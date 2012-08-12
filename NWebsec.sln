@@ -1,0 +1,42 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NWebsec.Modules", "NWebsec.modules\NWebsec.Modules.csproj", "{A011D84B-B731-4404-8BC1-FE94D2B37599}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NWebsec.Modules.Tests", "NWebsec.Modules.Tests\NWebsec.Modules.Tests.csproj", "{2E83CDC3-152A-4139-8B00-0CDECD3F5BDC}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{07D0ADD6-1502-453F-8F21-F69748F0D188}"
+	ProjectSection(SolutionItems) = preProject
+		Local.testsettings = Local.testsettings
+		nwebsec.vsmdi = nwebsec.vsmdi
+		TraceAndTestImpact.testsettings = TraceAndTestImpact.testsettings
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DemoSiteWebForms", "DemoSiteWebForms\DemoSiteWebForms.csproj", "{505AEAE4-2E8A-43EF-B3B8-DA25D6D2B859}"
+EndProject
+Global
+	GlobalSection(TestCaseManagementSettings) = postSolution
+		CategoryFile = nwebsec.vsmdi
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A011D84B-B731-4404-8BC1-FE94D2B37599}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A011D84B-B731-4404-8BC1-FE94D2B37599}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A011D84B-B731-4404-8BC1-FE94D2B37599}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A011D84B-B731-4404-8BC1-FE94D2B37599}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2E83CDC3-152A-4139-8B00-0CDECD3F5BDC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2E83CDC3-152A-4139-8B00-0CDECD3F5BDC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2E83CDC3-152A-4139-8B00-0CDECD3F5BDC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2E83CDC3-152A-4139-8B00-0CDECD3F5BDC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{505AEAE4-2E8A-43EF-B3B8-DA25D6D2B859}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{505AEAE4-2E8A-43EF-B3B8-DA25D6D2B859}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{505AEAE4-2E8A-43EF-B3B8-DA25D6D2B859}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{505AEAE4-2E8A-43EF-B3B8-DA25D6D2B859}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
