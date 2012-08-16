@@ -37,10 +37,16 @@ namespace NWebsec.Modules
 {
     public class HttpHeaderModule : IHttpModule
     {
+        private static readonly String[] versionHeaders = { "X-AspNet-Version", "X-Powered-By", "X-AspNetMvc-Version" };
 
         public void Init(HttpApplication app)
         {
 
+            var config = GetConfig();
+            if (config.suppressVersionHeaders.Enabled && !HttpRuntime.UsingIntegratedPipeline)
+            {
+                throw new ConfigurationErrorsException("NWebsec config error: suppressVersionHeaders can only be enabled when using IIS integrated pipeline mode.");
+            }
             app.PreSendRequestHeaders += new EventHandler(App_PreSendRequestHeaders);
         }
 
@@ -48,7 +54,9 @@ namespace NWebsec.Modules
         {
             var app = (HttpApplication)sender;
             var response = new HttpResponseWrapper(app.Response);
-            FixHeaders(response, GetConfig());
+            var config = GetConfig() ?? new HttpHeaderConfigurationSection();
+            
+            FixHeaders(response, config);
 
         }
 
@@ -59,7 +67,11 @@ namespace NWebsec.Modules
             AddXContentTypeOptionsHeader(response, headerConfig);
             AddXDownloadOptionsHeader(response, headerConfig);
             AddXXssProtectionHeader(response, headerConfig);
+
+            SuppressVersionHeaders(response, headerConfig);
         }
+
+
 
         internal void AddXFrameoptionsHeader(HttpResponseBase response, HttpHeaderConfigurationSection headerConfig)
         {
@@ -79,15 +91,15 @@ namespace NWebsec.Modules
                     frameOptions = "SAMEORIGIN";
                     break;
 
-                case HttpHeadersEnums.XFrameOptions.AllowFrom:
-                    frameOptions = "ALLOW-FROM " + headerConfig.SecurityHttpHeaders.XFrameOptions.Origin.GetLeftPart(UriPartial.Authority);
-                    break;
+                //case HttpHeadersEnums.XFrameOptions.AllowFrom:
+                //    frameOptions = "ALLOW-FROM " + headerConfig.SecurityHttpHeaders.XFrameOptions.Origin.GetLeftPart(UriPartial.Authority);
+                //    break;
 
                 default:
                     throw new NotImplementedException("Apparently someone forgot to implement support for: " + headerConfig.SecurityHttpHeaders.XFrameOptions.Policy);
 
             }
-            response.AddHeader("X-FRAME-OPTIONS", frameOptions);
+            response.AddHeader("X-Frame-Options", frameOptions);
 
         }
 
@@ -144,6 +156,18 @@ namespace NWebsec.Modules
 
         }
 
+        internal void SuppressVersionHeaders(HttpResponseBase response, HttpHeaderConfigurationSection headerConfig)
+        {
+            if (!headerConfig.suppressVersionHeaders.Enabled) return;
+
+            foreach (var header in versionHeaders)
+            {
+                response.Headers.Remove(header);
+            }
+            response.Headers.Set("Server", headerConfig.suppressVersionHeaders.ServerHeader);
+
+
+        }
 
         private HttpHeaderConfigurationSection GetConfig()
         {

@@ -34,7 +34,7 @@ namespace NWebsec.Modules
 {
     public class HttpHeadersEnums
     {
-        public enum XFrameOptions { Disabled, Deny, SameOrigin, AllowFrom }
+        public enum XFrameOptions { Disabled, Deny, SameOrigin }
         public enum XXssProtection { Disabled, FilterDisabled, FilterEnabled }
     }
 }

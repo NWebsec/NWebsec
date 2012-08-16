@@ -46,6 +46,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Configuration\HttpHeaderConfigurationSection.cs" />
+    <Compile Include="Configuration\SecurityHttpHeadersConfigurationElement.cs" />
     <Compile Include="HttpHeaderModule.cs" />
     <Compile Include="HttpHeadersEnums.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
