@@ -48,6 +48,7 @@
     <Compile Include="Configuration\HttpHeaderConfigurationSection.cs" />
     <Compile Include="Configuration\SecurityHttpHeadersConfigurationElement.cs" />
     <Compile Include="HttpHeaderModule.cs" />
+    <Compile Include="Configuration\XContentSecurityPolicyConfigurationElement.cs" />
     <Compile Include="HttpHeadersEnums.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

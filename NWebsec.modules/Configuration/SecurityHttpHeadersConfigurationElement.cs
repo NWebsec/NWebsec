@@ -82,21 +82,36 @@ namespace NWebsec.Modules.Configuration
 
         }
 
-    }
-
-    public class ExperimentalSecurityHttpHeadersConfigurationElement : ConfigurationElement
-    {
-        [ConfigurationProperty("experimental", IsRequired = false)]
-        public XFrameOptionsConfigurationElement XFrameOptions
+        [ConfigurationProperty("experimentalHeaders", IsRequired = false)]
+        public ExperimentalSecurityHttpHeadersConfigurationElement ExperimentalHeaders
         {
 
             get
             {
-                return (XFrameOptionsConfigurationElement)this["experimental"];
+                return (ExperimentalSecurityHttpHeadersConfigurationElement)this["experimentalHeaders"];
             }
             set
             {
-                this["experimental"] = value;
+                this["experimentalHeaders"] = value;
+            }
+
+        }
+
+    }
+
+    public class ExperimentalSecurityHttpHeadersConfigurationElement : ConfigurationElement
+    {
+        [ConfigurationProperty("x-Content-Security-Policy", IsRequired = false)]
+        public XContentSecurityPolicyConfigurationElement ContentSecurityPolicy
+        {
+
+            get
+            {
+                return (XContentSecurityPolicyConfigurationElement)this["x-Content-Security-Policy"];
+            }
+            set
+            {
+                this["x-Content-Security-Policy"] = value;
             }
 
         }
