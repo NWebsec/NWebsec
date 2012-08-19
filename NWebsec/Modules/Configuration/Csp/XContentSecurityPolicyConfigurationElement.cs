@@ -64,6 +64,7 @@ namespace NWebsec.Modules.Configuration.Csp
         }
 
         [ConfigurationProperty("directives", IsRequired = false)]
+        [ConfigurationCollection(typeof(CspDirectiveElementCollection), CollectionType = ConfigurationElementCollectionType.AddRemoveClearMap)]
         public CspDirectiveElementCollection Directives
         {
 
@@ -89,7 +90,15 @@ namespace NWebsec.Modules.Configuration.Csp
 
         protected override object GetElementKey(ConfigurationElement element)
         {
-            return ((CspDirectiveConfigurationElement) element).Name;
+            return ((CspDirectiveConfigurationElement)element).Name;
+        }
+
+        public override ConfigurationElementCollectionType CollectionType
+        {
+            get
+            {
+                return ConfigurationElementCollectionType.AddRemoveClearMap;
+            }
         }
 
         public void Add(CspDirectiveConfigurationElement element)
@@ -101,11 +110,30 @@ namespace NWebsec.Modules.Configuration.Csp
         {
             BaseClear();
         }
+        public void Remove(CspDirectiveConfigurationElement element)
+        {
+            BaseRemove(element);
+        }
+        
+        public void Remove(string name)
+        {
+            BaseRemove(name);
+        }
+
+        public void RemoveAt(int index)
+        {
+            BaseRemoveAt(index);
+        }
+
+        public int IndexOf(CspDirectiveConfigurationElement element)
+        {
+            return BaseIndexOf(element);
+        }
     }
 
     public class CspDirectiveConfigurationElement : ConfigurationElement
     {
-        [ConfigurationProperty("name", IsRequired = false)]
+        [ConfigurationProperty("name", IsRequired = false, IsKey = true)]
         public string Name
         {
             get
@@ -132,6 +160,7 @@ namespace NWebsec.Modules.Configuration.Csp
         }
 
         [ConfigurationProperty("sources", IsRequired = false)]
+        [ConfigurationCollection(typeof(CspSourcesElementCollection), CollectionType = ConfigurationElementCollectionType.AddRemoveClearMap)]
         public CspSourcesElementCollection Sources
         {
 
@@ -157,7 +186,7 @@ namespace NWebsec.Modules.Configuration.Csp
 
         protected override object GetElementKey(ConfigurationElement element)
         {
-            return ((CspSourceConfigurationElement) element).Source;
+            return ((CspSourceConfigurationElement)element).Source;
         }
 
         public void Add(CspSourceConfigurationElement element)
@@ -174,6 +203,6 @@ namespace NWebsec.Modules.Configuration.Csp
         {
             return BaseGetAllKeys();
         }
-         
+
     }
 }

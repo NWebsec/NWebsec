@@ -222,7 +222,7 @@ namespace NWebsec.Modules
 
         private HttpHeaderConfigurationSection GetConfig()
         {
-            return (HttpHeaderConfigurationSection)(ConfigurationManager.GetSection("nwebsec.modules"));
+            return (HttpHeaderConfigurationSection)(ConfigurationManager.GetSection("nwebsec/httpHeaderModule"));
         }
 
         public void Dispose()
