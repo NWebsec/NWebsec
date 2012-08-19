@@ -32,6 +32,7 @@ using System.Text;
 using System.Web;
 using NWebsec.Modules.Configuration;
 using System.Configuration;
+using NWebsec.Modules.Configuration.Csp;
 
 namespace NWebsec.Modules
 {
@@ -55,7 +56,7 @@ namespace NWebsec.Modules
             var app = (HttpApplication)sender;
             var response = new HttpResponseWrapper(app.Response);
             var config = GetConfig() ?? new HttpHeaderConfigurationSection();
-            
+
             FixHeaders(response, config);
 
         }
@@ -67,11 +68,10 @@ namespace NWebsec.Modules
             AddXContentTypeOptionsHeader(response, headerConfig);
             AddXDownloadOptionsHeader(response, headerConfig);
             AddXXssProtectionHeader(response, headerConfig);
+            AddXCspHeaders(response, headerConfig);
 
             SuppressVersionHeaders(response, headerConfig);
         }
-
-
 
         internal void AddXFrameoptionsHeader(HttpResponseBase response, HttpHeaderConfigurationSection headerConfig)
         {
@@ -80,18 +80,18 @@ namespace NWebsec.Modules
             string frameOptions;
             switch (headerConfig.SecurityHttpHeaders.XFrameOptions.Policy)
             {
-                case HttpHeadersEnums.XFrameOptions.Disabled:
+                case HttpHeadersConstants.XFrameOptions.Disabled:
                     return;
 
-                case HttpHeadersEnums.XFrameOptions.Deny:
+                case HttpHeadersConstants.XFrameOptions.Deny:
                     frameOptions = "DENY";
                     break;
 
-                case HttpHeadersEnums.XFrameOptions.SameOrigin:
+                case HttpHeadersConstants.XFrameOptions.SameOrigin:
                     frameOptions = "SAMEORIGIN";
                     break;
 
-                //case HttpHeadersEnums.XFrameOptions.AllowFrom:
+                //case HttpHeadersConstants.XFrameOptions.AllowFrom:
                 //    frameOptions = "ALLOW-FROM " + headerConfig.SecurityHttpHeaders.XFrameOptions.Origin.GetLeftPart(UriPartial.Authority);
                 //    break;
 
@@ -138,13 +138,13 @@ namespace NWebsec.Modules
             string value = "";
             switch (headerConfig.SecurityHttpHeaders.XXssProtection.Policy)
             {
-                case HttpHeadersEnums.XXssProtection.Disabled:
+                case HttpHeadersConstants.XXssProtection.Disabled:
                     return;
-                case HttpHeadersEnums.XXssProtection.FilterDisabled:
+                case HttpHeadersConstants.XXssProtection.FilterDisabled:
                     value = "0";
                     break;
 
-                case HttpHeadersEnums.XXssProtection.FilterEnabled:
+                case HttpHeadersConstants.XXssProtection.FilterEnabled:
                     value = (headerConfig.SecurityHttpHeaders.XXssProtection.BlockMode ? "1; mode=block" : "1");
                     break;
 
@@ -168,6 +168,57 @@ namespace NWebsec.Modules
 
 
         }
+
+        internal void AddXCspHeaders(HttpResponseBase response, HttpHeaderConfigurationSection headerConfig)
+        {
+            var cspConfig = headerConfig.SecurityHttpHeaders.ExperimentalHeaders.XContentSecurityPolicy;
+
+            if ((cspConfig.XContentSecurityPolicyHeader || cspConfig.XWebKitCspHeader))
+            {
+                var headerValue = CreateCspHeaderValue(cspConfig);
+                if (cspConfig.XContentSecurityPolicyHeader)
+                    response.AddHeader("X-Content-Security-Policy", headerValue);
+                if (cspConfig.XWebKitCspHeader)
+                    response.AddHeader("X-WebKit-CSP", headerValue);
+            }
+
+            var cspReportConfig = headerConfig.SecurityHttpHeaders.ExperimentalHeaders.XContentSecurityPolicyReportOnly;
+            if ((cspReportConfig.XContentSecurityPolicyHeader || cspReportConfig.XWebKitCspHeader))
+            {
+                var headerValue = CreateCspHeaderValue(cspReportConfig);
+                if (cspReportConfig.XContentSecurityPolicyHeader)
+                    response.AddHeader("X-Content-Security-Policy-Report-Only", headerValue);
+                if (cspReportConfig.XWebKitCspHeader)
+                    response.AddHeader("X-WebKit-CSP-Report-Only", headerValue);
+            }
+
+        }
+
+        private string CreateCspHeaderValue(XContentSecurityPolicyConfigurationElement config)
+        {
+            if (config.Directives.Count == 0) throw new ApplicationException("Error creating header, no directives configured.");
+            var sb = new StringBuilder();
+            foreach (CspDirectiveConfigurationElement directive in config.Directives)
+            {
+                sb.Append(directive.Name);
+                sb.Append(' ');
+                if (!String.IsNullOrEmpty(directive.Source))
+                {
+                    sb.Append(directive.Source);
+                    sb.Append(' ');
+                }
+                foreach (CspSourceConfigurationElement source in directive.Sources)
+                {
+                    sb.Append(source.Source);
+                    sb.Append(' ');
+                }
+
+                sb.Insert(sb.Length - 1, ';');
+            }
+            sb.Remove(sb.Length - 2, 2);
+            return sb.ToString();
+        }
+
 
         private HttpHeaderConfigurationSection GetConfig()
         {

@@ -35,6 +35,7 @@ using NWebsec.Modules.Configuration;
 using Moq;
 using System.Collections;
 using System.Collections.Specialized;
+using NWebsec.Modules.Configuration.Csp;
 
 namespace nWebsec.Modules.Tests
 {
@@ -53,24 +54,24 @@ namespace nWebsec.Modules.Tests
         {
             headerModule = new HttpHeaderModule();
             config = new HttpHeaderConfigurationSection();
-            mockResponse  = new Mock<HttpResponseBase>();
+            mockResponse = new Mock<HttpResponseBase>();
         }
 
 
         [TestMethod()]
         public void AddXFrameoptionsHeader_DisabledInConfig_DoesNotAddXFrameOptionsHeader()
         {
-            config.SecurityHttpHeaders.XFrameOptions.Policy = HttpHeadersEnums.XFrameOptions.Disabled;
+            config.SecurityHttpHeaders.XFrameOptions.Policy = HttpHeadersConstants.XFrameOptions.Disabled;
 
             headerModule.AddXFrameoptionsHeader(mockResponse.Object, config);
 
-            mockResponse.Verify(x => x.AddHeader("X-Frame-Options", It.IsAny<String>()), Times.Never());
+            mockResponse.Verify(x => x.AddHeader(It.IsAny<String>(), It.IsAny<String>()), Times.Never());
         }
 
         [TestMethod()]
         public void AddXFrameoptionsHeader_DenyInConfig_AddsAddXFrameOptionsDenyHeader()
         {
-            config.SecurityHttpHeaders.XFrameOptions.Policy = HttpHeadersEnums.XFrameOptions.Deny;
+            config.SecurityHttpHeaders.XFrameOptions.Policy = HttpHeadersConstants.XFrameOptions.Deny;
 
             headerModule.AddXFrameoptionsHeader(mockResponse.Object, config);
 
@@ -80,23 +81,23 @@ namespace nWebsec.Modules.Tests
         [TestMethod()]
         public void AddXFrameoptionsHeader_SameoriginInConfig_AddsXFrameoptionsSameoriginHeader()
         {
-            config.SecurityHttpHeaders.XFrameOptions.Policy = HttpHeadersEnums.XFrameOptions.SameOrigin;
+            config.SecurityHttpHeaders.XFrameOptions.Policy = HttpHeadersConstants.XFrameOptions.SameOrigin;
 
             headerModule.AddXFrameoptionsHeader(mockResponse.Object, config);
 
             mockResponse.Verify(x => x.AddHeader("X-Frame-Options", "SAMEORIGIN"), Times.Once());
         }
 
-        [TestMethod(), Ignore]
-        public void AddXFrameoptionsHeader_AllowfromInConfig_AddsXFrameoptionsAllowfromHeader()
-        {
-            //config.SecurityHttpHeaders.XFrameOptions.Policy = HttpHeadersEnums.XFrameOptions.AllowFrom;
-            //config.SecurityHttpHeaders.XFrameOptions.Origin = new Uri("http://nwebsec.codeplex.com");
+        //[TestMethod(), Ignore]
+        //public void AddXFrameoptionsHeader_AllowfromInConfig_AddsXFrameoptionsAllowfromHeader()
+        //{
+        //    //config.SecurityHttpHeaders.XFrameOptions.Policy = HttpHeadersConstants.XFrameOptions.AllowFrom;
+        //    //config.SecurityHttpHeaders.XFrameOptions.Origin = new Uri("http://nwebsec.codeplex.com");
 
-            headerModule.AddXFrameoptionsHeader(mockResponse.Object, config);
+        //    headerModule.AddXFrameoptionsHeader(mockResponse.Object, config);
 
-            mockResponse.Verify(x => x.AddHeader("X-Frame-Options", "ALLOW-FROM http://nwebsec.codeplex.com"), Times.Once());
-        }
+        //    mockResponse.Verify(x => x.AddHeader("X-Frame-Options", "ALLOW-FROM http://nwebsec.codeplex.com"), Times.Once());
+        //}
 
         [TestMethod()]
         public void AddHstsHeader_ZeroTimespanInConfig_DoesNotAddHSTSHeaderHeader()
@@ -105,7 +106,7 @@ namespace nWebsec.Modules.Tests
 
             headerModule.AddHstsHeader(mockResponse.Object, config);
 
-            mockResponse.Verify(x => x.AddHeader("Strict-Transport-Security", It.IsAny<String>()), Times.Never());
+            mockResponse.Verify(x => x.AddHeader(It.IsAny<String>(), It.IsAny<String>()), Times.Never());
         }
 
         [TestMethod()]
@@ -137,7 +138,7 @@ namespace nWebsec.Modules.Tests
 
             headerModule.AddXContentTypeOptionsHeader(mockResponse.Object, config);
 
-            mockResponse.Verify(x => x.AddHeader("X-Content-Type-Options", It.IsAny<String>()), Times.Never());
+            mockResponse.Verify(x => x.AddHeader(It.IsAny<String>(), It.IsAny<String>()), Times.Never());
         }
 
         [TestMethod()]
@@ -157,7 +158,7 @@ namespace nWebsec.Modules.Tests
 
             headerModule.AddXDownloadOptionsHeader(mockResponse.Object, config);
 
-            mockResponse.Verify(x => x.AddHeader("X-Download-Options", It.IsAny<String>()), Times.Never());
+            mockResponse.Verify(x => x.AddHeader(It.IsAny<String>(), It.IsAny<String>()), Times.Never());
         }
 
         [TestMethod()]
@@ -173,17 +174,17 @@ namespace nWebsec.Modules.Tests
         [TestMethod()]
         public void AddXXssProtectionHeader_DisabledInConfig_DoesNotAddXXssProtectionHeader()
         {
-            config.SecurityHttpHeaders.XXssProtection.Policy = HttpHeadersEnums.XXssProtection.Disabled;
+            config.SecurityHttpHeaders.XXssProtection.Policy = HttpHeadersConstants.XXssProtection.Disabled;
 
             headerModule.AddXXssProtectionHeader(mockResponse.Object, config);
 
-            mockResponse.Verify(x => x.AddHeader("X-XSS-Protection", It.IsAny<String>()), Times.Never());
+            mockResponse.Verify(x => x.AddHeader(It.IsAny<String>(), It.IsAny<String>()), Times.Never());
         }
 
         [TestMethod()]
         public void AddXXssProtectionHeader_FilterDisabledPolicyInConfig_AddsXXssProtectionDisabledHeader()
         {
-            config.SecurityHttpHeaders.XXssProtection.Policy = HttpHeadersEnums.XXssProtection.FilterDisabled;
+            config.SecurityHttpHeaders.XXssProtection.Policy = HttpHeadersConstants.XXssProtection.FilterDisabled;
 
             headerModule.AddXXssProtectionHeader(mockResponse.Object, config);
 
@@ -193,7 +194,7 @@ namespace nWebsec.Modules.Tests
         [TestMethod()]
         public void AddXXssProtectionHeader_FilterDisabledPolicyWithBlockmodeInConfig_AddsXXssProtectionDisabledHeaderWithoutBlockMode()
         {
-            config.SecurityHttpHeaders.XXssProtection.Policy = HttpHeadersEnums.XXssProtection.FilterDisabled;
+            config.SecurityHttpHeaders.XXssProtection.Policy = HttpHeadersConstants.XXssProtection.FilterDisabled;
             config.SecurityHttpHeaders.XXssProtection.BlockMode = true;
 
             headerModule.AddXXssProtectionHeader(mockResponse.Object, config);
@@ -204,7 +205,7 @@ namespace nWebsec.Modules.Tests
         [TestMethod()]
         public void AddXXssProtectionHeader_FilterEnabledPolicyInConfig_AddsXssProtectionHeaderEnabledWithoutBlockmode()
         {
-            config.SecurityHttpHeaders.XXssProtection.Policy = HttpHeadersEnums.XXssProtection.FilterEnabled;
+            config.SecurityHttpHeaders.XXssProtection.Policy = HttpHeadersConstants.XXssProtection.FilterEnabled;
             config.SecurityHttpHeaders.XXssProtection.BlockMode = false;
 
 
@@ -216,7 +217,7 @@ namespace nWebsec.Modules.Tests
         [TestMethod()]
         public void AddXXSSProtectionHeader_FilterEnabledPolicyWithBlockmode_AddsXssProtectionHeaderEnabledWithBlockMode()
         {
-            config.SecurityHttpHeaders.XXssProtection.Policy = HttpHeadersEnums.XXssProtection.FilterEnabled;
+            config.SecurityHttpHeaders.XXssProtection.Policy = HttpHeadersConstants.XXssProtection.FilterEnabled;
             config.SecurityHttpHeaders.XXssProtection.BlockMode = true;
 
             headerModule.AddXXssProtectionHeader(mockResponse.Object, config);
@@ -225,10 +226,139 @@ namespace nWebsec.Modules.Tests
         }
 
         [TestMethod()]
+        public void AddXCspHeaders_DisabledInConfig_DoesNotAddXCspHeader()
+        {
+            var cspConfig = config.SecurityHttpHeaders.ExperimentalHeaders.XContentSecurityPolicy;
+            cspConfig.XContentSecurityPolicyHeader = false;
+            cspConfig.XWebKitCspHeader = false;
+
+            headerModule.AddXCspHeaders(mockResponse.Object, config);
+
+            mockResponse.Verify(x => x.AddHeader(It.IsAny<String>(), It.IsAny<String>()), Times.Never());
+        }
+
+        [TestMethod()]
+        public void AddXCspHeaders_XCspEnabledInConfig_AddsXCspHeader()
+        {
+            var cspConfig = config.SecurityHttpHeaders.ExperimentalHeaders.XContentSecurityPolicy;
+            cspConfig.XContentSecurityPolicyHeader = true;
+            cspConfig.XWebKitCspHeader = false;
+            var directive = new CspDirectiveConfigurationElement() { Name = "script-src" };
+            cspConfig.Directives.Add(directive);
+
+            headerModule.AddXCspHeaders(mockResponse.Object, config);
+
+            mockResponse.Verify(x => x.AddHeader("X-Content-Security-Policy", It.IsAny<String>()), Times.Once());
+        }
+
+        [TestMethod()]
+        public void AddXCspHeaders_XWebkitCspEnabledInConfig_AddsXWebkitCspHeader()
+        {
+            var cspConfig = config.SecurityHttpHeaders.ExperimentalHeaders.XContentSecurityPolicy;
+            cspConfig.XContentSecurityPolicyHeader = false;
+            cspConfig.XWebKitCspHeader = true;
+            var directive = new CspDirectiveConfigurationElement() { Name = "script-src" };
+            cspConfig.Directives.Add(directive);
+
+            headerModule.AddXCspHeaders(mockResponse.Object, config);
+
+            mockResponse.Verify(x => x.AddHeader("X-WebKit-CSP", It.IsAny<String>()), Times.Once());
+        }
+
+        [TestMethod()]
+        public void AddXCspHeaders_XCspAndXWebkitCspEnabledInConfig_AddsXcspAndXWebkitCspHeader()
+        {
+            var cspConfig = config.SecurityHttpHeaders.ExperimentalHeaders.XContentSecurityPolicy;
+            cspConfig.XContentSecurityPolicyHeader = true;
+            cspConfig.XWebKitCspHeader = true;
+            var directive = new CspDirectiveConfigurationElement() { Name = "script-src" };
+            cspConfig.Directives.Add(directive);
+
+            headerModule.AddXCspHeaders(mockResponse.Object, config);
+
+            mockResponse.Verify(x => x.AddHeader("X-Content-Security-Policy", It.IsAny<String>()), Times.Once());
+            mockResponse.Verify(x => x.AddHeader("X-WebKit-CSP", It.IsAny<String>()), Times.Once());
+        }
+
+        [TestMethod()]
+        public void AddXCspHeaders_XCspReportOnlyEnabledInConfig_AddsXCspReportOnlyHeader()
+        {
+            var cspConfig = config.SecurityHttpHeaders.ExperimentalHeaders.XContentSecurityPolicyReportOnly;
+            cspConfig.XContentSecurityPolicyHeader = true;
+            cspConfig.XWebKitCspHeader = false;
+            var directive = new CspDirectiveConfigurationElement() { Name = "script-src" };
+            cspConfig.Directives.Add(directive);
+
+            headerModule.AddXCspHeaders(mockResponse.Object, config);
+
+            mockResponse.Verify(x => x.AddHeader("X-Content-Security-Policy-Report-Only", It.IsAny<String>()), Times.Once());
+        }
+
+        [TestMethod()]
+        public void AddXCspHeaders_XWebkitCspReportOnlyEnabledInConfig_AddsXWebkitCspReportOnlyHeader()
+        {
+            var cspConfig = config.SecurityHttpHeaders.ExperimentalHeaders.XContentSecurityPolicyReportOnly;
+            cspConfig.XContentSecurityPolicyHeader = false;
+            cspConfig.XWebKitCspHeader = true;
+            var directive = new CspDirectiveConfigurationElement() { Name = "script-src" };
+            cspConfig.Directives.Add(directive);
+
+            headerModule.AddXCspHeaders(mockResponse.Object, config);
+
+            mockResponse.Verify(x => x.AddHeader("X-WebKit-CSP-Report-Only", It.IsAny<String>()), Times.Once());
+        }
+
+        [TestMethod()]
+        public void AddXCspHeaders_XCspAndXWebkitCspReportOnlyEnabledInConfig_AddsXCspAndXWebkitCspReportOnlyHeader()
+        {
+            var cspConfig = config.SecurityHttpHeaders.ExperimentalHeaders.XContentSecurityPolicyReportOnly;
+            cspConfig.XContentSecurityPolicyHeader = true;
+            cspConfig.XWebKitCspHeader = true;
+            var directive = new CspDirectiveConfigurationElement() { Name = "script-src" };
+            cspConfig.Directives.Add(directive);
+
+            headerModule.AddXCspHeaders(mockResponse.Object, config);
+
+            mockResponse.Verify(x => x.AddHeader("X-Content-Security-Policy-Report-Only", It.IsAny<String>()), Times.Once());
+            mockResponse.Verify(x => x.AddHeader("X-WebKit-CSP-Report-Only", It.IsAny<String>()), Times.Once());
+        }
+
+        [TestMethod()]
+        public void AddXCspHeaders_XCspWithTwoDirectives_AddsCorrectXCspHeader()
+        {
+            var cspConfig = config.SecurityHttpHeaders.ExperimentalHeaders.XContentSecurityPolicy;
+            cspConfig.XContentSecurityPolicyHeader = true;
+            cspConfig.XWebKitCspHeader = false;
+            var directive = new CspDirectiveConfigurationElement() { Name = "default-src", Source = "'self'" };
+            cspConfig.Directives.Add(directive);
+            directive = new CspDirectiveConfigurationElement() { Name = "script-src", Source = "'none'" };
+            cspConfig.Directives.Add(directive);
+
+            headerModule.AddXCspHeaders(mockResponse.Object, config);
+
+            mockResponse.Verify(x => x.AddHeader("X-Content-Security-Policy", "default-src 'self'; script-src 'none'"), Times.Once());
+        }
+
+        [TestMethod()]
+        public void AddXCspHeaders_XCspDirectiveWithTwoSources_AddsCorrectlyFormattedXCspHeader()
+        {
+            var cspConfig = config.SecurityHttpHeaders.ExperimentalHeaders.XContentSecurityPolicy;
+            cspConfig.XContentSecurityPolicyHeader = true;
+            cspConfig.XWebKitCspHeader = false;
+            var directive = new CspDirectiveConfigurationElement() { Name = "default-src", Source = "'self'" };
+            directive.Sources.Add(new CspSourceConfigurationElement() {Source = "nwebsec.codeplex.com"});
+            cspConfig.Directives.Add(directive);
+            
+            headerModule.AddXCspHeaders(mockResponse.Object, config);
+
+            mockResponse.Verify(x => x.AddHeader("X-Content-Security-Policy", "default-src 'self' nwebsec.codeplex.com"), Times.Once());
+        }
+
+        [TestMethod()]
         public void SuppressVersionHeaders_Disabled_DoesNotRemoveHeaders()
         {
             config.suppressVersionHeaders.Enabled = false;
-            
+
             headerModule.SuppressVersionHeaders(mockResponse.Object, config);
 
             mockResponse.Verify(x => x.Headers.Remove(It.IsAny<String>()), Times.Never());
