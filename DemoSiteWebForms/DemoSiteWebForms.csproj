@@ -143,9 +143,9 @@
     <Content Include="Site.Master" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\NWebsec.modules\NWebsec.Modules.csproj">
+    <ProjectReference Include="..\NWebsec\NWebsec.csproj">
       <Project>{A011D84B-B731-4404-8BC1-FE94D2B37599}</Project>
-      <Name>NWebsec.Modules</Name>
+      <Name>NWebsec</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

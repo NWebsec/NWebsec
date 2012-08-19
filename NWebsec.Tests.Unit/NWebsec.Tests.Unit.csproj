@@ -9,8 +9,8 @@
     <ProjectGuid>{2E83CDC3-152A-4139-8B00-0CDECD3F5BDC}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>nWebsec.Modules.Tests</RootNamespace>
-    <AssemblyName>nWebsec.Modules.Tests</AssemblyName>
+    <RootNamespace>nWebsec.Tests.Unit</RootNamespace>
+    <AssemblyName>nWebsec.Tests.Unit</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -58,14 +58,14 @@
     </CodeAnalysisDependentAssemblyPaths>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="HttpHeaderModuleTest.cs" />
+    <Compile Include="Modules\HttpHeaderModuleTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="XContentSecurityPolicyConfigurationElementValidatorTest.cs" />
+    <Compile Include="Modules\Configuration\XContentSecurityPolicyConfigurationElementValidatorTest.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\nwebsec.modules\nWebsec.Modules.csproj">
+    <ProjectReference Include="..\NWebsec\NWebsec.csproj">
       <Project>{A011D84B-B731-4404-8BC1-FE94D2B37599}</Project>
-      <Name>nWebsec.Modules</Name>
+      <Name>NWebsec</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

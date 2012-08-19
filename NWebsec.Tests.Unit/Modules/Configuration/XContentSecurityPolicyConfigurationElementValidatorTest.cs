@@ -26,17 +26,12 @@ OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 #endregion
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NWebsec.Modules;
-using NWebsec.Modules.Configuration;
 using System.Configuration;
 using NWebsec.Modules.Configuration.Csp;
 
-namespace nWebsec.Modules.Tests
+namespace NWebsec.Tests.Unit.Modules.Configuration
 {
     [TestClass()]
     public class XContentSecurityPolicyConfigurationElementValidatorTest

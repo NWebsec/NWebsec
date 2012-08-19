@@ -25,19 +25,17 @@ OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISE
 OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 #endregion
+
 using NWebsec.Modules;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Web;
-using System.Configuration;
-using System.Linq;
 using NWebsec.Modules.Configuration;
 using Moq;
-using System.Collections;
 using System.Collections.Specialized;
 using NWebsec.Modules.Configuration.Csp;
 
-namespace nWebsec.Modules.Tests
+namespace NWebsec.Tests.Unit.Modules
 {
 
 

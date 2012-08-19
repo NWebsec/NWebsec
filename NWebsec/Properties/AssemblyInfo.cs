@@ -19,7 +19,7 @@ using System.Runtime.InteropServices;
 // COM, set the ComVisible attribute to true on that type.
 [assembly: ComVisible(false)]
 
-[assembly: InternalsVisibleTo("nWebsec.Modules.Tests")]
+[assembly: InternalsVisibleTo("nWebsec.Tests.Unit")]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
 [assembly: Guid("b6152f2f-4467-4e97-9d17-9c267b7ae551")]

@@ -8,8 +8,8 @@
     <ProjectGuid>{A011D84B-B731-4404-8BC1-FE94D2B37599}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>NWebsec.Modules</RootNamespace>
-    <AssemblyName>NWebsec.Modules</AssemblyName>
+    <RootNamespace>NWebsec</RootNamespace>
+    <AssemblyName>NWebsec</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
@@ -45,12 +45,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Configuration\Csp\CspSourceConfigurationElement.cs" />
-    <Compile Include="Configuration\HttpHeaderConfigurationSection.cs" />
-    <Compile Include="Configuration\SecurityHttpHeadersConfigurationElement.cs" />
-    <Compile Include="Configuration\Csp\XContentSecurityPolicyConfigurationElementValidator.cs" />
-    <Compile Include="HttpHeaderModule.cs" />
-    <Compile Include="Configuration\Csp\XContentSecurityPolicyConfigurationElement.cs" />
+    <Compile Include="Modules\Configuration\Csp\CspSourceConfigurationElement.cs" />
+    <Compile Include="Modules\Configuration\HttpHeaderConfigurationSection.cs" />
+    <Compile Include="Modules\Configuration\SecurityHttpHeadersConfigurationElement.cs" />
+    <Compile Include="Modules\Configuration\Csp\XContentSecurityPolicyConfigurationElementValidator.cs" />
+    <Compile Include="Modules\HttpHeaderModule.cs" />
+    <Compile Include="Modules\Configuration\Csp\XContentSecurityPolicyConfigurationElement.cs" />
     <Compile Include="HttpHeadersConstants.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
