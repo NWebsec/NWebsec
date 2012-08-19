@@ -92,12 +92,41 @@ namespace NWebsec.Tests.Unit.Modules.Configuration
 
         }
 
-        [TestMethod(), Ignore]
+        [TestMethod()]
         [ExpectedException(typeof(ConfigurationErrorsException))]
         public void Validate_NoneWithMultipleSourcesInList_ThrowsException()
         {
+            configElement.XContentSecurityPolicyHeader = true;
+            var directive = new CspDirectiveConfigurationElement() { Name = "script-src", Source = "'none'" };
+            directive.Sources.Add(new CspSourceConfigurationElement() {Source = "nwebsec.codeplex.com"});
+            configElement.Directives.Add(directive);
+
             validator.Validate(configElement);
         }
 
+        [TestMethod()]
+        [ExpectedException(typeof(ConfigurationErrorsException))]
+        public void Validate_SourceConfiguredBothInSourceAndSources_ThrowsException()
+        {
+            configElement.XContentSecurityPolicyHeader = true;
+            var directive = new CspDirectiveConfigurationElement() { Name = "script-src", Source = "'self'" };
+            directive.Sources.Add(new CspSourceConfigurationElement() { Source = "'self'" });
+            configElement.Directives.Add(directive);
+
+            validator.Validate(configElement);
+        }
+
+        [TestMethod()]
+        [ExpectedException(typeof(ConfigurationErrorsException))]
+        public void Validate_SameSourceAddedTwiceToSources_ThrowsException()
+        {
+            configElement.XContentSecurityPolicyHeader = true;
+            var directive = new CspDirectiveConfigurationElement() { Name = "script-src", Source = "'none'" };
+            directive.Sources.Add(new CspSourceConfigurationElement() { Source = "'self'" });
+            directive.Sources.Add(new CspSourceConfigurationElement() { Source = "'self'" });
+            configElement.Directives.Add(directive);
+
+            validator.Validate(configElement);
+        }
     }
 }

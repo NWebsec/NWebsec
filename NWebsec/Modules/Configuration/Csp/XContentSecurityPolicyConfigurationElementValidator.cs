@@ -62,16 +62,37 @@ namespace NWebsec.Modules.Configuration.Csp
                     var ex = string.Format("No sources configured for directive: {0}",
                                            directive.Name);
                     throw new ConfigurationErrorsException(ex);
-                } 
+                }
+
+                if (directive.Source.Equals("'none'") && directive.Sources.Count > 0)
+                {
+                    var ex = string.Format("The source 'none' cannot be combined with other sources. Directive: {0}",
+                                           directive.Name);
+                    throw new ConfigurationErrorsException(ex);
+                }
+
+                if (!directive.Source.Equals("'none'") && directive.Sources.Count > 1 && directive.Sources.GetAllKeys().Any(x => x.Equals("'none'")))
+                {
+                    var ex = string.Format("The source 'none' cannot be combined with other sources. Directive: {0}",
+                                           directive.Name);
+                    throw new ConfigurationErrorsException(ex);
+                }
+
+                if (! String.IsNullOrEmpty(directive.Source) && directive.Sources.GetAllKeys().Any(x => x.Equals(directive.Source)))
+                {
+                    var ex = string.Format("The source is defined both in the source attribute and in the source list. Please define it only once. Directive: {0}",
+                                           directive.Name);
+                    throw new ConfigurationErrorsException(ex);
+                }
             }
-           
-            
+
+
         }
 
-       internal bool ValidateDirectiveName(string directiveName)
-       {
-           return HttpHeadersConstants.CspDirectives.Any(x => x.Equals(directiveName));
-       }
+        internal bool ValidateDirectiveName(string directiveName)
+        {
+            return HttpHeadersConstants.CspDirectives.Any(x => x.Equals(directiveName));
+        }
     }
 
     public class XContentSecurityPolicyConfigurationElementValidatorAttribute :

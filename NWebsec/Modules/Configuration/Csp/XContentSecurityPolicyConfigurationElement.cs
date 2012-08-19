@@ -26,6 +26,7 @@ OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 #endregion
 
+using System;
 using System.Configuration;
 
 namespace NWebsec.Modules.Configuration.Csp
@@ -167,6 +168,11 @@ namespace NWebsec.Modules.Configuration.Csp
         public void Clear()
         {
             BaseClear();
+        }
+
+        public Object[] GetAllKeys()
+        {
+            return BaseGetAllKeys();
         }
          
     }
