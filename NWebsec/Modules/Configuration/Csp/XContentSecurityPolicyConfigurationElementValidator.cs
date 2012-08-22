@@ -29,6 +29,7 @@ OF THE POSSIBILITY OF SUCH DAMAGE.
 using System;
 using System.Configuration;
 using System.Linq;
+using NWebsec.HttpHeaders;
 using NWebsec.Modules.Configuration.Csp;
 
 namespace NWebsec.Modules.Configuration.Csp

@@ -31,6 +31,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Configuration;
+using NWebsec.HttpHeaders;
 using NWebsec.Modules.Configuration.Csp;
 
 namespace NWebsec.Modules.Configuration

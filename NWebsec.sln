@@ -14,6 +14,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NWebsec.Tests.Unit", "NWebs
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DemoSiteWebForms", "DemoSiteWebForms\DemoSiteWebForms.csproj", "{505AEAE4-2E8A-43EF-B3B8-DA25D6D2B859}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NWebsec.Mvc", "NWebsec.Mvc\NWebsec.Mvc.csproj", "{78FF86A6-C148-4D03-96CF-B429C1A36DA9}"
+EndProject
 Global
 	GlobalSection(TestCaseManagementSettings) = postSolution
 		CategoryFile = nwebsec.vsmdi
@@ -35,6 +37,10 @@ Global
 		{505AEAE4-2E8A-43EF-B3B8-DA25D6D2B859}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{505AEAE4-2E8A-43EF-B3B8-DA25D6D2B859}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{505AEAE4-2E8A-43EF-B3B8-DA25D6D2B859}.Release|Any CPU.Build.0 = Release|Any CPU
+		{78FF86A6-C148-4D03-96CF-B429C1A36DA9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{78FF86A6-C148-4D03-96CF-B429C1A36DA9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{78FF86A6-C148-4D03-96CF-B429C1A36DA9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{78FF86A6-C148-4D03-96CF-B429C1A36DA9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

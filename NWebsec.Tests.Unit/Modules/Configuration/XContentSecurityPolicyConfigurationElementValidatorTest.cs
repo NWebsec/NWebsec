@@ -27,6 +27,7 @@ OF THE POSSIBILITY OF SUCH DAMAGE.
 #endregion
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NWebsec.HttpHeaders;
 using NWebsec.Modules;
 using System.Configuration;
 using NWebsec.Modules.Configuration.Csp;

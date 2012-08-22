@@ -1,6 +1,6 @@
-﻿#region License
+#region License
 /*
-Copyright (c) 2012, André N. Klingsheim
+Copyright (c) 2012, Andr� N. Klingsheim
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -25,25 +25,21 @@ OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISE
 OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 #endregion
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
-namespace NWebsec.Modules
+namespace NWebsec.HttpHeaders
 {
     public class HttpHeadersConstants
     {
         public enum XFrameOptions { Disabled, Deny, SameOrigin }
         public enum XXssProtection { Disabled, FilterDisabled, FilterEnabled }
 
-        public static string[] CspSourceList = {    "'none'",
+        public static readonly string[] CspSourceList = {    "'none'",
                                                    "'self'",
                                                    "'unsafe-inline'",
                                                    "'unsafe-eval'"
                                                };
 
-        public static string[] CspDirectives = {   "default-src",
+        public static readonly string[] CspDirectives = {   "default-src",
                                                    "script-src",
                                                    "object-src",
                                                    "style-src", 
@@ -55,9 +51,11 @@ namespace NWebsec.Modules
                                                    "report-uri" 
                                                };
 
-        public static string[] CspSchemes = {   "data:",
+        public static readonly string[] CspSchemes = {   "data:",
                                                 "https:",
                                                 "http:" 
                                             };
+
+        public static readonly string[] VersionHeaders = { "X-AspNet-Version", "X-AspNetMvc-Version" };
     }
 }
