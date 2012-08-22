@@ -34,18 +34,20 @@ using NWebsec.Modules.Configuration;
 namespace NWebsec.Mvc.HttpHeaders
 {
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, Inherited = true, AllowMultiple = false)]
-    public class XDownloadOptionsAttribute : ActionFilterAttribute
+    public class StrictTransportSecurityHeaderAttribute : ActionFilterAttribute
     {
-        public bool Enabled { get; set; }
+        private TimeSpan ttl;
+        public bool IncludeSubdomains { get; set; }
 
-        public XDownloadOptionsAttribute()
+        public StrictTransportSecurityHeaderAttribute(TimeSpan maxAge)
         {
-            Enabled = true;
+            ttl = maxAge;
+            IncludeSubdomains = false;
         }
 
         public override void OnActionExecuted(ActionExecutedContext filterContext)
         {
-            new HttpHeaderHelper().AddXDownloadOptionsHeader(filterContext.HttpContext, new SimpleBooleanConfigurationElement() { Enabled = Enabled });
+            new HttpHeaderHelper().AddHstsHeader(filterContext.HttpContext, new HstsConfigurationElement() {MaxAge = ttl, IncludeSubdomains = IncludeSubdomains});
             base.OnActionExecuted(filterContext);
         }
     }

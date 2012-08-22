@@ -203,6 +203,10 @@
       <Project>{78ff86a6-c148-4d03-96cf-b429c1a36da9}</Project>
       <Name>NWebsec.Mvc</Name>
     </ProjectReference>
+    <ProjectReference Include="..\NWebsec\NWebsec.csproj">
+      <Project>{A011D84B-B731-4404-8BC1-FE94D2B37599}</Project>
+      <Name>NWebsec</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -34,18 +34,18 @@ using NWebsec.Modules.Configuration;
 namespace NWebsec.Mvc.HttpHeaders
 {
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, Inherited = true, AllowMultiple = false)]
-    public class XDownloadOptionsAttribute : ActionFilterAttribute
+    public class XContentTypeOptionsHeaderAttribute : ActionFilterAttribute
     {
         public bool Enabled { get; set; }
 
-        public XDownloadOptionsAttribute()
+        public XContentTypeOptionsHeaderAttribute()
         {
             Enabled = true;
         }
 
         public override void OnActionExecuted(ActionExecutedContext filterContext)
         {
-            new HttpHeaderHelper().AddXDownloadOptionsHeader(filterContext.HttpContext, new SimpleBooleanConfigurationElement() { Enabled = Enabled });
+            new HttpHeaderHelper().AddXContentTypeOptionsHeader(filterContext.HttpContext, new SimpleBooleanConfigurationElement() { Enabled = Enabled });
             base.OnActionExecuted(filterContext);
         }
     }

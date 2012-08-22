@@ -44,7 +44,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="HttpHeaders\StrictTransportSecurityHeaderAttribute.cs" />
+    <Compile Include="HttpHeaders\XContentTypeOptionsHeaderAttribute.cs" />
     <Compile Include="HttpHeaders\XDownloadOptionsAttribute.cs" />
+    <Compile Include="HttpHeaders\XFrameOptionsAttribute.cs" />
+    <Compile Include="HttpHeaders\XXssProtectionHeaderAttribute.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
