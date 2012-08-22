@@ -32,7 +32,10 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Abstractions" />
     <Reference Include="System.Web.Mvc, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -46,6 +49,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="NWebsec.Mvc.nuspec" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\NWebsec\NWebsec.csproj">
+      <Project>{a011d84b-b731-4404-8bc1-fe94d2b37599}</Project>
+      <Name>NWebsec</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

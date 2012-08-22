@@ -30,6 +30,17 @@ namespace NWebsec.HttpHeaders
 {
     public class HttpHeadersConstants
     {
+        public static readonly string XFrameOptionsHeader = "X-Frame-Options";
+        public static readonly string StrictTransportSecurityHeader = "Strict-Transport-Security";
+        public static readonly string XContentTypeOptionsHeader = "X-Content-Type-Options";
+        public static readonly string XDownloadOptionsHeader = "X-Download-Options";
+        public static readonly string XXssProtectionHeader = "X-XSS-Protection";
+        public static readonly string XContentSecurityPolicyHeader = "X-Content-Security-Policy";
+        public static readonly string XWebKitCspHeader = "X-WebKit-CSP";
+        public static readonly string XContentSecurityPolicyReportOnlyHeader = "X-Content-Security-Policy-Report-Only";
+        public static readonly string XWebKitCspReportOnlyHeader = "X-WebKit-CSP-Report-Only";
+
+
         public enum XFrameOptions { Disabled, Deny, SameOrigin }
         public enum XXssProtection { Disabled, FilterDisabled, FilterEnabled }
 

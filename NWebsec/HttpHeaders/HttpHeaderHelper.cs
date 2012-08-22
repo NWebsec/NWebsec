@@ -38,24 +38,39 @@ namespace NWebsec.HttpHeaders
 {
     public class HttpHeaderHelper
     {
-            
-        public void FixHeadersFromConfig(HttpContextBase context)
+
+        internal void FixHeadersFromConfig(HttpContextBase context)
         {
             var headerConfig = GetConfig();
-            
-            AddXFrameoptionsHeader(context, headerConfig.SecurityHttpHeaders.XFrameOptions);
-            AddHstsHeader(context, headerConfig.SecurityHttpHeaders.Hsts);
-            AddXContentTypeOptionsHeader(context, headerConfig.SecurityHttpHeaders.XContentTypeOptions);
-            AddXDownloadOptionsHeader(context, headerConfig.SecurityHttpHeaders.XDownloadOptions);
-            AddXXssProtectionHeader(context, headerConfig.SecurityHttpHeaders.XXssProtection);
-            AddXCspHeaders(context, headerConfig.SecurityHttpHeaders.ExperimentalHeaders.XContentSecurityPolicy);
+            var headerList = GetHeaderListFromContextItems(context);
+
+            if (!headerList.Contains(HttpHeadersConstants.XFrameOptionsHeader))
+                AddXFrameoptionsHeader(context, headerConfig.SecurityHttpHeaders.XFrameOptions);
+
+            if (!headerList.Contains(HttpHeadersConstants.StrictTransportSecurityHeader))
+                AddHstsHeader(context, headerConfig.SecurityHttpHeaders.Hsts);
+
+            if (!headerList.Contains(HttpHeadersConstants.XContentTypeOptionsHeader))
+                AddXContentTypeOptionsHeader(context, headerConfig.SecurityHttpHeaders.XContentTypeOptions);
+
+            if (!headerList.Contains(HttpHeadersConstants.XDownloadOptionsHeader))
+                AddXDownloadOptionsHeader(context, headerConfig.SecurityHttpHeaders.XDownloadOptions);
+
+            if (!headerList.Contains(HttpHeadersConstants.XXssProtectionHeader))
+                AddXXssProtectionHeader(context, headerConfig.SecurityHttpHeaders.XXssProtection);
+
+            if (!headerList.Contains(HttpHeadersConstants.XContentSecurityPolicyHeader))
+                AddXCspHeaders(context, headerConfig.SecurityHttpHeaders.ExperimentalHeaders.XContentSecurityPolicy);
+
+            if (!headerList.Contains(HttpHeadersConstants.XContentSecurityPolicyReportOnlyHeader))
+                AddXCspHeaders(context, headerConfig.SecurityHttpHeaders.ExperimentalHeaders.XContentSecurityPolicyReportOnly);
 
             SuppressVersionHeaders(context, headerConfig.suppressVersionHeaders);
         }
 
-        internal void AddXFrameoptionsHeader(HttpContextBase context, XFrameOptionsConfigurationElement xFrameOptionsConfig)
+        public void AddXFrameoptionsHeader(HttpContextBase context, XFrameOptionsConfigurationElement xFrameOptionsConfig)
         {
-           
+
             string frameOptions;
             switch (xFrameOptionsConfig.Policy)
             {
@@ -78,10 +93,10 @@ namespace NWebsec.HttpHeaders
                     throw new NotImplementedException("Apparently someone forgot to implement support for: " + xFrameOptionsConfig.Policy);
 
             }
-            AddAndNoteHeader(context, "X-Frame-Options", frameOptions);
+            AddAndNoteHeader(context, HttpHeadersConstants.XFrameOptionsHeader, frameOptions);
         }
 
-        internal void AddHstsHeader(HttpContextBase context, HstsConfigurationElement hstsConfig)
+        public void AddHstsHeader(HttpContextBase context, HstsConfigurationElement hstsConfig)
         {
 
             int seconds = (int)hstsConfig.MaxAge.TotalSeconds;
@@ -91,26 +106,26 @@ namespace NWebsec.HttpHeaders
             var includeSubdomains = (hstsConfig.IncludeSubdomains ? "; includeSubDomains" : "");
             var value = String.Format("max-age={0}{1}", seconds, includeSubdomains);
 
-            AddAndNoteHeader(context, "Strict-Transport-Security", value);
+            AddAndNoteHeader(context, HttpHeadersConstants.StrictTransportSecurityHeader, value);
         }
 
-        internal void AddXContentTypeOptionsHeader(HttpContextBase context, SimpleBooleanConfigurationElement xContentTypeOptionsConfig)
+        public void AddXContentTypeOptionsHeader(HttpContextBase context, SimpleBooleanConfigurationElement xContentTypeOptionsConfig)
         {
             if (xContentTypeOptionsConfig.Enabled)
             {
-                AddAndNoteHeader(context, "X-Content-Type-Options", "nosniff");
+                AddAndNoteHeader(context, HttpHeadersConstants.XContentTypeOptionsHeader, "nosniff");
             }
         }
 
-        internal void AddXDownloadOptionsHeader(HttpContextBase context, SimpleBooleanConfigurationElement xDownloadOptionsConfig)
+        public void AddXDownloadOptionsHeader(HttpContextBase context, SimpleBooleanConfigurationElement xDownloadOptionsConfig)
         {
             if (xDownloadOptionsConfig.Enabled)
             {
-                AddAndNoteHeader(context, "X-Download-Options", "noopen");
+                AddAndNoteHeader(context, HttpHeadersConstants.XDownloadOptionsHeader, "noopen");
             }
         }
 
-        internal void AddXXssProtectionHeader(HttpContextBase context, XXssProtectionConfigurationElement xXssProtectionConfig)
+        public void AddXXssProtectionHeader(HttpContextBase context, XXssProtectionConfigurationElement xXssProtectionConfig)
         {
             string value = "";
             switch (xXssProtectionConfig.Policy)
@@ -130,32 +145,32 @@ namespace NWebsec.HttpHeaders
 
             }
 
-            AddAndNoteHeader(context, "X-XSS-Protection", value);
+            AddAndNoteHeader(context, HttpHeadersConstants.XXssProtectionHeader, value);
         }
 
-        internal void AddXCspHeaders(HttpContextBase context, XContentSecurityPolicyConfigurationElement xContentSecurityPolicyConfig)
+        public void AddXCspHeaders(HttpContextBase context, XContentSecurityPolicyConfigurationElement xContentSecurityPolicyConfig)
         {
             if ((xContentSecurityPolicyConfig.XContentSecurityPolicyHeader || xContentSecurityPolicyConfig.XWebKitCspHeader))
             {
                 var headerValue = CreateCspHeaderValue(xContentSecurityPolicyConfig);
                 if (xContentSecurityPolicyConfig.XContentSecurityPolicyHeader)
-                    AddAndNoteHeader(context, "X-Content-Security-Policy", headerValue);
+                    AddAndNoteHeader(context, HttpHeadersConstants.XContentSecurityPolicyHeader, headerValue);
                 if (xContentSecurityPolicyConfig.XWebKitCspHeader)
-                    AddAndNoteHeader(context, "X-WebKit-CSP", headerValue);
+                    AddAndNoteHeader(context, HttpHeadersConstants.XWebKitCspHeader, headerValue);
             }
 
         }
 
-        internal void AddXCspReportOnlyHeaders(HttpContextBase context, XContentSecurityPolicyConfigurationElement xContentSecurityPolicyReportConfig)
+        public void AddXCspReportOnlyHeaders(HttpContextBase context, XContentSecurityPolicyConfigurationElement xContentSecurityPolicyReportConfig)
         {
-            
+
             if ((xContentSecurityPolicyReportConfig.XContentSecurityPolicyHeader || xContentSecurityPolicyReportConfig.XWebKitCspHeader))
             {
                 var headerValue = CreateCspHeaderValue(xContentSecurityPolicyReportConfig);
                 if (xContentSecurityPolicyReportConfig.XContentSecurityPolicyHeader)
-                    AddAndNoteHeader(context, "X-Content-Security-Policy-Report-Only", headerValue);
+                    AddAndNoteHeader(context, HttpHeadersConstants.XContentSecurityPolicyReportOnlyHeader, headerValue);
                 if (xContentSecurityPolicyReportConfig.XWebKitCspHeader)
-                    AddAndNoteHeader(context ,"X-WebKit-CSP-Report-Only", headerValue);
+                    AddAndNoteHeader(context, HttpHeadersConstants.XWebKitCspReportOnlyHeader, headerValue);
             }
 
         }
@@ -185,7 +200,7 @@ namespace NWebsec.HttpHeaders
             return sb.ToString();
         }
 
-        internal void SuppressVersionHeaders(HttpContextBase context, SuppressVersionHeadersConfigurationElement suppressVersionHeadersConfig)
+        public void SuppressVersionHeaders(HttpContextBase context, SuppressVersionHeadersConfigurationElement suppressVersionHeadersConfig)
         {
             if (!suppressVersionHeadersConfig.Enabled) return;
 
@@ -199,18 +214,22 @@ namespace NWebsec.HttpHeaders
 
         internal void AddAndNoteHeader(HttpContextBase context, string headerName, string headerValue)
         {
+
+            var headerList = GetHeaderListFromContextItems(context);
+            headerList.Add(headerName);
+            context.Response.AddHeader(headerName, headerValue);
+        }
+
+        private IList GetHeaderListFromContextItems(HttpContextBase context)
+        {
             if (context.Items["nwebsecheaders"] == null)
             {
                 context.Items["nwebsecheaders"] = new ArrayList();
             }
-            var headerList = (IList) context.Items["nwebsecheaders"];
-            headerList.Add(headerName);
-            context.Response.AddHeader(headerName, headerValue);
-            
-
-
+            return (IList)context.Items["nwebsecheaders"];
         }
-        public HttpHeaderConfigurationSection GetConfig()
+
+        internal HttpHeaderConfigurationSection GetConfig()
         {
             return (HttpHeaderConfigurationSection)(ConfigurationManager.GetSection("nwebsec/httpHeaderModule")) ?? new HttpHeaderConfigurationSection();
         }
