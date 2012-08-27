@@ -27,27 +27,29 @@ OF THE POSSIBILITY OF SUCH DAMAGE.
 #endregion
 
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Web.Mvc;
 using NWebsec.HttpHeaders;
-using NWebsec.Modules.Configuration;
 
 namespace NWebsec.Mvc.HttpHeaders
 {
-    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, Inherited = true, AllowMultiple = false)]
-    public class StrictTransportSecurityHeaderAttribute : ActionFilterAttribute
+    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, Inherited = true, AllowMultiple = true)]
+    public class XContentSecurityPolicyReportOnlyAttribute : ActionFilterAttribute
     {
-        private TimeSpan ttl;
-        public bool IncludeSubdomains { get; set; }
+        private string directiveName;
+        private string sourceList;
 
-        public StrictTransportSecurityHeaderAttribute(TimeSpan maxAge)
+        public XContentSecurityPolicyReportOnlyAttribute(String directive, string sources)
         {
-            ttl = maxAge;
-            IncludeSubdomains = false;
+            directiveName = directive;
+            sourceList = sources;
         }
 
         public override void OnActionExecuted(ActionExecutedContext filterContext)
         {
-            new HttpHeaderHelper(filterContext.HttpContext).SetHstsOverride(new HstsConfigurationElement() { MaxAge = ttl, IncludeSubdomains = IncludeSubdomains });
+            new HttpHeaderHelper(filterContext.HttpContext).SetContentSecurityPolicyDirectiveOverride(directiveName, sourceList, true);
             base.OnActionExecuted(filterContext);
         }
     }

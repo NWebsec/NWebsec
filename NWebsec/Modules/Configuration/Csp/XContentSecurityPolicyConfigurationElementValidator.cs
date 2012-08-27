@@ -30,7 +30,6 @@ using System;
 using System.Configuration;
 using System.Linq;
 using NWebsec.HttpHeaders;
-using NWebsec.Modules.Configuration.Csp;
 
 namespace NWebsec.Modules.Configuration.Csp
 {
@@ -93,18 +92,6 @@ namespace NWebsec.Modules.Configuration.Csp
         internal bool ValidateDirectiveName(string directiveName)
         {
             return HttpHeadersConstants.CspDirectives.Any(x => x.Equals(directiveName));
-        }
-    }
-
-    public class XContentSecurityPolicyConfigurationElementValidatorAttribute :
-       ConfigurationValidatorAttribute
-    {
-        public override ConfigurationValidatorBase ValidatorInstance
-        {
-            get
-            {
-                return new XContentSecurityPolicyConfigurationElementValidator();
-            }
         }
     }
 }

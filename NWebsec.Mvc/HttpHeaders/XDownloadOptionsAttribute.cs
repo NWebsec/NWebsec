@@ -45,7 +45,7 @@ namespace NWebsec.Mvc.HttpHeaders
 
         public override void OnActionExecuted(ActionExecutedContext filterContext)
         {
-            new HttpHeaderHelper().AddXDownloadOptionsHeader(filterContext.HttpContext, new SimpleBooleanConfigurationElement() { Enabled = Enabled });
+            new HttpHeaderHelper(filterContext.HttpContext).SetXDownloadOptionsOverride(new SimpleBooleanConfigurationElement() { Enabled = Enabled });
             base.OnActionExecuted(filterContext);
         }
     }

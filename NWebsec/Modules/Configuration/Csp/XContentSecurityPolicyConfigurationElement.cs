@@ -31,7 +31,7 @@ using System.Configuration;
 
 namespace NWebsec.Modules.Configuration.Csp
 {
-    public class XContentSecurityPolicyConfigurationElement : ConfigurationElement
+    public class XContentSecurityPolicyConfigurationElement : ConfigurationElement, ICloneable
     {
         [ConfigurationProperty("x-Content-Security-Policy-Header", IsRequired = false, DefaultValue = false)]
         public bool XContentSecurityPolicyHeader
@@ -79,130 +79,23 @@ namespace NWebsec.Modules.Configuration.Csp
 
         }
 
-    }
-
-    public class CspDirectiveElementCollection : ConfigurationElementCollection
-    {
-        protected override ConfigurationElement CreateNewElement()
+        public object Clone()
         {
-            return new CspDirectiveConfigurationElement();
-        }
+            var newElement = new XContentSecurityPolicyConfigurationElement();
+            newElement.XContentSecurityPolicyHeader = XContentSecurityPolicyHeader;
+            newElement.XWebKitCspHeader = XWebKitCspHeader;
 
-        protected override object GetElementKey(ConfigurationElement element)
-        {
-            return ((CspDirectiveConfigurationElement)element).Name;
-        }
-
-        public override ConfigurationElementCollectionType CollectionType
-        {
-            get
+            foreach (CspDirectiveConfigurationElement directive in Directives)
             {
-                return ConfigurationElementCollectionType.AddRemoveClearMap;
+                var d = new CspDirectiveConfigurationElement {Name = directive.Name, Source = directive.Source};
+                newElement.Directives.Add(d);
+
+                foreach (CspSourceConfigurationElement source in directive.Sources)
+                {
+                    d.Sources.Add(source);
+                }
             }
+            return newElement;
         }
-
-        public void Add(CspDirectiveConfigurationElement element)
-        {
-            BaseAdd(element);
-        }
-
-        public void Clear()
-        {
-            BaseClear();
-        }
-        public void Remove(CspDirectiveConfigurationElement element)
-        {
-            BaseRemove(element);
-        }
-        
-        public void Remove(string name)
-        {
-            BaseRemove(name);
-        }
-
-        public void RemoveAt(int index)
-        {
-            BaseRemoveAt(index);
-        }
-
-        public int IndexOf(CspDirectiveConfigurationElement element)
-        {
-            return BaseIndexOf(element);
-        }
-    }
-
-    public class CspDirectiveConfigurationElement : ConfigurationElement
-    {
-        [ConfigurationProperty("name", IsRequired = false, IsKey = true)]
-        public string Name
-        {
-            get
-            {
-                return (string)this["name"];
-            }
-            set
-            {
-                this["name"] = value;
-            }
-        }
-
-        [ConfigurationProperty("source", IsRequired = false)]
-        public string Source
-        {
-            get
-            {
-                return (string)this["source"];
-            }
-            set
-            {
-                this["source"] = value;
-            }
-        }
-
-        [ConfigurationProperty("sources", IsRequired = false)]
-        [ConfigurationCollection(typeof(CspSourcesElementCollection), CollectionType = ConfigurationElementCollectionType.AddRemoveClearMap)]
-        public CspSourcesElementCollection Sources
-        {
-
-            get
-            {
-                return (CspSourcesElementCollection)this["sources"];
-            }
-            set
-            {
-                this["sources"] = value;
-            }
-
-        }
-
-    }
-
-    public class CspSourcesElementCollection : ConfigurationElementCollection
-    {
-        protected override ConfigurationElement CreateNewElement()
-        {
-            return new CspSourceConfigurationElement();
-        }
-
-        protected override object GetElementKey(ConfigurationElement element)
-        {
-            return ((CspSourceConfigurationElement)element).Source;
-        }
-
-        public void Add(CspSourceConfigurationElement element)
-        {
-            BaseAdd(element);
-        }
-
-        public void Clear()
-        {
-            BaseClear();
-        }
-
-        public Object[] GetAllKeys()
-        {
-            return BaseGetAllKeys();
-        }
-
     }
 }

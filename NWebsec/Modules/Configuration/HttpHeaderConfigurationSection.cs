@@ -25,10 +25,11 @@ OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISE
 OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 #endregion
-using System;
+
 using System.Collections.Generic;
 using System.Text;
 using System.Configuration;
+using NWebsec.Modules.Configuration.Csp;
 
 namespace NWebsec.Modules.Configuration
 {
@@ -66,38 +67,4 @@ namespace NWebsec.Modules.Configuration
 
         }
     }
-
-    public class SuppressVersionHeadersConfigurationElement : ConfigurationElement
-    {
-        [ConfigurationProperty("enabled", IsRequired = false, DefaultValue = false)]
-        public bool Enabled
-        {
-
-            get
-            {
-                return (bool)this["enabled"];
-            }
-            set
-            {
-                this["enabled"] = value;
-            }
-
-        }
-
-        [ConfigurationProperty("serverHeader", IsRequired = false, DefaultValue = "Webserver 1.0")]
-        public String ServerHeader
-        {
-
-            get
-            {
-                return (String)this["serverHeader"];
-            }
-            set
-            {
-                this["serverHeader"] = value;
-            }
-
-        }
-    }
-
 }

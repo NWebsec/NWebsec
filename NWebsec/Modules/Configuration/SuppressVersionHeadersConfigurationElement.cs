@@ -1,6 +1,6 @@
-﻿#region License
+#region License
 /*
-Copyright (c) 2012, André N. Klingsheim
+Copyright (c) 2012, Andr� N. Klingsheim
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -27,28 +27,40 @@ OF THE POSSIBILITY OF SUCH DAMAGE.
 #endregion
 
 using System;
-using System.Web.Mvc;
-using NWebsec.HttpHeaders;
-using NWebsec.Modules.Configuration;
+using System.Configuration;
 
-namespace NWebsec.Mvc.HttpHeaders
+namespace NWebsec.Modules.Configuration
 {
-    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, Inherited = true, AllowMultiple = false)]
-    public class StrictTransportSecurityHeaderAttribute : ActionFilterAttribute
+    public class SuppressVersionHeadersConfigurationElement : ConfigurationElement
     {
-        private TimeSpan ttl;
-        public bool IncludeSubdomains { get; set; }
-
-        public StrictTransportSecurityHeaderAttribute(TimeSpan maxAge)
+        [ConfigurationProperty("enabled", IsRequired = false, DefaultValue = false)]
+        public bool Enabled
         {
-            ttl = maxAge;
-            IncludeSubdomains = false;
+
+            get
+            {
+                return (bool)this["enabled"];
+            }
+            set
+            {
+                this["enabled"] = value;
+            }
+
         }
 
-        public override void OnActionExecuted(ActionExecutedContext filterContext)
+        [ConfigurationProperty("serverHeader", IsRequired = false, DefaultValue = "Webserver 1.0")]
+        public String ServerHeader
         {
-            new HttpHeaderHelper(filterContext.HttpContext).SetHstsOverride(new HstsConfigurationElement() { MaxAge = ttl, IncludeSubdomains = IncludeSubdomains });
-            base.OnActionExecuted(filterContext);
+
+            get
+            {
+                return (String)this["serverHeader"];
+            }
+            set
+            {
+                this["serverHeader"] = value;
+            }
+
         }
     }
 }

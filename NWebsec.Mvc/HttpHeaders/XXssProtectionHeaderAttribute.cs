@@ -47,7 +47,7 @@ namespace NWebsec.Mvc.HttpHeaders
 
         public override void OnActionExecuted(ActionExecutedContext filterContext)
         {
-            new HttpHeaderHelper().AddXXssProtectionHeader(filterContext.HttpContext, new XXssProtectionConfigurationElement(){Policy = Policy, BlockMode = BlockMode});
+            new HttpHeaderHelper(filterContext.HttpContext).SetXXssProtectionOverride(new XXssProtectionConfigurationElement() { Policy = Policy, BlockMode = BlockMode });
             base.OnActionExecuted(filterContext);
         }
     }

@@ -1,6 +1,6 @@
-﻿#region License
+#region License
 /*
-Copyright (c) 2012, André N. Klingsheim
+Copyright (c) 2012, Andr� N. Klingsheim
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -27,28 +27,36 @@ OF THE POSSIBILITY OF SUCH DAMAGE.
 #endregion
 
 using System;
-using System.Web.Mvc;
-using NWebsec.HttpHeaders;
-using NWebsec.Modules.Configuration;
+using System.Configuration;
 
-namespace NWebsec.Mvc.HttpHeaders
+namespace NWebsec.Modules.Configuration.Csp
 {
-    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, Inherited = true, AllowMultiple = false)]
-    public class StrictTransportSecurityHeaderAttribute : ActionFilterAttribute
+    public class CspSourcesElementCollection : ConfigurationElementCollection
     {
-        private TimeSpan ttl;
-        public bool IncludeSubdomains { get; set; }
-
-        public StrictTransportSecurityHeaderAttribute(TimeSpan maxAge)
+        protected override ConfigurationElement CreateNewElement()
         {
-            ttl = maxAge;
-            IncludeSubdomains = false;
+            return new CspSourceConfigurationElement();
         }
 
-        public override void OnActionExecuted(ActionExecutedContext filterContext)
+        protected override object GetElementKey(ConfigurationElement element)
         {
-            new HttpHeaderHelper(filterContext.HttpContext).SetHstsOverride(new HstsConfigurationElement() { MaxAge = ttl, IncludeSubdomains = IncludeSubdomains });
-            base.OnActionExecuted(filterContext);
+            return ((CspSourceConfigurationElement)element).Source;
         }
+
+        public void Add(CspSourceConfigurationElement element)
+        {
+            BaseAdd(element);
+        }
+
+        public void Clear()
+        {
+            BaseClear();
+        }
+
+        public Object[] GetAllKeys()
+        {
+            return BaseGetAllKeys();
+        }
+
     }
 }

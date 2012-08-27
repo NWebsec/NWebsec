@@ -1,6 +1,6 @@
-﻿#region License
+#region License
 /*
-Copyright (c) 2012, André N. Klingsheim
+Copyright (c) 2012, Andr� N. Klingsheim
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -26,42 +26,62 @@ OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 #endregion
 
-using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Web;
-using NWebsec.HttpHeaders;
 using System.Configuration;
-using NWebsec.Modules.Configuration.Csp;
 
-namespace NWebsec.Modules
+namespace NWebsec.Modules.Configuration.Csp
 {
-    public class HttpHeaderModule : IHttpModule
+    public class CspDirectiveElementCollection : ConfigurationElementCollection
     {
-        
-        public void Init(HttpApplication app)
+        protected override ConfigurationElement CreateNewElement()
         {
+            return new CspDirectiveConfigurationElement();
+        }
 
-            var config = HttpHeaderHelper.GetConfig();
-            if (config.suppressVersionHeaders.Enabled && !HttpRuntime.UsingIntegratedPipeline)
+        protected override object GetElementKey(ConfigurationElement element)
+        {
+            return ((CspDirectiveConfigurationElement)element).Name;
+        }
+
+        public override ConfigurationElementCollectionType CollectionType
+        {
+            get
             {
-                throw new ConfigurationErrorsException("NWebsec config error: suppressVersionHeaders can only be enabled when using IIS integrated pipeline mode.");
+                return ConfigurationElementCollectionType.AddRemoveClearMap;
             }
-            app.PreSendRequestHeaders += new EventHandler(App_PreSendRequestHeaders);
         }
 
-        public void App_PreSendRequestHeaders(object sender, EventArgs ea)
+        public void Add(CspDirectiveConfigurationElement element)
         {
-            var app = (HttpApplication)sender;
-            var context = new HttpContextWrapper(app.Context);
-            
-            new HttpHeaderHelper(context).FixHeadersFromConfig();
-
+            BaseAdd(element);
         }
 
-        public void Dispose()
+        public void Clear()
         {
+            BaseClear();
+        }
+        public void Remove(CspDirectiveConfigurationElement element)
+        {
+            BaseRemove(element);
+        }
+        
+        public void Remove(string name)
+        {
+            BaseRemove(name);
+        }
 
+        public void RemoveAt(int index)
+        {
+            BaseRemoveAt(index);
+        }
+
+        public int IndexOf(CspDirectiveConfigurationElement element)
+        {
+            return BaseIndexOf(element);
+        }
+
+        public bool IsRemoved(CspDirectiveConfigurationElement element)
+        {
+            return BaseIsRemoved(element);
         }
     }
 }

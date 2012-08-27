@@ -45,7 +45,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="HttpHeaders\StrictTransportSecurityHeaderAttribute.cs" />
-    <Compile Include="HttpHeaders\XContentTypeOptionsHeaderAttribute.cs" />
+    <Compile Include="HttpHeaders\SuppressVersionHttpHeadersAttribute.cs" />
+    <Compile Include="HttpHeaders\XContentSecurityPolicyAttribute.cs" />
+    <Compile Include="HttpHeaders\XContentSecurityPolicyReportOnlyAttribute.cs" />
+    <Compile Include="HttpHeaders\XContentTypeOptionsAttribute.cs" />
     <Compile Include="HttpHeaders\XDownloadOptionsAttribute.cs" />
     <Compile Include="HttpHeaders\XFrameOptionsAttribute.cs" />
     <Compile Include="HttpHeaders\XXssProtectionHeaderAttribute.cs" />

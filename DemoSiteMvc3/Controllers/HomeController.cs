@@ -8,16 +8,24 @@ using NWebsec.Mvc.HttpHeaders;
 
 namespace DemoSiteMvc3.Controllers
 {
+    [XContentTypeOptions]
+    [XContentSecurityPolicy("script-src", "'self'")]
     public class HomeController : Controller
     {
         //
         // GET: /Home/
-        [XDownloadOptions]
-        [XFrameOptions(HttpHeadersConstants.XFrameOptions.Disabled)]
+        
+        //[XContentSecurityPolicy("script-src","'self' *.nwebsec.codeplex.com")]
+        [XContentSecurityPolicy("img-src", "'self'")]
         public ActionResult Index()
         {
             return View();
         }
 
+        [XContentSecurityPolicy("img-src", "'self'")]
+        public ActionResult Other()
+        {
+            return View();
+        }
     }
 }

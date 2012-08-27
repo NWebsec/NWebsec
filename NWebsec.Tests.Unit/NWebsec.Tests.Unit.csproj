@@ -59,14 +59,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="HttpHeaders\HttpHeaderHelperTest.cs" />
+    <Compile Include="HttpHeaders\HttpHeaderSetterTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Modules\Configuration\XContentSecurityPolicyConfigurationElementValidatorTest.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\NWebsec\NWebsec.csproj">
-      <Project>{A011D84B-B731-4404-8BC1-FE94D2B37599}</Project>
-      <Name>NWebsec</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config">
@@ -75,6 +70,12 @@
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\NWebsec\NWebsec.csproj">
+      <Project>{a011d84b-b731-4404-8bc1-fe94d2b37599}</Project>
+      <Name>NWebsec</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

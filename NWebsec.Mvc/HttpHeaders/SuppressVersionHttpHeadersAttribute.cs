@@ -27,6 +27,9 @@ OF THE POSSIBILITY OF SUCH DAMAGE.
 #endregion
 
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Web.Mvc;
 using NWebsec.HttpHeaders;
 using NWebsec.Modules.Configuration;
@@ -34,20 +37,21 @@ using NWebsec.Modules.Configuration;
 namespace NWebsec.Mvc.HttpHeaders
 {
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, Inherited = true, AllowMultiple = false)]
-    public class StrictTransportSecurityHeaderAttribute : ActionFilterAttribute
+    class SuppressVersionHttpHeadersAttribute : ActionFilterAttribute
     {
-        private TimeSpan ttl;
-        public bool IncludeSubdomains { get; set; }
 
-        public StrictTransportSecurityHeaderAttribute(TimeSpan maxAge)
+        public bool BlockMode { get; set; }
+        public string ServerHeader { get; set; }
+
+        public SuppressVersionHttpHeadersAttribute()
         {
-            ttl = maxAge;
-            IncludeSubdomains = false;
+            BlockMode = true;
+            ServerHeader = String.Empty;
         }
 
         public override void OnActionExecuted(ActionExecutedContext filterContext)
         {
-            new HttpHeaderHelper(filterContext.HttpContext).SetHstsOverride(new HstsConfigurationElement() { MaxAge = ttl, IncludeSubdomains = IncludeSubdomains });
+            new HttpHeaderHelper(filterContext.HttpContext).SetSuppressVersionHeadersOverride(new SuppressVersionHeadersConfigurationElement() { Enabled = BlockMode, ServerHeader = ServerHeader });
             base.OnActionExecuted(filterContext);
         }
     }

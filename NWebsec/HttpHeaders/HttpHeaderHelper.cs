@@ -28,8 +28,9 @@ OF THE POSSIBILITY OF SUCH DAMAGE.
 
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Configuration;
-using System.Text;
+using System.Linq;
 using System.Web;
 using NWebsec.Modules.Configuration;
 using NWebsec.Modules.Configuration.Csp;
@@ -38,198 +39,150 @@ namespace NWebsec.HttpHeaders
 {
     public class HttpHeaderHelper
     {
+        private HttpContextBase context;
 
-        internal void FixHeadersFromConfig(HttpContextBase context)
+        public HttpHeaderHelper(HttpContextBase context)
+        {
+            this.context = context;
+        }
+
+        internal void FixHeadersFromConfig()
         {
             var headerConfig = GetConfig();
-            var headerList = GetHeaderListFromContextItems(context);
+            var headerList = GetHeaderListFromContextItems();
+            var headerSetter = new HttpHeaderSetter(context.Response);
 
-            if (!headerList.Contains(HttpHeadersConstants.XFrameOptionsHeader))
-                AddXFrameoptionsHeader(context, headerConfig.SecurityHttpHeaders.XFrameOptions);
 
-            if (!headerList.Contains(HttpHeadersConstants.StrictTransportSecurityHeader))
-                AddHstsHeader(context, headerConfig.SecurityHttpHeaders.Hsts);
+            headerSetter.AddXFrameoptionsHeader(
+                (XFrameOptionsConfigurationElement)headerList[HttpHeadersConstants.XFrameOptionsHeader]
+                ?? headerConfig.SecurityHttpHeaders.XFrameOptions);
 
-            if (!headerList.Contains(HttpHeadersConstants.XContentTypeOptionsHeader))
-                AddXContentTypeOptionsHeader(context, headerConfig.SecurityHttpHeaders.XContentTypeOptions);
 
-            if (!headerList.Contains(HttpHeadersConstants.XDownloadOptionsHeader))
-                AddXDownloadOptionsHeader(context, headerConfig.SecurityHttpHeaders.XDownloadOptions);
+            headerSetter.AddHstsHeader(
+                (HstsConfigurationElement)headerList[HttpHeadersConstants.StrictTransportSecurityHeader]
+                ?? headerConfig.SecurityHttpHeaders.Hsts);
 
-            if (!headerList.Contains(HttpHeadersConstants.XXssProtectionHeader))
-                AddXXssProtectionHeader(context, headerConfig.SecurityHttpHeaders.XXssProtection);
 
-            if (!headerList.Contains(HttpHeadersConstants.XContentSecurityPolicyHeader))
-                AddXCspHeaders(context, headerConfig.SecurityHttpHeaders.ExperimentalHeaders.XContentSecurityPolicy);
+            headerSetter.AddXContentTypeOptionsHeader(
+                (SimpleBooleanConfigurationElement)headerList[HttpHeadersConstants.XContentTypeOptionsHeader]
+                ?? headerConfig.SecurityHttpHeaders.XContentTypeOptions);
 
-            if (!headerList.Contains(HttpHeadersConstants.XContentSecurityPolicyReportOnlyHeader))
-                AddXCspHeaders(context, headerConfig.SecurityHttpHeaders.ExperimentalHeaders.XContentSecurityPolicyReportOnly);
 
-            SuppressVersionHeaders(context, headerConfig.suppressVersionHeaders);
+            headerSetter.AddXDownloadOptionsHeader(
+                (SimpleBooleanConfigurationElement)headerList[HttpHeadersConstants.XDownloadOptionsHeader]
+                ?? headerConfig.SecurityHttpHeaders.XDownloadOptions);
+
+
+            headerSetter.AddXXssProtectionHeader(
+                (XXssProtectionConfigurationElement)headerList[HttpHeadersConstants.XXssProtectionHeader]
+                ?? headerConfig.SecurityHttpHeaders.XXssProtection);
+
+            //TODO fix stuff here.
+            headerSetter.SuppressVersionHeaders(
+                (SuppressVersionHeadersConfigurationElement)headerList["suppressVersionHeaders"]
+                ?? headerConfig.suppressVersionHeaders);
+
+
+            headerSetter.AddXCspHeaders(GetCspElementWithOverrides(false));
+            headerSetter.AddXCspHeaders(GetCspElementWithOverrides(true));
+
         }
 
-        public void AddXFrameoptionsHeader(HttpContextBase context, XFrameOptionsConfigurationElement xFrameOptionsConfig)
+        public void SetXFrameoptionsOverride(XFrameOptionsConfigurationElement xFrameOptionsConfig) { }
+
+        public void SetHstsOverride(HstsConfigurationElement hstsConfig) { }
+
+        public void SetXContentTypeOptionsOverride(SimpleBooleanConfigurationElement xContentTypeOptionsConfig) { }
+
+        public void SetXDownloadOptionsOverride(SimpleBooleanConfigurationElement xDownloadOptionsConfig) { }
+
+        public void SetXXssProtectionOverride(XXssProtectionConfigurationElement xXssProtectionConfig) { }
+
+        public void SetXCspOverride(XContentSecurityPolicyConfigurationElement xContentSecurityPolicyConfig) { }
+
+        public void SetXCspReportOnlyOverride(XContentSecurityPolicyConfigurationElement xContentSecurityPolicyReportConfig) { }
+
+        public void SetSuppressVersionHeadersOverride(SuppressVersionHeadersConfigurationElement suppressVersionHeadersConfig) { }
+
+        public void SetContentSecurityPolicyDirectiveOverride(string directive, string sources, bool reportOnly)
         {
 
-            string frameOptions;
-            switch (xFrameOptionsConfig.Policy)
+
+            if (sources.StartsWith(" ") || sources.EndsWith(" "))
+                throw new ApplicationException("Sources must not contain leading or trailing whitespace: " + sources);
+            if (sources.Contains("  "))
+                throw new ApplicationException("Sources must be separated by exactly one whitespace: " + sources);
+
+            var sourceList = sources.Split(' ');
+
+            var element = new CspDirectiveConfigurationElement() { Name = directive };
+
+            foreach (var source in sourceList)
             {
-                case HttpHeadersConstants.XFrameOptions.Disabled:
-                    return;
-
-                case HttpHeadersConstants.XFrameOptions.Deny:
-                    frameOptions = "DENY";
-                    break;
-
-                case HttpHeadersConstants.XFrameOptions.SameOrigin:
-                    frameOptions = "SAMEORIGIN";
-                    break;
-
-                //case HttpHeadersConstants.XFrameOptions.AllowFrom:
-                //    frameOptions = "ALLOW-FROM " + headerConfig.SecurityHttpHeaders.XFrameOptions.Origin.GetLeftPart(UriPartial.Authority);
-                //    break;
-
-                default:
-                    throw new NotImplementedException("Apparently someone forgot to implement support for: " + xFrameOptionsConfig.Policy);
-
-            }
-            AddAndNoteHeader(context, HttpHeadersConstants.XFrameOptionsHeader, frameOptions);
-        }
-
-        public void AddHstsHeader(HttpContextBase context, HstsConfigurationElement hstsConfig)
-        {
-
-            int seconds = (int)hstsConfig.MaxAge.TotalSeconds;
-
-            if (seconds == 0) return;
-
-            var includeSubdomains = (hstsConfig.IncludeSubdomains ? "; includeSubDomains" : "");
-            var value = String.Format("max-age={0}{1}", seconds, includeSubdomains);
-
-            AddAndNoteHeader(context, HttpHeadersConstants.StrictTransportSecurityHeader, value);
-        }
-
-        public void AddXContentTypeOptionsHeader(HttpContextBase context, SimpleBooleanConfigurationElement xContentTypeOptionsConfig)
-        {
-            if (xContentTypeOptionsConfig.Enabled)
-            {
-                AddAndNoteHeader(context, HttpHeadersConstants.XContentTypeOptionsHeader, "nosniff");
-            }
-        }
-
-        public void AddXDownloadOptionsHeader(HttpContextBase context, SimpleBooleanConfigurationElement xDownloadOptionsConfig)
-        {
-            if (xDownloadOptionsConfig.Enabled)
-            {
-                AddAndNoteHeader(context, HttpHeadersConstants.XDownloadOptionsHeader, "noopen");
-            }
-        }
-
-        public void AddXXssProtectionHeader(HttpContextBase context, XXssProtectionConfigurationElement xXssProtectionConfig)
-        {
-            string value = "";
-            switch (xXssProtectionConfig.Policy)
-            {
-                case HttpHeadersConstants.XXssProtection.Disabled:
-                    return;
-                case HttpHeadersConstants.XXssProtection.FilterDisabled:
-                    value = "0";
-                    break;
-
-                case HttpHeadersConstants.XXssProtection.FilterEnabled:
-                    value = (xXssProtectionConfig.BlockMode ? "1; mode=block" : "1");
-                    break;
-
-                default:
-                    throw new NotImplementedException("Somebody apparently forgot to implement support for: " + xXssProtectionConfig.Policy);
-
+                element.Sources.Add(new CspSourceConfigurationElement() { Source = source });
             }
 
-            AddAndNoteHeader(context, HttpHeadersConstants.XXssProtectionHeader, value);
-        }
-
-        public void AddXCspHeaders(HttpContextBase context, XContentSecurityPolicyConfigurationElement xContentSecurityPolicyConfig)
-        {
-            if ((xContentSecurityPolicyConfig.XContentSecurityPolicyHeader || xContentSecurityPolicyConfig.XWebKitCspHeader))
-            {
-                var headerValue = CreateCspHeaderValue(xContentSecurityPolicyConfig);
-                if (xContentSecurityPolicyConfig.XContentSecurityPolicyHeader)
-                    AddAndNoteHeader(context, HttpHeadersConstants.XContentSecurityPolicyHeader, headerValue);
-                if (xContentSecurityPolicyConfig.XWebKitCspHeader)
-                    AddAndNoteHeader(context, HttpHeadersConstants.XWebKitCspHeader, headerValue);
-            }
 
         }
 
-        public void AddXCspReportOnlyHeaders(HttpContextBase context, XContentSecurityPolicyConfigurationElement xContentSecurityPolicyReportConfig)
+        private IDictionary<String, CspDirectiveConfigurationElement> GetCspDirectiveOverides(bool reportOnly)
         {
+            var headerkey = (reportOnly
+                                 ? HttpHeadersConstants.XContentSecurityPolicyReportOnlyHeader
+                                 : HttpHeadersConstants.XContentSecurityPolicyHeader);
 
-            if ((xContentSecurityPolicyReportConfig.XContentSecurityPolicyHeader || xContentSecurityPolicyReportConfig.XWebKitCspHeader))
-            {
-                var headerValue = CreateCspHeaderValue(xContentSecurityPolicyReportConfig);
-                if (xContentSecurityPolicyReportConfig.XContentSecurityPolicyHeader)
-                    AddAndNoteHeader(context, HttpHeadersConstants.XContentSecurityPolicyReportOnlyHeader, headerValue);
-                if (xContentSecurityPolicyReportConfig.XWebKitCspHeader)
-                    AddAndNoteHeader(context, HttpHeadersConstants.XWebKitCspReportOnlyHeader, headerValue);
-            }
+            var headerList = GetHeaderListFromContextItems();
 
+            if (headerList[headerkey] == null)
+                headerList[headerkey] = new Dictionary<String, CspDirectiveConfigurationElement>();
+            return (IDictionary<String, CspDirectiveConfigurationElement>)headerList[headerkey];
         }
-
-        private string CreateCspHeaderValue(XContentSecurityPolicyConfigurationElement config)
+        private XContentSecurityPolicyConfigurationElement GetCspElementWithOverrides(bool reportOnlyElement)
         {
-            if (config.Directives.Count == 0) throw new ApplicationException("Error creating header, no directives configured.");
-            var sb = new StringBuilder();
-            foreach (CspDirectiveConfigurationElement directive in config.Directives)
+            var config = GetConfig().SecurityHttpHeaders.ExperimentalHeaders;
+            var cspConfig = (reportOnlyElement
+                                             ? config.XContentSecurityPolicyReportOnly
+                                             : config.XContentSecurityPolicy);
+
+            var headerKey = HttpHeadersConstants.XContentSecurityPolicyHeader + (reportOnlyElement ? "ReportOnly" : String.Empty);
+            var headerList = GetHeaderListFromContextItems();
+            if (headerList[headerKey] == null)
+                return cspConfig;
+
+            var overriddenConfig = (XContentSecurityPolicyConfigurationElement)cspConfig.Clone();
+
+            var overrides = (IDictionary<String, CspDirectiveConfigurationElement>)headerList[headerKey];
+
+            foreach (KeyValuePair<String, CspDirectiveConfigurationElement> directive in overrides)
             {
-                sb.Append(directive.Name);
-                sb.Append(' ');
-                if (!String.IsNullOrEmpty(directive.Source))
+                if (String.IsNullOrEmpty(directive.Value.Source) && directive.Value.Sources.Count == 0)
                 {
-                    sb.Append(directive.Source);
-                    sb.Append(' ');
-                }
-                foreach (CspSourceConfigurationElement source in directive.Sources)
-                {
-                    sb.Append(source.Source);
-                    sb.Append(' ');
+                    overriddenConfig.Directives.Remove(directive.Value);
+                    break;
                 }
 
-                sb.Insert(sb.Length - 1, ';');
+                if (overriddenConfig.Directives.IndexOf(directive.Value) > 0)
+                    overriddenConfig.Directives.Remove(directive.Value);
+
+                overriddenConfig.Directives.Add(directive.Value);
             }
-            sb.Remove(sb.Length - 2, 2);
-            return sb.ToString();
+
+            if (!(overriddenConfig.XContentSecurityPolicyHeader || overriddenConfig.XWebKitCspHeader))
+                overriddenConfig.XContentSecurityPolicyHeader = overriddenConfig.XWebKitCspHeader = true;
+
+            return overriddenConfig;
         }
 
-        public void SuppressVersionHeaders(HttpContextBase context, SuppressVersionHeadersConfigurationElement suppressVersionHeadersConfig)
+        private IDictionary<string, object> GetHeaderListFromContextItems()
         {
-            if (!suppressVersionHeadersConfig.Enabled) return;
-
-            var response = context.Response;
-            foreach (var header in HttpHeadersConstants.VersionHeaders)
+            if (context.Items["nwebsecheaderoverride"] == null)
             {
-                response.Headers.Remove(header);
+                context.Items["nwebsecheaderoverride"] = new Dictionary<string, object>();
             }
-            response.Headers.Set("Server", suppressVersionHeadersConfig.ServerHeader);
+            return (IDictionary<string, object>)context.Items["nwebsecheaderoverride"];
         }
 
-        internal void AddAndNoteHeader(HttpContextBase context, string headerName, string headerValue)
-        {
-
-            var headerList = GetHeaderListFromContextItems(context);
-            headerList.Add(headerName);
-            context.Response.AddHeader(headerName, headerValue);
-        }
-
-        private IList GetHeaderListFromContextItems(HttpContextBase context)
-        {
-            if (context.Items["nwebsecheaders"] == null)
-            {
-                context.Items["nwebsecheaders"] = new ArrayList();
-            }
-            return (IList)context.Items["nwebsecheaders"];
-        }
-
-        internal HttpHeaderConfigurationSection GetConfig()
+        internal static HttpHeaderConfigurationSection GetConfig()
         {
             return (HttpHeaderConfigurationSection)(ConfigurationManager.GetSection("nwebsec/httpHeaderModule")) ?? new HttpHeaderConfigurationSection();
         }

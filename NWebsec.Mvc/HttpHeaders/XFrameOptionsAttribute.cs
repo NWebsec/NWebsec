@@ -45,7 +45,7 @@ namespace NWebsec.Mvc.HttpHeaders
 
         public override void OnActionExecuted(ActionExecutedContext filterContext)
         {
-            new HttpHeaderHelper().AddXFrameoptionsHeader(filterContext.HttpContext, new XFrameOptionsConfigurationElement() { Policy = xFrameOptionsPolicy });
+            new HttpHeaderHelper(filterContext.HttpContext).SetXFrameoptionsOverride(new XFrameOptionsConfigurationElement() { Policy = xFrameOptionsPolicy });
             base.OnActionExecuted(filterContext);
         }
     }

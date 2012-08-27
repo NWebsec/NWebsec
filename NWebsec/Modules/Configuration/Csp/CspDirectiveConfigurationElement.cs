@@ -1,6 +1,6 @@
-﻿#region License
+#region License
 /*
-Copyright (c) 2012, André N. Klingsheim
+Copyright (c) 2012, Andr� N. Klingsheim
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -26,29 +26,53 @@ OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 #endregion
 
-using System;
-using System.Web.Mvc;
-using NWebsec.HttpHeaders;
-using NWebsec.Modules.Configuration;
+using System.Configuration;
 
-namespace NWebsec.Mvc.HttpHeaders
+namespace NWebsec.Modules.Configuration.Csp
 {
-    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, Inherited = true, AllowMultiple = false)]
-    public class StrictTransportSecurityHeaderAttribute : ActionFilterAttribute
+    public class CspDirectiveConfigurationElement : ConfigurationElement
     {
-        private TimeSpan ttl;
-        public bool IncludeSubdomains { get; set; }
-
-        public StrictTransportSecurityHeaderAttribute(TimeSpan maxAge)
+        [ConfigurationProperty("name", IsRequired = false, IsKey = true)]
+        public string Name
         {
-            ttl = maxAge;
-            IncludeSubdomains = false;
+            get
+            {
+                return (string)this["name"];
+            }
+            set
+            {
+                this["name"] = value;
+            }
         }
 
-        public override void OnActionExecuted(ActionExecutedContext filterContext)
+        [ConfigurationProperty("source", IsRequired = false)]
+        public string Source
         {
-            new HttpHeaderHelper(filterContext.HttpContext).SetHstsOverride(new HstsConfigurationElement() { MaxAge = ttl, IncludeSubdomains = IncludeSubdomains });
-            base.OnActionExecuted(filterContext);
+            get
+            {
+                return (string)this["source"];
+            }
+            set
+            {
+                this["source"] = value;
+            }
         }
+
+        [ConfigurationProperty("sources", IsRequired = false)]
+        [ConfigurationCollection(typeof(CspSourcesElementCollection), CollectionType = ConfigurationElementCollectionType.AddRemoveClearMap)]
+        public CspSourcesElementCollection Sources
+        {
+
+            get
+            {
+                return (CspSourcesElementCollection)this["sources"];
+            }
+            set
+            {
+                this["sources"] = value;
+            }
+
+        }
+
     }
 }
