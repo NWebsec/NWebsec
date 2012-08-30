@@ -27,9 +27,6 @@ OF THE POSSIBILITY OF SUCH DAMAGE.
 #endregion
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Web.Mvc;
 using NWebsec.HttpHeaders;
 

@@ -15,7 +15,6 @@ namespace nWebsec.Tests.Unit.HttpHeaders
         HttpHeaderSetter headerSetter;
         Mock<HttpResponseBase> mockResponse;
         
-        //Use TestInitialize to run code before running each test
         [TestInitialize()]
         public void HeaderModuleTestInitialize()
         {

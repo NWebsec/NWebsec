@@ -50,6 +50,22 @@ namespace NWebsec.Modules.Configuration.Csp
             }
         }
 
+        public CspDirectiveConfigurationElement this[int index]
+        {
+            get
+            {
+                return (CspDirectiveConfigurationElement) BaseGet(index);
+            }
+            set
+            {
+                if (BaseGet(index) != null)
+                {
+                    BaseRemoveAt(index);
+                }
+                BaseAdd(index, value);
+            }
+        }
+
         public void Add(CspDirectiveConfigurationElement element)
         {
             BaseAdd(element);
@@ -59,6 +75,7 @@ namespace NWebsec.Modules.Configuration.Csp
         {
             BaseClear();
         }
+
         public void Remove(CspDirectiveConfigurationElement element)
         {
             BaseRemove(element);

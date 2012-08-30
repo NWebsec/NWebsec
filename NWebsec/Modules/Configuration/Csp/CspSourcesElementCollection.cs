@@ -43,6 +43,22 @@ namespace NWebsec.Modules.Configuration.Csp
             return ((CspSourceConfigurationElement)element).Source;
         }
 
+        public CspSourceConfigurationElement this[int index]
+        {
+            get
+            {
+                return (CspSourceConfigurationElement)BaseGet(index);
+            }
+            set
+            {
+                if (BaseGet(index) != null)
+                {
+                    BaseRemoveAt(index);
+                }
+                BaseAdd(index, value);
+            }
+        }
+
         public void Add(CspSourceConfigurationElement element)
         {
             BaseAdd(element);
@@ -58,5 +74,29 @@ namespace NWebsec.Modules.Configuration.Csp
             return BaseGetAllKeys();
         }
 
+        public void Remove(CspSourceConfigurationElement element)
+        {
+            BaseRemove(element);
+        }
+
+        public void Remove(string name)
+        {
+            BaseRemove(name);
+        }
+
+        public void RemoveAt(int index)
+        {
+            BaseRemoveAt(index);
+        }
+
+        public int IndexOf(CspSourceConfigurationElement element)
+        {
+            return BaseIndexOf(element);
+        }
+
+        public bool IsRemoved(CspSourceConfigurationElement element)
+        {
+            return BaseIsRemoved(element);
+        }
     }
 }

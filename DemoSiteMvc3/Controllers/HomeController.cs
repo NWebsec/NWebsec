@@ -15,7 +15,8 @@ namespace DemoSiteMvc3.Controllers
         //
         // GET: /Home/
         
-        //[XContentSecurityPolicy("script-src","'self' *.nwebsec.codeplex.com")]
+        [SuppressVersionHttpHeaders]
+        [XContentSecurityPolicy("script-src","'none' *.nwebsec.codeplex.com")]
         [XContentSecurityPolicy("img-src", "'self'")]
         public ActionResult Index()
         {

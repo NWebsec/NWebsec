@@ -27,9 +27,6 @@ OF THE POSSIBILITY OF SUCH DAMAGE.
 #endregion
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Web.Mvc;
 using NWebsec.HttpHeaders;
 using NWebsec.Modules.Configuration;
@@ -37,21 +34,21 @@ using NWebsec.Modules.Configuration;
 namespace NWebsec.Mvc.HttpHeaders
 {
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, Inherited = true, AllowMultiple = false)]
-    class SuppressVersionHttpHeadersAttribute : ActionFilterAttribute
+    public class SuppressVersionHttpHeadersAttribute : ActionFilterAttribute
     {
 
-        public bool BlockMode { get; set; }
+        public bool Enabled { get; set; }
         public string ServerHeader { get; set; }
 
         public SuppressVersionHttpHeadersAttribute()
         {
-            BlockMode = true;
+            Enabled = true;
             ServerHeader = String.Empty;
         }
 
         public override void OnActionExecuted(ActionExecutedContext filterContext)
         {
-            new HttpHeaderHelper(filterContext.HttpContext).SetSuppressVersionHeadersOverride(new SuppressVersionHeadersConfigurationElement() { Enabled = BlockMode, ServerHeader = ServerHeader });
+            new HttpHeaderHelper(filterContext.HttpContext).SetSuppressVersionHeadersOverride(new SuppressVersionHeadersConfigurationElement() { Enabled = Enabled, ServerHeader = ServerHeader });
             base.OnActionExecuted(filterContext);
         }
     }

@@ -55,7 +55,7 @@ namespace NWebsec.Modules
             var app = (HttpApplication)sender;
             var context = new HttpContextWrapper(app.Context);
             
-            new HttpHeaderHelper(context).FixHeadersFromConfig();
+            new HttpHeaderHelper(context).FixHeaders();
 
         }
 
