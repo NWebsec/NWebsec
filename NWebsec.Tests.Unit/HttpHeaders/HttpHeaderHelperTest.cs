@@ -56,6 +56,68 @@ namespace NWebsec.Tests.Unit.HttpHeaders
             mockContext.Setup(x => x.Items["nwebsecheaderoverride"]).Returns(nwebsecContentItems);
             headerHelper = new HttpHeaderHelper(mockContext.Object);
         }
+            
+
+        [TestMethod]
+        public void GetXFrameoptionsWithOverride_ConfigOverriden_ReturnsOverrideElement()
+        {
+            var configOverride = new XFrameOptionsConfigurationElement() {Policy = HttpHeadersConstants.XFrameOptions.Deny};
+            
+            headerHelper.SetXFrameoptionsOverride(configOverride);
+
+            Assert.AreSame(configOverride, headerHelper.GetXFrameoptionsWithOverride());
+        }
+
+        [TestMethod]
+        public void GetHstsWithOverride_ConfigOverriden_ReturnsOverrideElement()
+        {
+            var configOverride = new HstsConfigurationElement() { MaxAge = new TimeSpan(1,0,0)};
+
+            headerHelper.SetHstsOverride(configOverride);
+
+            Assert.AreSame(configOverride, headerHelper.GetHstsWithOverride());   
+        }
+
+        [TestMethod]
+        public void GetXContentTypeOptionsWithOverride_ConfigOverriden_ReturnsOverrideElement()
+        {
+            var configOverride = new SimpleBooleanConfigurationElement() { Enabled = true };
+
+            headerHelper.SetXContentTypeOptionsOverride(configOverride);
+
+            Assert.AreSame(configOverride, headerHelper.GetXContentTypeOptionsWithOverride());  
+        }
+
+        [TestMethod]
+        public void GetXDownloadOptionsWithOverride_ConfigOverriden_ReturnsOverrideElement()
+        {
+            var configOverride = new SimpleBooleanConfigurationElement() { Enabled = true };
+
+            headerHelper.SetXDownloadOptionsOverride(configOverride);
+
+            Assert.AreSame(configOverride, headerHelper.GetXDownloadOptionsWithOverride());  
+            
+        }
+
+        [TestMethod]
+        public void GetXXssProtectionWithOverride_ConfigOverriden_ReturnsOverrideElement()
+        {
+            var configOverride = new XXssProtectionConfigurationElement() { Policy = HttpHeadersConstants.XXssProtection.FilterEnabled };
+
+            headerHelper.SetXXssProtectionOverride(configOverride);
+
+            Assert.AreSame(configOverride, headerHelper.GetXXssProtectionWithOverride());  
+        }
+
+        [TestMethod]
+        public void GetSuppressVersionHeadersWithOverride_ConfigOverriden_ReturnsOverrideElement()
+        {
+            var configOverride = new SuppressVersionHeadersConfigurationElement() { Enabled = true };
+
+            headerHelper.SetSuppressVersionHeadersOverride(configOverride);
+
+            Assert.AreSame(configOverride, headerHelper.GetSuppressVersionHeadersWithOverride());  
+        }
 
         [TestMethod]
         public void GetCspElementWithOverrides_DirectiveConfiguredAndBlankOverride_DirectiveRemoved()

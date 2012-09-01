@@ -50,47 +50,22 @@ namespace NWebsec.HttpHeaders
             baseConfig = GetConfig();
         }
 
+        internal HttpHeaderHelper(HttpContextBase context, HttpHeaderConfigurationSection config)
+        {
+            this.context = context;
+            baseConfig = config;
+        }
+
         internal void FixHeaders()
         {
-            var headerList = GetHeaderListFromContext();
             var headerSetter = new HttpHeaderSetter(context.Response);
 
-
-            headerSetter.AddXFrameoptionsHeader(
-                headerList.ContainsKey(HttpHeadersConstants.XFrameOptionsHeader) ?
-                (XFrameOptionsConfigurationElement)headerList[HttpHeadersConstants.XFrameOptionsHeader]
-                : baseConfig.SecurityHttpHeaders.XFrameOptions);
-
-
-            headerSetter.AddHstsHeader(
-                headerList.ContainsKey(HttpHeadersConstants.StrictTransportSecurityHeader) ?
-                (HstsConfigurationElement)headerList[HttpHeadersConstants.StrictTransportSecurityHeader]
-                : baseConfig.SecurityHttpHeaders.Hsts);
-
-
-            headerSetter.AddXContentTypeOptionsHeader(
-                headerList.ContainsKey(HttpHeadersConstants.XContentTypeOptionsHeader) ?
-                (SimpleBooleanConfigurationElement)headerList[HttpHeadersConstants.XContentTypeOptionsHeader]
-                : baseConfig.SecurityHttpHeaders.XContentTypeOptions);
-
-
-            headerSetter.AddXDownloadOptionsHeader(
-                headerList.ContainsKey(HttpHeadersConstants.XDownloadOptionsHeader) ?
-                (SimpleBooleanConfigurationElement)headerList[HttpHeadersConstants.XDownloadOptionsHeader]
-                : baseConfig.SecurityHttpHeaders.XDownloadOptions);
-
-
-            headerSetter.AddXXssProtectionHeader(
-                headerList.ContainsKey(HttpHeadersConstants.XXssProtectionHeader) ?
-                (XXssProtectionConfigurationElement)headerList[HttpHeadersConstants.XXssProtectionHeader]
-                : baseConfig.SecurityHttpHeaders.XXssProtection);
-
-            headerSetter.SuppressVersionHeaders(
-                headerList.ContainsKey(suppressHeadersKey) ?
-                (SuppressVersionHeadersConfigurationElement)headerList[suppressHeadersKey]
-                : baseConfig.suppressVersionHeaders);
-
-
+            headerSetter.AddXFrameoptionsHeader(GetXFrameoptionsWithOverride());
+            headerSetter.AddHstsHeader(GetHstsWithOverride());
+            headerSetter.AddXContentTypeOptionsHeader(GetXContentTypeOptionsWithOverride());
+            headerSetter.AddXDownloadOptionsHeader(GetXDownloadOptionsWithOverride());
+            headerSetter.AddXXssProtectionHeader(GetXXssProtectionWithOverride());
+            headerSetter.SuppressVersionHeaders(GetSuppressVersionHeadersWithOverride());
             headerSetter.AddXCspHeaders(GetCspElementWithOverrides(false, baseConfig.SecurityHttpHeaders.ExperimentalHeaders));
             headerSetter.AddXCspHeaders(GetCspElementWithOverrides(true, baseConfig.SecurityHttpHeaders.ExperimentalHeaders));
 
@@ -107,15 +82,31 @@ namespace NWebsec.HttpHeaders
             headerList.Add(headerKey, xFrameOptionsConfig);
         }
 
+        internal XFrameOptionsConfigurationElement GetXFrameoptionsWithOverride()
+        {
+            var headerList = GetHeaderListFromContext();
+            return headerList.ContainsKey(HttpHeadersConstants.XFrameOptionsHeader)
+                       ? (XFrameOptionsConfigurationElement)headerList[HttpHeadersConstants.XFrameOptionsHeader]
+                       : baseConfig.SecurityHttpHeaders.XFrameOptions;
+        }
+
         public void SetHstsOverride(HstsConfigurationElement hstsConfig)
         {
             var headerList = GetHeaderListFromContext();
-            var headerKey = HttpHeadersConstants.XFrameOptionsHeader;
+            var headerKey = HttpHeadersConstants.StrictTransportSecurityHeader;
 
             if (headerList.ContainsKey(headerKey))
                 headerList.Remove(headerKey);
 
             headerList.Add(headerKey, hstsConfig);
+        }
+
+        internal HstsConfigurationElement GetHstsWithOverride()
+        {
+            var headerList = GetHeaderListFromContext();
+            return headerList.ContainsKey(HttpHeadersConstants.StrictTransportSecurityHeader)
+                       ? (HstsConfigurationElement)headerList[HttpHeadersConstants.StrictTransportSecurityHeader]
+                       : baseConfig.SecurityHttpHeaders.Hsts;
         }
 
         public void SetXContentTypeOptionsOverride(SimpleBooleanConfigurationElement xContentTypeOptionsConfig)
@@ -129,6 +120,14 @@ namespace NWebsec.HttpHeaders
             headerList.Add(headerKey, xContentTypeOptionsConfig);
         }
 
+        public SimpleBooleanConfigurationElement GetXContentTypeOptionsWithOverride()
+        {
+            var headerList = GetHeaderListFromContext();
+            return headerList.ContainsKey(HttpHeadersConstants.XContentTypeOptionsHeader) ?
+                (SimpleBooleanConfigurationElement)headerList[HttpHeadersConstants.XContentTypeOptionsHeader]
+                : baseConfig.SecurityHttpHeaders.XContentTypeOptions;
+        }
+
         public void SetXDownloadOptionsOverride(SimpleBooleanConfigurationElement xDownloadOptionsConfig)
         {
             var headerList = GetHeaderListFromContext();
@@ -138,6 +137,14 @@ namespace NWebsec.HttpHeaders
                 headerList.Remove(headerKey);
 
             headerList.Add(headerKey, xDownloadOptionsConfig);
+        }
+
+        internal SimpleBooleanConfigurationElement GetXDownloadOptionsWithOverride()
+        {
+            var headerList = GetHeaderListFromContext();
+            return headerList.ContainsKey(HttpHeadersConstants.XDownloadOptionsHeader)
+                    ? (SimpleBooleanConfigurationElement)headerList[HttpHeadersConstants.XDownloadOptionsHeader]
+                    : baseConfig.SecurityHttpHeaders.XDownloadOptions;
         }
 
         public void SetXXssProtectionOverride(XXssProtectionConfigurationElement xXssProtectionConfig)
@@ -151,6 +158,15 @@ namespace NWebsec.HttpHeaders
             headerList.Add(headerKey, xXssProtectionConfig);
         }
 
+        internal XXssProtectionConfigurationElement GetXXssProtectionWithOverride()
+        {
+            var headerList = GetHeaderListFromContext();
+
+            return headerList.ContainsKey(HttpHeadersConstants.XXssProtectionHeader)
+                ? (XXssProtectionConfigurationElement)headerList[HttpHeadersConstants.XXssProtectionHeader]
+                : baseConfig.SecurityHttpHeaders.XXssProtection;
+        }
+
         public void SetSuppressVersionHeadersOverride(SuppressVersionHeadersConfigurationElement suppressVersionHeadersConfig)
         {
             var headerList = GetHeaderListFromContext();
@@ -160,6 +176,15 @@ namespace NWebsec.HttpHeaders
                 headerList.Remove(headerKey);
 
             headerList.Add(headerKey, suppressVersionHeadersConfig);
+        }
+
+        internal SuppressVersionHeadersConfigurationElement GetSuppressVersionHeadersWithOverride()
+        {
+            var headerList = GetHeaderListFromContext();
+
+            return headerList.ContainsKey(suppressHeadersKey)
+                    ? (SuppressVersionHeadersConfigurationElement)headerList[suppressHeadersKey]
+                    : baseConfig.suppressVersionHeaders;
         }
 
         public void SetContentSecurityPolicyDirectiveOverride(string directive, string sources, bool reportOnly)
@@ -232,7 +257,7 @@ namespace NWebsec.HttpHeaders
                 if (String.IsNullOrEmpty(directive.Value.Source) &&
                     test.Length == 0)
                 {
-                   continue;
+                    continue;
                 }
 
                 overriddenConfig.Directives.Add(directive.Value);
