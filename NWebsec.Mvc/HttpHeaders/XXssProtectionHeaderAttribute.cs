@@ -45,10 +45,10 @@ namespace NWebsec.Mvc.HttpHeaders
             BlockMode = true;
         }
 
-        public override void OnActionExecuted(ActionExecutedContext filterContext)
+        public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
             new HttpHeaderHelper(filterContext.HttpContext).SetXXssProtectionOverride(new XXssProtectionConfigurationElement() { Policy = Policy, BlockMode = BlockMode });
-            base.OnActionExecuted(filterContext);
+            base.OnActionExecuting(filterContext);
         }
     }
 }

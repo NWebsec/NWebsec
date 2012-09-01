@@ -44,10 +44,10 @@ namespace NWebsec.Mvc.HttpHeaders
             sourceList = sources;
         }
 
-        public override void OnActionExecuted(ActionExecutedContext filterContext)
+        public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
             new HttpHeaderHelper(filterContext.HttpContext).SetContentSecurityPolicyDirectiveOverride(directiveName, sourceList, true);
-            base.OnActionExecuted(filterContext);
+            base.OnActionExecuting(filterContext);
         }
     }
 }

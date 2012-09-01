@@ -66,8 +66,8 @@ namespace NWebsec.HttpHeaders
             headerSetter.AddXDownloadOptionsHeader(GetXDownloadOptionsWithOverride());
             headerSetter.AddXXssProtectionHeader(GetXXssProtectionWithOverride());
             headerSetter.SuppressVersionHeaders(GetSuppressVersionHeadersWithOverride());
-            headerSetter.AddXCspHeaders(GetCspElementWithOverrides(false, baseConfig.SecurityHttpHeaders.ExperimentalHeaders));
-            headerSetter.AddXCspHeaders(GetCspElementWithOverrides(true, baseConfig.SecurityHttpHeaders.ExperimentalHeaders));
+            headerSetter.AddXCspHeaders(GetCspElementWithOverrides(false, baseConfig.SecurityHttpHeaders.ExperimentalHeaders), false);
+            headerSetter.AddXCspHeaders(GetCspElementWithOverrides(true, baseConfig.SecurityHttpHeaders.ExperimentalHeaders), true);
 
         }
 
@@ -190,7 +190,6 @@ namespace NWebsec.HttpHeaders
         public void SetContentSecurityPolicyDirectiveOverride(string directive, string sources, bool reportOnly)
         {
 
-
             if (sources.StartsWith(" ") || sources.EndsWith(" "))
                 throw new ApplicationException("Sources must not contain leading or trailing whitespace: " + sources);
             if (sources.Contains("  "))
@@ -208,7 +207,7 @@ namespace NWebsec.HttpHeaders
             var cspOverride = GetCspDirectiveOverides(reportOnly);
             if (cspOverride.ContainsKey(element.Name))
                 cspOverride.Remove(element.Name);
-            cspOverride.Add(new KeyValuePair<string, CspDirectiveConfigurationElement>(element.Name, element));
+            cspOverride.Add(element.Name, element);
         }
 
         private IDictionary<String, CspDirectiveConfigurationElement> GetCspDirectiveOverides(bool reportOnly)

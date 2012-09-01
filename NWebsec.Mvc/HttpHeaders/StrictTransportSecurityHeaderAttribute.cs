@@ -39,16 +39,17 @@ namespace NWebsec.Mvc.HttpHeaders
         private TimeSpan ttl;
         public bool IncludeSubdomains { get; set; }
 
-        public StrictTransportSecurityHeaderAttribute(TimeSpan maxAge)
+        public StrictTransportSecurityHeaderAttribute(string maxAge)
         {
-            ttl = maxAge;
+            if (!TimeSpan.TryParse(maxAge,out ttl))
+                throw new ArgumentException("Invalid timespan format. See TimeSpan.TryParse on MSDN for examples.","maxAge");
             IncludeSubdomains = false;
         }
 
-        public override void OnActionExecuted(ActionExecutedContext filterContext)
+        public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
             new HttpHeaderHelper(filterContext.HttpContext).SetHstsOverride(new HstsConfigurationElement() { MaxAge = ttl, IncludeSubdomains = IncludeSubdomains });
-            base.OnActionExecuted(filterContext);
+            base.OnActionExecuting(filterContext);
         }
     }
 }

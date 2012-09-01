@@ -157,6 +157,26 @@ namespace NWebsec.Tests.Unit.HttpHeaders
         }
 
         [TestMethod]
+        public void GetCspElementWithOverrides_DirectiveOverridenMultipleTimes_LastOverrideWins()
+        {
+            const bool reportonly = false;
+
+            var config = new ExperimentalSecurityHttpHeadersConfigurationElement();
+            
+            headerHelper.SetContentSecurityPolicyDirectiveOverride("script-src", "transformtool.codeplex.com", reportonly);
+            headerHelper.SetContentSecurityPolicyDirectiveOverride("script-src", "'none'", reportonly);
+
+            var overrideElement = headerHelper.GetCspElementWithOverrides(reportonly, config);
+
+            var expectedDirective = new CspDirectiveConfigurationElement { Name = "script-src", Source = "'none'" };
+            var winningDirective = overrideElement.Directives[overrideElement.Directives.IndexOf(expectedDirective)];
+
+            Assert.IsTrue(String.IsNullOrEmpty(winningDirective.Source));
+            Assert.IsTrue(winningDirective.Sources.GetAllKeys().Length == 1);
+            Assert.IsTrue(winningDirective.Sources[0].Source.Equals("'none'"));
+        }
+
+        [TestMethod]
         public void GetCspElementWithOverrides_DirectiveNotConfiguredAndOverridenWithSources_DirectiveAdded()
         {
             const bool reportonly = false;

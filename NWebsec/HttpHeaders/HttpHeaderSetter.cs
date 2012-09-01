@@ -122,15 +122,27 @@ namespace NWebsec.HttpHeaders
             response.Headers.Add(HttpHeadersConstants.XXssProtectionHeader, value);
         }
 
-        internal void AddXCspHeaders(XContentSecurityPolicyConfigurationElement xContentSecurityPolicyConfig)
+        internal void AddXCspHeaders(XContentSecurityPolicyConfigurationElement xContentSecurityPolicyConfig, bool reportOnly)
         {
             if ((xContentSecurityPolicyConfig.XContentSecurityPolicyHeader || xContentSecurityPolicyConfig.XWebKitCspHeader))
             {
                 var headerValue = CreateCspHeaderValue(xContentSecurityPolicyConfig);
                 if (xContentSecurityPolicyConfig.XContentSecurityPolicyHeader)
-                    response.Headers.Add(HttpHeadersConstants.XContentSecurityPolicyHeader, headerValue);
+                {
+                    var headerName = (reportOnly
+                                          ? HttpHeadersConstants.XContentSecurityPolicyReportOnlyHeader
+                                          : HttpHeadersConstants.XContentSecurityPolicyHeader);
+                    
+                    response.Headers.Add(headerName, headerValue);
+                }
                 if (xContentSecurityPolicyConfig.XWebKitCspHeader)
-                    response.Headers.Add(HttpHeadersConstants.XWebKitCspHeader, headerValue);
+                {
+                    var headerName = (reportOnly
+                                          ? HttpHeadersConstants.XWebKitCspReportOnlyHeader
+                                          : HttpHeadersConstants.XWebKitCspHeader);
+
+                    response.Headers.Add(headerName, headerValue);
+                }
             }
 
         }
@@ -157,7 +169,10 @@ namespace NWebsec.HttpHeaders
             {
                 response.Headers.Remove(header);
             }
-            response.Headers.Set("Server", suppressVersionHeadersConfig.ServerHeader);
+            var serverName = (String.IsNullOrEmpty(suppressVersionHeadersConfig.ServerHeader)
+                                  ? "Webserver 1.0"
+                                  : suppressVersionHeadersConfig.ServerHeader);
+            response.Headers.Set("Server", serverName);
         }
 
         private string CreateCspHeaderValue(XContentSecurityPolicyConfigurationElement config)

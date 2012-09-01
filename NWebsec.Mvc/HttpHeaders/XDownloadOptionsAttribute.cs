@@ -43,10 +43,10 @@ namespace NWebsec.Mvc.HttpHeaders
             Enabled = true;
         }
 
-        public override void OnActionExecuted(ActionExecutedContext filterContext)
+        public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
             new HttpHeaderHelper(filterContext.HttpContext).SetXDownloadOptionsOverride(new SimpleBooleanConfigurationElement() { Enabled = Enabled });
-            base.OnActionExecuted(filterContext);
+            base.OnActionExecuting(filterContext);
         }
     }
 }

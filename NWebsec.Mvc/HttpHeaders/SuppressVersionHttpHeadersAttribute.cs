@@ -46,10 +46,10 @@ namespace NWebsec.Mvc.HttpHeaders
             ServerHeader = String.Empty;
         }
 
-        public override void OnActionExecuted(ActionExecutedContext filterContext)
+        public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
             new HttpHeaderHelper(filterContext.HttpContext).SetSuppressVersionHeadersOverride(new SuppressVersionHeadersConfigurationElement() { Enabled = Enabled, ServerHeader = ServerHeader });
-            base.OnActionExecuted(filterContext);
+            base.OnActionExecuting(filterContext);
         }
     }
 }

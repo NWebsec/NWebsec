@@ -27,6 +27,7 @@ OF THE POSSIBILITY OF SUCH DAMAGE.
 #endregion
 
 using System;
+using System.Diagnostics;
 using System.Web.Mvc;
 using NWebsec.HttpHeaders;
 
@@ -42,12 +43,14 @@ namespace NWebsec.Mvc.HttpHeaders
         {
             directiveName = directive;
             sourceList = sources;
+
         }
 
-        public override void OnActionExecuted(ActionExecutedContext filterContext)
+        public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
-            new HttpHeaderHelper(filterContext.HttpContext).SetContentSecurityPolicyDirectiveOverride(directiveName, sourceList, false);
-            base.OnActionExecuted(filterContext);
+            new HttpHeaderHelper(filterContext.HttpContext).SetContentSecurityPolicyDirectiveOverride(directiveName,
+                                                                                                      sourceList, false);
+            base.OnActionExecuting(filterContext);
         }
     }
 }

@@ -48,7 +48,7 @@ namespace NWebsec.Modules.Configuration
 
         }
 
-        [ConfigurationProperty("serverHeader", IsRequired = false, DefaultValue = "Webserver 1.0")]
+        [ConfigurationProperty("serverHeader", IsRequired = false, DefaultValue = "")]
         public String ServerHeader
         {
 
