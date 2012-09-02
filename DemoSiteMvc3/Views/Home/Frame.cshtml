@@ -1,0 +1,26 @@
+﻿@model dynamic
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>title</title>
+</head>
+<body>
+    <div>
+        Iframing localhost
+        
+        
+    </div>
+    <iframe src="http://localhost/NWebsecMvc3/Home/Framed"></iframe>
+    <div>
+        Iframing own domain
+        <br />
+
+    </div>
+    <iframe src="@{ Write(new UrlHelper(Context.Request.RequestContext).Action("Framed", "Home")); }"></iframe>
+</body>
+</html>

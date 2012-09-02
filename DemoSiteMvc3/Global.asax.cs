@@ -19,15 +19,15 @@ namespace DemoSiteMvc3
         public static void RegisterGlobalFilters(GlobalFilterCollection filters)
         {
             filters.Add(new HandleErrorAttribute());
-            filters.Add(new StrictTransportSecurityHeaderAttribute("0:0:10"));
+            //filters.Add(new StrictTransportSecurityHeaderAttribute("0:0:10"));
             filters.Add(new SuppressVersionHttpHeadersAttribute());
             filters.Add(new XContentTypeOptionsAttribute());
             filters.Add(new XDownloadOptionsAttribute());
             filters.Add(new XFrameOptionsAttribute(HttpHeadersConstants.XFrameOptions.Deny));
             filters.Add(new XXssProtectionHeaderAttribute(){Policy = HttpHeadersConstants.XXssProtection.FilterEnabled });
-            filters.Add(new XContentSecurityPolicyAttribute("default-src", "'self'"));
-            filters.Add(new XContentSecurityPolicyAttribute("script-src", "'self'"));
-            filters.Add(new XContentSecurityPolicyReportOnlyAttribute("script-src", "'none'"));
+            //filters.Add(new XContentSecurityPolicyAttribute("default-src", "'self'"));
+            //filters.Add(new XContentSecurityPolicyAttribute("script-src", "'self'"));
+            //filters.Add(new XContentSecurityPolicyReportOnlyAttribute("script-src", "'none'"));
         }
 
         public static void RegisterRoutes(RouteCollection routes)

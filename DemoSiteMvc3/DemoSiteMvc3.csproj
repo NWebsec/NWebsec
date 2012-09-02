@@ -195,6 +195,8 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Home\Headers.cshtml" />
+    <Content Include="Views\Home\Frame.cshtml" />
+    <Content Include="Views\Home\Framed.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
