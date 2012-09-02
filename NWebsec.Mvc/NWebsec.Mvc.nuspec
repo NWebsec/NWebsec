@@ -2,17 +2,17 @@
 <package >
   <metadata>
     <id>NWebsec.Mvc</id>
-    <version>1.0.2-alpha</version>
-    <title>NWebsec</title>
+    <version>1.0.3-alpha</version>
+    <title>NWebsec.Mvc</title>
     <authors>Andre N. Klingsheim</authors>
     <owners>Andre N. Klingsheim</owners>
     <licenseUrl>http://nwebsec.codeplex.com/license</licenseUrl>
     <projectUrl>http://nwebsec.codeplex.com</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <description>Security library for ASP.NET MVC 3/4 applications.</description>
+    <description>NWebsec goodies for ASP.NET MVC 3/4 applications.</description>
     <releaseNotes>See latest release notes at project web site.</releaseNotes>
     <copyright>Copyright 2012</copyright>
-    <tags>NWebsec security</tags>
+    <tags>NWebsec security asp.net mvc</tags>
     <dependencies>
       <dependency id="NWebSec" />
     </dependencies>
