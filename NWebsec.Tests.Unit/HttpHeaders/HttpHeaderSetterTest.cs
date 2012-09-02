@@ -38,15 +38,19 @@ using NWebsec.Modules.Configuration.Csp;
 namespace nWebsec.Tests.Unit.HttpHeaders
 {
     [TestClass()]
-    class HttpHeaderSetterTest
+    public class HttpHeaderSetterTest
     {
         HttpHeaderSetter headerSetter;
         Mock<HttpResponseBase> mockResponse;
+        private Mock<NameValueCollection> mockHeaderCollection;
         
         [TestInitialize()]
         public void HeaderModuleTestInitialize()
         {
             mockResponse = new Mock<HttpResponseBase>();
+            mockHeaderCollection = new Mock<NameValueCollection>();
+            //mockResponse.Setup(x => x.Headers).Returns(mockHeaderCollection.)
+            
             headerSetter = new HttpHeaderSetter(mockResponse.Object);
             
         }
@@ -70,7 +74,7 @@ namespace nWebsec.Tests.Unit.HttpHeaders
 
             headerSetter.AddXFrameoptionsHeader(xFramesConfig);
 
-            mockResponse.Verify(x => x.AddHeader("X-Frame-Options", "DENY"), Times.Once());
+            mockResponse.Verify(x => x.AddHeader("X-Frame-Options", "Deny"), Times.Once());
         }
 
         [TestMethod()]
@@ -81,7 +85,7 @@ namespace nWebsec.Tests.Unit.HttpHeaders
 
             headerSetter.AddXFrameoptionsHeader(xFramesConfig);
 
-            mockResponse.Verify(x => x.AddHeader("X-Frame-Options", "SAMEORIGIN"), Times.Once());
+            mockResponse.Verify(x => x.AddHeader("X-Frame-Options", "SameOrigin"), Times.Once());
         }
 
         [TestMethod()]

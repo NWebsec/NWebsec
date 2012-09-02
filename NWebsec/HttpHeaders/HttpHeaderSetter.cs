@@ -52,11 +52,11 @@ namespace NWebsec.HttpHeaders
                     return;
 
                 case HttpHeadersConstants.XFrameOptions.Deny:
-                    frameOptions = "DENY";
+                    frameOptions = "Deny";
                     break;
 
                 case HttpHeadersConstants.XFrameOptions.SameOrigin:
-                    frameOptions = "SAMEORIGIN";
+                    frameOptions = "SameOrigin";
                     break;
 
                 //case HttpHeadersConstants.XFrameOptions.AllowFrom:
@@ -67,7 +67,7 @@ namespace NWebsec.HttpHeaders
                     throw new NotImplementedException("Apparently someone forgot to implement support for: " + xFrameOptionsConfig.Policy);
 
             }
-            response.Headers.Add(HttpHeadersConstants.XFrameOptionsHeader, frameOptions);
+            response.AddHeader(HttpHeadersConstants.XFrameOptionsHeader, frameOptions);
         }
 
         internal void AddHstsHeader(HstsConfigurationElement hstsConfig)
@@ -80,14 +80,14 @@ namespace NWebsec.HttpHeaders
             var includeSubdomains = (hstsConfig.IncludeSubdomains ? "; includeSubDomains" : "");
             var value = String.Format("max-age={0}{1}", seconds, includeSubdomains);
 
-            response.Headers.Add(HttpHeadersConstants.StrictTransportSecurityHeader, value);
+            response.AddHeader(HttpHeadersConstants.StrictTransportSecurityHeader, value);
         }
 
         internal void AddXContentTypeOptionsHeader(SimpleBooleanConfigurationElement xContentTypeOptionsConfig)
         {
             if (xContentTypeOptionsConfig.Enabled)
             {
-               response.Headers.Add(HttpHeadersConstants.XContentTypeOptionsHeader, "nosniff");
+               response.AddHeader(HttpHeadersConstants.XContentTypeOptionsHeader, "nosniff");
             }
         }
 
@@ -95,7 +95,7 @@ namespace NWebsec.HttpHeaders
         {
             if (xDownloadOptionsConfig.Enabled)
             {
-                response.Headers.Add(HttpHeadersConstants.XDownloadOptionsHeader, "noopen");
+                response.AddHeader(HttpHeadersConstants.XDownloadOptionsHeader, "noopen");
             }
         }
 
@@ -119,7 +119,7 @@ namespace NWebsec.HttpHeaders
 
             }
 
-            response.Headers.Add(HttpHeadersConstants.XXssProtectionHeader, value);
+            response.AddHeader(HttpHeadersConstants.XXssProtectionHeader, value);
         }
 
         internal void AddXCspHeaders(XContentSecurityPolicyConfigurationElement xContentSecurityPolicyConfig, bool reportOnly)
@@ -133,7 +133,7 @@ namespace NWebsec.HttpHeaders
                                           ? HttpHeadersConstants.XContentSecurityPolicyReportOnlyHeader
                                           : HttpHeadersConstants.XContentSecurityPolicyHeader);
                     
-                    response.Headers.Add(headerName, headerValue);
+                    response.AddHeader(headerName, headerValue);
                 }
                 if (xContentSecurityPolicyConfig.XWebKitCspHeader)
                 {
@@ -141,7 +141,7 @@ namespace NWebsec.HttpHeaders
                                           ? HttpHeadersConstants.XWebKitCspReportOnlyHeader
                                           : HttpHeadersConstants.XWebKitCspHeader);
 
-                    response.Headers.Add(headerName, headerValue);
+                    response.AddHeader(headerName, headerValue);
                 }
             }
 
@@ -154,9 +154,9 @@ namespace NWebsec.HttpHeaders
             {
                 var headerValue = CreateCspHeaderValue(xContentSecurityPolicyReportConfig);
                 if (xContentSecurityPolicyReportConfig.XContentSecurityPolicyHeader)
-                    response.Headers.Add(HttpHeadersConstants.XContentSecurityPolicyReportOnlyHeader, headerValue);
+                    response.AddHeader(HttpHeadersConstants.XContentSecurityPolicyReportOnlyHeader, headerValue);
                 if (xContentSecurityPolicyReportConfig.XWebKitCspHeader)
-                    response.Headers.Add(HttpHeadersConstants.XWebKitCspReportOnlyHeader, headerValue);
+                    response.AddHeader(HttpHeadersConstants.XWebKitCspReportOnlyHeader, headerValue);
             }
 
         }
