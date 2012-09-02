@@ -35,7 +35,7 @@ using NWebsec.HttpHeaders;
 using NWebsec.Modules.Configuration;
 using NWebsec.Modules.Configuration.Csp;
 
-namespace nWebsec.Tests.Unit.HttpHeaders
+namespace NWebsec.Tests.Unit.HttpHeaders
 {
     [TestClass()]
     public class HttpHeaderSetterTest
