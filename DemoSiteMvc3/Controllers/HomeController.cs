@@ -12,11 +12,15 @@ namespace DemoSiteMvc3.Controllers
     [SuppressVersionHttpHeaders]
     [XContentTypeOptions]
     [XDownloadOptions]
-    [XFrameOptions(HttpHeadersConstants.XFrameOptions.SameOrigin)]
+    //[XFrameOptions(Policy = HttpHeadersConstants.XFrameOptions.SameOrigin)]
     [XXssProtectionHeader]
     [XContentSecurityPolicy("script-src", "'none'")]
     [XContentSecurityPolicyReportOnly("script-src", "'self'")]
     [XContentSecurityPolicyReportOnly("img-src", "'self'")]
+    //[XContentSecurityPolicy("script-src", "'none'")]
+    //[XContentSecurityPolicyReportOnly("script-src", "'self'")]
+    //[XContentSecurityPolicyReportOnly("img-src", "'self'")]
+    [XContentSecurityPolicy("script-src", "'self' scripts.nwebsec.codeplex.com")]
     public class HomeController : Controller
     {
 
@@ -26,11 +30,23 @@ namespace DemoSiteMvc3.Controllers
             return View("Index");
         }
 
-        [StrictTransportSecurityHeader("0:0:1")]
-        [SuppressVersionHttpHeaders(Enabled = false)]
+        [XContentSecurityPolicy("default-src", "'self' nwebsec.codeplex.com")]
+        public ActionResult Index2()
+        {
+            return View("Index");
+        }
+
+        [XContentSecurityPolicy("script-src", "scripts.nwebsec.codeplex.com ajax.googleapis.com")]
+        [XContentSecurityPolicy("default-src", "'self' stuff.nwebsec.codeplex.com")]
+        public ActionResult Index3()
+        {
+            return View("Index");
+        }
+        //[StrictTransportSecurityHeader("0:0:1")]
+
         [XContentTypeOptions(Enabled = false)]
         [XDownloadOptions(Enabled = false)]
-        [XFrameOptions(HttpHeadersConstants.XFrameOptions.Disabled)]
+        [XFrameOptions]
         [XXssProtectionHeader]
         [XContentSecurityPolicy("default-src", "'nwebsec.codeplex.com'")]
         [XContentSecurityPolicy("script-src", "'nwebsec.codeplex.com'")]
@@ -41,7 +57,7 @@ namespace DemoSiteMvc3.Controllers
             return View();
         }
 
-        [XFrameOptions(HttpHeadersConstants.XFrameOptions.Disabled)]
+        [XFrameOptions(Policy = HttpHeadersConstants.XFrameOptions.Disabled)]
         public ActionResult Framed()
         {
             return View();

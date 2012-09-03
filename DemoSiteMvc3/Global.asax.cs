@@ -23,7 +23,7 @@ namespace DemoSiteMvc3
             filters.Add(new SuppressVersionHttpHeadersAttribute());
             filters.Add(new XContentTypeOptionsAttribute());
             filters.Add(new XDownloadOptionsAttribute());
-            filters.Add(new XFrameOptionsAttribute(HttpHeadersConstants.XFrameOptions.Deny));
+            filters.Add(new XFrameOptionsAttribute());
             filters.Add(new XXssProtectionHeaderAttribute(){Policy = HttpHeadersConstants.XXssProtection.FilterEnabled });
             filters.Add(new XContentSecurityPolicyAttribute("default-src", "'self'"));
             filters.Add(new XContentSecurityPolicyAttribute("script-src", "'self'"));
