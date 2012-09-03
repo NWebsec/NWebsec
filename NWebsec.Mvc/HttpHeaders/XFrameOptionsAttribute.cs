@@ -36,16 +36,16 @@ namespace NWebsec.Mvc.HttpHeaders
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, Inherited = true, AllowMultiple = false)]
     public class XFrameOptionsAttribute : ActionFilterAttribute
     {
-        private HttpHeadersConstants.XFrameOptions xFrameOptionsPolicy;
+        public HttpHeadersConstants.XFrameOptions Policy { get; set; }
         
-        public XFrameOptionsAttribute(HttpHeadersConstants.XFrameOptions policy)
+        public XFrameOptionsAttribute()
         {
-            xFrameOptionsPolicy = policy;
+            Policy = HttpHeadersConstants.XFrameOptions.Deny;
         }
 
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
-            new HttpHeaderHelper(filterContext.HttpContext).SetXFrameoptionsOverride(new XFrameOptionsConfigurationElement() { Policy = xFrameOptionsPolicy });
+            new HttpHeaderHelper(filterContext.HttpContext).SetXFrameoptionsOverride(new XFrameOptionsConfigurationElement() { Policy = Policy});
             base.OnActionExecuting(filterContext);
         }
     }

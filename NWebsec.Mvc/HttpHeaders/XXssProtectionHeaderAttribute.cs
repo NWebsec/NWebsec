@@ -41,7 +41,7 @@ namespace NWebsec.Mvc.HttpHeaders
 
         public XXssProtectionHeaderAttribute()
         {
-
+            Policy = HttpHeadersConstants.XXssProtection.FilterEnabled;
             BlockMode = true;
         }
 
