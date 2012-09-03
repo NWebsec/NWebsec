@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>NWebsec.Mvc</id>
-    <version>1.0.3-alpha</version>
+    <version>1.0.4-alpha</version>
     <title>NWebsec.Mvc</title>
     <authors>Andre N. Klingsheim</authors>
     <owners>Andre N. Klingsheim</owners>
