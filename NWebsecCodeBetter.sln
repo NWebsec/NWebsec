@@ -1,0 +1,43 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{07D0ADD6-1502-453F-8F21-F69748F0D188}"
+	ProjectSection(SolutionItems) = preProject
+		Local.testsettings = Local.testsettings
+		nwebsec.vsmdi = nwebsec.vsmdi
+		TraceAndTestImpact.testsettings = TraceAndTestImpact.testsettings
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NWebsec", "NWebsec\NWebsec.csproj", "{A011D84B-B731-4404-8BC1-FE94D2B37599}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NWebsec.Mvc", "NWebsec.Mvc\NWebsec.Mvc.csproj", "{78FF86A6-C148-4D03-96CF-B429C1A36DA9}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{F3753382-5F33-41AC-91E2-26E1153838AE}"
+	ProjectSection(SolutionItems) = preProject
+		.nuget\NuGet.Config = .nuget\NuGet.Config
+		.nuget\NuGet.exe = .nuget\NuGet.exe
+		.nuget\NuGet.targets = .nuget\NuGet.targets
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(TestCaseManagementSettings) = postSolution
+		CategoryFile = nwebsec.vsmdi
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A011D84B-B731-4404-8BC1-FE94D2B37599}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A011D84B-B731-4404-8BC1-FE94D2B37599}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A011D84B-B731-4404-8BC1-FE94D2B37599}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A011D84B-B731-4404-8BC1-FE94D2B37599}.Release|Any CPU.Build.0 = Release|Any CPU
+		{78FF86A6-C148-4D03-96CF-B429C1A36DA9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{78FF86A6-C148-4D03-96CF-B429C1A36DA9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{78FF86A6-C148-4D03-96CF-B429C1A36DA9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{78FF86A6-C148-4D03-96CF-B429C1A36DA9}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
