@@ -29,22 +29,22 @@ OF THE POSSIBILITY OF SUCH DAMAGE.
 using System;
 using System.Collections.Specialized;
 using System.Web;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
-using NUnit.Framework;
 using NWebsec.HttpHeaders;
 using NWebsec.Modules.Configuration;
 using NWebsec.Modules.Configuration.Csp;
 
 namespace NWebsec.Tests.Unit.HttpHeaders
 {
-    [TestFixture]
+    [TestClass()]
     public class HttpHeaderSetterTest
     {
         HttpHeaderSetter headerSetter;
         Mock<HttpResponseBase> mockResponse;
         private Mock<NameValueCollection> mockHeaderCollection;
         
-        [SetUp]
+        [TestInitialize()]
         public void HeaderModuleTestInitialize()
         {
             mockResponse = new Mock<HttpResponseBase>();
@@ -56,7 +56,7 @@ namespace NWebsec.Tests.Unit.HttpHeaders
         }
 
 
-        [Test]
+        [TestMethod()]
         public void AddXFrameoptionsHeader_DisabledInConfig_DoesNotAddXFrameOptionsHeader()
         {
             var xFramesConfig = new XFrameOptionsConfigurationElement
@@ -67,7 +67,7 @@ namespace NWebsec.Tests.Unit.HttpHeaders
             mockResponse.Verify(x => x.AddHeader(It.IsAny<String>(), It.IsAny<String>()), Times.Never());
         }
 
-        [Test]
+        [TestMethod()]
         public void AddXFrameoptionsHeader_DenyInConfig_AddsAddXFrameOptionsDenyHeader()
         {
             var xFramesConfig = new XFrameOptionsConfigurationElement {Policy = HttpHeadersConstants.XFrameOptions.Deny};
@@ -77,7 +77,7 @@ namespace NWebsec.Tests.Unit.HttpHeaders
             mockResponse.Verify(x => x.AddHeader("X-Frame-Options", "Deny"), Times.Once());
         }
 
-        [Test]
+        [TestMethod()]
         public void AddXFrameoptionsHeader_SameoriginInConfig_AddsXFrameoptionsSameoriginHeader()
         {
             var xFramesConfig = new XFrameOptionsConfigurationElement
@@ -88,7 +88,7 @@ namespace NWebsec.Tests.Unit.HttpHeaders
             mockResponse.Verify(x => x.AddHeader("X-Frame-Options", "SameOrigin"), Times.Once());
         }
 
-        [Test]
+        [TestMethod()]
         public void AddHstsHeader_ZeroTimespanInConfig_DoesNotAddHSTSHeaderHeader()
         {
             var hstsConfig = new HstsConfigurationElement {MaxAge = new TimeSpan(0)};
@@ -98,7 +98,7 @@ namespace NWebsec.Tests.Unit.HttpHeaders
             mockResponse.Verify(x => x.AddHeader(It.IsAny<String>(), It.IsAny<String>()), Times.Never());
         }
 
-        [Test]
+        [TestMethod()]
         public void AddHstsHeader_24hInConfig_AddsHstsHeader()
         {
             var hstsConfig = new HstsConfigurationElement {MaxAge = new TimeSpan(24, 0, 0), IncludeSubdomains = false};
@@ -108,7 +108,7 @@ namespace NWebsec.Tests.Unit.HttpHeaders
             mockResponse.Verify(x => x.AddHeader("Strict-Transport-Security", "max-age=86400"), Times.Once());
         }
 
-        [Test]
+        [TestMethod()]
         public void AddHstsHeader_24hAndIncludesubdomainsConfig_AddsIncludesubdomainsInHstsHeader()
         {
             var hstsConfig = new HstsConfigurationElement {MaxAge = new TimeSpan(24, 0, 0), IncludeSubdomains = true};
@@ -118,7 +118,7 @@ namespace NWebsec.Tests.Unit.HttpHeaders
             mockResponse.Verify(x => x.AddHeader("Strict-Transport-Security", "max-age=86400; includeSubDomains"), Times.Once());
         }
 
-        [Test]
+        [TestMethod()]
         public void AddXContentTypeOptionsHeader_DisabledInConfig_DoesNotAddXContentTypeOptionsHeader()
         {
             var contentTypeOptions = new SimpleBooleanConfigurationElement {Enabled = false};
@@ -128,7 +128,7 @@ namespace NWebsec.Tests.Unit.HttpHeaders
             mockResponse.Verify(x => x.AddHeader(It.IsAny<String>(), It.IsAny<String>()), Times.Never());
         }
 
-        [Test]
+        [TestMethod()]
         public void AddXContentTypeOptionsHeader_EnabledInConfig_AddsXContentTypeOptionsHeader()
         {
             var contentTypeOptions = new SimpleBooleanConfigurationElement {Enabled = true};
@@ -138,7 +138,7 @@ namespace NWebsec.Tests.Unit.HttpHeaders
             mockResponse.Verify(x => x.AddHeader("X-Content-Type-Options", "nosniff"), Times.Once());
         }
 
-        [Test]
+        [TestMethod()]
         public void AddXDownloadOptionsHeader_DisabledInConfig_DoesNotAddXDownloadOptionsHeader()
         {
             var downloadOptions = new SimpleBooleanConfigurationElement {Enabled = false};
@@ -148,7 +148,7 @@ namespace NWebsec.Tests.Unit.HttpHeaders
             mockResponse.Verify(x => x.AddHeader(It.IsAny<String>(), It.IsAny<String>()), Times.Never());
         }
 
-        [Test]
+        [TestMethod()]
         public void AddXDownloadOptionsHeader_EnabledInConfig_AddsXDownloadOptionsHeader()
         {
             var downloadOptions = new SimpleBooleanConfigurationElement {Enabled = true};
@@ -158,7 +158,7 @@ namespace NWebsec.Tests.Unit.HttpHeaders
             mockResponse.Verify(x => x.AddHeader("X-Download-Options", "noopen"), Times.Once());
         }
 
-        [Test]
+        [TestMethod()]
         public void AddXXssProtectionHeader_DisabledInConfig_DoesNotAddXXssProtectionHeader()
         {
             var xssProtection = new XXssProtectionConfigurationElement
@@ -169,7 +169,7 @@ namespace NWebsec.Tests.Unit.HttpHeaders
             mockResponse.Verify(x => x.AddHeader(It.IsAny<String>(), It.IsAny<String>()), Times.Never());
         }
 
-        [Test]
+        [TestMethod()]
         public void AddXXssProtectionHeader_FilterDisabledPolicyInConfig_AddsXXssProtectionDisabledHeader()
         {
             var xssProtection = new XXssProtectionConfigurationElement
@@ -180,7 +180,7 @@ namespace NWebsec.Tests.Unit.HttpHeaders
             mockResponse.Verify(x => x.AddHeader("X-XSS-Protection", "0"), Times.Once());
         }
 
-        [Test]
+        [TestMethod()]
         public void AddXXssProtectionHeader_FilterDisabledPolicyWithBlockmodeInConfig_AddsXXssProtectionDisabledHeaderWithoutBlockMode()
         {
             var xssProtection = new XXssProtectionConfigurationElement
@@ -191,7 +191,7 @@ namespace NWebsec.Tests.Unit.HttpHeaders
             mockResponse.Verify(x => x.AddHeader("X-XSS-Protection", "0"), Times.Once());
         }
 
-        [Test]
+        [TestMethod()]
         public void AddXXssProtectionHeader_FilterEnabledPolicyInConfig_AddsXssProtectionHeaderEnabledWithoutBlockmode()
         {
             var xssProtection = new XXssProtectionConfigurationElement
@@ -203,7 +203,7 @@ namespace NWebsec.Tests.Unit.HttpHeaders
             mockResponse.Verify(x => x.AddHeader("X-XSS-Protection", "1"), Times.Once());
         }
 
-        [Test]
+        [TestMethod()]
         public void AddXXSSProtectionHeader_FilterEnabledPolicyWithBlockmode_AddsXssProtectionHeaderEnabledWithBlockMode()
         {
             var xssProtection = new XXssProtectionConfigurationElement
@@ -214,7 +214,7 @@ namespace NWebsec.Tests.Unit.HttpHeaders
             mockResponse.Verify(x => x.AddHeader("X-XSS-Protection", "1; mode=block"), Times.Once());
         }
 
-        [Test]
+        [TestMethod()]
         public void AddXCspHeaders_DisabledInConfig_DoesNotAddXCspHeader()
         {
             var cspConfig = new XContentSecurityPolicyConfigurationElement
@@ -225,7 +225,7 @@ namespace NWebsec.Tests.Unit.HttpHeaders
             mockResponse.Verify(x => x.AddHeader(It.IsAny<String>(), It.IsAny<String>()), Times.Never());
         }
 
-        [Test]
+        [TestMethod()]
         public void AddXCspHeaders_XCspEnabledInConfig_AddsXCspHeader()
         {
             var cspConfig = new XContentSecurityPolicyConfigurationElement
@@ -238,7 +238,7 @@ namespace NWebsec.Tests.Unit.HttpHeaders
             mockResponse.Verify(x => x.AddHeader("X-Content-Security-Policy", It.IsAny<String>()), Times.Once());
         }
 
-        [Test]
+        [TestMethod()]
         public void AddXCspHeaders_XWebkitCspEnabledInConfig_AddsXWebkitCspHeader()
         {
             var cspConfig = new XContentSecurityPolicyConfigurationElement
@@ -251,7 +251,7 @@ namespace NWebsec.Tests.Unit.HttpHeaders
             mockResponse.Verify(x => x.AddHeader("X-WebKit-CSP", It.IsAny<String>()), Times.Once());
         }
 
-        [Test]
+        [TestMethod()]
         public void AddXCspHeaders_XCspAndXWebkitCspEnabledInConfig_AddsXcspAndXWebkitCspHeader()
         {
             var cspConfig = new XContentSecurityPolicyConfigurationElement
@@ -265,7 +265,7 @@ namespace NWebsec.Tests.Unit.HttpHeaders
             mockResponse.Verify(x => x.AddHeader("X-WebKit-CSP", It.IsAny<String>()), Times.Once());
         }
 
-        [Test]
+        [TestMethod()]
         public void AddXCspHeaders_XCspReportOnlyEnabledInConfig_AddsXCspReportOnlyHeader()
         {
             var cspConfig = new XContentSecurityPolicyConfigurationElement
@@ -278,7 +278,7 @@ namespace NWebsec.Tests.Unit.HttpHeaders
             mockResponse.Verify(x => x.AddHeader("X-Content-Security-Policy-Report-Only", It.IsAny<String>()), Times.Once());
         }
 
-        [Test]
+        [TestMethod()]
         public void AddXCspHeaders_XWebkitCspReportOnlyEnabledInConfig_AddsXWebkitCspReportOnlyHeader()
         {
             var cspConfig = new XContentSecurityPolicyConfigurationElement
@@ -291,7 +291,7 @@ namespace NWebsec.Tests.Unit.HttpHeaders
             mockResponse.Verify(x => x.AddHeader("X-WebKit-CSP-Report-Only", It.IsAny<String>()), Times.Once());
         }
 
-        [Test]
+        [TestMethod()]
         public void AddXCspHeaders_XCspAndXWebkitCspReportOnlyEnabledInConfig_AddsXCspAndXWebkitCspReportOnlyHeader()
         {
             var cspConfig = new XContentSecurityPolicyConfigurationElement
@@ -305,7 +305,7 @@ namespace NWebsec.Tests.Unit.HttpHeaders
             mockResponse.Verify(x => x.AddHeader("X-WebKit-CSP-Report-Only", It.IsAny<String>()), Times.Once());
         }
 
-        [Test]
+        [TestMethod()]
         public void AddXCspHeaders_XCspWithTwoDirectives_AddsCorrectXCspHeader()
         {
             var cspConfig = new XContentSecurityPolicyConfigurationElement
@@ -320,7 +320,7 @@ namespace NWebsec.Tests.Unit.HttpHeaders
             mockResponse.Verify(x => x.AddHeader("X-Content-Security-Policy", "default-src 'self'; script-src 'none'"), Times.Once());
         }
 
-        [Test]
+        [TestMethod()]
         public void AddXCspHeaders_XCspDirectiveWithTwoSources_AddsCorrectlyFormattedXCspHeader()
         {
             var cspConfig = new XContentSecurityPolicyConfigurationElement
@@ -334,7 +334,7 @@ namespace NWebsec.Tests.Unit.HttpHeaders
             mockResponse.Verify(x => x.AddHeader("X-Content-Security-Policy", "default-src 'self' nwebsec.codeplex.com"), Times.Once());
         }
 
-        [Test]
+        [TestMethod()]
         public void SuppressVersionHeaders_Disabled_DoesNotRemoveHeaders()
         {
             var suppressHeaders = new SuppressVersionHeadersConfigurationElement {Enabled = false};
@@ -344,7 +344,7 @@ namespace NWebsec.Tests.Unit.HttpHeaders
             mockResponse.Verify(x => x.Headers.Remove(It.IsAny<String>()), Times.Never());
         }
 
-        [Test]
+        [TestMethod()]
         public void SuppressVersionHeaders_Disabled_DoesNotChangeServerheader()
         {
             var suppressHeaders = new SuppressVersionHeadersConfigurationElement {Enabled = false};
@@ -355,7 +355,7 @@ namespace NWebsec.Tests.Unit.HttpHeaders
             mockResponse.Verify(x => x.Headers.Set("Server", It.IsAny<String>()), Times.Never());
         }
 
-        [Test]
+        [TestMethod()]
         public void SuppressVersionHeaders_Enabled_ChangesServerheader()
         {
             var suppressHeaders = new SuppressVersionHeadersConfigurationElement {Enabled = true};
@@ -367,7 +367,7 @@ namespace NWebsec.Tests.Unit.HttpHeaders
             mockCollection.Verify(x => x.Set("Server", It.IsAny<String>()), Times.Once());
         }
 
-        [Test]
+        [TestMethod()]
         public void SuppressVersionHeaders_EnabledWithServerOverride_ChangesServerheader()
         {
             var suppressHeaders = new SuppressVersionHeadersConfigurationElement
@@ -380,7 +380,7 @@ namespace NWebsec.Tests.Unit.HttpHeaders
             mockCollection.Verify(x => x.Set("Server", "ninjaserver 1.0"), Times.Once());
         }
 
-        [Test]
+        [TestMethod()]
         public void SuppressVersionHeaders_Enabled_RemovesVersionHeaders()
         {
             var suppressHeaders = new SuppressVersionHeadersConfigurationElement {Enabled = true};

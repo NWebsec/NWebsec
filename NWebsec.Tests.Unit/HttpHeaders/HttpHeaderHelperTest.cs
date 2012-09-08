@@ -29,11 +29,11 @@ OF THE POSSIBILITY OF SUCH DAMAGE.
 using System.Collections;
 using System.Collections.Generic;
 using System.Web.Configuration;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Web;
 using Moq;
 using System.Collections.Specialized;
-using NUnit.Framework;
 using NWebsec.HttpHeaders;
 using NWebsec.Modules.Configuration;
 using NWebsec.Modules.Configuration.Csp;
@@ -42,13 +42,13 @@ namespace NWebsec.Tests.Unit.HttpHeaders
 {
 
 
-    [TestFixture()]
+    [TestClass()]
     public class HttpHeaderHelperTest
     {
         private Mock<HttpContextBase> mockContext;
         private HttpHeaderHelper headerHelper;
 
-        [SetUp]
+        [TestInitialize]
         public void Setup()
         {
             mockContext = new Mock<HttpContextBase>();
@@ -58,7 +58,7 @@ namespace NWebsec.Tests.Unit.HttpHeaders
         }
             
 
-        [Test]
+        [TestMethod]
         public void GetXFrameoptionsWithOverride_ConfigOverriden_ReturnsOverrideElement()
         {
             var configOverride = new XFrameOptionsConfigurationElement() {Policy = HttpHeadersConstants.XFrameOptions.Deny};
@@ -68,7 +68,7 @@ namespace NWebsec.Tests.Unit.HttpHeaders
             Assert.AreSame(configOverride, headerHelper.GetXFrameoptionsWithOverride());
         }
 
-        [Test]
+        [TestMethod]
         public void GetHstsWithOverride_ConfigOverriden_ReturnsOverrideElement()
         {
             var configOverride = new HstsConfigurationElement() { MaxAge = new TimeSpan(1,0,0)};
@@ -78,7 +78,7 @@ namespace NWebsec.Tests.Unit.HttpHeaders
             Assert.AreSame(configOverride, headerHelper.GetHstsWithOverride());   
         }
 
-        [Test]
+        [TestMethod]
         public void GetXContentTypeOptionsWithOverride_ConfigOverriden_ReturnsOverrideElement()
         {
             var configOverride = new SimpleBooleanConfigurationElement() { Enabled = true };
@@ -88,7 +88,7 @@ namespace NWebsec.Tests.Unit.HttpHeaders
             Assert.AreSame(configOverride, headerHelper.GetXContentTypeOptionsWithOverride());  
         }
 
-        [Test]
+        [TestMethod]
         public void GetXDownloadOptionsWithOverride_ConfigOverriden_ReturnsOverrideElement()
         {
             var configOverride = new SimpleBooleanConfigurationElement() { Enabled = true };
@@ -99,7 +99,7 @@ namespace NWebsec.Tests.Unit.HttpHeaders
             
         }
 
-        [Test]
+        [TestMethod]
         public void GetXXssProtectionWithOverride_ConfigOverriden_ReturnsOverrideElement()
         {
             var configOverride = new XXssProtectionConfigurationElement() { Policy = HttpHeadersConstants.XXssProtection.FilterEnabled };
@@ -109,7 +109,7 @@ namespace NWebsec.Tests.Unit.HttpHeaders
             Assert.AreSame(configOverride, headerHelper.GetXXssProtectionWithOverride());  
         }
 
-        [Test]
+        [TestMethod]
         public void GetSuppressVersionHeadersWithOverride_ConfigOverriden_ReturnsOverrideElement()
         {
             var configOverride = new SuppressVersionHeadersConfigurationElement() { Enabled = true };
@@ -119,7 +119,7 @@ namespace NWebsec.Tests.Unit.HttpHeaders
             Assert.AreSame(configOverride, headerHelper.GetSuppressVersionHeadersWithOverride());  
         }
 
-        [Test]
+        [TestMethod]
         public void GetCspElementWithOverrides_DirectiveConfiguredAndBlankOverride_DirectiveRemoved()
         {
             const bool reportonly = false;
@@ -136,7 +136,7 @@ namespace NWebsec.Tests.Unit.HttpHeaders
 
         }
 
-        [Test]
+        [TestMethod]
         public void GetCspElementWithOverrides_DirectiveConfiguredAndOverridenWithSources_DirectiveReplaced()
         {
             const bool reportonly = false;
@@ -156,7 +156,7 @@ namespace NWebsec.Tests.Unit.HttpHeaders
             Assert.IsTrue(newDirective.Sources[0].Source.Equals("transformtool.codeplex.com"));
         }
 
-        [Test]
+        [TestMethod]
         public void GetCspElementWithOverrides_DirectiveOverridenMultipleTimes_LastOverrideWins()
         {
             const bool reportonly = false;
@@ -176,7 +176,7 @@ namespace NWebsec.Tests.Unit.HttpHeaders
             Assert.IsTrue(winningDirective.Sources[0].Source.Equals("'none'"));
         }
 
-        [Test]
+        [TestMethod]
         public void GetCspElementWithOverrides_DirectiveNotConfiguredAndOverridenWithSources_DirectiveAdded()
         {
             const bool reportonly = false;
@@ -193,7 +193,7 @@ namespace NWebsec.Tests.Unit.HttpHeaders
             Assert.IsTrue(newDirective.Sources[0].Source.Equals("'none'"));
         }
 
-        [Test]
+        [TestMethod]
         public void GetCspElementWithOverrides_CspDisabledInConfigAndOverridenWithSources_CspEnabled()
         {
             const bool reportonly = false;
