@@ -26,7 +26,7 @@ OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 #endregion
 
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 using NWebsec.HttpHeaders;
 using NWebsec.Modules;
 using System.Configuration;
@@ -34,20 +34,20 @@ using NWebsec.Modules.Configuration.Csp;
 
 namespace NWebsec.Tests.Unit.Modules.Configuration
 {
-    [TestClass()]
+    [TestFixture]
     public class XContentSecurityPolicyConfigurationElementValidatorTest
     {
         private XContentSecurityPolicyConfigurationElementValidator validator;
         private XContentSecurityPolicyConfigurationElement configElement;
 
-        [TestInitialize()]
+        [SetUp]
         public void TestInitialize()
         {
             validator = new XContentSecurityPolicyConfigurationElementValidator();
             configElement = new XContentSecurityPolicyConfigurationElement();
         }
 
-        [TestMethod()]
+        [Test]
         [ExpectedException(typeof(ConfigurationErrorsException))]
         public void Validate_InvalidDirective_ThrowsException()
         {
@@ -58,7 +58,7 @@ namespace NWebsec.Tests.Unit.Modules.Configuration
             validator.Validate(configElement);
         }
 
-        [TestMethod()]
+        [Test]
         public void Validate_ValidDirectives_NoException()
         {
             foreach (var directiveName in HttpHeadersConstants.CspDirectives)
@@ -70,7 +70,7 @@ namespace NWebsec.Tests.Unit.Modules.Configuration
 
         }
 
-        [TestMethod()]
+        [Test]
         [ExpectedException(typeof(ConfigurationErrorsException))]
         public void Validate_XcspHeadersEnabledButNoDirectives_ThrowsException()
         {
@@ -81,7 +81,7 @@ namespace NWebsec.Tests.Unit.Modules.Configuration
         }
 
 
-        [TestMethod()]
+        [Test]
         [ExpectedException(typeof(ConfigurationErrorsException))]
         public void Validate_XcspHeadersEnabledAndDirectivesWithoutSource_ThrowsException()
         {
@@ -93,7 +93,7 @@ namespace NWebsec.Tests.Unit.Modules.Configuration
 
         }
 
-        [TestMethod()]
+        [Test]
         [ExpectedException(typeof(ConfigurationErrorsException))]
         public void Validate_NoneWithMultipleSourcesInList_ThrowsException()
         {
@@ -105,7 +105,7 @@ namespace NWebsec.Tests.Unit.Modules.Configuration
             validator.Validate(configElement);
         }
 
-        [TestMethod()]
+        [Test]
         [ExpectedException(typeof(ConfigurationErrorsException))]
         public void Validate_SourceConfiguredBothInSourceAndSources_ThrowsException()
         {
@@ -117,7 +117,7 @@ namespace NWebsec.Tests.Unit.Modules.Configuration
             validator.Validate(configElement);
         }
 
-        [TestMethod()]
+        [Test]
         [ExpectedException(typeof(ConfigurationErrorsException))]
         public void Validate_SameSourceAddedTwiceToSources_ThrowsException()
         {
