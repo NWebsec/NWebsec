@@ -42,7 +42,7 @@ namespace NWebsec.Tests.Unit.HttpHeaders
 {
 
 
-    [TestFixture()]
+    [TestFixture]
     public class HttpHeaderHelperTest
     {
         private Mock<HttpContextBase> mockContext;

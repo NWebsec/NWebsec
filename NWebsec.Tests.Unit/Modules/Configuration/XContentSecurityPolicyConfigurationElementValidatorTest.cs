@@ -28,6 +28,7 @@ OF THE POSSIBILITY OF SUCH DAMAGE.
 
 using NUnit.Framework;
 using NWebsec.HttpHeaders;
+using NWebsec.Modules;
 using System.Configuration;
 using NWebsec.Modules.Configuration.Csp;
 
