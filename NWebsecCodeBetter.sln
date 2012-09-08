@@ -19,6 +19,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{F37533
 		.nuget\NuGet.targets = .nuget\NuGet.targets
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NWebsec.Tests.Unit", "NWebsec.Tests.Unit\NWebsec.Tests.Unit.csproj", "{2E83CDC3-152A-4139-8B00-0CDECD3F5BDC}"
+EndProject
 Global
 	GlobalSection(TestCaseManagementSettings) = postSolution
 		CategoryFile = nwebsec.vsmdi
@@ -36,6 +38,10 @@ Global
 		{78FF86A6-C148-4D03-96CF-B429C1A36DA9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{78FF86A6-C148-4D03-96CF-B429C1A36DA9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{78FF86A6-C148-4D03-96CF-B429C1A36DA9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2E83CDC3-152A-4139-8B00-0CDECD3F5BDC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2E83CDC3-152A-4139-8B00-0CDECD3F5BDC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2E83CDC3-152A-4139-8B00-0CDECD3F5BDC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2E83CDC3-152A-4139-8B00-0CDECD3F5BDC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
