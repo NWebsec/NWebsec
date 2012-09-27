@@ -42,25 +42,51 @@ namespace NWebsec.Tests.Unit.HttpHeaders
     {
         HttpHeaderSetter headerSetter;
         Mock<HttpResponseBase> mockResponse;
+        private Mock<HttpCachePolicyBase> mockCachePolicy;
         private Mock<NameValueCollection> mockHeaderCollection;
-        
+
         [SetUp]
         public void HeaderModuleTestInitialize()
         {
             mockResponse = new Mock<HttpResponseBase>();
+            mockResponse.SetupAllProperties();
             mockHeaderCollection = new Mock<NameValueCollection>();
-            //mockResponse.Setup(x => x.Headers).Returns(mockHeaderCollection.)
-            
+            mockCachePolicy = new Mock<HttpCachePolicyBase>();
+            mockResponse.Setup(x => x.Cache).Returns(mockCachePolicy.Object);
+
             headerSetter = new HttpHeaderSetter(mockResponse.Object);
-            
+
         }
 
+        [Test]
+        public void SetNoCacheHeaders_DisabledInConfig_DoesNotChangeCachePolicy()
+        {
+            var noCache = new SimpleBooleanConfigurationElement { Enabled = false };
+            var strictMockCachePolicy = new Mock<HttpCachePolicyBase>(MockBehavior.Strict);
+            mockResponse.Setup(x => x.Cache).Returns(strictMockCachePolicy.Object);
+            
+            headerSetter.SetNoCacheHeaders(noCache);
+
+            mockResponse.Verify(x => x.AddHeader("Pragma", "no-cache"), Times.Never());
+        }
+
+        [Test]
+        public void SetNoCacheHeaders_EnabledInConfig_SetsNoCacheHeaders()
+        {
+            var contentTypeOptions = new SimpleBooleanConfigurationElement { Enabled = true };
+
+            headerSetter.SetNoCacheHeaders(contentTypeOptions);
+
+            mockCachePolicy.Verify(c => c.SetCacheability(HttpCacheability.NoCache), Times.Once());
+            mockCachePolicy.Verify(c => c.SetNoStore(), Times.Once());
+            mockCachePolicy.Verify(c => c.SetRevalidation(HttpCacheRevalidation.AllCaches), Times.Once());
+            mockResponse.Verify(x => x.AddHeader("Pragma", "no-cache"), Times.Once());
+        }
 
         [Test]
         public void AddXFrameoptionsHeader_DisabledInConfig_DoesNotAddXFrameOptionsHeader()
         {
-            var xFramesConfig = new XFrameOptionsConfigurationElement
-                                    {Policy = HttpHeadersConstants.XFrameOptions.Disabled};
+            var xFramesConfig = new XFrameOptionsConfigurationElement { Policy = HttpHeadersConstants.XFrameOptions.Disabled };
 
             headerSetter.AddXFrameoptionsHeader(xFramesConfig);
 
@@ -70,7 +96,7 @@ namespace NWebsec.Tests.Unit.HttpHeaders
         [Test]
         public void AddXFrameoptionsHeader_DenyInConfig_AddsAddXFrameOptionsDenyHeader()
         {
-            var xFramesConfig = new XFrameOptionsConfigurationElement {Policy = HttpHeadersConstants.XFrameOptions.Deny};
+            var xFramesConfig = new XFrameOptionsConfigurationElement { Policy = HttpHeadersConstants.XFrameOptions.Deny };
 
             headerSetter.AddXFrameoptionsHeader(xFramesConfig);
 
@@ -80,8 +106,7 @@ namespace NWebsec.Tests.Unit.HttpHeaders
         [Test]
         public void AddXFrameoptionsHeader_SameoriginInConfig_AddsXFrameoptionsSameoriginHeader()
         {
-            var xFramesConfig = new XFrameOptionsConfigurationElement
-                                    {Policy = HttpHeadersConstants.XFrameOptions.SameOrigin};
+            var xFramesConfig = new XFrameOptionsConfigurationElement { Policy = HttpHeadersConstants.XFrameOptions.SameOrigin };
 
             headerSetter.AddXFrameoptionsHeader(xFramesConfig);
 
@@ -91,7 +116,7 @@ namespace NWebsec.Tests.Unit.HttpHeaders
         [Test]
         public void AddHstsHeader_ZeroTimespanInConfig_DoesNotAddHSTSHeaderHeader()
         {
-            var hstsConfig = new HstsConfigurationElement {MaxAge = new TimeSpan(0)};
+            var hstsConfig = new HstsConfigurationElement { MaxAge = new TimeSpan(0) };
 
             headerSetter.AddHstsHeader(hstsConfig);
 
@@ -101,7 +126,7 @@ namespace NWebsec.Tests.Unit.HttpHeaders
         [Test]
         public void AddHstsHeader_24hInConfig_AddsHstsHeader()
         {
-            var hstsConfig = new HstsConfigurationElement {MaxAge = new TimeSpan(24, 0, 0), IncludeSubdomains = false};
+            var hstsConfig = new HstsConfigurationElement { MaxAge = new TimeSpan(24, 0, 0), IncludeSubdomains = false };
 
             headerSetter.AddHstsHeader(hstsConfig);
 
@@ -111,7 +136,7 @@ namespace NWebsec.Tests.Unit.HttpHeaders
         [Test]
         public void AddHstsHeader_24hAndIncludesubdomainsConfig_AddsIncludesubdomainsInHstsHeader()
         {
-            var hstsConfig = new HstsConfigurationElement {MaxAge = new TimeSpan(24, 0, 0), IncludeSubdomains = true};
+            var hstsConfig = new HstsConfigurationElement { MaxAge = new TimeSpan(24, 0, 0), IncludeSubdomains = true };
 
             headerSetter.AddHstsHeader(hstsConfig);
 
@@ -121,7 +146,7 @@ namespace NWebsec.Tests.Unit.HttpHeaders
         [Test]
         public void AddXContentTypeOptionsHeader_DisabledInConfig_DoesNotAddXContentTypeOptionsHeader()
         {
-            var contentTypeOptions = new SimpleBooleanConfigurationElement {Enabled = false};
+            var contentTypeOptions = new SimpleBooleanConfigurationElement { Enabled = false };
 
             headerSetter.AddXContentTypeOptionsHeader(contentTypeOptions);
 
@@ -131,7 +156,7 @@ namespace NWebsec.Tests.Unit.HttpHeaders
         [Test]
         public void AddXContentTypeOptionsHeader_EnabledInConfig_AddsXContentTypeOptionsHeader()
         {
-            var contentTypeOptions = new SimpleBooleanConfigurationElement {Enabled = true};
+            var contentTypeOptions = new SimpleBooleanConfigurationElement { Enabled = true };
 
             headerSetter.AddXContentTypeOptionsHeader(contentTypeOptions);
 
@@ -141,7 +166,7 @@ namespace NWebsec.Tests.Unit.HttpHeaders
         [Test]
         public void AddXDownloadOptionsHeader_DisabledInConfig_DoesNotAddXDownloadOptionsHeader()
         {
-            var downloadOptions = new SimpleBooleanConfigurationElement {Enabled = false};
+            var downloadOptions = new SimpleBooleanConfigurationElement { Enabled = false };
 
             headerSetter.AddXDownloadOptionsHeader(downloadOptions);
 
@@ -151,7 +176,7 @@ namespace NWebsec.Tests.Unit.HttpHeaders
         [Test]
         public void AddXDownloadOptionsHeader_EnabledInConfig_AddsXDownloadOptionsHeader()
         {
-            var downloadOptions = new SimpleBooleanConfigurationElement {Enabled = true};
+            var downloadOptions = new SimpleBooleanConfigurationElement { Enabled = true };
 
             headerSetter.AddXDownloadOptionsHeader(downloadOptions);
 
@@ -161,8 +186,7 @@ namespace NWebsec.Tests.Unit.HttpHeaders
         [Test]
         public void AddXXssProtectionHeader_DisabledInConfig_DoesNotAddXXssProtectionHeader()
         {
-            var xssProtection = new XXssProtectionConfigurationElement
-                                    {Policy = HttpHeadersConstants.XXssProtection.Disabled};
+            var xssProtection = new XXssProtectionConfigurationElement { Policy = HttpHeadersConstants.XXssProtection.Disabled };
 
             headerSetter.AddXXssProtectionHeader(xssProtection);
 
@@ -172,8 +196,7 @@ namespace NWebsec.Tests.Unit.HttpHeaders
         [Test]
         public void AddXXssProtectionHeader_FilterDisabledPolicyInConfig_AddsXXssProtectionDisabledHeader()
         {
-            var xssProtection = new XXssProtectionConfigurationElement
-                                    {Policy = HttpHeadersConstants.XXssProtection.FilterDisabled};
+            var xssProtection = new XXssProtectionConfigurationElement { Policy = HttpHeadersConstants.XXssProtection.FilterDisabled };
 
             headerSetter.AddXXssProtectionHeader(xssProtection);
 
@@ -183,8 +206,7 @@ namespace NWebsec.Tests.Unit.HttpHeaders
         [Test]
         public void AddXXssProtectionHeader_FilterDisabledPolicyWithBlockmodeInConfig_AddsXXssProtectionDisabledHeaderWithoutBlockMode()
         {
-            var xssProtection = new XXssProtectionConfigurationElement
-                                    {Policy = HttpHeadersConstants.XXssProtection.FilterDisabled, BlockMode = true};
+            var xssProtection = new XXssProtectionConfigurationElement { Policy = HttpHeadersConstants.XXssProtection.FilterDisabled, BlockMode = true };
 
             headerSetter.AddXXssProtectionHeader(xssProtection);
 
@@ -194,8 +216,7 @@ namespace NWebsec.Tests.Unit.HttpHeaders
         [Test]
         public void AddXXssProtectionHeader_FilterEnabledPolicyInConfig_AddsXssProtectionHeaderEnabledWithoutBlockmode()
         {
-            var xssProtection = new XXssProtectionConfigurationElement
-                                    {Policy = HttpHeadersConstants.XXssProtection.FilterEnabled, BlockMode = false};
+            var xssProtection = new XXssProtectionConfigurationElement { Policy = HttpHeadersConstants.XXssProtection.FilterEnabled, BlockMode = false };
 
 
             headerSetter.AddXXssProtectionHeader(xssProtection);
@@ -206,8 +227,7 @@ namespace NWebsec.Tests.Unit.HttpHeaders
         [Test]
         public void AddXXSSProtectionHeader_FilterEnabledPolicyWithBlockmode_AddsXssProtectionHeaderEnabledWithBlockMode()
         {
-            var xssProtection = new XXssProtectionConfigurationElement
-                                    {Policy = HttpHeadersConstants.XXssProtection.FilterEnabled, BlockMode = true};
+            var xssProtection = new XXssProtectionConfigurationElement { Policy = HttpHeadersConstants.XXssProtection.FilterEnabled, BlockMode = true };
 
             headerSetter.AddXXssProtectionHeader(xssProtection);
 
@@ -217,8 +237,7 @@ namespace NWebsec.Tests.Unit.HttpHeaders
         [Test]
         public void AddXCspHeaders_DisabledInConfig_DoesNotAddXCspHeader()
         {
-            var cspConfig = new XContentSecurityPolicyConfigurationElement
-                                {XContentSecurityPolicyHeader = false, XWebKitCspHeader = false};
+            var cspConfig = new XContentSecurityPolicyConfigurationElement { XContentSecurityPolicyHeader = false, XWebKitCspHeader = false };
 
             headerSetter.AddXCspHeaders(cspConfig, false);
 
@@ -228,8 +247,7 @@ namespace NWebsec.Tests.Unit.HttpHeaders
         [Test]
         public void AddXCspHeaders_XCspEnabledInConfig_AddsXCspHeader()
         {
-            var cspConfig = new XContentSecurityPolicyConfigurationElement
-                                {XContentSecurityPolicyHeader = true, XWebKitCspHeader = false};
+            var cspConfig = new XContentSecurityPolicyConfigurationElement { XContentSecurityPolicyHeader = true, XWebKitCspHeader = false };
             var directive = new CspDirectiveConfigurationElement() { Name = "script-src" };
             cspConfig.Directives.Add(directive);
 
@@ -241,8 +259,7 @@ namespace NWebsec.Tests.Unit.HttpHeaders
         [Test]
         public void AddXCspHeaders_XWebkitCspEnabledInConfig_AddsXWebkitCspHeader()
         {
-            var cspConfig = new XContentSecurityPolicyConfigurationElement
-                                {XContentSecurityPolicyHeader = false, XWebKitCspHeader = true};
+            var cspConfig = new XContentSecurityPolicyConfigurationElement { XContentSecurityPolicyHeader = false, XWebKitCspHeader = true };
             var directive = new CspDirectiveConfigurationElement() { Name = "script-src" };
             cspConfig.Directives.Add(directive);
 
@@ -254,8 +271,7 @@ namespace NWebsec.Tests.Unit.HttpHeaders
         [Test]
         public void AddXCspHeaders_XCspAndXWebkitCspEnabledInConfig_AddsXcspAndXWebkitCspHeader()
         {
-            var cspConfig = new XContentSecurityPolicyConfigurationElement
-                                {XContentSecurityPolicyHeader = true, XWebKitCspHeader = true};
+            var cspConfig = new XContentSecurityPolicyConfigurationElement { XContentSecurityPolicyHeader = true, XWebKitCspHeader = true };
             var directive = new CspDirectiveConfigurationElement() { Name = "script-src" };
             cspConfig.Directives.Add(directive);
 
@@ -268,8 +284,7 @@ namespace NWebsec.Tests.Unit.HttpHeaders
         [Test]
         public void AddXCspHeaders_XCspReportOnlyEnabledInConfig_AddsXCspReportOnlyHeader()
         {
-            var cspConfig = new XContentSecurityPolicyConfigurationElement
-                                {XContentSecurityPolicyHeader = true, XWebKitCspHeader = false};
+            var cspConfig = new XContentSecurityPolicyConfigurationElement { XContentSecurityPolicyHeader = true, XWebKitCspHeader = false };
             var directive = new CspDirectiveConfigurationElement() { Name = "script-src" };
             cspConfig.Directives.Add(directive);
 
@@ -281,8 +296,7 @@ namespace NWebsec.Tests.Unit.HttpHeaders
         [Test]
         public void AddXCspHeaders_XWebkitCspReportOnlyEnabledInConfig_AddsXWebkitCspReportOnlyHeader()
         {
-            var cspConfig = new XContentSecurityPolicyConfigurationElement
-                                {XContentSecurityPolicyHeader = false, XWebKitCspHeader = true};
+            var cspConfig = new XContentSecurityPolicyConfigurationElement { XContentSecurityPolicyHeader = false, XWebKitCspHeader = true };
             var directive = new CspDirectiveConfigurationElement() { Name = "script-src" };
             cspConfig.Directives.Add(directive);
 
@@ -294,8 +308,7 @@ namespace NWebsec.Tests.Unit.HttpHeaders
         [Test]
         public void AddXCspHeaders_XCspAndXWebkitCspReportOnlyEnabledInConfig_AddsXCspAndXWebkitCspReportOnlyHeader()
         {
-            var cspConfig = new XContentSecurityPolicyConfigurationElement
-                                {XContentSecurityPolicyHeader = true, XWebKitCspHeader = true};
+            var cspConfig = new XContentSecurityPolicyConfigurationElement { XContentSecurityPolicyHeader = true, XWebKitCspHeader = true };
             var directive = new CspDirectiveConfigurationElement() { Name = "script-src" };
             cspConfig.Directives.Add(directive);
 
@@ -308,8 +321,7 @@ namespace NWebsec.Tests.Unit.HttpHeaders
         [Test]
         public void AddXCspHeaders_XCspWithTwoDirectives_AddsCorrectXCspHeader()
         {
-            var cspConfig = new XContentSecurityPolicyConfigurationElement
-                                {XContentSecurityPolicyHeader = true, XWebKitCspHeader = false};
+            var cspConfig = new XContentSecurityPolicyConfigurationElement { XContentSecurityPolicyHeader = true, XWebKitCspHeader = false };
             var directive = new CspDirectiveConfigurationElement() { Name = "default-src", Source = "'self'" };
             cspConfig.Directives.Add(directive);
             directive = new CspDirectiveConfigurationElement() { Name = "script-src", Source = "'none'" };
@@ -323,8 +335,7 @@ namespace NWebsec.Tests.Unit.HttpHeaders
         [Test]
         public void AddXCspHeaders_XCspDirectiveWithTwoSources_AddsCorrectlyFormattedXCspHeader()
         {
-            var cspConfig = new XContentSecurityPolicyConfigurationElement
-                                {XContentSecurityPolicyHeader = true, XWebKitCspHeader = false};
+            var cspConfig = new XContentSecurityPolicyConfigurationElement { XContentSecurityPolicyHeader = true, XWebKitCspHeader = false };
             var directive = new CspDirectiveConfigurationElement() { Name = "default-src", Source = "'self'" };
             directive.Sources.Add(new CspSourceConfigurationElement() { Source = "nwebsec.codeplex.com" });
             cspConfig.Directives.Add(directive);
@@ -337,7 +348,7 @@ namespace NWebsec.Tests.Unit.HttpHeaders
         [Test]
         public void SuppressVersionHeaders_Disabled_DoesNotRemoveHeaders()
         {
-            var suppressHeaders = new SuppressVersionHeadersConfigurationElement {Enabled = false};
+            var suppressHeaders = new SuppressVersionHeadersConfigurationElement { Enabled = false };
 
             headerSetter.SuppressVersionHeaders(suppressHeaders);
 
@@ -347,7 +358,7 @@ namespace NWebsec.Tests.Unit.HttpHeaders
         [Test]
         public void SuppressVersionHeaders_Disabled_DoesNotChangeServerheader()
         {
-            var suppressHeaders = new SuppressVersionHeadersConfigurationElement {Enabled = false};
+            var suppressHeaders = new SuppressVersionHeadersConfigurationElement { Enabled = false };
 
             headerSetter.SuppressVersionHeaders(suppressHeaders);
 
@@ -358,7 +369,7 @@ namespace NWebsec.Tests.Unit.HttpHeaders
         [Test]
         public void SuppressVersionHeaders_Enabled_ChangesServerheader()
         {
-            var suppressHeaders = new SuppressVersionHeadersConfigurationElement {Enabled = true};
+            var suppressHeaders = new SuppressVersionHeadersConfigurationElement { Enabled = true };
             var mockCollection = new Mock<NameValueCollection>();
             mockResponse.Setup(x => x.Headers).Returns(mockCollection.Object);
 
@@ -370,8 +381,7 @@ namespace NWebsec.Tests.Unit.HttpHeaders
         [Test]
         public void SuppressVersionHeaders_EnabledWithServerOverride_ChangesServerheader()
         {
-            var suppressHeaders = new SuppressVersionHeadersConfigurationElement
-                                      {Enabled = true, ServerHeader = "ninjaserver 1.0"};
+            var suppressHeaders = new SuppressVersionHeadersConfigurationElement { Enabled = true, ServerHeader = "ninjaserver 1.0" };
             var mockCollection = new Mock<NameValueCollection>();
             mockResponse.Setup(x => x.Headers).Returns(mockCollection.Object);
 
@@ -383,7 +393,7 @@ namespace NWebsec.Tests.Unit.HttpHeaders
         [Test]
         public void SuppressVersionHeaders_Enabled_RemovesVersionHeaders()
         {
-            var suppressHeaders = new SuppressVersionHeadersConfigurationElement {Enabled = true};
+            var suppressHeaders = new SuppressVersionHeadersConfigurationElement { Enabled = true };
             var mockCollection = new Mock<NameValueCollection>();
             mockResponse.Setup(x => x.Headers).Returns(mockCollection.Object);
 

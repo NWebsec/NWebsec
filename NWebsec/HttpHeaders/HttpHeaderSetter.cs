@@ -42,6 +42,18 @@ namespace NWebsec.HttpHeaders
             this.response = response;
         }
 
+        public void SetNoCacheHeaders(SimpleBooleanConfigurationElement getNoCacheHeadersWithOverride)
+        {
+            if (!getNoCacheHeadersWithOverride.Enabled)
+                return;
+
+            response.Cache.SetCacheability(HttpCacheability.NoCache);
+            response.Cache.SetNoStore();
+            response.Cache.SetRevalidation(HttpCacheRevalidation.AllCaches);
+            
+            response.AddHeader("Pragma", "no-cache");
+        }
+
         internal void AddXFrameoptionsHeader(XFrameOptionsConfigurationElement xFrameOptionsConfig)
         {
 
@@ -199,5 +211,6 @@ namespace NWebsec.HttpHeaders
             sb.Remove(sb.Length - 2, 2);
             return sb.ToString();
         }
+
     }
 }

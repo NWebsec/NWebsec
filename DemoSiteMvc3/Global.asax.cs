@@ -19,6 +19,7 @@ namespace DemoSiteMvc3
         public static void RegisterGlobalFilters(GlobalFilterCollection filters)
         {
             filters.Add(new HandleErrorAttribute());
+            filters.Add(new SetNoCacheHttpHeadersAttribute());
             filters.Add(new StrictTransportSecurityHeaderAttribute("0:0:10"));
             filters.Add(new SuppressVersionHttpHeadersAttribute());
             filters.Add(new XContentTypeOptionsAttribute());

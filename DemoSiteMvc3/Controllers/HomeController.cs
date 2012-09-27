@@ -24,7 +24,7 @@ namespace DemoSiteMvc3.Controllers
     public class HomeController : Controller
     {
 
-        
+        [SetNoCacheHttpHeaders(Enabled = false)]
         public ActionResult Index()
         {
             return View("Index");

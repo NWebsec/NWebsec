@@ -8,8 +8,9 @@
     <owners>Andre N. Klingsheim</owners>
     <licenseUrl>http://nwebsec.codeplex.com/license</licenseUrl>
     <projectUrl>http://nwebsec.codeplex.com</projectUrl>
+    <iconUrl>http://www.nwebsec.com/Content/Logo/nwebsec_nuget.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <description>NWebsec goodies for ASP.NET MVC 3/4 applications.</description>
+    <description>NWebsec for ASP.NET MVC 3/4 applications.</description>
     <releaseNotes>See latest release notes at project web site.</releaseNotes>
     <copyright>Copyright 2012</copyright>
     <tags>NWebsec security asp.net mvc</tags>

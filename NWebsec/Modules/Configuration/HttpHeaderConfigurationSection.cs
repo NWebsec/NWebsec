@@ -35,6 +35,35 @@ namespace NWebsec.Modules.Configuration
 {
     public class HttpHeaderConfigurationSection : ConfigurationSection
     {
+        [ConfigurationProperty("setNoCacheHttpHeaders", IsRequired = true)]
+        public SimpleBooleanConfigurationElement NoCacheHttpHeaders
+        {
+
+            get
+            {
+                return (SimpleBooleanConfigurationElement)this["setNoCacheHttpHeaders"];
+            }
+            set
+            {
+                this["setNoCacheHttpHeaders"] = value;
+            }
+
+        }
+
+        [ConfigurationProperty("suppressVersionHttpHeaders", IsRequired = true)]
+        public SuppressVersionHeadersConfigurationElement suppressVersionHeaders
+        {
+
+            get
+            {
+                return (SuppressVersionHeadersConfigurationElement)this["suppressVersionHttpHeaders"];
+            }
+            set
+            {
+                this["suppressVersionHttpHeaders"] = value;
+            }
+
+        }
 
         [ConfigurationProperty("securityHttpHeaders", IsRequired = true)]
         public SecurityHttpHeadersConfigurationElement SecurityHttpHeaders
@@ -51,20 +80,5 @@ namespace NWebsec.Modules.Configuration
 
         }
 
-
-        [ConfigurationProperty("suppressVersionHttpHeaders", IsRequired = true)]
-        public SuppressVersionHeadersConfigurationElement suppressVersionHeaders
-        {
-
-            get
-            {
-                return (SuppressVersionHeadersConfigurationElement)this["suppressVersionHttpHeaders"];
-            }
-            set
-            {
-                this["suppressVersionHttpHeaders"] = value;
-            }
-
-        }
     }
 }

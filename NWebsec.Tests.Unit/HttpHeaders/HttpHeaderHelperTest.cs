@@ -56,7 +56,16 @@ namespace NWebsec.Tests.Unit.HttpHeaders
             mockContext.Setup(x => x.Items["nwebsecheaderoverride"]).Returns(nwebsecContentItems);
             headerHelper = new HttpHeaderHelper(mockContext.Object);
         }
-            
+
+        [Test]
+        public void GetNoCacheHeadersWithOverride_ConfigOverriden_ReturnsOverrideElement()
+        {
+            var configOverride = new SimpleBooleanConfigurationElement() { Enabled = true };
+
+            headerHelper.SetXContentTypeOptionsOverride(configOverride);
+
+            Assert.AreSame(configOverride, headerHelper.GetXContentTypeOptionsWithOverride());
+        }
 
         [Test]
         public void GetXFrameoptionsWithOverride_ConfigOverriden_ReturnsOverrideElement()

@@ -39,6 +39,7 @@ namespace NWebsec.HttpHeaders
     public class HttpHeaderHelper
     {
         private readonly string suppressHeadersKey = "NWebsecSuppressHeaders";
+        private readonly string setNoCacheHeadersKey = "NWebsecSetNoCacheHeaders";
         private readonly string cspHeadersKeyPrefix = "NWebsecCsp";
 
         private HttpContextBase context;
@@ -60,6 +61,7 @@ namespace NWebsec.HttpHeaders
         {
             var headerSetter = new HttpHeaderSetter(context.Response);
 
+            headerSetter.SetNoCacheHeaders(GetNoCacheHeadersWithOverride());
             headerSetter.AddXFrameoptionsHeader(GetXFrameoptionsWithOverride());
             headerSetter.AddHstsHeader(GetHstsWithOverride());
             headerSetter.AddXContentTypeOptionsHeader(GetXContentTypeOptionsWithOverride());
@@ -69,6 +71,25 @@ namespace NWebsec.HttpHeaders
             headerSetter.AddXCspHeaders(GetCspElementWithOverrides(false, baseConfig.SecurityHttpHeaders.ExperimentalHeaders), false);
             headerSetter.AddXCspHeaders(GetCspElementWithOverrides(true, baseConfig.SecurityHttpHeaders.ExperimentalHeaders), true);
 
+        }
+
+        public void SetNoCacheHeadersOverride(SimpleBooleanConfigurationElement setNoCacheHeadersConfig)
+        {
+            var headerList = GetHeaderListFromContext();
+            var headerKey = setNoCacheHeadersKey;
+
+            if (headerList.ContainsKey(headerKey))
+                headerList.Remove(headerKey);
+
+            headerList.Add(headerKey, setNoCacheHeadersConfig);
+        }
+
+        internal SimpleBooleanConfigurationElement GetNoCacheHeadersWithOverride()
+        {
+            var headerList = GetHeaderListFromContext();
+            return headerList.ContainsKey(setNoCacheHeadersKey)
+                       ? (SimpleBooleanConfigurationElement)headerList[setNoCacheHeadersKey]
+                       : baseConfig.NoCacheHttpHeaders;
         }
 
         public void SetXFrameoptionsOverride(XFrameOptionsConfigurationElement xFrameOptionsConfig)

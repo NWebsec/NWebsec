@@ -143,6 +143,12 @@
     <None Include="Properties\PublishProfiles\ngh.pubxml" />
     <None Include="Properties\PublishProfiles\Profile1.pubxml" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\NWebsec\NWebsec.csproj">
+      <Project>{a011d84b-b731-4404-8bc1-fe94d2b37599}</Project>
+      <Name>NWebsec</Name>
+    </ProjectReference>
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
