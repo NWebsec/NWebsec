@@ -67,6 +67,6 @@ namespace NWebsec.HttpHeaders
                                                 "http:" 
                                             };
 
-        public static readonly string[] VersionHeaders = { "X-AspNet-Version", "X-AspNetMvc-Version" };
+        public static readonly string[] VersionHeaders = { "X-AspNet-Version", "X-AspNetMvc-Version", "X-AspNetWebPages-Version" };
     }
 }
