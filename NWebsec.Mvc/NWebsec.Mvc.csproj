@@ -74,14 +74,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="HttpHeaders\SetNoCacheHttpHeadersAttribute.cs" />
-    <Compile Include="HttpHeaders\StrictTransportSecurityHeaderAttribute.cs" />
+    <Compile Include="HttpHeaders\StrictTransportSecurityAttribute.cs" />
     <Compile Include="HttpHeaders\SuppressVersionHttpHeadersAttribute.cs" />
     <Compile Include="HttpHeaders\XContentSecurityPolicyAttribute.cs" />
     <Compile Include="HttpHeaders\XContentSecurityPolicyReportOnlyAttribute.cs" />
     <Compile Include="HttpHeaders\XContentTypeOptionsAttribute.cs" />
     <Compile Include="HttpHeaders\XDownloadOptionsAttribute.cs" />
     <Compile Include="HttpHeaders\XFrameOptionsAttribute.cs" />
-    <Compile Include="HttpHeaders\XXssProtectionHeaderAttribute.cs" />
+    <Compile Include="HttpHeaders\XXssProtectionAttribute.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

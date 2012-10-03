@@ -8,12 +8,12 @@ using NWebsec.Mvc.HttpHeaders;
 
 namespace DemoSiteMvc3.Controllers
 {
-    [StrictTransportSecurityHeader("0:0:5")]
+    [StrictTransportSecurity("0:0:5")]
     [SuppressVersionHttpHeaders]
     [XContentTypeOptions]
     [XDownloadOptions]
     //[XFrameOptions(Policy = HttpHeadersConstants.XFrameOptions.SameOrigin)]
-    [XXssProtectionHeader]
+    [XXssProtection]
     [XContentSecurityPolicy("script-src", "'none'")]
     [XContentSecurityPolicyReportOnly("script-src", "'self'")]
     [XContentSecurityPolicyReportOnly("img-src", "'self'")]
@@ -47,7 +47,7 @@ namespace DemoSiteMvc3.Controllers
         [XContentTypeOptions(Enabled = false)]
         [XDownloadOptions(Enabled = false)]
         [XFrameOptions]
-        [XXssProtectionHeader]
+        [XXssProtection]
         [XContentSecurityPolicy("default-src", "'nwebsec.codeplex.com'")]
         [XContentSecurityPolicy("script-src", "'nwebsec.codeplex.com'")]
         [XContentSecurityPolicy("img-src", "'self'")]

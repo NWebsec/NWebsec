@@ -34,20 +34,21 @@ using NWebsec.Modules.Configuration;
 namespace NWebsec.Mvc.HttpHeaders
 {
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, Inherited = true, AllowMultiple = false)]
-    public class XXssProtectionHeaderAttribute : ActionFilterAttribute
+    public class StrictTransportSecurityAttribute : ActionFilterAttribute
     {
-        public HttpHeadersConstants.XXssProtection Policy { get; set; }
-        public bool BlockMode { get; set; }
+        private TimeSpan ttl;
+        public bool IncludeSubdomains { get; set; }
 
-        public XXssProtectionHeaderAttribute()
+        public StrictTransportSecurityAttribute(string maxAge)
         {
-            Policy = HttpHeadersConstants.XXssProtection.FilterEnabled;
-            BlockMode = true;
+            if (!TimeSpan.TryParse(maxAge,out ttl))
+                throw new ArgumentException("Invalid timespan format. See TimeSpan.TryParse on MSDN for examples.","maxAge");
+            IncludeSubdomains = false;
         }
 
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
-            new HttpHeaderHelper(filterContext.HttpContext).SetXXssProtectionOverride(new XXssProtectionConfigurationElement() { Policy = Policy, BlockMode = BlockMode });
+            new HttpHeaderHelper(filterContext.HttpContext).SetHstsOverride(new HstsConfigurationElement() { MaxAge = ttl, IncludeSubdomains = IncludeSubdomains });
             base.OnActionExecuting(filterContext);
         }
     }
