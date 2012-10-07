@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>NWebsec.Mvc</id>
-    <version>1.0.4-alpha</version>
+    <version>1.1.0-alpha</version>
     <title>NWebsec.Mvc</title>
     <authors>Andre N. Klingsheim</authors>
     <owners>Andre N. Klingsheim</owners>
@@ -11,7 +11,7 @@
     <iconUrl>http://www.nwebsec.com/Content/Logo/nwebsec_nuget.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>NWebsec for ASP.NET MVC 3/4 applications.</description>
-    <releaseNotes>See latest release notes at project web site.</releaseNotes>
+    <releaseNotes>NWebsec can now set secure cache headers. See documentation at project web site.</releaseNotes>
     <copyright>Copyright 2012</copyright>
     <tags>NWebsec security asp.net mvc</tags>
     <dependencies>
