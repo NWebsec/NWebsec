@@ -59,7 +59,7 @@ namespace NWebsec.HttpHeaders
 
         internal void FixHeaders()
         {
-            var headerSetter = new HttpHeaderSetter(context.Response);
+            var headerSetter = new HttpHeaderSetter(context);
 
             headerSetter.SetNoCacheHeaders(GetNoCacheHeadersWithOverride());
             headerSetter.AddXFrameoptionsHeader(GetXFrameoptionsWithOverride());

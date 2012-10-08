@@ -41,20 +41,32 @@ namespace NWebsec.Tests.Unit.HttpHeaders
     public class HttpHeaderSetterTest
     {
         HttpHeaderSetter headerSetter;
+        Mock<HttpRequestBase> mockRequest;
         Mock<HttpResponseBase> mockResponse;
+        Mock<HttpContextBase> mockContext;
         private Mock<HttpCachePolicyBase> mockCachePolicy;
         private Mock<NameValueCollection> mockHeaderCollection;
 
         [SetUp]
         public void HeaderModuleTestInitialize()
         {
+            mockContext = new Mock<HttpContextBase>();
+            mockRequest = new Mock<HttpRequestBase>();
             mockResponse = new Mock<HttpResponseBase>();
             mockResponse.SetupAllProperties();
+            mockRequest.SetupAllProperties();
+            mockContext.SetupAllProperties();
+
+            var testUri = new Uri("http://localhost/NWebsecWebforms/");
+            mockRequest.Setup(r => r.Url).Returns(testUri);
+
             mockHeaderCollection = new Mock<NameValueCollection>();
             mockCachePolicy = new Mock<HttpCachePolicyBase>();
             mockResponse.Setup(x => x.Cache).Returns(mockCachePolicy.Object);
 
-            headerSetter = new HttpHeaderSetter(mockResponse.Object);
+            mockContext.Setup(c => c.Request).Returns(mockRequest.Object);
+            mockContext.Setup(c => c.Response).Returns(mockResponse.Object);
+            headerSetter = new HttpHeaderSetter(mockContext.Object);
 
         }
 
@@ -64,7 +76,7 @@ namespace NWebsec.Tests.Unit.HttpHeaders
             var noCache = new SimpleBooleanConfigurationElement { Enabled = false };
             var strictMockCachePolicy = new Mock<HttpCachePolicyBase>(MockBehavior.Strict);
             mockResponse.Setup(x => x.Cache).Returns(strictMockCachePolicy.Object);
-            
+
             headerSetter.SetNoCacheHeaders(noCache);
 
             mockResponse.Verify(x => x.AddHeader("Pragma", "no-cache"), Times.Never());
@@ -73,14 +85,42 @@ namespace NWebsec.Tests.Unit.HttpHeaders
         [Test]
         public void SetNoCacheHeaders_EnabledInConfig_SetsNoCacheHeaders()
         {
-            var contentTypeOptions = new SimpleBooleanConfigurationElement { Enabled = true };
+            var noCacheConfig = new SimpleBooleanConfigurationElement { Enabled = true };
 
-            headerSetter.SetNoCacheHeaders(contentTypeOptions);
+            headerSetter.SetNoCacheHeaders(noCacheConfig);
 
             mockCachePolicy.Verify(c => c.SetCacheability(HttpCacheability.NoCache), Times.Once());
             mockCachePolicy.Verify(c => c.SetNoStore(), Times.Once());
             mockCachePolicy.Verify(c => c.SetRevalidation(HttpCacheRevalidation.AllCaches), Times.Once());
             mockResponse.Verify(x => x.AddHeader("Pragma", "no-cache"), Times.Once());
+        }
+
+        [Test]
+        public void SetNoCacheHeaders_EnabledInConfig_DoesNotChangeCachePolicyForWebResourceAxd()
+        {
+            var webResourceUri = new Uri("http://localhost/NWebsecWebforms/WebResource.axd?d=KR0LqbT9_EjNk9IGvQFOqLyww8pA5ZlVlp7-TdCC0v1f_CVLSLO6tCZSL6XZrd8W1ctlmbPHEB-m5CMlhKx-NSR5JSs1&t=634771440654164963");
+            mockRequest.Setup(r => r.Url).Returns(webResourceUri);
+            var noCache = new SimpleBooleanConfigurationElement { Enabled = true };
+            var strictMockCachePolicy = new Mock<HttpCachePolicyBase>(MockBehavior.Strict);
+            mockResponse.Setup(x => x.Cache).Returns(strictMockCachePolicy.Object);
+
+            headerSetter.SetNoCacheHeaders(noCache);
+
+            mockResponse.Verify(x => x.AddHeader("Pragma", "no-cache"), Times.Never());
+        }
+         
+        [Test]
+        public void SetNoCacheHeaders_EnabledInConfig_DoesNotChangeCachePolicyForScriptResourceAxd()
+        {
+            var scriptResourceUri = new Uri("http://localhost/NWebsecWebforms/ScriptResource.axd?d=KginuExFUAm3FJORK9PFmBV2hx1PgpjtjXKZZA6VaxKkuDHju8G7FchuvNy0eHix-3v5_FhO4HIrGUES80RL08iwqB01&t=634771440654164963");
+            mockRequest.Setup(r => r.Url).Returns(scriptResourceUri);
+            var noCache = new SimpleBooleanConfigurationElement { Enabled = true };
+            var strictMockCachePolicy = new Mock<HttpCachePolicyBase>(MockBehavior.Strict);
+            mockResponse.Setup(x => x.Cache).Returns(strictMockCachePolicy.Object);
+
+            headerSetter.SetNoCacheHeaders(noCache);
+
+            mockResponse.Verify(x => x.AddHeader("Pragma", "no-cache"), Times.Never());
         }
 
         [Test]

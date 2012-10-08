@@ -37,15 +37,23 @@ namespace NWebsec.HttpHeaders
     class HttpHeaderSetter
     {
         private HttpResponseBase response;
-        internal HttpHeaderSetter(HttpResponseBase response)
+        private HttpRequestBase request;
+        internal HttpHeaderSetter(HttpContextBase context)
         {
-            this.response = response;
+            response = context.Response;
+            request = context.Request;
         }
 
         public void SetNoCacheHeaders(SimpleBooleanConfigurationElement getNoCacheHeadersWithOverride)
         {
             if (!getNoCacheHeadersWithOverride.Enabled)
                 return;
+
+            var path = request.Url.AbsolutePath;
+            if (path.EndsWith("ScriptResource.axd") || path.EndsWith("WebResource.axd"))
+                return;
+
+            //response.
 
             response.Cache.SetCacheability(HttpCacheability.NoCache);
             response.Cache.SetNoStore();
