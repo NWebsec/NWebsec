@@ -45,7 +45,6 @@ namespace NWebsec.Tests.Unit.HttpHeaders
         Mock<HttpResponseBase> mockResponse;
         Mock<HttpContextBase> mockContext;
         private Mock<HttpCachePolicyBase> mockCachePolicy;
-        private Mock<NameValueCollection> mockHeaderCollection;
 
         [SetUp]
         public void HeaderModuleTestInitialize()
@@ -56,16 +55,18 @@ namespace NWebsec.Tests.Unit.HttpHeaders
             mockResponse.SetupAllProperties();
             mockRequest.SetupAllProperties();
             mockContext.SetupAllProperties();
+            var mockHandler = new Mock<IHttpHandler>();
 
             var testUri = new Uri("http://localhost/NWebsecWebforms/");
             mockRequest.Setup(r => r.Url).Returns(testUri);
 
-            mockHeaderCollection = new Mock<NameValueCollection>();
             mockCachePolicy = new Mock<HttpCachePolicyBase>();
             mockResponse.Setup(x => x.Cache).Returns(mockCachePolicy.Object);
 
             mockContext.Setup(c => c.Request).Returns(mockRequest.Object);
             mockContext.Setup(c => c.Response).Returns(mockResponse.Object);
+            mockContext.Setup(c => c.CurrentHandler).Returns(mockHandler.Object);
+            
             headerSetter = new HttpHeaderSetter(mockContext.Object);
 
         }
@@ -117,6 +118,19 @@ namespace NWebsec.Tests.Unit.HttpHeaders
             var noCache = new SimpleBooleanConfigurationElement { Enabled = true };
             var strictMockCachePolicy = new Mock<HttpCachePolicyBase>(MockBehavior.Strict);
             mockResponse.Setup(x => x.Cache).Returns(strictMockCachePolicy.Object);
+
+            headerSetter.SetNoCacheHeaders(noCache);
+
+            mockResponse.Verify(x => x.AddHeader("Pragma", "no-cache"), Times.Never());
+        }
+
+        [Test]
+        public void SetNoCacheHeaders_EnabledInConfigWhenStaticContent_DoesNotChangeCachePolicy()
+        {
+            var noCache = new SimpleBooleanConfigurationElement { Enabled = true };
+            var strictMockCachePolicy = new Mock<HttpCachePolicyBase>(MockBehavior.Strict);
+            mockResponse.Setup(x => x.Cache).Returns(strictMockCachePolicy.Object);
+            mockContext.Setup(c => c.CurrentHandler).Returns((IHttpHandler)null);
 
             headerSetter.SetNoCacheHeaders(noCache);
 
