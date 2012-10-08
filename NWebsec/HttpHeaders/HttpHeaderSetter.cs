@@ -53,6 +53,10 @@ namespace NWebsec.HttpHeaders
 
             if (context.CurrentHandler == null)
                 return;
+
+            var handlerType = context.CurrentHandler.GetType();
+            if (handlerType.FullName.Equals("System.Web.Optimization.BundleHandler"))
+                return;
             
             var path = request.Url.AbsolutePath;
             if (path.EndsWith("ScriptResource.axd") || path.EndsWith("WebResource.axd"))
