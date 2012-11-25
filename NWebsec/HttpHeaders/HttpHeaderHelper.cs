@@ -61,13 +61,13 @@ namespace NWebsec.HttpHeaders
         {
             var headerSetter = new HttpHeaderSetter(context);
 
+            headerSetter.SuppressVersionHeaders(GetSuppressVersionHeadersWithOverride());
+            headerSetter.AddHstsHeader(GetHstsWithOverride());
             headerSetter.SetNoCacheHeaders(GetNoCacheHeadersWithOverride());
             headerSetter.AddXFrameoptionsHeader(GetXFrameoptionsWithOverride());
-            headerSetter.AddHstsHeader(GetHstsWithOverride());
             headerSetter.AddXContentTypeOptionsHeader(GetXContentTypeOptionsWithOverride());
             headerSetter.AddXDownloadOptionsHeader(GetXDownloadOptionsWithOverride());
             headerSetter.AddXXssProtectionHeader(GetXXssProtectionWithOverride());
-            headerSetter.SuppressVersionHeaders(GetSuppressVersionHeadersWithOverride());
             headerSetter.AddXCspHeaders(GetCspElementWithOverrides(false, baseConfig.SecurityHttpHeaders.ExperimentalHeaders), false);
             headerSetter.AddXCspHeaders(GetCspElementWithOverrides(true, baseConfig.SecurityHttpHeaders.ExperimentalHeaders), true);
 
