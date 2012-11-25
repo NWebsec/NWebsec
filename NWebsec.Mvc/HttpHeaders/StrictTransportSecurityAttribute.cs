@@ -34,6 +34,7 @@ using NWebsec.Modules.Configuration;
 namespace NWebsec.Mvc.HttpHeaders
 {
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, Inherited = true, AllowMultiple = false)]
+    [Obsolete("Strict Transport Security should be configured in web.config.",false)]
     public class StrictTransportSecurityAttribute : ActionFilterAttribute
     {
         private TimeSpan ttl;

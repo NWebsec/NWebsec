@@ -34,6 +34,7 @@ using NWebsec.Modules.Configuration;
 namespace NWebsec.Mvc.HttpHeaders
 {
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, Inherited = true, AllowMultiple = false)]
+    [Obsolete("SuppressVersionHttpHeaders should be configured in web.config.", false)]
     public class SuppressVersionHttpHeadersAttribute : ActionFilterAttribute
     {
 
