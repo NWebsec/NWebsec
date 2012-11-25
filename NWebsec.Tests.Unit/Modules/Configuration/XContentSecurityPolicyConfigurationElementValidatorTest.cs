@@ -38,20 +38,20 @@ namespace NWebsec.Tests.Unit.Modules.Configuration
     public class XContentSecurityPolicyConfigurationElementValidatorTest
     {
         private XContentSecurityPolicyConfigurationElementValidator validator;
-        private XContentSecurityPolicyConfigurationElement configElement;
+        private CspConfigurationElement configElement;
 
         [SetUp]
         public void TestInitialize()
         {
             validator = new XContentSecurityPolicyConfigurationElementValidator();
-            configElement = new XContentSecurityPolicyConfigurationElement();
+            configElement = new CspConfigurationElement();
         }
 
         [Test]
         [ExpectedException(typeof(ConfigurationErrorsException))]
         public void Validate_InvalidDirective_ThrowsException()
         {
-            var directive = new CspDirectiveConfigurationElement() { Name = "invalid-src" };
+            var directive = new CspDirectiveBaseConfigurationElement() { Name = "invalid-src" };
             configElement.Directives.Add(directive);
             configElement.XContentSecurityPolicyHeader = true;
 
@@ -63,7 +63,7 @@ namespace NWebsec.Tests.Unit.Modules.Configuration
         {
             foreach (var directiveName in HttpHeadersConstants.CspDirectives)
             {
-                var directive = new CspDirectiveConfigurationElement() { Name = directiveName, Source = "'self'"};
+                var directive = new CspDirectiveBaseConfigurationElement() { Name = directiveName, Source = "'self'"};
                 configElement.Directives.Add(directive);
             }
             validator.Validate(configElement);
@@ -86,7 +86,7 @@ namespace NWebsec.Tests.Unit.Modules.Configuration
         public void Validate_XcspHeadersEnabledAndDirectivesWithoutSource_ThrowsException()
         {
             configElement.XContentSecurityPolicyHeader = true;
-            var directive = new CspDirectiveConfigurationElement() { Name = "script-src", Source = ""};
+            var directive = new CspDirectiveBaseConfigurationElement() { Name = "script-src", Source = ""};
             configElement.Directives.Add(directive);
 
             validator.Validate(configElement);
@@ -98,7 +98,7 @@ namespace NWebsec.Tests.Unit.Modules.Configuration
         public void Validate_NoneWithMultipleSourcesInList_ThrowsException()
         {
             configElement.XContentSecurityPolicyHeader = true;
-            var directive = new CspDirectiveConfigurationElement() { Name = "script-src", Source = "'none'" };
+            var directive = new CspDirectiveBaseConfigurationElement() { Name = "script-src", Source = "'none'" };
             directive.Sources.Add(new CspSourceConfigurationElement() {Source = "nwebsec.codeplex.com"});
             configElement.Directives.Add(directive);
 
@@ -110,7 +110,7 @@ namespace NWebsec.Tests.Unit.Modules.Configuration
         public void Validate_SourceConfiguredBothInSourceAndSources_ThrowsException()
         {
             configElement.XContentSecurityPolicyHeader = true;
-            var directive = new CspDirectiveConfigurationElement() { Name = "script-src", Source = "'self'" };
+            var directive = new CspDirectiveBaseConfigurationElement() { Name = "script-src", Source = "'self'" };
             directive.Sources.Add(new CspSourceConfigurationElement() { Source = "'self'" });
             configElement.Directives.Add(directive);
 
@@ -122,7 +122,7 @@ namespace NWebsec.Tests.Unit.Modules.Configuration
         public void Validate_SameSourceAddedTwiceToSources_ThrowsException()
         {
             configElement.XContentSecurityPolicyHeader = true;
-            var directive = new CspDirectiveConfigurationElement() { Name = "script-src", Source = "'none'" };
+            var directive = new CspDirectiveBaseConfigurationElement() { Name = "script-src", Source = "'none'" };
             directive.Sources.Add(new CspSourceConfigurationElement() { Source = "'self'" });
             directive.Sources.Add(new CspSourceConfigurationElement() { Source = "'self'" });
             configElement.Directives.Add(directive);

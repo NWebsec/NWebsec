@@ -43,7 +43,7 @@ namespace NWebsec.Modules
         {
 
             var config = HttpHeaderHelper.GetConfig();
-            if (config.suppressVersionHeaders.Enabled && !HttpRuntime.UsingIntegratedPipeline)
+            if (config.SuppressVersionHeaders.Enabled && !HttpRuntime.UsingIntegratedPipeline)
             {
                 throw new ConfigurationErrorsException("NWebsec config error: suppressVersionHeaders can only be enabled when using IIS integrated pipeline mode.");
             }

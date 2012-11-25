@@ -68,8 +68,8 @@ namespace NWebsec.HttpHeaders
             headerSetter.AddXContentTypeOptionsHeader(GetXContentTypeOptionsWithOverride());
             headerSetter.AddXDownloadOptionsHeader(GetXDownloadOptionsWithOverride());
             headerSetter.AddXXssProtectionHeader(GetXXssProtectionWithOverride());
-            headerSetter.AddXCspHeaders(GetCspElementWithOverrides(false, baseConfig.SecurityHttpHeaders.ExperimentalHeaders), false);
-            headerSetter.AddXCspHeaders(GetCspElementWithOverrides(true, baseConfig.SecurityHttpHeaders.ExperimentalHeaders), true);
+            headerSetter.AddXCspHeaders(GetCspElementWithOverrides(false, baseConfig.SecurityHttpHeaders.Csp), false);
+            headerSetter.AddXCspHeaders(GetCspElementWithOverrides(true, baseConfig.SecurityHttpHeaders.CspReportOnly), true);
 
         }
 
@@ -205,7 +205,7 @@ namespace NWebsec.HttpHeaders
 
             return headerList.ContainsKey(suppressHeadersKey)
                     ? (SuppressVersionHeadersConfigurationElement)headerList[suppressHeadersKey]
-                    : baseConfig.suppressVersionHeaders;
+                    : baseConfig.SuppressVersionHeaders;
         }
 
         public void SetContentSecurityPolicyDirectiveOverride(string directive, string sources, bool reportOnly)
@@ -218,7 +218,7 @@ namespace NWebsec.HttpHeaders
 
             var sourceList = sources.Split(' ');
 
-            var element = new CspDirectiveConfigurationElement() { Name = directive };
+            var element = new CspDirectiveBaseConfigurationElement() { Name = directive };
 
             foreach (var source in sourceList)
             {
@@ -231,7 +231,7 @@ namespace NWebsec.HttpHeaders
             cspOverride.Add(element.Name, element);
         }
 
-        private IDictionary<String, CspDirectiveConfigurationElement> GetCspDirectiveOverides(bool reportOnly)
+        private IDictionary<String, CspDirectiveBaseConfigurationElement> GetCspDirectiveOverides(bool reportOnly)
         {
             var headerKey = cspHeadersKeyPrefix + (reportOnly
                                  ? HttpHeadersConstants.XContentSecurityPolicyReportOnlyHeader
@@ -240,16 +240,12 @@ namespace NWebsec.HttpHeaders
             var headerList = GetHeaderListFromContext();
 
             if (!headerList.ContainsKey(headerKey))
-                headerList[headerKey] = new Dictionary<String, CspDirectiveConfigurationElement>();
-            return (IDictionary<String, CspDirectiveConfigurationElement>)headerList[headerKey];
+                headerList[headerKey] = new Dictionary<String, CspDirectiveBaseConfigurationElement>();
+            return (IDictionary<String, CspDirectiveBaseConfigurationElement>)headerList[headerKey];
         }
 
-        internal XContentSecurityPolicyConfigurationElement GetCspElementWithOverrides(bool reportOnlyElement, ExperimentalSecurityHttpHeadersConfigurationElement config)
+        internal CspConfigurationElement GetCspElementWithOverrides(bool reportOnlyElement, CspConfigurationElement cspConfig)
         {
-            var cspConfig = (reportOnlyElement
-                                             ? config.XContentSecurityPolicyReportOnly
-                                             : config.XContentSecurityPolicy);
-
             var headerKey = cspHeadersKeyPrefix + (reportOnlyElement
                                  ? HttpHeadersConstants.XContentSecurityPolicyReportOnlyHeader
                                  : HttpHeadersConstants.XContentSecurityPolicyHeader);
@@ -258,17 +254,17 @@ namespace NWebsec.HttpHeaders
             if (!headerList.ContainsKey(headerKey))
                 return cspConfig;
 
-            var overriddenConfig = new XContentSecurityPolicyConfigurationElement();
-            var overrides = (IDictionary<String, CspDirectiveConfigurationElement>)headerList[headerKey];
+            var overriddenConfig = new CspConfigurationElement();
+            var overrides = (IDictionary<String, CspDirectiveBaseConfigurationElement>)headerList[headerKey];
 
-            foreach (CspDirectiveConfigurationElement directive in cspConfig.Directives)
+            foreach (CspDirectiveBaseConfigurationElement directive in cspConfig.Directives)
             {
                 if (!overrides.ContainsKey(directive.Name))
                     overriddenConfig.Directives.Add(directive);
             }
 
 
-            foreach (KeyValuePair<String, CspDirectiveConfigurationElement> directive in overrides)
+            foreach (KeyValuePair<String, CspDirectiveBaseConfigurationElement> directive in overrides)
             {
                 var test = (from CspSourceConfigurationElement source in directive.Value.Sources
                             where (!String.IsNullOrEmpty(source.Source))

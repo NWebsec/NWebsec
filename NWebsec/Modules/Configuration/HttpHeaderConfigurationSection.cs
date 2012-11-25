@@ -26,10 +26,7 @@ OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 #endregion
 
-using System.Collections.Generic;
-using System.Text;
 using System.Configuration;
-using NWebsec.Modules.Configuration.Csp;
 
 namespace NWebsec.Modules.Configuration
 {
@@ -51,7 +48,7 @@ namespace NWebsec.Modules.Configuration
         }
 
         [ConfigurationProperty("suppressVersionHttpHeaders", IsRequired = true)]
-        public SuppressVersionHeadersConfigurationElement suppressVersionHeaders
+        public SuppressVersionHeadersConfigurationElement SuppressVersionHeaders
         {
 
             get

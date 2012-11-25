@@ -37,17 +37,17 @@ namespace NWebsec.Modules.Configuration.Csp
     {
         public override bool CanValidate(Type type)
         {
-            return type == typeof(XContentSecurityPolicyConfigurationElement);
+            return type == typeof(CspConfigurationElement);
         }
         public override void Validate(object value)
         {
-            var config = (XContentSecurityPolicyConfigurationElement)value;
+            var config = (CspConfigurationElement)value;
 
             if (config.XContentSecurityPolicyHeader == false && config.XWebKitCspHeader == false) return;
 
             if (config.Directives.Count == 0)
                 throw new ConfigurationErrorsException("X-Content-Security-Policy is enabled, but there are no directives configured.");
-            foreach (CspDirectiveConfigurationElement directive in config.Directives)
+            foreach (CspDirectiveBaseConfigurationElement directive in config.Directives)
             {
                 if (!ValidateDirectiveName(directive.Name))
                 {

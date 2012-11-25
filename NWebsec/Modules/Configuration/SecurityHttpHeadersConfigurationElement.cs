@@ -112,7 +112,40 @@ namespace NWebsec.Modules.Configuration
 
         }
 
+        [ConfigurationProperty("content-Security-Policy", IsRequired = false)]
+        [XContentSecurityPolicyConfigurationElementValidator]
+        public CspConfigurationElement Csp
+        {
+
+            get
+            {
+                return (CspConfigurationElement)this["content-Security-Policy"];
+            }
+            set
+            {
+                this["content-Security-Policy"] = value;
+            }
+
+        }
+
+        [ConfigurationProperty("content-Security-Policy-Report-Only", IsRequired = false)]
+        [XContentSecurityPolicyConfigurationElementValidator]
+        public CspConfigurationElement CspReportOnly
+        {
+
+            get
+            {
+                return (CspConfigurationElement)this["content-Security-Policy-Report-Only"];
+            }
+            set
+            {
+                this["content-Security-Policy-Report-Only"] = value;
+            }
+
+        }
+
         [ConfigurationProperty("experimentalHeaders", IsRequired = false)]
+        [Obsolete]
         public ExperimentalSecurityHttpHeadersConfigurationElement ExperimentalHeaders
         {
 
@@ -133,12 +166,13 @@ namespace NWebsec.Modules.Configuration
     {
         [ConfigurationProperty("x-Content-Security-Policy", IsRequired = false)]
         [XContentSecurityPolicyConfigurationElementValidator]
-        public XContentSecurityPolicyConfigurationElement XContentSecurityPolicy
+        [Obsolete]
+        public CspConfigurationElement Csp
         {
 
             get
             {
-                return (XContentSecurityPolicyConfigurationElement)this["x-Content-Security-Policy"];
+                return (CspConfigurationElement)this["x-Content-Security-Policy"];
             }
             set
             {
@@ -149,12 +183,13 @@ namespace NWebsec.Modules.Configuration
 
         [ConfigurationProperty("x-Content-Security-Policy-Report-Only", IsRequired = false)]
         [XContentSecurityPolicyConfigurationElementValidator]
-        public XContentSecurityPolicyConfigurationElement XContentSecurityPolicyReportOnly
+        [Obsolete]
+        public CspConfigurationElement CspReportOnly
         {
 
             get
             {
-                return (XContentSecurityPolicyConfigurationElement)this["x-Content-Security-Policy-Report-Only"];
+                return (CspConfigurationElement)this["x-Content-Security-Policy-Report-Only"];
             }
             set
             {

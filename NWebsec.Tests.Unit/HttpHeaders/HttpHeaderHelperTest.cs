@@ -133,10 +133,10 @@ namespace NWebsec.Tests.Unit.HttpHeaders
         {
             const bool reportonly = false;
 
-            var config = new ExperimentalSecurityHttpHeadersConfigurationElement();
-            var directive = new CspDirectiveConfigurationElement { Name = "script-src", Source = "'self'" };
+            var config = new CspConfigurationElement();
+            var directive = new CspDirectiveBaseConfigurationElement { Name = "script-src", Source = "'self'" };
             directive.Sources.Add(new CspSourceConfigurationElement() { Source = "nwebsec.codeplex.com" });
-            config.XContentSecurityPolicy.Directives.Add(directive);
+            config.Directives.Add(directive);
 
             headerHelper.SetContentSecurityPolicyDirectiveOverride("script-src", "", reportonly);
 
@@ -150,10 +150,10 @@ namespace NWebsec.Tests.Unit.HttpHeaders
         {
             const bool reportonly = false;
 
-            var config = new ExperimentalSecurityHttpHeadersConfigurationElement();
-            var directive = new CspDirectiveConfigurationElement { Name = "script-src", Source = "'self'" };
+            var config = new CspConfigurationElement();
+            var directive = new CspDirectiveBaseConfigurationElement { Name = "script-src", Source = "'self'" };
             directive.Sources.Add(new CspSourceConfigurationElement() { Source = "nwebsec.codeplex.com" });
-            config.XContentSecurityPolicy.Directives.Add(directive);
+            config.Directives.Add(directive);
 
             headerHelper.SetContentSecurityPolicyDirectiveOverride("script-src", "transformtool.codeplex.com", reportonly);
 
@@ -170,14 +170,14 @@ namespace NWebsec.Tests.Unit.HttpHeaders
         {
             const bool reportonly = false;
 
-            var config = new ExperimentalSecurityHttpHeadersConfigurationElement();
+            var config = new CspConfigurationElement();
             
             headerHelper.SetContentSecurityPolicyDirectiveOverride("script-src", "transformtool.codeplex.com", reportonly);
             headerHelper.SetContentSecurityPolicyDirectiveOverride("script-src", "'none'", reportonly);
 
             var overrideElement = headerHelper.GetCspElementWithOverrides(reportonly, config);
 
-            var expectedDirective = new CspDirectiveConfigurationElement { Name = "script-src", Source = "'none'" };
+            var expectedDirective = new CspDirectiveBaseConfigurationElement { Name = "script-src", Source = "'none'" };
             var winningDirective = overrideElement.Directives[overrideElement.Directives.IndexOf(expectedDirective)];
 
             Assert.IsTrue(String.IsNullOrEmpty(winningDirective.Source));
@@ -189,12 +189,12 @@ namespace NWebsec.Tests.Unit.HttpHeaders
         public void GetCspElementWithOverrides_DirectiveNotConfiguredAndOverridenWithSources_DirectiveAdded()
         {
             const bool reportonly = false;
-            var config = new ExperimentalSecurityHttpHeadersConfigurationElement();
+            var config = new CspConfigurationElement();
 
             headerHelper.SetContentSecurityPolicyDirectiveOverride("script-src", "'none'", reportonly);
 
             var overrideElement = headerHelper.GetCspElementWithOverrides(reportonly, config);
-            var expectedDirective = new CspDirectiveConfigurationElement { Name = "script-src" };
+            var expectedDirective = new CspDirectiveBaseConfigurationElement { Name = "script-src" };
             var newDirective = overrideElement.Directives[overrideElement.Directives.IndexOf(expectedDirective)];
 
             Assert.IsTrue(String.IsNullOrEmpty(newDirective.Source));
@@ -206,9 +206,7 @@ namespace NWebsec.Tests.Unit.HttpHeaders
         public void GetCspElementWithOverrides_CspDisabledInConfigAndOverridenWithSources_CspEnabled()
         {
             const bool reportonly = false;
-            var config = new ExperimentalSecurityHttpHeadersConfigurationElement();
-            config.XContentSecurityPolicy.XContentSecurityPolicyHeader = false;
-            config.XContentSecurityPolicy.XWebKitCspHeader = false;
+            var config = new CspConfigurationElement {XContentSecurityPolicyHeader = false, XWebKitCspHeader = false};
 
             headerHelper.SetContentSecurityPolicyDirectiveOverride("script-src", "'none'", reportonly);
 

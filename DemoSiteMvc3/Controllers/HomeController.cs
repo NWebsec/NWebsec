@@ -17,9 +17,9 @@ namespace DemoSiteMvc3.Controllers
     [XContentSecurityPolicy("script-src", "'none'")]
     [XContentSecurityPolicyReportOnly("script-src", "'self'")]
     [XContentSecurityPolicyReportOnly("img-src", "'self'")]
-    //[XContentSecurityPolicy("script-src", "'none'")]
-    //[XContentSecurityPolicyReportOnly("script-src", "'self'")]
-    //[XContentSecurityPolicyReportOnly("img-src", "'self'")]
+    //[Csp("script-src", "'none'")]
+    //[CspReportOnly("script-src", "'self'")]
+    //[CspReportOnly("img-src", "'self'")]
     [XContentSecurityPolicy("script-src", "'self' scripts.nwebsec.codeplex.com")]
     public class HomeController : Controller
     {

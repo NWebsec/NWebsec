@@ -26,13 +26,15 @@ OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 #endregion
 
+using System;
 using System.Configuration;
 
 namespace NWebsec.Modules.Configuration.Csp
 {
-    public class CspDirectiveConfigurationElement : ConfigurationElement
+    public class CspDirectiveBaseConfigurationElement : ConfigurationElement
     {
         [ConfigurationProperty("name", IsRequired = false, IsKey = true)]
+        [Obsolete]
         public string Name
         {
             get
@@ -42,6 +44,45 @@ namespace NWebsec.Modules.Configuration.Csp
             set
             {
                 this["name"] = value;
+            }
+        }
+
+        [ConfigurationProperty("enabled", IsRequired = false, DefaultValue = true)]
+        public bool Enabled
+        {
+            get
+            {
+                return (bool)this["enabled"];
+            }
+            set
+            {
+                this["enabled"] = value;
+            }
+        }
+
+        [ConfigurationProperty("allowNone", IsRequired = false, DefaultValue = false)]
+        public bool AllowNone
+        {
+            get
+            {
+                return (bool)this["allowNone"];
+            }
+            set
+            {
+                this["allowNone"] = value;
+            }
+        }
+
+        [ConfigurationProperty("allowSelf", IsRequired = false, DefaultValue = false)]
+        public bool AllowSelf
+        {
+            get
+            {
+                return (bool)this["allowSelf"];
+            }
+            set
+            {
+                this["allowSelf"] = value;
             }
         }
 
@@ -62,8 +103,7 @@ namespace NWebsec.Modules.Configuration.Csp
         [ConfigurationCollection(typeof(CspSourcesElementCollection), CollectionType = ConfigurationElementCollectionType.AddRemoveClearMap)]
         public CspSourcesElementCollection Sources
         {
-
-            get
+get
             {
                 return (CspSourcesElementCollection)this["sources"];
             }
@@ -71,7 +111,6 @@ namespace NWebsec.Modules.Configuration.Csp
             {
                 this["sources"] = value;
             }
-
         }
 
     }

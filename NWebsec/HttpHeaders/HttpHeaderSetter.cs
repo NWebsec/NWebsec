@@ -27,6 +27,8 @@ OF THE POSSIBILITY OF SUCH DAMAGE.
 #endregion
 
 using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text;
 using System.Web;
 using NWebsec.Modules.Configuration;
@@ -36,9 +38,9 @@ namespace NWebsec.HttpHeaders
 {
     class HttpHeaderSetter
     {
-        private HttpContextBase context;
-        private HttpResponseBase response;
-        private HttpRequestBase request;
+        private readonly HttpContextBase context;
+        private readonly HttpResponseBase response;
+        private readonly HttpRequestBase request;
         internal HttpHeaderSetter(HttpContextBase context)
         {
             this.context = context;
@@ -57,7 +59,8 @@ namespace NWebsec.HttpHeaders
             var handlerType = context.CurrentHandler.GetType();
             if (handlerType.FullName.Equals("System.Web.Optimization.BundleHandler"))
                 return;
-            
+
+            Debug.Assert(request.Url != null, "request.Url != null");
             var path = request.Url.AbsolutePath;
             if (path.EndsWith("ScriptResource.axd") || path.EndsWith("WebResource.axd"))
                 return;
@@ -65,7 +68,7 @@ namespace NWebsec.HttpHeaders
             response.Cache.SetCacheability(HttpCacheability.NoCache);
             response.Cache.SetNoStore();
             response.Cache.SetRevalidation(HttpCacheRevalidation.AllCaches);
-            
+
             response.AddHeader("Pragma", "no-cache");
         }
 
@@ -100,7 +103,7 @@ namespace NWebsec.HttpHeaders
         internal void AddHstsHeader(HstsConfigurationElement hstsConfig)
         {
 
-            int seconds = (int)hstsConfig.MaxAge.TotalSeconds;
+            var seconds = (int)hstsConfig.MaxAge.TotalSeconds;
 
             if (seconds == 0) return;
 
@@ -114,7 +117,7 @@ namespace NWebsec.HttpHeaders
         {
             if (xContentTypeOptionsConfig.Enabled)
             {
-               response.AddHeader(HttpHeadersConstants.XContentTypeOptionsHeader, "nosniff");
+                response.AddHeader(HttpHeadersConstants.XContentTypeOptionsHeader, "nosniff");
             }
         }
 
@@ -128,7 +131,7 @@ namespace NWebsec.HttpHeaders
 
         internal void AddXXssProtectionHeader(XXssProtectionConfigurationElement xXssProtectionConfig)
         {
-            string value = "";
+            string value;
             switch (xXssProtectionConfig.Policy)
             {
                 case HttpHeadersConstants.XXssProtection.Disabled:
@@ -149,43 +152,34 @@ namespace NWebsec.HttpHeaders
             response.AddHeader(HttpHeadersConstants.XXssProtectionHeader, value);
         }
 
-        internal void AddXCspHeaders(XContentSecurityPolicyConfigurationElement xContentSecurityPolicyConfig, bool reportOnly)
+        internal void AddXCspHeaders(CspConfigurationElement cspConfig, bool reportOnly)
         {
-            if ((xContentSecurityPolicyConfig.XContentSecurityPolicyHeader || xContentSecurityPolicyConfig.XWebKitCspHeader))
-            {
-                var headerValue = CreateCspHeaderValue(xContentSecurityPolicyConfig);
-                if (xContentSecurityPolicyConfig.XContentSecurityPolicyHeader)
-                {
-                    var headerName = (reportOnly
-                                          ? HttpHeadersConstants.XContentSecurityPolicyReportOnlyHeader
-                                          : HttpHeadersConstants.XContentSecurityPolicyHeader);
-                    
-                    response.AddHeader(headerName, headerValue);
-                }
-                if (xContentSecurityPolicyConfig.XWebKitCspHeader)
-                {
-                    var headerName = (reportOnly
-                                          ? HttpHeadersConstants.XWebKitCspReportOnlyHeader
-                                          : HttpHeadersConstants.XWebKitCspHeader);
+            if (!cspConfig.Enabled) return;
 
-                    response.AddHeader(headerName, headerValue);
-                }
+            var headerValue = CreateCspHeaderValue(cspConfig);
+            var headerName = (reportOnly
+                                          ? HttpHeadersConstants.ContentSecurityPolicyReportOnlyHeader
+                                          : HttpHeadersConstants.ContentSecurityPolicyHeader);
+
+            response.AddHeader(headerName, headerValue);
+
+            if (cspConfig.XContentSecurityPolicyHeader)
+            {
+                headerName = (reportOnly
+                                  ? HttpHeadersConstants.XContentSecurityPolicyReportOnlyHeader
+                                  : HttpHeadersConstants.XContentSecurityPolicyHeader);
+
+                response.AddHeader(headerName, headerValue);
             }
 
-        }
-
-        internal void AddXCspReportOnlyHeaders(XContentSecurityPolicyConfigurationElement xContentSecurityPolicyReportConfig)
-        {
-
-            if ((xContentSecurityPolicyReportConfig.XContentSecurityPolicyHeader || xContentSecurityPolicyReportConfig.XWebKitCspHeader))
+            if (cspConfig.XWebKitCspHeader)
             {
-                var headerValue = CreateCspHeaderValue(xContentSecurityPolicyReportConfig);
-                if (xContentSecurityPolicyReportConfig.XContentSecurityPolicyHeader)
-                    response.AddHeader(HttpHeadersConstants.XContentSecurityPolicyReportOnlyHeader, headerValue);
-                if (xContentSecurityPolicyReportConfig.XWebKitCspHeader)
-                    response.AddHeader(HttpHeadersConstants.XWebKitCspReportOnlyHeader, headerValue);
-            }
+                headerName = (reportOnly
+                                  ? HttpHeadersConstants.XWebKitCspReportOnlyHeader
+                                  : HttpHeadersConstants.XWebKitCspHeader);
 
+                response.AddHeader(headerName, headerValue);
+            }
         }
 
         internal void SuppressVersionHeaders(SuppressVersionHeadersConfigurationElement suppressVersionHeadersConfig)
@@ -202,28 +196,80 @@ namespace NWebsec.HttpHeaders
             response.Headers.Set("Server", serverName);
         }
 
-        private string CreateCspHeaderValue(XContentSecurityPolicyConfigurationElement config)
+        private string CreateCspHeaderValue(CspConfigurationElement config)
         {
-            if (config.Directives.Count == 0) throw new ApplicationException("Error creating header, no directives configured.");
             var sb = new StringBuilder();
-            foreach (CspDirectiveConfigurationElement directive in config.Directives)
-            {
-                sb.Append(directive.Name);
-                sb.Append(' ');
-                if (!String.IsNullOrEmpty(directive.Source))
-                {
-                    sb.Append(directive.Source);
-                    sb.Append(' ');
-                }
-                foreach (CspSourceConfigurationElement source in directive.Sources)
-                {
-                    sb.Append(source.Source);
-                    sb.Append(' ');
-                }
 
-                sb.Insert(sb.Length - 1, ';');
+            if (config.DefaultSrc.Enabled)
+                sb.Append(CreateDirectiveValue("default-src", GetDirectiveList(config.DefaultSrc)));
+
+            if (config.ScriptSrc.Enabled)
+                sb.Append(CreateDirectiveValue("script-src", GetDirectiveList(config.ScriptSrc)));
+
+            if (config.ObjectSrc.Enabled)
+                sb.Append(CreateDirectiveValue("object-src", GetDirectiveList(config.ObjectSrc)));
+
+            if (config.StyleSrc.Enabled)
+                sb.Append(CreateDirectiveValue("style-src", GetDirectiveList(config.StyleSrc)));
+
+            if (config.ImgSrc.Enabled)
+                sb.Append(CreateDirectiveValue("img-src", GetDirectiveList(config.ImgSrc)));
+
+            if (config.MediaSrc.Enabled)
+                sb.Append(CreateDirectiveValue("media-src", GetDirectiveList(config.MediaSrc)));
+
+            if (config.FrameSrc.Enabled)
+                sb.Append(CreateDirectiveValue("frame-src", GetDirectiveList(config.FrameSrc)));
+
+            if (config.FontSrc.Enabled)
+                sb.Append(CreateDirectiveValue("font-src", GetDirectiveList(config.FontSrc)));
+
+            if (config.ConnectSrc.Enabled)
+                sb.Append(CreateDirectiveValue("connect-src", GetDirectiveList(config.ConnectSrc)));
+
+            return sb.ToString();
+        }
+
+        private ICollection<string> GetDirectiveList(CspDirectiveBaseConfigurationElement directive)
+        {
+            var sources = new LinkedList<string>();
+
+            if (directive.AllowNone)
+                sources.AddLast("'none'");
+
+            if (directive.AllowSelf)
+                sources.AddLast("'self'");
+
+            var allowUnsafeInlineElement = directive as CspDirectiveUnsafeInlineConfigurationElement;
+            if (allowUnsafeInlineElement != null && allowUnsafeInlineElement.AllowUnsafeInline)
+                sources.AddLast("'unsafe-inline'");
+
+            var allowUnsafeEvallement = directive as CspDirectiveUnsafeInlineUnsafeEvalConfigurationElement;
+            if (allowUnsafeEvallement != null && allowUnsafeEvallement.AllowUnsafeEval)
+                sources.AddLast("'unsafe-eval'");
+
+            if (!string.IsNullOrEmpty(directive.Source))
+                sources.AddLast(directive.Source);
+
+            foreach (CspSourceConfigurationElement sourceElement in directive.Sources)
+            {
+                sources.AddLast(sourceElement.Source);
             }
-            sb.Remove(sb.Length - 2, 2);
+            return sources;
+        }
+
+        private string CreateDirectiveValue(string directiveName, ICollection<string> sources)
+        {
+            if (sources.Count < 1) return String.Empty;
+            var sb = new StringBuilder();
+            sb.Append(directiveName);
+            sb.Append(' ');
+            foreach (var source in sources)
+            {
+                sb.Append(source);
+                sb.Append(' ');
+            }
+            sb.Insert(sb.Length - 1,';');
             return sb.ToString();
         }
 

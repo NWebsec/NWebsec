@@ -34,12 +34,12 @@ namespace NWebsec.Modules.Configuration.Csp
     {
         protected override ConfigurationElement CreateNewElement()
         {
-            return new CspDirectiveConfigurationElement();
+            return new CspDirectiveBaseConfigurationElement();
         }
 
         protected override object GetElementKey(ConfigurationElement element)
         {
-            return ((CspDirectiveConfigurationElement)element).Name;
+            return ((CspDirectiveBaseConfigurationElement)element).Name;
         }
 
         public override ConfigurationElementCollectionType CollectionType
@@ -50,11 +50,11 @@ namespace NWebsec.Modules.Configuration.Csp
             }
         }
 
-        public CspDirectiveConfigurationElement this[int index]
+        public CspDirectiveBaseConfigurationElement this[int index]
         {
             get
             {
-                return (CspDirectiveConfigurationElement) BaseGet(index);
+                return (CspDirectiveBaseConfigurationElement) BaseGet(index);
             }
             set
             {
@@ -66,7 +66,7 @@ namespace NWebsec.Modules.Configuration.Csp
             }
         }
 
-        public void Add(CspDirectiveConfigurationElement element)
+        public void Add(CspDirectiveBaseConfigurationElement element)
         {
             BaseAdd(element);
         }
@@ -76,7 +76,7 @@ namespace NWebsec.Modules.Configuration.Csp
             BaseClear();
         }
 
-        public void Remove(CspDirectiveConfigurationElement element)
+        public void Remove(CspDirectiveBaseConfigurationElement element)
         {
             BaseRemove(element);
         }
@@ -91,12 +91,12 @@ namespace NWebsec.Modules.Configuration.Csp
             BaseRemoveAt(index);
         }
 
-        public int IndexOf(CspDirectiveConfigurationElement element)
+        public int IndexOf(CspDirectiveBaseConfigurationElement element)
         {
             return BaseIndexOf(element);
         }
 
-        public bool IsRemoved(CspDirectiveConfigurationElement element)
+        public bool IsRemoved(CspDirectiveBaseConfigurationElement element)
         {
             return BaseIsRemoved(element);
         }

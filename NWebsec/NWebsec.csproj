@@ -49,8 +49,10 @@
     <Compile Include="HttpHeaders\HttpHeaderHelper.cs" />
     <Compile Include="HttpHeaders\HttpHeadersConstants.cs" />
     <Compile Include="HttpHeaders\HttpHeaderSetter.cs" />
-    <Compile Include="Modules\Configuration\Csp\CspDirectiveConfigurationElement.cs" />
+    <Compile Include="Modules\Configuration\Csp\CspDirectiveBaseConfigurationElement.cs" />
     <Compile Include="Modules\Configuration\Csp\CspDirectiveElementCollection.cs" />
+    <Compile Include="Modules\Configuration\Csp\CspDirectiveUnsafeInlineConfigurationElement.cs" />
+    <Compile Include="Modules\Configuration\Csp\CspDirectiveUnsafeInlineUnsafeEvalConfigurationElement.cs" />
     <Compile Include="Modules\Configuration\Csp\CspSourceConfigurationElement.cs" />
     <Compile Include="Modules\Configuration\Csp\CspSourcesElementCollection.cs" />
     <Compile Include="Modules\Configuration\Csp\XContentSecurityPolicyConfigurationElementValidatorAttribute.cs" />
@@ -59,7 +61,7 @@
     <Compile Include="Modules\Configuration\Csp\XContentSecurityPolicyConfigurationElementValidator.cs" />
     <Compile Include="Modules\Configuration\SuppressVersionHeadersConfigurationElement.cs" />
     <Compile Include="Modules\HttpHeaderModule.cs" />
-    <Compile Include="Modules\Configuration\Csp\XContentSecurityPolicyConfigurationElement.cs" />
+    <Compile Include="Modules\Configuration\Csp\CspConfigurationElement.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
