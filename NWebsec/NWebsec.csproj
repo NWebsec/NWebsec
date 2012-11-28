@@ -50,15 +50,20 @@
     <Compile Include="HttpHeaders\HttpHeadersConstants.cs" />
     <Compile Include="HttpHeaders\HttpHeaderSetter.cs" />
     <Compile Include="Modules\Configuration\Csp\CspDirectiveBaseConfigurationElement.cs" />
-    <Compile Include="Modules\Configuration\Csp\CspDirectiveElementCollection.cs" />
     <Compile Include="Modules\Configuration\Csp\CspDirectiveUnsafeInlineConfigurationElement.cs" />
     <Compile Include="Modules\Configuration\Csp\CspDirectiveUnsafeInlineUnsafeEvalConfigurationElement.cs" />
+    <Compile Include="Modules\Configuration\Csp\CspHeaderConfigurationElement.cs" />
+    <Compile Include="Modules\Configuration\Csp\CspReportUriConfigurationElement.cs" />
+    <Compile Include="Modules\Configuration\Csp\CspReportUriDirectiveConfigurationElement.cs" />
+    <Compile Include="Modules\Configuration\Csp\CspReportUriConfigurationElementCollection.cs" />
+    <Compile Include="Modules\Configuration\Csp\Validation\ReportUriValidator.cs" />
     <Compile Include="Modules\Configuration\Csp\CspSourceConfigurationElement.cs" />
     <Compile Include="Modules\Configuration\Csp\CspSourcesElementCollection.cs" />
-    <Compile Include="Modules\Configuration\Csp\XContentSecurityPolicyConfigurationElementValidatorAttribute.cs" />
+    <Compile Include="Modules\Configuration\Csp\Validation\ReportUriValidatorAttribute.cs" />
+    <Compile Include="Modules\Configuration\Csp\Validation\CspDirectiveBaseConfigurationElementValidatorAttribute.cs" />
     <Compile Include="Modules\Configuration\HttpHeaderConfigurationSection.cs" />
     <Compile Include="Modules\Configuration\SecurityHttpHeadersConfigurationElement.cs" />
-    <Compile Include="Modules\Configuration\Csp\XContentSecurityPolicyConfigurationElementValidator.cs" />
+    <Compile Include="Modules\Configuration\Csp\Validation\CspDirectiveBaseConfigurationElementValidator.cs" />
     <Compile Include="Modules\Configuration\SuppressVersionHeadersConfigurationElement.cs" />
     <Compile Include="Modules\HttpHeaderModule.cs" />
     <Compile Include="Modules\Configuration\Csp\CspConfigurationElement.cs" />
@@ -69,6 +74,7 @@
       <SubType>Designer</SubType>
     </None>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

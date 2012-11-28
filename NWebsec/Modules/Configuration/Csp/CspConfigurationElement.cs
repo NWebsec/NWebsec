@@ -1,78 +1,15 @@
-﻿#region License
-/*
-Copyright (c) 2012, André N. Klingsheim
-All rights reserved.
+﻿// Copyright (c) André N. Klingsheim. See License.txt in the project root for license information.
 
-Redistribution and use in source and binary forms, with or without
-modification, are permitted provided that the following conditions are met:
-
-* Redistributions of source code must retain the above copyright notice, this
-  list of conditions and the following disclaimer.
-
-* Redistributions in binary form must reproduce the above copyright notice,
-  this list of conditions and the following disclaimer in the documentation
-  and/or other materials provided with the distribution.
-
-THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
-ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
-WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
-IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
-INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
-BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
-LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
-OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
-OF THE POSSIBILITY OF SUCH DAMAGE.
-*/
-#endregion
-
-using System;
 using System.Configuration;
+using NWebsec.Modules.Configuration.Csp.Validation;
 
 namespace NWebsec.Modules.Configuration.Csp
 {
-    public class CspConfigurationElement : ConfigurationElement, ICloneable
+    public class CspConfigurationElement : CspHeaderConfigurationElement
     {
-        [ConfigurationProperty("enabled", IsRequired = false, DefaultValue = false)]
-        public bool Enabled
-        {
-            get
-            {
-                return (bool)this["enabled"];
-            }
-            set
-            {
-                this["enabled"] = value;
-            }
-        }
-
-        [ConfigurationProperty("x-Content-Security-Policy-Header", IsRequired = false, DefaultValue = false)]
-        public bool XContentSecurityPolicyHeader
-        {
-            get
-            {
-                return (bool)this["x-Content-Security-Policy-Header"];
-            }
-            set
-            {
-                this["x-Content-Security-Policy-Header"] = value;
-            }
-        }
-
-        [ConfigurationProperty("x-WebKit-CSP-Header", IsRequired = false, DefaultValue = false)]
-        public bool XWebKitCspHeader
-        {
-            get
-            {
-                return (bool)this["x-WebKit-CSP-Header"];
-            }
-            set
-            {
-                this["x-WebKit-CSP-Header"] = value;
-            }
-        }
 
         [ConfigurationProperty("default-src", IsRequired = false)]
+        [CspDirectiveBaseConfigurationElementValidator]
         public CspDirectiveBaseConfigurationElement DefaultSrc
         {
             get
@@ -99,6 +36,7 @@ namespace NWebsec.Modules.Configuration.Csp
         }
 
         [ConfigurationProperty("object-src", IsRequired = false)]
+        [CspDirectiveBaseConfigurationElementValidator]
         public CspDirectiveBaseConfigurationElement ObjectSrc
         {
             get
@@ -125,6 +63,7 @@ namespace NWebsec.Modules.Configuration.Csp
         }
 
         [ConfigurationProperty("img-src", IsRequired = false)]
+        [CspDirectiveBaseConfigurationElementValidator]
         public CspDirectiveBaseConfigurationElement ImgSrc
         {
             get
@@ -138,6 +77,7 @@ namespace NWebsec.Modules.Configuration.Csp
         }
 
         [ConfigurationProperty("media-src", IsRequired = false)]
+        [CspDirectiveBaseConfigurationElementValidator]
         public CspDirectiveBaseConfigurationElement MediaSrc
         {
             get
@@ -151,6 +91,7 @@ namespace NWebsec.Modules.Configuration.Csp
         }
 
         [ConfigurationProperty("frame-src", IsRequired = false)]
+        [CspDirectiveBaseConfigurationElementValidator]
         public CspDirectiveBaseConfigurationElement FrameSrc
         {
             get
@@ -164,6 +105,7 @@ namespace NWebsec.Modules.Configuration.Csp
         }
 
         [ConfigurationProperty("font-src", IsRequired = false)]
+        [CspDirectiveBaseConfigurationElementValidator]
         public CspDirectiveBaseConfigurationElement FontSrc
         {
             get
@@ -177,6 +119,7 @@ namespace NWebsec.Modules.Configuration.Csp
         }
 
         [ConfigurationProperty("connect-src", IsRequired = false)]
+        [CspDirectiveBaseConfigurationElementValidator]
         public CspDirectiveBaseConfigurationElement ConnectSrc
         {
             get
@@ -189,39 +132,18 @@ namespace NWebsec.Modules.Configuration.Csp
             }
         }
 
-        [ConfigurationProperty("directives", IsRequired = false)]
-        [ConfigurationCollection(typeof(CspDirectiveElementCollection), CollectionType = ConfigurationElementCollectionType.AddRemoveClearMap)]
-        [Obsolete]
-        public CspDirectiveElementCollection Directives
+        [ConfigurationProperty("report-uri", IsRequired = false)]
+        public CspReportUriDirectiveConfigurationElement ReportUriDirective
         {
             get
             {
-                return (CspDirectiveElementCollection)this["directives"];
+                return (CspReportUriDirectiveConfigurationElement)this["report-uri"];
             }
             set
             {
-                this["directives"] = value;
+                this["report-uri"] = value;
             }
         }
 
-        [Obsolete]
-        public object Clone()
-        {
-            var newElement = new CspConfigurationElement();
-            newElement.XContentSecurityPolicyHeader = XContentSecurityPolicyHeader;
-            newElement.XWebKitCspHeader = XWebKitCspHeader;
-
-            foreach (CspDirectiveBaseConfigurationElement directive in Directives)
-            {
-                var d = new CspDirectiveBaseConfigurationElement { Name = directive.Name, Source = directive.Source };
-                newElement.Directives.Add(d);
-
-                foreach (CspSourceConfigurationElement source in directive.Sources)
-                {
-                    d.Sources.Add(source);
-                }
-            }
-            return newElement;
-        }
     }
 }

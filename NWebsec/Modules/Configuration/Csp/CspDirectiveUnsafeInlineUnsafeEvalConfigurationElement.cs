@@ -1,19 +1,21 @@
-﻿using System.Configuration;
+﻿// Copyright (c) André N. Klingsheim. See License.txt in the project root for license information.
+
+using System.Configuration;
 
 namespace NWebsec.Modules.Configuration.Csp
 {
     public class CspDirectiveUnsafeInlineUnsafeEvalConfigurationElement : CspDirectiveUnsafeInlineConfigurationElement
     {
-        [ConfigurationProperty("allowUnsafeEval", IsRequired = false, DefaultValue = false)]
-        public bool AllowUnsafeEval
+        [ConfigurationProperty("unsafeEval", IsRequired = false, DefaultValue = false)]
+        public bool UnsafeEval
         {
             get
             {
-                return (bool)this["allowUnsafeEval"];
+                return (bool)this["unsafeEval"];
             }
             set
             {
-                this["allowUnsafeEval"] = value;
+                this["unsafeEval"] = value;
             }
         }
     }

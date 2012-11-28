@@ -33,6 +33,7 @@ using NWebsec.HttpHeaders;
 namespace NWebsec.Mvc.HttpHeaders
 {
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, Inherited = true, AllowMultiple = true)]
+    [Obsolete("This attribute has been discontinued. Please use the new CSP attributes in the NWebsec.Mvc.HttpHeaders.Csp namespace", true)]
     public class XContentSecurityPolicyReportOnlyAttribute : ActionFilterAttribute
     {
         private string directiveName;
@@ -46,7 +47,7 @@ namespace NWebsec.Mvc.HttpHeaders
 
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
-            new HttpHeaderHelper(filterContext.HttpContext).SetContentSecurityPolicyDirectiveOverride(directiveName, sourceList, true);
+            //new HttpHeaderHelper(filterContext.HttpContext).SetContentSecurityPolicyDirectiveOverride(directiveName, sourceList, true);
             base.OnActionExecuting(filterContext);
         }
     }

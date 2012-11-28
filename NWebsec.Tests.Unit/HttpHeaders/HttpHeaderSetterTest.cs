@@ -301,9 +301,13 @@ namespace NWebsec.Tests.Unit.HttpHeaders
         [Test]
         public void AddXCspHeaders_XCspEnabledInConfig_AddsXCspHeader()
         {
-            var cspConfig = new CspConfigurationElement { XContentSecurityPolicyHeader = true, XWebKitCspHeader = false };
-            var directive = new CspDirectiveBaseConfigurationElement() { Name = "script-src" };
-            cspConfig.Directives.Add(directive);
+            var cspConfig = new CspConfigurationElement
+                                {
+                                    Enabled = true,
+                                    XContentSecurityPolicyHeader = true,
+                                    XWebKitCspHeader = false,
+                                    DefaultSrc = {Self = true}
+                                };
 
             headerSetter.AddXCspHeaders(cspConfig, false);
 
@@ -313,9 +317,13 @@ namespace NWebsec.Tests.Unit.HttpHeaders
         [Test]
         public void AddXCspHeaders_XWebkitCspEnabledInConfig_AddsXWebkitCspHeader()
         {
-            var cspConfig = new CspConfigurationElement { XContentSecurityPolicyHeader = false, XWebKitCspHeader = true };
-            var directive = new CspDirectiveBaseConfigurationElement() { Name = "script-src" };
-            cspConfig.Directives.Add(directive);
+            var cspConfig = new CspConfigurationElement
+                                {
+                                    Enabled = true,
+                                    XContentSecurityPolicyHeader = false,
+                                    XWebKitCspHeader = true,
+                                    DefaultSrc = {Self = true}
+                                };
 
             headerSetter.AddXCspHeaders(cspConfig, false);
 
@@ -325,10 +333,8 @@ namespace NWebsec.Tests.Unit.HttpHeaders
         [Test]
         public void AddXCspHeaders_XCspAndXWebkitCspEnabledInConfig_AddsXcspAndXWebkitCspHeader()
         {
-            var cspConfig = new CspConfigurationElement { XContentSecurityPolicyHeader = true, XWebKitCspHeader = true };
-            var directive = new CspDirectiveBaseConfigurationElement() { Name = "script-src" };
-            cspConfig.Directives.Add(directive);
-
+            var cspConfig = new CspConfigurationElement { Enabled = true, XContentSecurityPolicyHeader = true, XWebKitCspHeader = true };
+            
             headerSetter.AddXCspHeaders(cspConfig, false);
 
             mockResponse.Verify(x => x.AddHeader("X-Content-Security-Policy", It.IsAny<String>()), Times.Once());
@@ -338,9 +344,13 @@ namespace NWebsec.Tests.Unit.HttpHeaders
         [Test]
         public void AddXCspHeaders_XCspReportOnlyEnabledInConfig_AddsXCspReportOnlyHeader()
         {
-            var cspConfig = new CspConfigurationElement { XContentSecurityPolicyHeader = true, XWebKitCspHeader = false };
-            var directive = new CspDirectiveBaseConfigurationElement() { Name = "script-src" };
-            cspConfig.Directives.Add(directive);
+            var cspConfig = new CspConfigurationElement
+                                {
+                                    Enabled = true,
+                                    XContentSecurityPolicyHeader = true,
+                                    XWebKitCspHeader = false,
+                                    DefaultSrc = {Self = true}
+                                };
 
             headerSetter.AddXCspHeaders(cspConfig,true);
 
@@ -350,9 +360,13 @@ namespace NWebsec.Tests.Unit.HttpHeaders
         [Test]
         public void AddXCspHeaders_XWebkitCspReportOnlyEnabledInConfig_AddsXWebkitCspReportOnlyHeader()
         {
-            var cspConfig = new CspConfigurationElement { XContentSecurityPolicyHeader = false, XWebKitCspHeader = true };
-            var directive = new CspDirectiveBaseConfigurationElement() { Name = "script-src" };
-            cspConfig.Directives.Add(directive);
+            var cspConfig = new CspConfigurationElement
+                                {
+                                    Enabled = true,
+                                    XContentSecurityPolicyHeader = false,
+                                    XWebKitCspHeader = true,
+                                    DefaultSrc = {Self = true}
+                                };
 
             headerSetter.AddXCspHeaders(cspConfig, true);
 
@@ -362,9 +376,13 @@ namespace NWebsec.Tests.Unit.HttpHeaders
         [Test]
         public void AddXCspHeaders_XCspAndXWebkitCspReportOnlyEnabledInConfig_AddsXCspAndXWebkitCspReportOnlyHeader()
         {
-            var cspConfig = new CspConfigurationElement { XContentSecurityPolicyHeader = true, XWebKitCspHeader = true };
-            var directive = new CspDirectiveBaseConfigurationElement() { Name = "script-src" };
-            cspConfig.Directives.Add(directive);
+            var cspConfig = new CspConfigurationElement
+                                {
+                                    Enabled = true,
+                                    XContentSecurityPolicyHeader = true,
+                                    XWebKitCspHeader = true,
+                                    DefaultSrc = {Self = true}
+                                };
 
             headerSetter.AddXCspHeaders(cspConfig, true);
 
@@ -373,30 +391,29 @@ namespace NWebsec.Tests.Unit.HttpHeaders
         }
 
         [Test]
-        public void AddXCspHeaders_XCspWithTwoDirectives_AddsCorrectXCspHeader()
+        public void AddCspHeaders_CspWithTwoDirectives_AddsCorrectCspHeader()
         {
-            var cspConfig = new CspConfigurationElement { XContentSecurityPolicyHeader = true, XWebKitCspHeader = false };
-            var directive = new CspDirectiveBaseConfigurationElement() { Name = "default-src", Source = "'self'" };
-            cspConfig.Directives.Add(directive);
-            directive = new CspDirectiveBaseConfigurationElement() { Name = "script-src", Source = "'none'" };
-            cspConfig.Directives.Add(directive);
+            var cspConfig = new CspConfigurationElement
+                                {
+                                    Enabled = true,
+                                    DefaultSrc = {Self = true},
+                                    ScriptSrc = {None = true}
+                                };
 
             headerSetter.AddXCspHeaders(cspConfig, false);
 
-            mockResponse.Verify(x => x.AddHeader("X-Content-Security-Policy", "default-src 'self'; script-src 'none'"), Times.Once());
+            mockResponse.Verify(x => x.AddHeader("Content-Security-Policy", "default-src 'self'; script-src 'none'"), Times.Once());
         }
 
         [Test]
-        public void AddXCspHeaders_XCspDirectiveWithTwoSources_AddsCorrectlyFormattedXCspHeader()
+        public void AddCspHeaders_CspDirectiveWithTwoSources_AddsCorrectlyFormattedCspHeader()
         {
-            var cspConfig = new CspConfigurationElement { XContentSecurityPolicyHeader = true, XWebKitCspHeader = false };
-            var directive = new CspDirectiveBaseConfigurationElement() { Name = "default-src", Source = "'self'" };
-            directive.Sources.Add(new CspSourceConfigurationElement() { Source = "nwebsec.codeplex.com" });
-            cspConfig.Directives.Add(directive);
-
+            var cspConfig = new CspConfigurationElement {Enabled = true, DefaultSrc = {Self = true}};
+            cspConfig.DefaultSrc.Sources.Add(new CspSourceConfigurationElement() { Source = "nwebsec.codeplex.com" });
+            
             headerSetter.AddXCspHeaders(cspConfig, false);
 
-            mockResponse.Verify(x => x.AddHeader("X-Content-Security-Policy", "default-src 'self' nwebsec.codeplex.com"), Times.Once());
+            mockResponse.Verify(x => x.AddHeader("Content-Security-Policy", "default-src 'self' nwebsec.codeplex.com"), Times.Once());
         }
 
         [Test]

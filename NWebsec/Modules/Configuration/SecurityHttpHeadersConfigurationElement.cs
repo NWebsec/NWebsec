@@ -27,12 +27,10 @@ OF THE POSSIBILITY OF SUCH DAMAGE.
 #endregion
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Configuration;
 using NWebsec.HttpHeaders;
 using NWebsec.Modules.Configuration.Csp;
+using NWebsec.Modules.Configuration.Csp.Validation;
 
 namespace NWebsec.Modules.Configuration
 {
@@ -113,7 +111,6 @@ namespace NWebsec.Modules.Configuration
         }
 
         [ConfigurationProperty("content-Security-Policy", IsRequired = false)]
-        [XContentSecurityPolicyConfigurationElementValidator]
         public CspConfigurationElement Csp
         {
 
@@ -129,7 +126,6 @@ namespace NWebsec.Modules.Configuration
         }
 
         [ConfigurationProperty("content-Security-Policy-Report-Only", IsRequired = false)]
-        [XContentSecurityPolicyConfigurationElementValidator]
         public CspConfigurationElement CspReportOnly
         {
 
@@ -165,7 +161,6 @@ namespace NWebsec.Modules.Configuration
     public class ExperimentalSecurityHttpHeadersConfigurationElement : ConfigurationElement
     {
         [ConfigurationProperty("x-Content-Security-Policy", IsRequired = false)]
-        [XContentSecurityPolicyConfigurationElementValidator]
         [Obsolete]
         public CspConfigurationElement Csp
         {
@@ -182,7 +177,6 @@ namespace NWebsec.Modules.Configuration
         }
 
         [ConfigurationProperty("x-Content-Security-Policy-Report-Only", IsRequired = false)]
-        [XContentSecurityPolicyConfigurationElementValidator]
         [Obsolete]
         public CspConfigurationElement CspReportOnly
         {

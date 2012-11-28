@@ -1,30 +1,4 @@
-﻿#region License
-/*
-Copyright (c) 2012, André N. Klingsheim
-All rights reserved.
-
-Redistribution and use in source and binary forms, with or without
-modification, are permitted provided that the following conditions are met:
-
-* Redistributions of source code must retain the above copyright notice, this
-  list of conditions and the following disclaimer.
-
-* Redistributions in binary form must reproduce the above copyright notice,
-  this list of conditions and the following disclaimer in the documentation
-  and/or other materials provided with the distribution.
-
-THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
-ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
-WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
-IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
-INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
-BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
-LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
-OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
-OF THE POSSIBILITY OF SUCH DAMAGE.
-*/
-#endregion
+﻿// Copyright (c) André N. Klingsheim. See License.txt in the project root for license information.
 
 using System;
 using System.Collections.Generic;
@@ -200,52 +174,36 @@ namespace NWebsec.HttpHeaders
         {
             var sb = new StringBuilder();
 
-            if (config.DefaultSrc.Enabled)
-                sb.Append(CreateDirectiveValue("default-src", GetDirectiveList(config.DefaultSrc)));
+            sb.Append(CreateDirectiveValue("default-src", GetDirectiveList(config.DefaultSrc)));
+            sb.Append(CreateDirectiveValue("script-src", GetDirectiveList(config.ScriptSrc)));
+            sb.Append(CreateDirectiveValue("object-src", GetDirectiveList(config.ObjectSrc)));
+            sb.Append(CreateDirectiveValue("style-src", GetDirectiveList(config.StyleSrc)));
+            sb.Append(CreateDirectiveValue("img-src", GetDirectiveList(config.ImgSrc)));
+            sb.Append(CreateDirectiveValue("media-src", GetDirectiveList(config.MediaSrc)));
+            sb.Append(CreateDirectiveValue("frame-src", GetDirectiveList(config.FrameSrc)));
+            sb.Append(CreateDirectiveValue("font-src", GetDirectiveList(config.FontSrc)));
+            sb.Append(CreateDirectiveValue("connect-src", GetDirectiveList(config.ConnectSrc)));
+            sb.Append(CreateDirectiveValue("report-uri", GetReportUriList(config.ReportUriDirective)));
 
-            if (config.ScriptSrc.Enabled)
-                sb.Append(CreateDirectiveValue("script-src", GetDirectiveList(config.ScriptSrc)));
-
-            if (config.ObjectSrc.Enabled)
-                sb.Append(CreateDirectiveValue("object-src", GetDirectiveList(config.ObjectSrc)));
-
-            if (config.StyleSrc.Enabled)
-                sb.Append(CreateDirectiveValue("style-src", GetDirectiveList(config.StyleSrc)));
-
-            if (config.ImgSrc.Enabled)
-                sb.Append(CreateDirectiveValue("img-src", GetDirectiveList(config.ImgSrc)));
-
-            if (config.MediaSrc.Enabled)
-                sb.Append(CreateDirectiveValue("media-src", GetDirectiveList(config.MediaSrc)));
-
-            if (config.FrameSrc.Enabled)
-                sb.Append(CreateDirectiveValue("frame-src", GetDirectiveList(config.FrameSrc)));
-
-            if (config.FontSrc.Enabled)
-                sb.Append(CreateDirectiveValue("font-src", GetDirectiveList(config.FontSrc)));
-
-            if (config.ConnectSrc.Enabled)
-                sb.Append(CreateDirectiveValue("connect-src", GetDirectiveList(config.ConnectSrc)));
-
-            return sb.ToString();
+            return sb.ToString().TrimEnd(new[] {' ', ';'});
         }
 
         private ICollection<string> GetDirectiveList(CspDirectiveBaseConfigurationElement directive)
         {
             var sources = new LinkedList<string>();
 
-            if (directive.AllowNone)
+            if (directive.None)
                 sources.AddLast("'none'");
 
-            if (directive.AllowSelf)
+            if (directive.Self)
                 sources.AddLast("'self'");
 
             var allowUnsafeInlineElement = directive as CspDirectiveUnsafeInlineConfigurationElement;
-            if (allowUnsafeInlineElement != null && allowUnsafeInlineElement.AllowUnsafeInline)
+            if (allowUnsafeInlineElement != null && allowUnsafeInlineElement.UnsafeInline)
                 sources.AddLast("'unsafe-inline'");
 
             var allowUnsafeEvallement = directive as CspDirectiveUnsafeInlineUnsafeEvalConfigurationElement;
-            if (allowUnsafeEvallement != null && allowUnsafeEvallement.AllowUnsafeEval)
+            if (allowUnsafeEvallement != null && allowUnsafeEvallement.UnsafeEval)
                 sources.AddLast("'unsafe-eval'");
 
             if (!string.IsNullOrEmpty(directive.Source))
@@ -256,6 +214,19 @@ namespace NWebsec.HttpHeaders
                 sources.AddLast(sourceElement.Source);
             }
             return sources;
+        }
+
+        private ICollection<string> GetReportUriList(CspReportUriDirectiveConfigurationElement directive)
+        {
+            var reportUris = new LinkedList<string>();
+            if (!String.IsNullOrEmpty(directive.ReportUri))
+                reportUris.AddLast(directive.ReportUri);
+
+            foreach (CspReportUriConfigurationElement reportUri in directive.ReportUris)
+            {
+                reportUris.AddLast(reportUri.ReportUri.ToString());
+            }
+            return reportUris;
         }
 
         private string CreateDirectiveValue(string directiveName, ICollection<string> sources)
@@ -269,7 +240,7 @@ namespace NWebsec.HttpHeaders
                 sb.Append(source);
                 sb.Append(' ');
             }
-            sb.Insert(sb.Length - 1,';');
+            sb.Insert(sb.Length - 1, ';');
             return sb.ToString();
         }
 

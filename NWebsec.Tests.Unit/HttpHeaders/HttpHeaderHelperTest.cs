@@ -26,13 +26,10 @@ OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 #endregion
 
-using System.Collections;
 using System.Collections.Generic;
-using System.Web.Configuration;
 using System;
 using System.Web;
 using Moq;
-using System.Collections.Specialized;
 using NUnit.Framework;
 using NWebsec.HttpHeaders;
 using NWebsec.Modules.Configuration;
@@ -47,6 +44,7 @@ namespace NWebsec.Tests.Unit.HttpHeaders
     {
         private Mock<HttpContextBase> mockContext;
         private HttpHeaderHelper headerHelper;
+        private string validCspDirectiveSource = "nwebsec.codeplex.com";
 
         [SetUp]
         public void Setup()
@@ -70,8 +68,8 @@ namespace NWebsec.Tests.Unit.HttpHeaders
         [Test]
         public void GetXFrameoptionsWithOverride_ConfigOverriden_ReturnsOverrideElement()
         {
-            var configOverride = new XFrameOptionsConfigurationElement() {Policy = HttpHeadersConstants.XFrameOptions.Deny};
-            
+            var configOverride = new XFrameOptionsConfigurationElement() { Policy = HttpHeadersConstants.XFrameOptions.Deny };
+
             headerHelper.SetXFrameoptionsOverride(configOverride);
 
             Assert.AreSame(configOverride, headerHelper.GetXFrameoptionsWithOverride());
@@ -80,11 +78,11 @@ namespace NWebsec.Tests.Unit.HttpHeaders
         [Test]
         public void GetHstsWithOverride_ConfigOverriden_ReturnsOverrideElement()
         {
-            var configOverride = new HstsConfigurationElement() { MaxAge = new TimeSpan(1,0,0)};
+            var configOverride = new HstsConfigurationElement() { MaxAge = new TimeSpan(1, 0, 0) };
 
             headerHelper.SetHstsOverride(configOverride);
 
-            Assert.AreSame(configOverride, headerHelper.GetHstsWithOverride());   
+            Assert.AreSame(configOverride, headerHelper.GetHstsWithOverride());
         }
 
         [Test]
@@ -94,7 +92,7 @@ namespace NWebsec.Tests.Unit.HttpHeaders
 
             headerHelper.SetXContentTypeOptionsOverride(configOverride);
 
-            Assert.AreSame(configOverride, headerHelper.GetXContentTypeOptionsWithOverride());  
+            Assert.AreSame(configOverride, headerHelper.GetXContentTypeOptionsWithOverride());
         }
 
         [Test]
@@ -104,8 +102,8 @@ namespace NWebsec.Tests.Unit.HttpHeaders
 
             headerHelper.SetXDownloadOptionsOverride(configOverride);
 
-            Assert.AreSame(configOverride, headerHelper.GetXDownloadOptionsWithOverride());  
-            
+            Assert.AreSame(configOverride, headerHelper.GetXDownloadOptionsWithOverride());
+
         }
 
         [Test]
@@ -115,7 +113,7 @@ namespace NWebsec.Tests.Unit.HttpHeaders
 
             headerHelper.SetXXssProtectionOverride(configOverride);
 
-            Assert.AreSame(configOverride, headerHelper.GetXXssProtectionWithOverride());  
+            Assert.AreSame(configOverride, headerHelper.GetXXssProtectionWithOverride());
         }
 
         [Test]
@@ -125,24 +123,7 @@ namespace NWebsec.Tests.Unit.HttpHeaders
 
             headerHelper.SetSuppressVersionHeadersOverride(configOverride);
 
-            Assert.AreSame(configOverride, headerHelper.GetSuppressVersionHeadersWithOverride());  
-        }
-
-        [Test]
-        public void GetCspElementWithOverrides_DirectiveConfiguredAndBlankOverride_DirectiveRemoved()
-        {
-            const bool reportonly = false;
-
-            var config = new CspConfigurationElement();
-            var directive = new CspDirectiveBaseConfigurationElement { Name = "script-src", Source = "'self'" };
-            directive.Sources.Add(new CspSourceConfigurationElement() { Source = "nwebsec.codeplex.com" });
-            config.Directives.Add(directive);
-
-            headerHelper.SetContentSecurityPolicyDirectiveOverride("script-src", "", reportonly);
-
-            var overrideElement = headerHelper.GetCspElementWithOverrides(reportonly, config);
-            Assert.IsFalse(overrideElement.Directives.IndexOf(directive) >= 0);
-
+            Assert.AreSame(configOverride, headerHelper.GetSuppressVersionHeadersWithOverride());
         }
 
         [Test]
@@ -150,70 +131,35 @@ namespace NWebsec.Tests.Unit.HttpHeaders
         {
             const bool reportonly = false;
 
-            var config = new CspConfigurationElement();
-            var directive = new CspDirectiveBaseConfigurationElement { Name = "script-src", Source = "'self'" };
-            directive.Sources.Add(new CspSourceConfigurationElement() { Source = "nwebsec.codeplex.com" });
-            config.Directives.Add(directive);
+            var config = new CspConfigurationElement { DefaultSrc = { Self = true } };
+            var directive = new CspDirectiveBaseConfigurationElement { Self = false };
+            directive.Sources.Add(new CspSourceConfigurationElement() { Source = validCspDirectiveSource });
 
-            headerHelper.SetContentSecurityPolicyDirectiveOverride("script-src", "transformtool.codeplex.com", reportonly);
+            headerHelper.SetContentSecurityPolicyDirectiveOverride(HttpHeaderHelper.CspDirectives.DefaultSrc, directive, reportonly);
 
-            var overrideElement = headerHelper.GetCspElementWithOverrides(reportonly, config);
-            var newDirective = overrideElement.Directives[overrideElement.Directives.IndexOf(directive)];
+            var overrideElement = headerHelper.GetCspElementWithOverrides(reportonly, config).DefaultSrc;
 
-            Assert.IsTrue(String.IsNullOrEmpty(newDirective.Source));
-            Assert.IsTrue(newDirective.Sources.GetAllKeys().Length == 1);
-            Assert.IsTrue(newDirective.Sources[0].Source.Equals("transformtool.codeplex.com"));
+            Assert.IsFalse(overrideElement.Self);
+            Assert.IsTrue(overrideElement.Sources.GetAllKeys().Length == 1);
+            Assert.IsTrue(overrideElement.Sources[0].Source.Equals(validCspDirectiveSource));
         }
 
         [Test]
         public void GetCspElementWithOverrides_DirectiveOverridenMultipleTimes_LastOverrideWins()
         {
             const bool reportonly = false;
-
-            var config = new CspConfigurationElement();
-            
-            headerHelper.SetContentSecurityPolicyDirectiveOverride("script-src", "transformtool.codeplex.com", reportonly);
-            headerHelper.SetContentSecurityPolicyDirectiveOverride("script-src", "'none'", reportonly);
-
-            var overrideElement = headerHelper.GetCspElementWithOverrides(reportonly, config);
-
-            var expectedDirective = new CspDirectiveBaseConfigurationElement { Name = "script-src", Source = "'none'" };
-            var winningDirective = overrideElement.Directives[overrideElement.Directives.IndexOf(expectedDirective)];
-
-            Assert.IsTrue(String.IsNullOrEmpty(winningDirective.Source));
-            Assert.IsTrue(winningDirective.Sources.GetAllKeys().Length == 1);
-            Assert.IsTrue(winningDirective.Sources[0].Source.Equals("'none'"));
-        }
-
-        [Test]
-        public void GetCspElementWithOverrides_DirectiveNotConfiguredAndOverridenWithSources_DirectiveAdded()
-        {
-            const bool reportonly = false;
             var config = new CspConfigurationElement();
 
-            headerHelper.SetContentSecurityPolicyDirectiveOverride("script-src", "'none'", reportonly);
+            var firstOverride = new CspDirectiveBaseConfigurationElement { Source = "transformtool.codeplex.com" };
+            var secondOverride = new CspDirectiveBaseConfigurationElement { Source = "nwebsec.codeplex.com" };
+
+            headerHelper.SetContentSecurityPolicyDirectiveOverride(HttpHeaderHelper.CspDirectives.DefaultSrc, firstOverride, reportonly);
+            headerHelper.SetContentSecurityPolicyDirectiveOverride(HttpHeaderHelper.CspDirectives.DefaultSrc, secondOverride, reportonly);
 
             var overrideElement = headerHelper.GetCspElementWithOverrides(reportonly, config);
-            var expectedDirective = new CspDirectiveBaseConfigurationElement { Name = "script-src" };
-            var newDirective = overrideElement.Directives[overrideElement.Directives.IndexOf(expectedDirective)];
 
-            Assert.IsTrue(String.IsNullOrEmpty(newDirective.Source));
-            Assert.IsTrue(newDirective.Sources.GetAllKeys().Length == 1);
-            Assert.IsTrue(newDirective.Sources[0].Source.Equals("'none'"));
+            Assert.IsTrue(overrideElement.DefaultSrc.Source.Equals("nwebsec.codeplex.com"));
         }
 
-        [Test]
-        public void GetCspElementWithOverrides_CspDisabledInConfigAndOverridenWithSources_CspEnabled()
-        {
-            const bool reportonly = false;
-            var config = new CspConfigurationElement {XContentSecurityPolicyHeader = false, XWebKitCspHeader = false};
-
-            headerHelper.SetContentSecurityPolicyDirectiveOverride("script-src", "'none'", reportonly);
-
-            var overrideElement = headerHelper.GetCspElementWithOverrides(reportonly, config);
-            
-            Assert.IsTrue(overrideElement.XContentSecurityPolicyHeader);
-            Assert.IsTrue(overrideElement.XWebKitCspHeader);
-        }
     }
 }

@@ -3,6 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{07D0ADD6-1502-453F-8F21-F69748F0D188}"
 	ProjectSection(SolutionItems) = preProject
+		License.txt = License.txt
 		Local.testsettings = Local.testsettings
 		nwebsec.vsmdi = nwebsec.vsmdi
 		TraceAndTestImpact.testsettings = TraceAndTestImpact.testsettings

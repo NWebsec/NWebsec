@@ -558,7 +558,7 @@ ko.utils.domNodeDisposal = new (function () {
 
         // Special support for jQuery here because it's so commonly used.
         // Many jQuery plugins (including jquery.tmpl) store data using jQuery's equivalent of domData
-        // so notify it to tear down any resources associated with the node & descendants here.
+        // so notify it to tear down any reReportUris associated with the node & descendants here.
         if ((typeof jQuery == "function") && (typeof jQuery['cleanData'] == "function"))
             jQuery['cleanData']([node]);
 
@@ -2772,13 +2772,13 @@ ko.exportSymbol('templateRewriting.applyMemoizedBindingsToNextSibling', ko.templ
     //                                           without reading/writing the actual element text content, since it will be overwritten
     //                                           with the rendered template output.
     // You can implement your own template source if you want to fetch/store templates somewhere other than in DOM elements.
-    // Template sources need to have the following functions:
+    // Template ReportUris need to have the following functions:
     //   text() 			- returns the template text from your storage location
     //   text(value)		- writes the supplied template text to your storage location
     //   data(key)			- reads values stored using data(key, value) - see below
     //   data(key, value)	- associates "value" with this template and the key "key". Is used to store information like "isRewritten".
     //
-    // Optionally, template sources can also have the following functions:
+    // Optionally, template ReportUris can also have the following functions:
     //   nodes()            - returns a DOM element containing the nodes of this template, where available
     //   nodes(value)       - writes the given DOM element to your storage location
     // If a DOM element is available for a given template source, template engines are encouraged to use it in preference over text()

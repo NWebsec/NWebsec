@@ -5,22 +5,21 @@ using System.Web;
 using System.Web.Mvc;
 using NWebsec.HttpHeaders;
 using NWebsec.Mvc.HttpHeaders;
+using NWebsec.Mvc.HttpHeaders.Csp;
 
 namespace DemoSiteMvc3.Controllers
 {
-    [StrictTransportSecurity("0:0:5")]
-    [SuppressVersionHttpHeaders]
+    [CspDefaultSrc(SourceNone = true)]
     [XContentTypeOptions]
     [XDownloadOptions]
     //[XFrameOptions(Policy = HttpHeadersConstants.XFrameOptions.SameOrigin)]
     [XXssProtection]
-    [XContentSecurityPolicy("script-src", "'none'")]
-    [XContentSecurityPolicyReportOnly("script-src", "'self'")]
-    [XContentSecurityPolicyReportOnly("img-src", "'self'")]
-    //[Csp("script-src", "'none'")]
+    //[XContentSecurityPolicy("script-src", "'none'")]
+    //[XContentSecurityPolicyReportOnly("script-src", "'self'")]
+    //[XContentSecurityPolicyReportOnly("img-src", "'self'")]
+    ////[Csp("script-src", "'none'")]
     //[CspReportOnly("script-src", "'self'")]
     //[CspReportOnly("img-src", "'self'")]
-    [XContentSecurityPolicy("script-src", "'self' scripts.nwebsec.codeplex.com")]
     public class HomeController : Controller
     {
 
@@ -30,14 +29,14 @@ namespace DemoSiteMvc3.Controllers
             return View("Index");
         }
 
-        [XContentSecurityPolicy("default-src", "'self' nwebsec.codeplex.com")]
+        //[XContentSecurityPolicy("default-src", "'self' nwebsec.codeplex.com")]
         public ActionResult Index2()
         {
             return View("Index");
         }
 
-        [XContentSecurityPolicy("script-src", "scripts.nwebsec.codeplex.com ajax.googleapis.com")]
-        [XContentSecurityPolicy("default-src", "'self' stuff.nwebsec.codeplex.com")]
+        //[XContentSecurityPolicy("script-src", "scripts.nwebsec.codeplex.com ajax.googleapis.com")]
+        //[XContentSecurityPolicy("default-src", "'self' stuff.nwebsec.codeplex.com")]
         public ActionResult Index3()
         {
             return View("Index");
@@ -48,10 +47,10 @@ namespace DemoSiteMvc3.Controllers
         [XDownloadOptions(Enabled = false)]
         [XFrameOptions]
         [XXssProtection]
-        [XContentSecurityPolicy("default-src", "'nwebsec.codeplex.com'")]
-        [XContentSecurityPolicy("script-src", "'nwebsec.codeplex.com'")]
-        [XContentSecurityPolicy("img-src", "'self'")]
-        [XContentSecurityPolicyReportOnly("script-src", "'none'")]
+        //[XContentSecurityPolicy("default-src", "'nwebsec.codeplex.com'")]
+        //[XContentSecurityPolicy("script-src", "'nwebsec.codeplex.com'")]
+        //[XContentSecurityPolicy("img-src", "'self'")]
+        //[XContentSecurityPolicyReportOnly("script-src", "'none'")]
         public ActionResult Frame()
         {
             return View();

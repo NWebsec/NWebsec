@@ -73,6 +73,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="HttpHeaders\Csp\CspDefaultSrcAttribute.cs" />
+    <Compile Include="HttpHeaders\Csp\CspDirectiveAttributeBase.cs" />
     <Compile Include="HttpHeaders\SetNoCacheHttpHeadersAttribute.cs" />
     <Compile Include="HttpHeaders\StrictTransportSecurityAttribute.cs" />
     <Compile Include="HttpHeaders\SuppressVersionHttpHeadersAttribute.cs" />
@@ -94,6 +96,7 @@
       <Name>NWebsec</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

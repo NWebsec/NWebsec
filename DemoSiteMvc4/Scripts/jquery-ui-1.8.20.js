@@ -5990,7 +5990,7 @@ $.extend( $.ui.accordion, {
 
 (function( $, undefined ) {
 
-// used to prevent race conditions with remote data sources
+// used to prevent race conditions with remote data ReportUris
 var requestIndex = 0;
 
 $.widget( "ui.autocomplete", {

@@ -68,7 +68,7 @@
     <Compile Include="HttpHeaders\HttpHeaderHelperTest.cs" />
     <Compile Include="HttpHeaders\HttpHeaderSetterTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Modules\Configuration\XContentSecurityPolicyConfigurationElementValidatorTest.cs" />
+    <Compile Include="Modules\Configuration\CspDirectiveBaseConfigurationElementValidatorTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config">
