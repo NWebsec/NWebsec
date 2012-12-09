@@ -7,7 +7,6 @@ using NWebsec.Modules.Configuration.Csp;
 
 namespace NWebsec.Mvc.HttpHeaders.Csp
 {
-    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, Inherited = true, AllowMultiple = false)]
     public abstract class CspDirectiveAttributeBase : ActionFilterAttribute
     {
         public bool Enabled { get; set; }

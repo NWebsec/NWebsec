@@ -73,8 +73,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="HttpHeaders\Csp\CspAttribute.cs" />
+    <Compile Include="HttpHeaders\Csp\CspAttributeBase.cs" />
     <Compile Include="HttpHeaders\Csp\CspDefaultSrcAttribute.cs" />
     <Compile Include="HttpHeaders\Csp\CspDirectiveAttributeBase.cs" />
+    <Compile Include="HttpHeaders\Csp\CspReportOnlyAttribute.cs" />
+    <Compile Include="HttpHeaders\Csp\CspReportUriAttribute.cs" />
+    <Compile Include="HttpHeaders\Csp\CspReportUriAttributeBase.cs" />
+    <Compile Include="HttpHeaders\Csp\CspReportUriReportOnlyAttribute.cs" />
     <Compile Include="HttpHeaders\SetNoCacheHttpHeadersAttribute.cs" />
     <Compile Include="HttpHeaders\StrictTransportSecurityAttribute.cs" />
     <Compile Include="HttpHeaders\SuppressVersionHttpHeadersAttribute.cs" />

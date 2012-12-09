@@ -18,8 +18,8 @@ namespace DemoSiteMvc3.Controllers
     //[XContentSecurityPolicyReportOnly("script-src", "'self'")]
     //[XContentSecurityPolicyReportOnly("img-src", "'self'")]
     ////[Csp("script-src", "'none'")]
-    //[CspReportOnly("script-src", "'self'")]
-    //[CspReportOnly("img-src", "'self'")]
+    //[CspReportOnlyAttribute("script-src", "'self'")]
+    //[CspReportOnlyAttribute("img-src", "'self'")]
     public class HomeController : Controller
     {
 

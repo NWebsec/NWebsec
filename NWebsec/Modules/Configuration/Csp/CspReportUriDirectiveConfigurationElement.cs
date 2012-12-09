@@ -19,6 +19,19 @@ namespace NWebsec.Modules.Configuration.Csp
             }
         }
 
+        [ConfigurationProperty("enableBuiltinHandler", IsRequired = false, DefaultValue = false)]
+        public bool EnableBuiltinHandler
+        {
+            get
+            {
+                return (bool)this["enableBuiltinHandler"];
+            }
+            set
+            {
+                this["enableBuiltinHandler"] = value;
+            }
+        }
+
         [ConfigurationProperty("report-uri", IsRequired = false)]
         public string ReportUri
         {

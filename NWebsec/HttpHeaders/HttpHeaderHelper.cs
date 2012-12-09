@@ -56,8 +56,8 @@ namespace NWebsec.HttpHeaders
             headerSetter.AddXContentTypeOptionsHeader(GetXContentTypeOptionsWithOverride());
             headerSetter.AddXDownloadOptionsHeader(GetXDownloadOptionsWithOverride());
             headerSetter.AddXXssProtectionHeader(GetXXssProtectionWithOverride());
-            headerSetter.AddXCspHeaders(GetCspElementWithOverrides(false, baseConfig.SecurityHttpHeaders.Csp), false);
-            headerSetter.AddXCspHeaders(GetCspElementWithOverrides(true, baseConfig.SecurityHttpHeaders.CspReportOnly), true);
+            headerSetter.AddCspHeaders(GetCspElementWithOverrides(false, baseConfig.SecurityHttpHeaders.Csp), false);
+            headerSetter.AddCspHeaders(GetCspElementWithOverrides(true, baseConfig.SecurityHttpHeaders.CspReportOnly), true);
 
         }
 
@@ -196,7 +196,7 @@ namespace NWebsec.HttpHeaders
                     : baseConfig.SuppressVersionHeaders;
         }
 
-        public void SetCspHeaderOverride(CspConfigurationElement cspConfig, bool reportOnly)
+        public void SetCspHeaderOverride(CspHeaderConfigurationElement cspConfig, bool reportOnly)
         {
             var headerList = GetHeaderListFromContext();
             var headerKey = GetCspConfigKey(CspHeaderKeyPrefix, reportOnly);
@@ -207,7 +207,7 @@ namespace NWebsec.HttpHeaders
             headerList.Add(headerKey, cspConfig);
         }
 
-        internal CspConfigurationElement GetCspHeaderWithOverride(bool reportOnly)
+        internal CspHeaderConfigurationElement GetCspHeaderWithOverride(bool reportOnly)
         {
             var headerList = GetHeaderListFromContext();
             var headerkey = GetCspConfigKey(CspHeaderKeyPrefix, reportOnly);

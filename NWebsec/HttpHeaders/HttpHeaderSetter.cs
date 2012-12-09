@@ -15,6 +15,8 @@ namespace NWebsec.HttpHeaders
         private readonly HttpContextBase context;
         private readonly HttpResponseBase response;
         private readonly HttpRequestBase request;
+        internal static string BuiltInReportUriHandler = "/WebResource.axd?cspReport=true";
+
         internal HttpHeaderSetter(HttpContextBase context)
         {
             this.context = context;
@@ -126,11 +128,13 @@ namespace NWebsec.HttpHeaders
             response.AddHeader(HttpHeadersConstants.XXssProtectionHeader, value);
         }
 
-        internal void AddXCspHeaders(CspConfigurationElement cspConfig, bool reportOnly)
+        internal void AddCspHeaders(CspConfigurationElement cspConfig, bool reportOnly)
         {
             if (!cspConfig.Enabled) return;
-
+            
             var headerValue = CreateCspHeaderValue(cspConfig);
+            if (String.IsNullOrEmpty(headerValue)) return;
+
             var headerName = (reportOnly
                                           ? HttpHeadersConstants.ContentSecurityPolicyReportOnlyHeader
                                           : HttpHeadersConstants.ContentSecurityPolicyHeader);
@@ -183,6 +187,7 @@ namespace NWebsec.HttpHeaders
             sb.Append(CreateDirectiveValue("frame-src", GetDirectiveList(config.FrameSrc)));
             sb.Append(CreateDirectiveValue("font-src", GetDirectiveList(config.FontSrc)));
             sb.Append(CreateDirectiveValue("connect-src", GetDirectiveList(config.ConnectSrc)));
+            if (sb.Length == 0) return null;
             sb.Append(CreateDirectiveValue("report-uri", GetReportUriList(config.ReportUriDirective)));
 
             return sb.ToString().TrimEnd(new[] {' ', ';'});
@@ -202,8 +207,8 @@ namespace NWebsec.HttpHeaders
             if (allowUnsafeInlineElement != null && allowUnsafeInlineElement.UnsafeInline)
                 sources.AddLast("'unsafe-inline'");
 
-            var allowUnsafeEvallement = directive as CspDirectiveUnsafeInlineUnsafeEvalConfigurationElement;
-            if (allowUnsafeEvallement != null && allowUnsafeEvallement.UnsafeEval)
+            var allowUnsafeEvalElement = directive as CspDirectiveUnsafeInlineUnsafeEvalConfigurationElement;
+            if (allowUnsafeEvalElement != null && allowUnsafeEvalElement.UnsafeEval)
                 sources.AddLast("'unsafe-eval'");
 
             if (!string.IsNullOrEmpty(directive.Source))
@@ -219,6 +224,11 @@ namespace NWebsec.HttpHeaders
         private ICollection<string> GetReportUriList(CspReportUriDirectiveConfigurationElement directive)
         {
             var reportUris = new LinkedList<string>();
+            if (directive.EnableBuiltinHandler)
+            {
+                reportUris.AddLast(request.ApplicationPath + BuiltInReportUriHandler);
+            }
+
             if (!String.IsNullOrEmpty(directive.ReportUri))
                 reportUris.AddLast(directive.ReportUri);
 

@@ -1,10 +1,12 @@
 ﻿// Copyright (c) André N. Klingsheim. See License.txt in the project root for license information.
 
+using System;
 using NWebsec.HttpHeaders;
 using NWebsec.Modules.Configuration.Csp;
 
 namespace NWebsec.Mvc.HttpHeaders.Csp
 {
+    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, Inherited = false, AllowMultiple = false)]
     public class CspDefaultSrcAttribute : CspDirectiveAttributeBase
     {
         protected override HttpHeaderHelper.CspDirectives Directive
@@ -18,6 +20,7 @@ namespace NWebsec.Mvc.HttpHeaders.Csp
         }
     }
 
+    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, Inherited = false, AllowMultiple = false)]
     public class CspScriptSrcAttribute : CspDirectiveAttributeBase
     {
         public bool UnsafeInline { get; set; }
@@ -47,6 +50,7 @@ namespace NWebsec.Mvc.HttpHeaders.Csp
         }
     }
 
+    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, Inherited = false, AllowMultiple = false)]
     public class CspObjectSrcAttribute : CspDirectiveAttributeBase
     {
         protected override HttpHeaderHelper.CspDirectives Directive
@@ -60,6 +64,7 @@ namespace NWebsec.Mvc.HttpHeaders.Csp
         }
     }
 
+    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, Inherited = false, AllowMultiple = false)]
     public class CspStyleSrcAttribute : CspDirectiveAttributeBase
     {
         public bool UnsafeInline { get; set; }
@@ -88,6 +93,7 @@ namespace NWebsec.Mvc.HttpHeaders.Csp
         }
     }
 
+    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, Inherited = false, AllowMultiple = false)]
     public class CspImgSrcAttribute : CspDirectiveAttributeBase
     {
         protected override HttpHeaderHelper.CspDirectives Directive
@@ -101,6 +107,7 @@ namespace NWebsec.Mvc.HttpHeaders.Csp
         }
     }
 
+    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, Inherited = false, AllowMultiple = false)]
     public class CspMediaSrcAttribute : CspDirectiveAttributeBase
     {
         protected override HttpHeaderHelper.CspDirectives Directive
@@ -114,6 +121,7 @@ namespace NWebsec.Mvc.HttpHeaders.Csp
         }
     }
 
+    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, Inherited = false, AllowMultiple = false)]
     public class CspFrameSrcAttribute : CspDirectiveAttributeBase
     {
         protected override HttpHeaderHelper.CspDirectives Directive
@@ -127,6 +135,7 @@ namespace NWebsec.Mvc.HttpHeaders.Csp
         }
     }
 
+    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, Inherited = false, AllowMultiple = false)]
     public class CspFontSrcAttribute : CspDirectiveAttributeBase
     {
         protected override HttpHeaderHelper.CspDirectives Directive
@@ -140,6 +149,7 @@ namespace NWebsec.Mvc.HttpHeaders.Csp
         }
     }
 
+    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, Inherited = false, AllowMultiple = false)]
     public class CspConnectSrcAttribute : CspDirectiveAttributeBase
     {
         protected override HttpHeaderHelper.CspDirectives Directive
