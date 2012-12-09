@@ -9,11 +9,14 @@ using NWebsec.Mvc.HttpHeaders.Csp;
 
 namespace DemoSiteMvc3.Controllers
 {
-    [CspDefaultSrc(SourceNone = true)]
-    [XContentTypeOptions]
-    [XDownloadOptions]
+    [Csp(enabled: true)]
+    [CspDefaultSrc(None = true)]
+    [CspScriptSrc(Self = true)]
+    [CspReportUri(enableBuiltinHandler: true)]
+    //[XContentTypeOptions]
+    //[XDownloadOptions]
     //[XFrameOptions(Policy = HttpHeadersConstants.XFrameOptions.SameOrigin)]
-    [XXssProtection]
+    //[XXssProtection]
     //[XContentSecurityPolicy("script-src", "'none'")]
     //[XContentSecurityPolicyReportOnly("script-src", "'self'")]
     //[XContentSecurityPolicyReportOnly("img-src", "'self'")]
@@ -23,7 +26,26 @@ namespace DemoSiteMvc3.Controllers
     public class HomeController : Controller
     {
 
-        [SetNoCacheHttpHeaders(Enabled = false)]
+        [Csp(enabled : true)]
+        [CspScriptSrc(Self = true)]
+        [CspStyleSrc(UnsafeInline = true,Self = true)]
+        [CspConnectSrc(None = true)]
+        [CspDefaultSrc(Self = true)]
+        [CspFontSrc(None = true)]
+        [CspFrameSrc(None = true)]
+        [CspImgSrc(None = true)]
+        [CspMediaSrc(None = true)]
+        [CspObjectSrc(None = true)]
+        [CspReportOnly(enabled: true)]
+        [CspScriptSrcReportOnly(Self = true)]
+        [CspStyleSrcReportOnly(UnsafeInline = true, Self = true)]
+        [CspConnectSrcReportOnly(None = true)]
+        [CspDefaultSrcReportOnly(Self = true)]
+        [CspFontSrcReportOnly(None = true)]
+        [CspFrameSrcReportOnly(None = true)]
+        [CspImgSrcReportOnly(None = true)]
+        [CspMediaSrcReportOnly(None = true)]
+        [CspObjectSrcReportOnly(None = true)]
         public ActionResult Index()
         {
             return View("Index");

@@ -6,7 +6,19 @@ namespace NWebsec.Modules.Configuration.Csp
 {
     public class CspDirectiveBaseConfigurationElement : ConfigurationElement
     {
-        
+        [ConfigurationProperty("enabled", IsRequired = false, DefaultValue = false)]
+        public bool Enabled
+        {
+            get
+            {
+                return (bool)this["enabled"];
+            }
+            set
+            {
+                this["enabled"] = value;
+            }
+        }
+
         [ConfigurationProperty("none", IsRequired = false, DefaultValue = false)]
         public bool None
         {

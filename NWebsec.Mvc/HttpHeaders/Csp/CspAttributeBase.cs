@@ -8,7 +8,7 @@ namespace NWebsec.Mvc.HttpHeaders.Csp
 {
     public abstract class CspAttributeBase : ActionFilterAttribute
     {
-        public bool Enabled { get; set; }
+        private readonly bool enabled;
         public bool XContentSecurityPolicyHeader { get; set; }
         public bool XWebKitCspHeader { get; set; }
 
@@ -16,20 +16,20 @@ namespace NWebsec.Mvc.HttpHeaders.Csp
 
         protected CspAttributeBase(bool enabled)
         {
-            Enabled = enabled;
+            this.enabled = enabled;
         }
 
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
             var config = new CspHeaderConfigurationElement
                              {
-                                 Enabled = Enabled,
+                                 Enabled = enabled,
                                  XContentSecurityPolicyHeader = XContentSecurityPolicyHeader,
                                  XWebKitCspHeader = XWebKitCspHeader
                              };
 
             var helper = new HttpHeaderHelper(filterContext.HttpContext);
-            helper.SetCspHeaderOverride(config, false);
+            helper.SetCspHeaderOverride(config, ReportOnly);
             base.OnActionExecuting(filterContext);
         }
     }

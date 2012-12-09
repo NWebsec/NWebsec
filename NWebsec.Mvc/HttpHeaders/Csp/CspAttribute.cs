@@ -4,7 +4,7 @@ using System;
 
 namespace NWebsec.Mvc.HttpHeaders.Csp
 {
-    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, Inherited = true, AllowMultiple = false)]
+    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, Inherited = false, AllowMultiple = false)]
     public class CspAttribute : CspAttributeBase
     {
         public CspAttribute(bool enabled) : base(enabled)

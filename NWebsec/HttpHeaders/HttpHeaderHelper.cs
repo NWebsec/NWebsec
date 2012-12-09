@@ -212,7 +212,7 @@ namespace NWebsec.HttpHeaders
             var headerList = GetHeaderListFromContext();
             var headerkey = GetCspConfigKey(CspHeaderKeyPrefix, reportOnly);
             return headerList.ContainsKey(headerkey)
-                    ? (CspConfigurationElement)headerList[headerkey]
+                    ? (CspHeaderConfigurationElement)headerList[headerkey]
                     : baseConfig.SecurityHttpHeaders.Csp;
         }
 

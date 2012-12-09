@@ -11,7 +11,7 @@ namespace NWebsec.Mvc.HttpHeaders.Csp
     {
         public bool Enabled { get; set; }
         public string ReportUris { get; set; }
-        public bool EnableBuiltinHandler { get; set; }
+        private bool EnableBuiltinHandler { get; set; }
 
         protected abstract bool ReportOnly { get; }
 

@@ -10,8 +10,8 @@ namespace NWebsec.Mvc.HttpHeaders.Csp
     public abstract class CspDirectiveAttributeBase : ActionFilterAttribute
     {
         public bool Enabled { get; set; }
-        public bool SourceNone { get; set; }
-        public bool SourceSelf { get; set; }
+        public bool None { get; set; }
+        public bool Self { get; set; }
         public string Sources { get; set; }
 
         protected abstract HttpHeaderHelper.CspDirectives Directive { get; }
@@ -20,8 +20,8 @@ namespace NWebsec.Mvc.HttpHeaders.Csp
         protected CspDirectiveAttributeBase()
         {
             Enabled = true;
-            SourceNone = false;
-            SourceSelf = false;
+            None = false;
+            Self = false;
         }
 
         public override void OnActionExecuting(ActionExecutingContext filterContext)
@@ -30,12 +30,13 @@ namespace NWebsec.Mvc.HttpHeaders.Csp
 
             var helper = new HttpHeaderHelper(filterContext.HttpContext);
             helper.SetContentSecurityPolicyDirectiveOverride(Directive, GetCspDirectiveConfig(Sources), ReportOnly);
+
             base.OnActionExecuting(filterContext);
         }
 
         protected virtual void ValidateParams()
         {
-            if (Enabled && !SourceNone && !SourceSelf && String.IsNullOrEmpty(Sources))
+            if (Enabled && !None && !Self && String.IsNullOrEmpty(Sources))
                 throw new ApplicationException("No sources enabled for attribute. Remove attribute, or set \"Enabled=false\"");
         }
 
@@ -47,8 +48,9 @@ namespace NWebsec.Mvc.HttpHeaders.Csp
         protected CspDirectiveBaseConfigurationElement GetCspDirectiveConfig(string sources)
         {
             var directive = GetNewDirectiveConfigurationElement();
-            directive.None = SourceNone;
-            directive.Self = SourceSelf;
+            directive.Enabled = Enabled;
+            directive.None = None;
+            directive.Self = Self;
 
             if (String.IsNullOrEmpty(sources)) return directive;
 

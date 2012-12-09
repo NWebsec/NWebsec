@@ -197,6 +197,9 @@ namespace NWebsec.HttpHeaders
         {
             var sources = new LinkedList<string>();
 
+            if (!directive.Enabled)
+                return sources;
+
             if (directive.None)
                 sources.AddLast("'none'");
 
