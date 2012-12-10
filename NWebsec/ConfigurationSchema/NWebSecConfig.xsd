@@ -129,6 +129,8 @@
             <xs:element name="clear"/>
           </xs:choice>
           <xs:attributeGroup ref="BaseCspAttributes"/>
+          <xs:attribute name="unsafeInline" type="simple_boolean" use="optional" />
+          <xs:attribute name="unsafeEval" type="simple_boolean" use="optional" />
         </xs:complexType>
       </xs:element>
       <xs:element name="style-src" minOccurs="0">
@@ -147,6 +149,7 @@
             <xs:element name="clear"/>
           </xs:choice>
           <xs:attributeGroup ref="BaseCspAttributes"/>
+          <xs:attribute name="unsafeInline" type="simple_boolean" use="optional" />
         </xs:complexType>
       </xs:element>
       <xs:element name="object-src" minOccurs="0">
@@ -260,8 +263,8 @@
     </xs:all>
   </xs:group>
   <xs:attributeGroup name="BaseCspAttributes">
+    <xs:attribute name="enabled" type="simple_boolean" use="required" />
     <xs:attribute name="self" type="simple_boolean" use="optional" />
     <xs:attribute name="none" type="simple_boolean" use="optional" />
-    <xs:attribute name="enabled" type="simple_boolean" use="optional" />
   </xs:attributeGroup>
 </xs:schema>
