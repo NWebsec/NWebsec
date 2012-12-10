@@ -53,7 +53,7 @@
     <Compile Include="Modules\Configuration\Csp\CspDirectiveUnsafeInlineConfigurationElement.cs" />
     <Compile Include="Modules\Configuration\Csp\CspDirectiveUnsafeInlineUnsafeEvalConfigurationElement.cs" />
     <Compile Include="Modules\Configuration\Csp\CspHeaderConfigurationElement.cs" />
-    <Compile Include="Modules\Configuration\Csp\CspReportUriConfigurationElement.cs" />
+    <Compile Include="Modules\Configuration\Csp\ReportUriConfigurationElement.cs" />
     <Compile Include="Modules\Configuration\Csp\CspReportUriDirectiveConfigurationElement.cs" />
     <Compile Include="Modules\Configuration\Csp\CspReportUriConfigurationElementCollection.cs" />
     <Compile Include="Modules\Configuration\Csp\Validation\ReportUriValidator.cs" />

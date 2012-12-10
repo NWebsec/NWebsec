@@ -9,19 +9,19 @@ namespace NWebsec.Modules.Configuration.Csp
     {
         protected override ConfigurationElement CreateNewElement()
         {
-            return new CspReportUriConfigurationElement();
+            return new ReportUriConfigurationElement();
         }
 
         protected override object GetElementKey(ConfigurationElement element)
         {
-            return ((CspReportUriConfigurationElement)element).ReportUri;
+            return ((ReportUriConfigurationElement)element).ReportUri;
         }
 
-        public CspReportUriConfigurationElement this[int index]
+        public ReportUriConfigurationElement this[int index]
         {
             get
             {
-                return (CspReportUriConfigurationElement)BaseGet(index);
+                return (ReportUriConfigurationElement)BaseGet(index);
             }
             set
             {
@@ -33,7 +33,7 @@ namespace NWebsec.Modules.Configuration.Csp
             }
         }
 
-        public void Add(CspReportUriConfigurationElement element)
+        public void Add(ReportUriConfigurationElement element)
         {
             BaseAdd(element);
         }
@@ -48,7 +48,7 @@ namespace NWebsec.Modules.Configuration.Csp
             return BaseGetAllKeys();
         }
 
-        public void Remove(CspReportUriConfigurationElement element)
+        public void Remove(ReportUriConfigurationElement element)
         {
             BaseRemove(element);
         }
@@ -63,12 +63,12 @@ namespace NWebsec.Modules.Configuration.Csp
             BaseRemoveAt(index);
         }
 
-        public int IndexOf(CspReportUriConfigurationElement element)
+        public int IndexOf(ReportUriConfigurationElement element)
         {
             return BaseIndexOf(element);
         }
 
-        public bool IsRemoved(CspReportUriConfigurationElement element)
+        public bool IsRemoved(ReportUriConfigurationElement element)
         {
             return BaseIsRemoved(element);
         }

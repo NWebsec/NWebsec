@@ -228,11 +228,8 @@ namespace NWebsec.HttpHeaders
             {
                 reportUris.AddLast(request.ApplicationPath + BuiltInReportUriHandler);
             }
-
-            if (!String.IsNullOrEmpty(directive.ReportUri))
-                reportUris.AddLast(directive.ReportUri);
-
-            foreach (CspReportUriConfigurationElement reportUri in directive.ReportUris)
+            
+            foreach (ReportUriConfigurationElement reportUri in directive.ReportUris)
             {
                 reportUris.AddLast(reportUri.ReportUri.ToString());
             }

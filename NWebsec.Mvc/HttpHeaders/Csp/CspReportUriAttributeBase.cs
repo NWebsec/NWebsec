@@ -49,7 +49,7 @@ namespace NWebsec.Mvc.HttpHeaders.Csp
 
             foreach (var uri in uris)
             {
-                directive.ReportUris.Add(new CspReportUriConfigurationElement { ReportUri = new Uri(uri, UriKind.Relative) });
+                directive.ReportUris.Add(new ReportUriConfigurationElement { ReportUri = new Uri(uri, UriKind.Relative) });
             }
             return directive;
         }

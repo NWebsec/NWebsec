@@ -219,9 +219,9 @@ namespace nWebsec.Tests.Unit.HttpHeaders
             var cspConfig = new CspConfigurationElement
             {
                 Enabled = true,
-                DefaultSrc = { Self = true },
-                ReportUriDirective = { ReportUri = "/CspReport" }
+                DefaultSrc = { Self = true }
             };
+            cspConfig.ReportUriDirective.ReportUris.Add(new ReportUriConfigurationElement() { ReportUri = new Uri("/CspReport", UriKind.Relative) });
 
             headerSetter.AddCspHeaders(cspConfig, false);
 
@@ -235,8 +235,9 @@ namespace nWebsec.Tests.Unit.HttpHeaders
                                 {
                                     Enabled = true,
                                     DefaultSrc = { Self = true },
-                                    ReportUriDirective = { EnableBuiltinHandler = true, ReportUri = "/CspReport" }
+                                    ReportUriDirective = { EnableBuiltinHandler = true }
                                 };
+            cspConfig.ReportUriDirective.ReportUris.Add(new ReportUriConfigurationElement {ReportUri = new Uri("/CspReport", UriKind.Relative)});
 
             headerSetter.AddCspHeaders(cspConfig, false);
 

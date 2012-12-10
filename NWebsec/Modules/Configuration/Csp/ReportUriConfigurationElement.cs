@@ -6,7 +6,7 @@ using NWebsec.Modules.Configuration.Csp.Validation;
 
 namespace NWebsec.Modules.Configuration.Csp
 {
-    public class CspReportUriConfigurationElement : ConfigurationElement
+    public class ReportUriConfigurationElement : ConfigurationElement
     {
         [ConfigurationProperty("report-uri", IsKey = true, IsRequired = true)]
         [ReportUriValidator]

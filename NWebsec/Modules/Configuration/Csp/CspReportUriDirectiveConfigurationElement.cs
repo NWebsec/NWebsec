@@ -32,30 +32,17 @@ namespace NWebsec.Modules.Configuration.Csp
             }
         }
 
-        [ConfigurationProperty("report-uri", IsRequired = false)]
-        public string ReportUri
-        {
-            get
-            {
-                return (string)this["report-uri"];
-            }
-            set
-            {
-                this["report-uri"] = value;
-            }
-        }
-
-        [ConfigurationProperty("report-uris", IsRequired = false)]
+        [ConfigurationProperty("", IsRequired = false, IsDefaultCollection = true)]
         [ConfigurationCollection(typeof(CspReportUriConfigurationElementCollection), CollectionType = ConfigurationElementCollectionType.AddRemoveClearMap)]
         public CspReportUriConfigurationElementCollection ReportUris
         {
             get
             {
-                return (CspReportUriConfigurationElementCollection)this["report-uris"];
+                return (CspReportUriConfigurationElementCollection)base[""];
             }
             set
             {
-                this["report-uris"] = value;
+                base[""] = value;
             }
         }
     }
