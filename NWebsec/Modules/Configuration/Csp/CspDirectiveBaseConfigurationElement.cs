@@ -6,7 +6,7 @@ namespace NWebsec.Modules.Configuration.Csp
 {
     public class CspDirectiveBaseConfigurationElement : ConfigurationElement
     {
-        [ConfigurationProperty("enabled", IsRequired = false, DefaultValue = false)]
+        [ConfigurationProperty("enabled", IsRequired = false, DefaultValue = true)]
         public bool Enabled
         {
             get
@@ -45,30 +45,17 @@ namespace NWebsec.Modules.Configuration.Csp
             }
         }
 
-        [ConfigurationProperty("source", IsRequired = false)]
-        public string Source
-        {
-            get
-            {
-                return (string)this["source"];
-            }
-            set
-            {
-                this["source"] = value;
-            }
-        }
-
-        [ConfigurationProperty("sources", IsRequired = false)]
+        [ConfigurationProperty("", IsRequired = false, IsDefaultCollection = true)]
         [ConfigurationCollection(typeof(CspSourcesElementCollection), CollectionType = ConfigurationElementCollectionType.AddRemoveClearMap)]
         public CspSourcesElementCollection Sources
         {
             get
             {
-                return (CspSourcesElementCollection)this["sources"];
+                return (CspSourcesElementCollection)base[""];
             }
             set
             {
-                this["sources"] = value;
+                base[""] = value;
             }
         }
 

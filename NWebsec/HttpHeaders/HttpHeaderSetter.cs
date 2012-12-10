@@ -214,9 +214,6 @@ namespace NWebsec.HttpHeaders
             if (allowUnsafeEvalElement != null && allowUnsafeEvalElement.UnsafeEval)
                 sources.AddLast("'unsafe-eval'");
 
-            if (!string.IsNullOrEmpty(directive.Source))
-                sources.AddLast(directive.Source);
-
             foreach (CspSourceConfigurationElement sourceElement in directive.Sources)
             {
                 sources.AddLast(sourceElement.Source);

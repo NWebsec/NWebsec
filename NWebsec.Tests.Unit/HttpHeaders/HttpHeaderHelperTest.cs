@@ -124,15 +124,18 @@ namespace NWebsec.Tests.Unit.HttpHeaders
             const bool reportonly = false;
             var config = new CspConfigurationElement();
 
-            var firstOverride = new CspDirectiveBaseConfigurationElement { Source = "transformtool.codeplex.com" };
-            var secondOverride = new CspDirectiveBaseConfigurationElement { Source = "nwebsec.codeplex.com" };
+            var firstOverride = new CspDirectiveBaseConfigurationElement();
+            firstOverride.Sources.Add(new CspSourceConfigurationElement {Source = "transformtool.codeplex.com"});
+            var secondOverride = new CspDirectiveBaseConfigurationElement();
+            secondOverride.Sources.Add(new CspSourceConfigurationElement {Source = "nwebsec.codeplex.com"});
 
             headerHelper.SetContentSecurityPolicyDirectiveOverride(HttpHeaderHelper.CspDirectives.DefaultSrc, firstOverride, reportonly);
             headerHelper.SetContentSecurityPolicyDirectiveOverride(HttpHeaderHelper.CspDirectives.DefaultSrc, secondOverride, reportonly);
 
             var overrideElement = headerHelper.GetCspElementWithOverrides(reportonly, config);
 
-            Assert.IsTrue(overrideElement.DefaultSrc.Source.Equals("nwebsec.codeplex.com"));
+            Assert.IsTrue(overrideElement.DefaultSrc.Sources.GetAllKeys().Length == 1);
+            Assert.IsTrue(overrideElement.DefaultSrc.Sources[0].Source.Equals("nwebsec.codeplex.com"));
         }
 
     }
