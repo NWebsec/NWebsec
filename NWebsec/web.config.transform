@@ -12,4 +12,6 @@
       <add name="HttpHeaderModule" type="NWebsec.Modules.HttpHeaderModule, NWebsec"/>
     </modules>
     </system.webServer>
+  <nwebsec xmlns="http://nwebsec.com/NWebSecConfig.xsd">
+  </nwebsec>
 </configuration>

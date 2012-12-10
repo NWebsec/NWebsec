@@ -70,6 +70,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="ConfigurationSchema\NWebSecConfig.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="web.config.transform">
       <SubType>Designer</SubType>
     </None>
