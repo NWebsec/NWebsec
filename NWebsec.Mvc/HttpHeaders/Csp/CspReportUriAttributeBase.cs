@@ -15,10 +15,9 @@ namespace NWebsec.Mvc.HttpHeaders.Csp
 
         protected abstract bool ReportOnly { get; }
 
-        protected CspReportUriAttributeBase(bool enableBuiltinHandler)
+        protected CspReportUriAttributeBase()
         {
             Enabled = true;
-            EnableBuiltinHandler = enableBuiltinHandler;
         }
 
         public override void OnActionExecuting(ActionExecutingContext filterContext)

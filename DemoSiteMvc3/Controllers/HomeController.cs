@@ -9,10 +9,10 @@ using NWebsec.Mvc.HttpHeaders.Csp;
 
 namespace DemoSiteMvc3.Controllers
 {
-    [Csp(enabled: true)]
+    [Csp]
     [CspDefaultSrc(None = true)]
     [CspScriptSrc(Self = true)]
-    [CspReportUri(enableBuiltinHandler: true)]
+    [CspReportUri(ReportUris = "*.nwebsec.*")]
     //[XContentTypeOptions]
     //[XDownloadOptions]
     //[XFrameOptions(Policy = HttpHeadersConstants.XFrameOptions.SameOrigin)]
@@ -26,8 +26,8 @@ namespace DemoSiteMvc3.Controllers
     public class HomeController : Controller
     {
 
-        [Csp(enabled : true)]
-        [CspScriptSrc(Self = true)]
+        [Csp]
+        [CspScriptSrc(Self = true,Sources = "*.nwebsec.com")]
         [CspStyleSrc(UnsafeInline = true,Self = true)]
         [CspConnectSrc(None = true)]
         [CspDefaultSrc(Self = true)]
@@ -36,7 +36,8 @@ namespace DemoSiteMvc3.Controllers
         [CspImgSrc(None = true)]
         [CspMediaSrc(None = true)]
         [CspObjectSrc(None = true)]
-        [CspReportOnly(enabled: true)]
+        [CspReportUri(ReportUris = "CspReport")]
+        [CspReportOnly]
         [CspScriptSrcReportOnly(Self = true)]
         [CspStyleSrcReportOnly(UnsafeInline = true, Self = true)]
         [CspConnectSrcReportOnly(None = true)]

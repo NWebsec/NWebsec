@@ -19,6 +19,8 @@ namespace NWebsec.Modules.Configuration.Csp.Validation
         public override void Validate(object value)
         {
             var source = (string)value;
+            
+            if (String.IsNullOrEmpty(source)) return;
 
             if (source.Equals("*")) return;
 
@@ -33,27 +35,28 @@ namespace NWebsec.Modules.Configuration.Csp.Validation
             {
                 var scheme = source.Substring(0, index);
                 if (!Regex.IsMatch(scheme, SchemeRegex))
-                    throw new ConfigurationErrorsException("Invalid scheme in source: " + source);
-                hostString = source.Substring(index+2, source.Length - (index+2));
+                    throw new InvalidCspSourceException("Invalid scheme in source: " + source);
+                hostString = source.Substring(index + 2, source.Length - (index + 2));
             }
             else
             {
                 hostString = source;
             }
 
-            if (ValidateHostString(hostString)) return;
-
-            throw new ConfigurationErrorsException("Invalid source: " + source);
+            if (!ValidateHostString(hostString))
+                throw new InvalidCspSourceException("Invalid host in source: " + source);
         }
 
         private bool ValidateHostString(string host)
         {
-            var hostParts = host.Split('/');
+            char[] pathSplit = { '/' };
+            var hostParts = host.Split(pathSplit, 2);
             var actualHost = hostParts[0];
+            
+            char[] portSplit = { ':' };
+            var actualHostParts = actualHost.Split(portSplit, 2);
 
-            var actualHostParts = actualHost.Split(':');
-
-            if (actualHostParts.Length > 1 && !ValidatePort(actualHostParts[1]))
+            if (actualHostParts.Length == 2 && !ValidatePort(actualHostParts[1]))
                 return false;
 
             return Regex.IsMatch(actualHostParts[0], HostRegex);
@@ -65,6 +68,14 @@ namespace NWebsec.Modules.Configuration.Csp.Validation
 
             int portNumber;
             return Int32.TryParse(port, out portNumber);
+        }
+    }
+
+    [Serializable]
+    public class InvalidCspSourceException : ConfigurationErrorsException
+    {
+        public InvalidCspSourceException(string s) : base(s)
+        {
         }
     }
 }

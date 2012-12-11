@@ -23,6 +23,7 @@ namespace NWebsec.Modules.Configuration.Csp
         }
 
         [ConfigurationProperty("script-src", IsRequired = false)]
+        [CspDirectiveUnsafeInlineUnsafeEvalConfigurationElementValidator]
         public CspDirectiveUnsafeInlineUnsafeEvalConfigurationElement ScriptSrc
         {
             get
@@ -50,6 +51,7 @@ namespace NWebsec.Modules.Configuration.Csp
         }
 
         [ConfigurationProperty("style-src", IsRequired = false)]
+        [CspDirectiveUnsafeInlineConfigurationElementValidator]
         public CspDirectiveUnsafeInlineConfigurationElement StyleSrc
         {
             get

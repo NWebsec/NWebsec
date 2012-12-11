@@ -18,7 +18,7 @@ namespace NWebsec.Tests.Unit.HttpHeaders
     {
         private Mock<HttpContextBase> mockContext;
         private HttpHeaderHelper headerHelper;
-        private const string validCspDirectiveSource = "nwebsec.codeplex.com";
+        private const string ValidCspDirectiveSource = "nwebsec.codeplex.com";
 
         [SetUp]
         public void Setup()
@@ -108,14 +108,14 @@ namespace NWebsec.Tests.Unit.HttpHeaders
             var config = new CspConfigurationElement { DefaultSrc = { Self = true } };
             
             var directive = new CspDirectiveUnsafeInlineUnsafeEvalConfigurationElement { Self = false };
-                directive.Sources.Add(new CspSourceConfigurationElement() { Source = validCspDirectiveSource });
+                directive.Sources.Add(new CspSourceConfigurationElement() { Source = ValidCspDirectiveSource });
 
                 headerHelper.SetContentSecurityPolicyDirectiveOverride(HttpHeaderHelper.CspDirectives.DefaultSrc, directive, reportonly);
             
                 var overrideElement = headerHelper.GetCspElementWithOverrides(reportonly, config).DefaultSrc;
                 Assert.IsFalse(overrideElement.Self);
                 Assert.IsTrue(overrideElement.Sources.GetAllKeys().Length == 1);
-                Assert.IsTrue(overrideElement.Sources[0].Source.Equals(validCspDirectiveSource));
+                Assert.IsTrue(overrideElement.Sources[0].Source.Equals(ValidCspDirectiveSource));
         }
 
         [Test]

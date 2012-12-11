@@ -17,8 +17,17 @@ namespace NWebsec.Modules.Configuration.Csp.Validation
             var element = (Uri)value;
 
             if (element.IsAbsoluteUri)
-                throw new ConfigurationErrorsException("The Csp report-uri must be a relative URI.");
+                throw new InvalidCspReportUriException("The Csp report-uri must be a relative URI.");
 
+        }
+    }
+
+    [Serializable]
+    public class InvalidCspReportUriException : ConfigurationErrorsException
+    {
+        public InvalidCspReportUriException(string s)
+            : base(s)
+        {
         }
     }
 }

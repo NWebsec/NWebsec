@@ -1,4 +1,6 @@
-﻿using System;
+﻿// Copyright (c) André N. Klingsheim. See License.txt in the project root for license information.
+
+using System;
 using NUnit.Framework;
 using NWebsec.Modules.Configuration.Csp.Validation;
 
