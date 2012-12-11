@@ -7,7 +7,7 @@ using NUnit.Framework;
 using NWebsec.HttpHeaders;
 using NWebsec.Modules.Configuration.Csp;
 
-namespace nWebsec.Tests.Unit.HttpHeaders
+namespace NWebsec.Tests.Unit.HttpHeaders
 {
     [TestFixture]
     public class HttpHeaderSetterCspTest

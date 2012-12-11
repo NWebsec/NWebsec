@@ -9,8 +9,8 @@
     <ProjectGuid>{2E83CDC3-152A-4139-8B00-0CDECD3F5BDC}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>nWebsec.Tests.Unit</RootNamespace>
-    <AssemblyName>nWebsec.Tests.Unit</AssemblyName>
+    <RootNamespace>NWebsec.Tests.Unit</RootNamespace>
+    <AssemblyName>NWebsec.Tests.Unit</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
@@ -68,6 +68,8 @@
     <Compile Include="HttpHeaders\HttpHeaderHelperTest.cs" />
     <Compile Include="HttpHeaders\HttpHeaderSetterCspTest.cs" />
     <Compile Include="HttpHeaders\HttpHeaderSetterTest.cs" />
+    <Compile Include="Modules\Configuration\CspSourceValidatorTests.cs" />
+    <Compile Include="Modules\Configuration\ReportUriValidatorTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Modules\Configuration\CspDirectiveBaseConfigurationElementValidatorTest.cs" />
   </ItemGroup>

@@ -56,6 +56,8 @@
     <Compile Include="Modules\Configuration\Csp\ReportUriConfigurationElement.cs" />
     <Compile Include="Modules\Configuration\Csp\CspReportUriDirectiveConfigurationElement.cs" />
     <Compile Include="Modules\Configuration\Csp\CspReportUriConfigurationElementCollection.cs" />
+    <Compile Include="Modules\Configuration\Csp\Validation\CspSourceValidator.cs" />
+    <Compile Include="Modules\Configuration\Csp\Validation\CspSourceValidatorAttribute.cs" />
     <Compile Include="Modules\Configuration\Csp\Validation\ReportUriValidator.cs" />
     <Compile Include="Modules\Configuration\Csp\CspSourceConfigurationElement.cs" />
     <Compile Include="Modules\Configuration\Csp\CspSourcesElementCollection.cs" />
