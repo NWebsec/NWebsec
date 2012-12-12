@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.Entity;
+﻿using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
-using NWebsec.HttpHeaders;
+using NWebsec.Csp;
 using NWebsec.Mvc.HttpHeaders;
 
 namespace DemoSiteMvc3
@@ -51,5 +47,11 @@ namespace DemoSiteMvc3
             RegisterGlobalFilters(GlobalFilters.Filters);
             RegisterRoutes(RouteTable.Routes);
         }
+
+        protected void NWebSecHttpHeaderSecurityModule_CspViolationReported(object sender, CspViolationReportEventArgs e)
+        {
+            var report = e.ViolationReport;
+        }
+
     }
 }

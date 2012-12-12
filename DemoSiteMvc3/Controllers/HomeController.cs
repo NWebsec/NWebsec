@@ -1,18 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 using NWebsec.HttpHeaders;
 using NWebsec.Mvc.HttpHeaders;
 using NWebsec.Mvc.HttpHeaders.Csp;
 
 namespace DemoSiteMvc3.Controllers
 {
-    [Csp]
-    [CspDefaultSrc(None = true)]
-    [CspScriptSrc(Self = true)]
-    [CspReportUri(ReportUris = "*.nwebsec.*")]
+    //[Csp]
+    //[CspDefaultSrc(None = true)]
+    //[CspScriptSrc(Self = true)]
+    //[CspReportUri(ReportUris = "*.nwebsec.*")]
     //[XContentTypeOptions]
     //[XDownloadOptions]
     //[XFrameOptions(Policy = HttpHeadersConstants.XFrameOptions.SameOrigin)]
@@ -26,27 +22,28 @@ namespace DemoSiteMvc3.Controllers
     public class HomeController : Controller
     {
 
-        [Csp]
-        [CspScriptSrc(Self = true,Sources = "*.nwebsec.com")]
-        [CspStyleSrc(UnsafeInline = true,Self = true)]
-        [CspConnectSrc(None = true)]
+        [Csp(XWebKitCspHeader = true)]
+        [CspScriptSrc(None = true)]
         [CspDefaultSrc(Self = true)]
-        [CspFontSrc(None = true)]
-        [CspFrameSrc(None = true)]
-        [CspImgSrc(None = true)]
-        [CspMediaSrc(None = true)]
-        [CspObjectSrc(None = true)]
-        [CspReportUri(ReportUris = "CspReport")]
-        [CspReportOnly]
-        [CspScriptSrcReportOnly(Self = true)]
-        [CspStyleSrcReportOnly(UnsafeInline = true, Self = true)]
-        [CspConnectSrcReportOnly(None = true)]
-        [CspDefaultSrcReportOnly(Self = true)]
-        [CspFontSrcReportOnly(None = true)]
-        [CspFrameSrcReportOnly(None = true)]
-        [CspImgSrcReportOnly(None = true)]
-        [CspMediaSrcReportOnly(None = true)]
-        [CspObjectSrcReportOnly(None = true)]
+        //[CspStyleSrc(UnsafeInline = true,Self = true)]
+        //[CspConnectSrc(None = true)]
+        //[CspDefaultSrc(Self = true)]
+        //[CspFontSrc(None = true)]
+        //[CspFrameSrc(None = true)]
+        //[CspImgSrc(None = true)]
+        //[CspMediaSrc(None = true)]
+        //[CspObjectSrc(None = true)]
+        [CspReportUri(EnableBuiltinHandler = true)]
+        //[CspReportOnly]
+        //[CspScriptSrcReportOnly(Self = true)]
+        //[CspStyleSrcReportOnly(UnsafeInline = true, Self = true)]
+        //[CspConnectSrcReportOnly(None = true)]
+        //[CspDefaultSrcReportOnly(Self = true)]
+        //[CspFontSrcReportOnly(None = true)]
+        //[CspFrameSrcReportOnly(None = true)]
+        //[CspImgSrcReportOnly(None = true)]
+        //[CspMediaSrcReportOnly(None = true)]
+        //[CspObjectSrcReportOnly(None = true)]
         public ActionResult Index()
         {
             return View("Index");
