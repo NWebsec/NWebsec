@@ -7,10 +7,15 @@ using NWebsec.Modules.Configuration;
 
 namespace NWebsec.Mvc.HttpHeaders
 {
-
+    /// <summary>
+    /// Specifies whether appropriate headers to prevent browser caching should be set in the HTTP response.
+    /// </summary>
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, Inherited = true, AllowMultiple = false)]
     public class SetNoCacheHttpHeadersAttribute : ActionFilterAttribute
     {
+        /// <summary>
+        /// Gets of sets whether cache headers should be included in the response to prevent browser caching. The default is true.
+        /// </summary>
         public bool Enabled { get; set; }
 
         public SetNoCacheHttpHeadersAttribute()
