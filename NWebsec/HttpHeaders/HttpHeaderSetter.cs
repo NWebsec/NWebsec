@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text;
 using System.Web;
+using NWebsec.Csp;
 using NWebsec.Modules.Configuration;
 using NWebsec.Modules.Configuration.Csp;
 
@@ -15,13 +16,22 @@ namespace NWebsec.HttpHeaders
         private readonly HttpContextBase context;
         private readonly HttpResponseBase response;
         private readonly HttpRequestBase request;
-        internal static string BuiltInReportUriHandler = "/WebResource.axd?cspReport=true";
+        private CspReportHelper reportHelper;
 
         internal HttpHeaderSetter(HttpContextBase context)
         {
             this.context = context;
             request = context.Request;
             response = context.Response;
+            reportHelper = new CspReportHelper();
+        }
+
+        internal HttpHeaderSetter(HttpContextBase context, CspReportHelper reportHelper)
+        {
+            this.context = context;
+            request = context.Request;
+            response = context.Response;
+            this.reportHelper = reportHelper;
         }
 
         public void SetNoCacheHeaders(SimpleBooleanConfigurationElement getNoCacheHeadersWithOverride)
@@ -226,7 +236,7 @@ namespace NWebsec.HttpHeaders
             var reportUris = new LinkedList<string>();
             if (directive.EnableBuiltinHandler)
             {
-                reportUris.AddLast(request.ApplicationPath + BuiltInReportUriHandler);
+                reportUris.AddLast(reportHelper.GetBuiltInCspReportHandlerRelativeUri());
             }
             
             foreach (ReportUriConfigurationElement reportUri in directive.ReportUris)

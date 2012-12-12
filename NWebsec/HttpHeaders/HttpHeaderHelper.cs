@@ -323,7 +323,7 @@ namespace NWebsec.HttpHeaders
 
         public static HttpHeaderConfigurationSection GetConfig()
         {
-            return (HttpHeaderConfigurationSection)(ConfigurationManager.GetSection("nwebsec/httpHeaderModule")) ??
+            return (HttpHeaderConfigurationSection)(ConfigurationManager.GetSection("nwebsec/httpHeaderSecurityModule")) ??
              new HttpHeaderConfigurationSection();
         }
 

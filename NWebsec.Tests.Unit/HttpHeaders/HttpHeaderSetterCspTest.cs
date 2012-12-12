@@ -4,6 +4,7 @@ using System;
 using System.Web;
 using Moq;
 using NUnit.Framework;
+using NWebsec.Csp;
 using NWebsec.HttpHeaders;
 using NWebsec.Modules.Configuration.Csp;
 
@@ -17,6 +18,7 @@ namespace NWebsec.Tests.Unit.HttpHeaders
         Mock<HttpResponseBase> mockResponse;
         Mock<HttpContextBase> mockContext;
         private Mock<HttpCachePolicyBase> mockCachePolicy;
+        private CspReportHelper cspReportHelper;
 
         private const string AppPath = "/MyApp";
 
@@ -42,7 +44,11 @@ namespace NWebsec.Tests.Unit.HttpHeaders
             mockContext.Setup(c => c.Response).Returns(mockResponse.Object);
             mockContext.Setup(c => c.CurrentHandler).Returns(mockHandler.Object);
 
-            headerSetter = new HttpHeaderSetter(mockContext.Object);
+            var mockReportPathHelper = new Mock<ICspReportHandlerPathHelper>();
+            mockReportPathHelper.Setup(p => p.GetBuiltinCspReportHandlerPath()).Returns("/NWebsec");
+            cspReportHelper = new CspReportHelper(mockReportPathHelper.Object);
+            
+            headerSetter = new HttpHeaderSetter(mockContext.Object,cspReportHelper);
 
         }
 
@@ -209,7 +215,7 @@ namespace NWebsec.Tests.Unit.HttpHeaders
 
             headerSetter.AddCspHeaders(cspConfig, false);
 
-            var expectedReportUri = AppPath + HttpHeaderSetter.BuiltInReportUriHandler;
+            var expectedReportUri = cspReportHelper.GetBuiltInCspReportHandlerRelativeUri();
             mockResponse.Verify(x => x.AddHeader("Content-Security-Policy", "default-src 'self'; report-uri " + expectedReportUri), Times.Once());
         }
 
@@ -221,11 +227,11 @@ namespace NWebsec.Tests.Unit.HttpHeaders
                 Enabled = true,
                 DefaultSrc = { Self = true }
             };
-            cspConfig.ReportUriDirective.ReportUris.Add(new ReportUriConfigurationElement() { ReportUri = new Uri("/CspReport", UriKind.Relative) });
+            cspConfig.ReportUriDirective.ReportUris.Add(new ReportUriConfigurationElement() { ReportUri = new Uri("/CspViolationReported", UriKind.Relative) });
 
             headerSetter.AddCspHeaders(cspConfig, false);
 
-            mockResponse.Verify(x => x.AddHeader("Content-Security-Policy", "default-src 'self'; report-uri /CspReport"), Times.Once());
+            mockResponse.Verify(x => x.AddHeader("Content-Security-Policy", "default-src 'self'; report-uri /CspViolationReported"), Times.Once());
         }
 
         [Test]
@@ -237,11 +243,11 @@ namespace NWebsec.Tests.Unit.HttpHeaders
                                     DefaultSrc = { Self = true },
                                     ReportUriDirective = { EnableBuiltinHandler = true }
                                 };
-            cspConfig.ReportUriDirective.ReportUris.Add(new ReportUriConfigurationElement {ReportUri = new Uri("/CspReport", UriKind.Relative)});
+            cspConfig.ReportUriDirective.ReportUris.Add(new ReportUriConfigurationElement {ReportUri = new Uri("/CspViolationReported", UriKind.Relative)});
 
             headerSetter.AddCspHeaders(cspConfig, false);
 
-            var expectedReportUri = AppPath + HttpHeaderSetter.BuiltInReportUriHandler + " /CspReport";
+            var expectedReportUri = cspReportHelper.GetBuiltInCspReportHandlerRelativeUri() + " /CspViolationReported";
             mockResponse.Verify(x => x.AddHeader("Content-Security-Policy", "default-src 'self'; report-uri " + expectedReportUri), Times.Once());
         }
 

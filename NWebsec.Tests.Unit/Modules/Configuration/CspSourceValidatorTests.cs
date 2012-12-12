@@ -186,42 +186,42 @@ namespace NWebsec.Tests.Unit.Modules.Configuration
         }
 
         [Test]
-        [ExpectedException(typeof(ConfigurationErrorsException))]
+        [ExpectedException(typeof(InvalidCspSourceException))]
         public void Validate_InvalidScheme_ThrowsException()
         {
             validator.Validate("0https:");
         }
 
         [Test]
-        [ExpectedException(typeof(ConfigurationErrorsException))]
+        [ExpectedException(typeof(InvalidCspSourceException))]
         public void Validate_InvalidSchemeHost_ThrowsException()
         {
             validator.Validate("0https://www.nwebsec.com");
         }
 
         [Test]
-        [ExpectedException(typeof(ConfigurationErrorsException))]
+        [ExpectedException(typeof(InvalidCspSourceException))]
         public void Validate_WildcardTld_ThrowsException()
         {
             validator.Validate("www.nwebsec.*");
         }
 
         [Test]
-        [ExpectedException(typeof(ConfigurationErrorsException))]
+        [ExpectedException(typeof(InvalidCspSourceException))]
         public void Validate_WildcardWithinHostname_ThrowsException()
         {
             validator.Validate("www.*.com");
         }
 
         [Test]
-        [ExpectedException(typeof(ConfigurationErrorsException))]
+        [ExpectedException(typeof(InvalidCspSourceException))]
         public void Validate_SchemeAndWildcardWithinHostname_ThrowsException()
         {
             validator.Validate("https://www.*.com");
         }
 
         [Test]
-        [ExpectedException(typeof(ConfigurationErrorsException))]
+        [ExpectedException(typeof(InvalidCspSourceException))]
         public void Validate_SchemeHostAndDoublePort_ThrowsException()
         {
             validator.Validate("https://www.nwebsec.com:80:80");

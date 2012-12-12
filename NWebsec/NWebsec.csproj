@@ -36,6 +36,8 @@
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel.Web" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Abstractions">
       <Private>False</Private>
@@ -46,6 +48,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Csp\CspReport.cs" />
+    <Compile Include="Csp\CspViolationReportEventArgs.cs" />
+    <Compile Include="Csp\CspReportHandlerUriHelper.cs" />
+    <Compile Include="Csp\CspReportHelper.cs" />
     <Compile Include="HttpHeaders\HttpHeaderHelper.cs" />
     <Compile Include="HttpHeaders\HttpHeadersConstants.cs" />
     <Compile Include="HttpHeaders\HttpHeaderSetter.cs" />
@@ -71,7 +77,7 @@
     <Compile Include="Modules\Configuration\SecurityHttpHeadersConfigurationElement.cs" />
     <Compile Include="Modules\Configuration\Csp\Validation\CspDirectiveBaseConfigurationElementValidator.cs" />
     <Compile Include="Modules\Configuration\SuppressVersionHeadersConfigurationElement.cs" />
-    <Compile Include="Modules\HttpHeaderModule.cs" />
+    <Compile Include="Modules\HttpHeaderSecurityModule.cs" />
     <Compile Include="Modules\Configuration\Csp\CspConfigurationElement.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

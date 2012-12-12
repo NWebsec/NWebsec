@@ -23,7 +23,7 @@
   <xs:element name="nwebsec">
     <xs:complexType>
       <xs:all>
-        <xs:element name="httpHeaderModule" minOccurs="0" maxOccurs="1">
+        <xs:element name="httpHeaderSecurityModule" minOccurs="0" maxOccurs="1">
           <xs:complexType>
             <xs:all>
               <xs:element name="setNoCacheHttpHeaders" minOccurs="0" maxOccurs="1">
