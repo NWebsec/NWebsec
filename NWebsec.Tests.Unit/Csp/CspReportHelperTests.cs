@@ -56,7 +56,7 @@ namespace NWebsec.Tests.Unit.Csp
                 mockRequest.Setup(r => r.InputStream).Returns(ms);
 
                 var violationReport = helper.GetCspReportFromRequest(mockRequest.Object);
-                var values = violationReport.Values;
+                var values = violationReport.Details;
 
                 Assert.IsNotNull(values);
                 Assert.AreEqual("http://localhost/NWebsecMvc3", values.DocumentUri);
@@ -84,7 +84,7 @@ namespace NWebsec.Tests.Unit.Csp
                 mockRequest.Setup(r => r.InputStream).Returns(ms);
 
                 var violationReport = helper.GetCspReportFromRequest(mockRequest.Object);
-                var values = violationReport.Values;
+                var values = violationReport.Details;
 
                 Assert.IsNotNull(values);
                 Assert.AreEqual("http://localhost/NWebsecMvc3", values.DocumentUri);

@@ -22,7 +22,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <RunCodeAnalysis>false</RunCodeAnalysis>
+    <RunCodeAnalysis>true</RunCodeAnalysis>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -48,7 +48,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Csp\CspReport.cs" />
+    <Compile Include="Csp\CspReportDetails.cs" />
     <Compile Include="Csp\CspViolationReportEventArgs.cs" />
     <Compile Include="Csp\CspReportHandlerUriHelper.cs" />
     <Compile Include="Csp\CspReportHelper.cs" />
