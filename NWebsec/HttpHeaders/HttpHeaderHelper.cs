@@ -1,8 +1,10 @@
 ﻿// Copyright (c) André N. Klingsheim. See License.txt in the project root for license information.
 
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Web;
+using NWebsec.Csp.Overrides;
 using NWebsec.Modules.Configuration;
 using NWebsec.Modules.Configuration.Csp;
 
@@ -31,18 +33,21 @@ namespace NWebsec.HttpHeaders
         }
 
         private readonly HttpContextBase context;
+        private readonly CspOverrideHelper cspHelper;
         private readonly HttpHeaderConfigurationSection baseConfig;
-
+        
         public HttpHeaderHelper(HttpContextBase context)
         {
             this.context = context;
             baseConfig = GetConfig();
+            cspHelper = new CspOverrideHelper();
         }
 
         internal HttpHeaderHelper(HttpContextBase context, HttpHeaderConfigurationSection config)
         {
             this.context = context;
             baseConfig = config;
+            cspHelper = new CspOverrideHelper();
         }
 
         internal void FixHeaders()
@@ -56,8 +61,8 @@ namespace NWebsec.HttpHeaders
             headerSetter.AddXContentTypeOptionsHeader(GetXContentTypeOptionsWithOverride());
             headerSetter.AddXDownloadOptionsHeader(GetXDownloadOptionsWithOverride());
             headerSetter.AddXXssProtectionHeader(GetXXssProtectionWithOverride());
-            headerSetter.AddCspHeaders(GetCspElementWithOverrides(false, baseConfig.SecurityHttpHeaders.Csp), false);
-            headerSetter.AddCspHeaders(GetCspElementWithOverrides(true, baseConfig.SecurityHttpHeaders.CspReportOnly), true);
+            headerSetter.AddCspHeaders(GetCspElementWithOverrides(false), false);
+            headerSetter.AddCspHeaders(GetCspElementWithOverrides(true), true);
 
         }
 
@@ -236,14 +241,61 @@ namespace NWebsec.HttpHeaders
                     : baseConfig.SecurityHttpHeaders.Csp.ReportUriDirective;
         }
 
-        public void SetContentSecurityPolicyDirectiveOverride(CspDirectives directive, CspDirectiveBaseConfigurationElement config, bool reportOnly)
+        public void SetContentSecurityPolicyDirectiveOverride(CspDirectives directive, CspDirectiveBaseOverride config, bool reportOnly)
         {
 
             var cspOverride = GetCspDirectiveOverides(reportOnly);
-            if (cspOverride.ContainsKey(directive))
+            CspDirectiveBaseConfigurationElement directiveElement;
+            var directiveExists = cspOverride.TryGetValue(directive, out directiveElement);
+
+            if (!directiveExists)
+            {
+                directiveElement = GetCspDirectiveFromConfig(directive);
+            }
+
+            var newConfig = cspHelper.GetOverridenCspDirectiveConfig(directive, config, directiveElement);
+
+            if (directiveExists)
                 cspOverride.Remove(directive);
-            cspOverride.Add(directive, config);
+            cspOverride.Add(directive, newConfig);
         }
+
+        private CspDirectiveBaseConfigurationElement GetCspDirectiveFromConfig(CspDirectives directive)
+        {
+            switch (directive)
+            {
+                case CspDirectives.DefaultSrc:
+                    return baseConfig.SecurityHttpHeaders.Csp.DefaultSrc;
+
+                case CspDirectives.ConnectSrc:
+                    return baseConfig.SecurityHttpHeaders.Csp.ConnectSrc;
+
+                case CspDirectives.FontSrc:
+                    return baseConfig.SecurityHttpHeaders.Csp.FontSrc;
+
+                case CspDirectives.FrameSrc:
+                    return baseConfig.SecurityHttpHeaders.Csp.FrameSrc;
+
+                case CspDirectives.ImgSrc:
+                    return baseConfig.SecurityHttpHeaders.Csp.ImgSrc;
+
+                case CspDirectives.MediaSrc:
+                    return baseConfig.SecurityHttpHeaders.Csp.MediaSrc;
+
+                case CspDirectives.ObjectSrc:
+                    return baseConfig.SecurityHttpHeaders.Csp.ObjectSrc;
+
+                case CspDirectives.ScriptSrc:
+                    return baseConfig.SecurityHttpHeaders.Csp.ScriptSrc;
+
+                case CspDirectives.StyleSrc:
+                    return baseConfig.SecurityHttpHeaders.Csp.StyleSrc;
+
+                default:
+                    throw new NotImplementedException("The mapping for " + directive + " was not implemented.");
+            }
+        }
+
 
         private IDictionary<CspDirectives, CspDirectiveBaseConfigurationElement> GetCspDirectiveOverides(bool reportOnly)
         {
@@ -255,26 +307,24 @@ namespace NWebsec.HttpHeaders
             return (IDictionary<CspDirectives, CspDirectiveBaseConfigurationElement>)headerList[headerKey];
         }
 
-        internal CspConfigurationElement GetCspElementWithOverrides(bool reportOnly, CspConfigurationElement cspConfig)
+        internal CspConfigurationElement GetCspElementWithOverrides(bool reportOnly)
         {
-            var headerKey = GetCspConfigKey(CspDirectivesKeyPrefix, reportOnly);
-            var headerList = GetHeaderListFromContext();
-            if (!headerList.ContainsKey(headerKey))
-                return cspConfig;
-
+            var cspHeaderOverride = GetCspHeaderWithOverride(reportOnly);
             var overriddenConfig = new CspConfigurationElement();
             {
-                var cspHeaderOverride = GetCspHeaderWithOverride(reportOnly);
+
                 overriddenConfig.Enabled = cspHeaderOverride.Enabled;
                 overriddenConfig.XContentSecurityPolicyHeader = cspHeaderOverride.XContentSecurityPolicyHeader;
                 overriddenConfig.XWebKitCspHeader = cspHeaderOverride.XWebKitCspHeader;
             }
 
             overriddenConfig.ReportUriDirective = GetCspReportUriDirectiveWithOverride(reportOnly);
-            
-            var directiveOverrides = (IDictionary<CspDirectives, CspDirectiveBaseConfigurationElement>)headerList[headerKey];
-            CspDirectiveBaseConfigurationElement element;
 
+            var directiveOverrides = GetCspDirectiveOverides(reportOnly);
+
+            var cspConfig = baseConfig.SecurityHttpHeaders.Csp;
+
+            CspDirectiveBaseConfigurationElement element;
             var isOverriden = directiveOverrides.TryGetValue(CspDirectives.DefaultSrc, out element);
             overriddenConfig.DefaultSrc = (isOverriden ? element : cspConfig.DefaultSrc);
 

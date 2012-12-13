@@ -2,17 +2,18 @@
 
 using System;
 using System.Web.Mvc;
+using NWebsec.Csp.Overrides;
 using NWebsec.HttpHeaders;
-using NWebsec.Modules.Configuration.Csp;
 
 namespace NWebsec.Mvc.HttpHeaders.Csp
 {
     public abstract class CspDirectiveAttributeBase : ActionFilterAttribute
     {
         public bool Enabled { get; set; }
-        public bool None { get; set; }
-        public bool Self { get; set; }
-        public string Sources { get; set; }
+        public Source None { get; set; }
+        public Source Self { get; set; }
+        public bool InheritOtherSources { get; set; }
+        public string OtherSources { get; set; }
 
         protected abstract HttpHeaderHelper.CspDirectives Directive { get; }
         protected abstract bool ReportOnly { get; }
@@ -20,8 +21,9 @@ namespace NWebsec.Mvc.HttpHeaders.Csp
         protected CspDirectiveAttributeBase()
         {
             Enabled = true;
-            None = false;
-            Self = false;
+            None = Source.Inherit;
+            Self = Source.Inherit;
+            InheritOtherSources = true;
         }
 
         public override void OnActionExecuting(ActionExecutingContext filterContext)
@@ -29,43 +31,32 @@ namespace NWebsec.Mvc.HttpHeaders.Csp
             ValidateParams();
 
             var helper = new HttpHeaderHelper(filterContext.HttpContext);
-            helper.SetContentSecurityPolicyDirectiveOverride(Directive, GetCspDirectiveConfig(Sources), ReportOnly);
+            helper.SetContentSecurityPolicyDirectiveOverride(Directive, GetCspDirectiveOverride(OtherSources), ReportOnly);
 
             base.OnActionExecuting(filterContext);
         }
 
         protected virtual void ValidateParams()
         {
-            if (Enabled && !None && !Self && String.IsNullOrEmpty(Sources))
+            if (Enabled && None == Source.Inherit && Self == Source.Inherit && (String.IsNullOrEmpty(OtherSources) && !InheritOtherSources))
                 throw new ApplicationException("No sources enabled for attribute. Remove attribute, or set \"Enabled=false\"");
         }
 
-        protected virtual CspDirectiveBaseConfigurationElement GetNewDirectiveConfigurationElement()
+        protected virtual CspDirectiveBaseOverride GetNewDirectiveConfigurationElement()
         {
-            return new CspDirectiveBaseConfigurationElement();
+            return new CspDirectiveBaseOverride();
         }
 
-        protected CspDirectiveBaseConfigurationElement GetCspDirectiveConfig(string sources)
+        protected CspDirectiveBaseOverride GetCspDirectiveOverride(string sources)
         {
-            var directive = GetNewDirectiveConfigurationElement();
-            directive.Enabled = Enabled;
-            directive.None = None;
-            directive.Self = Self;
+            var directiveOverride = GetNewDirectiveConfigurationElement();
+            directiveOverride.Enabled = Enabled;
+            directiveOverride.None = None;
+            directiveOverride.Self = Self;
+            directiveOverride.InheritOtherSources = InheritOtherSources;
+            directiveOverride.OtherSources = sources;
 
-            if (String.IsNullOrEmpty(sources)) return directive;
-
-            if (sources.StartsWith(" ") || sources.EndsWith(" "))
-                throw new ApplicationException("ReportUris must not contain leading or trailing whitespace: " + sources);
-            if (sources.Contains("  "))
-                throw new ApplicationException("ReportUris must be separated by exactly one whitespace: " + sources);
-
-            var sourceList = sources.Split(' ');
-
-            foreach (var source in sourceList)
-            {
-                directive.Sources.Add(new CspSourceConfigurationElement { Source = source });
-            }
-            return directive;
+            return directiveOverride;
         }
     }
 }

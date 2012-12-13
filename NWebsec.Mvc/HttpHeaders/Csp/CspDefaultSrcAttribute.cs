@@ -1,6 +1,7 @@
 ﻿// Copyright (c) André N. Klingsheim. See License.txt in the project root for license information.
 
 using System;
+using NWebsec.Csp.Overrides;
 using NWebsec.HttpHeaders;
 using NWebsec.Modules.Configuration.Csp;
 
@@ -23,8 +24,8 @@ namespace NWebsec.Mvc.HttpHeaders.Csp
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, Inherited = false, AllowMultiple = false)]
     public class CspScriptSrcAttribute : CspDirectiveAttributeBase
     {
-        public bool UnsafeInline { get; set; }
-        public bool UnsafeEval { get; set; }
+        public Source UnsafeInline { get; set; }
+        public Source UnsafeEval { get; set; }
 
         protected override HttpHeaderHelper.CspDirectives Directive
         {
@@ -36,14 +37,14 @@ namespace NWebsec.Mvc.HttpHeaders.Csp
             get { return false; }
         }
 
-        protected override CspDirectiveBaseConfigurationElement GetNewDirectiveConfigurationElement()
+        protected override CspDirectiveBaseOverride GetNewDirectiveConfigurationElement()
         {
-            return new CspDirectiveUnsafeInlineUnsafeEvalConfigurationElement { UnsafeInline = UnsafeInline, UnsafeEval = UnsafeEval };
+            return new CspDirectiveUnsafeInlineUnsafeEvalOverride { UnsafeInline = UnsafeInline, UnsafeEval = UnsafeEval };
         }
 
         protected override void ValidateParams()
         {
-            if (UnsafeInline || UnsafeEval)
+            if (UnsafeInline != Source.Inherit || UnsafeEval != Source.Inherit)
                 return;
 
             base.ValidateParams();
@@ -67,7 +68,7 @@ namespace NWebsec.Mvc.HttpHeaders.Csp
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, Inherited = false, AllowMultiple = false)]
     public class CspStyleSrcAttribute : CspDirectiveAttributeBase
     {
-        public bool UnsafeInline { get; set; }
+        public Source UnsafeInline { get; set; }
 
         protected override HttpHeaderHelper.CspDirectives Directive
         {
@@ -79,14 +80,14 @@ namespace NWebsec.Mvc.HttpHeaders.Csp
             get { return false; }
         }
 
-        protected override CspDirectiveBaseConfigurationElement GetNewDirectiveConfigurationElement()
+        protected override CspDirectiveBaseOverride GetNewDirectiveConfigurationElement()
         {
-            return new CspDirectiveUnsafeInlineConfigurationElement { UnsafeInline = UnsafeInline };
+            return new CspDirectiveUnsafeInlineOverride() { UnsafeInline = UnsafeInline };
         }
 
         protected override void ValidateParams()
         {
-            if (UnsafeInline)
+            if (UnsafeInline != Source.Inherit)
                 return;
 
             base.ValidateParams();
@@ -178,32 +179,11 @@ namespace NWebsec.Mvc.HttpHeaders.Csp
     }
 
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, Inherited = false, AllowMultiple = false)]
-    public class CspScriptSrcReportOnlyAttribute : CspDirectiveAttributeBase
+    public class CspScriptSrcReportOnlyAttribute : CspScriptSrcAttribute
     {
-        public bool UnsafeInline { get; set; }
-        public bool UnsafeEval { get; set; }
-
-        protected override HttpHeaderHelper.CspDirectives Directive
-        {
-            get { return HttpHeaderHelper.CspDirectives.ScriptSrc; }
-        }
-
         protected override bool ReportOnly
         {
             get { return true; }
-        }
-
-        protected override CspDirectiveBaseConfigurationElement GetNewDirectiveConfigurationElement()
-        {
-            return new CspDirectiveUnsafeInlineUnsafeEvalConfigurationElement { UnsafeInline = UnsafeInline, UnsafeEval = UnsafeEval };
-        }
-
-        protected override void ValidateParams()
-        {
-            if (UnsafeInline || UnsafeEval)
-                return;
-
-            base.ValidateParams();
         }
     }
 
@@ -222,31 +202,11 @@ namespace NWebsec.Mvc.HttpHeaders.Csp
     }
 
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, Inherited = false, AllowMultiple = false)]
-    public class CspStyleSrcReportOnlyAttribute : CspDirectiveAttributeBase
+    public class CspStyleSrcReportOnlyAttribute : CspStyleSrcAttribute
     {
-        public bool UnsafeInline { get; set; }
-
-        protected override HttpHeaderHelper.CspDirectives Directive
-        {
-            get { return HttpHeaderHelper.CspDirectives.StyleSrc; }
-        }
-
         protected override bool ReportOnly
         {
             get { return true; }
-        }
-
-        protected override CspDirectiveBaseConfigurationElement GetNewDirectiveConfigurationElement()
-        {
-            return new CspDirectiveUnsafeInlineConfigurationElement { UnsafeInline = UnsafeInline };
-        }
-
-        protected override void ValidateParams()
-        {
-            if (UnsafeInline)
-                return;
-
-            base.ValidateParams();
         }
     }
 

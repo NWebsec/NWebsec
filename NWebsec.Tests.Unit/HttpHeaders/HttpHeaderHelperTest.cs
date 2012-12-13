@@ -2,9 +2,11 @@
 
 using System.Collections.Generic;
 using System;
+using System.Linq;
 using System.Web;
 using Moq;
 using NUnit.Framework;
+using NWebsec.Csp.Overrides;
 using NWebsec.HttpHeaders;
 using NWebsec.Modules.Configuration;
 using NWebsec.Modules.Configuration.Csp;
@@ -104,35 +106,71 @@ namespace NWebsec.Tests.Unit.HttpHeaders
         public void GetCspElementWithOverrides_DirectiveConfiguredAndOverridenWithSources_DirectiveReplaced()
         {
             const bool reportonly = false;
+            var configSection = new HttpHeaderConfigurationSection();
+            configSection.SecurityHttpHeaders.Csp.DefaultSrc.Self = true;
+            configSection.SecurityHttpHeaders.Csp.DefaultSrc.Sources.Add(new CspSourceConfigurationElement { Source = "www.nwebsec.com" });
+            headerHelper = new HttpHeaderHelper(mockContext.Object, configSection);
+            var directive = new CspDirectiveBaseOverride { Self = Source.Disable, OtherSources = "*.nwebsec.com", InheritOtherSources = false };
 
-            var config = new CspConfigurationElement { DefaultSrc = { Self = true } };
-            
-            var directive = new CspDirectiveUnsafeInlineUnsafeEvalConfigurationElement { Self = false };
-                directive.Sources.Add(new CspSourceConfigurationElement() { Source = ValidCspDirectiveSource });
+            headerHelper.SetContentSecurityPolicyDirectiveOverride(HttpHeaderHelper.CspDirectives.DefaultSrc, directive, reportonly);
 
-                headerHelper.SetContentSecurityPolicyDirectiveOverride(HttpHeaderHelper.CspDirectives.DefaultSrc, directive, reportonly);
-            
-                var overrideElement = headerHelper.GetCspElementWithOverrides(reportonly, config).DefaultSrc;
-                Assert.IsFalse(overrideElement.Self);
-                Assert.IsTrue(overrideElement.Sources.GetAllKeys().Length == 1);
-                Assert.IsTrue(overrideElement.Sources[0].Source.Equals(ValidCspDirectiveSource));
+            var overrideElement = headerHelper.GetCspElementWithOverrides(reportonly).DefaultSrc;
+            Assert.IsFalse(overrideElement.Self);
+            Assert.IsTrue(overrideElement.Sources.GetAllKeys().Length == 1);
+            Assert.IsTrue(overrideElement.Sources[0].Source.Equals("*.nwebsec.com"));
         }
 
         [Test]
-        public void GetCspElementWithOverrides_DirectiveOverridenMultipleTimes_LastOverrideWins()
+        public void GetCspElementWithOverrides_ScriptSrcDirectiveConfiguredAndOverridenWithUnsafeEval_DirectiveReplaced()
         {
             const bool reportonly = false;
-            var config = new CspConfigurationElement();
+            var configSection = new HttpHeaderConfigurationSection();
+            configSection.SecurityHttpHeaders.Csp.ScriptSrc.Self = true;
+            configSection.SecurityHttpHeaders.Csp.ScriptSrc.UnsafeInline = false;
+            headerHelper = new HttpHeaderHelper(mockContext.Object, configSection);
+            var directive = new CspDirectiveUnsafeInlineUnsafeEvalOverride { UnsafeEval = Source.Enable };
 
-            var firstOverride = new CspDirectiveBaseConfigurationElement();
-            firstOverride.Sources.Add(new CspSourceConfigurationElement {Source = "transformtool.codeplex.com"});
-            var secondOverride = new CspDirectiveBaseConfigurationElement();
-            secondOverride.Sources.Add(new CspSourceConfigurationElement {Source = "nwebsec.codeplex.com"});
+            headerHelper.SetContentSecurityPolicyDirectiveOverride(HttpHeaderHelper.CspDirectives.ScriptSrc, directive, reportonly);
+            var overrideElement = headerHelper.GetCspElementWithOverrides(reportonly).ScriptSrc;
+
+            Assert.IsTrue(overrideElement.Self);
+            Assert.IsTrue(overrideElement.UnsafeEval);
+            Assert.IsFalse(overrideElement.UnsafeInline);
+        }
+
+        [Test]
+        public void GetCspElementWithOverrides_DirectiveConfiguredAndOverridenWithSourcesInherited_KeepsAllSources()
+        {
+            const bool reportonly = false;
+
+            var configSection = new HttpHeaderConfigurationSection();
+            var element = configSection.SecurityHttpHeaders.Csp.DefaultSrc;
+            element.Self = true;
+            element.Sources.Add(new CspSourceConfigurationElement() { Source = "transformtool.codeplex.com" });
+            headerHelper = new HttpHeaderHelper(mockContext.Object, configSection);
+
+            var directive = new CspDirectiveBaseOverride { Self = Source.Disable, OtherSources = "nwebsec.codeplex.com", InheritOtherSources = true };
+
+            headerHelper.SetContentSecurityPolicyDirectiveOverride(HttpHeaderHelper.CspDirectives.DefaultSrc, directive, reportonly);
+
+            var overrideElement = headerHelper.GetCspElementWithOverrides(reportonly).DefaultSrc;
+            Assert.IsFalse(overrideElement.Self);
+            Assert.IsTrue(overrideElement.Sources.GetAllKeys().Length == 2);
+            Assert.IsTrue(overrideElement.Sources.OfType<CspSourceConfigurationElement>().Any(elm => elm.Source.Equals("transformtool.codeplex.com")));
+            Assert.IsTrue(overrideElement.Sources.OfType<CspSourceConfigurationElement>().Any(elm => elm.Source.Equals("nwebsec.codeplex.com")));
+        }
+
+        [Test]
+        public void GetCspElementWithOverrides_DirectiveSourceOverridenMultipleTimes_LastOverrideWins()
+        {
+            const bool reportonly = false;
+            var firstOverride = new CspDirectiveBaseOverride() { OtherSources = "transformtool.codeplex.com", InheritOtherSources = false };
+            var secondOverride = new CspDirectiveBaseOverride() { OtherSources = "nwebsec.codeplex.com", InheritOtherSources = false };
 
             headerHelper.SetContentSecurityPolicyDirectiveOverride(HttpHeaderHelper.CspDirectives.DefaultSrc, firstOverride, reportonly);
             headerHelper.SetContentSecurityPolicyDirectiveOverride(HttpHeaderHelper.CspDirectives.DefaultSrc, secondOverride, reportonly);
 
-            var overrideElement = headerHelper.GetCspElementWithOverrides(reportonly, config);
+            var overrideElement = headerHelper.GetCspElementWithOverrides(reportonly);
 
             Assert.IsTrue(overrideElement.DefaultSrc.Sources.GetAllKeys().Length == 1);
             Assert.IsTrue(overrideElement.DefaultSrc.Sources[0].Source.Equals("nwebsec.codeplex.com"));
