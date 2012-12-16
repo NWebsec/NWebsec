@@ -32,6 +32,9 @@ using NWebsec.HttpHeaders;
 
 namespace NWebsec.Mvc.HttpHeaders
 {
+    /// <summary>
+    /// This attribute is no longer supported.
+    /// </summary>
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, Inherited = true, AllowMultiple = true)]
     [Obsolete("This attribute has been discontinued. Please use the new CSP attributes in the NWebsec.Mvc.HttpHeaders.Csp namespace", true)]
     public class XContentSecurityPolicyReportOnlyAttribute : ActionFilterAttribute

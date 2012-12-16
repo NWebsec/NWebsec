@@ -7,13 +7,25 @@ using NWebsec.Modules.Configuration.Csp;
 
 namespace NWebsec.Mvc.HttpHeaders.Csp
 {
+    /// <summary>
+    /// This class is abstract and cannot be used directly.
+    /// </summary>
     public abstract class CspReportUriAttributeBase : ActionFilterAttribute
     {
         private readonly HttpHeaderHelper helper;
+        /// <summary>
+        /// Gets or sets whether the report-uri directive is enabled in the CSP header. The default is true.
+        /// </summary>
         public bool Enabled { get; set; }
-        public string ReportUris { get; set; }
+        /// <summary>
+        /// Gets or sets whether the URI for the built in CSP report handler should be included in the directive.
+        /// </summary>
         public bool EnableBuiltinHandler { get; set; }
-
+        /// <summary>
+        /// Gets or sets custom report URIs for the directive. Report URIs are separated by exactly one whitespace, and they must be relative URIs.
+        /// </summary>
+        public string ReportUris { get; set; }
+        
         protected abstract bool ReportOnly { get; }
 
         protected CspReportUriAttributeBase()

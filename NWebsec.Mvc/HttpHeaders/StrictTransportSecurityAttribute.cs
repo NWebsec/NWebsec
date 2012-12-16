@@ -7,8 +7,12 @@ using NWebsec.Modules.Configuration;
 
 namespace NWebsec.Mvc.HttpHeaders
 {
+    /// <summary>
+    /// This attribute has been discontinued, and will be removed in the near future.
+    /// </summary>
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, Inherited = true, AllowMultiple = false)]
     [Obsolete("Strict Transport Security should be configured in web.config.",false)]
+#pragma warning disable 1591
     public class StrictTransportSecurityAttribute : ActionFilterAttribute
     {
         private readonly TimeSpan ttl;
