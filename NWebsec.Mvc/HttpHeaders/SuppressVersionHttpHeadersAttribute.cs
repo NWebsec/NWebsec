@@ -9,8 +9,10 @@ namespace NWebsec.Mvc.HttpHeaders
 {
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, Inherited = true, AllowMultiple = false)]
     [Obsolete("SuppressVersionHttpHeaders should be configured in web.config.", false)]
+#pragma warning disable 1591
     public class SuppressVersionHttpHeadersAttribute : ActionFilterAttribute
     {
+        private readonly HttpHeaderHelper headerHelper;
 
         public bool Enabled { get; set; }
         public string ServerHeader { get; set; }
@@ -19,11 +21,12 @@ namespace NWebsec.Mvc.HttpHeaders
         {
             Enabled = true;
             ServerHeader = String.Empty;
+            headerHelper = new HttpHeaderHelper();
         }
 
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
-            new HttpHeaderHelper(filterContext.HttpContext).SetSuppressVersionHeadersOverride(new SuppressVersionHeadersConfigurationElement { Enabled = Enabled, ServerHeader = ServerHeader });
+            headerHelper.SetSuppressVersionHeadersOverride(filterContext.HttpContext, new SuppressVersionHeadersConfigurationElement { Enabled = Enabled, ServerHeader = ServerHeader });
             base.OnActionExecuting(filterContext);
         }
     }

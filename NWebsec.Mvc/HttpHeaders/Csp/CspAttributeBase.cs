@@ -8,6 +8,7 @@ namespace NWebsec.Mvc.HttpHeaders.Csp
 {
     public abstract class CspAttributeBase : ActionFilterAttribute
     {
+        private readonly HttpHeaderHelper headerHelper;
         public bool Enabled { get; set; }
         public bool XContentSecurityPolicyHeader { get; set; }
         public bool XWebKitCspHeader { get; set; }
@@ -17,6 +18,7 @@ namespace NWebsec.Mvc.HttpHeaders.Csp
         protected CspAttributeBase()
         {
             Enabled = true;
+            headerHelper = new HttpHeaderHelper();
         }
 
         public override void OnActionExecuting(ActionExecutingContext filterContext)
@@ -28,8 +30,7 @@ namespace NWebsec.Mvc.HttpHeaders.Csp
                                  XWebKitCspHeader = XWebKitCspHeader
                              };
 
-            var helper = new HttpHeaderHelper(filterContext.HttpContext);
-            helper.SetCspHeaderOverride(config, ReportOnly);
+            headerHelper.SetCspHeaderOverride(filterContext.HttpContext, config, ReportOnly);
             base.OnActionExecuting(filterContext);
         }
     }

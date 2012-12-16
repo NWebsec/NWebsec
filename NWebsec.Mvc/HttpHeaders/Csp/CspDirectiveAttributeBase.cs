@@ -12,6 +12,8 @@ namespace NWebsec.Mvc.HttpHeaders.Csp
     /// </summary>
     public abstract class CspDirectiveAttributeBase : ActionFilterAttribute
     {
+        private readonly HttpHeaderHelper headerHelper;
+
         /// <summary>
         /// Gets or sets whether the CSP directive is enabled in the CSP header. The default is true.
         /// </summary>
@@ -44,14 +46,14 @@ namespace NWebsec.Mvc.HttpHeaders.Csp
             None = Source.Inherit;
             Self = Source.Inherit;
             InheritOtherSources = true;
+            headerHelper = new HttpHeaderHelper();
         }
 
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
             ValidateParams();
 
-            var helper = new HttpHeaderHelper(filterContext.HttpContext);
-            helper.SetContentSecurityPolicyDirectiveOverride(Directive, GetCspDirectiveOverride(OtherSources), ReportOnly);
+            headerHelper.SetContentSecurityPolicyDirectiveOverride(filterContext.HttpContext, Directive, GetCspDirectiveOverride(OtherSources), ReportOnly);
 
             base.OnActionExecuting(filterContext);
         }

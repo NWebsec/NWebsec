@@ -10,19 +10,24 @@ namespace NWebsec.Modules
 {
     public class HttpHeaderSecurityModule : IHttpModule
     {
-        private CspReportHelper cspReportHelper;
+        private readonly CspReportHelper cspReportHelper;
+        private readonly HttpHeaderHelper headerHelper;
         public event CspViolationReportEventHandler CspViolationReported;
+
+        public HttpHeaderSecurityModule()
+        {
+            cspReportHelper = new CspReportHelper();
+            headerHelper = new HttpHeaderHelper();
+        }
 
         public void Init(HttpApplication app)
         {
-
             var config = HttpHeaderHelper.GetConfig();
             if (config.SuppressVersionHeaders.Enabled && !HttpRuntime.UsingIntegratedPipeline)
             {
                 throw new ConfigurationErrorsException("NWebsec config error: suppressVersionHeaders can only be enabled when using IIS integrated pipeline mode.");
             }
 
-            cspReportHelper = new CspReportHelper();
             app.BeginRequest += AppBeginRequest;
             app.PreSendRequestHeaders += AppPreSendRequestHeaders;
         }
@@ -34,7 +39,7 @@ namespace NWebsec.Modules
 
             if (!cspReportHelper.IsRequestForBuiltInCspReportHandler(context.Request)) return;
             var cspReport = cspReportHelper.GetCspReportFromRequest(context.Request);
-            var eventArgs = new CspViolationReportEventArgs {ViolationReport = cspReport};
+            var eventArgs = new CspViolationReportEventArgs { ViolationReport = cspReport };
             OnCspViolationReport(eventArgs);
             context.Response.StatusCode = 204;
             app.CompleteRequest();
@@ -45,8 +50,7 @@ namespace NWebsec.Modules
             var app = (HttpApplication)sender;
             var context = new HttpContextWrapper(app.Context);
 
-            new HttpHeaderHelper(context).FixHeaders();
-
+            headerHelper.FixHeaders(context);
         }
 
         public delegate void CspViolationReportEventHandler(object sender, CspViolationReportEventArgs e);

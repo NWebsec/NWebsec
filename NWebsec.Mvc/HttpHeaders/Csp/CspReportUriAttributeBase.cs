@@ -9,6 +9,7 @@ namespace NWebsec.Mvc.HttpHeaders.Csp
 {
     public abstract class CspReportUriAttributeBase : ActionFilterAttribute
     {
+        private readonly HttpHeaderHelper helper;
         public bool Enabled { get; set; }
         public string ReportUris { get; set; }
         public bool EnableBuiltinHandler { get; set; }
@@ -18,12 +19,12 @@ namespace NWebsec.Mvc.HttpHeaders.Csp
         protected CspReportUriAttributeBase()
         {
             Enabled = true;
+            helper = new HttpHeaderHelper();
         }
 
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
-            var helper = new HttpHeaderHelper(filterContext.HttpContext);
-            helper.SetCspReportUriOverride(GetCspDirectiveConfig(), false);
+            helper.SetCspReportUriOverride(filterContext.HttpContext, GetCspDirectiveConfig(), false);
             base.OnActionExecuting(filterContext);
         }
 

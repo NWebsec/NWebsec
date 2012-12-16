@@ -13,6 +13,8 @@ namespace NWebsec.Mvc.HttpHeaders
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, Inherited = true, AllowMultiple = false)]
     public class XContentTypeOptionsAttribute : ActionFilterAttribute
     {
+        private readonly HttpHeaderHelper headerHelper;
+
         /// <summary>
         /// Gets or sets whether the X-Content-Type-Options security header should be set in the HTTP response. The default is true.
         /// </summary>
@@ -21,11 +23,12 @@ namespace NWebsec.Mvc.HttpHeaders
         public XContentTypeOptionsAttribute()
         {
             Enabled = true;
+            headerHelper = new HttpHeaderHelper();
         }
 
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
-            new HttpHeaderHelper(filterContext.HttpContext).SetXContentTypeOptionsOverride(new SimpleBooleanConfigurationElement { Enabled = Enabled });
+            headerHelper.SetXContentTypeOptionsOverride(filterContext.HttpContext, new SimpleBooleanConfigurationElement { Enabled = Enabled });
             base.OnActionExecuting(filterContext);
         }
     }

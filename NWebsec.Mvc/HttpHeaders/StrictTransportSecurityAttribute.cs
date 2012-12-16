@@ -11,7 +11,8 @@ namespace NWebsec.Mvc.HttpHeaders
     [Obsolete("Strict Transport Security should be configured in web.config.",false)]
     public class StrictTransportSecurityAttribute : ActionFilterAttribute
     {
-        private TimeSpan ttl;
+        private readonly TimeSpan ttl;
+        private readonly HttpHeaderHelper headerHelper;
         public bool IncludeSubdomains { get; set; }
 
         public StrictTransportSecurityAttribute(string maxAge)
@@ -19,11 +20,12 @@ namespace NWebsec.Mvc.HttpHeaders
             if (!TimeSpan.TryParse(maxAge,out ttl))
                 throw new ArgumentException("Invalid timespan format. See TimeSpan.TryParse on MSDN for examples.","maxAge");
             IncludeSubdomains = false;
+            headerHelper = new HttpHeaderHelper();
         }
 
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
-            new HttpHeaderHelper(filterContext.HttpContext).SetHstsOverride(new HstsConfigurationElement { MaxAge = ttl, IncludeSubdomains = IncludeSubdomains });
+            headerHelper.SetHstsOverride(filterContext.HttpContext, new HstsConfigurationElement { MaxAge = ttl, IncludeSubdomains = IncludeSubdomains });
             base.OnActionExecuting(filterContext);
         }
     }

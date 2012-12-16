@@ -13,20 +13,23 @@ namespace NWebsec.Mvc.HttpHeaders
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, Inherited = true, AllowMultiple = false)]
     public class XFrameOptionsAttribute : ActionFilterAttribute
     {
+        private readonly HttpHeaderHelper headerHelper;
+
         /// <summary>
         /// Gets or sets whether the X-Frame-Options security header should be set in the HTTP response.
         /// Possible values are: Disabled, Deny, SameOrigin. The default is Deny.
         /// </summary>
         public HttpHeadersConstants.XFrameOptions Policy { get; set; }
-        
+
         public XFrameOptionsAttribute()
         {
             Policy = HttpHeadersConstants.XFrameOptions.Deny;
+            headerHelper = new HttpHeaderHelper();
         }
 
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
-            new HttpHeaderHelper(filterContext.HttpContext).SetXFrameoptionsOverride(new XFrameOptionsConfigurationElement { Policy = Policy});
+            headerHelper.SetXFrameoptionsOverride(filterContext.HttpContext, new XFrameOptionsConfigurationElement { Policy = Policy });
             base.OnActionExecuting(filterContext);
         }
     }

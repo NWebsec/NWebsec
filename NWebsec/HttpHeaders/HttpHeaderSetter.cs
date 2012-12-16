@@ -13,29 +13,22 @@ namespace NWebsec.HttpHeaders
 {
     class HttpHeaderSetter
     {
-        private readonly HttpContextBase context;
-        private readonly HttpResponseBase response;
-        private readonly HttpRequestBase request;
-        private CspReportHelper reportHelper;
+        private readonly CspReportHelper reportHelper;
 
-        internal HttpHeaderSetter(HttpContextBase context)
+        internal HttpHeaderSetter()
         {
-            this.context = context;
-            request = context.Request;
-            response = context.Response;
             reportHelper = new CspReportHelper();
         }
 
-        internal HttpHeaderSetter(HttpContextBase context, CspReportHelper reportHelper)
+        internal HttpHeaderSetter(CspReportHelper reportHelper)
         {
-            this.context = context;
-            request = context.Request;
-            response = context.Response;
             this.reportHelper = reportHelper;
         }
 
-        public void SetNoCacheHeaders(SimpleBooleanConfigurationElement getNoCacheHeadersWithOverride)
+        public void SetNoCacheHeaders(HttpContextBase context, SimpleBooleanConfigurationElement getNoCacheHeadersWithOverride)
         {
+            var request = context.Request;
+            var response = context.Response;
             if (!getNoCacheHeadersWithOverride.Enabled)
                 return;
 
@@ -58,7 +51,7 @@ namespace NWebsec.HttpHeaders
             response.AddHeader("Pragma", "no-cache");
         }
 
-        internal void AddXFrameoptionsHeader(XFrameOptionsConfigurationElement xFrameOptionsConfig)
+        internal void AddXFrameoptionsHeader(HttpResponseBase response, XFrameOptionsConfigurationElement xFrameOptionsConfig)
         {
 
             string frameOptions;
@@ -86,7 +79,7 @@ namespace NWebsec.HttpHeaders
             response.AddHeader(HttpHeadersConstants.XFrameOptionsHeader, frameOptions);
         }
 
-        internal void AddHstsHeader(HstsConfigurationElement hstsConfig)
+        internal void AddHstsHeader(HttpResponseBase response, HstsConfigurationElement hstsConfig)
         {
 
             var seconds = (int)hstsConfig.MaxAge.TotalSeconds;
@@ -99,7 +92,7 @@ namespace NWebsec.HttpHeaders
             response.AddHeader(HttpHeadersConstants.StrictTransportSecurityHeader, value);
         }
 
-        internal void AddXContentTypeOptionsHeader(SimpleBooleanConfigurationElement xContentTypeOptionsConfig)
+        internal void AddXContentTypeOptionsHeader(HttpResponseBase response, SimpleBooleanConfigurationElement xContentTypeOptionsConfig)
         {
             if (xContentTypeOptionsConfig.Enabled)
             {
@@ -107,7 +100,7 @@ namespace NWebsec.HttpHeaders
             }
         }
 
-        internal void AddXDownloadOptionsHeader(SimpleBooleanConfigurationElement xDownloadOptionsConfig)
+        internal void AddXDownloadOptionsHeader(HttpResponseBase response, SimpleBooleanConfigurationElement xDownloadOptionsConfig)
         {
             if (xDownloadOptionsConfig.Enabled)
             {
@@ -115,7 +108,7 @@ namespace NWebsec.HttpHeaders
             }
         }
 
-        internal void AddXXssProtectionHeader(XXssProtectionConfigurationElement xXssProtectionConfig)
+        internal void AddXXssProtectionHeader(HttpResponseBase response, XXssProtectionConfigurationElement xXssProtectionConfig)
         {
             string value;
             switch (xXssProtectionConfig.Policy)
@@ -138,7 +131,7 @@ namespace NWebsec.HttpHeaders
             response.AddHeader(HttpHeadersConstants.XXssProtectionHeader, value);
         }
 
-        internal void AddCspHeaders(CspConfigurationElement cspConfig, bool reportOnly)
+        internal void AddCspHeaders(HttpResponseBase response, CspConfigurationElement cspConfig, bool reportOnly)
         {
             if (!cspConfig.Enabled) return;
             
@@ -170,7 +163,7 @@ namespace NWebsec.HttpHeaders
             }
         }
 
-        internal void SuppressVersionHeaders(SuppressVersionHeadersConfigurationElement suppressVersionHeadersConfig)
+        internal void SuppressVersionHeaders(HttpResponseBase response, SuppressVersionHeadersConfigurationElement suppressVersionHeadersConfig)
         {
             if (!suppressVersionHeadersConfig.Enabled) return;
 
