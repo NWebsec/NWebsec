@@ -78,7 +78,7 @@
     <Compile Include="Modules\Configuration\Csp\CspSourcesElementCollection.cs" />
     <Compile Include="Modules\Configuration\Csp\Validation\ReportUriValidatorAttribute.cs" />
     <Compile Include="Modules\Configuration\Csp\Validation\CspDirectiveBaseConfigurationElementValidatorAttribute.cs" />
-    <Compile Include="Modules\Configuration\HttpHeaderConfigurationSection.cs" />
+    <Compile Include="Modules\Configuration\HttpHeaderSecurityConfigurationSection.cs" />
     <Compile Include="Modules\Configuration\SecurityHttpHeadersConfigurationElement.cs" />
     <Compile Include="Modules\Configuration\Csp\Validation\CspDirectiveBaseConfigurationElementValidator.cs" />
     <Compile Include="Modules\Configuration\SuppressVersionHeadersConfigurationElement.cs" />
@@ -90,6 +90,7 @@
     <None Include="ConfigurationSchema\NWebSecConfig.xsd">
       <SubType>Designer</SubType>
     </None>
+    <None Include="NWebsec.nuspec" />
     <None Include="web.config.transform">
       <SubType>Designer</SubType>
     </None>

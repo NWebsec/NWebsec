@@ -4,7 +4,7 @@ using System.Configuration;
 
 namespace NWebsec.Modules.Configuration
 {
-    public class HttpHeaderConfigurationSection : ConfigurationSection
+    public class HttpHeaderSecurityConfigurationSection : ConfigurationSection
     {
         [ConfigurationProperty("setNoCacheHttpHeaders", IsRequired = true)]
         public SimpleBooleanConfigurationElement NoCacheHttpHeaders

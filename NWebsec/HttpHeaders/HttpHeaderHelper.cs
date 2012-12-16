@@ -34,7 +34,7 @@ namespace NWebsec.HttpHeaders
 
         private readonly HttpContextBase context;
         private readonly CspOverrideHelper cspHelper;
-        private readonly HttpHeaderConfigurationSection baseConfig;
+        private readonly HttpHeaderSecurityConfigurationSection baseConfig;
         
         public HttpHeaderHelper(HttpContextBase context)
         {
@@ -43,7 +43,7 @@ namespace NWebsec.HttpHeaders
             cspHelper = new CspOverrideHelper();
         }
 
-        internal HttpHeaderHelper(HttpContextBase context, HttpHeaderConfigurationSection config)
+        internal HttpHeaderHelper(HttpContextBase context, HttpHeaderSecurityConfigurationSection config)
         {
             this.context = context;
             baseConfig = config;
@@ -371,10 +371,10 @@ namespace NWebsec.HttpHeaders
                                  : HttpHeadersConstants.XContentSecurityPolicyHeader);
         }
 
-        public static HttpHeaderConfigurationSection GetConfig()
+        public static HttpHeaderSecurityConfigurationSection GetConfig()
         {
-            return (HttpHeaderConfigurationSection)(ConfigurationManager.GetSection("nwebsec/httpHeaderSecurityModule")) ??
-             new HttpHeaderConfigurationSection();
+            return (HttpHeaderSecurityConfigurationSection)(ConfigurationManager.GetSection("nwebsec/httpHeaderSecurityModule")) ??
+             new HttpHeaderSecurityConfigurationSection();
         }
 
     }

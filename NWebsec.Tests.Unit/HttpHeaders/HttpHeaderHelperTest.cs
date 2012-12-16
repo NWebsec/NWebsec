@@ -103,10 +103,10 @@ namespace NWebsec.Tests.Unit.HttpHeaders
         }
 
         [Test]
-        public void GetCspElementWithOverrides_DirectiveConfiguredAndOverridenWithSources_DirectiveReplaced()
+        public void GetCspElementWithOverrides_DirectiveConfiguredAndOverridenWithSource_SourceOverridden()
         {
             const bool reportonly = false;
-            var configSection = new HttpHeaderConfigurationSection();
+            var configSection = new HttpHeaderSecurityConfigurationSection();
             configSection.SecurityHttpHeaders.Csp.DefaultSrc.Self = true;
             configSection.SecurityHttpHeaders.Csp.DefaultSrc.Sources.Add(new CspSourceConfigurationElement { Source = "www.nwebsec.com" });
             headerHelper = new HttpHeaderHelper(mockContext.Object, configSection);
@@ -124,7 +124,7 @@ namespace NWebsec.Tests.Unit.HttpHeaders
         public void GetCspElementWithOverrides_ScriptSrcDirectiveConfiguredAndOverridenWithUnsafeEval_DirectiveReplaced()
         {
             const bool reportonly = false;
-            var configSection = new HttpHeaderConfigurationSection();
+            var configSection = new HttpHeaderSecurityConfigurationSection();
             configSection.SecurityHttpHeaders.Csp.ScriptSrc.Self = true;
             configSection.SecurityHttpHeaders.Csp.ScriptSrc.UnsafeInline = false;
             headerHelper = new HttpHeaderHelper(mockContext.Object, configSection);
@@ -143,7 +143,7 @@ namespace NWebsec.Tests.Unit.HttpHeaders
         {
             const bool reportonly = false;
 
-            var configSection = new HttpHeaderConfigurationSection();
+            var configSection = new HttpHeaderSecurityConfigurationSection();
             var element = configSection.SecurityHttpHeaders.Csp.DefaultSrc;
             element.Self = true;
             element.Sources.Add(new CspSourceConfigurationElement() { Source = "transformtool.codeplex.com" });
@@ -176,5 +176,37 @@ namespace NWebsec.Tests.Unit.HttpHeaders
             Assert.IsTrue(overrideElement.DefaultSrc.Sources[0].Source.Equals("nwebsec.codeplex.com"));
         }
 
+        [Test]
+        public void GetCspElementWithOverrides_DirectiveEnabledThenDisabledThroughOverride_DirectiveDisabled()
+        {
+            const bool reportonly = false;
+            var configSection = new HttpHeaderSecurityConfigurationSection();
+            headerHelper = new HttpHeaderHelper(mockContext.Object, configSection);
+            var directive1 = new CspDirectiveBaseOverride { Self = Source.Enable };
+            var directive2 = new CspDirectiveBaseOverride { Enabled = false };
+
+            headerHelper.SetContentSecurityPolicyDirectiveOverride(HttpHeaderHelper.CspDirectives.DefaultSrc, directive1, reportonly);
+            headerHelper.SetContentSecurityPolicyDirectiveOverride(HttpHeaderHelper.CspDirectives.DefaultSrc, directive2, reportonly);
+
+            var overrideElement = headerHelper.GetCspElementWithOverrides(reportonly).DefaultSrc;
+            Assert.IsFalse(overrideElement.Enabled);
+        }
+
+        [Test]
+        public void GetCspElementWithOverrides_DirectiveOverriddenTwiceWithDifferentSources_BothOverridesEnabled()
+        {
+            const bool reportonly = false;
+            var configSection = new HttpHeaderSecurityConfigurationSection();
+            headerHelper = new HttpHeaderHelper(mockContext.Object, configSection);
+            var directive1 = new CspDirectiveUnsafeInlineUnsafeEvalOverride { Self = Source.Enable };
+            var directive2 = new CspDirectiveUnsafeInlineUnsafeEvalOverride { UnsafeEval = Source.Enable };
+
+            headerHelper.SetContentSecurityPolicyDirectiveOverride(HttpHeaderHelper.CspDirectives.ScriptSrc, directive1, reportonly);
+            headerHelper.SetContentSecurityPolicyDirectiveOverride(HttpHeaderHelper.CspDirectives.ScriptSrc, directive2, reportonly);
+
+            var overrideElement = headerHelper.GetCspElementWithOverrides(reportonly).ScriptSrc;
+            Assert.IsTrue(overrideElement.Self);
+            Assert.IsTrue(overrideElement.UnsafeEval);
+        }
     }
 }

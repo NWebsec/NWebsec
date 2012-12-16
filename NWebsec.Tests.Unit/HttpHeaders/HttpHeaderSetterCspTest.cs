@@ -47,8 +47,8 @@ namespace NWebsec.Tests.Unit.HttpHeaders
             var mockReportPathHelper = new Mock<ICspReportHandlerPathHelper>();
             mockReportPathHelper.Setup(p => p.GetBuiltinCspReportHandlerPath()).Returns("/NWebsec");
             cspReportHelper = new CspReportHelper(mockReportPathHelper.Object);
-            
-            headerSetter = new HttpHeaderSetter(mockContext.Object,cspReportHelper);
+
+            headerSetter = new HttpHeaderSetter(mockContext.Object, cspReportHelper);
 
         }
 
@@ -56,6 +56,16 @@ namespace NWebsec.Tests.Unit.HttpHeaders
         public void AddCspHeaders_DisabledInConfig_DoesNotAddCspHeader()
         {
             var cspConfig = new CspConfigurationElement { Enabled = false, DefaultSrc = { Self = true } };
+
+            headerSetter.AddCspHeaders(cspConfig, false);
+
+            mockResponse.Verify(x => x.AddHeader(It.IsAny<String>(), It.IsAny<String>()), Times.Never());
+        }
+
+        [Test]
+        public void AddCspHeaders_DefaultConfig_DoesNotAddCspHeader()
+        {
+            var cspConfig = new CspConfigurationElement();
 
             headerSetter.AddCspHeaders(cspConfig, false);
 
@@ -82,6 +92,206 @@ namespace NWebsec.Tests.Unit.HttpHeaders
             headerSetter.AddCspHeaders(cspConfig, false);
 
             mockResponse.Verify(x => x.AddHeader(It.IsAny<String>(), It.IsAny<String>()), Times.Never());
+        }
+
+        [Test]
+        public void AddCspHeaders_CspEnabledWithDefaultSrc_AddsCspHeaderWithDefaultSrc()
+        {
+            var cspConfig = new CspConfigurationElement
+            {
+                Enabled = true,
+                DefaultSrc = { Self = true }
+            };
+
+            headerSetter.AddCspHeaders(cspConfig, false);
+
+            mockResponse.Verify(x => x.AddHeader("Content-Security-Policy", "default-src 'self'"), Times.Once());
+        }
+
+        [Test]
+        public void AddCspHeaders_CspEnabledWithScriptSrc_AddsCspHeaderWithScriptSrc()
+        {
+            var cspConfig = new CspConfigurationElement
+            {
+                Enabled = true,
+                ScriptSrc = { UnsafeEval = true }
+            };
+
+            headerSetter.AddCspHeaders(cspConfig, false);
+
+            mockResponse.Verify(x => x.AddHeader("Content-Security-Policy", "script-src 'unsafe-eval'"), Times.Once());
+        }
+
+        [Test]
+        public void AddCspHeaders_CspEnabledWithObjectSrc_AddsCspHeaderWithObjectSrc()
+        {
+            var cspConfig = new CspConfigurationElement
+            {
+                Enabled = true,
+                ObjectSrc = { Self = true }
+            };
+
+            headerSetter.AddCspHeaders(cspConfig, false);
+
+            mockResponse.Verify(x => x.AddHeader("Content-Security-Policy", "object-src 'self'"), Times.Once());
+        }
+
+        [Test]
+        public void AddCspHeaders_CspEnabledWithStyleSrc_AddsCspHeaderWithStyleSrc()
+        {
+            var cspConfig = new CspConfigurationElement
+            {
+                Enabled = true,
+                StyleSrc = { UnsafeInline = true }
+            };
+
+            headerSetter.AddCspHeaders(cspConfig, false);
+
+            mockResponse.Verify(x => x.AddHeader("Content-Security-Policy", "style-src 'unsafe-inline'"), Times.Once());
+        }
+
+        [Test]
+        public void AddCspHeaders_CspEnabledWithImgSrc_AddsCspHeaderWithImgSrc()
+        {
+            var cspConfig = new CspConfigurationElement
+            {
+                Enabled = true,
+                ImgSrc= { Self = true }
+            };
+
+            headerSetter.AddCspHeaders(cspConfig, false);
+
+            mockResponse.Verify(x => x.AddHeader("Content-Security-Policy", "img-src 'self'"), Times.Once());
+        }
+
+        [Test]
+        public void AddCspHeaders_CspEnabledWithMediaSrc_AddsCspHeaderWithMediaSrc()
+        {
+            var cspConfig = new CspConfigurationElement
+            {
+                Enabled = true,
+                MediaSrc = { Self = true }
+            };
+
+            headerSetter.AddCspHeaders(cspConfig, false);
+
+            mockResponse.Verify(x => x.AddHeader("Content-Security-Policy", "media-src 'self'"), Times.Once());
+        }
+
+        [Test]
+        public void AddCspHeaders_CspEnabledWithFrameSrc_AddsCspHeaderWithFrameSrc()
+        {
+            var cspConfig = new CspConfigurationElement
+            {
+                Enabled = true,
+                FrameSrc = { Self = true }
+            };
+
+            headerSetter.AddCspHeaders(cspConfig, false);
+
+            mockResponse.Verify(x => x.AddHeader("Content-Security-Policy", "frame-src 'self'"), Times.Once());
+        }
+
+        [Test]
+        public void AddCspHeaders_CspEnabledWithFontSrc_AddsCspHeaderWithFontSrc()
+        {
+            var cspConfig = new CspConfigurationElement
+            {
+                Enabled = true,
+                FontSrc = { Self = true }
+            };
+
+            headerSetter.AddCspHeaders(cspConfig, false);
+
+            mockResponse.Verify(x => x.AddHeader("Content-Security-Policy", "font-src 'self'"), Times.Once());
+        }
+
+        [Test]
+        public void AddCspHeaders_CspEnabledWithConnectSrc_AddsCspHeaderWithConnectSrc()
+        {
+            var cspConfig = new CspConfigurationElement
+            {
+                Enabled = true,
+                ConnectSrc = { Self = true }
+            };
+
+            headerSetter.AddCspHeaders(cspConfig, false);
+
+            mockResponse.Verify(x => x.AddHeader("Content-Security-Policy", "connect-src 'self'"), Times.Once());
+        }
+
+        [Test]
+        public void AddCspHeaders_CspWithTwoDirectives_AddsCorrectCspHeader()
+        {
+            var cspConfig = new CspConfigurationElement
+            {
+                Enabled = true,
+                DefaultSrc = { Self = true },
+                ScriptSrc = { None = true }
+            };
+
+            headerSetter.AddCspHeaders(cspConfig, false);
+
+            mockResponse.Verify(x => x.AddHeader("Content-Security-Policy", "default-src 'self'; script-src 'none'"), Times.Once());
+        }
+
+        [Test]
+        public void AddCspHeaders_CspDirectiveWithTwoSources_AddsCorrectlyFormattedCspHeader()
+        {
+            var cspConfig = new CspConfigurationElement { Enabled = true, DefaultSrc = { Self = true } };
+            cspConfig.DefaultSrc.Sources.Add(new CspSourceConfigurationElement() { Source = "nwebsec.codeplex.com" });
+
+            headerSetter.AddCspHeaders(cspConfig, false);
+
+            mockResponse.Verify(x => x.AddHeader("Content-Security-Policy", "default-src 'self' nwebsec.codeplex.com"), Times.Once());
+        }
+
+        [Test]
+        public void AddCspHeaders_CspEnabledWithBuiltinReportUri_AddsCorrectCspHeader()
+        {
+            var cspConfig = new CspConfigurationElement
+            {
+                Enabled = true,
+                DefaultSrc = { Self = true },
+                ReportUriDirective = { EnableBuiltinHandler = true }
+            };
+
+            headerSetter.AddCspHeaders(cspConfig, false);
+
+            var expectedReportUri = cspReportHelper.GetBuiltInCspReportHandlerRelativeUri();
+            mockResponse.Verify(x => x.AddHeader("Content-Security-Policy", "default-src 'self'; report-uri " + expectedReportUri), Times.Once());
+        }
+
+        [Test]
+        public void AddCspHeaders_CspEnabledWithCustomReportUri_AddsCorrectCspHeader()
+        {
+            var cspConfig = new CspConfigurationElement
+            {
+                Enabled = true,
+                DefaultSrc = { Self = true }
+            };
+            cspConfig.ReportUriDirective.ReportUris.Add(new ReportUriConfigurationElement() { ReportUri = new Uri("/CspViolationReported", UriKind.Relative) });
+
+            headerSetter.AddCspHeaders(cspConfig, false);
+
+            mockResponse.Verify(x => x.AddHeader("Content-Security-Policy", "default-src 'self'; report-uri /CspViolationReported"), Times.Once());
+        }
+
+        [Test]
+        public void AddCspHeaders_CspEnabledWithTwoReportUris_AddsCorrectCspHeader()
+        {
+            var cspConfig = new CspConfigurationElement
+                                {
+                                    Enabled = true,
+                                    DefaultSrc = { Self = true },
+                                    ReportUriDirective = { EnableBuiltinHandler = true }
+                                };
+            cspConfig.ReportUriDirective.ReportUris.Add(new ReportUriConfigurationElement { ReportUri = new Uri("/CspViolationReported", UriKind.Relative) });
+
+            headerSetter.AddCspHeaders(cspConfig, false);
+
+            var expectedReportUri = cspReportHelper.GetBuiltInCspReportHandlerRelativeUri() + " /CspViolationReported";
+            mockResponse.Verify(x => x.AddHeader("Content-Security-Policy", "default-src 'self'; report-uri " + expectedReportUri), Times.Once());
         }
 
         [Test]
@@ -175,80 +385,6 @@ namespace NWebsec.Tests.Unit.HttpHeaders
 
             mockResponse.Verify(x => x.AddHeader("X-Content-Security-Policy-Report-Only", It.IsAny<String>()), Times.Once());
             mockResponse.Verify(x => x.AddHeader("X-WebKit-CSP-Report-Only", It.IsAny<String>()), Times.Once());
-        }
-
-        [Test]
-        public void AddCspHeaders_CspWithTwoDirectives_AddsCorrectCspHeader()
-        {
-            var cspConfig = new CspConfigurationElement
-            {
-                Enabled = true,
-                DefaultSrc = { Self = true },
-                ScriptSrc = { None = true }
-            };
-
-            headerSetter.AddCspHeaders(cspConfig, false);
-
-            mockResponse.Verify(x => x.AddHeader("Content-Security-Policy", "default-src 'self'; script-src 'none'"), Times.Once());
-        }
-
-        [Test]
-        public void AddCspHeaders_CspDirectiveWithTwoSources_AddsCorrectlyFormattedCspHeader()
-        {
-            var cspConfig = new CspConfigurationElement { Enabled = true, DefaultSrc = { Self = true } };
-            cspConfig.DefaultSrc.Sources.Add(new CspSourceConfigurationElement() { Source = "nwebsec.codeplex.com" });
-
-            headerSetter.AddCspHeaders(cspConfig, false);
-
-            mockResponse.Verify(x => x.AddHeader("Content-Security-Policy", "default-src 'self' nwebsec.codeplex.com"), Times.Once());
-        }
-
-        [Test]
-        public void AddCspHeaders_CspEnabledWithBuiltinReportUri_AddsCorrectCspHeader()
-        {
-            var cspConfig = new CspConfigurationElement
-            {
-                Enabled = true,
-                DefaultSrc = { Self = true },
-                ReportUriDirective = { EnableBuiltinHandler = true }
-            };
-
-            headerSetter.AddCspHeaders(cspConfig, false);
-
-            var expectedReportUri = cspReportHelper.GetBuiltInCspReportHandlerRelativeUri();
-            mockResponse.Verify(x => x.AddHeader("Content-Security-Policy", "default-src 'self'; report-uri " + expectedReportUri), Times.Once());
-        }
-
-        [Test]
-        public void AddCspHeaders_CspEnabledWithCustomReportUri_AddsCorrectCspHeader()
-        {
-            var cspConfig = new CspConfigurationElement
-            {
-                Enabled = true,
-                DefaultSrc = { Self = true }
-            };
-            cspConfig.ReportUriDirective.ReportUris.Add(new ReportUriConfigurationElement() { ReportUri = new Uri("/CspViolationReported", UriKind.Relative) });
-
-            headerSetter.AddCspHeaders(cspConfig, false);
-
-            mockResponse.Verify(x => x.AddHeader("Content-Security-Policy", "default-src 'self'; report-uri /CspViolationReported"), Times.Once());
-        }
-
-        [Test]
-        public void AddCspHeaders_CspEnabledWithTwoReportUris_AddsCorrectCspHeader()
-        {
-            var cspConfig = new CspConfigurationElement
-                                {
-                                    Enabled = true,
-                                    DefaultSrc = { Self = true },
-                                    ReportUriDirective = { EnableBuiltinHandler = true }
-                                };
-            cspConfig.ReportUriDirective.ReportUris.Add(new ReportUriConfigurationElement {ReportUri = new Uri("/CspViolationReported", UriKind.Relative)});
-
-            headerSetter.AddCspHeaders(cspConfig, false);
-
-            var expectedReportUri = cspReportHelper.GetBuiltInCspReportHandlerRelativeUri() + " /CspViolationReported";
-            mockResponse.Verify(x => x.AddHeader("Content-Security-Policy", "default-src 'self'; report-uri " + expectedReportUri), Times.Once());
         }
 
     }
