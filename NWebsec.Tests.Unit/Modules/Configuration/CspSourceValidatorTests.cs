@@ -1,6 +1,5 @@
 ﻿// Copyright (c) André N. Klingsheim. See License.txt in the project root for license information.
 
-using System.Configuration;
 using NUnit.Framework;
 using NWebsec.Modules.Configuration.Csp.Validation;
 
@@ -225,6 +224,20 @@ namespace NWebsec.Tests.Unit.Modules.Configuration
         public void Validate_SchemeHostAndDoublePort_ThrowsException()
         {
             validator.Validate("https://www.nwebsec.com:80:80");
+        }
+
+        [Test]
+        [ExpectedException(typeof(InvalidCspSourceException))]
+        public void Validate_SchemeHostAndNegativePortNumber_ThrowsException()
+        {
+            validator.Validate("https://www.nwebsec.com:-80");
+        }
+
+        [Test]
+        [ExpectedException(typeof(InvalidCspSourceException))]
+        public void Validate_SchemeHostAndInvalidPortNumber_ThrowsException()
+        {
+            validator.Validate("https://www.nwebsec.com:65536");
         }
     }
 }

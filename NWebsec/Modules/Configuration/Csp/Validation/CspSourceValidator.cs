@@ -67,7 +67,8 @@ namespace NWebsec.Modules.Configuration.Csp.Validation
             if (port.Equals("*")) return true;
 
             int portNumber;
-            return Int32.TryParse(port, out portNumber);
+            var isInt= Int32.TryParse(port, out portNumber);
+            return isInt && portNumber > 0 && portNumber <= 65535;
         }
     }
 
