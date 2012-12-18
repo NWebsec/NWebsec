@@ -29,6 +29,7 @@ namespace NWebsec.Mvc.HttpHeaders.Csp
 
         protected CspAttributeBase()
         {
+            Enabled = true;
             headerHelper = new HttpHeaderHelper();
         }
 

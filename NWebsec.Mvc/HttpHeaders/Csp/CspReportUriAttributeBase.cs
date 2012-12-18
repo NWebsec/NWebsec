@@ -36,7 +36,7 @@ namespace NWebsec.Mvc.HttpHeaders.Csp
 
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
-            helper.SetCspReportUriOverride(filterContext.HttpContext, GetCspDirectiveConfig(), false);
+            helper.SetCspReportUriOverride(filterContext.HttpContext, GetCspDirectiveConfig(), ReportOnly);
             base.OnActionExecuting(filterContext);
         }
 

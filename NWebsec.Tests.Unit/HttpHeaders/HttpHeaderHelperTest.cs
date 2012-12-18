@@ -198,7 +198,7 @@ namespace NWebsec.Tests.Unit.HttpHeaders
             const bool reportonly = false;
             var configSection = new HttpHeaderSecurityConfigurationSection();
             headerHelper = new HttpHeaderHelper(configSection);
-            var directive1 = new CspDirectiveUnsafeInlineUnsafeEvalOverride { Self = Source.Enable };
+            var directive1 = new CspDirectiveUnsafeInlineUnsafeEvalOverride { Self = Source.Enable, UnsafeInline = Source.Enable};
             var directive2 = new CspDirectiveUnsafeInlineUnsafeEvalOverride { UnsafeEval = Source.Enable };
 
             headerHelper.SetContentSecurityPolicyDirectiveOverride(mockContext, HttpHeaderHelper.CspDirectives.ScriptSrc, directive1, reportonly);
@@ -206,7 +206,25 @@ namespace NWebsec.Tests.Unit.HttpHeaders
 
             var overrideElement = headerHelper.GetCspElementWithOverrides(mockContext, reportonly).ScriptSrc;
             Assert.IsTrue(overrideElement.Self);
+            Assert.IsTrue(overrideElement.UnsafeInline);
             Assert.IsTrue(overrideElement.UnsafeEval);
+        }
+
+        [Test]
+        public void GetCspElementWithOverrides_DefaultConfigAndDefaultOverridden_HeaderEnabled()
+        {
+            const bool reportonly = false;
+            var configSection = new HttpHeaderSecurityConfigurationSection();
+            headerHelper = new HttpHeaderHelper(configSection);
+            var cspOverride = new CspHeaderConfigurationElement { Enabled = true };
+            var directive1 = new CspDirectiveUnsafeInlineUnsafeEvalOverride { Self = Source.Enable };
+
+            headerHelper.SetCspHeaderOverride(mockContext, cspOverride, reportonly);
+            headerHelper.SetContentSecurityPolicyDirectiveOverride(mockContext, HttpHeaderHelper.CspDirectives.ScriptSrc, directive1, reportonly);
+
+            var overrideElement = headerHelper.GetCspElementWithOverrides(mockContext, reportonly);
+            Assert.IsTrue(overrideElement.Enabled);
+            Assert.IsTrue(overrideElement.ScriptSrc.Self);
         }
     }
 }

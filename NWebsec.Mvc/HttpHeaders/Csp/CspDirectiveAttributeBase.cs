@@ -10,6 +10,7 @@ namespace NWebsec.Mvc.HttpHeaders.Csp
     /// <summary>
     /// This is a base class which should not be used directly.
     /// </summary>
+    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, Inherited = true, AllowMultiple = true)]
     public abstract class CspDirectiveAttributeBase : ActionFilterAttribute
     {
         private readonly HttpHeaderHelper headerHelper;
@@ -47,6 +48,7 @@ namespace NWebsec.Mvc.HttpHeaders.Csp
             Self = Source.Inherit;
             InheritOtherSources = true;
             headerHelper = new HttpHeaderHelper();
+
         }
 
         public override void OnActionExecuting(ActionExecutingContext filterContext)

@@ -23,7 +23,7 @@ namespace NWebsec.Csp
         internal string GetBuiltInCspReportHandlerRelativeUri()
         {
             var uri = new UriBuilder {Path = pathHelper.GetBuiltinCspReportHandlerPath(), Query = "cspReport=true"};
-            return uri.Uri.ToString();
+            return uri.Uri.PathAndQuery;
         }
 
         internal bool IsRequestForBuiltInCspReportHandler(HttpRequestBase request)
