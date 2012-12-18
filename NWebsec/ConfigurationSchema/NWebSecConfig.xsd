@@ -71,7 +71,7 @@
                     <xs:element name="content-Security-Policy" minOccurs="0" maxOccurs="1">
                       <xs:complexType>
                         <xs:group ref="cspElements" minOccurs="0" maxOccurs="1"/>
-                        <xs:attribute name="enabled" type="simple_boolean" use="required" />
+                        <xs:attribute name="enabled" type="simple_boolean" use="optional" />
                         <xs:attribute name="x-Content-Security-Policy-Header" type="simple_boolean" use="optional" />
                         <xs:attribute name="x-WebKit-CSP-Header" type="simple_boolean" use="optional" />
                       </xs:complexType>
@@ -79,7 +79,7 @@
                     <xs:element name="content-Security-Policy-Report-Only" minOccurs="0" maxOccurs="1">
                       <xs:complexType>
                         <xs:group ref="cspElements" minOccurs="0" maxOccurs="1"/>
-                        <xs:attribute name="enabled" type="simple_boolean" use="required" />
+                        <xs:attribute name="enabled" type="simple_boolean" use="optional" />
                         <xs:attribute name="x-Content-Security-Policy-Header" type="simple_boolean" use="optional" />
                         <xs:attribute name="x-WebKit-CSP-Header" type="simple_boolean" use="optional" />
                       </xs:complexType>

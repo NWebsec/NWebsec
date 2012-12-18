@@ -3,7 +3,7 @@
   <configSections>
     <sectionGroup name ="nwebsec">
       <!-- For information on how to configure NWebsec please visit: http://nwebsec.codeplex.com/wikipage?title=Configuration -->
-      <section name="NWebsecHttpHeaderSecurityModule" type="NWebsec.Modules.Configuration.HttpHeaderSecurityConfigurationSection, NWebsec"/>
+      <section name="httpHeaderSecurityModule" type="NWebsec.Modules.Configuration.HttpHeaderSecurityConfigurationSection, NWebsec"/>
     </sectionGroup>
   </configSections>
 
