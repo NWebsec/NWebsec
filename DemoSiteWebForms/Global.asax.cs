@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Web;
 using NWebsec.Csp;
 
 namespace DemoSiteWebForms
@@ -9,12 +10,29 @@ namespace DemoSiteWebForms
         protected void NWebSecHttpHeaderSecurityModule_CspViolationReported(object sender, CspViolationReportEventArgs e)
         {
             var report = e.ViolationReport;
+            
         }
 
         void Application_Start(object sender, EventArgs e)
         {
             // Code that runs on application startup
+            //var app = (HttpApplication) sender;
+            
 
+        }
+
+        void Application_BeginRequest(object sender, EventArgs e)
+        {
+            var request = HttpContext.Current.Request;
+        }
+
+        void Application_PreSendRequestHeaders(object sender, EventArgs e)
+        {
+            var request = HttpContext.Current.Request;
+        }
+        void Application_EndRequest(object sender, EventArgs e)
+        {
+            var request = HttpContext.Current.Request;
         }
 
         void Application_End(object sender, EventArgs e)
@@ -26,7 +44,7 @@ namespace DemoSiteWebForms
         void Application_Error(object sender, EventArgs e)
         {
             // Code that runs when an unhandled error occurs
-
+            var request = HttpContext.Current.Request;
         }
 
         void Session_Start(object sender, EventArgs e)

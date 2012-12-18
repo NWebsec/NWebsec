@@ -1,4 +1,5 @@
 ﻿using System.Web.Mvc;
+using NWebsec.Csp.Overrides;
 using NWebsec.HttpHeaders;
 using NWebsec.Mvc.HttpHeaders;
 using NWebsec.Mvc.HttpHeaders.Csp;
@@ -23,8 +24,8 @@ namespace DemoSiteMvc3.Controllers
     {
 
         [Csp(XWebKitCspHeader = true)]
-        [CspScriptSrc(None = true)]
-        [CspDefaultSrc(Self = true)]
+        [CspScriptSrc(None = Source.Enable )]
+        [CspDefaultSrc(Self = Source.Enable)]
         //[CspStyleSrc(UnsafeInline = true,Self = true)]
         //[CspConnectSrc(None = true)]
         //[CspDefaultSrc(Self = true)]
@@ -50,6 +51,7 @@ namespace DemoSiteMvc3.Controllers
         }
 
         //[XContentSecurityPolicy("default-src", "'self' nwebsec.codeplex.com")]
+        [SetNoCacheHttpHeaders]
         public ActionResult Index2()
         {
             return View("Index");

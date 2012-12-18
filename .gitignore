@@ -10,6 +10,7 @@ TestResults
 
 # User-specific files
 *.suo
+*.xml
 *.user
 *.sln.docstates
 
