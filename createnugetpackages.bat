@@ -13,7 +13,7 @@ msbuild NWebsec.csproj /tv:4.0 /p:Configuration=Release /p:TargetFrameworkVersio
 @xcopy /f /y d:\nuget\nwebsecstage\lib\40\NWebsec.xml d:\nuget\nwebsec\lib\40\
 @xcopy /f /y NWebsec.nuspec d:\nuget\nwebsec\
 @xcopy /f /y web.config.transform d:\nuget\nwebsec\content\
-
+@xcopy /f /y /s d:\nuget\nwebsecstage\lib\40\ConfigurationSchema d:\nuget\nwebsec\content\App_Data\NWebsecConfig\
 @popd
 @pushd NWebsec.Mvc
 
