@@ -1,7 +1,11 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2010
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebForms35", "WebForms35\WebForms35.csproj", "{9C64587A-96D8-4C43-8A93-890F2D37D25F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mvc3", "Mvc3\Mvc3.csproj", "{A103166D-B9AD-48F4-96C9-B3A91E6468AE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mvc4", "Mvc4\Mvc4.csproj", "{0F77B971-0484-44EA-B3F1-D1AF0F520922}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -13,6 +17,14 @@ Global
 		{9C64587A-96D8-4C43-8A93-890F2D37D25F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9C64587A-96D8-4C43-8A93-890F2D37D25F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9C64587A-96D8-4C43-8A93-890F2D37D25F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A103166D-B9AD-48F4-96C9-B3A91E6468AE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A103166D-B9AD-48F4-96C9-B3A91E6468AE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A103166D-B9AD-48F4-96C9-B3A91E6468AE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A103166D-B9AD-48F4-96C9-B3A91E6468AE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0F77B971-0484-44EA-B3F1-D1AF0F520922}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0F77B971-0484-44EA-B3F1-D1AF0F520922}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0F77B971-0484-44EA-B3F1-D1AF0F520922}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0F77B971-0484-44EA-B3F1-D1AF0F520922}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
