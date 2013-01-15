@@ -22,16 +22,15 @@ namespace NWebsec.Tests.Unit.Modules.Configuration
         {
             var relativeUri = new Uri("/Cspreport", UriKind.Relative);
 
-            validator.Validate(relativeUri);
+            Assert.DoesNotThrow(() => validator.Validate(relativeUri));
         }
 
         [Test]
-        [ExpectedException]
         public void Validate_AbsoluteUri_ThrowsException()
         {
             var relativeUri = new Uri("https://www.nwebsec.com/Cspreport");
 
-            validator.Validate(relativeUri);
+            Assert.Throws<InvalidCspReportUriException>(() => validator.Validate(relativeUri));
         }
     }
 }

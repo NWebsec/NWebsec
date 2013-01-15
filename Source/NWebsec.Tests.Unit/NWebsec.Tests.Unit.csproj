@@ -72,7 +72,7 @@
     <Compile Include="Modules\Configuration\CspSourceValidatorTests.cs" />
     <Compile Include="Modules\Configuration\ReportUriValidatorTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Modules\Configuration\CspDirectiveBaseConfigurationElementValidatorTest.cs" />
+    <Compile Include="Modules\Configuration\CspDirectiveBaseConfigurationElementValidatorTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config">

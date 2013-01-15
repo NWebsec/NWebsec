@@ -8,11 +8,11 @@ using NWebsec.Modules.Configuration.Csp.Validation;
 namespace NWebsec.Tests.Unit.Modules.Configuration
 {
     [TestFixture]
-    public class CspDirectiveBaseConfigurationElementValidatorTest
+    public class CspDirectiveBaseConfigurationElementValidatorTests
     {
         private CspDirectiveBaseConfigurationElementValidator validator;
         private CspDirectiveBaseConfigurationElement configElement;
-        private string validSource = "nwebsec.codeplex.com";
+        private const string ValidSource = "nwebsec.codeplex.com";
 
         [SetUp]
         public void TestInitialize()
@@ -22,23 +22,21 @@ namespace NWebsec.Tests.Unit.Modules.Configuration
         }
 
         [Test]
-        [ExpectedException(typeof(ConfigurationErrorsException))]
         public void Validate_NoneWithSource_ThrowsException()
         {
             configElement.None= true;
-            configElement.Sources.Add(new CspSourceConfigurationElement() { Source = validSource });
-            
-            validator.Validate(configElement);
+            configElement.Sources.Add(new CspSourceConfigurationElement() { Source = ValidSource });
+
+            Assert.Throws<ConfigurationErrorsException>(() => validator.Validate(configElement));
         }
 
         [Test]
-        [ExpectedException(typeof(ConfigurationErrorsException))]
         public void Validate_NoneWithSelf_ThrowsException()
         {
             configElement.None = true;
             configElement.Self = true;
 
-            validator.Validate(configElement);
+            Assert.Throws<ConfigurationErrorsException>(() => validator.Validate(configElement));
         }
 
     }
