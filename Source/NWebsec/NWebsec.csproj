@@ -87,7 +87,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="ConfigurationSchema\NWebSecConfig.xsd">
+    <None Include="ConfigurationSchema\HttpHeaderSecurityModuleConfig.xsd">
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

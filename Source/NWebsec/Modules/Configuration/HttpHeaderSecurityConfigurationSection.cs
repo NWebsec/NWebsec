@@ -51,5 +51,20 @@ namespace NWebsec.Modules.Configuration
 
         }
 
+        [ConfigurationProperty("xmlns", IsRequired = false)]
+        protected string Xmlns
+        {
+
+            get
+            {
+                return (string)this["xmlns"];
+            }
+            set
+            {
+                this["xmlns"] = value;
+            }
+
+        }
+
     }
 }
