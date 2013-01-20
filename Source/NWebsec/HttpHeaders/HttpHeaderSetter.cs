@@ -172,7 +172,7 @@ namespace NWebsec.HttpHeaders
                 response.Headers.Remove(header);
             }
             var serverName = (String.IsNullOrEmpty(suppressVersionHeadersConfig.ServerHeader)
-                                  ? "Webserver 1.0"
+                                  ? "Webserver/1.0"
                                   : suppressVersionHeadersConfig.ServerHeader);
             response.Headers.Set("Server", serverName);
         }
