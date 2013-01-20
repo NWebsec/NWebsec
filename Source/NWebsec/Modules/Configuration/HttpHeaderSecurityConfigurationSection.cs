@@ -51,20 +51,20 @@ namespace NWebsec.Modules.Configuration
 
         }
 
-        [ConfigurationProperty("xmlns", IsRequired = false)]
-        protected string Xmlns
+        protected override bool OnDeserializeUnrecognizedAttribute(string name, string value)
         {
-
-            get
+            var baseResult= base.OnDeserializeUnrecognizedAttribute(name, value);
+            switch (name)
             {
-                return (string)this["xmlns"];
+                case "xmlns":
+                case "xmlns:xsi":
+                case "xsi:noNamespaceSchemaLocation":
+                    return true;
+                default:
+                    return base.OnDeserializeUnrecognizedAttribute(name, value);
             }
-            set
-            {
-                this["xmlns"] = value;
-            }
-
+            
         }
-
+        
     }
 }

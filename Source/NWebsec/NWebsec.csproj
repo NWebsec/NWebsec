@@ -91,7 +91,9 @@
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="NWebsec.nuspec" />
+    <None Include="NWebsec.nuspec">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="web.config.transform">
       <SubType>Designer</SubType>
     </None>
