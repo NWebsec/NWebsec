@@ -57,14 +57,14 @@ namespace NWebsec.HttpHeaders
             string frameOptions;
             switch (xFrameOptionsConfig.Policy)
             {
-                case HttpHeadersConstants.XFrameOptions.Disabled:
+                case XFrameOptionsPolicy.Disabled:
                     return;
 
-                case HttpHeadersConstants.XFrameOptions.Deny:
+                case XFrameOptionsPolicy.Deny:
                     frameOptions = "Deny";
                     break;
 
-                case HttpHeadersConstants.XFrameOptions.SameOrigin:
+                case XFrameOptionsPolicy.SameOrigin:
                     frameOptions = "SameOrigin";
                     break;
 
@@ -113,13 +113,14 @@ namespace NWebsec.HttpHeaders
             string value;
             switch (xXssProtectionConfig.Policy)
             {
-                case HttpHeadersConstants.XXssProtection.Disabled:
+                case XXssProtectionPolicy.Disabled:
                     return;
-                case HttpHeadersConstants.XXssProtection.FilterDisabled:
+
+                case XXssProtectionPolicy.FilterDisabled:
                     value = "0";
                     break;
 
-                case HttpHeadersConstants.XXssProtection.FilterEnabled:
+                case XXssProtectionPolicy.FilterEnabled:
                     value = (xXssProtectionConfig.BlockMode ? "1; mode=block" : "1");
                     break;
 

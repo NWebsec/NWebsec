@@ -19,7 +19,7 @@ namespace NWebsec.Mvc.HttpHeaders
         /// Gets or sets whether the X-Xss-Protection security header should be set in the HTTP response.
         /// Possible values are: Disabled, FilterDisabled, FilterEnabled. The default is FilterEnabled.
         /// </summary>
-        public HttpHeadersConstants.XXssProtection Policy { get; set; }
+        public XXssProtectionPolicy Policy { get; set; }
 
         /// <summary>
         /// Gets or sets whether to enable the IE XSS filter block mode. This setting only takes effect when the Policy is set to FilterEnabled.
@@ -29,7 +29,7 @@ namespace NWebsec.Mvc.HttpHeaders
 
         public XXssProtectionAttribute()
         {
-            Policy = HttpHeadersConstants.XXssProtection.FilterEnabled;
+            Policy = XXssProtectionPolicy.FilterEnabled;
             BlockMode = true;
             headerHelper = new HttpHeaderHelper();
         }

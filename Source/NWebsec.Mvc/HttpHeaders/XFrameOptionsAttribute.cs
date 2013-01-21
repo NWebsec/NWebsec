@@ -19,11 +19,11 @@ namespace NWebsec.Mvc.HttpHeaders
         /// Gets or sets whether the X-Frame-Options security header should be set in the HTTP response.
         /// Possible values are: Disabled, Deny, SameOrigin. The default is Deny.
         /// </summary>
-        public HttpHeadersConstants.XFrameOptions Policy { get; set; }
+        public XFrameOptionsPolicy Policy { get; set; }
 
         public XFrameOptionsAttribute()
         {
-            Policy = HttpHeadersConstants.XFrameOptions.Deny;
+            Policy = XFrameOptionsPolicy.Deny;
             headerHelper = new HttpHeaderHelper();
         }
 

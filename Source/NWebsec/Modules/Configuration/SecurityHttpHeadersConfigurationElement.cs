@@ -168,13 +168,13 @@ namespace NWebsec.Modules.Configuration
 
     public class XFrameOptionsConfigurationElement : ConfigurationElement
     {
-        [ConfigurationProperty("policy", IsRequired = true, DefaultValue = HttpHeadersConstants.XFrameOptions.Disabled)]
-        public HttpHeadersConstants.XFrameOptions Policy
+        [ConfigurationProperty("policy", IsRequired = true, DefaultValue = XFrameOptionsPolicy.Disabled)]
+        public XFrameOptionsPolicy Policy
         {
 
             get
             {
-                return (HttpHeadersConstants.XFrameOptions)this["policy"];
+                return (XFrameOptionsPolicy)this["policy"];
             }
             set
             {
@@ -221,13 +221,13 @@ namespace NWebsec.Modules.Configuration
     public class XXssProtectionConfigurationElement : ConfigurationElement
     {
 
-        [ConfigurationProperty("policy", IsRequired = true, DefaultValue = HttpHeadersConstants.XXssProtection.Disabled)]
-        public HttpHeadersConstants.XXssProtection Policy
+        [ConfigurationProperty("policy", IsRequired = true, DefaultValue = XXssProtectionPolicy.Disabled)]
+        public XXssProtectionPolicy Policy
         {
 
             get
             {
-                return (HttpHeadersConstants.XXssProtection)this["policy"];
+                return (XXssProtectionPolicy)this["policy"];
             }
             set
             {

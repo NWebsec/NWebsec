@@ -12,9 +12,12 @@ using NWebsec.Mvc.HttpHeaders.Csp;
 namespace DemoSiteMvc4.Controllers
 {
     [AllowMultiple("Controller")]
-    [CspReportOnly(XWebKitCspHeader = true)]
-    [CspReportUriReportOnly(EnableBuiltinHandler = true)]
+    //[CspReportOnly(XWebKitCspHeader = true)]
+    //[CspReportUriReportOnly(EnableBuiltinHandler = true)]
     //[CspStyleSrc(UnsafeInline = Source.Enable, OtherSources = "styles.nwebsec.com")]
+        [Csp]
+    [CspDefaultSrc(Self = Source.Enable)]
+    [CspReportUri(ReportUris = "/Report")]
     public class HomeController : Controller
     {
         //

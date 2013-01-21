@@ -78,7 +78,7 @@ namespace DemoSiteMvc3.Controllers
             return View();
         }
 
-        [XFrameOptions(Policy = HttpHeadersConstants.XFrameOptions.Disabled)]
+        [XFrameOptions(Policy = XFrameOptionsPolicy.Disabled)]
         public ActionResult Framed()
         {
             return View();

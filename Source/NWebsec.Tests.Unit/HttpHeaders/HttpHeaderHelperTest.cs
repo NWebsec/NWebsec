@@ -44,7 +44,7 @@ namespace NWebsec.Tests.Unit.HttpHeaders
         [Test]
         public void GetXFrameoptionsWithOverride_ConfigOverriden_ReturnsOverrideElement()
         {
-            var configOverride = new XFrameOptionsConfigurationElement() { Policy = HttpHeadersConstants.XFrameOptions.Deny };
+            var configOverride = new XFrameOptionsConfigurationElement() { Policy = XFrameOptionsPolicy.Deny };
 
             headerHelper.SetXFrameoptionsOverride(mockContext, configOverride);
 
@@ -85,7 +85,7 @@ namespace NWebsec.Tests.Unit.HttpHeaders
         [Test]
         public void GetXXssProtectionWithOverride_ConfigOverriden_ReturnsOverrideElement()
         {
-            var configOverride = new XXssProtectionConfigurationElement() { Policy = HttpHeadersConstants.XXssProtection.FilterEnabled };
+            var configOverride = new XXssProtectionConfigurationElement() { Policy = XXssProtectionPolicy.FilterEnabled };
 
             headerHelper.SetXXssProtectionOverride(mockContext, configOverride);
 

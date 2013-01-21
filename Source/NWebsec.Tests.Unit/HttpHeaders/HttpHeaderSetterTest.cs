@@ -115,7 +115,7 @@ namespace NWebsec.Tests.Unit.HttpHeaders
         [Test]
         public void AddXFrameoptionsHeader_DisabledInConfig_DoesNotAddXFrameOptionsHeader()
         {
-            var xFramesConfig = new XFrameOptionsConfigurationElement { Policy = HttpHeadersConstants.XFrameOptions.Disabled };
+            var xFramesConfig = new XFrameOptionsConfigurationElement { Policy = XFrameOptionsPolicy.Disabled };
 
             headerSetter.AddXFrameoptionsHeader(mockResponse.Object, xFramesConfig);
 
@@ -125,7 +125,7 @@ namespace NWebsec.Tests.Unit.HttpHeaders
         [Test]
         public void AddXFrameoptionsHeader_DenyInConfig_AddsAddXFrameOptionsDenyHeader()
         {
-            var xFramesConfig = new XFrameOptionsConfigurationElement { Policy = HttpHeadersConstants.XFrameOptions.Deny };
+            var xFramesConfig = new XFrameOptionsConfigurationElement { Policy = XFrameOptionsPolicy.Deny };
 
             headerSetter.AddXFrameoptionsHeader(mockResponse.Object, xFramesConfig);
 
@@ -135,7 +135,7 @@ namespace NWebsec.Tests.Unit.HttpHeaders
         [Test]
         public void AddXFrameoptionsHeader_SameoriginInConfig_AddsXFrameoptionsSameoriginHeader()
         {
-            var xFramesConfig = new XFrameOptionsConfigurationElement { Policy = HttpHeadersConstants.XFrameOptions.SameOrigin };
+            var xFramesConfig = new XFrameOptionsConfigurationElement { Policy = XFrameOptionsPolicy.SameOrigin };
 
             headerSetter.AddXFrameoptionsHeader(mockResponse.Object, xFramesConfig);
 
@@ -215,7 +215,7 @@ namespace NWebsec.Tests.Unit.HttpHeaders
         [Test]
         public void AddXXssProtectionHeader_DisabledInConfig_DoesNotAddXXssProtectionHeader()
         {
-            var xssProtection = new XXssProtectionConfigurationElement { Policy = HttpHeadersConstants.XXssProtection.Disabled };
+            var xssProtection = new XXssProtectionConfigurationElement { Policy = XXssProtectionPolicy.Disabled };
 
             headerSetter.AddXXssProtectionHeader(mockResponse.Object, xssProtection);
 
@@ -225,7 +225,7 @@ namespace NWebsec.Tests.Unit.HttpHeaders
         [Test]
         public void AddXXssProtectionHeader_FilterDisabledPolicyInConfig_AddsXXssProtectionDisabledHeader()
         {
-            var xssProtection = new XXssProtectionConfigurationElement { Policy = HttpHeadersConstants.XXssProtection.FilterDisabled };
+            var xssProtection = new XXssProtectionConfigurationElement { Policy = XXssProtectionPolicy.FilterDisabled };
 
             headerSetter.AddXXssProtectionHeader(mockResponse.Object, xssProtection);
 
@@ -235,7 +235,7 @@ namespace NWebsec.Tests.Unit.HttpHeaders
         [Test]
         public void AddXXssProtectionHeader_FilterDisabledPolicyWithBlockmodeInConfig_AddsXXssProtectionDisabledHeaderWithoutBlockMode()
         {
-            var xssProtection = new XXssProtectionConfigurationElement { Policy = HttpHeadersConstants.XXssProtection.FilterDisabled, BlockMode = true };
+            var xssProtection = new XXssProtectionConfigurationElement { Policy = XXssProtectionPolicy.FilterDisabled, BlockMode = true };
 
             headerSetter.AddXXssProtectionHeader(mockResponse.Object, xssProtection);
 
@@ -245,7 +245,7 @@ namespace NWebsec.Tests.Unit.HttpHeaders
         [Test]
         public void AddXXssProtectionHeader_FilterEnabledPolicyInConfig_AddsXssProtectionHeaderEnabledWithoutBlockmode()
         {
-            var xssProtection = new XXssProtectionConfigurationElement { Policy = HttpHeadersConstants.XXssProtection.FilterEnabled, BlockMode = false };
+            var xssProtection = new XXssProtectionConfigurationElement { Policy = XXssProtectionPolicy.FilterEnabled, BlockMode = false };
 
 
             headerSetter.AddXXssProtectionHeader(mockResponse.Object, xssProtection);
@@ -256,7 +256,7 @@ namespace NWebsec.Tests.Unit.HttpHeaders
         [Test]
         public void AddXXSSProtectionHeader_FilterEnabledPolicyWithBlockmode_AddsXssProtectionHeaderEnabledWithBlockMode()
         {
-            var xssProtection = new XXssProtectionConfigurationElement { Policy = HttpHeadersConstants.XXssProtection.FilterEnabled, BlockMode = true };
+            var xssProtection = new XXssProtectionConfigurationElement { Policy = XXssProtectionPolicy.FilterEnabled, BlockMode = true };
 
             headerSetter.AddXXssProtectionHeader(mockResponse.Object, xssProtection);
 
