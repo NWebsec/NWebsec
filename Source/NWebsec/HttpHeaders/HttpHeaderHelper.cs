@@ -241,7 +241,6 @@ namespace NWebsec.HttpHeaders
 
         public void SetContentSecurityPolicyDirectiveOverride(HttpContextBase context, CspDirectives directive, CspDirectiveBaseOverride config, bool reportOnly)
         {
-
             var cspOverride = GetCspDirectiveOverides(context, reportOnly);
             CspDirectiveBaseConfigurationElement directiveElement;
             var directiveExists = cspOverride.TryGetValue(directive, out directiveElement);
@@ -263,37 +262,68 @@ namespace NWebsec.HttpHeaders
             switch (directive)
             {
                 case CspDirectives.DefaultSrc:
-                    return BaseConfig.SecurityHttpHeaders.Csp.DefaultSrc;
+                    return CloneElement(BaseConfig.SecurityHttpHeaders.Csp.DefaultSrc);
+                //return BaseConfig.SecurityHttpHeaders.Csp.DefaultSrc;
 
                 case CspDirectives.ConnectSrc:
-                    return BaseConfig.SecurityHttpHeaders.Csp.ConnectSrc;
+                    return CloneElement(BaseConfig.SecurityHttpHeaders.Csp.ConnectSrc);
 
                 case CspDirectives.FontSrc:
-                    return BaseConfig.SecurityHttpHeaders.Csp.FontSrc;
+                    return CloneElement(BaseConfig.SecurityHttpHeaders.Csp.FontSrc);
 
                 case CspDirectives.FrameSrc:
-                    return BaseConfig.SecurityHttpHeaders.Csp.FrameSrc;
+                    return CloneElement(BaseConfig.SecurityHttpHeaders.Csp.FrameSrc);
 
                 case CspDirectives.ImgSrc:
-                    return BaseConfig.SecurityHttpHeaders.Csp.ImgSrc;
+                    return CloneElement(BaseConfig.SecurityHttpHeaders.Csp.ImgSrc);
 
                 case CspDirectives.MediaSrc:
-                    return BaseConfig.SecurityHttpHeaders.Csp.MediaSrc;
+                    return CloneElement(BaseConfig.SecurityHttpHeaders.Csp.MediaSrc);
 
                 case CspDirectives.ObjectSrc:
-                    return BaseConfig.SecurityHttpHeaders.Csp.ObjectSrc;
+                    return CloneElement(BaseConfig.SecurityHttpHeaders.Csp.ObjectSrc);
 
                 case CspDirectives.ScriptSrc:
-                    return BaseConfig.SecurityHttpHeaders.Csp.ScriptSrc;
+                    return CloneElement(BaseConfig.SecurityHttpHeaders.Csp.ScriptSrc);
 
                 case CspDirectives.StyleSrc:
-                    return BaseConfig.SecurityHttpHeaders.Csp.StyleSrc;
+                    return CloneElement(BaseConfig.SecurityHttpHeaders.Csp.StyleSrc);
 
                 default:
                     throw new NotImplementedException("The mapping for " + directive + " was not implemented.");
             }
         }
 
+        private CspDirectiveBaseConfigurationElement CloneElement(CspDirectiveBaseConfigurationElement element)
+        {
+            CspDirectiveBaseConfigurationElement newElement = null;
+
+            var unsafeEvalElement = element as CspDirectiveUnsafeInlineUnsafeEvalConfigurationElement;
+            if (unsafeEvalElement != null)
+            {
+                newElement = new CspDirectiveUnsafeInlineUnsafeEvalConfigurationElement { UnsafeEval = unsafeEvalElement.UnsafeEval };
+            }
+
+            var unsafeInlineElement = element as CspDirectiveUnsafeInlineConfigurationElement;
+            if (unsafeInlineElement != null)
+            {
+                newElement = new CspDirectiveUnsafeInlineUnsafeEvalConfigurationElement { UnsafeEval = unsafeInlineElement.UnsafeInline };
+            }
+
+            if (newElement == null)
+            {
+                newElement = new CspDirectiveBaseConfigurationElement();
+            }
+            newElement.Enabled = element.Enabled;
+            newElement.None = element.None;
+            newElement.Self = element.Self;
+            newElement.Sources = new CspSourcesElementCollection();
+            foreach (CspSourceConfigurationElement source in element.Sources)
+            {
+                newElement.Sources.Add(source);
+            }
+            return newElement;
+        }
 
         private IDictionary<CspDirectives, CspDirectiveBaseConfigurationElement> GetCspDirectiveOverides(HttpContextBase context, bool reportOnly)
         {
