@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>NWebsec.Mvc</id>
-    <version>2.0.0-alpha7d</version>
+    <version>2.0.0-alpha7e</version>
     <title>NWebsec.Mvc</title>
     <authors>Andre N. Klingsheim</authors>
     <owners>Andre N. Klingsheim</owners>
@@ -15,7 +15,7 @@
     <copyright>Copyright 2012</copyright>
     <tags>NWebsec security asp.net mvc</tags>
     <dependencies>
-      <dependency id="NWebSec" />
+      <dependency id="NWebsec" />
     </dependencies>
   </metadata>
 </package>
