@@ -231,7 +231,7 @@
       <Name>NWebsec.Mvc</Name>
     </ProjectReference>
     <ProjectReference Include="..\NWebsec\NWebsec.csproj">
-      <Project>{A011D84B-B731-4404-8BC1-FE94D2B37599}</Project>
+      <Project>{a011d84b-b731-4404-8bc1-fe94d2b37599}</Project>
       <Name>NWebsec</Name>
     </ProjectReference>
   </ItemGroup>

@@ -24,6 +24,7 @@ namespace DemoSiteMvc4.Controllers
         // GET: /Home/
 
         [AllowMultiple("Action")]
+        [XFrameOptions(Policy = XFrameOptionsPolicy.Deny)]
         public ActionResult Index()
         {
             return View();

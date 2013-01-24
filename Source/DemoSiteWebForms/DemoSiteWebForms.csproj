@@ -79,6 +79,7 @@
     <Content Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
+    <None Include="Nwebsec.config" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="About.aspx.cs">
