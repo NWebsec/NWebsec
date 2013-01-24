@@ -118,7 +118,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\CspConfigController.cs" />
     <Compile Include="Controllers\CspController.cs" />
+    <Compile Include="Controllers\CspDirectivesController.cs" />
     <Compile Include="Controllers\CspReportOnlyController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\NoCacheHeadersController.cs" />

@@ -3,6 +3,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using NUnit.Framework;
@@ -11,6 +12,7 @@ namespace NWebsec.Tests.Functional
 {
     public abstract class MvcTestsBase
     {
+        private const String reqFailed = "Request failed: ";
         private HttpClient httpClient;
         private TestHelper helper;
         protected abstract string BaseUri { get; }
@@ -26,10 +28,11 @@ namespace NWebsec.Tests.Functional
         public async void SuppressVersionHeaders_Enabled_NoHeaders()
         {
             var testUri = new Uri(BaseUri);
-            
-            var response = await httpClient.GetAsync(testUri);
-            var serverHeader = response.Headers.Server.Single().Product.ToString();
 
+            var response = await httpClient.GetAsync(testUri);
+
+            Assert.IsTrue(response.IsSuccessStatusCode, reqFailed + testUri);
+            var serverHeader = response.Headers.Server.Single().Product.ToString();
             Assert.IsEmpty(response.Headers.Where(x => x.Key.Equals("X-AspNetMvc-Version", StringComparison.InvariantCultureIgnoreCase)), testUri.ToString());
             Assert.AreEqual("Webserver/1.0", serverHeader, testUri.ToString());
         }
@@ -41,8 +44,9 @@ namespace NWebsec.Tests.Functional
             var testUri = helper.GetUri(BaseUri, path);
 
             var response = await httpClient.GetAsync(testUri);
-            var serverHeader = response.Headers.Server.Single().Product.ToString();
 
+            Assert.AreEqual(HttpStatusCode.NotFound, response.StatusCode, reqFailed + testUri);
+            var serverHeader = response.Headers.Server.Single().Product.ToString();
             Assert.IsEmpty(response.Headers.Where(x => x.Key.Equals("X-AspNetMvc-Version", StringComparison.InvariantCultureIgnoreCase)), testUri.ToString());
             Assert.AreEqual("Webserver/1.0", serverHeader, testUri.ToString());
         }
@@ -54,10 +58,11 @@ namespace NWebsec.Tests.Functional
             var testUri = helper.GetUri(BaseUri, path);
 
             var response = await httpClient.GetAsync(testUri);
+
+            Assert.IsTrue(response.IsSuccessStatusCode, reqFailed + testUri);
             var cacheControlHeader = response.Headers.CacheControl;
             var pragmaHeader = response.Headers.Pragma;
             var expiresHeader = response.Content.Headers.GetValues("Expires").Single();
-
             Assert.IsTrue(cacheControlHeader.NoCache, testUri.ToString());
             Assert.IsTrue(cacheControlHeader.NoStore, testUri.ToString());
             Assert.IsTrue(cacheControlHeader.MustRevalidate, testUri.ToString());
@@ -73,9 +78,10 @@ namespace NWebsec.Tests.Functional
             var testUri = helper.GetUri(BaseUri, path);
 
             var response = await httpClient.GetAsync(testUri);
+
+            Assert.IsTrue(response.IsSuccessStatusCode, reqFailed + testUri);
             var cacheControlHeader = response.Headers.CacheControl;
             var pragmaHeader = response.Headers.Pragma;
-
             Assert.IsFalse(cacheControlHeader.NoCache, testUri.ToString());
             Assert.IsFalse(cacheControlHeader.NoStore, testUri.ToString());
             Assert.IsFalse(cacheControlHeader.MustRevalidate, testUri.ToString());
@@ -91,19 +97,18 @@ namespace NWebsec.Tests.Functional
 
             var response = await httpClient.GetAsync(testUri);
 
-            Assert.IsTrue(response.IsSuccessStatusCode, testUri.ToString());
+            Assert.IsTrue(response.IsSuccessStatusCode, reqFailed + testUri);
             Assert.IsTrue(response.Headers.Contains("X-Content-Type-Options"), testUri.ToString());
         }
 
         [Test]
         public async void XContentTypeOptions_Disabled_NoHeaders()
         {
-            IEnumerable<string> values;
             const string path = "/XContentTypeOptions/Disabled";
             var testUri = helper.GetUri(BaseUri, path);
-            
+
             var response = await httpClient.GetAsync(testUri);
-            Assert.IsTrue(response.IsSuccessStatusCode, testUri.ToString());
+            Assert.IsTrue(response.IsSuccessStatusCode, reqFailed + testUri);
             Assert.IsFalse(response.Headers.Contains("X-Content-Type-Options"), testUri.ToString());
         }
 
@@ -115,19 +120,18 @@ namespace NWebsec.Tests.Functional
 
             var response = await httpClient.GetAsync(testUri);
 
-            Assert.IsTrue(response.IsSuccessStatusCode, testUri.ToString());
+            Assert.IsTrue(response.IsSuccessStatusCode, reqFailed + testUri);
             Assert.IsTrue(response.Headers.Contains("X-Download-Options"), testUri.ToString());
         }
 
         [Test]
         public async void XDownloadOptions_Disabled_NoHeaders()
         {
-            IEnumerable<string> values;
             const string path = "/XDownloadOptions/Disabled";
             var testUri = helper.GetUri(BaseUri, path);
 
             var response = await httpClient.GetAsync(testUri);
-            Assert.IsTrue(response.IsSuccessStatusCode, testUri.ToString());
+            Assert.IsTrue(response.IsSuccessStatusCode, reqFailed + testUri);
             Assert.IsFalse(response.Headers.Contains("X-Download-Options"), testUri.ToString());
         }
 
@@ -139,7 +143,7 @@ namespace NWebsec.Tests.Functional
 
             var response = await httpClient.GetAsync(testUri);
 
-            Assert.IsTrue(response.IsSuccessStatusCode, testUri.ToString());
+            Assert.IsTrue(response.IsSuccessStatusCode, reqFailed + testUri);
             Assert.IsTrue(response.Headers.Contains("X-Frame-Options"), testUri.ToString());
         }
 
@@ -151,7 +155,8 @@ namespace NWebsec.Tests.Functional
             var testUri = helper.GetUri(BaseUri, path);
 
             var response = await httpClient.GetAsync(testUri);
-            Assert.IsTrue(response.IsSuccessStatusCode, testUri.ToString());
+
+            Assert.IsTrue(response.IsSuccessStatusCode, reqFailed + testUri);
             Assert.IsFalse(response.Headers.Contains("X-Frame-Options"), testUri.ToString());
         }
 
@@ -163,7 +168,7 @@ namespace NWebsec.Tests.Functional
 
             var response = await httpClient.GetAsync(testUri);
 
-            Assert.IsTrue(response.IsSuccessStatusCode, testUri.ToString());
+            Assert.IsTrue(response.IsSuccessStatusCode, reqFailed + testUri);
             Assert.IsTrue(response.Headers.Contains("X-Xss-Protection"), testUri.ToString());
         }
 
@@ -175,7 +180,8 @@ namespace NWebsec.Tests.Functional
             var testUri = helper.GetUri(BaseUri, path);
 
             var response = await httpClient.GetAsync(testUri);
-            Assert.IsTrue(response.IsSuccessStatusCode, testUri.ToString());
+
+            Assert.IsTrue(response.IsSuccessStatusCode, reqFailed + testUri);
             Assert.IsFalse(response.Headers.Contains("X-Xss-Protection"), testUri.ToString());
         }
 
@@ -187,7 +193,7 @@ namespace NWebsec.Tests.Functional
 
             var response = await httpClient.GetAsync(testUri);
 
-            Assert.IsTrue(response.IsSuccessStatusCode, testUri.ToString());
+            Assert.IsTrue(response.IsSuccessStatusCode, reqFailed + testUri);
             Assert.IsTrue(response.Headers.Contains("Content-Security-Policy"), testUri.ToString());
         }
 
@@ -199,7 +205,7 @@ namespace NWebsec.Tests.Functional
 
             var response = await httpClient.GetAsync(testUri);
 
-            Assert.IsTrue(response.IsSuccessStatusCode, testUri.ToString());
+            Assert.IsTrue(response.IsSuccessStatusCode, reqFailed + testUri);
             Assert.IsTrue(response.Headers.Contains("Content-Security-Policy"), testUri.ToString());
             Assert.IsTrue(response.Headers.Contains("X-Content-Security-Policy"), testUri.ToString());
         }
@@ -212,7 +218,7 @@ namespace NWebsec.Tests.Functional
 
             var response = await httpClient.GetAsync(testUri);
 
-            Assert.IsTrue(response.IsSuccessStatusCode, testUri.ToString());
+            Assert.IsTrue(response.IsSuccessStatusCode, reqFailed + testUri);
             Assert.IsTrue(response.Headers.Contains("Content-Security-Policy"), testUri.ToString());
             Assert.IsTrue(response.Headers.Contains("X-WebKit-Csp"), testUri.ToString());
         }
@@ -225,8 +231,252 @@ namespace NWebsec.Tests.Functional
 
             var response = await httpClient.GetAsync(testUri);
 
-            Assert.IsTrue(response.IsSuccessStatusCode, testUri.ToString());
+            Assert.IsTrue(response.IsSuccessStatusCode, reqFailed + testUri);
             Assert.IsFalse(response.Headers.Contains("Content-Security-Policy"), testUri.ToString());
+        }
+
+        [Test]
+        public async Task CspReportOnly_Enabled_SetsHeaders()
+        {
+            const string path = "/CspReportOnly";
+            var testUri = helper.GetUri(BaseUri, path);
+
+            var response = await httpClient.GetAsync(testUri);
+
+            Assert.IsTrue(response.IsSuccessStatusCode, reqFailed + testUri);
+            Assert.IsTrue(response.Headers.Contains("Content-Security-Policy-Report-Only"), testUri.ToString());
+        }
+
+        [Test]
+        public async Task CspReportOnly_EnabledWithXCsp_SetsHeaders()
+        {
+            const string path = "/CspReportOnly/XCsp";
+            var testUri = helper.GetUri(BaseUri, path);
+
+            var response = await httpClient.GetAsync(testUri);
+
+            Assert.IsTrue(response.IsSuccessStatusCode, reqFailed + testUri);
+            Assert.IsTrue(response.Headers.Contains("Content-Security-Policy-Report-Only"), testUri.ToString());
+            Assert.IsTrue(response.Headers.Contains("X-Content-Security-Policy-Report-Only"), testUri.ToString());
+        }
+
+        [Test]
+        public async Task CspReportOnly_EnabledWithXWebKitCsp_SetsHeaders()
+        {
+            const string path = "/CspReportOnly/XWebKitCsp";
+            var testUri = helper.GetUri(BaseUri, path);
+
+            var response = await httpClient.GetAsync(testUri);
+
+            Assert.IsTrue(response.IsSuccessStatusCode, reqFailed + testUri);
+            Assert.IsTrue(response.Headers.Contains("Content-Security-Policy-Report-Only"), testUri.ToString());
+            Assert.IsTrue(response.Headers.Contains("X-WebKit-Csp-Report-Only"), testUri.ToString());
+        }
+
+        [Test]
+        public async void CspReportOnly_Disabled_NoHeaders()
+        {
+            const string path = "/CspReportOnly/Disabled";
+            var testUri = helper.GetUri(BaseUri, path);
+
+            var response = await httpClient.GetAsync(testUri);
+
+            Assert.IsTrue(response.IsSuccessStatusCode, reqFailed + testUri);
+            Assert.IsFalse(response.Headers.Contains("Content-Security-Policy-Report-Only"), testUri.ToString());
+        }
+
+        [Test]
+        public async Task CspConfig_EnabledInConfig_SetsHeaders()
+        {
+            const string path = "/CspConfig";
+            var testUri = helper.GetUri(BaseUri, path);
+
+            var response = await httpClient.GetAsync(testUri);
+
+            Assert.IsTrue(response.IsSuccessStatusCode, reqFailed + testUri);
+            var cspHeader = response.Headers.GetValues("Content-Security-Policy").Single();
+            Assert.IsTrue(cspHeader.Contains("media-src fromconfig"), testUri.ToString());
+        }
+
+        [Test]
+        public async Task CspConfig_SourcesInConfigAndInAttributeWithInheritSources_CombinesSources()
+        {
+            const string path = "/CspConfig/AddSource";
+            var testUri = helper.GetUri(BaseUri, path);
+
+            var response = await httpClient.GetAsync(testUri);
+
+            Assert.IsTrue(response.IsSuccessStatusCode, reqFailed + testUri);
+            var cspHeader = response.Headers.GetValues("Content-Security-Policy").Single();
+            Assert.IsTrue(cspHeader.Contains("script-src configscripthost attributescripthost;"), testUri.ToString());
+        }
+
+        [Test]
+        public async Task CspConfig_SourcesInConfigAndInAttributeWithInheritSourcesDisabled_OverridesSources()
+        {
+            const string path = "/CspConfig/OverrideSource";
+            var testUri = helper.GetUri(BaseUri, path);
+
+            var response = await httpClient.GetAsync(testUri);
+
+            Assert.IsTrue(response.IsSuccessStatusCode, reqFailed + testUri);
+            var cspHeader = response.Headers.GetValues("Content-Security-Policy").Single();
+            Assert.IsTrue(cspHeader.Contains("script-src attributescripthost;"), testUri.ToString());
+        }
+
+        [Test]
+        public async Task CspDirectives_DefaultSrcEnabled_SetsHeader()
+        {
+            const string path = "/CspDirectives/DefaultSrc";
+            var testUri = helper.GetUri(BaseUri, path);
+
+            var response = await httpClient.GetAsync(testUri);
+
+            Assert.IsTrue(response.IsSuccessStatusCode, reqFailed + testUri);
+            var cspHeader = response.Headers.GetValues("Content-Security-Policy").Single();
+            Assert.AreEqual("default-src 'self'", cspHeader, testUri.ToString());
+        }
+
+        [Test]
+        public async Task CspDirectives_ScriptSrcEnabled_SetsHeader()
+        {
+            const string path = "/CspDirectives/ScriptSrc";
+            var testUri = helper.GetUri(BaseUri, path);
+
+            var response = await httpClient.GetAsync(testUri);
+
+            Assert.IsTrue(response.IsSuccessStatusCode, reqFailed + testUri);
+            var cspHeader = response.Headers.GetValues("Content-Security-Policy").Single();
+            Assert.AreEqual("script-src 'self'", cspHeader, testUri.ToString());
+        }
+
+        [Test]
+        public async Task CspDirectives_StyleSrcEnabled_SetsHeader()
+        {
+            const string path = "/CspDirectives/StyleSrc";
+            var testUri = helper.GetUri(BaseUri, path);
+
+            var response = await httpClient.GetAsync(testUri);
+
+            Assert.IsTrue(response.IsSuccessStatusCode, reqFailed + testUri);
+            var cspHeader = response.Headers.GetValues("Content-Security-Policy").Single();
+            Assert.AreEqual("style-src 'self'", cspHeader, testUri.ToString());
+        }
+
+        [Test]
+        public async Task CspDirectives_ImgSrcEnabled_SetsHeader()
+        {
+            const string path = "/CspDirectives/ImgSrc";
+            var testUri = helper.GetUri(BaseUri, path);
+
+            var response = await httpClient.GetAsync(testUri);
+
+            Assert.IsTrue(response.IsSuccessStatusCode, reqFailed + testUri);
+            var cspHeader = response.Headers.GetValues("Content-Security-Policy").Single();
+            Assert.AreEqual("img-src 'self'", cspHeader, testUri.ToString());
+        }
+
+        [Test]
+        public async Task CspDirectives_ConnectSrcEnabled_SetsHeader()
+        {
+            const string path = "/CspDirectives/ConnectSrc";
+            var testUri = helper.GetUri(BaseUri, path);
+
+            var response = await httpClient.GetAsync(testUri);
+
+            Assert.IsTrue(response.IsSuccessStatusCode, reqFailed + testUri);
+            var cspHeader = response.Headers.GetValues("Content-Security-Policy").Single();
+            Assert.AreEqual("connect-src 'self'", cspHeader, testUri.ToString());
+        }
+
+        [Test]
+        public async Task CspDirectives_FontSrcEnabled_SetsHeader()
+        {
+            const string path = "/CspDirectives/FontSrc";
+            var testUri = helper.GetUri(BaseUri, path);
+
+            var response = await httpClient.GetAsync(testUri);
+
+            Assert.IsTrue(response.IsSuccessStatusCode, reqFailed + testUri);
+            var cspHeader = response.Headers.GetValues("Content-Security-Policy").Single();
+            Assert.AreEqual("font-src 'self'", cspHeader, testUri.ToString());
+        }
+
+        [Test]
+        public async Task CspDirectives_FrameSrcEnabled_SetsHeader()
+        {
+            const string path = "/CspDirectives/FrameSrc";
+            var testUri = helper.GetUri(BaseUri, path);
+
+            var response = await httpClient.GetAsync(testUri);
+
+            Assert.IsTrue(response.IsSuccessStatusCode, reqFailed + testUri);
+            var cspHeader = response.Headers.GetValues("Content-Security-Policy").Single();
+            Assert.AreEqual("frame-src 'self'", cspHeader, testUri.ToString());
+        }
+
+        [Test]
+        public async Task CspDirectives_MediaSrcEnabled_SetsHeader()
+        {
+            const string path = "/CspDirectives/MediaSrc";
+            var testUri = helper.GetUri(BaseUri, path);
+
+            var response = await httpClient.GetAsync(testUri);
+
+            Assert.IsTrue(response.IsSuccessStatusCode, reqFailed + testUri);
+            var cspHeader = response.Headers.GetValues("Content-Security-Policy").Single();
+            Assert.AreEqual("media-src 'self'", cspHeader, testUri.ToString());
+        }
+
+        [Test]
+        public async Task CspDirectives_ObjectSrcEnabled_SetsHeader()
+        {
+            const string path = "/CspDirectives/ObjectSrc";
+            var testUri = helper.GetUri(BaseUri, path);
+
+            var response = await httpClient.GetAsync(testUri);
+
+            Assert.IsTrue(response.IsSuccessStatusCode, reqFailed + testUri);
+            var cspHeader = response.Headers.GetValues("Content-Security-Policy").Single();
+            Assert.AreEqual("object-src 'self'", cspHeader, testUri.ToString());
+        }
+
+        [Test]
+        public async Task CspDirectives_ReportUriBuiltinEnabled_SetsHeader()
+        {
+            const string path = "/CspDirectives/ReportUriBuiltin";
+            var testUri = helper.GetUri(BaseUri, path);
+
+            var response = await httpClient.GetAsync(testUri);
+
+            Assert.IsTrue(response.IsSuccessStatusCode, reqFailed + testUri);
+            var cspHeader = response.Headers.GetValues("Content-Security-Policy").Single();
+            Assert.True(cspHeader.Contains("report-uri") && cspHeader.Contains("WebResource.axd"), testUri.ToString());
+        }
+
+        [Test]
+        public async Task CspDirectives_CustomReportUriEnabled_SetsHeader()
+        {
+            const string path = "/CspDirectives/ReportUriCustom";
+            var testUri = helper.GetUri(BaseUri, path);
+
+            var response = await httpClient.GetAsync(testUri);
+
+            Assert.IsTrue(response.IsSuccessStatusCode, reqFailed + testUri);
+            var cspHeader = response.Headers.GetValues("Content-Security-Policy").Single();
+            Assert.AreEqual("default-src 'self'; report-uri /reporturi", cspHeader, testUri.ToString());
+        }
+
+        [Test]
+        public async Task CspDirectives_ReportUriOnly_NoHeader()
+        {
+            const string path = "/CspDirectives/ReportUriOnly";
+            var testUri = helper.GetUri(BaseUri, path);
+
+            var response = await httpClient.GetAsync(testUri);
+
+            Assert.IsTrue(response.IsSuccessStatusCode, reqFailed + testUri);
+            Assert.IsEmpty(response.Headers.Where( h => h.Key.Equals("Content-Security-Policy")));
         }
     }
 }
