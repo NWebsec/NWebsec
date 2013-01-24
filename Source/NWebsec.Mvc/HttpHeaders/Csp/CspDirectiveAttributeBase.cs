@@ -28,15 +28,15 @@ namespace NWebsec.Mvc.HttpHeaders.Csp
         /// </summary>
         public Source Self { get; set; }
         /// <summary>
-        /// Gets or sets whether <paramref name="OtherSources"/> should be inherited from previous settings. The default is true.
+        /// Gets or sets whether <paramref name="CustomSources"/> should be inherited from previous settings. The default is true.
         /// </summary>
-        public bool InheritOtherSources { get; set; }
+        public bool InheritCustomSources { get; set; }
         /// <summary>
         /// Gets or sets other sources for the directive. Sources are separated by exactly one whitespace. Source examples are scheme only ("https:"), any host ("*"),
         /// a host ("*.nwebsec.com", "www.nwebsec.com", "https://www.nwebsec.com", "www.nwebsec.com:443", "https://www.nwebsec.com:*").
         /// See the Content Security Policy 1.0 standard for details.
         /// </summary>
-        public string OtherSources { get; set; }
+        public string CustomSources { get; set; }
 
         protected abstract HttpHeaderHelper.CspDirectives Directive { get; }
         protected abstract bool ReportOnly { get; }
@@ -46,7 +46,7 @@ namespace NWebsec.Mvc.HttpHeaders.Csp
             Enabled = true;
             None = Source.Inherit;
             Self = Source.Inherit;
-            InheritOtherSources = true;
+            InheritCustomSources = true;
             headerHelper = new HttpHeaderHelper();
 
         }
@@ -55,14 +55,14 @@ namespace NWebsec.Mvc.HttpHeaders.Csp
         {
             ValidateParams();
 
-            headerHelper.SetContentSecurityPolicyDirectiveOverride(filterContext.HttpContext, Directive, GetCspDirectiveOverride(OtherSources), ReportOnly);
+            headerHelper.SetContentSecurityPolicyDirectiveOverride(filterContext.HttpContext, Directive, GetCspDirectiveOverride(CustomSources), ReportOnly);
 
             base.OnActionExecuting(filterContext);
         }
 
         protected virtual void ValidateParams()
         {
-            if (Enabled && None == Source.Inherit && Self == Source.Inherit && (String.IsNullOrEmpty(OtherSources) && !InheritOtherSources))
+            if (Enabled && None == Source.Inherit && Self == Source.Inherit && (String.IsNullOrEmpty(CustomSources) && !InheritCustomSources))
                 throw new ApplicationException("No sources enabled for attribute. Remove attribute, or set \"Enabled=false\"");
         }
 
@@ -77,7 +77,7 @@ namespace NWebsec.Mvc.HttpHeaders.Csp
             directiveOverride.Enabled = Enabled;
             directiveOverride.None = None;
             directiveOverride.Self = Self;
-            directiveOverride.InheritOtherSources = InheritOtherSources;
+            directiveOverride.InheritOtherSources = InheritCustomSources;
             directiveOverride.OtherSources = sources;
 
             return directiveOverride;

@@ -18,7 +18,7 @@ namespace NWebsec.Mvc.HttpHeaders.Csp
         /// </summary>
         public bool Enabled { get; set; }
         /// <summary>
-        /// Gets or sets whether the URI for the built in CSP report handler should be included in the directive.
+        /// Gets or sets whether the URI for the built in CSP report handler should be included in the directive. The default is false.
         /// </summary>
         public bool EnableBuiltinHandler { get; set; }
         /// <summary>
