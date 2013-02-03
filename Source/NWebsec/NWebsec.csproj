@@ -52,10 +52,10 @@
     <Compile Include="Csp\CspViolationReportEventArgs.cs" />
     <Compile Include="Csp\CspReportHandlerUriHelper.cs" />
     <Compile Include="Csp\CspReportHelper.cs" />
-    <Compile Include="Csp\Overrides\CspDirectiveBaseOverride.cs" />
-    <Compile Include="Csp\Overrides\CspDirectiveUnsafeInlineOverride.cs" />
-    <Compile Include="Csp\Overrides\CspDirectiveUnsafeInlineUnsafeEvalOverride.cs" />
-    <Compile Include="Csp\Overrides\Source.cs" />
+    <Compile Include="Csp\CspDirectiveBaseOverride.cs" />
+    <Compile Include="Csp\CspDirectiveUnsafeInlineOverride.cs" />
+    <Compile Include="Csp\CspDirectiveUnsafeInlineUnsafeEvalOverride.cs" />
+    <Compile Include="Csp\Source.cs" />
     <Compile Include="HttpHeaders\CspOverrideHelper.cs" />
     <Compile Include="HttpHeaders\HttpHeaderHelper.cs" />
     <Compile Include="HttpHeaders\HttpHeadersConstants.cs" />

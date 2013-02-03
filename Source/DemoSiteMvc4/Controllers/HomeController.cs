@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using DemoSiteMvc4.CustomAttribute;
-using NWebsec.Csp.Overrides;
+using NWebsec.Csp;
 using NWebsec.HttpHeaders;
 using NWebsec.Mvc.HttpHeaders;
 using NWebsec.Mvc.HttpHeaders.Csp;

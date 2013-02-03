@@ -2,7 +2,7 @@
 
 using System;
 using System.Web.Mvc;
-using NWebsec.Csp.Overrides;
+using NWebsec.Csp;
 using NWebsec.HttpHeaders;
 
 namespace NWebsec.Mvc.HttpHeaders.Csp

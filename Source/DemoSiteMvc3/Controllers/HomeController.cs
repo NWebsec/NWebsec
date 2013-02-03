@@ -1,5 +1,5 @@
 ﻿using System.Web.Mvc;
-using NWebsec.Csp.Overrides;
+using NWebsec.Csp;
 using NWebsec.HttpHeaders;
 using NWebsec.Mvc.HttpHeaders;
 using NWebsec.Mvc.HttpHeaders.Csp;

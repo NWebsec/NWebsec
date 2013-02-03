@@ -2,7 +2,7 @@
 
 using System;
 
-namespace NWebsec.Csp.Overrides
+namespace NWebsec.Csp
 {
     public class CspDirectiveBaseOverride
     {

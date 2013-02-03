@@ -6,7 +6,7 @@ using System.Linq;
 using System.Web;
 using Moq;
 using NUnit.Framework;
-using NWebsec.Csp.Overrides;
+using NWebsec.Csp;
 using NWebsec.HttpHeaders;
 using NWebsec.Modules.Configuration;
 using NWebsec.Modules.Configuration.Csp;

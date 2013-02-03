@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Web;
-using NWebsec.Csp.Overrides;
+using NWebsec.Csp;
 using NWebsec.Modules.Configuration;
 using NWebsec.Modules.Configuration.Csp;
 

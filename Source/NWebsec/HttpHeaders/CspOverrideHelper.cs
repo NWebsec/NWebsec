@@ -1,7 +1,7 @@
 ﻿// Copyright (c) André N. Klingsheim. See License.txt in the project root for license information.
 
 using System;
-using NWebsec.Csp.Overrides;
+using NWebsec.Csp;
 using NWebsec.Modules.Configuration.Csp;
 
 namespace NWebsec.HttpHeaders
