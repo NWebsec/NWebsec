@@ -1,7 +1,7 @@
 ﻿// Copyright (c) André N. Klingsheim. See License.txt in the project root for license information.
 
 using System.Web.Mvc;
-using NWebsec.Csp.Overrides;
+using NWebsec.Csp;
 using NWebsec.Mvc.HttpHeaders.Csp;
 
 namespace Mvc4.Controllers

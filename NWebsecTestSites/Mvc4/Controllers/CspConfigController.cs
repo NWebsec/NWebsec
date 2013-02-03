@@ -1,7 +1,7 @@
 ﻿// Copyright (c) André N. Klingsheim. See License.txt in the project root for license information.
 
 using System.Web.Mvc;
-using NWebsec.Csp.Overrides;
+using NWebsec.Csp;
 using NWebsec.Mvc.HttpHeaders.Csp;
 
 namespace Mvc4.Controllers
@@ -16,13 +16,13 @@ namespace Mvc4.Controllers
             return View("Index");
         }
 
-        [CspScriptSrc(OtherSources = "attributescripthost")]
+        [CspScriptSrc(CustomSources = "attributescripthost")]
         public ActionResult AddSource()
         {
             return View("Index");
         }
 
-        [CspScriptSrc(OtherSources = "attributescripthost", InheritOtherSources = false)]
+        [CspScriptSrc(CustomSources = "attributescripthost", InheritCustomSources = false)]
         public ActionResult OverrideSource()
         {
             return View("Index");
