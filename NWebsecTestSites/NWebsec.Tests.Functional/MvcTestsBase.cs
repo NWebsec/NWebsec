@@ -325,6 +325,31 @@ namespace NWebsec.Tests.Functional
         }
 
         [Test]
+        public async Task CspConfig_DisabledOnAction_NoHeader()
+        {
+            const string path = "/CspConfig/DisableCsp";
+            var testUri = helper.GetUri(BaseUri, path);
+
+            var response = await httpClient.GetAsync(testUri);
+
+            Assert.IsTrue(response.IsSuccessStatusCode, reqFailed + testUri);
+            Assert.IsEmpty(response.Headers.Where(h => h.Key.Equals("Content-Security-Policy")));
+        }
+
+        [Test]
+        public async Task CspConfig_ScriptSrcAllowInlineUnsafeEval_OverridesAllowInlineUnsafeEval()
+        {
+            const string path = "/CspConfig/ScriptSrcAllowInlineUnsafeEval";
+            var testUri = helper.GetUri(BaseUri, path);
+
+            var response = await httpClient.GetAsync(testUri);
+
+            Assert.IsTrue(response.IsSuccessStatusCode, reqFailed + testUri);
+            var cspHeader = response.Headers.GetValues("Content-Security-Policy").Single();
+            Assert.IsTrue(cspHeader.Contains("script-src 'unsafe-inline' 'unsafe-eval' configscripthost;"), testUri.ToString());
+        }
+
+        [Test]
         public async Task CspDirectives_DefaultSrcEnabled_SetsHeader()
         {
             const string path = "/CspDirectives/DefaultSrc";

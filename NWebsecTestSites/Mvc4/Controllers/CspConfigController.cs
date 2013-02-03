@@ -1,6 +1,7 @@
 ﻿// Copyright (c) André N. Klingsheim. See License.txt in the project root for license information.
 
 using System.Web.Mvc;
+using NWebsec.Csp.Overrides;
 using NWebsec.Mvc.HttpHeaders.Csp;
 
 namespace Mvc4.Controllers
@@ -23,6 +24,18 @@ namespace Mvc4.Controllers
 
         [CspScriptSrc(OtherSources = "attributescripthost", InheritOtherSources = false)]
         public ActionResult OverrideSource()
+        {
+            return View("Index");
+        }
+
+        [Csp(Enabled = false)]
+        public ActionResult DisableCsp()
+        {
+            return View("Index");
+        }
+
+        [CspScriptSrc(UnsafeInline = Source.Enable, UnsafeEval = Source.Enable)]
+        public ActionResult ScriptSrcAllowInlineUnsafeEval()
         {
             return View("Index");
         }
