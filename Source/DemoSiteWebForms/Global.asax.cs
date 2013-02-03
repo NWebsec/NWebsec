@@ -10,7 +10,6 @@ namespace DemoSiteWebForms
         protected void NWebSecHttpHeaderSecurityModule_CspViolationReported(object sender, CspViolationReportEventArgs e)
         {
             var report = e.ViolationReport;
-            
         }
 
         void Application_Start(object sender, EventArgs e)

@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <configuration>
   <configSections>
-    <sectionGroup name ="nwebsec">
+    <sectionGroup name="nwebsec">
       <!-- For information on how to configure NWebsec please visit: http://nwebsec.codeplex.com/wikipage?title=Configuration -->
       <section name="httpHeaderSecurityModule" type="NWebsec.Modules.Configuration.HttpHeaderSecurityConfigurationSection, NWebsec"/>
     </sectionGroup>
@@ -11,6 +11,11 @@
     <modules>
       <add name="NWebSecHttpHeaderSecurityModule" type="NWebsec.Modules.HttpHeaderSecurityModule, NWebsec"/>
     </modules>
+    <httpProtocol>
+      <customHeaders>
+        <clear />
+      </customHeaders>
+    </httpProtocol>
     <security>
       <requestFiltering>
         <hiddenSegments>
