@@ -39,7 +39,7 @@
       </xs:enumeration>
       <xs:enumeration value="Disabled">
         <xs:annotation>
-          <xs:documentation>The X-Xss-Protection header should be set in the HTTP response, explicitly disabling the IE XSS filter.</xs:documentation>
+          <xs:documentation>The X-Xss-Protection header should not be set in the HTTP response.</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
     </xs:restriction>
