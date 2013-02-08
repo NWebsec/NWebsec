@@ -212,11 +212,14 @@ namespace NWebsec.HttpHeaders
 
         internal CspHeaderConfigurationElement GetCspHeaderWithOverride(HttpContextBase context, bool reportOnly)
         {
+            var cspConfig = reportOnly
+                                ? BaseConfig.SecurityHttpHeaders.CspReportOnly
+                                : BaseConfig.SecurityHttpHeaders.Csp;
             var headerList = GetHeaderListFromContext(context);
             var headerkey = GetCspConfigKey(CspHeaderKeyPrefix, reportOnly);
             return headerList.ContainsKey(headerkey)
                     ? (CspHeaderConfigurationElement)headerList[headerkey]
-                    : BaseConfig.SecurityHttpHeaders.Csp;
+                    : cspConfig;
         }
 
         public void SetCspReportUriOverride(HttpContextBase context, CspReportUriDirectiveConfigurationElement reportUriConfig, bool reportOnly)
@@ -232,11 +235,14 @@ namespace NWebsec.HttpHeaders
 
         internal CspReportUriDirectiveConfigurationElement GetCspReportUriDirectiveWithOverride(HttpContextBase context, bool reportOnly)
         {
+            var reportUriConfig = reportOnly
+                                      ? BaseConfig.SecurityHttpHeaders.CspReportOnly.ReportUriDirective
+                                      : BaseConfig.SecurityHttpHeaders.Csp.ReportUriDirective;
             var headerList = GetHeaderListFromContext(context);
             var headerkey = GetCspConfigKey(CspReportUriKeyPrefix, reportOnly);
             return headerList.ContainsKey(headerkey)
                     ? (CspReportUriDirectiveConfigurationElement)headerList[headerkey]
-                    : BaseConfig.SecurityHttpHeaders.Csp.ReportUriDirective;
+                    : reportUriConfig;
         }
 
         public void SetContentSecurityPolicyDirectiveOverride(HttpContextBase context, CspDirectives directive, CspDirectiveBaseOverride config, bool reportOnly)
@@ -247,7 +253,7 @@ namespace NWebsec.HttpHeaders
 
             if (!directiveExists)
             {
-                directiveElement = GetCspDirectiveFromConfig(directive);
+                directiveElement = GetCspDirectiveFromConfig(directive, reportOnly);
             }
 
             var newConfig = cspHelper.GetOverridenCspDirectiveConfig(directive, config, directiveElement);
@@ -257,37 +263,39 @@ namespace NWebsec.HttpHeaders
             cspOverride.Add(directive, newConfig);
         }
 
-        private CspDirectiveBaseConfigurationElement GetCspDirectiveFromConfig(CspDirectives directive)
+        private CspDirectiveBaseConfigurationElement GetCspDirectiveFromConfig(CspDirectives directive, bool reportOnly)
         {
+            var cspConfig = reportOnly
+                                ? BaseConfig.SecurityHttpHeaders.CspReportOnly
+                                : BaseConfig.SecurityHttpHeaders.Csp;
             switch (directive)
             {
                 case CspDirectives.DefaultSrc:
-                    return CloneElement(BaseConfig.SecurityHttpHeaders.Csp.DefaultSrc);
-                //return BaseConfig.SecurityHttpHeaders.Csp.DefaultSrc;
-
+                    return CloneElement(cspConfig.DefaultSrc);
+                
                 case CspDirectives.ConnectSrc:
-                    return CloneElement(BaseConfig.SecurityHttpHeaders.Csp.ConnectSrc);
+                    return CloneElement(cspConfig.ConnectSrc);
 
                 case CspDirectives.FontSrc:
-                    return CloneElement(BaseConfig.SecurityHttpHeaders.Csp.FontSrc);
+                    return CloneElement(cspConfig.FontSrc);
 
                 case CspDirectives.FrameSrc:
-                    return CloneElement(BaseConfig.SecurityHttpHeaders.Csp.FrameSrc);
+                    return CloneElement(cspConfig.FrameSrc);
 
                 case CspDirectives.ImgSrc:
-                    return CloneElement(BaseConfig.SecurityHttpHeaders.Csp.ImgSrc);
+                    return CloneElement(cspConfig.ImgSrc);
 
                 case CspDirectives.MediaSrc:
-                    return CloneElement(BaseConfig.SecurityHttpHeaders.Csp.MediaSrc);
+                    return CloneElement(cspConfig.MediaSrc);
 
                 case CspDirectives.ObjectSrc:
-                    return CloneElement(BaseConfig.SecurityHttpHeaders.Csp.ObjectSrc);
+                    return CloneElement(cspConfig.ObjectSrc);
 
                 case CspDirectives.ScriptSrc:
-                    return CloneElement(BaseConfig.SecurityHttpHeaders.Csp.ScriptSrc);
+                    return CloneElement(cspConfig.ScriptSrc);
 
                 case CspDirectives.StyleSrc:
-                    return CloneElement(BaseConfig.SecurityHttpHeaders.Csp.StyleSrc);
+                    return CloneElement(cspConfig.StyleSrc);
 
                 default:
                     throw new NotImplementedException("The mapping for " + directive + " was not implemented.");
@@ -301,13 +309,27 @@ namespace NWebsec.HttpHeaders
             var unsafeEvalElement = element as CspDirectiveUnsafeInlineUnsafeEvalConfigurationElement;
             if (unsafeEvalElement != null)
             {
-                newElement = new CspDirectiveUnsafeInlineUnsafeEvalConfigurationElement { UnsafeEval = unsafeEvalElement.UnsafeEval };
+                newElement = new CspDirectiveUnsafeInlineUnsafeEvalConfigurationElement
+                                 {
+                                     UnsafeEval = unsafeEvalElement.UnsafeEval
+                                 };
             }
-
+            
             var unsafeInlineElement = element as CspDirectiveUnsafeInlineConfigurationElement;
             if (unsafeInlineElement != null)
             {
-                newElement = new CspDirectiveUnsafeInlineUnsafeEvalConfigurationElement { UnsafeEval = unsafeInlineElement.UnsafeInline };
+                if (newElement == null)
+                {
+                    newElement = new CspDirectiveUnsafeInlineUnsafeEvalConfigurationElement
+                                     {
+                                         UnsafeEval = unsafeInlineElement.UnsafeInline
+                                     };
+                }
+                else
+                {
+                    ((CspDirectiveUnsafeInlineConfigurationElement) newElement).UnsafeInline =
+                        unsafeInlineElement.UnsafeInline;
+                }
             }
 
             if (newElement == null)
@@ -350,7 +372,7 @@ namespace NWebsec.HttpHeaders
 
             var directiveOverrides = GetCspDirectiveOverides(context, reportOnly);
 
-            var cspConfig = BaseConfig.SecurityHttpHeaders.Csp;
+            var cspConfig = reportOnly ? BaseConfig.SecurityHttpHeaders.CspReportOnly : BaseConfig.SecurityHttpHeaders.Csp;
 
             CspDirectiveBaseConfigurationElement element;
             var isOverriden = directiveOverrides.TryGetValue(CspDirectives.DefaultSrc, out element);

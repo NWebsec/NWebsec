@@ -13,8 +13,6 @@ using NWebsec.Modules.Configuration.Csp;
 
 namespace NWebsec.Tests.Unit.HttpHeaders
 {
-
-
     [TestFixture]
     public class HttpHeaderHelperTest
     {
@@ -198,7 +196,7 @@ namespace NWebsec.Tests.Unit.HttpHeaders
             const bool reportonly = false;
             var configSection = new HttpHeaderSecurityConfigurationSection();
             headerHelper = new HttpHeaderHelper(configSection);
-            var directive1 = new CspDirectiveUnsafeInlineUnsafeEvalOverride { Self = Source.Enable, UnsafeInline = Source.Enable};
+            var directive1 = new CspDirectiveUnsafeInlineUnsafeEvalOverride { Self = Source.Enable, UnsafeInline = Source.Enable };
             var directive2 = new CspDirectiveUnsafeInlineUnsafeEvalOverride { UnsafeEval = Source.Enable };
 
             headerHelper.SetContentSecurityPolicyDirectiveOverride(mockContext, HttpHeaderHelper.CspDirectives.ScriptSrc, directive1, reportonly);
@@ -225,6 +223,77 @@ namespace NWebsec.Tests.Unit.HttpHeaders
             var overrideElement = headerHelper.GetCspElementWithOverrides(mockContext, reportonly);
             Assert.IsTrue(overrideElement.Enabled);
             Assert.IsTrue(overrideElement.ScriptSrc.Self);
+        }
+
+        [Test]
+        public void GetCspElementWithOverrides_ReportOnlyDefaultConfigAndDefaultOverridden_HeaderEnabled()
+        {
+            const bool reportonly = true;
+            var configSection = new HttpHeaderSecurityConfigurationSection();
+            headerHelper = new HttpHeaderHelper(configSection);
+            var cspOverride = new CspHeaderConfigurationElement { Enabled = true };
+            var directive1 = new CspDirectiveUnsafeInlineUnsafeEvalOverride { Self = Source.Enable };
+
+            headerHelper.SetCspHeaderOverride(mockContext, cspOverride, reportonly);
+            headerHelper.SetContentSecurityPolicyDirectiveOverride(mockContext, HttpHeaderHelper.CspDirectives.ScriptSrc, directive1, reportonly);
+
+            var overrideElement = headerHelper.GetCspElementWithOverrides(mockContext, reportonly);
+            Assert.IsTrue(overrideElement.Enabled);
+            Assert.IsTrue(overrideElement.ScriptSrc.Self);
+        }
+
+        [Test]
+        public void GetCspElementWithOverrides_ReportOnlyConfigured_ReturnsConfiguredCspReportOnly()
+        {
+            const bool reportonly = true;
+            var configSection = new HttpHeaderSecurityConfigurationSection();
+            configSection.SecurityHttpHeaders.CspReportOnly.Enabled = true;
+            configSection.SecurityHttpHeaders.CspReportOnly.DefaultSrc.Self = true;
+            headerHelper = new HttpHeaderHelper(configSection);
+            
+            var overrideElement = headerHelper.GetCspElementWithOverrides(mockContext, reportonly);
+            Assert.IsTrue(overrideElement.Enabled);
+            Assert.IsTrue(overrideElement.DefaultSrc.Self);
+        }
+
+        [Test]
+        public void GetCspReportUriWithOverrides_ReportOnlyConfigured_ReturnsConfiguredCspReportUri()
+        {
+            const bool reportonly = true;
+            var configSection = new HttpHeaderSecurityConfigurationSection();
+            configSection.SecurityHttpHeaders.CspReportOnly.ReportUriDirective.EnableBuiltinHandler = true;
+            headerHelper = new HttpHeaderHelper(configSection);
+
+            var overrideElement = headerHelper.GetCspReportUriDirectiveWithOverride(mockContext, reportonly);
+            Assert.IsTrue(overrideElement.EnableBuiltinHandler);
+        }
+
+        [Test]
+        public void GetCspHeaderWithOverride_CspEnabledReportOnlyDisabledInConfig_CspEnabledReportOnlyDisabled()
+        {
+            var configSection = new HttpHeaderSecurityConfigurationSection();
+            configSection.SecurityHttpHeaders.Csp.Enabled = true;
+            configSection.SecurityHttpHeaders.CspReportOnly.Enabled = false;
+            headerHelper = new HttpHeaderHelper(configSection);
+
+            var cspOverrideElement = headerHelper.GetCspHeaderWithOverride(mockContext, false);
+            var cspReportOnlyOverrideElement = headerHelper.GetCspHeaderWithOverride(mockContext, true);
+            Assert.IsTrue(cspOverrideElement.Enabled);
+            Assert.IsFalse(cspReportOnlyOverrideElement.Enabled);
+        }
+
+        [Test]
+        public void GetCspHeaderWithOverride_CspDisabledReportOnlyEnabledInConfig_CspDisabledReportOnlyEnabled()
+        {
+            var configSection = new HttpHeaderSecurityConfigurationSection();
+            configSection.SecurityHttpHeaders.Csp.Enabled = false;
+            configSection.SecurityHttpHeaders.CspReportOnly.Enabled = true;
+            headerHelper = new HttpHeaderHelper(configSection);
+
+            var cspOverrideElement = headerHelper.GetCspHeaderWithOverride(mockContext, false);
+            var cspReportOnlyOverrideElement = headerHelper.GetCspHeaderWithOverride(mockContext, true);
+            Assert.IsFalse(cspOverrideElement.Enabled);
+            Assert.IsTrue(cspReportOnlyOverrideElement.Enabled);
         }
     }
 }
