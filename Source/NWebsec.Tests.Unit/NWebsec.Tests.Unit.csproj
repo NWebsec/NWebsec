@@ -66,6 +66,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Csp\CspReportHelperTests.cs" />
+    <Compile Include="HttpHeaders\HttpHeaderHelperCspTestBase.cs" />
     <Compile Include="HttpHeaders\HttpHeaderHelperTest.cs" />
     <Compile Include="HttpHeaders\HttpHeaderSetterCspTest.cs" />
     <Compile Include="HttpHeaders\HttpHeaderSetterTest.cs" />
