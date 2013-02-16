@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<package >
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
   <metadata>
     <id>NWebsec.Mvc</id>
     <version>2.0.0</version>
@@ -15,7 +15,7 @@
     <copyright>Copyright 2012</copyright>
     <tags>NWebsec security asp.net mvc</tags>
     <dependencies>
-      <dependency id="NWebsec" />
+      <dependency id="NWebsec" version="2.0.0" />
     </dependencies>
   </metadata>
 </package>
