@@ -503,5 +503,129 @@ namespace NWebsec.Tests.Functional
             Assert.IsTrue(response.IsSuccessStatusCode, reqFailed + testUri);
             Assert.IsEmpty(response.Headers.Where( h => h.Key.Equals("Content-Security-Policy")));
         }
+
+        [Test]
+        public async Task XRobotsTag_Disabled_NoHeader()
+        {
+            const string path = "/XRobotsTag/Disabled";
+            var testUri = helper.GetUri(BaseUri, path);
+
+            var response = await httpClient.GetAsync(testUri);
+
+            Assert.IsTrue(response.IsSuccessStatusCode, reqFailed + testUri);
+            Assert.IsEmpty(response.Headers.Where(h => h.Key.Equals("X-Robots-Tag")));
+        }
+
+        [Test]
+        public async Task XRobotsTag_NoIndex()
+        {
+            const string path = "/XRobotsTag/NoIndex";
+            var testUri = helper.GetUri(BaseUri, path);
+
+            var response = await httpClient.GetAsync(testUri);
+
+            Assert.IsTrue(response.IsSuccessStatusCode, reqFailed + testUri);
+            var header = response.Headers.SingleOrDefault(h => h.Key.Equals("X-Robots-Tag"));
+            Assert.IsNotNull(header,"X-Robots-Tag header not set in response.");
+            Assert.AreEqual("noindex", header.Value.Single());
+        }
+
+        [Test]
+        public async Task XRobotsTag_NoFollow()
+        {
+            const string path = "/XRobotsTag/NoFollow";
+            var testUri = helper.GetUri(BaseUri, path);
+
+            var response = await httpClient.GetAsync(testUri);
+
+            Assert.IsTrue(response.IsSuccessStatusCode, reqFailed + testUri);
+            var header = response.Headers.SingleOrDefault(h => h.Key.Equals("X-Robots-Tag"));
+            Assert.IsNotNull(header, "X-Robots-Tag header not set in response.");
+            Assert.AreEqual("nofollow", header.Value.Single());
+        }
+
+        [Test]
+        public async Task XRobotsTag_NoSnippet()
+        {
+            const string path = "/XRobotsTag/NoSnippet";
+            var testUri = helper.GetUri(BaseUri, path);
+
+            var response = await httpClient.GetAsync(testUri);
+
+            Assert.IsTrue(response.IsSuccessStatusCode, reqFailed + testUri);
+            var header = response.Headers.SingleOrDefault(h => h.Key.Equals("X-Robots-Tag"));
+            Assert.IsNotNull(header, "X-Robots-Tag header not set in response.");
+            Assert.AreEqual("nosnippet", header.Value.Single());
+        }
+
+        [Test]
+        public async Task XRobotsTag_NoArchive()
+        {
+            const string path = "/XRobotsTag/NoArchive";
+            var testUri = helper.GetUri(BaseUri, path);
+
+            var response = await httpClient.GetAsync(testUri);
+
+            Assert.IsTrue(response.IsSuccessStatusCode, reqFailed + testUri);
+            var header = response.Headers.SingleOrDefault(h => h.Key.Equals("X-Robots-Tag"));
+            Assert.IsNotNull(header, "X-Robots-Tag header not set in response.");
+            Assert.AreEqual("noarchive", header.Value.Single());
+        }
+
+        [Test]
+        public async Task XRobotsTag_NoOdp()
+        {
+            const string path = "/XRobotsTag/NoOdp";
+            var testUri = helper.GetUri(BaseUri, path);
+
+            var response = await httpClient.GetAsync(testUri);
+
+            Assert.IsTrue(response.IsSuccessStatusCode, reqFailed + testUri);
+            var header = response.Headers.SingleOrDefault(h => h.Key.Equals("X-Robots-Tag"));
+            Assert.IsNotNull(header, "X-Robots-Tag header not set in response.");
+            Assert.AreEqual("noodp", header.Value.Single());
+        }
+
+        [Test]
+        public async Task XRobotsTag_NoTranslate()
+        {
+            const string path = "/XRobotsTag/NoTranslate";
+            var testUri = helper.GetUri(BaseUri, path);
+
+            var response = await httpClient.GetAsync(testUri);
+
+            Assert.IsTrue(response.IsSuccessStatusCode, reqFailed + testUri);
+            var header = response.Headers.SingleOrDefault(h => h.Key.Equals("X-Robots-Tag"));
+            Assert.IsNotNull(header, "X-Robots-Tag header not set in response.");
+            Assert.AreEqual("notranslate", header.Value.Single());
+        }
+
+        [Test]
+        public async Task XRobotsTag_NoImageIndex()
+        {
+            const string path = "/XRobotsTag/NoImageIndex";
+            var testUri = helper.GetUri(BaseUri, path);
+
+            var response = await httpClient.GetAsync(testUri);
+
+            Assert.IsTrue(response.IsSuccessStatusCode, reqFailed + testUri);
+            var header = response.Headers.SingleOrDefault(h => h.Key.Equals("X-Robots-Tag"));
+            Assert.IsNotNull(header, "X-Robots-Tag header not set in response.");
+            Assert.AreEqual("noimageindex", header.Value.Single());
+        }
+
+        [Test]
+        public async Task XRobotsTag_NoIndexNoFollow()
+        {
+            const string path = "/XRobotsTag/NoIndexNoFollow";
+            var testUri = helper.GetUri(BaseUri, path);
+
+            var response = await httpClient.GetAsync(testUri);
+
+            Assert.IsTrue(response.IsSuccessStatusCode, reqFailed + testUri);
+            var header = response.Headers.SingleOrDefault(h => h.Key.Equals("X-Robots-Tag"));
+            Assert.IsNotNull(header, "X-Robots-Tag header not set in response.");
+            Assert.AreEqual("noindex, nofollow", header.Value.Single());
+        }
     }
 }

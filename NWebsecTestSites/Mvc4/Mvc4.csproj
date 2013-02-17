@@ -42,13 +42,13 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="NWebsec, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="NWebsec, Version=2.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\NWebsec.2.0.0\lib\40\NWebsec.dll</HintPath>
+      <HintPath>..\packages\NWebsec.2.1.0-alpha01\lib\40\NWebsec.dll</HintPath>
     </Reference>
-    <Reference Include="NWebsec.Mvc, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="NWebsec.Mvc, Version=2.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\NWebsec.Mvc.2.0.0\lib\40\NWebsec.Mvc.dll</HintPath>
+      <HintPath>..\packages\NWebsec.Mvc.2.1.0-alpha01\lib\40\NWebsec.Mvc.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -127,6 +127,7 @@
     <Compile Include="Controllers\XContentTypeOptionsController.cs" />
     <Compile Include="Controllers\XDownloadOptionsController.cs" />
     <Compile Include="Controllers\XFrameOptionsController.cs" />
+    <Compile Include="Controllers\XRobotsTagController.cs" />
     <Compile Include="Controllers\XXssProtectionController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>

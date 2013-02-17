@@ -79,6 +79,53 @@
             </xs:attribute>
           </xs:complexType>
         </xs:element>
+        <xs:element name="x-Robots-Tag" minOccurs="0" maxOccurs="1">
+          <xs:annotation>
+            <xs:documentation>Specifies whether the X-Robots-Tag header should be set in the HTTP responses.</xs:documentation>
+          </xs:annotation>
+          <xs:complexType>
+            <xs:attribute name="enabled" type="simple_boolean" use="required">
+              <xs:annotation>
+                <xs:documentation>This attribute is required.</xs:documentation>
+              </xs:annotation>
+            </xs:attribute>
+            <xs:attribute name="noIndex" type="simple_boolean" use="optional">
+              <xs:annotation>
+                <xs:documentation>Instructs search engines to not index a page.</xs:documentation>
+              </xs:annotation>
+            </xs:attribute>
+            <xs:attribute name="noFollow" type="simple_boolean" use="optional">
+              <xs:annotation>
+                <xs:documentation>Instructs search engines to not follow links on a page.</xs:documentation>
+              </xs:annotation>
+            </xs:attribute>
+            <xs:attribute name="noSnippet" type="simple_boolean" use="optional">
+              <xs:annotation>
+                <xs:documentation>Instructs search engines to not display a snippet for a page in search results.</xs:documentation>
+              </xs:annotation>
+            </xs:attribute>
+            <xs:attribute name="noArchive" type="simple_boolean" use="optional">
+              <xs:annotation>
+                <xs:documentation>Instructs search engines to not offer a cached version of a page in search results.</xs:documentation>
+              </xs:annotation>
+            </xs:attribute>
+            <xs:attribute name="noOdp" type="simple_boolean" use="optional">
+              <xs:annotation>
+                <xs:documentation>Instructs search engines to not use information from the Open Directory Project (ODP) for a page's title or snippet.</xs:documentation>
+              </xs:annotation>
+            </xs:attribute>
+            <xs:attribute name="noTranslate " type="simple_boolean" use="optional">
+              <xs:annotation>
+                <xs:documentation>Instructs search engines to not offer translation of a page in search results (Google only).</xs:documentation>
+              </xs:annotation>
+            </xs:attribute>
+            <xs:attribute name="noImageIndex" type="simple_boolean" use="optional">
+              <xs:annotation>
+                <xs:documentation>Instructs search engines to not index images on the page (Google only).</xs:documentation>
+              </xs:annotation>
+            </xs:attribute>
+          </xs:complexType>
+        </xs:element>
         <xs:element name="securityHttpHeaders" minOccurs="0" maxOccurs="1">
           <xs:annotation>
             <xs:documentation>Configures various security HTTP headers.</xs:documentation>
