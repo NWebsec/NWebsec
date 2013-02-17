@@ -21,6 +21,9 @@ namespace NWebsec.Mvc.HttpHeaders
         /// </summary>
         public XFrameOptionsPolicy Policy { get; set; }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="XFrameOptionsAttribute"/> class
+        /// </summary>
         public XFrameOptionsAttribute()
         {
             Policy = XFrameOptionsPolicy.Deny;

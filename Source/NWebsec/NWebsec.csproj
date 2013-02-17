@@ -86,6 +86,8 @@
     <Compile Include="Modules\Configuration\Csp\Validation\CspDirectiveBaseConfigurationElementValidator.cs" />
     <Compile Include="Modules\Configuration\SimpleBooleanConfigurationElement.cs" />
     <Compile Include="Modules\Configuration\SuppressVersionHeadersConfigurationElement.cs" />
+    <Compile Include="Modules\Configuration\Validation\XRobotsTagValidator.cs" />
+    <Compile Include="Modules\Configuration\Validation\XRobotsTagValidatorAttribute.cs" />
     <Compile Include="Modules\Configuration\XFrameOptionsConfigurationElement.cs" />
     <Compile Include="Modules\Configuration\XRobotsTagConfigurationElement.cs" />
     <Compile Include="Modules\Configuration\XXssProtectionConfigurationElement.cs" />

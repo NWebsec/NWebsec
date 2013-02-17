@@ -27,6 +27,9 @@ namespace NWebsec.Mvc.HttpHeaders
         /// </summary>
         public bool BlockMode { get; set; }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="XXssProtectionAttribute"/> class
+        /// </summary>
         public XXssProtectionAttribute()
         {
             Policy = XXssProtectionPolicy.FilterEnabled;

@@ -94,6 +94,7 @@
     <Compile Include="HttpHeaders\XContentTypeOptionsAttribute.cs" />
     <Compile Include="HttpHeaders\XDownloadOptionsAttribute.cs" />
     <Compile Include="HttpHeaders\XFrameOptionsAttribute.cs" />
+    <Compile Include="HttpHeaders\XRobotsTagAttribute.cs" />
     <Compile Include="HttpHeaders\XXssProtectionAttribute.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

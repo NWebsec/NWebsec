@@ -5,7 +5,7 @@ using System.Configuration;
 using NWebsec.Modules.Configuration.Csp;
 using NWebsec.Modules.Configuration.Csp.Validation;
 
-namespace NWebsec.Tests.Unit.Modules.Configuration
+namespace NWebsec.Tests.Unit.Modules.Configuration.Csp
 {
     [TestFixture]
     public class CspDirectiveBaseConfigurationElementValidatorTests

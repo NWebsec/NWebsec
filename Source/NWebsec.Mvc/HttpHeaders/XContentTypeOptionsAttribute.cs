@@ -20,6 +20,9 @@ namespace NWebsec.Mvc.HttpHeaders
         /// </summary>
         public bool Enabled { get; set; }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="XContentTypeOptionsAttribute"/> class
+        /// </summary>
         public XContentTypeOptionsAttribute()
         {
             Enabled = true;

@@ -4,7 +4,7 @@ using System;
 using NUnit.Framework;
 using NWebsec.Modules.Configuration.Csp.Validation;
 
-namespace NWebsec.Tests.Unit.Modules.Configuration
+namespace NWebsec.Tests.Unit.Modules.Configuration.Csp
 {
     [TestFixture]
     public class ReportUriValidatorTests

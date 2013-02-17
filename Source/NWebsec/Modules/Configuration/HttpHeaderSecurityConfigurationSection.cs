@@ -1,6 +1,7 @@
 ﻿// Copyright (c) André N. Klingsheim. See License.txt in the project root for license information.
 
 using System.Configuration;
+using NWebsec.Modules.Configuration.Validation;
 
 namespace NWebsec.Modules.Configuration
 {
@@ -33,6 +34,7 @@ namespace NWebsec.Modules.Configuration
         }
 
         [ConfigurationProperty("x-Robots-Tag", IsRequired = true)]
+        [XRobotsTagValidator]
         public XRobotsTagConfigurationElement XRobotsTag
         {
             get

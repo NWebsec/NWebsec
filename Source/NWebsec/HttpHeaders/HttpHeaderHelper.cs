@@ -7,6 +7,7 @@ using System.Web;
 using NWebsec.Csp;
 using NWebsec.Modules.Configuration;
 using NWebsec.Modules.Configuration.Csp;
+using NWebsec.Modules.Configuration.Validation;
 
 namespace NWebsec.HttpHeaders
 {
@@ -36,6 +37,7 @@ namespace NWebsec.HttpHeaders
         private readonly CspOverrideHelper cspHelper;
         private readonly HttpHeaderSetter headerSetter;
         private readonly HttpHeaderSecurityConfigurationSection mockConfig;
+        private readonly XRobotsTagValidator xRobotsValidator;
 
         private HttpHeaderSecurityConfigurationSection BaseConfig { get { return mockConfig ?? GetConfig(); } }
 
@@ -43,12 +45,14 @@ namespace NWebsec.HttpHeaders
         {
             headerSetter = new HttpHeaderSetter();
             cspHelper = new CspOverrideHelper();
+            xRobotsValidator = new XRobotsTagValidator();
         }
 
         internal HttpHeaderHelper(HttpHeaderSecurityConfigurationSection config)
         {
             mockConfig = config;
             cspHelper = new CspOverrideHelper();
+            xRobotsValidator = new XRobotsTagValidator();
         }
 
         internal void SetHeaders(HttpContextBase context)
@@ -86,6 +90,7 @@ namespace NWebsec.HttpHeaders
 
         public void SetXRobotsTagHeaderOverride(HttpContextBase context, XRobotsTagConfigurationElement setXRobotsTagHeaderConfig)
         {
+            xRobotsValidator.Validate(setXRobotsTagHeaderConfig);
             var headerList = GetHeaderListFromContext(context);
             const string headerKey = SetXRobotsTagHeadersKey;
 

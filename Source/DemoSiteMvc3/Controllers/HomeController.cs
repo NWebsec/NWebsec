@@ -24,7 +24,7 @@ namespace DemoSiteMvc3.Controllers
     {
 
         [Csp(XWebKitCspHeader = true)]
-        [CspScriptSrc(None = Source.Enable )]
+        [CspScriptSrc(None = Source.Enable)]
         [CspDefaultSrc(Self = Source.Enable)]
         //[CspStyleSrc(UnsafeInline = true,Self = true)]
         //[CspConnectSrc(None = true)]
@@ -45,6 +45,7 @@ namespace DemoSiteMvc3.Controllers
         //[CspImgSrcReportOnly(None = true)]
         //[CspMediaSrcReportOnly(None = true)]
         //[CspObjectSrcReportOnly(None = true)]
+        [XRobotsTag(NoIndex = true)]
         public ActionResult Index()
         {
             return View("Index");
@@ -52,6 +53,7 @@ namespace DemoSiteMvc3.Controllers
 
         //[XContentSecurityPolicy("default-src", "'self' nwebsec.codeplex.com")]
         [SetNoCacheHttpHeaders]
+        [XRobotsTag]
         public ActionResult Index2()
         {
             return View("Index");

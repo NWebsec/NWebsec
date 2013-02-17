@@ -13,13 +13,16 @@ namespace NWebsec.Mvc.HttpHeaders
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, Inherited = true, AllowMultiple = false)]
     public class SetNoCacheHttpHeadersAttribute : ActionFilterAttribute
     {
-        private HttpHeaderHelper headerHelper;
+        private readonly HttpHeaderHelper headerHelper;
 
         /// <summary>
         /// Gets of sets whether cache headers should be included in the response to prevent browser caching. The default is true.
         /// </summary>
         public bool Enabled { get; set; }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SetNoCacheHttpHeadersAttribute"/> class
+        /// </summary>
         public SetNoCacheHttpHeadersAttribute()
         {
             Enabled = true;

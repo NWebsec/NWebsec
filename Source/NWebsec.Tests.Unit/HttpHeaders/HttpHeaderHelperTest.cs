@@ -96,5 +96,15 @@ namespace NWebsec.Tests.Unit.HttpHeaders
 
             Assert.AreSame(configOverride, headerHelper.GetSuppressVersionHeadersWithOverride(mockContext));
         }
+
+        [Test]
+        public void GetXRobotsTagWithOverride_ConfigOverriden_ReturnsOverrideElement()
+        {
+            var configOverride = new XRobotsTagConfigurationElement { Enabled = true };
+
+            headerHelper.SetXRobotsTagHeaderOverride(mockContext, configOverride);
+
+            Assert.AreSame(configOverride, headerHelper.GetXRobotsTagHeaderWithOverride(mockContext));
+        }
     }
 }
