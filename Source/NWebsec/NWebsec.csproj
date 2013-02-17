@@ -80,10 +80,15 @@
     <Compile Include="Modules\Configuration\Csp\CspSourcesElementCollection.cs" />
     <Compile Include="Modules\Configuration\Csp\Validation\ReportUriValidatorAttribute.cs" />
     <Compile Include="Modules\Configuration\Csp\Validation\CspDirectiveBaseConfigurationElementValidatorAttribute.cs" />
+    <Compile Include="Modules\Configuration\HstsConfigurationElement.cs" />
     <Compile Include="Modules\Configuration\HttpHeaderSecurityConfigurationSection.cs" />
     <Compile Include="Modules\Configuration\SecurityHttpHeadersConfigurationElement.cs" />
     <Compile Include="Modules\Configuration\Csp\Validation\CspDirectiveBaseConfigurationElementValidator.cs" />
+    <Compile Include="Modules\Configuration\SimpleBooleanConfigurationElement.cs" />
     <Compile Include="Modules\Configuration\SuppressVersionHeadersConfigurationElement.cs" />
+    <Compile Include="Modules\Configuration\XFrameOptionsConfigurationElement.cs" />
+    <Compile Include="Modules\Configuration\XRobotsTagConfigurationElement.cs" />
+    <Compile Include="Modules\Configuration\XXssProtectionConfigurationElement.cs" />
     <Compile Include="Modules\HttpHeaderSecurityModule.cs" />
     <Compile Include="Modules\Configuration\Csp\CspConfigurationElement.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

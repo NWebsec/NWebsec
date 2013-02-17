@@ -50,7 +50,7 @@ namespace NWebsec.Modules
             var app = (HttpApplication)sender;
             var context = new HttpContextWrapper(app.Context);
 
-            headerHelper.FixHeaders(context);
+            headerHelper.SetHeaders(context);
         }
 
         public delegate void CspViolationReportEventHandler(object sender, CspViolationReportEventArgs e);

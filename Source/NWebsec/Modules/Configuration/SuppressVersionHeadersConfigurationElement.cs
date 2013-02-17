@@ -10,7 +10,6 @@ namespace NWebsec.Modules.Configuration
         [ConfigurationProperty("enabled", IsRequired = false, DefaultValue = false)]
         public bool Enabled
         {
-
             get
             {
                 return (bool)this["enabled"];
@@ -19,13 +18,11 @@ namespace NWebsec.Modules.Configuration
             {
                 this["enabled"] = value;
             }
-
         }
 
         [ConfigurationProperty("serverHeader", IsRequired = false, DefaultValue = "")]
         public String ServerHeader
         {
-
             get
             {
                 return (String)this["serverHeader"];
@@ -34,7 +31,6 @@ namespace NWebsec.Modules.Configuration
             {
                 this["serverHeader"] = value;
             }
-
         }
     }
 }

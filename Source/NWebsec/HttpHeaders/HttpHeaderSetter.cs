@@ -51,6 +51,25 @@ namespace NWebsec.HttpHeaders
             response.AddHeader("Pragma", "no-cache");
         }
 
+        public void AddXRobotsTagHeader(HttpResponseBase response, XRobotsTagConfigurationElement xRobotsTagConfig)
+        {
+            if (!xRobotsTagConfig.Enabled) return;
+            
+            var sb = new StringBuilder();
+            sb.Append(xRobotsTagConfig.NoIndex ? "noindex, " : String.Empty);
+            sb.Append(xRobotsTagConfig.NoFollow ? "nofollow, " : String.Empty);
+            sb.Append(xRobotsTagConfig.NoSnippet && !xRobotsTagConfig.NoIndex ? "nosnippet, " : String.Empty);
+            sb.Append(xRobotsTagConfig.NoArchive && !xRobotsTagConfig.NoIndex ? "noarchive, " : String.Empty);
+            sb.Append(xRobotsTagConfig.NoOdp && !xRobotsTagConfig.NoIndex ? "noodp, " : String.Empty);
+            sb.Append(xRobotsTagConfig.NoTranslate && !xRobotsTagConfig.NoIndex ? "notranslate, " : String.Empty);
+            sb.Append(xRobotsTagConfig.NoImageIndex ? "noimageindex" : String.Empty);
+            var value = sb.ToString().TrimEnd(new[] {' ', ','});
+            
+            if (value.Length == 0) return;
+            
+            response.AddHeader(HttpHeadersConstants.XRobotsTagHeader, value);
+        }
+
         internal void AddXFrameoptionsHeader(HttpResponseBase response, XFrameOptionsConfigurationElement xFrameOptionsConfig)
         {
 

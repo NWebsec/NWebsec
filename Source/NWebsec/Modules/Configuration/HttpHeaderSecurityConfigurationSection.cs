@@ -9,7 +9,6 @@ namespace NWebsec.Modules.Configuration
         [ConfigurationProperty("setNoCacheHttpHeaders", IsRequired = true)]
         public SimpleBooleanConfigurationElement NoCacheHttpHeaders
         {
-
             get
             {
                 return (SimpleBooleanConfigurationElement)this["setNoCacheHttpHeaders"];
@@ -18,13 +17,11 @@ namespace NWebsec.Modules.Configuration
             {
                 this["setNoCacheHttpHeaders"] = value;
             }
-
         }
 
         [ConfigurationProperty("suppressVersionHttpHeaders", IsRequired = true)]
         public SuppressVersionHeadersConfigurationElement SuppressVersionHeaders
         {
-
             get
             {
                 return (SuppressVersionHeadersConfigurationElement)this["suppressVersionHttpHeaders"];
@@ -33,13 +30,24 @@ namespace NWebsec.Modules.Configuration
             {
                 this["suppressVersionHttpHeaders"] = value;
             }
+        }
 
+        [ConfigurationProperty("x-Robots-Tag", IsRequired = true)]
+        public XRobotsTagConfigurationElement XRobotsTag
+        {
+            get
+            {
+                return (XRobotsTagConfigurationElement)this["x-Robots-Tag"];
+            }
+            set
+            {
+                this["x-Robots-Tag"] = value;
+            }
         }
 
         [ConfigurationProperty("securityHttpHeaders", IsRequired = true)]
         public SecurityHttpHeadersConfigurationElement SecurityHttpHeaders
         {
-
             get
             {
                 return (SecurityHttpHeadersConfigurationElement)this["securityHttpHeaders"];
@@ -48,12 +56,10 @@ namespace NWebsec.Modules.Configuration
             {
                 this["securityHttpHeaders"] = value;
             }
-
         }
 
         protected override bool OnDeserializeUnrecognizedAttribute(string name, string value)
         {
-            var baseResult= base.OnDeserializeUnrecognizedAttribute(name, value);
             switch (name)
             {
                 case "xmlns":
@@ -63,8 +69,6 @@ namespace NWebsec.Modules.Configuration
                 default:
                     return base.OnDeserializeUnrecognizedAttribute(name, value);
             }
-            
         }
-        
     }
 }

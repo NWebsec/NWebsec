@@ -113,6 +113,135 @@ namespace NWebsec.Tests.Unit.HttpHeaders
         }
 
         [Test]
+        public void AddXRobotsTagHeader_EnabledInConfigWithNoIndex_AddsXRobotsTagHeader()
+        {
+            var xRobotsTag = new XRobotsTagConfigurationElement { Enabled = true, NoIndex = true };
+
+            headerSetter.AddXRobotsTagHeader(mockResponse.Object, xRobotsTag);
+
+            mockResponse.Verify(x => x.AddHeader("X-Robots-Tag", "noindex"), Times.Once());
+        }
+
+        [Test]
+        public void AddXRobotsTagHeader_EnabledInConfigWithNoFollow_AddsXRobotsTagHeader()
+        {
+            var xRobotsTag = new XRobotsTagConfigurationElement { Enabled = true, NoFollow = true };
+
+            headerSetter.AddXRobotsTagHeader(mockResponse.Object, xRobotsTag);
+
+            mockResponse.Verify(x => x.AddHeader("X-Robots-Tag", "nofollow"), Times.Once());
+        }
+
+        [Test]
+        public void AddXRobotsTagHeader_EnabledInConfigWithNoSnippet_AddsXRobotsTagHeader()
+        {
+            var xRobotsTag = new XRobotsTagConfigurationElement { Enabled = true, NoSnippet = true };
+
+            headerSetter.AddXRobotsTagHeader(mockResponse.Object, xRobotsTag);
+
+            mockResponse.Verify(x => x.AddHeader("X-Robots-Tag", "nosnippet"), Times.Once());
+        }
+
+        [Test]
+        public void AddXRobotsTagHeader_EnabledInConfigWithNoArchive_AddsXRobotsTagHeader()
+        {
+            var xRobotsTag = new XRobotsTagConfigurationElement { Enabled = true, NoArchive = true };
+
+            headerSetter.AddXRobotsTagHeader(mockResponse.Object, xRobotsTag);
+
+            mockResponse.Verify(x => x.AddHeader("X-Robots-Tag", "noarchive"), Times.Once());
+        }
+
+        [Test]
+        public void AddXRobotsTagHeader_EnabledInConfigWithNoOdp_AddsXRobotsTagHeader()
+        {
+            var xRobotsTag = new XRobotsTagConfigurationElement { Enabled = true, NoOdp = true };
+
+            headerSetter.AddXRobotsTagHeader(mockResponse.Object, xRobotsTag);
+
+            mockResponse.Verify(x => x.AddHeader("X-Robots-Tag", "noodp"), Times.Once());
+        }
+
+        [Test]
+        public void AddXRobotsTagHeader_EnabledInConfigWithNoTranslate_AddsXRobotsTagHeader()
+        {
+            var xRobotsTag = new XRobotsTagConfigurationElement { Enabled = true, NoTranslate = true };
+
+            headerSetter.AddXRobotsTagHeader(mockResponse.Object, xRobotsTag);
+
+            mockResponse.Verify(x => x.AddHeader("X-Robots-Tag", "notranslate"), Times.Once());
+        }
+
+        [Test]
+        public void AddXRobotsTagHeader_EnabledInConfigWithNoImageIndex_AddsXRobotsTagHeader()
+        {
+            var xRobotsTag = new XRobotsTagConfigurationElement { Enabled = true, NoImageIndex = true };
+
+            headerSetter.AddXRobotsTagHeader(mockResponse.Object, xRobotsTag);
+
+            mockResponse.Verify(x => x.AddHeader("X-Robots-Tag", "noimageindex"), Times.Once());
+        }
+
+        [Test]
+        public void AddXRobotsTagHeader_EnabledInConfigWithNoIndexNoSnippet_AddsXRobotsTagHeaderIndexOnly()
+        {
+            var xRobotsTag = new XRobotsTagConfigurationElement { Enabled = true, NoIndex = true, NoSnippet = true };
+
+            headerSetter.AddXRobotsTagHeader(mockResponse.Object, xRobotsTag);
+
+            mockResponse.Verify(x => x.AddHeader("X-Robots-Tag", "noindex"), Times.Once());
+        }
+
+        [Test]
+        public void AddXRobotsTagHeader_EnabledInConfigWithNoIndexNoArchive_AddsXRobotsTagHeaderNoIndexOnly()
+        {
+            var xRobotsTag = new XRobotsTagConfigurationElement { Enabled = true, NoIndex = true, NoArchive = true };
+
+            headerSetter.AddXRobotsTagHeader(mockResponse.Object, xRobotsTag);
+
+            mockResponse.Verify(x => x.AddHeader("X-Robots-Tag", "noindex"), Times.Once());
+        }
+
+        [Test]
+        public void AddXRobotsTagHeader_EnabledInConfigWithNoIndexNoOdp_AddsXRobotsTagHeaderNoIndexOnly()
+        {
+            var xRobotsTag = new XRobotsTagConfigurationElement { Enabled = true, NoIndex = true, NoOdp = true };
+
+            headerSetter.AddXRobotsTagHeader(mockResponse.Object, xRobotsTag);
+
+            mockResponse.Verify(x => x.AddHeader("X-Robots-Tag", "noindex"), Times.Once());
+        }
+
+        [Test]
+        public void AddXRobotsTagHeader_EnabledInConfigWithNoIndexNoTranslate_AddsXRobotsTagHeaderNoIndexOnly()
+        {
+            var xRobotsTag = new XRobotsTagConfigurationElement { Enabled = true, NoIndex = true, NoTranslate = true };
+
+            headerSetter.AddXRobotsTagHeader(mockResponse.Object, xRobotsTag);
+
+            mockResponse.Verify(x => x.AddHeader("X-Robots-Tag", "noindex"), Times.Once());
+        }
+        [Test]
+        public void AddXRobotsTagHeader_EnabledInConfigWithMultipleDirectives_AddsXRobotsTagHeaderWithDirectives()
+        {
+            var xRobotsTag = new XRobotsTagConfigurationElement { Enabled = true, NoIndex = true, NoFollow = true };
+
+            headerSetter.AddXRobotsTagHeader(mockResponse.Object, xRobotsTag);
+
+            mockResponse.Verify(x => x.AddHeader("X-Robots-Tag", "noindex, nofollow"), Times.Once());
+        }
+
+        [Test]
+        public void AddXRobotsTagHeader_DisabledInConfig_DoesNotAddXRobotsTagHeader()
+        {
+            var xRobotsTag = new XRobotsTagConfigurationElement { Enabled = false, NoIndex = true };
+
+            headerSetter.AddXRobotsTagHeader(mockResponse.Object, xRobotsTag);
+
+            mockResponse.Verify(x => x.AddHeader(It.IsAny<String>(), It.IsAny<String>()), Times.Never());
+        }
+
+        [Test]
         public void AddXFrameoptionsHeader_DisabledInConfig_DoesNotAddXFrameOptionsHeader()
         {
             var xFramesConfig = new XFrameOptionsConfigurationElement { Policy = XFrameOptionsPolicy.Disabled };
