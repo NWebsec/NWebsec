@@ -100,7 +100,7 @@ namespace NWebsec.Tests.Unit.HttpHeaders
         [Test]
         public void GetXRobotsTagWithOverride_ConfigOverriden_ReturnsOverrideElement()
         {
-            var configOverride = new XRobotsTagConfigurationElement { Enabled = true };
+            var configOverride = new XRobotsTagConfigurationElement { Enabled = true, NoIndex = true };
 
             headerHelper.SetXRobotsTagHeaderOverride(mockContext, configOverride);
 
