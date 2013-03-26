@@ -82,10 +82,16 @@
     <Compile Include="Modules\Configuration\Csp\Validation\CspDirectiveBaseConfigurationElementValidatorAttribute.cs" />
     <Compile Include="Modules\Configuration\HstsConfigurationElement.cs" />
     <Compile Include="Modules\Configuration\HttpHeaderSecurityConfigurationSection.cs" />
+    <Compile Include="Modules\Configuration\RedirectUriConfigurationElement.cs" />
+    <Compile Include="Modules\Configuration\RedirectUriElementCollection.cs" />
+    <Compile Include="Modules\Configuration\Validation\RedirectUriValidator.cs" />
+    <Compile Include="Modules\Configuration\Validation\RedirectUriValidatorAttribute.cs" />
     <Compile Include="Modules\Configuration\SecurityHttpHeadersConfigurationElement.cs" />
     <Compile Include="Modules\Configuration\Csp\Validation\CspDirectiveBaseConfigurationElementValidator.cs" />
     <Compile Include="Modules\Configuration\SimpleBooleanConfigurationElement.cs" />
     <Compile Include="Modules\Configuration\SuppressVersionHeadersConfigurationElement.cs" />
+    <Compile Include="Modules\Configuration\ValidateRedirectsConfigurationElement.cs" />
+    <Compile Include="Modules\Configuration\Validation\ValidateRedirectConfigurationException.cs" />
     <Compile Include="Modules\Configuration\Validation\XRobotsTagValidator.cs" />
     <Compile Include="Modules\Configuration\Validation\XRobotsTagValidatorAttribute.cs" />
     <Compile Include="Modules\Configuration\XFrameOptionsConfigurationElement.cs" />

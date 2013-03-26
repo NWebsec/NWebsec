@@ -72,6 +72,7 @@
     <Compile Include="HttpHeaders\HttpHeaderSetterTest.cs" />
     <Compile Include="Modules\Configuration\Csp\CspSourceValidatorTests.cs" />
     <Compile Include="Modules\Configuration\Csp\ReportUriValidatorTests.cs" />
+    <Compile Include="Modules\Configuration\RedirectUriValidatorTest.cs" />
     <Compile Include="Modules\Configuration\XRobotsTagValidatorTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Modules\Configuration\Csp\CspDirectiveBaseConfigurationElementValidatorTests.cs" />

@@ -5,9 +5,9 @@ using System.Configuration;
 
 namespace NWebsec.Modules.Configuration.Validation
 {
-    class XRobotsTagValidator: ConfigurationValidatorBase
+    class XRobotsTagValidator : ConfigurationValidatorBase
     {
-        
+
         public override bool CanValidate(Type type)
         {
             return type == typeof(XRobotsTagConfigurationElement);
@@ -15,7 +15,7 @@ namespace NWebsec.Modules.Configuration.Validation
 
         public override void Validate(object value)
         {
-            var xRobotsConfig = (XRobotsTagConfigurationElement) value;
+            var xRobotsConfig = (XRobotsTagConfigurationElement)value;
             if (!xRobotsConfig.Enabled) return;
 
             if (xRobotsConfig.NoArchive ||

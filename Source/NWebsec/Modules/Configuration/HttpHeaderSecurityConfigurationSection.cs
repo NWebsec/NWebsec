@@ -47,6 +47,19 @@ namespace NWebsec.Modules.Configuration
             }
         }
 
+        [ConfigurationProperty("validateRedirects", IsRequired = true)]
+        public ValidateRedirectsConfigurationElement ValidateRedirects
+        {
+            get
+            {
+                return (ValidateRedirectsConfigurationElement)this["validateRedirects"];
+            }
+            set
+            {
+                this["validateRedirects"] = value;
+            }
+        }
+
         [ConfigurationProperty("securityHttpHeaders", IsRequired = true)]
         public SecurityHttpHeadersConfigurationElement SecurityHttpHeaders
         {

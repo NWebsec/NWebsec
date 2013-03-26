@@ -126,6 +126,24 @@
             </xs:attribute>
           </xs:complexType>
         </xs:element>
+        <xs:element name="validateRedirects" minOccurs="0" maxOccurs="1">
+          <xs:annotation>
+            <xs:documentation>Specifies whether to validate redirects in the application. Redirects to relative URIs and
+            to the same scheme/host/port are allowed. Redirects to other destinations must be explicitly allowed through config.</xs:documentation>
+          </xs:annotation>
+          <xs:complexType>
+            <xs:choice minOccurs="0" maxOccurs="unbounded">
+              <xs:element name="add" type="RedirectUri" />
+              <xs:element name="remove" type="RedirectUri" />
+              <xs:element name="clear"/>
+            </xs:choice>
+            <xs:attribute name="enabled" type="simple_boolean" use="required">
+              <xs:annotation>
+                <xs:documentation>This attribute is required.</xs:documentation>
+              </xs:annotation>
+            </xs:attribute>
+          </xs:complexType>
+        </xs:element>
         <xs:element name="securityHttpHeaders" minOccurs="0" maxOccurs="1">
           <xs:annotation>
             <xs:documentation>Configures various security HTTP headers.</xs:documentation>
@@ -202,7 +220,6 @@
                   </xs:attribute>
                 </xs:complexType>
               </xs:element>
-
               <xs:element name="content-Security-Policy" minOccurs="0" maxOccurs="1">
                 <xs:annotation>
                   <xs:documentation>Configures the Content-Security-Policy header.</xs:documentation>
@@ -255,6 +272,16 @@
       </xs:all>
     </xs:complexType>
   </xs:element>
+  <xs:complexType name="RedirectUri">
+    <xs:attribute name="allowedUri" type="xs:string" use="required">
+      <xs:annotation>
+        <xs:documentation>
+          This attribute is required. Specifies a URI to where redirects are allowed. The URI must include scheme,
+          host and optionally port. Examples: https://www.nwebsec.com or http://www.nwebsec.com:81
+        </xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+  </xs:complexType>
   <xs:complexType name="cspSource">
     <xs:attribute name="source" type="xs:string" use="required">
       <xs:annotation>
