@@ -2,13 +2,12 @@
 
 using System;
 using NUnit.Framework;
-using NWebsec.Modules.Configuration;
 using NWebsec.Modules.Configuration.Validation;
 
 namespace NWebsec.Tests.Unit.Modules.Configuration
 {
     [TestFixture]
-    public class RedirectUriValidatorTest
+    public class RedirectUriValidatorTests
     {
         private RedirectUriValidator validator;
 

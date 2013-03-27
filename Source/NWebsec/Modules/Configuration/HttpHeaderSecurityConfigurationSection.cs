@@ -47,16 +47,16 @@ namespace NWebsec.Modules.Configuration
             }
         }
 
-        [ConfigurationProperty("validateRedirects", IsRequired = true)]
-        public ValidateRedirectsConfigurationElement ValidateRedirects
+        [ConfigurationProperty("redirectValidation", IsRequired = true)]
+        public RedirectValidationConfigurationElement RedirectValidation
         {
             get
             {
-                return (ValidateRedirectsConfigurationElement)this["validateRedirects"];
+                return (RedirectValidationConfigurationElement)this["redirectValidation"];
             }
             set
             {
-                this["validateRedirects"] = value;
+                this["redirectValidation"] = value;
             }
         }
 

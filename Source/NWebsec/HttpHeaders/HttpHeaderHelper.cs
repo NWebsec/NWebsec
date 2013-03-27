@@ -2,7 +2,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Configuration;
 using System.Web;
 using NWebsec.Csp;
 using NWebsec.Modules.Configuration;
@@ -38,11 +37,18 @@ namespace NWebsec.HttpHeaders
         private readonly HttpHeaderSetter headerSetter;
         private readonly HttpHeaderSecurityConfigurationSection mockConfig;
         private readonly XRobotsTagValidator xRobotsValidator;
+        private readonly ConfigHelper configHelper;
 
-        private HttpHeaderSecurityConfigurationSection BaseConfig { get { return mockConfig ?? GetConfig(); } }
+        private HttpHeaderSecurityConfigurationSection BaseConfig { get { return mockConfig ?? ConfigHelper.GetConfig(); } }
+
+        public ConfigHelper ConfigHelper
+        {
+            get { return configHelper; }
+        }
 
         public HttpHeaderHelper()
         {
+            configHelper = new ConfigHelper();
             headerSetter = new HttpHeaderSetter();
             cspHelper = new CspOverrideHelper();
             xRobotsValidator = new XRobotsTagValidator();
@@ -50,6 +56,7 @@ namespace NWebsec.HttpHeaders
 
         internal HttpHeaderHelper(HttpHeaderSecurityConfigurationSection config)
         {
+            configHelper = new ConfigHelper();
             mockConfig = config;
             cspHelper = new CspOverrideHelper();
             xRobotsValidator = new XRobotsTagValidator();
@@ -445,12 +452,5 @@ namespace NWebsec.HttpHeaders
                                  ? HttpHeadersConstants.XContentSecurityPolicyReportOnlyHeader
                                  : HttpHeadersConstants.XContentSecurityPolicyHeader);
         }
-
-        public static HttpHeaderSecurityConfigurationSection GetConfig()
-        {
-            return (HttpHeaderSecurityConfigurationSection)(ConfigurationManager.GetSection("nwebsec/httpHeaderSecurityModule")) ??
-             new HttpHeaderSecurityConfigurationSection();
-        }
-
     }
 }

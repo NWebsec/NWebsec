@@ -126,7 +126,7 @@
             </xs:attribute>
           </xs:complexType>
         </xs:element>
-        <xs:element name="validateRedirects" minOccurs="0" maxOccurs="1">
+        <xs:element name="redirectValidation" minOccurs="0" maxOccurs="1">
           <xs:annotation>
             <xs:documentation>Specifies whether to validate redirects in the application. Redirects to relative URIs and
             to the same scheme/host/port are allowed. Redirects to other destinations must be explicitly allowed through config.</xs:documentation>

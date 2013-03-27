@@ -4,7 +4,7 @@ using System.Configuration;
 
 namespace NWebsec.Modules.Configuration
 {
-    public class ValidateRedirectsConfigurationElement : ConfigurationElement
+    public class RedirectValidationConfigurationElement : ConfigurationElement
     {
         [ConfigurationProperty("enabled", IsRequired = false, DefaultValue = false)]
         public bool Enabled

@@ -12,17 +12,19 @@ namespace NWebsec.Modules
     {
         private readonly CspReportHelper cspReportHelper;
         private readonly HttpHeaderHelper headerHelper;
+        private RedirectValidationHelper redirectValidationHelper;
         public event CspViolationReportEventHandler CspViolationReported;
 
         public HttpHeaderSecurityModule()
         {
             cspReportHelper = new CspReportHelper();
             headerHelper = new HttpHeaderHelper();
+            redirectValidationHelper = new RedirectValidationHelper();
         }
 
         public void Init(HttpApplication app)
         {
-            var config = HttpHeaderHelper.GetConfig();
+            var config = ConfigHelper.GetConfig();
             if (config.SuppressVersionHeaders.Enabled && !HttpRuntime.UsingIntegratedPipeline)
             {
                 throw new ConfigurationErrorsException("NWebsec config error: suppressVersionHeaders can only be enabled when using IIS integrated pipeline mode.");
@@ -51,6 +53,7 @@ namespace NWebsec.Modules
             var context = new HttpContextWrapper(app.Context);
 
             headerHelper.SetHeaders(context);
+            redirectValidationHelper.ValidateIfRedirect(context);
         }
 
         public delegate void CspViolationReportEventHandler(object sender, CspViolationReportEventArgs e);

@@ -56,10 +56,12 @@
     <Compile Include="Csp\CspDirectiveUnsafeInlineOverride.cs" />
     <Compile Include="Csp\CspDirectiveUnsafeInlineUnsafeEvalOverride.cs" />
     <Compile Include="Csp\Source.cs" />
+    <Compile Include="HttpHeaders\ConfigHelper.cs" />
     <Compile Include="HttpHeaders\CspOverrideHelper.cs" />
     <Compile Include="HttpHeaders\HttpHeaderHelper.cs" />
     <Compile Include="HttpHeaders\HttpHeadersConstants.cs" />
     <Compile Include="HttpHeaders\HttpHeaderSetter.cs" />
+    <Compile Include="HttpHeaders\RedirectValidationHelper.cs" />
     <Compile Include="HttpHeaders\XFrameOptionsPolicy.cs" />
     <Compile Include="HttpHeaders\XXssProtectionPolicy.cs" />
     <Compile Include="Modules\Configuration\Csp\CspDirectiveBaseConfigurationElement.cs" />
@@ -90,7 +92,7 @@
     <Compile Include="Modules\Configuration\Csp\Validation\CspDirectiveBaseConfigurationElementValidator.cs" />
     <Compile Include="Modules\Configuration\SimpleBooleanConfigurationElement.cs" />
     <Compile Include="Modules\Configuration\SuppressVersionHeadersConfigurationElement.cs" />
-    <Compile Include="Modules\Configuration\ValidateRedirectsConfigurationElement.cs" />
+    <Compile Include="Modules\Configuration\RedirectValidationConfigurationElement.cs" />
     <Compile Include="Modules\Configuration\Validation\ValidateRedirectConfigurationException.cs" />
     <Compile Include="Modules\Configuration\Validation\XRobotsTagValidator.cs" />
     <Compile Include="Modules\Configuration\Validation\XRobotsTagValidatorAttribute.cs" />

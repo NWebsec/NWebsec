@@ -7,7 +7,7 @@ using NWebsec.Modules.Configuration.Validation;
 namespace NWebsec.Tests.Unit.Modules.Configuration
 {
     [TestFixture]
-    public class XRobotsTagValidatorTest
+    public class XRobotsTagValidatorTests
     {
         private XRobotsTagValidator validator;
 
