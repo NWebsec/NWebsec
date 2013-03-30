@@ -83,6 +83,18 @@ namespace NWebsec.Tests.Unit.HttpHeaders
         }
 
         [Test]
+        public void ValidateIfRedirect_EnabledAndRelativeRedirectWithQueryString_NoException()
+        {
+            var response = Mock.Get(context.Response);
+            response.Setup(r => r.StatusCode).Returns(302);
+            response.Setup(r => r.RedirectLocation).Returns("/Some/Interesting/Content?foo=bar");
+            var config = new RedirectValidationConfigurationElement { Enabled = true };
+            var validator = new RedirectValidationHelper(config);
+
+            Assert.DoesNotThrow(() => validator.ValidateIfRedirect(context));
+        }
+
+        [Test]
         public void ValidateIfRedirect_EnabledAndAbsoluteRedirectToSameSite_NoException()
         {
             var response = Mock.Get(context.Response);
@@ -95,13 +107,77 @@ namespace NWebsec.Tests.Unit.HttpHeaders
         }
 
         [Test]
+        public void ValidateIfRedirect_EnabledAndAbsoluteRedirectToSameSiteWithQueryString_NoException()
+        {
+            var response = Mock.Get(context.Response);
+            response.Setup(r => r.StatusCode).Returns(302);
+            response.Setup(r => r.RedirectLocation).Returns("https://www.nwebsec.com/Something/Worth/Seeing?foo=bar");
+            var config = new RedirectValidationConfigurationElement { Enabled = true };
+            var validator = new RedirectValidationHelper(config);
+
+            Assert.DoesNotThrow(() => validator.ValidateIfRedirect(context));
+        }
+
+        [Test]
+        public void ValidateIfRedirect_EnabledAndAbsoluteRedirectToSubPath_NoException()
+        {
+            var response = Mock.Get(context.Response);
+            response.Setup(r => r.StatusCode).Returns(302);
+            response.Setup(r => r.RedirectLocation).Returns("https://www.expectedsite.com/Kittens");
+            var config = new RedirectValidationConfigurationElement { Enabled = true };
+            config.RedirectUris.Add(new RedirectUriConfigurationElement {RedirectUri = new Uri("https://www.expectedsite.com")});
+            var validator = new RedirectValidationHelper(config);
+
+            Assert.DoesNotThrow(() => validator.ValidateIfRedirect(context));
+        }
+
+        [Test]
+        public void ValidateIfRedirect_EnabledAndAbsoluteRedirectToSubPathWithQueryString_NoException()
+        {
+            var response = Mock.Get(context.Response);
+            response.Setup(r => r.StatusCode).Returns(302);
+            response.Setup(r => r.RedirectLocation).Returns("https://www.expectedsite.com/Kittens?foo=bar");
+            var config = new RedirectValidationConfigurationElement { Enabled = true };
+            config.RedirectUris.Add(new RedirectUriConfigurationElement { RedirectUri = new Uri("https://www.expectedsite.com") });
+            var validator = new RedirectValidationHelper(config);
+
+            Assert.DoesNotThrow(() => validator.ValidateIfRedirect(context));
+        }
+
+        [Test]
+        public void ValidateIfRedirect_EnabledAndAbsoluteRedirectToParentPath_ThrowsException()
+        {
+            var response = Mock.Get(context.Response);
+            response.Setup(r => r.StatusCode).Returns(302);
+            response.Setup(r => r.RedirectLocation).Returns("https://www.expectedsite.com/");
+            var config = new RedirectValidationConfigurationElement { Enabled = true };
+            config.RedirectUris.Add(new RedirectUriConfigurationElement { RedirectUri = new Uri("https://www.expectedsite.com/Kittens") });
+            var validator = new RedirectValidationHelper(config);
+
+            Assert.Throws<RedirectValidationException>(() => validator.ValidateIfRedirect(context));
+        }
+
+        [Test]
+        public void ValidateIfRedirect_EnabledAndAbsoluteRedirectToParentPathWithQueryString_ThrowsException()
+        {
+            var response = Mock.Get(context.Response);
+            response.Setup(r => r.StatusCode).Returns(302);
+            response.Setup(r => r.RedirectLocation).Returns("https://www.expectedsite.com/?foo=bar");
+            var config = new RedirectValidationConfigurationElement { Enabled = true };
+            config.RedirectUris.Add(new RedirectUriConfigurationElement { RedirectUri = new Uri("https://www.expectedsite.com/Kittens") });
+            var validator = new RedirectValidationHelper(config);
+
+            Assert.Throws<RedirectValidationException>(() => validator.ValidateIfRedirect(context));
+        }
+
+        [Test]
         public void ValidateIfRedirect_EnabledAndAbsoluteRedirectToWhiteListedSite_NoException()
         {
             var response = Mock.Get(context.Response);
             response.Setup(r => r.StatusCode).Returns(302);
             response.Setup(r => r.RedirectLocation).Returns("https://www.expectedsite.com/Kittens");
             var config = new RedirectValidationConfigurationElement { Enabled = true };
-            config.RedirectUris.Add(new RedirectUriConfigurationElement() { RedirectUri = new Uri("https://www.expectedsite.com") });
+            config.RedirectUris.Add(new RedirectUriConfigurationElement { RedirectUri = new Uri("https://www.expectedsite.com") });
             var validator = new RedirectValidationHelper(config);
 
             Assert.DoesNotThrow(() => validator.ValidateIfRedirect(context));

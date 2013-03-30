@@ -33,17 +33,17 @@ namespace NWebsec.HttpHeaders
             var requestUri = context.Request.Url;
             if (redirectUri.GetLeftPart(UriPartial.Authority).Equals(requestUri.GetLeftPart(UriPartial.Authority))) return;
 
-            if (IsWhitelistedUri(redirectUri)) return;
+            if (IsWhitelistedDestination(redirectUri)) return;
 
             throw new RedirectValidationException("A potentially dangerous redirect was detected. Add it to the configured whitelist if the redirect was intended. Offending redirect: " + redirectUri);
         }
 
-        private bool IsWhitelistedUri(Uri redirectUri)
+        private bool IsWhitelistedDestination(Uri redirectUri)
         {
-            var authorityPart = redirectUri.GetLeftPart(UriPartial.Authority);
+            var authorityAndPath = redirectUri.GetLeftPart(UriPartial.Path);
 
             return Config.RedirectUris.OfType<RedirectUriConfigurationElement>()
-                  .Any(c => c.RedirectUri.GetLeftPart(UriPartial.Authority).Equals(authorityPart));
+                  .Any(c => authorityAndPath.StartsWith(c.RedirectUri.GetLeftPart(UriPartial.Path), StringComparison.InvariantCultureIgnoreCase));
         }
 
         private bool IsRedirectResponse(HttpResponseBase response)

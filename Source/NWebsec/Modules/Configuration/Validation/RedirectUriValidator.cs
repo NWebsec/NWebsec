@@ -18,13 +18,13 @@ namespace NWebsec.Modules.Configuration.Validation
             var uri = (Uri) value;
             if (!uri.IsAbsoluteUri)
             {
-                throw new ValidateRedirectConfigurationException("You must specify an absolute URI. Got: " + uri);    
+                throw new RedirectValidationConfigurationException("You must specify an absolute URI. Got: " + uri);    
             }
-            if (!uri.PathAndQuery.Equals("/"))
+
+            if (! String.IsNullOrEmpty(uri.Query))
             {
-                throw new ValidateRedirectConfigurationException("You must specify an absolute URI without path or query. Got: " + uri);    
+                throw new RedirectValidationConfigurationException("You must specify an absolute URI without a query string. Got: " + uri);    
             }
-            
         }
     }
 }

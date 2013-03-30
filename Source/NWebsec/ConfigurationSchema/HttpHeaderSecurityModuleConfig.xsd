@@ -273,11 +273,12 @@
     </xs:complexType>
   </xs:element>
   <xs:complexType name="RedirectUri">
-    <xs:attribute name="allowedUri" type="xs:string" use="required">
+    <xs:attribute name="allowedDestination" type="xs:string" use="required">
       <xs:annotation>
         <xs:documentation>
-          This attribute is required. Specifies a URI to where redirects are allowed. The URI must include scheme,
-          host and optionally port. Examples: https://www.nwebsec.com or http://www.nwebsec.com:81
+          This attribute is required. Specifies a base URI for where redirects are allowed, redirects to sub paths of the URI are also allowed. The URI must include scheme,
+          host and optionally port and a path. Example: https://www.nwebsec.com/somepath allows redirects to https://www.nwebsec.com/somepath and
+          https://www.nwebsec.com/somepath/subpath but not https://www.nwebsec.com/
         </xs:documentation>
       </xs:annotation>
     </xs:attribute>

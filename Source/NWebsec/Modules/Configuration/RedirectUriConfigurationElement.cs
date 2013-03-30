@@ -8,13 +8,13 @@ namespace NWebsec.Modules.Configuration
 {
     public class RedirectUriConfigurationElement : ConfigurationElement
     {
-        [ConfigurationProperty("allowedUri", IsKey = true, IsRequired = true)]
+        [ConfigurationProperty("allowedDestination", IsKey = true, IsRequired = true)]
         [RedirectUriValidator]
         public Uri RedirectUri
         {
 
-            get { return (Uri)this["allowedUri"]; }
-            set { this["allowedUri"] = value; }
+            get { return (Uri)this["allowedDestination"]; }
+            set { this["allowedDestination"] = value; }
 
         }
     }
