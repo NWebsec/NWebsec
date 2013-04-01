@@ -35,7 +35,7 @@ namespace NWebsec.HttpHeaders
 
             if (IsWhitelistedDestination(redirectUri)) return;
 
-            throw new RedirectValidationException("A potentially dangerous redirect was detected. Add it to the configured whitelist if the redirect was intended. Offending redirect: " + redirectUri);
+            throw new RedirectValidationException("A potentially dangerous redirect was detected. Add the destination to the whitelist in configuration if the redirect was intended. Offending redirect: " + redirectUri);
         }
 
         private bool IsWhitelistedDestination(Uri redirectUri)
