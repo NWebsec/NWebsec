@@ -39,7 +39,7 @@
       </xs:enumeration>
       <xs:enumeration value="Disabled">
         <xs:annotation>
-          <xs:documentation>The X-Xss-Protection header should be set in the HTTP response, explicitly disabling the IE XSS filter.</xs:documentation>
+          <xs:documentation>The X-Xss-Protection header should not be set in the HTTP response.</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
     </xs:restriction>
@@ -74,7 +74,72 @@
             </xs:attribute>
             <xs:attribute name="serverHeader" type="xs:string" use="optional">
               <xs:annotation>
-                <xs:documentation>Optional. Specifies a custom value for the Server header. The default is "webserver 1.0"</xs:documentation>
+                <xs:documentation>Optional. Specifies a custom value for the Server header. The default is "Webserver/1.0"</xs:documentation>
+              </xs:annotation>
+            </xs:attribute>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="x-Robots-Tag" minOccurs="0" maxOccurs="1">
+          <xs:annotation>
+            <xs:documentation>Specifies whether the X-Robots-Tag header should be set in the HTTP responses.</xs:documentation>
+          </xs:annotation>
+          <xs:complexType>
+            <xs:attribute name="enabled" type="simple_boolean" use="required">
+              <xs:annotation>
+                <xs:documentation>This attribute is required.</xs:documentation>
+              </xs:annotation>
+            </xs:attribute>
+            <xs:attribute name="noIndex" type="simple_boolean" use="optional">
+              <xs:annotation>
+                <xs:documentation>Instructs search engines to not index a page.</xs:documentation>
+              </xs:annotation>
+            </xs:attribute>
+            <xs:attribute name="noFollow" type="simple_boolean" use="optional">
+              <xs:annotation>
+                <xs:documentation>Instructs search engines to not follow links on a page.</xs:documentation>
+              </xs:annotation>
+            </xs:attribute>
+            <xs:attribute name="noSnippet" type="simple_boolean" use="optional">
+              <xs:annotation>
+                <xs:documentation>Instructs search engines to not display a snippet for a page in search results.</xs:documentation>
+              </xs:annotation>
+            </xs:attribute>
+            <xs:attribute name="noArchive" type="simple_boolean" use="optional">
+              <xs:annotation>
+                <xs:documentation>Instructs search engines to not offer a cached version of a page in search results.</xs:documentation>
+              </xs:annotation>
+            </xs:attribute>
+            <xs:attribute name="noOdp" type="simple_boolean" use="optional">
+              <xs:annotation>
+                <xs:documentation>Instructs search engines to not use information from the Open Directory Project (ODP) for a page's title or snippet.</xs:documentation>
+              </xs:annotation>
+            </xs:attribute>
+            <xs:attribute name="noTranslate " type="simple_boolean" use="optional">
+              <xs:annotation>
+                <xs:documentation>Instructs search engines to not offer translation of a page in search results (Google only).</xs:documentation>
+              </xs:annotation>
+            </xs:attribute>
+            <xs:attribute name="noImageIndex" type="simple_boolean" use="optional">
+              <xs:annotation>
+                <xs:documentation>Instructs search engines to not index images on the page (Google only).</xs:documentation>
+              </xs:annotation>
+            </xs:attribute>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="redirectValidation" minOccurs="0" maxOccurs="1">
+          <xs:annotation>
+            <xs:documentation>Specifies whether to validate redirects in the application. Redirects to relative URIs and
+            to the same scheme/host/port are allowed. Redirects to other destinations must be explicitly allowed through config.</xs:documentation>
+          </xs:annotation>
+          <xs:complexType>
+            <xs:choice minOccurs="0" maxOccurs="unbounded">
+              <xs:element name="add" type="RedirectUri" />
+              <xs:element name="remove" type="RedirectUri" />
+              <xs:element name="clear"/>
+            </xs:choice>
+            <xs:attribute name="enabled" type="simple_boolean" use="required">
+              <xs:annotation>
+                <xs:documentation>This attribute is required.</xs:documentation>
               </xs:annotation>
             </xs:attribute>
           </xs:complexType>
@@ -155,7 +220,6 @@
                   </xs:attribute>
                 </xs:complexType>
               </xs:element>
-
               <xs:element name="content-Security-Policy" minOccurs="0" maxOccurs="1">
                 <xs:annotation>
                   <xs:documentation>Configures the Content-Security-Policy header.</xs:documentation>
@@ -208,6 +272,17 @@
       </xs:all>
     </xs:complexType>
   </xs:element>
+  <xs:complexType name="RedirectUri">
+    <xs:attribute name="allowedDestination" type="xs:string" use="required">
+      <xs:annotation>
+        <xs:documentation>
+          This attribute is required. Specifies a base URI for where redirects are allowed, redirects to sub paths of the URI are also allowed. The URI must include scheme,
+          host and optionally port and a path. Example: https://www.nwebsec.com/somepath allows redirects to https://www.nwebsec.com/somepath and
+          https://www.nwebsec.com/somepath/subpath but not https://www.nwebsec.com/
+        </xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+  </xs:complexType>
   <xs:complexType name="cspSource">
     <xs:attribute name="source" type="xs:string" use="required">
       <xs:annotation>

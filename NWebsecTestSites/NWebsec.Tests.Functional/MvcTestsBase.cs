@@ -20,7 +20,8 @@ namespace NWebsec.Tests.Functional
         [SetUp]
         public void Setup()
         {
-            httpClient = new HttpClient();
+            var handler = new WebRequestHandler {AllowAutoRedirect = false};
+            httpClient = new HttpClient(handler);
             helper = new TestHelper();
         }
 
@@ -89,6 +90,62 @@ namespace NWebsec.Tests.Functional
             Assert.IsFalse(response.Content.Headers.TryGetValues("Expires", out values), testUri.ToString());
         }
 
+        [Test]
+        public async void RedirectValidation_EnabledAndRelative_Ok()
+        {
+            const string path = "/Redirect/Relative";
+            var testUri = helper.GetUri(BaseUri, path);
+
+            var response = await httpClient.GetAsync(testUri);
+
+            Assert.AreEqual(HttpStatusCode.Redirect, response.StatusCode, reqFailed + testUri);
+        }
+
+        [Test]
+        public async void RedirectValidation_EnabledAndSameSite_Ok()
+        {
+            const string path = "/Redirect/SameSite";
+            var testUri = helper.GetUri(BaseUri, path);
+
+            var response = await httpClient.GetAsync(testUri);
+
+            Assert.AreEqual(HttpStatusCode.Redirect, response.StatusCode, reqFailed + testUri);
+        }
+
+        [Test]
+        public async void RedirectValidation_EnabledAndWhitelistedSite_Ok()
+        {
+            const string path = "/Redirect/WhitelistedSite";
+            var testUri = helper.GetUri(BaseUri, path);
+
+            var response = await httpClient.GetAsync(testUri);
+
+            Assert.AreEqual(HttpStatusCode.Redirect, response.StatusCode, reqFailed + testUri);
+        }
+
+        [Test]
+        public async void RedirectValidation_EnabledAndDangerousSite_500()
+        {
+            const string path = "/Redirect/DangerousSite";
+            var testUri = helper.GetUri(BaseUri, path);
+
+            var response = await httpClient.GetAsync(testUri);
+            var body = await response.Content.ReadAsStringAsync();
+
+            Assert.AreEqual(HttpStatusCode.InternalServerError, response.StatusCode, reqFailed + testUri);
+            Assert.IsTrue(body.Contains("RedirectValidationException"), "RedirectValidationException not found in body.");
+        }
+        
+            [Test]
+        public async void RedirectValidation_DisabledAndDangerousSite_Ok()
+        {
+            const string path = "/Redirect/ValidationDisabledDangerousSite";
+            var testUri = helper.GetUri(BaseUri, path);
+
+            var response = await httpClient.GetAsync(testUri);
+
+            Assert.AreEqual(HttpStatusCode.Redirect, response.StatusCode, reqFailed + testUri);
+        }
         [Test]
         public async Task XContentTypeOptions_Enabled_SetsHeaders()
         {

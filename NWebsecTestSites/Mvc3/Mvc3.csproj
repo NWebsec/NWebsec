@@ -43,9 +43,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="NWebsec, Version=2.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="NWebsec, Version=2.2.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\NWebsec.2.1.0\lib\40\NWebsec.dll</HintPath>
+      <HintPath>..\packages\NWebsec.2.2.0\lib\40\NWebsec.dll</HintPath>
     </Reference>
     <Reference Include="NWebsec.Mvc, Version=2.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -110,6 +110,7 @@
     <Compile Include="Controllers\CspReportOnlyController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\NoCacheHeadersController.cs" />
+    <Compile Include="Controllers\RedirectController.cs" />
     <Compile Include="Controllers\XContentTypeOptionsController.cs" />
     <Compile Include="Controllers\XDownloadOptionsController.cs" />
     <Compile Include="Controllers\XFrameOptionsController.cs" />
@@ -123,7 +124,9 @@
   <ItemGroup>
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>

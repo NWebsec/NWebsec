@@ -46,9 +46,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="NWebsec, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="NWebsec, Version=2.2.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\NWebsec.2.0.0-alpha7c\lib\35\NWebsec.dll</HintPath>
+      <HintPath>..\packages\NWebsec.2.2.0\lib\35\NWebsec.dll</HintPath>
     </Reference>
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Web.DynamicData" />
