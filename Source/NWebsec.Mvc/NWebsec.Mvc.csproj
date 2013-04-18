@@ -37,6 +37,12 @@
     </DocumentationFile>
     <RunCodeAnalysis>true</RunCodeAnalysis>
   </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>NWebsecDevKey.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
@@ -102,6 +108,7 @@
     <None Include="NWebsec.Mvc.nuspec">
       <SubType>Designer</SubType>
     </None>
+    <None Include="NWebsecDevKey.snk" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

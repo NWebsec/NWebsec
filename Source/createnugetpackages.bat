@@ -3,8 +3,8 @@
 @rem msbuild NWebsec.csproj /tv:3.5 /p:Configuration=Release /p:TargetFrameworkVersion=v3.5 /p:OutputPath="d:\nuget\nwebsecstage\lib\35" /t:Clean
 @rem msbuild NWebsec.csproj /tv:4.0 /p:Configuration=Release /p:TargetFrameworkVersion=v4.0 /p:OutputPath="d:\nuget\nwebsecstage\lib\40" /t:Clean
 
-msbuild NWebsec.csproj /tv:3.5 /p:Configuration=Release /p:TargetFrameworkVersion=v3.5 /p:OutputPath="d:\nuget\nwebsecstage\lib\35" /t:Rebuild /v:q /p:DocumentationFile="NWebsec.xml" /p:NoWarn=1591
-msbuild NWebsec.csproj /tv:4.0 /p:Configuration=Release /p:TargetFrameworkVersion=v4.0 /p:OutputPath="d:\nuget\nwebsecstage\lib\40" /t:Rebuild /v:q /p:DocumentationFile="NWebsec.xml" /p:NoWarn=1591
+msbuild NWebsec.csproj /tv:3.5 /p:Configuration=Release /p:TargetFrameworkVersion=v3.5 /p:OutputPath="d:\nuget\nwebsecstage\lib\35" /t:Rebuild /v:q /p:DocumentationFile="NWebsec.xml" /p:NoWarn=1591 /p:SignAssembly=true /p:AssemblyOriginatorKeyFile=D:\NWebsecKey\NWebsec.pfx
+msbuild NWebsec.csproj /tv:4.0 /p:Configuration=Release /p:TargetFrameworkVersion=v4.0 /p:OutputPath="d:\nuget\nwebsecstage\lib\40" /t:Rebuild /v:q /p:DocumentationFile="NWebsec.xml" /p:NoWarn=1591 /p:SignAssembly=true /p:AssemblyOriginatorKeyFile=D:\NWebsecKey\NWebsec.pfx
 
 @rd /s /q d:\nuget\nwebsec
 @xcopy /f /y d:\nuget\nwebsecstage\lib\35\NWebsec.dll d:\nuget\nwebsec\lib\35\
@@ -17,7 +17,7 @@ msbuild NWebsec.csproj /tv:4.0 /p:Configuration=Release /p:TargetFrameworkVersio
 @popd
 @pushd NWebsec.Mvc
 
-msbuild NWebsec.Mvc.csproj /tv:4.0 /p:Configuration=Release /p:TargetFrameworkVersion=v4.0 /p:OutputPath="d:\nuget\nwebsec.mvcstage\lib\40" /t:Rebuild /v:m /p:DocumentationFile="NWebsec.Mvc.xml" /p:NoWarn=1591
+msbuild NWebsec.Mvc.csproj /tv:4.0 /p:Configuration=Release /p:TargetFrameworkVersion=v4.0 /p:OutputPath="d:\nuget\nwebsec.mvcstage\lib\40" /t:Rebuild /v:m /p:DocumentationFile="NWebsec.Mvc.xml" /p:NoWarn=1591 /p:SignAssembly=true /p:AssemblyOriginatorKeyFile=D:\NWebsecKey\NWebsec.pfx
 
 @rd /s /q d:\nuget\nwebsec.mvc
 @xcopy /f /y d:\nuget\nwebsec.mvcstage\lib\40\NWebsec.Mvc.dll d:\nuget\nwebsec.mvc\lib\40\

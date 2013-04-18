@@ -38,6 +38,12 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>NWebsecDevKey.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Moq">
       <HintPath>..\packages\Moq.4.0.10827\lib\NET35\Moq.dll</HintPath>
@@ -82,6 +88,7 @@
     <None Include="App.config">
       <SubType>Designer</SubType>
     </None>
+    <None Include="NWebsecDevKey.snk" />
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>
