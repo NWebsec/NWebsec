@@ -9,7 +9,7 @@
 
   <system.webServer>
     <modules>
-      <add name="NWebSecHttpHeaderSecurityModule" type="NWebsec.Modules.HttpHeaderSecurityModule, NWebsec, Version=2.2.0.0, Culture=neutral, PublicKeyToken=3613da5f958908a1"/>
+      <add name="NWebsecHttpHeaderSecurityModule" type="NWebsec.Modules.HttpHeaderSecurityModule, NWebsec, Version=2.2.0.0, Culture=neutral, PublicKeyToken=3613da5f958908a1"/>
     </modules>
     <httpProtocol>
       <customHeaders>
