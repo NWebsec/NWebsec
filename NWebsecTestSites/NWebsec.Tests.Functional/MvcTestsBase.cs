@@ -46,9 +46,8 @@ namespace NWebsec.Tests.Functional
             var response = await httpClient.GetAsync(testUri);
 
             Assert.AreEqual(HttpStatusCode.NotFound, response.StatusCode, reqFailed + testUri);
-            var serverHeader = response.Headers.Server.Single().Product.ToString();
+            Assert.IsEmpty(response.Headers.Where(x => x.Key.Equals("Server", StringComparison.InvariantCultureIgnoreCase)), testUri.ToString());
             Assert.IsEmpty(response.Headers.Where(x => x.Key.Equals("X-AspNetMvc-Version", StringComparison.InvariantCultureIgnoreCase)), testUri.ToString());
-            Assert.AreEqual("Webserver/1.0", serverHeader, testUri.ToString());
         }
 
         [Test]
