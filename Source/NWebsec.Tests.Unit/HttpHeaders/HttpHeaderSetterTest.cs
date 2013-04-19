@@ -414,7 +414,7 @@ namespace NWebsec.Tests.Unit.HttpHeaders
         }
 
         [Test]
-        public void SuppressVersionHeaders_Enabled_ChangesServerheader()
+        public void SuppressVersionHeaders_Enabled_RemovesServerheader()
         {
             var suppressHeaders = new SuppressVersionHeadersConfigurationElement { Enabled = true };
             var mockCollection = new Mock<NameValueCollection>();
@@ -422,7 +422,7 @@ namespace NWebsec.Tests.Unit.HttpHeaders
 
             headerSetter.SuppressVersionHeaders(mockResponse.Object, suppressHeaders);
 
-            mockCollection.Verify(x => x.Set("Server", It.IsAny<String>()), Times.Once());
+            mockCollection.Verify(x => x.Remove("Server"), Times.Once());
         }
 
         [Test]
