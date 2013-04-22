@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
   <metadata>
     <id>NWebsec</id>
-    <version>2.2.1-alpha03</version>
+    <version>2.2.1-alpha04</version>
     <title>NWebsec</title>
     <authors>André N. Klingsheim</authors>
     <owners>André N. Klingsheim</owners>
