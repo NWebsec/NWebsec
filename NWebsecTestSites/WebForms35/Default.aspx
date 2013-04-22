@@ -11,6 +11,12 @@
         <div>
             Hei sveis.
         </div>
+        <asp:TextBox ID="TextBox1" runat="server"></asp:TextBox>
+        <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ControlToValidate="TextBox1" ErrorMessage="RequiredFieldValidator"></asp:RequiredFieldValidator>
+        <asp:ScriptManager ID="ScriptManager1" runat="server">
+        </asp:ScriptManager>
+        <asp:UpdatePanel ID="UpdatePanel1" runat="server">
+        </asp:UpdatePanel>
     </form>
 </body>
 </html>

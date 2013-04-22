@@ -55,6 +55,7 @@
     <Compile Include="MvcTestsBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TestHelper.cs" />
+    <Compile Include="WebForms35Tests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config">

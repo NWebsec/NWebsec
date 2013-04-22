@@ -4,12 +4,13 @@ using System;
 
 namespace NWebsec.Tests.Functional
 {
-    internal class TestHelper
+    public class TestHelper
     {
-        internal Uri GetUri(string baseUri, string path)
+        internal Uri GetUri(string baseUri, string path, string query="")
         {
             var absoluteUri = new UriBuilder(baseUri);
             absoluteUri.Path += path;
+            absoluteUri.Query = query;
             return absoluteUri.Uri;
         }
     }
