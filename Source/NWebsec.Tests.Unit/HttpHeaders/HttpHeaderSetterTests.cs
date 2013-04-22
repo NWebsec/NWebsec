@@ -5,15 +5,17 @@ using System.Collections.Specialized;
 using System.Web;
 using Moq;
 using NUnit.Framework;
+using NWebsec.Csp;
 using NWebsec.HttpHeaders;
 using NWebsec.Modules.Configuration;
 
 namespace NWebsec.Tests.Unit.HttpHeaders
 {
     [TestFixture]
-    public class HttpHeaderSetterTest
+    public class HttpHeaderSetterTests
     {
         HttpHeaderSetter headerSetter;
+        Mock<IHandlerTypeHelper> mockHandlerHelper;
         Mock<HttpRequestBase> mockRequest;
         Mock<HttpResponseBase> mockResponse;
         HttpContextBase mockContext;
@@ -29,7 +31,7 @@ namespace NWebsec.Tests.Unit.HttpHeaders
             mockResponse.SetupAllProperties();
             mockRequest.SetupAllProperties();
             mockedContext.SetupAllProperties();
-            var mockHandler = new Mock<IHttpHandler>();
+            mockHandlerHelper = new Mock<IHandlerTypeHelper>();
 
             var testUri = new Uri("http://localhost/NWebsecWebforms/");
             mockRequest.Setup(r => r.Url).Returns(testUri);
@@ -39,10 +41,9 @@ namespace NWebsec.Tests.Unit.HttpHeaders
 
             mockedContext.Setup(c => c.Request).Returns(mockRequest.Object);
             mockedContext.Setup(c => c.Response).Returns(mockResponse.Object);
-            mockedContext.Setup(c => c.CurrentHandler).Returns(mockHandler.Object);
 
             mockContext = mockedContext.Object;
-            headerSetter = new HttpHeaderSetter();
+            headerSetter = new HttpHeaderSetter(mockHandlerHelper.Object, new CspReportHelper());
 
         }
 
@@ -72,24 +73,9 @@ namespace NWebsec.Tests.Unit.HttpHeaders
         }
 
         [Test]
-        public void SetNoCacheHeaders_EnabledInConfig_DoesNotChangeCachePolicyForWebResourceAxd()
+        public void SetNoCacheHeaders_EnabledInConfig_DoesNotChangeCachePolicyForStaticContentHandlers()
         {
-            var webResourceUri = new Uri("http://localhost/NWebsecWebforms/WebResource.axd?d=KR0LqbT9_EjNk9IGvQFOqLyww8pA5ZlVlp7-TdCC0v1f_CVLSLO6tCZSL6XZrd8W1ctlmbPHEB-m5CMlhKx-NSR5JSs1&t=634771440654164963");
-            mockRequest.Setup(r => r.Url).Returns(webResourceUri);
-            var noCache = new SimpleBooleanConfigurationElement { Enabled = true };
-            var strictMockCachePolicy = new Mock<HttpCachePolicyBase>(MockBehavior.Strict);
-            mockResponse.Setup(x => x.Cache).Returns(strictMockCachePolicy.Object);
-
-            headerSetter.SetNoCacheHeaders(mockContext, noCache);
-
-            mockResponse.Verify(x => x.AddHeader("Pragma", "no-cache"), Times.Never());
-        }
-
-        [Test]
-        public void SetNoCacheHeaders_EnabledInConfig_DoesNotChangeCachePolicyForScriptResourceAxd()
-        {
-            var scriptResourceUri = new Uri("http://localhost/NWebsecWebforms/ScriptResource.axd?d=KginuExFUAm3FJORK9PFmBV2hx1PgpjtjXKZZA6VaxKkuDHju8G7FchuvNy0eHix-3v5_FhO4HIrGUES80RL08iwqB01&t=634771440654164963");
-            mockRequest.Setup(r => r.Url).Returns(scriptResourceUri);
+            mockHandlerHelper.Setup(h => h.IsStaticContentHandler(mockContext)).Returns(true);
             var noCache = new SimpleBooleanConfigurationElement { Enabled = true };
             var strictMockCachePolicy = new Mock<HttpCachePolicyBase>(MockBehavior.Strict);
             mockResponse.Setup(x => x.Cache).Returns(strictMockCachePolicy.Object);
@@ -102,6 +88,7 @@ namespace NWebsec.Tests.Unit.HttpHeaders
         [Test]
         public void SetNoCacheHeaders_EnabledInConfigWhenStaticContent_DoesNotChangeCachePolicy()
         {
+            mockHandlerHelper.Setup(h => h.IsUnmanagedHandler(mockContext)).Returns(true);
             var noCache = new SimpleBooleanConfigurationElement { Enabled = true };
             var strictMockCachePolicy = new Mock<HttpCachePolicyBase>(MockBehavior.Strict);
             mockResponse.Setup(x => x.Cache).Returns(strictMockCachePolicy.Object);

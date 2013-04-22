@@ -62,6 +62,7 @@
     <Reference Include="System.Web.Abstractions">
       <Private>True</Private>
     </Reference>
+    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
@@ -73,10 +74,11 @@
   <ItemGroup>
     <Compile Include="Csp\CspReportHelperTests.cs" />
     <Compile Include="HttpHeaders\HttpHeaderHelperCspTestBase.cs" />
-    <Compile Include="HttpHeaders\HttpHeaderHelperTest.cs" />
-    <Compile Include="HttpHeaders\HttpHeaderSetterCspTest.cs" />
-    <Compile Include="HttpHeaders\HttpHeaderSetterTest.cs" />
+    <Compile Include="HttpHeaders\HttpHeaderHelperTests.cs" />
+    <Compile Include="HttpHeaders\HttpHeaderSetterCspTests.cs" />
+    <Compile Include="HttpHeaders\HttpHeaderSetterTests.cs" />
     <Compile Include="HttpHeaders\RedirectValidationHelperTests.cs" />
+    <Compile Include="HttpHeaders\HandlerTypeHelperTests.cs" />
     <Compile Include="Modules\Configuration\Csp\CspSourceValidatorTests.cs" />
     <Compile Include="Modules\Configuration\Csp\ReportUriValidatorTests.cs" />
     <Compile Include="Modules\Configuration\RedirectUriValidatorTests.cs" />

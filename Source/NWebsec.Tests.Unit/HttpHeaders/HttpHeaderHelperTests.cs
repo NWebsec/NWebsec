@@ -11,7 +11,7 @@ using NWebsec.Modules.Configuration;
 namespace NWebsec.Tests.Unit.HttpHeaders
 {
     [TestFixture]
-    public class HttpHeaderHelperTest
+    public class HttpHeaderHelperTests
     {
         private HttpContextBase mockContext;
         private HttpHeaderHelper headerHelper;

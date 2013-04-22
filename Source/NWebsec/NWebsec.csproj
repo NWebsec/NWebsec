@@ -68,6 +68,7 @@
     <Compile Include="HttpHeaders\HttpHeadersConstants.cs" />
     <Compile Include="HttpHeaders\HttpHeaderSetter.cs" />
     <Compile Include="HttpHeaders\RedirectValidationHelper.cs" />
+    <Compile Include="HttpHeaders\HandlerTypeHelper.cs" />
     <Compile Include="HttpHeaders\XFrameOptionsPolicy.cs" />
     <Compile Include="HttpHeaders\XXssProtectionPolicy.cs" />
     <Compile Include="Modules\Configuration\Csp\CspDirectiveBaseConfigurationElement.cs" />

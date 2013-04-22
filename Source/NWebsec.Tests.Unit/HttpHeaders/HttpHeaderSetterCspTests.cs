@@ -11,9 +11,10 @@ using NWebsec.Modules.Configuration.Csp;
 namespace NWebsec.Tests.Unit.HttpHeaders
 {
     [TestFixture]
-    public class HttpHeaderSetterCspTest
+    public class HttpHeaderSetterCspTests
     {
         HttpHeaderSetter headerSetter;
+        Mock<IHandlerTypeHelper> mockHandlerHelper;
         Mock<HttpRequestBase> mockRequest;
         Mock<HttpResponseBase> mockResponse;
         Mock<HttpContextBase> mockContext;
@@ -31,7 +32,7 @@ namespace NWebsec.Tests.Unit.HttpHeaders
             mockResponse.SetupAllProperties();
             mockRequest.SetupAllProperties();
             mockContext.SetupAllProperties();
-            var mockHandler = new Mock<IHttpHandler>();
+            mockHandlerHelper = new Mock<IHandlerTypeHelper>();
 
             var testUri = new Uri("http://localhost/NWebsecWebforms/");
             mockRequest.Setup(r => r.Url).Returns(testUri);
@@ -42,13 +43,12 @@ namespace NWebsec.Tests.Unit.HttpHeaders
 
             mockContext.Setup(c => c.Request).Returns(mockRequest.Object);
             mockContext.Setup(c => c.Response).Returns(mockResponse.Object);
-            mockContext.Setup(c => c.CurrentHandler).Returns(mockHandler.Object);
-
+            
             var mockReportPathHelper = new Mock<ICspReportHandlerPathHelper>();
             mockReportPathHelper.Setup(p => p.GetBuiltinCspReportHandlerPath()).Returns("/NWebsec");
             cspReportHelper = new CspReportHelper(mockReportPathHelper.Object);
 
-            headerSetter = new HttpHeaderSetter(cspReportHelper);
+            headerSetter = new HttpHeaderSetter(mockHandlerHelper.Object, cspReportHelper);
 
         }
 

@@ -12,13 +12,15 @@ namespace NWebsec.Modules
     {
         private readonly CspReportHelper cspReportHelper;
         private readonly HttpHeaderHelper headerHelper;
-        private RedirectValidationHelper redirectValidationHelper;
+        private readonly HandlerTypeHelper handlerTypeHelper;
+        private readonly RedirectValidationHelper redirectValidationHelper;
         public event CspViolationReportEventHandler CspViolationReported;
 
         public HttpHeaderSecurityModule()
         {
             cspReportHelper = new CspReportHelper();
             headerHelper = new HttpHeaderHelper();
+            handlerTypeHelper = new HandlerTypeHelper();
             redirectValidationHelper = new RedirectValidationHelper();
         }
 
@@ -31,6 +33,7 @@ namespace NWebsec.Modules
             }
 
             app.BeginRequest += AppBeginRequest;
+            app.PostMapRequestHandler += AppPostMapRequestHandler;
             app.PreSendRequestHeaders += AppPreSendRequestHeaders;
         }
 
@@ -45,6 +48,14 @@ namespace NWebsec.Modules
             OnCspViolationReport(eventArgs);
             context.Response.StatusCode = 204;
             app.CompleteRequest();
+        }
+
+        void AppPostMapRequestHandler(object sender, EventArgs e)
+        {
+            var app = (HttpApplication)sender;
+            var context = new HttpContextWrapper(app.Context);
+
+            handlerTypeHelper.RequestHandlerMapped(context);
         }
 
         public void AppPreSendRequestHeaders(object sender, EventArgs ea)

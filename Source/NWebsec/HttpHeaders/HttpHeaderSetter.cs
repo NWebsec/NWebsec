@@ -14,34 +14,27 @@ namespace NWebsec.HttpHeaders
     class HttpHeaderSetter
     {
         private readonly CspReportHelper reportHelper;
+        private readonly IHandlerTypeHelper handlerHelper;
 
         internal HttpHeaderSetter()
         {
             reportHelper = new CspReportHelper();
+            handlerHelper = new HandlerTypeHelper();
         }
 
-        internal HttpHeaderSetter(CspReportHelper reportHelper)
+        internal HttpHeaderSetter(IHandlerTypeHelper handlerTypeHelper, CspReportHelper reportHelper)
         {
             this.reportHelper = reportHelper;
+            handlerHelper = handlerTypeHelper;
         }
 
         public void SetNoCacheHeaders(HttpContextBase context, SimpleBooleanConfigurationElement getNoCacheHeadersWithOverride)
         {
-            var request = context.Request;
             var response = context.Response;
             if (!getNoCacheHeadersWithOverride.Enabled)
                 return;
 
-            if (context.CurrentHandler == null)
-                return;
-
-            var handlerType = context.CurrentHandler.GetType();
-            if (handlerType.FullName.Equals("System.Web.Optimization.BundleHandler"))
-                return;
-
-            Debug.Assert(request.Url != null, "request.Url != null");
-            var path = request.Url.AbsolutePath;
-            if (path.EndsWith("ScriptResource.axd") || path.EndsWith("WebResource.axd"))
+            if (handlerHelper.IsUnmanagedHandler(context) || handlerHelper.IsStaticContentHandler(context))
                 return;
 
             response.Cache.SetCacheability(HttpCacheability.NoCache);
@@ -54,7 +47,7 @@ namespace NWebsec.HttpHeaders
         public void AddXRobotsTagHeader(HttpResponseBase response, XRobotsTagConfigurationElement xRobotsTagConfig)
         {
             if (!xRobotsTagConfig.Enabled) return;
-            
+
             var sb = new StringBuilder();
             sb.Append(xRobotsTagConfig.NoIndex ? "noindex, " : String.Empty);
             sb.Append(xRobotsTagConfig.NoFollow ? "nofollow, " : String.Empty);
@@ -63,10 +56,10 @@ namespace NWebsec.HttpHeaders
             sb.Append(xRobotsTagConfig.NoOdp && !xRobotsTagConfig.NoIndex ? "noodp, " : String.Empty);
             sb.Append(xRobotsTagConfig.NoTranslate && !xRobotsTagConfig.NoIndex ? "notranslate, " : String.Empty);
             sb.Append(xRobotsTagConfig.NoImageIndex ? "noimageindex" : String.Empty);
-            var value = sb.ToString().TrimEnd(new[] {' ', ','});
-            
+            var value = sb.ToString().TrimEnd(new[] { ' ', ',' });
+
             if (value.Length == 0) return;
-            
+
             response.AddHeader(HttpHeadersConstants.XRobotsTagHeader, value);
         }
 
@@ -154,7 +147,7 @@ namespace NWebsec.HttpHeaders
         internal void AddCspHeaders(HttpResponseBase response, CspConfigurationElement cspConfig, bool reportOnly)
         {
             if (!cspConfig.Enabled) return;
-            
+
             var headerValue = CreateCspHeaderValue(cspConfig);
             if (String.IsNullOrEmpty(headerValue)) return;
 
@@ -196,7 +189,7 @@ namespace NWebsec.HttpHeaders
                 response.Headers.Remove("Server");
                 return;
             }
-                                  
+
             response.Headers.Set("Server", suppressVersionHeadersConfig.ServerHeader);
         }
 
@@ -216,7 +209,7 @@ namespace NWebsec.HttpHeaders
             if (sb.Length == 0) return null;
             sb.Append(CreateDirectiveValue("report-uri", GetReportUriList(config.ReportUriDirective)));
 
-            return sb.ToString().TrimEnd(new[] {' ', ';'});
+            return sb.ToString().TrimEnd(new[] { ' ', ';' });
         }
 
         private ICollection<string> GetDirectiveList(CspDirectiveBaseConfigurationElement directive)
@@ -254,7 +247,7 @@ namespace NWebsec.HttpHeaders
             {
                 reportUris.AddLast(reportHelper.GetBuiltInCspReportHandlerRelativeUri());
             }
-            
+
             foreach (ReportUriConfigurationElement reportUri in directive.ReportUris)
             {
                 reportUris.AddLast(reportUri.ReportUri.ToString());
