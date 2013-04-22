@@ -1,19 +1,15 @@
 ﻿// Copyright (c) André N. Klingsheim. See License.txt in the project root for license information.
 
-using System.Configuration;
+using System.Web.Configuration;
 using NWebsec.Modules.Configuration;
 
 namespace NWebsec.HttpHeaders
 {
-    public class ConfigHelper
+    public static class ConfigHelper
     {
-        public ConfigHelper()
-        {
-        }
-
         public static HttpHeaderSecurityConfigurationSection GetConfig()
         {
-            return (HttpHeaderSecurityConfigurationSection)(ConfigurationManager.GetSection("nwebsec/httpHeaderSecurityModule")) ??
+            return (HttpHeaderSecurityConfigurationSection)(WebConfigurationManager.GetSection("nwebsec/httpHeaderSecurityModule")) ??
                    new HttpHeaderSecurityConfigurationSection();
         }
     }
