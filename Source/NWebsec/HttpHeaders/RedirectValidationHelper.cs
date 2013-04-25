@@ -3,6 +3,7 @@
 using System;
 using System.Linq;
 using System.Web;
+using NWebsec.ExtensionMethods;
 using NWebsec.Modules.Configuration;
 
 namespace NWebsec.HttpHeaders
@@ -25,7 +26,7 @@ namespace NWebsec.HttpHeaders
             if (!Config.Enabled) return;
             
             var response = context.Response;
-            if (!IsRedirectResponse(response)) return;
+            if (!response.HasStatusCodeThatRedirects()) return;
             
             var redirectUri = new Uri(response.RedirectLocation, UriKind.RelativeOrAbsolute);
             if (!redirectUri.IsAbsoluteUri) return;
@@ -44,11 +45,6 @@ namespace NWebsec.HttpHeaders
 
             return Config.RedirectUris.OfType<RedirectUriConfigurationElement>()
                   .Any(c => authorityAndPath.StartsWith(c.RedirectUri.GetLeftPart(UriPartial.Path), StringComparison.InvariantCultureIgnoreCase));
-        }
-
-        private bool IsRedirectResponse(HttpResponseBase response)
-        {
-            return response.StatusCode > 299 && response.StatusCode < 400 && response.StatusCode != 304;
         }
     }
 

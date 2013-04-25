@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Web;
 using NWebsec.Csp;
+using NWebsec.ExtensionMethods;
 using NWebsec.Modules.Configuration;
 using NWebsec.Modules.Configuration.Csp;
 
@@ -64,6 +65,7 @@ namespace NWebsec.HttpHeaders
 
         internal void AddXFrameoptionsHeader(HttpResponseBase response, XFrameOptionsConfigurationElement xFrameOptionsConfig)
         {
+            if (response.HasStatusCodeThatRedirects()) return;
 
             string frameOptions;
             switch (xFrameOptionsConfig.Policy)
@@ -105,6 +107,8 @@ namespace NWebsec.HttpHeaders
 
         internal void AddXContentTypeOptionsHeader(HttpResponseBase response, SimpleBooleanConfigurationElement xContentTypeOptionsConfig)
         {
+            if (response.HasStatusCodeThatRedirects()) return;
+
             if (xContentTypeOptionsConfig.Enabled)
             {
                 response.AddHeader(HttpHeadersConstants.XContentTypeOptionsHeader, "nosniff");
@@ -113,14 +117,22 @@ namespace NWebsec.HttpHeaders
 
         internal void AddXDownloadOptionsHeader(HttpResponseBase response, SimpleBooleanConfigurationElement xDownloadOptionsConfig)
         {
+            if (response.HasStatusCodeThatRedirects()) return;
+
             if (xDownloadOptionsConfig.Enabled)
             {
                 response.AddHeader(HttpHeadersConstants.XDownloadOptionsHeader, "noopen");
             }
         }
 
-        internal void AddXXssProtectionHeader(HttpResponseBase response, XXssProtectionConfigurationElement xXssProtectionConfig)
+        internal void AddXXssProtectionHeader(HttpContextBase context, XXssProtectionConfigurationElement xXssProtectionConfig)
         {
+            var response = context.Response;
+
+            if (response.HasStatusCodeThatRedirects() ||
+                handlerHelper.IsStaticContentHandler(context) ||
+                handlerHelper.IsUnmanagedHandler(context)) return;
+
             string value;
             switch (xXssProtectionConfig.Policy)
             {
@@ -143,9 +155,13 @@ namespace NWebsec.HttpHeaders
             response.AddHeader(HttpHeadersConstants.XXssProtectionHeader, value);
         }
 
-        internal void AddCspHeaders(HttpResponseBase response, CspConfigurationElement cspConfig, bool reportOnly)
+        internal void AddCspHeaders(HttpContextBase context, CspConfigurationElement cspConfig, bool reportOnly)
         {
-            if (!cspConfig.Enabled) return;
+            var response = context.Response;
+            if (!cspConfig.Enabled ||
+                response.HasStatusCodeThatRedirects() ||
+                handlerHelper.IsStaticContentHandler(context) ||
+                handlerHelper.IsUnmanagedHandler(context)) return;
 
             var headerValue = CreateCspHeaderValue(cspConfig);
             if (String.IsNullOrEmpty(headerValue)) return;
@@ -268,6 +284,5 @@ namespace NWebsec.HttpHeaders
             sb.Insert(sb.Length - 1, ';');
             return sb.ToString();
         }
-
     }
 }

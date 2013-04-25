@@ -63,9 +63,9 @@ namespace NWebsec.HttpHeaders
             headerSetter.AddXFrameoptionsHeader(context.Response, GetXFrameoptionsWithOverride(context));
             headerSetter.AddXContentTypeOptionsHeader(context.Response, GetXContentTypeOptionsWithOverride(context));
             headerSetter.AddXDownloadOptionsHeader(context.Response, GetXDownloadOptionsWithOverride(context));
-            headerSetter.AddXXssProtectionHeader(context.Response, GetXXssProtectionWithOverride(context));
-            headerSetter.AddCspHeaders(context.Response, GetCspElementWithOverrides(context, false), false);
-            headerSetter.AddCspHeaders(context.Response, GetCspElementWithOverrides(context, true), true);
+            headerSetter.AddXXssProtectionHeader(context, GetXXssProtectionWithOverride(context));
+            headerSetter.AddCspHeaders(context, GetCspElementWithOverrides(context, false), false);
+            headerSetter.AddCspHeaders(context, GetCspElementWithOverrides(context, true), true);
         }
 
         public void SetNoCacheHeadersOverride(HttpContextBase context, SimpleBooleanConfigurationElement setNoCacheHeadersConfig)

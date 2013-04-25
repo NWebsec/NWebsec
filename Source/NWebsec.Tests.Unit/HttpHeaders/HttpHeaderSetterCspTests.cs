@@ -57,7 +57,40 @@ namespace NWebsec.Tests.Unit.HttpHeaders
         {
             var cspConfig = new CspConfigurationElement { Enabled = false, DefaultSrc = { Self = true } };
 
-            headerSetter.AddCspHeaders(mockResponse.Object, cspConfig, false);
+            headerSetter.AddCspHeaders(mockContext.Object, cspConfig, false);
+
+            mockResponse.Verify(x => x.AddHeader(It.IsAny<String>(), It.IsAny<String>()), Times.Never());
+        }
+
+        [Test]
+        public void AddCspHeaders_EnabledInConfigAndRedirect_DoesNotAddCspHeader()
+        {
+            var cspConfig = new CspConfigurationElement { Enabled = true, DefaultSrc = { Self = true } };
+            mockResponse.Setup(r => r.StatusCode).Returns(302);
+
+            headerSetter.AddCspHeaders(mockContext.Object, cspConfig, false);
+
+            mockResponse.Verify(x => x.AddHeader(It.IsAny<String>(), It.IsAny<String>()), Times.Never());
+        }
+
+        [Test]
+        public void AddCspHeaders_EnabledInConfigAndStaticContentHandler_DoesNotAddCspHeader()
+        {
+            var cspConfig = new CspConfigurationElement { Enabled = true, DefaultSrc = { Self = true } };
+            mockHandlerHelper.Setup(h => h.IsStaticContentHandler(It.IsAny<HttpContextBase>())).Returns(true);
+
+            headerSetter.AddCspHeaders(mockContext.Object, cspConfig, false);
+
+            mockResponse.Verify(x => x.AddHeader(It.IsAny<String>(), It.IsAny<String>()), Times.Never());
+        }
+
+        [Test]
+        public void AddCspHeaders_EnabledInConfigAndUnmanagedHandler_DoesNotAddCspHeader()
+        {
+            var cspConfig = new CspConfigurationElement { Enabled = true, DefaultSrc = { Self = true } };
+            mockHandlerHelper.Setup(h => h.IsUnmanagedHandler(It.IsAny<HttpContextBase>())).Returns(true);
+
+            headerSetter.AddCspHeaders(mockContext.Object, cspConfig, false);
 
             mockResponse.Verify(x => x.AddHeader(It.IsAny<String>(), It.IsAny<String>()), Times.Never());
         }
@@ -67,7 +100,7 @@ namespace NWebsec.Tests.Unit.HttpHeaders
         {
             var cspConfig = new CspConfigurationElement();
 
-            headerSetter.AddCspHeaders(mockResponse.Object, cspConfig, false);
+            headerSetter.AddCspHeaders(mockContext.Object, cspConfig, false);
 
             mockResponse.Verify(x => x.AddHeader(It.IsAny<String>(), It.IsAny<String>()), Times.Never());
         }
@@ -77,7 +110,7 @@ namespace NWebsec.Tests.Unit.HttpHeaders
         {
             var cspConfig = new CspConfigurationElement { Enabled = true };
 
-            headerSetter.AddCspHeaders(mockResponse.Object, cspConfig, false);
+            headerSetter.AddCspHeaders(mockContext.Object, cspConfig, false);
 
             mockResponse.Verify(x => x.AddHeader(It.IsAny<String>(), It.IsAny<String>()), Times.Never());
         }
@@ -89,7 +122,7 @@ namespace NWebsec.Tests.Unit.HttpHeaders
             cspConfig.ReportUriDirective.Enabled = true;
             cspConfig.ReportUriDirective.EnableBuiltinHandler = true;
 
-            headerSetter.AddCspHeaders(mockResponse.Object, cspConfig, false);
+            headerSetter.AddCspHeaders(mockContext.Object, cspConfig, false);
 
             mockResponse.Verify(x => x.AddHeader(It.IsAny<String>(), It.IsAny<String>()), Times.Never());
         }
@@ -103,7 +136,7 @@ namespace NWebsec.Tests.Unit.HttpHeaders
                 DefaultSrc = { Self = true }
             };
 
-            headerSetter.AddCspHeaders(mockResponse.Object, cspConfig, false);
+            headerSetter.AddCspHeaders(mockContext.Object, cspConfig, false);
 
             mockResponse.Verify(x => x.AddHeader("Content-Security-Policy", "default-src 'self'"), Times.Once());
         }
@@ -117,7 +150,7 @@ namespace NWebsec.Tests.Unit.HttpHeaders
                 ScriptSrc = { UnsafeEval = true }
             };
 
-            headerSetter.AddCspHeaders(mockResponse.Object, cspConfig, false);
+            headerSetter.AddCspHeaders(mockContext.Object, cspConfig, false);
 
             mockResponse.Verify(x => x.AddHeader("Content-Security-Policy", "script-src 'unsafe-eval'"), Times.Once());
         }
@@ -131,7 +164,7 @@ namespace NWebsec.Tests.Unit.HttpHeaders
                 ObjectSrc = { Self = true }
             };
 
-            headerSetter.AddCspHeaders(mockResponse.Object, cspConfig, false);
+            headerSetter.AddCspHeaders(mockContext.Object, cspConfig, false);
 
             mockResponse.Verify(x => x.AddHeader("Content-Security-Policy", "object-src 'self'"), Times.Once());
         }
@@ -145,7 +178,7 @@ namespace NWebsec.Tests.Unit.HttpHeaders
                 StyleSrc = { UnsafeInline = true }
             };
 
-            headerSetter.AddCspHeaders(mockResponse.Object, cspConfig, false);
+            headerSetter.AddCspHeaders(mockContext.Object, cspConfig, false);
 
             mockResponse.Verify(x => x.AddHeader("Content-Security-Policy", "style-src 'unsafe-inline'"), Times.Once());
         }
@@ -159,7 +192,7 @@ namespace NWebsec.Tests.Unit.HttpHeaders
                 ImgSrc= { Self = true }
             };
 
-            headerSetter.AddCspHeaders(mockResponse.Object, cspConfig, false);
+            headerSetter.AddCspHeaders(mockContext.Object, cspConfig, false);
 
             mockResponse.Verify(x => x.AddHeader("Content-Security-Policy", "img-src 'self'"), Times.Once());
         }
@@ -173,7 +206,7 @@ namespace NWebsec.Tests.Unit.HttpHeaders
                 MediaSrc = { Self = true }
             };
 
-            headerSetter.AddCspHeaders(mockResponse.Object, cspConfig, false);
+            headerSetter.AddCspHeaders(mockContext.Object, cspConfig, false);
 
             mockResponse.Verify(x => x.AddHeader("Content-Security-Policy", "media-src 'self'"), Times.Once());
         }
@@ -187,7 +220,7 @@ namespace NWebsec.Tests.Unit.HttpHeaders
                 FrameSrc = { Self = true }
             };
 
-            headerSetter.AddCspHeaders(mockResponse.Object, cspConfig, false);
+            headerSetter.AddCspHeaders(mockContext.Object, cspConfig, false);
 
             mockResponse.Verify(x => x.AddHeader("Content-Security-Policy", "frame-src 'self'"), Times.Once());
         }
@@ -201,7 +234,7 @@ namespace NWebsec.Tests.Unit.HttpHeaders
                 FontSrc = { Self = true }
             };
 
-            headerSetter.AddCspHeaders(mockResponse.Object, cspConfig, false);
+            headerSetter.AddCspHeaders(mockContext.Object, cspConfig, false);
 
             mockResponse.Verify(x => x.AddHeader("Content-Security-Policy", "font-src 'self'"), Times.Once());
         }
@@ -215,7 +248,7 @@ namespace NWebsec.Tests.Unit.HttpHeaders
                 ConnectSrc = { Self = true }
             };
 
-            headerSetter.AddCspHeaders(mockResponse.Object, cspConfig, false);
+            headerSetter.AddCspHeaders(mockContext.Object, cspConfig, false);
 
             mockResponse.Verify(x => x.AddHeader("Content-Security-Policy", "connect-src 'self'"), Times.Once());
         }
@@ -230,7 +263,7 @@ namespace NWebsec.Tests.Unit.HttpHeaders
                 ScriptSrc = { None = true }
             };
 
-            headerSetter.AddCspHeaders(mockResponse.Object, cspConfig, false);
+            headerSetter.AddCspHeaders(mockContext.Object, cspConfig, false);
 
             mockResponse.Verify(x => x.AddHeader("Content-Security-Policy", "default-src 'self'; script-src 'none'"), Times.Once());
         }
@@ -241,7 +274,7 @@ namespace NWebsec.Tests.Unit.HttpHeaders
             var cspConfig = new CspConfigurationElement { Enabled = true, DefaultSrc = { Self = true } };
             cspConfig.DefaultSrc.Sources.Add(new CspSourceConfigurationElement() { Source = "nwebsec.codeplex.com" });
 
-            headerSetter.AddCspHeaders(mockResponse.Object, cspConfig, false);
+            headerSetter.AddCspHeaders(mockContext.Object, cspConfig, false);
 
             mockResponse.Verify(x => x.AddHeader("Content-Security-Policy", "default-src 'self' nwebsec.codeplex.com"), Times.Once());
         }
@@ -256,7 +289,7 @@ namespace NWebsec.Tests.Unit.HttpHeaders
                 ReportUriDirective = { EnableBuiltinHandler = true }
             };
 
-            headerSetter.AddCspHeaders(mockResponse.Object, cspConfig, false);
+            headerSetter.AddCspHeaders(mockContext.Object, cspConfig, false);
 
             var expectedReportUri = cspReportHelper.GetBuiltInCspReportHandlerRelativeUri();
             mockResponse.Verify(x => x.AddHeader("Content-Security-Policy", "default-src 'self'; report-uri " + expectedReportUri), Times.Once());
@@ -272,7 +305,7 @@ namespace NWebsec.Tests.Unit.HttpHeaders
             };
             cspConfig.ReportUriDirective.ReportUris.Add(new ReportUriConfigurationElement() { ReportUri = new Uri("/CspViolationReported", UriKind.Relative) });
 
-            headerSetter.AddCspHeaders(mockResponse.Object, cspConfig, false);
+            headerSetter.AddCspHeaders(mockContext.Object, cspConfig, false);
 
             mockResponse.Verify(x => x.AddHeader("Content-Security-Policy", "default-src 'self'; report-uri /CspViolationReported"), Times.Once());
         }
@@ -288,7 +321,7 @@ namespace NWebsec.Tests.Unit.HttpHeaders
                                 };
             cspConfig.ReportUriDirective.ReportUris.Add(new ReportUriConfigurationElement { ReportUri = new Uri("/CspViolationReported", UriKind.Relative) });
 
-            headerSetter.AddCspHeaders(mockResponse.Object, cspConfig, false);
+            headerSetter.AddCspHeaders(mockContext.Object, cspConfig, false);
 
             var expectedReportUri = cspReportHelper.GetBuiltInCspReportHandlerRelativeUri() + " /CspViolationReported";
             mockResponse.Verify(x => x.AddHeader("Content-Security-Policy", "default-src 'self'; report-uri " + expectedReportUri), Times.Once());
@@ -305,7 +338,7 @@ namespace NWebsec.Tests.Unit.HttpHeaders
                 DefaultSrc = { Self = true }
             };
 
-            headerSetter.AddCspHeaders(mockResponse.Object, cspConfig, false);
+            headerSetter.AddCspHeaders(mockContext.Object, cspConfig, false);
 
             mockResponse.Verify(x => x.AddHeader("X-Content-Security-Policy", It.IsAny<String>()), Times.Once());
         }
@@ -321,7 +354,7 @@ namespace NWebsec.Tests.Unit.HttpHeaders
                 DefaultSrc = { Self = true }
             };
 
-            headerSetter.AddCspHeaders(mockResponse.Object, cspConfig, false);
+            headerSetter.AddCspHeaders(mockContext.Object, cspConfig, false);
 
             mockResponse.Verify(x => x.AddHeader("X-WebKit-CSP", It.IsAny<String>()), Times.Once());
         }
@@ -332,7 +365,7 @@ namespace NWebsec.Tests.Unit.HttpHeaders
             var cspConfig = new CspConfigurationElement { Enabled = true, XContentSecurityPolicyHeader = true, XWebKitCspHeader = true };
             cspConfig.DefaultSrc.Self = true;
 
-            headerSetter.AddCspHeaders(mockResponse.Object, cspConfig, false);
+            headerSetter.AddCspHeaders(mockContext.Object, cspConfig, false);
 
             mockResponse.Verify(x => x.AddHeader("X-Content-Security-Policy", It.IsAny<String>()), Times.Once());
             mockResponse.Verify(x => x.AddHeader("X-WebKit-CSP", It.IsAny<String>()), Times.Once());
@@ -349,7 +382,7 @@ namespace NWebsec.Tests.Unit.HttpHeaders
                 DefaultSrc = { Self = true }
             };
 
-            headerSetter.AddCspHeaders(mockResponse.Object, cspConfig, reportOnly: true);
+            headerSetter.AddCspHeaders(mockContext.Object, cspConfig, reportOnly: true);
 
             mockResponse.Verify(x => x.AddHeader("X-Content-Security-Policy-Report-Only", It.IsAny<String>()), Times.Once());
         }
@@ -365,7 +398,7 @@ namespace NWebsec.Tests.Unit.HttpHeaders
                 DefaultSrc = { Self = true }
             };
 
-            headerSetter.AddCspHeaders(mockResponse.Object, cspConfig, true);
+            headerSetter.AddCspHeaders(mockContext.Object, cspConfig, true);
 
             mockResponse.Verify(x => x.AddHeader("X-WebKit-CSP-Report-Only", It.IsAny<String>()), Times.Once());
         }
@@ -381,7 +414,7 @@ namespace NWebsec.Tests.Unit.HttpHeaders
                 DefaultSrc = { Self = true }
             };
 
-            headerSetter.AddCspHeaders(mockResponse.Object, cspConfig, true);
+            headerSetter.AddCspHeaders(mockContext.Object, cspConfig, true);
 
             mockResponse.Verify(x => x.AddHeader("X-Content-Security-Policy-Report-Only", It.IsAny<String>()), Times.Once());
             mockResponse.Verify(x => x.AddHeader("X-WebKit-CSP-Report-Only", It.IsAny<String>()), Times.Once());

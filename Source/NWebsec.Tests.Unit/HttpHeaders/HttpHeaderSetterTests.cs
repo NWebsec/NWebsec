@@ -56,6 +56,9 @@ namespace NWebsec.Tests.Unit.HttpHeaders
 
             headerSetter.SetNoCacheHeaders(mockContext, noCache);
 
+            mockCachePolicy.Verify(c => c.SetCacheability(It.IsAny<HttpCacheability>()), Times.Never());
+            mockCachePolicy.Verify(c => c.SetNoStore(), Times.Never());
+            mockCachePolicy.Verify(c => c.SetRevalidation(It.IsAny<HttpCacheRevalidation>()), Times.Never());
             mockResponse.Verify(x => x.AddHeader("Pragma", "no-cache"), Times.Never());
         }
 
@@ -73,29 +76,34 @@ namespace NWebsec.Tests.Unit.HttpHeaders
         }
 
         [Test]
-        public void SetNoCacheHeaders_EnabledInConfig_DoesNotChangeCachePolicyForStaticContentHandlers()
+        public void SetNoCacheHeaders_EnabledInConfigAndStaticContentHandler_DoesNotChangeCachePolicy()
         {
-            mockHandlerHelper.Setup(h => h.IsStaticContentHandler(mockContext)).Returns(true);
             var noCache = new SimpleBooleanConfigurationElement { Enabled = true };
             var strictMockCachePolicy = new Mock<HttpCachePolicyBase>(MockBehavior.Strict);
             mockResponse.Setup(x => x.Cache).Returns(strictMockCachePolicy.Object);
-
+            mockHandlerHelper.Setup(h => h.IsStaticContentHandler(It.IsAny<HttpContextBase>())).Returns(true);
+            
             headerSetter.SetNoCacheHeaders(mockContext, noCache);
 
+            mockCachePolicy.Verify(c => c.SetCacheability(It.IsAny<HttpCacheability>()), Times.Never());
+            mockCachePolicy.Verify(c => c.SetNoStore(), Times.Never());
+            mockCachePolicy.Verify(c => c.SetRevalidation(It.IsAny<HttpCacheRevalidation>()), Times.Never());
             mockResponse.Verify(x => x.AddHeader("Pragma", "no-cache"), Times.Never());
         }
 
         [Test]
-        public void SetNoCacheHeaders_EnabledInConfigWhenStaticContent_DoesNotChangeCachePolicy()
+        public void SetNoCacheHeaders_EnabledInConfigAndStaticContent_DoesNotChangeCachePolicy()
         {
-            mockHandlerHelper.Setup(h => h.IsUnmanagedHandler(mockContext)).Returns(true);
             var noCache = new SimpleBooleanConfigurationElement { Enabled = true };
             var strictMockCachePolicy = new Mock<HttpCachePolicyBase>(MockBehavior.Strict);
             mockResponse.Setup(x => x.Cache).Returns(strictMockCachePolicy.Object);
-            Mock.Get(mockContext).Setup(c => c.CurrentHandler).Returns((IHttpHandler)null);
-
+            mockHandlerHelper.Setup(h => h.IsUnmanagedHandler(It.IsAny<HttpContextBase>())).Returns(true);
+            
             headerSetter.SetNoCacheHeaders(mockContext, noCache);
 
+            mockCachePolicy.Verify(c => c.SetCacheability(It.IsAny<HttpCacheability>()), Times.Never());
+            mockCachePolicy.Verify(c => c.SetNoStore(), Times.Never());
+            mockCachePolicy.Verify(c => c.SetRevalidation(It.IsAny<HttpCacheRevalidation>()), Times.Never());
             mockResponse.Verify(x => x.AddHeader("Pragma", "no-cache"), Times.Never());
         }
 
@@ -239,6 +247,17 @@ namespace NWebsec.Tests.Unit.HttpHeaders
         }
 
         [Test]
+        public void AddXFrameoptionsHeader_EnabledInConfigAndRedirect_DoesNotAddXFrameOptionsHeader()
+        {
+            var xFramesConfig = new XFrameOptionsConfigurationElement { Policy = XFrameOptionsPolicy.Deny };
+            mockResponse.Setup(r => r.StatusCode).Returns(302);
+
+            headerSetter.AddXFrameoptionsHeader(mockResponse.Object, xFramesConfig);
+
+            mockResponse.Verify(x => x.AddHeader(It.IsAny<String>(), It.IsAny<String>()), Times.Never());
+        }
+
+        [Test]
         public void AddXFrameoptionsHeader_DenyInConfig_AddsAddXFrameOptionsDenyHeader()
         {
             var xFramesConfig = new XFrameOptionsConfigurationElement { Policy = XFrameOptionsPolicy.Deny };
@@ -309,6 +328,17 @@ namespace NWebsec.Tests.Unit.HttpHeaders
         }
 
         [Test]
+        public void AddXContentTypeOptionsHeader_EnabledInConfigAndRedirect_DoesNotAddXContentTypeOptionsHeader()
+        {
+            var contentTypeOptions = new SimpleBooleanConfigurationElement { Enabled = true };
+            mockResponse.Setup(r => r.StatusCode).Returns(302);
+
+            headerSetter.AddXContentTypeOptionsHeader(mockResponse.Object, contentTypeOptions);
+
+            mockResponse.Verify(x => x.AddHeader(It.IsAny<String>(), It.IsAny<String>()), Times.Never());
+        }
+
+        [Test]
         public void AddXDownloadOptionsHeader_DisabledInConfig_DoesNotAddXDownloadOptionsHeader()
         {
             var downloadOptions = new SimpleBooleanConfigurationElement { Enabled = false };
@@ -329,21 +359,65 @@ namespace NWebsec.Tests.Unit.HttpHeaders
         }
 
         [Test]
-        public void AddXXssProtectionHeader_DisabledInConfig_DoesNotAddXXssProtectionHeader()
+        public void AddXDownloadOptionsHeader_EnabledInConfigAndRedirect_DoesNotAddXDownloadOptionsHeader()
         {
-            var xssProtection = new XXssProtectionConfigurationElement { Policy = XXssProtectionPolicy.Disabled };
+            var downloadOptions = new SimpleBooleanConfigurationElement { Enabled = true };
+            mockResponse.Setup(r => r.StatusCode).Returns(302);
 
-            headerSetter.AddXXssProtectionHeader(mockResponse.Object, xssProtection);
+            headerSetter.AddXDownloadOptionsHeader(mockResponse.Object, downloadOptions);
 
             mockResponse.Verify(x => x.AddHeader(It.IsAny<String>(), It.IsAny<String>()), Times.Never());
         }
 
         [Test]
+        public void AddXXssProtectionHeader_DisabledInConfig_DoesNotAddXXssProtectionHeader()
+        {
+            var xssProtection = new XXssProtectionConfigurationElement { Policy = XXssProtectionPolicy.Disabled };
+
+            headerSetter.AddXXssProtectionHeader(mockContext, xssProtection);
+
+            mockResponse.Verify(x => x.AddHeader(It.IsAny<String>(), It.IsAny<String>()), Times.Never());
+        }
+        
+        [Test]
+        public void AddXXssProtectionHeader_EnabledInConfigAndRedirect_DoesNotAddXXssProtectionHeader()
+        {
+            var xssProtection = new XXssProtectionConfigurationElement { Policy = XXssProtectionPolicy.FilterEnabled };
+            mockResponse.Setup(r => r.StatusCode).Returns(302);
+
+            headerSetter.AddXXssProtectionHeader(mockContext, xssProtection);
+
+            mockResponse.Verify(x => x.AddHeader(It.IsAny<String>(), It.IsAny<String>()), Times.Never());
+        }
+        
+        [Test]
+        public void AddXXssProtectionHeader_EnabledInConfigAndUnmanagedHandler_DoesNotAddXXssProtectionHeader()
+        {
+            var xssProtection = new XXssProtectionConfigurationElement { Policy = XXssProtectionPolicy.FilterEnabled };
+            mockHandlerHelper.Setup(h => h.IsUnmanagedHandler(It.IsAny<HttpContextBase>())).Returns(true);
+
+            headerSetter.AddXXssProtectionHeader(mockContext, xssProtection);
+
+            mockResponse.Verify(x => x.AddHeader(It.IsAny<String>(), It.IsAny<String>()), Times.Never());
+        }
+
+        [Test]
+        public void AddXXssProtectionHeader_EnabledInConfigAndStaticContentHandler_DoesNotAddXXssProtectionHeader()
+        {
+            var xssProtection = new XXssProtectionConfigurationElement { Policy = XXssProtectionPolicy.FilterEnabled };
+            mockHandlerHelper.Setup(h => h.IsStaticContentHandler(It.IsAny<HttpContextBase>())).Returns(true);
+
+            headerSetter.AddXXssProtectionHeader(mockContext, xssProtection);
+
+            mockResponse.Verify(x => x.AddHeader(It.IsAny<String>(), It.IsAny<String>()), Times.Never());
+        }
+   
+        [Test]
         public void AddXXssProtectionHeader_FilterDisabledPolicyInConfig_AddsXXssProtectionDisabledHeader()
         {
             var xssProtection = new XXssProtectionConfigurationElement { Policy = XXssProtectionPolicy.FilterDisabled };
 
-            headerSetter.AddXXssProtectionHeader(mockResponse.Object, xssProtection);
+            headerSetter.AddXXssProtectionHeader(mockContext, xssProtection);
 
             mockResponse.Verify(x => x.AddHeader("X-XSS-Protection", "0"), Times.Once());
         }
@@ -353,7 +427,7 @@ namespace NWebsec.Tests.Unit.HttpHeaders
         {
             var xssProtection = new XXssProtectionConfigurationElement { Policy = XXssProtectionPolicy.FilterDisabled, BlockMode = true };
 
-            headerSetter.AddXXssProtectionHeader(mockResponse.Object, xssProtection);
+            headerSetter.AddXXssProtectionHeader(mockContext, xssProtection);
 
             mockResponse.Verify(x => x.AddHeader("X-XSS-Protection", "0"), Times.Once());
         }
@@ -364,7 +438,7 @@ namespace NWebsec.Tests.Unit.HttpHeaders
             var xssProtection = new XXssProtectionConfigurationElement { Policy = XXssProtectionPolicy.FilterEnabled, BlockMode = false };
 
 
-            headerSetter.AddXXssProtectionHeader(mockResponse.Object, xssProtection);
+            headerSetter.AddXXssProtectionHeader(mockContext, xssProtection);
 
             mockResponse.Verify(x => x.AddHeader("X-XSS-Protection", "1"), Times.Once());
         }
@@ -374,7 +448,7 @@ namespace NWebsec.Tests.Unit.HttpHeaders
         {
             var xssProtection = new XXssProtectionConfigurationElement { Policy = XXssProtectionPolicy.FilterEnabled, BlockMode = true };
 
-            headerSetter.AddXXssProtectionHeader(mockResponse.Object, xssProtection);
+            headerSetter.AddXXssProtectionHeader(mockContext, xssProtection);
 
             mockResponse.Verify(x => x.AddHeader("X-XSS-Protection", "1; mode=block"), Times.Once());
         }
