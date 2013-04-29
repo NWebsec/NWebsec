@@ -48,7 +48,7 @@
   <ItemGroup>
     <Reference Include="NWebsec, Version=2.2.1.0, Culture=neutral, PublicKeyToken=3613da5f958908a1, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\NWebsec.2.2.1-alpha04\lib\35\NWebsec.dll</HintPath>
+      <HintPath>..\packages\NWebsec.2.2.1\lib\35\NWebsec.dll</HintPath>
     </Reference>
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Web.DynamicData" />
@@ -65,6 +65,7 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Css\site.css" />
     <Content Include="Default.aspx" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>

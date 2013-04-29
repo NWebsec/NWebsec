@@ -35,5 +35,11 @@ namespace Mvc4.Controllers
         {
             return View("Index");
         }
+
+        public ActionResult Redirect()
+        {
+            return RedirectToAction("Index");
+        }
+
     }
 }

@@ -241,15 +241,15 @@ namespace NWebsec.Tests.Functional
         }
 
         [Test]
-        public async Task Csp_Enabled_SetsHeaders()
+        public async Task Csp_EnabledAndRedirect_NoHeaders()
         {
-            const string path = "/Csp";
+            const string path = "/Csp/Redirect";
             var testUri = Helper.GetUri(BaseUri, path);
 
             var response = await HttpClient.GetAsync(testUri);
 
-            Assert.IsTrue(response.IsSuccessStatusCode, ReqFailed + testUri);
-            Assert.IsTrue(response.Headers.Contains("Content-Security-Policy"), testUri.ToString());
+            Assert.IsTrue(response.StatusCode == HttpStatusCode.Redirect, ReqFailed + testUri);
+            Assert.IsFalse(response.Headers.Contains("Content-Security-Policy"), testUri.ToString());
         }
 
         [Test]
