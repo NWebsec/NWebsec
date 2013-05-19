@@ -29,6 +29,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DemoSiteWebForms", "DemoSit
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DemoSiteMvc4", "DemoSiteMvc4\DemoSiteMvc4.csproj", "{7E665EF9-D512-4D36-AFD6-E13BDBD8167F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NWebsec.SessionSecurity", "NWebsec.SessionSecurity\NWebsec.SessionSecurity.csproj", "{678B7F4E-2F0C-45B9-8236-4F178BE7C301}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NWebsec.SessionSecurity.Tests.Unit", "NWebsec.SessionSecurity.Tests.Unit\NWebsec.SessionSecurity.Tests.Unit.csproj", "{49675522-AD79-4544-B4D6-AC42C6560922}"
+EndProject
 Global
 	GlobalSection(TestCaseManagementSettings) = postSolution
 		CategoryFile = nwebsec.vsmdi
@@ -62,6 +66,14 @@ Global
 		{7E665EF9-D512-4D36-AFD6-E13BDBD8167F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7E665EF9-D512-4D36-AFD6-E13BDBD8167F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7E665EF9-D512-4D36-AFD6-E13BDBD8167F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{678B7F4E-2F0C-45B9-8236-4F178BE7C301}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{678B7F4E-2F0C-45B9-8236-4F178BE7C301}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{678B7F4E-2F0C-45B9-8236-4F178BE7C301}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{678B7F4E-2F0C-45B9-8236-4F178BE7C301}.Release|Any CPU.Build.0 = Release|Any CPU
+		{49675522-AD79-4544-B4D6-AC42C6560922}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{49675522-AD79-4544-B4D6-AC42C6560922}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{49675522-AD79-4544-B4D6-AC42C6560922}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{49675522-AD79-4544-B4D6-AC42C6560922}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
