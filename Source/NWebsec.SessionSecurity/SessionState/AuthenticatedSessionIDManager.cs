@@ -11,9 +11,9 @@ namespace NWebsec.SessionSecurity.SessionState
     {
         private static readonly RNGCryptoServiceProvider Rng = new RNGCryptoServiceProvider();
         private static readonly UTF8Encoding Utf8 = new UTF8Encoding(false, true);
-        private const int SessionIdComponentLength = 16; //Length in bytes
-        private const int TruncatedMacLength = 16; //Length in bytes
-        private readonly int base64SessionIdLength; //Length in bytes
+        internal const int SessionIdComponentLength = 16; //Length in bytes
+        internal const int TruncatedMacLength = 16; //Length in bytes
+        internal const int Base64SessionIdLength = 44; //Length in base64 characters
 
         private readonly HttpContextBase mockContext;
 
@@ -24,11 +24,6 @@ namespace NWebsec.SessionSecurity.SessionState
 
         public AuthenticatedSessionIDManager()
         {
-            const int totalSessionIdLength = SessionIdComponentLength + TruncatedMacLength;
-
-            var base64Length = totalSessionIdLength / 3;
-            if (totalSessionIdLength % 3 != 0) base64Length++;
-            base64SessionIdLength = base64Length * 4;
         }
 
         protected internal AuthenticatedSessionIDManager(HttpContextBase context)
@@ -57,7 +52,7 @@ namespace NWebsec.SessionSecurity.SessionState
 
         private bool ValidateSecureSessionId(string id)
         {
-            if (String.IsNullOrEmpty(id) || id.Length != base64SessionIdLength) return false;
+            if (String.IsNullOrEmpty(id) || id.Length != Base64SessionIdLength) return false;
 
             byte[] binarySessionID;
             try
