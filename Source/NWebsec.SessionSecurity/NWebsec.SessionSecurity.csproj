@@ -30,6 +30,12 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>NWebsecDevKey.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
@@ -49,8 +55,13 @@
     <Compile Include="Modules\SessionSecurityModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SessionState\AuthenticatedSessionIDManager.cs" />
+    <Compile Include="SessionState\AuthenticatedSessionIDHelper.cs" />
+    <Compile Include="SessionState\HmacSha256Helper.cs" />
+    <Compile Include="SessionState\IHmacHelper.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="NWebsecDevKey.snk" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
