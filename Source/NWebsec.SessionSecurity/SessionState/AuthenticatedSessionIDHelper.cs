@@ -3,6 +3,8 @@
 using System;
 using System.Security.Cryptography;
 using System.Text;
+using NWebsec.SessionSecurity.Configuration;
+using NWebsec.SessionSecurity.ExtensionMethods;
 
 namespace NWebsec.SessionSecurity.SessionState
 {
@@ -20,17 +22,21 @@ namespace NWebsec.SessionSecurity.SessionState
         internal const int SessionIdComponentLength = 16; //Length in bytes
         internal const int TruncatedMacLength = 16; //Length in bytes
         internal const int Base64SessionIdLength = 44; //Length in base64 characters
-        internal const string Base64SessionIdPadding = "=="; //The padding we need to add.
-
+        
         private readonly RandomNumberGenerator rng;
         private readonly IHmacHelper hmac;
+        private readonly SessionFixationConfigurationHelper configHelper;
 
         internal AuthenticatedSessionIDHelper()
-            : this(CryptoRng, new HmacSha256Helper())
-        { }
-
-        public AuthenticatedSessionIDHelper(RandomNumberGenerator rng, IHmacHelper hmac)
         {
+            configHelper = new SessionFixationConfigurationHelper();
+            rng = CryptoRng;
+            hmac = new HmacSha256Helper(configHelper.AuthenticationKey);
+        }
+
+        public AuthenticatedSessionIDHelper(SessionFixationConfigurationHelper configHelper, RandomNumberGenerator rng, IHmacHelper hmac)
+        {
+            this.configHelper = configHelper;
             this.rng = rng;
             this.hmac = hmac;
         }
@@ -54,7 +60,7 @@ namespace NWebsec.SessionSecurity.SessionState
             byte[] binarySessionID;
             try
             {
-                binarySessionID = Convert.FromBase64String(incomingSessionID + Base64SessionIdPadding);
+                binarySessionID = Convert.FromBase64String(incomingSessionID.AddBase64Padding());
             }
             catch (FormatException)
             {

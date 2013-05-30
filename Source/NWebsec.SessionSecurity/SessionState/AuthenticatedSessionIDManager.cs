@@ -1,5 +1,6 @@
 ﻿// Copyright (c) André N. Klingsheim. See License.txt in the project root for license information.
 
+using System;
 using System.Web;
 
 namespace NWebsec.SessionSecurity.SessionState
@@ -31,13 +32,22 @@ namespace NWebsec.SessionSecurity.SessionState
 
         public override string CreateSessionID(HttpContext context)
         {
-            return CurrentContext.User.Identity.IsAuthenticated ? sessionIdHelper.Create(CurrentContext.User.Identity.Name) : base.CreateSessionID(context);
+            var currentIdentity = CurrentContext.User.Identity;
+            if (currentIdentity.IsAuthenticated && !String.IsNullOrEmpty(currentIdentity.Name))
+            {
+                return sessionIdHelper.Create(currentIdentity.Name);
+            }
+            return base.CreateSessionID(context);
         }
 
         public override bool Validate(string id)
         {
-            return CurrentContext.User.Identity.IsAuthenticated ? sessionIdHelper.Validate(CurrentContext.User.Identity.Name, id) : id.Length == 24 && base.Validate(id);
+            var currentIdentity = CurrentContext.User.Identity;
+            if (currentIdentity.IsAuthenticated && !String.IsNullOrEmpty(currentIdentity.Name))
+            {
+                return sessionIdHelper.Validate(currentIdentity.Name, id);
+            }
+            return base.Validate(id);
         }
-
     }
 }

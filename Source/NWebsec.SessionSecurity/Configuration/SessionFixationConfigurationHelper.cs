@@ -8,15 +8,19 @@ namespace NWebsec.SessionSecurity.Configuration
     internal class SessionFixationConfigurationHelper
     {
         private readonly SessionSecurityConfigurationSection config;
-        private readonly byte[] authenticationKey;
+        internal byte[] AuthenticationKey { get; private set; }
 
-        internal SessionFixationConfigurationHelper()
+        internal SessionFixationConfigurationHelper() : this((SessionSecurityConfigurationSection)WebConfigurationManager.GetSection("nwebsec/sessionSecurity"))
         {
-            config = (SessionSecurityConfigurationSection) WebConfigurationManager.GetSection("nwebsec/sessionSecurity");
-            var hexToBinary = SoapHexBinary.Parse(config.SessionFixationProtection.SessionAuthenticationKey.Value);
-            authenticationKey = hexToBinary.Value;
+            
         }
 
-        //internal SessionSecurityConfigurationSectionGetConfig
+        internal SessionFixationConfigurationHelper(SessionSecurityConfigurationSection config)
+        {
+            this.config = config;
+            var hexToBinary = SoapHexBinary.Parse(config.SessionFixationProtection.SessionAuthenticationKey.Value);
+            AuthenticationKey = hexToBinary.Value;
+        }
+
     }
 }
