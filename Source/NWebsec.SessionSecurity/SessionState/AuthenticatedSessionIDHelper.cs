@@ -21,7 +21,7 @@ namespace NWebsec.SessionSecurity.SessionState
 
         internal const int SessionIdComponentLength = 16; //Length in bytes
         internal const int TruncatedMacLength = 16; //Length in bytes
-        internal const int Base64SessionIdLength = 44; //Length in base64 characters
+        internal const int Base64SessionIdLength = 43; //Length in base64 characters
         
         private readonly RandomNumberGenerator rng;
         private readonly IHmacHelper hmac;
@@ -75,7 +75,7 @@ namespace NWebsec.SessionSecurity.SessionState
             var expectedMac = CalculateMac(username, sessionIdComponent);
 
             var macDiffers = false;
-            for (var i = 0; i < expectedMac.Length; i++)
+            for (var i = 0; i < TruncatedMacLength; i++)
             {
                 macDiffers = macDiffers || expectedMac[i] != binarySessionID[i + SessionIdComponentLength];
             }

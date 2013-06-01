@@ -15,9 +15,8 @@ namespace NWebsec.SessionSecurity.Tests.Unit.SessionState
     {
         internal const int SessionIdComponentLength = 16; //Length in bytes
         internal const int TruncatedMacLength = 16; //Length in bytes
-        internal const int Base64SessionIdLength = 44; //Length in base64 characters
-        internal const string Base64SessionIdPadding = "=="; //The padding we need to add.
-
+        internal const int Base64SessionIdLength = 43; //Length in base64 characters
+        
         private AuthenticatedSessionIDHelper helper;
         private RandomNumberGenerator rng;
         private IHmacHelper hmac;
@@ -33,6 +32,7 @@ namespace NWebsec.SessionSecurity.Tests.Unit.SessionState
             var config = new SessionSecurityConfigurationSection();
             config.SessionFixationProtection.Enabled = true;
             config.SessionFixationProtection.SessionAuthenticationKey.Value = "0101010101010101010101010101010101010101010101010101010101010101";
+
             configHelper = new SessionFixationConfigurationHelper(config);
             helper = new AuthenticatedSessionIDHelper(configHelper, rng, hmac);
         }
@@ -40,32 +40,11 @@ namespace NWebsec.SessionSecurity.Tests.Unit.SessionState
         [Test]
         public void Create_CreatesRandomIdWithMac()
         {
-            var expectedSessionId = Convert.ToBase64String(new byte[]
-                                                               {
-                                                                   0x05, 0x05, 0x05, 0x05, 0x05, 0x05, 0x05, 0x05,
-                                                                   0x05, 0x05, 0x05, 0x05, 0x05, 0x05, 0x05, 0x05,
-                                                                   0x10, 0x10, 0x10, 0x10, 0x10, 0x10, 0x10, 0x10,
-                                                                   0x10, 0x10, 0x10, 0x10, 0x10, 0x10, 0x10, 0x10
-                                                               }).TrimEnd('=');
+            var expectedSessionId = GetMockValidSessionID();
 
             var sessionID = helper.Create("klings");
 
             Assert.AreEqual(expectedSessionId, sessionID);
-        }
-
-        [Test]
-        public void Create_CalculatesHMacOverUserNameAndId()
-        {
-            var expectedinput = new byte[]
-                                    {
-                                        0x6B, 0x6C, 0x69, 0x6E, 0x67, 0x73,
-                                        0x05, 0x05, 0x05, 0x05, 0x05, 0x05, 0x05, 0x05,
-                                        0x05, 0x05, 0x05, 0x05, 0x05, 0x05, 0x05, 0x05
-                                    };
-            
-            helper.Create("klings");
-
-            Mock.Get(hmac).Verify(h => h.CalculateMac(expectedinput), Times.Once());
         }
 
         [Test]
@@ -87,7 +66,7 @@ namespace NWebsec.SessionSecurity.Tests.Unit.SessionState
             var session1 = Convert.FromBase64String(helper.Create("klings").AddBase64Padding());
             var session2 = Convert.FromBase64String(helper.Create("klings2").AddBase64Padding());
 
-            for (var i = 0; i < SessionIdComponentLength; i++ )
+            for (var i = 0; i < SessionIdComponentLength; i++)
             {
                 Assert.AreEqual(session1[i], session2[i]);
             }
@@ -97,9 +76,36 @@ namespace NWebsec.SessionSecurity.Tests.Unit.SessionState
             {
                 differs = differs || session1[i] != session2[i];
             }
-            Assert.IsTrue(differs,"MACs were equal.");
+            Assert.IsTrue(differs, "MACs were equal.");
         }
-        
+
+        [Test]
+        public void Validate_ValidSessionID_ReturnsTrue()
+        {
+            Assert.IsTrue(helper.Validate("klings", GetMockValidSessionID()));
+        }
+
+        [Test]
+        public void Validate_SessionIDWithInvalidMacLeftBoundary_ReturnsFalse()
+        {
+            Assert.IsFalse(helper.Validate("klings", GetMockSessionIDWithInvalidMacLeftBoundary()));
+        }
+
+        [Test]
+        public void Validate_SessionIDWithInvalidMacRightBoundary_ReturnsFalse()
+        {
+            Assert.IsFalse(helper.Validate("klings", GetMockSessionIDWithInvalidMacRightBoundary()));
+        }
+
+        [Test]
+        public void Validate_InvalidBase64SessionID_ReturnsFalse()
+        {
+            var sessionid = GetMockValidSessionID();
+            sessionid = "?" + sessionid.Substring(1);
+
+            Assert.AreEqual(Base64SessionIdLength, sessionid.Length);
+            Assert.IsFalse(helper.Validate("klings", sessionid));
+        }
 
         private byte[] GetMockMac()
         {
@@ -110,6 +116,39 @@ namespace NWebsec.SessionSecurity.Tests.Unit.SessionState
                            0x10, 0x10, 0x10, 0x10, 0x10, 0x10, 0x10, 0x10,
                            0x10, 0x10, 0x10, 0x10, 0x10, 0x10, 0x10, 0x10
                        };
+        }
+
+        private string GetMockValidSessionID()
+        {
+            return Convert.ToBase64String(new byte[]
+            {
+                0x05, 0x05, 0x05, 0x05, 0x05, 0x05, 0x05, 0x05,
+                0x05, 0x05, 0x05, 0x05, 0x05, 0x05, 0x05, 0x05,
+                0x10, 0x10, 0x10, 0x10, 0x10, 0x10, 0x10, 0x10,
+                0x10, 0x10, 0x10, 0x10, 0x10, 0x10, 0x10, 0x10
+            }).TrimEnd('=');
+        }
+
+        private string GetMockSessionIDWithInvalidMacLeftBoundary()
+        {
+            return Convert.ToBase64String(new byte[]
+            {
+                0x05, 0x05, 0x05, 0x05, 0x05, 0x05, 0x05, 0x05,
+                0x05, 0x05, 0x05, 0x05, 0x05, 0x05, 0x05, 0x05,
+                0x11, 0x10, 0x10, 0x10, 0x10, 0x10, 0x10, 0x10,
+                0x10, 0x10, 0x10, 0x10, 0x10, 0x10, 0x10, 0x10
+            }).TrimEnd('=');
+        }
+        
+        private string GetMockSessionIDWithInvalidMacRightBoundary()
+        {
+            return Convert.ToBase64String(new byte[]
+            {
+                0x05, 0x05, 0x05, 0x05, 0x05, 0x05, 0x05, 0x05,
+                0x05, 0x05, 0x05, 0x05, 0x05, 0x05, 0x05, 0x05,
+                0x10, 0x10, 0x10, 0x10, 0x10, 0x10, 0x10, 0x10,
+                0x10, 0x10, 0x10, 0x10, 0x10, 0x10, 0x10, 0x11
+            }).TrimEnd('=');
         }
     }
 }
