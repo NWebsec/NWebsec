@@ -110,17 +110,15 @@ namespace NWebsec.SessionSecurity.Tests.Unit.Crypto
             get { return new object[] { KeyLength, Ki, Input, Ko }; }
         }
 
-        public object Result { get; private set; }
-
         // ReSharper disable UnusedAutoPropertyAccessor.Local
+        public object Result { get; private set; }
         public bool HasExpectedResult { get; private set; }
-
         public Type ExpectedException { get; private set; }
         public string ExpectedExceptionName { get; private set; }
 
         public string TestName
         {
-            get { return String.Format("NIST KDF HMAC_SHA256 Ctr validation #{0:d2}",Count); }
+            get { return String.Format("NIST KDF HMAC_SHA256 Ctr validation #{0:d2}", Count); }
             private set { throw new NotImplementedException(); }
         }
 

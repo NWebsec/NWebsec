@@ -18,9 +18,10 @@ namespace NWebsec.SessionSecurity.Crypto
             utf8 = new UTF8Encoding(false, true);
         }
 
-        internal byte[] DeriveKey(byte[] keyDerivationKey, string label, int generatedKeyLength,
-                                  string context = "")
+        internal byte[] DeriveKey(int generatedKeyLength, byte[] keyDerivationKey, string label, string context = "")
         {
+            if (String.IsNullOrEmpty(label)) throw new ArgumentException("Label was null or empty.", "label");
+            
             using (var ms = new MemoryStream(100))
             {
                 var labelBytes = utf8.GetBytes(label);
@@ -32,19 +33,24 @@ namespace NWebsec.SessionSecurity.Crypto
                     ms.Write(contextBytes, 0, contextBytes.Length);
                 }
                 var keyLengthBytes = BitConverter.GetBytes(generatedKeyLength);
-                ToBigEndian(keyLengthBytes);
+                EnsureLittleEndian(keyLengthBytes);
                 ms.Write(keyLengthBytes, 0, keyLengthBytes.Length);
+
                 return DeriveKey(keyDerivationKey, generatedKeyLength, ms.ToArray());
             }
-
         }
 
         internal byte[] DeriveKey(byte[] keyDerivationKey, int generatedKeyLength, byte[] inputData)
         {
+            if (keyDerivationKey == null) throw new ArgumentNullException("keyDerivationKey");
+            if (generatedKeyLength < 1) throw new ArgumentOutOfRangeException("generatedKeyLength", "Requested key length must be > 0");
+            if (generatedKeyLength % 8 != 0) throw new ArgumentException("The requested key length must be a multiple of 8.", "generatedKeyLength");
+            if (inputData == null) throw new ArgumentException("inputData");
+
             var n = generatedKeyLength / H;
             if (generatedKeyLength % H != 0) n++;
 
-            if (n > (2 ^ RLen - 1)) throw new ArgumentException("Generated key length too long. Maximum is: " + H * (2 ^ RLen));
+            if (n > Math.Pow(2, RLen) - 1) throw new ArgumentException("Requested key length too long. Maximum is: " + H * (Math.Pow(2, RLen) - 1));
             var rounds = Convert.ToByte(n);
 
             var hmacInput = new byte[inputData.Length + 1];
@@ -52,28 +58,31 @@ namespace NWebsec.SessionSecurity.Crypto
 
             using (var ms = new MemoryStream(generatedKeyLength + H))
             {
-                for (byte i = 1; i <= rounds; i++)
+                byte i = 0x00;
+                do
                 {
-                    hmacInput[0] = i;
+
+                    hmacInput[0] = ++i;
                     using (var hmac = new HMACSHA256(keyDerivationKey))
                     {
                         var ki = hmac.ComputeHash(hmacInput);
                         ms.Write(ki, 0, ki.Length);
                     }
-                }
+                } while (i != rounds);
+
                 ms.Position = 0;
-                var key = new byte[generatedKeyLength/8];
+                var key = new byte[generatedKeyLength / 8];
                 ms.Read(key, 0, key.Length);
+
                 return key;
             }
         }
 
-        private void ToBigEndian(byte[] bytes)
+        private void EnsureLittleEndian(byte[] bytes)
         {
-            if (BitConverter.IsLittleEndian)
-            {
-                Array.Reverse(bytes);
-            }
+            if (BitConverter.IsLittleEndian) return;
+
+            Array.Reverse(bytes);
         }
     }
 }

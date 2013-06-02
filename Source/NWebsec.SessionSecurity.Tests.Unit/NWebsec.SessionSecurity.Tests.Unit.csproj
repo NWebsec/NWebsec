@@ -58,6 +58,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Configuration\SessionAuthenticationKeyValidatorTests.cs" />
+    <Compile Include="Crypto\KbkdfHmacSha256CtrNistValidationTests.cs" />
     <Compile Include="Crypto\KbkdfHmacSha256CtrTests.cs" />
     <Compile Include="Crypto\NistKbkdfTestData.cs" />
     <Compile Include="PredictableNumberGenerator.cs" />

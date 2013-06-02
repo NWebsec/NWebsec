@@ -1,9 +1,8 @@
-﻿// Copyright (c) André N. Klingsheim. See License.txt in the project root for license information.
-
-using System;
-using System.Runtime.Remoting.Metadata.W3cXsd2001;
+﻿using System;
 using NUnit.Framework;
 using NWebsec.SessionSecurity.Crypto;
+
+// Copyright (c) André N. Klingsheim. See License.txt in the project root for license information.
 
 namespace NWebsec.SessionSecurity.Tests.Unit.Crypto
 {
@@ -18,25 +17,48 @@ namespace NWebsec.SessionSecurity.Tests.Unit.Crypto
             kdf = new KbkdfHmacSha256Ctr();
         }
 
-        [Test, TestCaseSource(typeof(NistKbkdfTestData))]
-        public void DeriveKey_NistValidationTest01(int keyLength, string keyDerivationKey, string fixedInput, string expectedKey)
+        [Test]
+        public void DeriveKey_GeneratesDifferentKeysForDifferentLabels()
         {
-            var l = keyLength;
-            var ki = ParseHexString(keyDerivationKey);
-            var input = ParseHexString(fixedInput);
+            const int keyLength = 128;
+            var ki = new byte[16];
             
-            var derivedKey = kdf.DeriveKey(ki, l, input);
+            
+            var derivedKey = kdf.DeriveKey(keyLength, ki, "label");
+            var secondDerivedKey = kdf.DeriveKey(keyLength, ki, "label2");
 
-            Assert.AreEqual(expectedKey,GetLowerCaseHexString(derivedKey));
+            Assert.AreNotEqual(derivedKey,secondDerivedKey);
         }
 
-        private static byte[] ParseHexString(string hex)
+        [Test]
+        public void DeriveKey_GeneratesDifferentKeyWithContext()
         {
-            return SoapHexBinary.Parse(hex).Value;
+            const int keyLength = 128;
+            var ki = new byte[16];
+
+
+            var derivedKey = kdf.DeriveKey(keyLength, ki, "label");
+            var secondDerivedKey = kdf.DeriveKey(keyLength, ki, "label", "context");
+
+            Assert.AreNotEqual(derivedKey, secondDerivedKey);
         }
-        private static string GetLowerCaseHexString(byte[] data)
+
+        [Test]
+        public void DeriveKey_RequestedKeyLengthMax_NoException()
         {
-            return BitConverter.ToString(data).Replace("-", String.Empty).ToLower();
+            const int keyLength = 255*256;
+            var ki = new byte[16];
+
+            Assert.DoesNotThrow(() =>  kdf.DeriveKey(keyLength, ki, "label"));
+        }
+
+        [Test]
+        public void DeriveKey_RequestedKeyLengthTooLong_ThrowsException()
+        {
+            const int keyLength = (255 * 256)+1;
+            var ki = new byte[16];
+            
+            Assert.Throws<ArgumentException>(() => kdf.DeriveKey(keyLength, ki, "label"));
         }
     }
 }
