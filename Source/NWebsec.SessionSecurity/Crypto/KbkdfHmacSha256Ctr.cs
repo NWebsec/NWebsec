@@ -18,20 +18,30 @@ namespace NWebsec.SessionSecurity.Crypto
             utf8 = new UTF8Encoding(false, true);
         }
 
+        /// <summary>
+        /// Derives a new key from an existing key.
+        /// </summary>
+        /// <param name="generatedKeyLength">The length of the derived key in bits. Must be a multiple of 8.</param>
+        /// <param name="keyDerivationKey">The key used to derive a new key. The recommended length is 256 bits. A shorter key undermines security. A longer key does not add much to security.</param>
+        /// <param name="label">The label used to identify a purpose. Use different labels to generate different keys for different purposes.</param>
+        /// <param name="context">And optional context.</param>
+        /// <returns>The derived key.</returns>
         internal byte[] DeriveKey(int generatedKeyLength, byte[] keyDerivationKey, string label, string context = "")
         {
             if (String.IsNullOrEmpty(label)) throw new ArgumentException("Label was null or empty.", "label");
-            
+
             using (var ms = new MemoryStream(100))
             {
                 var labelBytes = utf8.GetBytes(label);
                 ms.Write(labelBytes, 0, labelBytes.Length);
                 ms.WriteByte(0x00);
+
                 if (!String.IsNullOrEmpty(context))
                 {
                     var contextBytes = utf8.GetBytes(context);
                     ms.Write(contextBytes, 0, contextBytes.Length);
                 }
+
                 var keyLengthBytes = BitConverter.GetBytes(generatedKeyLength);
                 EnsureLittleEndian(keyLengthBytes);
                 ms.Write(keyLengthBytes, 0, keyLengthBytes.Length);
@@ -39,7 +49,13 @@ namespace NWebsec.SessionSecurity.Crypto
                 return DeriveKey(keyDerivationKey, generatedKeyLength, ms.ToArray());
             }
         }
-
+        /// <summary>
+        /// This method should not be called directly. Use <see cref="DeriveKey(int,byte[],string,string)">DeriveKey(int,byte[],string,string)</see> instead./>
+        /// </summary>
+        /// <param name="keyDerivationKey"></param>
+        /// <param name="generatedKeyLength"></param>
+        /// <param name="inputData"></param>
+        /// <returns></returns>
         internal byte[] DeriveKey(byte[] keyDerivationKey, int generatedKeyLength, byte[] inputData)
         {
             if (keyDerivationKey == null) throw new ArgumentNullException("keyDerivationKey");
@@ -61,7 +77,6 @@ namespace NWebsec.SessionSecurity.Crypto
                 byte i = 0x00;
                 do
                 {
-
                     hmacInput[0] = ++i;
                     using (var hmac = new HMACSHA256(keyDerivationKey))
                     {
@@ -78,7 +93,7 @@ namespace NWebsec.SessionSecurity.Crypto
             }
         }
 
-        private void EnsureLittleEndian(byte[] bytes)
+        private static void EnsureLittleEndian(byte[] bytes)
         {
             if (BitConverter.IsLittleEndian) return;
 
