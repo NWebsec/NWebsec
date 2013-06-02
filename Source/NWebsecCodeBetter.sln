@@ -21,6 +21,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{F37533
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NWebsec.Tests.Unit", "NWebsec.Tests.Unit\NWebsec.Tests.Unit.csproj", "{2E83CDC3-152A-4139-8B00-0CDECD3F5BDC}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NWebsec.SessionSecurity", "NWebsec.SessionSecurity\NWebsec.SessionSecurity.csproj", "{678B7F4E-2F0C-45B9-8236-4F178BE7C301}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NWebsec.SessionSecurity.Tests.Unit", "NWebsec.SessionSecurity.Tests.Unit\NWebsec.SessionSecurity.Tests.Unit.csproj", "{49675522-AD79-4544-B4D6-AC42C6560922}"
+EndProject
 Global
 	GlobalSection(TestCaseManagementSettings) = postSolution
 		CategoryFile = nwebsec.vsmdi
@@ -42,6 +46,14 @@ Global
 		{2E83CDC3-152A-4139-8B00-0CDECD3F5BDC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2E83CDC3-152A-4139-8B00-0CDECD3F5BDC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2E83CDC3-152A-4139-8B00-0CDECD3F5BDC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{678B7F4E-2F0C-45B9-8236-4F178BE7C301}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{678B7F4E-2F0C-45B9-8236-4F178BE7C301}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{678B7F4E-2F0C-45B9-8236-4F178BE7C301}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{678B7F4E-2F0C-45B9-8236-4F178BE7C301}.Release|Any CPU.Build.0 = Release|Any CPU
+		{49675522-AD79-4544-B4D6-AC42C6560922}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{49675522-AD79-4544-B4D6-AC42C6560922}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{49675522-AD79-4544-B4D6-AC42C6560922}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{49675522-AD79-4544-B4D6-AC42C6560922}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
