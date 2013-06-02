@@ -52,7 +52,7 @@ namespace NWebsec.SessionSecurity.Tests.Unit.Crypto
                     var dataChunk = new HmacSha256CtrData();
                     var field = line.Split('=');
                     if (!field[0].Trim().Equals("COUNT")) throw new ApplicationException("Expected COUNT, but got: " + field[0]);
-                    dataChunk.Count = field[1].Trim();
+                    dataChunk.Count = Int32.Parse(field[1].Trim());
                     // ReSharper disable PossibleNullReferenceException
                     line = reader.ReadLine();
                     field = line.Split('=');
@@ -99,7 +99,7 @@ namespace NWebsec.SessionSecurity.Tests.Unit.Crypto
 
     public class HmacSha256CtrData : ITestCaseData
     {
-        internal string Count { get; set; }
+        internal int Count { get; set; }
         internal int KeyLength { get; set; }
         internal string Ki { get; set; }
         internal string Input { get; set; }
@@ -120,7 +120,7 @@ namespace NWebsec.SessionSecurity.Tests.Unit.Crypto
 
         public string TestName
         {
-            get { return "NIST KDF HMAC_SHA256 Ctr validation #"+Count; }
+            get { return String.Format("NIST KDF HMAC_SHA256 Ctr validation #{0:d2}",Count); }
             private set { throw new NotImplementedException(); }
         }
 
