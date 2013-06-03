@@ -43,7 +43,6 @@ namespace NWebsec.SessionSecurity.Crypto
                 }
 
                 var keyLengthBytes = BitConverter.GetBytes(generatedKeyLength);
-                EnsureLittleEndian(keyLengthBytes);
                 ms.Write(keyLengthBytes, 0, keyLengthBytes.Length);
 
                 return DeriveKey(keyDerivationKey, generatedKeyLength, ms.ToArray());
@@ -72,7 +71,7 @@ namespace NWebsec.SessionSecurity.Crypto
             var hmacInput = new byte[inputData.Length + 1];
             Array.Copy(inputData, 0, hmacInput, 1, inputData.Length);
 
-            using (var ms = new MemoryStream(generatedKeyLength + H))
+            using (var ms = new MemoryStream((generatedKeyLength + H)/8))
             {
                 byte i = 0x00;
                 do
@@ -91,13 +90,6 @@ namespace NWebsec.SessionSecurity.Crypto
 
                 return key;
             }
-        }
-
-        private static void EnsureLittleEndian(byte[] bytes)
-        {
-            if (BitConverter.IsLittleEndian) return;
-
-            Array.Reverse(bytes);
         }
     }
 }

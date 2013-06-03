@@ -11,12 +11,12 @@ namespace NWebsec.SessionSecurity.SessionState
 
         internal HmacSha256Helper(byte[] key)
         {
-            if (key.Length != 32)
-            {
-                throw new ArgumentException("Expected a 32 byte key (256 bits), got " + key.Length + "bytes.");
-            }
+            if (key == null) throw new ArgumentNullException("key");
+            if (key.Length == 0) throw new ArgumentException("Key length was 0.","key");
+            
             this.key = key;
         }
+
         public byte[] CalculateMac(byte[] input)
         {
             using (var hmac = new HMACSHA256(key))

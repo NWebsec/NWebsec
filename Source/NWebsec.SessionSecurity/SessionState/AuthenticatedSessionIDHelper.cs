@@ -25,18 +25,16 @@ namespace NWebsec.SessionSecurity.SessionState
         
         private readonly RandomNumberGenerator rng;
         private readonly IHmacHelper hmac;
-        private readonly SessionFixationConfigurationHelper configHelper;
-
+        
         internal AuthenticatedSessionIDHelper()
         {
-            configHelper = new SessionFixationConfigurationHelper();
             rng = CryptoRng;
-            hmac = new HmacSha256Helper(configHelper.AuthenticationKey);
+            var configHelper = new SessionFixationConfigurationHelper();
+            hmac = new HmacSha256Helper(configHelper.GetKeyDerivedFromConfig());
         }
 
-        public AuthenticatedSessionIDHelper(SessionFixationConfigurationHelper configHelper, RandomNumberGenerator rng, IHmacHelper hmac)
+        public AuthenticatedSessionIDHelper(RandomNumberGenerator rng, IHmacHelper hmac)
         {
-            this.configHelper = configHelper;
             this.rng = rng;
             this.hmac = hmac;
         }

@@ -48,6 +48,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Configuration\MachineKeyConfigurationHelper.cs" />
     <Compile Include="Configuration\SessionSecurityConfigurationSection.cs" />
     <Compile Include="Configuration\SessionFixationConfigurationHelper.cs" />
     <Compile Include="Configuration\Validation\SessionAuthenticationKeyValidator.cs" />

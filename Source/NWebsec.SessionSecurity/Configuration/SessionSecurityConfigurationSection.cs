@@ -30,6 +30,12 @@ namespace NWebsec.SessionSecurity.Configuration
             set { this["enabled"] = value; }
         }
 
+        [ConfigurationProperty("useMachineKey", IsRequired = false, DefaultValue = true)]
+        public bool useMachineKey
+        {
+            get { return (bool)this["useMachineKey"]; }
+            set { this["useMachineKey"] = value; }
+        }
 
         [ConfigurationProperty("sessionAuthenticationKey", IsRequired = true)]
         public SessionAuthenticationKeyConfigurationElement SessionAuthenticationKey

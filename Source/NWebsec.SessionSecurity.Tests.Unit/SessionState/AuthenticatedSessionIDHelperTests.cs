@@ -33,8 +33,8 @@ namespace NWebsec.SessionSecurity.Tests.Unit.SessionState
             config.SessionFixationProtection.Enabled = true;
             config.SessionFixationProtection.SessionAuthenticationKey.Value = "0101010101010101010101010101010101010101010101010101010101010101";
 
-            configHelper = new SessionFixationConfigurationHelper(config);
-            helper = new AuthenticatedSessionIDHelper(configHelper, rng, hmac);
+            //configHelper = new SessionFixationConfigurationHelper(config);
+            helper = new AuthenticatedSessionIDHelper(rng, hmac);
         }
 
         [Test]
@@ -50,7 +50,7 @@ namespace NWebsec.SessionSecurity.Tests.Unit.SessionState
         [Test]
         public void Create_CalculatesSameMacForSameUserWithSameSessionComponent()
         {
-            helper = new AuthenticatedSessionIDHelper(configHelper, rng, new HmacSha256Helper(new byte[32]));
+            helper = new AuthenticatedSessionIDHelper(rng, new HmacSha256Helper(new byte[32]));
 
             var session1 = helper.Create("klings").AddBase64Padding();
             var session2 = helper.Create("klings").AddBase64Padding();
@@ -61,7 +61,7 @@ namespace NWebsec.SessionSecurity.Tests.Unit.SessionState
         [Test]
         public void Create_CalculatesDifferentMacForDifferentUsersWithSameSessionComponent()
         {
-            helper = new AuthenticatedSessionIDHelper(configHelper, rng, new HmacSha256Helper(new byte[32]));
+            helper = new AuthenticatedSessionIDHelper(rng, new HmacSha256Helper(new byte[32]));
 
             var session1 = Convert.FromBase64String(helper.Create("klings").AddBase64Padding());
             var session2 = Convert.FromBase64String(helper.Create("klings2").AddBase64Padding());
