@@ -17,6 +17,7 @@ namespace NWebsec.SessionSecurity.Tests.Unit.Crypto
                            ? "KDFCTR_gen.txt"
                            : @"Source\NWebsec.SessionSecurity.Tests.Unit\KDFCTR_gen.txt";
             
+            if(!File.Exists(file)) throw new FileNotFoundException("Cwd: " + Directory.GetCurrentDirectory(),file);
             using (var reader = new StreamReader(file))
             {
 
