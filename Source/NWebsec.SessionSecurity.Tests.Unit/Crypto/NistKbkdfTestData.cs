@@ -12,7 +12,12 @@ namespace NWebsec.SessionSecurity.Tests.Unit.Crypto
     {
         private static IEnumerator ReadTestDataFromFile()
         {
-            using (var reader = new StreamReader("KDFCTR_gen.txt"))
+            //The first should work for VS test runner, the second for CodeBetter build.
+            var file = File.Exists("KDFCTR_gen.txt")
+                           ? "KDFCTR_gen.txt"
+                           : @"Source\NWebsec.SessionSecurity.Tests.Unit\KDFCTR_gen.txt";
+            
+            using (var reader = new StreamReader(file))
             {
 
                 var line = reader.ReadLine();
