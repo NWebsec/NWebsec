@@ -21,6 +21,7 @@
     <DefineConstants>TRACE;DEBUG</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <RunCodeAnalysis>true</RunCodeAnalysis>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -53,6 +54,7 @@
     <Compile Include="Configuration\SessionFixationConfigurationHelper.cs" />
     <Compile Include="Configuration\Validation\SessionAuthenticationKeyValidator.cs" />
     <Compile Include="Configuration\Validation\SessionAuthenticationKeyValidatorAttribute.cs" />
+    <Compile Include="Crypto\CryptoRng.cs" />
     <Compile Include="Crypto\KbkdfHmacSha256Ctr.cs" />
     <Compile Include="ExtensionMethods\Base64StringExtensions.cs" />
     <Compile Include="Modules\SessionSecurityModule.cs" />

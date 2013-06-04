@@ -25,7 +25,7 @@ namespace NWebsec.SessionSecurity.Tests.Unit.Crypto
             var ki = ParseHexString(keyDerivationKey);
             var input = ParseHexString(fixedInput);
             
-            var derivedKey = kdf.DeriveKey(ki, l, input);
+            var derivedKey = kdf.DeriveKey(l, ki, input);
 
             Assert.AreEqual(expectedKey,GetLowerCaseHexString(derivedKey));
         }

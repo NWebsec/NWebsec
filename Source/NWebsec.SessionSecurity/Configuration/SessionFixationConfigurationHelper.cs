@@ -2,7 +2,6 @@
 
 using System.Runtime.Remoting.Metadata.W3cXsd2001;
 using System.Web.Configuration;
-using NWebsec.SessionSecurity.Crypto;
 
 namespace NWebsec.SessionSecurity.Configuration
 {
@@ -23,23 +22,22 @@ namespace NWebsec.SessionSecurity.Configuration
             this.machineKeyHelper = machineKeyHelper;
         }
 
-        internal byte[] GetKeyDerivedFromConfig()
+        internal bool SessionFixationProtectionEnabled()
         {
-            return sessionSecurityConfig.SessionFixationProtection.useMachineKey ? DeriveKey(machineKeyHelper.GetMachineKey()) : DeriveFromSessionAuthenticationKey();
+            return sessionSecurityConfig.SessionFixationProtection.Enabled;
         }
 
-        private byte[] DeriveFromSessionAuthenticationKey()
+        internal byte[] GetKeyFromConfig()
+        {
+            return sessionSecurityConfig.SessionFixationProtection.useMachineKey ? machineKeyHelper.GetMachineKey() : GetSessionAuthenticationKey();
+        }
+
+        private byte[] GetSessionAuthenticationKey()
         {
             var hexBinary = SoapHexBinary.Parse(sessionSecurityConfig.SessionFixationProtection.SessionAuthenticationKey.Value);
-            var key = DeriveKey(hexBinary.Value);
+            var key = hexBinary.Value;
             hexBinary.Value = new byte[0];
             return key;
-        }
-
-        private byte[] DeriveKey(byte[] keyMaterial)
-        {
-            var kdf = new KbkdfHmacSha256Ctr();
-            return kdf.DeriveKey(256, keyMaterial, "NWebsecSessionAuthenticationPurpose");
         }
     }
 }

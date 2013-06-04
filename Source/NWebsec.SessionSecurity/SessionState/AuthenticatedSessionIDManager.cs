@@ -22,7 +22,7 @@ namespace NWebsec.SessionSecurity.SessionState
 
         public AuthenticatedSessionIDManager()
         {
-            sessionIdHelper = new AuthenticatedSessionIDHelper();
+            sessionIdHelper = AuthenticatedSessionIDHelper.Instance;
         }
 
         internal AuthenticatedSessionIDManager(HttpContextBase context, IAuthenticatedSessionIDHelper helper)

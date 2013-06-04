@@ -4,6 +4,7 @@ using System;
 using System.Security.Cryptography;
 using System.Text;
 using NWebsec.SessionSecurity.Configuration;
+using NWebsec.SessionSecurity.Crypto;
 using NWebsec.SessionSecurity.ExtensionMethods;
 
 namespace NWebsec.SessionSecurity.SessionState
@@ -16,24 +17,42 @@ namespace NWebsec.SessionSecurity.SessionState
 
     internal class AuthenticatedSessionIDHelper : IAuthenticatedSessionIDHelper
     {
-        private static readonly RNGCryptoServiceProvider CryptoRng = new RNGCryptoServiceProvider();
-        private static readonly UTF8Encoding Utf8 = new UTF8Encoding(false, true);
+        private static volatile AuthenticatedSessionIDHelper instance;
+        private static readonly object LockObj = new Object();
 
         internal const int SessionIdComponentLength = 16; //Length in bytes
         internal const int TruncatedMacLength = 16; //Length in bytes
         internal const int Base64SessionIdLength = 43; //Length in base64 characters
-        
+
+        private readonly UTF8Encoding utf8 = new UTF8Encoding(false, true);
         private readonly RandomNumberGenerator rng;
         private readonly IHmacHelper hmac;
-        
-        internal AuthenticatedSessionIDHelper()
+
+        public static AuthenticatedSessionIDHelper Instance
         {
-            rng = CryptoRng;
-            var configHelper = new SessionFixationConfigurationHelper();
-            hmac = new HmacSha256Helper(configHelper.GetKeyDerivedFromConfig());
+            get
+            {
+                if (instance == null)
+                {
+                    lock (LockObj)
+                    {
+                        if (instance == null)
+                        {
+                            var configHelper = new SessionFixationConfigurationHelper();
+                            var keyMaterial = configHelper.GetKeyFromConfig();
+                            var kdf = new KbkdfHmacSha256Ctr();
+                            var key = kdf.DeriveKey(256, keyMaterial,
+                                                    "NWebsec.SessionSecurity.SessionState.AuthenticatedSessionIDHelper");
+                            Array.Clear(keyMaterial, 0, keyMaterial.Length);
+                            instance = new AuthenticatedSessionIDHelper(new CryptoRng(), new HmacSha256Helper(key));
+                        }
+                    }
+                }
+                return instance;
+            }
         }
 
-        public AuthenticatedSessionIDHelper(RandomNumberGenerator rng, IHmacHelper hmac)
+        internal AuthenticatedSessionIDHelper(RandomNumberGenerator rng, IHmacHelper hmac)
         {
             this.rng = rng;
             this.hmac = hmac;
@@ -53,7 +72,7 @@ namespace NWebsec.SessionSecurity.SessionState
         {
             if (String.IsNullOrEmpty(incomingSessionID) || incomingSessionID.Length != Base64SessionIdLength) return false;
 
-            if (String.IsNullOrEmpty(username)) throw new ArgumentException("username was null or empty.");
+            if (String.IsNullOrEmpty(username)) throw new ArgumentException("Username was null or empty.");
 
             byte[] binarySessionID;
             try
@@ -83,7 +102,7 @@ namespace NWebsec.SessionSecurity.SessionState
 
         private byte[] CalculateMac(string userName, byte[] sessionID)
         {
-            var userNameBits = Utf8.GetBytes(userName);
+            var userNameBits = utf8.GetBytes(userName);
 
             var input = new byte[userName.Length + sessionID.Length];
             Array.Copy(userNameBits, input, userName.Length);
