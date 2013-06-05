@@ -4,6 +4,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Reflection;
 using NUnit.Framework;
 
 namespace NWebsec.SessionSecurity.Tests.Unit.Crypto
@@ -12,13 +13,9 @@ namespace NWebsec.SessionSecurity.Tests.Unit.Crypto
     {
         private static IEnumerator ReadTestDataFromFile()
         {
-            //The first should work for VS test runner, the second for CodeBetter build.
-            var file = File.Exists("KDFCTR_gen.txt")
-                           ? "KDFCTR_gen.txt"
-                           : @"Source\NWebsec.SessionSecurity.Tests.Unit\KDFCTR_gen.txt";
-            
-            if(!File.Exists(file)) throw new FileNotFoundException("Cwd: " + Directory.GetCurrentDirectory(),file);
-            using (var reader = new StreamReader(file))
+            var assembly = Assembly.GetExecutingAssembly();
+
+            using (var reader = new StreamReader((assembly.GetManifestResourceStream("NWebsec.SessionSecurity.Tests.Unit.KDFCTR_gen.txt"))))
             {
 
                 var line = reader.ReadLine();
