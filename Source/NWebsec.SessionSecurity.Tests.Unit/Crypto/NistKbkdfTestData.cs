@@ -13,7 +13,7 @@ namespace NWebsec.SessionSecurity.Tests.Unit.Crypto
     {
         private static IEnumerator ReadTestDataFromFile()
         {
-            var assembly = Assembly.GetExecutingAssembly();
+            var assembly = Assembly.GetAssembly(typeof(NistKbkdfTestData));
 
             using (var reader = new StreamReader((assembly.GetManifestResourceStream("NWebsec.SessionSecurity.Tests.Unit.KDFCTR_gen.txt"))))
             {
