@@ -5,6 +5,7 @@ using System.Collections.Specialized;
 using System.Web;
 using Moq;
 using NUnit.Framework;
+using NWebsec.SessionSecurity.Configuration;
 using NWebsec.SessionSecurity.SessionState;
 
 namespace NWebsec.SessionSecurity.Tests.Unit.SessionState
@@ -14,6 +15,7 @@ namespace NWebsec.SessionSecurity.Tests.Unit.SessionState
     {
         private HttpContextBase httpContext;
         private IAuthenticatedSessionIDHelper sessionIDHelper;
+        private SessionSecurityConfigurationSection configEnabled;
 
         [SetUp]
         public void Setup()
@@ -21,8 +23,22 @@ namespace NWebsec.SessionSecurity.Tests.Unit.SessionState
             var httpContextMock = new Mock<HttpContextBase>();
             httpContextMock.Setup(c => c.Items).Returns(new ListDictionary());
             httpContext = httpContextMock.Object;
+            configEnabled = new SessionSecurityConfigurationSection { SessionFixationProtection = { Enabled = true } };
 
             sessionIDHelper = new Mock<IAuthenticatedSessionIDHelper>().Object;
+        }
+
+        [Test]
+        public void CreateSessionID_DisabledInConfigUserAuthenticated_ReturnsAspNetSessionID()
+        {
+            var mock = Mock.Get(httpContext);
+            mock.Setup(c => c.User.Identity.IsAuthenticated).Returns(true);
+            mock.Setup(c => c.User.Identity.Name).Returns("klings");
+            var config = new SessionSecurityConfigurationSection {SessionFixationProtection = {Enabled = false}};
+            var sessionIdManager = new AuthenticatedSessionIDManager(httpContext, config, sessionIDHelper);
+            Mock.Get(sessionIDHelper).Setup(s => s.Create("klings")).Returns("secureid");
+
+            Assert.True(sessionIdManager.CreateSessionID(null).Length == 24, "Generated session id was not length 24, and propably not an ASP.NET session ID.");
         }
 
         [Test]
@@ -31,7 +47,7 @@ namespace NWebsec.SessionSecurity.Tests.Unit.SessionState
             var mock = Mock.Get(httpContext);
             mock.Setup(c => c.User.Identity.IsAuthenticated).Returns(true);
             mock.Setup(c => c.User.Identity.Name).Returns("klings");
-            var sessionIdManager = new AuthenticatedSessionIDManager(httpContext, sessionIDHelper);
+            var sessionIdManager = new AuthenticatedSessionIDManager(httpContext, configEnabled, sessionIDHelper);
             Mock.Get(sessionIDHelper).Setup(s => s.Create("klings")).Returns("secureid");
 
             Assert.AreEqual("secureid", sessionIdManager.CreateSessionID(null));
@@ -42,10 +58,23 @@ namespace NWebsec.SessionSecurity.Tests.Unit.SessionState
         {
             var mock = Mock.Get(httpContext);
             mock.Setup(c => c.User.Identity.IsAuthenticated).Returns(false);
-            var sessionIdManager = new AuthenticatedSessionIDManager(httpContext, sessionIDHelper);
+            var sessionIdManager = new AuthenticatedSessionIDManager(httpContext, configEnabled, sessionIDHelper);
             Mock.Get(sessionIDHelper).Setup(s => s.Create(It.IsAny<String>())).Throws<NotImplementedException>();
 
             Assert.True(sessionIdManager.CreateSessionID(null).Length == 24, "Generated session id was not length 24, and propably not an ASP.NET session ID.");
+        }
+
+        [Test]
+        public void Validate_DisabledInConfigUserAuthenticated_ReturnsTrueOnValidAspnetSessionID()
+        {
+            var mock = Mock.Get(httpContext);
+            mock.Setup(c => c.User.Identity.IsAuthenticated).Returns(true);
+            mock.Setup(c => c.User.Identity.Name).Returns("klings");
+            var config = new SessionSecurityConfigurationSection {SessionFixationProtection = {Enabled = false}};
+            var sessionIdManager = new AuthenticatedSessionIDManager(httpContext, config, sessionIDHelper);
+            Mock.Get(sessionIDHelper).Setup(s => s.Validate(It.IsAny<String>(), It.IsAny<String>())).Returns(false);
+
+            Assert.True(sessionIdManager.Validate("abcdefghijklmnopqrstuvwx"));
         }
 
         [Test]
@@ -55,8 +84,8 @@ namespace NWebsec.SessionSecurity.Tests.Unit.SessionState
             mock.Setup(c => c.User.Identity.IsAuthenticated).Returns(true);
             mock.Setup(c => c.User.Identity.Name).Returns("klings");
 
-            var sessionIdManager = new AuthenticatedSessionIDManager(httpContext, sessionIDHelper);
-            Mock.Get(sessionIDHelper).Setup(s => s.Validate("klings","secureid")).Returns(true);
+            var sessionIdManager = new AuthenticatedSessionIDManager(httpContext, configEnabled, sessionIDHelper);
+            Mock.Get(sessionIDHelper).Setup(s => s.Validate("klings", "secureid")).Returns(true);
 
             Assert.True(sessionIdManager.Validate("secureid"));
         }
@@ -68,7 +97,7 @@ namespace NWebsec.SessionSecurity.Tests.Unit.SessionState
             mock.Setup(c => c.User.Identity.IsAuthenticated).Returns(true);
             mock.Setup(c => c.User.Identity.Name).Returns("klings");
 
-            var sessionIdManager = new AuthenticatedSessionIDManager(httpContext, sessionIDHelper);
+            var sessionIdManager = new AuthenticatedSessionIDManager(httpContext, configEnabled, sessionIDHelper);
             Mock.Get(sessionIDHelper).Setup(s => s.Validate("klings", "secureid")).Returns(true);
 
             Assert.False(sessionIdManager.Validate("somerandomid"));
@@ -79,11 +108,11 @@ namespace NWebsec.SessionSecurity.Tests.Unit.SessionState
         {
             var mock = Mock.Get(httpContext);
             mock.Setup(c => c.User.Identity.IsAuthenticated).Returns(false);
-            
-            var sessionIdManager = new AuthenticatedSessionIDManager(httpContext, sessionIDHelper);
+
+            var sessionIdManager = new AuthenticatedSessionIDManager(httpContext, configEnabled, sessionIDHelper);
             sessionIdManager.Validate("someid");
-            
-            Mock.Get(sessionIDHelper).Verify(s => s.Validate(It.IsAny<String>(),It.IsAny<String>()),Times.Never());
+
+            Mock.Get(sessionIDHelper).Verify(s => s.Validate(It.IsAny<String>(), It.IsAny<String>()), Times.Never());
         }
     }
 }

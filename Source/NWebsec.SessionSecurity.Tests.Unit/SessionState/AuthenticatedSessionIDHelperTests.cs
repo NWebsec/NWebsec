@@ -16,25 +16,24 @@ namespace NWebsec.SessionSecurity.Tests.Unit.SessionState
         internal const int SessionIdComponentLength = 16; //Length in bytes
         internal const int TruncatedMacLength = 16; //Length in bytes
         internal const int Base64SessionIdLength = 43; //Length in base64 characters
-        
+
         private AuthenticatedSessionIDHelper helper;
         private RandomNumberGenerator rng;
         private IHmacHelper hmac;
-        private SessionFixationConfigurationHelper configHelper;
 
         [SetUp]
         public void Setup()
         {
             rng = new PredictableNumberGenerator(0x05);
             hmac = new Mock<IHmacHelper>().Object;
-            Mock.Get(hmac).Setup(h => h.CalculateMac(It.IsAny<byte[]>())).Returns(GetMockMac);
+            Mock.Get(hmac).Setup(h => h.CalculateMac(It.IsAny<byte[]>(), It.IsAny<byte[]>())).Returns(GetMockMac);
 
             var config = new SessionSecurityConfigurationSection();
             config.SessionFixationProtection.Enabled = true;
             config.SessionFixationProtection.SessionAuthenticationKey.Value = "0101010101010101010101010101010101010101010101010101010101010101";
 
             //configHelper = new SessionFixationConfigurationHelper(config);
-            helper = new AuthenticatedSessionIDHelper(rng, hmac);
+            helper = new AuthenticatedSessionIDHelper(rng, new byte[32], hmac);
         }
 
         [Test]
@@ -50,7 +49,7 @@ namespace NWebsec.SessionSecurity.Tests.Unit.SessionState
         [Test]
         public void Create_CalculatesSameMacForSameUserWithSameSessionComponent()
         {
-            helper = new AuthenticatedSessionIDHelper(rng, new HmacSha256Helper(new byte[32]));
+            helper = new AuthenticatedSessionIDHelper(rng, new byte[32], new HmacSha256Helper());
 
             var session1 = helper.Create("klings").AddBase64Padding();
             var session2 = helper.Create("klings").AddBase64Padding();
@@ -61,7 +60,7 @@ namespace NWebsec.SessionSecurity.Tests.Unit.SessionState
         [Test]
         public void Create_CalculatesDifferentMacForDifferentUsersWithSameSessionComponent()
         {
-            helper = new AuthenticatedSessionIDHelper(rng, new HmacSha256Helper(new byte[32]));
+            helper = new AuthenticatedSessionIDHelper(rng, new byte[32], new HmacSha256Helper());
 
             var session1 = Convert.FromBase64String(helper.Create("klings").AddBase64Padding());
             var session2 = Convert.FromBase64String(helper.Create("klings2").AddBase64Padding());
@@ -139,7 +138,7 @@ namespace NWebsec.SessionSecurity.Tests.Unit.SessionState
                 0x10, 0x10, 0x10, 0x10, 0x10, 0x10, 0x10, 0x10
             }).TrimEnd('=');
         }
-        
+
         private string GetMockSessionIDWithInvalidMacRightBoundary()
         {
             return Convert.ToBase64String(new byte[]

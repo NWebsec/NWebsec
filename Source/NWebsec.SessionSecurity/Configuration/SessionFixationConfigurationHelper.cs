@@ -1,7 +1,6 @@
 ﻿// Copyright (c) André N. Klingsheim. See License.txt in the project root for license information.
 
 using System.Runtime.Remoting.Metadata.W3cXsd2001;
-using System.Web.Configuration;
 
 namespace NWebsec.SessionSecurity.Configuration
 {
@@ -12,7 +11,7 @@ namespace NWebsec.SessionSecurity.Configuration
 
         internal SessionFixationConfigurationHelper()
         {
-            sessionSecurityConfig = (SessionSecurityConfigurationSection)WebConfigurationManager.GetSection("nwebsec/sessionSecurity") ?? new SessionSecurityConfigurationSection();
+            sessionSecurityConfig = SessionSecurityConfiguration.Configuration;
             machineKeyHelper = new MachineKeyConfigurationHelper();
         }
 

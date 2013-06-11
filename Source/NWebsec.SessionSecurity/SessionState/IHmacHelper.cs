@@ -4,6 +4,6 @@ namespace NWebsec.SessionSecurity.SessionState
 {
     public interface IHmacHelper
     {
-        byte[] CalculateMac(byte[] input);
+        byte[] CalculateMac(byte[] key, byte[] input);
     }
 }

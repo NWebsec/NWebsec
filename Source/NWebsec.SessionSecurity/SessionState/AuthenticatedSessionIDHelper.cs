@@ -27,8 +27,9 @@ namespace NWebsec.SessionSecurity.SessionState
         private readonly UTF8Encoding utf8 = new UTF8Encoding(false, true);
         private readonly RandomNumberGenerator rng;
         private readonly IHmacHelper hmac;
+        private readonly byte[] key;
 
-        public static AuthenticatedSessionIDHelper Instance
+        internal static AuthenticatedSessionIDHelper Instance
         {
             get
             {
@@ -44,7 +45,7 @@ namespace NWebsec.SessionSecurity.SessionState
                             var key = kdf.DeriveKey(256, keyMaterial,
                                                     "NWebsec.SessionSecurity.SessionState.AuthenticatedSessionIDHelper");
                             Array.Clear(keyMaterial, 0, keyMaterial.Length);
-                            instance = new AuthenticatedSessionIDHelper(new CryptoRng(), new HmacSha256Helper(key));
+                            instance = new AuthenticatedSessionIDHelper(new CryptoRng(), key, new HmacSha256Helper());
                         }
                     }
                 }
@@ -52,9 +53,10 @@ namespace NWebsec.SessionSecurity.SessionState
             }
         }
 
-        internal AuthenticatedSessionIDHelper(RandomNumberGenerator rng, IHmacHelper hmac)
+        internal AuthenticatedSessionIDHelper(RandomNumberGenerator rng, byte[] key, IHmacHelper hmac)
         {
             this.rng = rng;
+            this.key = key;
             this.hmac = hmac;
         }
 
@@ -94,7 +96,7 @@ namespace NWebsec.SessionSecurity.SessionState
             var macDiffers = false;
             for (var i = 0; i < TruncatedMacLength; i++)
             {
-                macDiffers = macDiffers || expectedMac[i] != binarySessionID[i + SessionIdComponentLength];
+                macDiffers = macDiffers | expectedMac[i] != binarySessionID[i + SessionIdComponentLength];
             }
 
             return !macDiffers;
@@ -108,7 +110,7 @@ namespace NWebsec.SessionSecurity.SessionState
             Array.Copy(userNameBits, input, userName.Length);
             Array.Copy(sessionID, 0, input, userName.Length, sessionID.Length);
 
-            return hmac.CalculateMac(input);
+            return hmac.CalculateMac(key, input);
         }
 
         private string GenerateSessionIdWithTruncatedMac(byte[] sessionId, byte[] mac)

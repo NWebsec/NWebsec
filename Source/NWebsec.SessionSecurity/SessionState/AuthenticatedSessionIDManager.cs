@@ -2,6 +2,7 @@
 
 using System;
 using System.Web;
+using NWebsec.SessionSecurity.Configuration;
 
 namespace NWebsec.SessionSecurity.SessionState
 {
@@ -14,6 +15,7 @@ namespace NWebsec.SessionSecurity.SessionState
         
         private readonly HttpContextBase mockContext;
         private readonly IAuthenticatedSessionIDHelper sessionIdHelper;
+        private readonly bool authenticatedSessionsEnabled;
 
         private HttpContextBase CurrentContext
         {
@@ -22,19 +24,21 @@ namespace NWebsec.SessionSecurity.SessionState
 
         public AuthenticatedSessionIDManager()
         {
+            authenticatedSessionsEnabled = SessionSecurityConfiguration.Configuration.SessionFixationProtection.Enabled;
             sessionIdHelper = AuthenticatedSessionIDHelper.Instance;
         }
 
-        internal AuthenticatedSessionIDManager(HttpContextBase context, IAuthenticatedSessionIDHelper helper)
+        internal AuthenticatedSessionIDManager(HttpContextBase context, SessionSecurityConfigurationSection config, IAuthenticatedSessionIDHelper helper)
         {
             mockContext = context;
+            authenticatedSessionsEnabled = config.SessionFixationProtection.Enabled;
             sessionIdHelper = helper;
         }
 
         public override string CreateSessionID(HttpContext context)
         {
             var currentIdentity = CurrentContext.User.Identity;
-            if (currentIdentity.IsAuthenticated && !String.IsNullOrEmpty(currentIdentity.Name))
+            if (authenticatedSessionsEnabled && currentIdentity.IsAuthenticated && !String.IsNullOrEmpty(currentIdentity.Name))
             {
                 var id = sessionIdHelper.Create(currentIdentity.Name);
                 CurrentContext.Items[SessionIdContextKey] = id;
@@ -46,7 +50,7 @@ namespace NWebsec.SessionSecurity.SessionState
         public override bool Validate(string id)
         {
             var currentIdentity = CurrentContext.User.Identity;
-            if (currentIdentity.IsAuthenticated && !String.IsNullOrEmpty(currentIdentity.Name))
+            if (authenticatedSessionsEnabled && currentIdentity.IsAuthenticated && !String.IsNullOrEmpty(currentIdentity.Name))
             {
                 return sessionIdHelper.Validate(currentIdentity.Name, id);
             }
@@ -56,7 +60,7 @@ namespace NWebsec.SessionSecurity.SessionState
         internal static bool AuthenticatedSessionCreated(HttpContextBase context)
         {
             var id = context.Items[SessionIdContextKey] as string;
-            return  !String.IsNullOrEmpty(id) && context.Session != null && id.Equals(context.Session.SessionID);
+            return !String.IsNullOrEmpty(id) && context.Session != null && id.Equals(context.Session.SessionID);
         }
     }
 }
