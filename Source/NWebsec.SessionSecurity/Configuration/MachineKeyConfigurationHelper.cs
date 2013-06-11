@@ -8,7 +8,12 @@ using System.Web.Configuration;
 
 namespace NWebsec.SessionSecurity.Configuration
 {
-    internal class MachineKeyConfigurationHelper
+    public interface IMachineKeyConfigurationHelper
+    {
+        byte[] GetMachineKey();
+    }
+
+    internal class MachineKeyConfigurationHelper : IMachineKeyConfigurationHelper
     {
         private readonly MachineKeySection config;
 
@@ -20,11 +25,11 @@ namespace NWebsec.SessionSecurity.Configuration
             this.config = config;
         }
 
-        internal byte[] GetMachineKey()
+        public byte[] GetMachineKey()
         {
             var cfg = config ?? GetConfig();
 
-            if (!Regex.IsMatch(cfg.ValidationKey, "^[0-9a-fA-F]$"))
+            if (!Regex.IsMatch(cfg.ValidationKey, "^[0-9a-fA-F]+$"))
             {
                 throw new ApplicationException("A validation key must be explicitly set in the machineKey configuration, or you can disable the use of machine key and specify a separate \"sessionAuthenticationKey\" in config. ");
             }
@@ -42,7 +47,7 @@ namespace NWebsec.SessionSecurity.Configuration
             }
             catch (SecurityException se)
             {
-                const string message = "Could not get machineKey settings, the application is probably not running under high or full trust. You can disable the use of machine key and specify a separate \"sessionAuthenticationKey\" in config.";
+                const string message = "Could not get machineKey settings, the application is probably not running with high or full trust. You can disable the use of machine key and specify a separate \"sessionAuthenticationKey\" in config.";
                 throw new ApplicationException(message, se);
             }
         }

@@ -7,7 +7,7 @@ namespace NWebsec.SessionSecurity.Configuration
     internal class SessionFixationConfigurationHelper
     {
         private readonly SessionSecurityConfigurationSection sessionSecurityConfig;
-        private readonly MachineKeyConfigurationHelper machineKeyHelper;
+        private readonly IMachineKeyConfigurationHelper machineKeyHelper;
 
         internal SessionFixationConfigurationHelper()
         {
@@ -15,15 +15,10 @@ namespace NWebsec.SessionSecurity.Configuration
             machineKeyHelper = new MachineKeyConfigurationHelper();
         }
 
-        internal SessionFixationConfigurationHelper(SessionSecurityConfigurationSection config, MachineKeyConfigurationHelper machineKeyHelper)
+        internal SessionFixationConfigurationHelper(SessionSecurityConfigurationSection config, IMachineKeyConfigurationHelper machineKeyHelper)
         {
             sessionSecurityConfig = config;
             this.machineKeyHelper = machineKeyHelper;
-        }
-
-        internal bool SessionFixationProtectionEnabled()
-        {
-            return sessionSecurityConfig.SessionFixationProtection.Enabled;
         }
 
         internal byte[] GetKeyFromConfig()

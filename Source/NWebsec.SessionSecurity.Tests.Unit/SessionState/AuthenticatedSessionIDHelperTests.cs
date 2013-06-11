@@ -97,6 +97,18 @@ namespace NWebsec.SessionSecurity.Tests.Unit.SessionState
         }
 
         [Test]
+        public void Validate_SessionIDWithInvalidMacMultipleBytes_ReturnsFalse()
+        {
+            Assert.IsFalse(helper.Validate("klings", GetMockSessionIDWithInvalidMacMultipleBytes()));
+        }
+
+        [Test]
+        public void Validate_SessionIDWithInvalidMacAllBytes_ReturnsFalse()
+        {
+            Assert.IsFalse(helper.Validate("klings", GetMockSessionIDWithInvalidMacAllBytes()));
+        }
+
+        [Test]
         public void Validate_InvalidBase64SessionID_ReturnsFalse()
         {
             var sessionid = GetMockValidSessionID();
@@ -147,6 +159,28 @@ namespace NWebsec.SessionSecurity.Tests.Unit.SessionState
                 0x05, 0x05, 0x05, 0x05, 0x05, 0x05, 0x05, 0x05,
                 0x10, 0x10, 0x10, 0x10, 0x10, 0x10, 0x10, 0x10,
                 0x10, 0x10, 0x10, 0x10, 0x10, 0x10, 0x10, 0x11
+            }).TrimEnd('=');
+        }
+
+        private string GetMockSessionIDWithInvalidMacMultipleBytes()
+        {
+            return Convert.ToBase64String(new byte[]
+            {
+                0x05, 0x05, 0x05, 0x05, 0x05, 0x05, 0x05, 0x05,
+                0x05, 0x05, 0x05, 0x05, 0x05, 0x05, 0x05, 0x05,
+                0x10, 0x10, 0x10, 0x10, 0x10, 0x10, 0x10, 0x10,
+                0x10, 0x10, 0x10, 0x10, 0x10, 0x10, 0x11, 0x11
+            }).TrimEnd('=');
+        }
+
+        private string GetMockSessionIDWithInvalidMacAllBytes()
+        {
+            return Convert.ToBase64String(new byte[]
+            {
+                0x05, 0x05, 0x05, 0x05, 0x05, 0x05, 0x05, 0x05,
+                0x05, 0x05, 0x05, 0x05, 0x05, 0x05, 0x05, 0x05,
+                0x13, 0x19, 0x15, 0x17, 0x13, 0x18, 0x16, 0x14,
+                0x11, 0x12, 0x13, 0x15, 0x15, 0x14, 0x11, 0x11
             }).TrimEnd('=');
         }
     }
