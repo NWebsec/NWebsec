@@ -41,7 +41,7 @@ namespace NWebsec.SessionSecurity.Tests.Unit.Configuration
         [Test]
         public void GetKeyFromConfig_UseMachineKeyTrue_ReturnsMachineKey()
         {
-            sessionSecurityConfig.SessionFixationProtection.useMachineKey = true;
+            sessionSecurityConfig.SessionFixationProtection.UseMachineKey = true;
             var helper = new SessionFixationConfigurationHelper(sessionSecurityConfig, machineKeyHelper);
 
             var key = helper.GetKeyFromConfig();
@@ -52,7 +52,7 @@ namespace NWebsec.SessionSecurity.Tests.Unit.Configuration
         [Test]
         public void GetKeyFromConfig_UseMachineKeyFalse_ReturnsSessionAuthenticationKey()
         {
-            sessionSecurityConfig.SessionFixationProtection.useMachineKey = false;
+            sessionSecurityConfig.SessionFixationProtection.UseMachineKey = false;
             var helper = new SessionFixationConfigurationHelper(sessionSecurityConfig, machineKeyHelper);
 
             var key = helper.GetKeyFromConfig();

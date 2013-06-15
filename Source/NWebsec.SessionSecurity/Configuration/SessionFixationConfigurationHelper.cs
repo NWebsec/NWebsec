@@ -23,7 +23,7 @@ namespace NWebsec.SessionSecurity.Configuration
 
         internal byte[] GetKeyFromConfig()
         {
-            return sessionSecurityConfig.SessionFixationProtection.useMachineKey ? machineKeyHelper.GetMachineKey() : GetSessionAuthenticationKey();
+            return sessionSecurityConfig.SessionFixationProtection.UseMachineKey ? machineKeyHelper.GetMachineKey() : GetSessionAuthenticationKey();
         }
 
         private byte[] GetSessionAuthenticationKey()

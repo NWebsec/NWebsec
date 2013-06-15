@@ -25,7 +25,10 @@ namespace NWebsec.SessionSecurity.SessionState
         public AuthenticatedSessionIDManager()
         {
             authenticatedSessionsEnabled = SessionSecurityConfiguration.Configuration.SessionFixationProtection.Enabled;
-            sessionIdHelper = AuthenticatedSessionIDHelper.Instance;
+            if (authenticatedSessionsEnabled)
+            {
+                sessionIdHelper = AuthenticatedSessionIDHelper.Instance;
+            }
         }
 
         internal AuthenticatedSessionIDManager(HttpContextBase context, SessionSecurityConfigurationSection config, IAuthenticatedSessionIDHelper helper)

@@ -8,6 +8,7 @@ namespace NWebsec.SessionSecurity.Configuration
     public class SessionSecurityConfigurationSection : ConfigurationSection
     {
         [ConfigurationProperty("sessionFixationProtection", IsRequired = true)]
+        [SessionFixationProtectionValidator]
         public SessionFixationProtectionConfigurationElement SessionFixationProtection
         {
             get
@@ -31,13 +32,13 @@ namespace NWebsec.SessionSecurity.Configuration
         }
 
         [ConfigurationProperty("useMachineKey", IsRequired = false, DefaultValue = true)]
-        public bool useMachineKey
+        public bool UseMachineKey
         {
             get { return (bool)this["useMachineKey"]; }
             set { this["useMachineKey"] = value; }
         }
 
-        [ConfigurationProperty("sessionAuthenticationKey", IsRequired = true)]
+        [ConfigurationProperty("sessionAuthenticationKey", IsRequired = false)]
         public SessionAuthenticationKeyConfigurationElement SessionAuthenticationKey
         {
             get { return (SessionAuthenticationKeyConfigurationElement) this["sessionAuthenticationKey"]; }

@@ -45,10 +45,10 @@ namespace NWebsec.SessionSecurity.Configuration
             {
                 return (MachineKeySection)WebConfigurationManager.GetSection("system.web/machineKey");
             }
-            catch (SecurityException se)
+            catch (SecurityException)
             {
-                const string message = "Could not get machineKey settings, the application is probably not running with high or full trust. You can disable the use of machine key and specify a separate \"sessionAuthenticationKey\" in config.";
-                throw new ApplicationException(message, se);
+                const string message = "Could not access machineKey settings, the application is probably not running with high or full trust. You can disable the use of machine key and specify a separate \"sessionAuthenticationKey\" in config.";
+                throw new Exception(message);
             }
         }
     }

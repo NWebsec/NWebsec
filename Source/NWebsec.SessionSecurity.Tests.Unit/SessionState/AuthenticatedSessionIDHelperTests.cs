@@ -1,6 +1,8 @@
 ﻿// Copyright (c) André N. Klingsheim. See License.txt in the project root for license information.
 
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Security.Cryptography;
 using Moq;
 using NUnit.Framework;
@@ -116,6 +118,27 @@ namespace NWebsec.SessionSecurity.Tests.Unit.SessionState
 
             Assert.AreEqual(Base64SessionIdLength, sessionid.Length);
             Assert.IsFalse(helper.Validate("klings", sessionid));
+        }
+
+        //[Test]
+        public void Validate_ValidSessionID_Performance()
+        {
+            helper = new AuthenticatedSessionIDHelper(new RNGCryptoServiceProvider(), new byte[32], new HmacSha256Helper());
+            var sessionId = helper.Create("klings");
+            foreach (var number in Enumerable.Range(0,10000000))
+            {
+                helper.Validate("klings", sessionId);
+            }
+        }
+
+        //[Test]
+        public void Create_Performance()
+        {
+            helper = new AuthenticatedSessionIDHelper(new RNGCryptoServiceProvider(), new byte[32], new HmacSha256Helper());
+            foreach (var number in Enumerable.Range(0, 10000000))
+            {
+                helper.Create("klings");
+            }
         }
 
         private byte[] GetMockMac()

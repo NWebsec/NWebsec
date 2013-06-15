@@ -12,7 +12,7 @@ namespace NWebsec.SessionSecurity.Crypto
 
         static CryptoRng()
         {
-            if (!typeof(RNGCryptoServiceProvider).IsAssignableFrom(typeof(IDisposable))) OldRng = new RNGCryptoServiceProvider();
+            if (!typeof(IDisposable).IsAssignableFrom(typeof(RNGCryptoServiceProvider))) OldRng = new RNGCryptoServiceProvider();
         }
 
         public override void GetBytes(byte[] data)
