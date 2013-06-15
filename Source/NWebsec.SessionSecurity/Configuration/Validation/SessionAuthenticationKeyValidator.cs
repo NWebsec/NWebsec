@@ -20,8 +20,7 @@ namespace NWebsec.SessionSecurity.Configuration.Validation
             
             if (Regex.IsMatch(key, "^[0-9a-fA-F]{64}$")) return;
 
-            var e = new ConfigurationErrorsException("Unexpected SessionAuthenticationKey format. Expected a 256 bit hex encoded key (64 character hex string without whitespace).");
-            throw e;
+            throw new ConfigurationErrorsException("Unexpected SessionAuthenticationKey format. Expected a 256 bit hex encoded key (64 character hex string without whitespace).");
         }
     }
 

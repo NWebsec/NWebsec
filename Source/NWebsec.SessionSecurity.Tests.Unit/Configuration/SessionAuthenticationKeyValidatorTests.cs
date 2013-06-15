@@ -1,6 +1,7 @@
 ﻿// Copyright (c) André N. Klingsheim. See License.txt in the project root for license information.
 
 using System;
+using System.Configuration;
 using NUnit.Framework;
 using NWebsec.SessionSecurity.Configuration.Validation;
 
@@ -31,7 +32,7 @@ namespace NWebsec.SessionSecurity.Tests.Unit.Configuration
 
             var key = BitConverter.ToString(new byte[31]).Replace("-", String.Empty);
             key += "0G";
-            Assert.Throws<FormatException>(() => validator.Validate(key));
+            Assert.Throws<ConfigurationErrorsException>(() => validator.Validate(key));
         }
 
         [Test]
@@ -39,7 +40,7 @@ namespace NWebsec.SessionSecurity.Tests.Unit.Configuration
         {
 
             var key = BitConverter.ToString(new byte[31]).Replace("-", String.Empty);
-            Assert.Throws<FormatException>(() => validator.Validate(key));
+            Assert.Throws<ConfigurationErrorsException>(() => validator.Validate(key));
         }
 
         [Test]
@@ -47,7 +48,7 @@ namespace NWebsec.SessionSecurity.Tests.Unit.Configuration
         {
 
             var key = BitConverter.ToString(new byte[33]).Replace("-", String.Empty);
-            Assert.Throws<FormatException>(() => validator.Validate(key));
+            Assert.Throws<ConfigurationErrorsException>(() => validator.Validate(key));
         }
     }
 }
