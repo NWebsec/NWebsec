@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
+using System.Web.Security;
 using DemoSiteMvc4.CustomAttribute;
 using NWebsec.Csp;
 using NWebsec.HttpHeaders;
@@ -39,5 +36,14 @@ namespace DemoSiteMvc4.Controllers
             return View("Index");
         }
 
+        public ActionResult Authenticated(string user ="klings")
+        {
+            if (!User.Identity.IsAuthenticated)
+            {
+                FormsAuthentication.SetAuthCookie(user,false);
+            }
+            Session["Hey"] = "whatever";
+            return View("Index");
+        }
     }
 }

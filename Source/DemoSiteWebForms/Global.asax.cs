@@ -20,31 +20,31 @@ namespace DemoSiteWebForms
 
         }
 
-        void Application_BeginRequest(object sender, EventArgs e)
-        {
-            var request = HttpContext.Current.Request;
-        }
+        //void Application_BeginRequest(object sender, EventArgs e)
+        //{
+        //    var request = HttpContext.Current.Request;
+        //}
 
-        void Application_PreSendRequestHeaders(object sender, EventArgs e)
-        {
-            var request = HttpContext.Current.Request;
-        }
-        void Application_EndRequest(object sender, EventArgs e)
-        {
-            var request = HttpContext.Current.Request;
-        }
+        //void Application_PreSendRequestHeaders(object sender, EventArgs e)
+        //{
+        //    var request = HttpContext.Current.Request;
+        //}
+        //void Application_EndRequest(object sender, EventArgs e)
+        //{
+        //    var request = HttpContext.Current.Request;
+        //}
 
-        void Application_End(object sender, EventArgs e)
-        {
-            //  Code that runs on application shutdown
+        //void Application_End(object sender, EventArgs e)
+        //{
+        //    //  Code that runs on application shutdown
 
-        }
+        //}
 
-        void Application_Error(object sender, EventArgs e)
-        {
-            // Code that runs when an unhandled error occurs
-            var request = HttpContext.Current.Request;
-        }
+        //void Application_Error(object sender, EventArgs e)
+        //{
+        //    // Code that runs when an unhandled error occurs
+        //    var request = HttpContext.Current.Request;
+        //}
 
         void Session_Start(object sender, EventArgs e)
         {

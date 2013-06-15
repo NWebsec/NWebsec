@@ -64,6 +64,7 @@
     <Content Include="Account\Login.aspx" />
     <Content Include="Account\Register.aspx" />
     <Content Include="App_Data\Config.xml" />
+    <Content Include="Authenticated.aspx" />
     <Content Include="Redirect.aspx" />
     <Content Include="Styles\Site.css" />
     <Content Include="Default.aspx" />
@@ -120,6 +121,13 @@
     <Compile Include="Account\Register.aspx.designer.cs">
       <DependentUpon>Register.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Authenticated.aspx.cs">
+      <DependentUpon>Authenticated.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Authenticated.aspx.designer.cs">
+      <DependentUpon>Authenticated.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Default.aspx.cs">
       <DependentUpon>Default.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -158,6 +166,10 @@
     <None Include="Properties\PublishProfiles\Profile1.pubxml" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\NWebsec.SessionSecurity\NWebsec.SessionSecurity.csproj">
+      <Project>{678b7f4e-2f0c-45b9-8236-4f178be7c301}</Project>
+      <Name>NWebsec.SessionSecurity</Name>
+    </ProjectReference>
     <ProjectReference Include="..\NWebsec\NWebsec.csproj">
       <Project>{a011d84b-b731-4404-8bc1-fe94d2b37599}</Project>
       <Name>NWebsec</Name>
