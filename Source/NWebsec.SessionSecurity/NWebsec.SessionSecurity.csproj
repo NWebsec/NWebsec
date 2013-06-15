@@ -50,6 +50,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Configuration\MachineKeyConfigurationHelper.cs" />
+    <Compile Include="Configuration\SessionAuthenticationKeyConfigurationElement.cs" />
+    <Compile Include="Configuration\SessionFixationProtectionConfigurationElement.cs" />
     <Compile Include="Configuration\SessionSecurityConfigurationSection.cs" />
     <Compile Include="Configuration\SessionFixationConfigurationHelper.cs" />
     <Compile Include="Configuration\Validation\SessionFixationProtectionValidator.cs" />
@@ -68,6 +70,10 @@
     <Compile Include="SessionState\IHmacHelper.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="ConfigurationSchema\SessionSecurityConfig.xsd">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="NWebsecDevKey.snk" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

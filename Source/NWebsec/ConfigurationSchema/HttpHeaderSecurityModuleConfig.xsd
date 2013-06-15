@@ -1,4 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (c) André N. Klingsheim. See NWebsec project website for license information. -->
 <xs:schema id="httpheadersecuritymoduleconfigschema" attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://nwebsec.com/HttpHeaderSecurityModuleConfig.xsd" targetNamespace="http://nwebsec.com/HttpHeaderSecurityModuleConfig.xsd">
   <xs:simpleType name="simple_boolean">
     <xs:restriction base="xs:NMTOKEN">
@@ -46,7 +47,7 @@
   </xs:simpleType>
   <xs:element name="httpHeaderSecurityModule" >
     <xs:annotation>
-      <xs:documentation>Configuration section for the NWebsec HttpHeaderSecurityModulde</xs:documentation>
+      <xs:documentation>Configuration section for the NWebsec HttpHeaderSecurityModule</xs:documentation>
     </xs:annotation>
     <xs:complexType>
       <xs:all>

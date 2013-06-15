@@ -1,0 +1,50 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (c) André N. Klingsheim. See NWebsec project website for license information. -->
+<xs:schema id="sessionsecurityconfigschema" attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://nwebsec.com/SessionSecurityConfig.xsd" targetNamespace="http://nwebsec.com/SessionSecurityConfig.xsd">
+  <xs:simpleType name="simple_boolean">
+    <xs:restriction base="xs:NMTOKEN">
+      <xs:enumeration value="false" />
+      <xs:enumeration value="true" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="sessionSecurity" >
+    <xs:annotation>
+      <xs:documentation>Configuration section for NWebsec.SessionSecurity</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:all>
+        <xs:element name="sessionFixationProtection" minOccurs="0" maxOccurs="1">
+          <xs:annotation>
+            <xs:documentation>Configures session fixation protection for the application.</xs:documentation>
+          </xs:annotation>
+          <xs:complexType>
+            <xs:all>
+              <xs:element name="sessionAuthenticationKey" minOccurs="0" maxOccurs="1">
+                <xs:annotation>
+                  <xs:documentation>Specifies the key used to authenticate session identifiers.</xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                  <xs:attribute name="value" type="xs:hexBinary" use="required">
+                    <xs:annotation>
+                      <xs:documentation>Required. Should be set to a 256 bit hex encoded key (64 character hex string without whitespace).</xs:documentation>
+                    </xs:annotation>
+                  </xs:attribute>
+                </xs:complexType>
+              </xs:element>
+            </xs:all>
+            <xs:attribute name="enabled" type="simple_boolean" use="required">
+              <xs:annotation>
+                <xs:documentation>Required. Specifies whether session fixation protection is enabled in the application.</xs:documentation>
+              </xs:annotation>
+            </xs:attribute>
+            <xs:attribute name="useMachineKey" type="simple_boolean" use="optional">
+              <xs:annotation>
+                <xs:documentation>Optional. Specifies whether session ids should be protected under the machineKey validation key. If set to false, a sessionAuthentication key must be specified. The default is true.</xs:documentation>
+              </xs:annotation>
+            </xs:attribute>
+            </xs:complexType>
+        </xs:element>
+      </xs:all>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

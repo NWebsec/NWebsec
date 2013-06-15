@@ -162,6 +162,7 @@
     <Content Include="Site.Master" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="NwebsecSessionSecurity.config" />
     <None Include="Properties\PublishProfiles\ngh.pubxml" />
     <None Include="Properties\PublishProfiles\Profile1.pubxml" />
   </ItemGroup>

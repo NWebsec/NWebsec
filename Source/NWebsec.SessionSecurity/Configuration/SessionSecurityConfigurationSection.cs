@@ -20,40 +20,18 @@ namespace NWebsec.SessionSecurity.Configuration
                 this["sessionFixationProtection"] = value;
             }
         }
-    }
 
-    public class SessionFixationProtectionConfigurationElement : ConfigurationElement
-    {
-        [ConfigurationProperty("enabled", IsRequired = false, DefaultValue = false)]
-        public bool Enabled
+        protected override bool OnDeserializeUnrecognizedAttribute(string name, string value)
         {
-            get { return (bool) this["enabled"]; }
-            set { this["enabled"] = value; }
-        }
-
-        [ConfigurationProperty("useMachineKey", IsRequired = false, DefaultValue = true)]
-        public bool UseMachineKey
-        {
-            get { return (bool)this["useMachineKey"]; }
-            set { this["useMachineKey"] = value; }
-        }
-
-        [ConfigurationProperty("sessionAuthenticationKey", IsRequired = false)]
-        public SessionAuthenticationKeyConfigurationElement SessionAuthenticationKey
-        {
-            get { return (SessionAuthenticationKeyConfigurationElement) this["sessionAuthenticationKey"]; }
-            set { this["sessionAuthenticationKey"] = value; }
-        }
-    }
-
-    public class SessionAuthenticationKeyConfigurationElement : ConfigurationElement
-    {
-        [ConfigurationProperty("value", IsRequired = true, DefaultValue = "0000000000000000000000000000000000000000000000000000000000000000")]
-        [SessionAuthenticationKeyValidator]
-        public string Value
-        {
-            get { return (string)this["value"]; }
-            set { this["value"] = value; }
+            switch (name)
+            {
+                case "xmlns":
+                case "xmlns:xsi":
+                case "xsi:noNamespaceSchemaLocation":
+                    return true;
+                default:
+                    return base.OnDeserializeUnrecognizedAttribute(name, value);
+            }
         }
     }
 }
