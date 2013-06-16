@@ -50,6 +50,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\NWebsec.2.2.1\lib\35\NWebsec.dll</HintPath>
     </Reference>
+    <Reference Include="NWebsec.SessionSecurity">
+      <HintPath>..\packages\NWebsec.SessionSecurity.0.0.9-rc01\lib\35\NWebsec.SessionSecurity.dll</HintPath>
+    </Reference>
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
@@ -67,6 +70,7 @@
   <ItemGroup>
     <Content Include="Css\site.css" />
     <Content Include="Default.aspx" />
+    <Content Include="SessionFixation.aspx" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -86,12 +90,22 @@
       <DependentUpon>Default.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SessionFixation.aspx.cs">
+      <DependentUpon>SessionFixation.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SessionFixation.aspx.designer.cs">
+      <DependentUpon>SessionFixation.aspx</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="NWebsecConfig\HttpHeaderSecurityModuleConfig.xsd">
       <SubType>Designer</SubType>
     </None>
     <Content Include="packages.config" />
+    <None Include="NWebsecConfig\SessionSecurityConfig.xsd">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

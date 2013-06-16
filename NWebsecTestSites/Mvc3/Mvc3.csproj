@@ -51,6 +51,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\NWebsec.Mvc.2.2.1\lib\40\NWebsec.Mvc.dll</HintPath>
     </Reference>
+    <Reference Include="NWebsec.SessionSecurity">
+      <HintPath>..\packages\NWebsec.SessionSecurity.0.0.9-rc01\lib\40\NWebsec.SessionSecurity.dll</HintPath>
+    </Reference>
     <Reference Include="System.Data.Entity" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
@@ -111,6 +114,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\NoCacheHeadersController.cs" />
     <Compile Include="Controllers\RedirectController.cs" />
+    <Compile Include="Controllers\SessionFixationController.cs" />
     <Compile Include="Controllers\XContentTypeOptionsController.cs" />
     <Compile Include="Controllers\XDownloadOptionsController.cs" />
     <Compile Include="Controllers\XFrameOptionsController.cs" />
@@ -160,6 +164,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="NWebsecConfig\HttpHeaderSecurityModuleConfig.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="NWebsecConfig\SessionSecurityConfig.xsd">
       <SubType>Designer</SubType>
     </None>
   </ItemGroup>

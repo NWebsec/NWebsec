@@ -15,12 +15,13 @@ namespace NWebsec.Tests.Functional
         protected const String ReqFailed = "Request failed: ";
         protected HttpClient HttpClient;
         protected TestHelper Helper;
+        private HttpClientHandler handler;
         protected abstract string BaseUri { get; }
 
         [SetUp]
         public void Setup()
         {
-            var handler = new WebRequestHandler {AllowAutoRedirect = false};
+            handler = new HttpClientHandler { AllowAutoRedirect = false, UseCookies = true };
             HttpClient = new HttpClient(handler);
             Helper = new TestHelper();
         }
@@ -133,8 +134,8 @@ namespace NWebsec.Tests.Functional
             Assert.AreEqual(HttpStatusCode.InternalServerError, response.StatusCode, ReqFailed + testUri);
             Assert.IsTrue(body.Contains("RedirectValidationException"), "RedirectValidationException not found in body.");
         }
-        
-            [Test]
+
+        [Test]
         public async void RedirectValidation_DisabledAndDangerousSite_Ok()
         {
             const string path = "/Redirect/ValidationDisabledDangerousSite";
@@ -556,7 +557,7 @@ namespace NWebsec.Tests.Functional
             var response = await HttpClient.GetAsync(testUri);
 
             Assert.IsTrue(response.IsSuccessStatusCode, ReqFailed + testUri);
-            Assert.IsEmpty(response.Headers.Where( h => h.Key.Equals("Content-Security-Policy")));
+            Assert.IsEmpty(response.Headers.Where(h => h.Key.Equals("Content-Security-Policy")));
         }
 
         [Test]
@@ -581,7 +582,7 @@ namespace NWebsec.Tests.Functional
 
             Assert.IsTrue(response.IsSuccessStatusCode, ReqFailed + testUri);
             var header = response.Headers.SingleOrDefault(h => h.Key.Equals("X-Robots-Tag"));
-            Assert.IsNotNull(header,"X-Robots-Tag header not set in response.");
+            Assert.IsNotNull(header, "X-Robots-Tag header not set in response.");
             Assert.AreEqual("noindex", header.Value.Single());
         }
 
@@ -681,6 +682,72 @@ namespace NWebsec.Tests.Functional
             var header = response.Headers.SingleOrDefault(h => h.Key.Equals("X-Robots-Tag"));
             Assert.IsNotNull(header, "X-Robots-Tag header not set in response.");
             Assert.AreEqual("noindex, nofollow", header.Value.Single());
+        }
+
+        [Test]
+        public async Task SessionFixation_ReIssuesCookies()
+        {
+            const string sessionPath = "/SessionFixation/SetSessionValue";
+            var sessionTestUri = Helper.GetUri(BaseUri, sessionPath);
+
+            //Anonymous user
+            var response = await HttpClient.GetAsync(sessionTestUri);
+
+            Assert.IsTrue(response.IsSuccessStatusCode, ReqFailed + sessionTestUri);
+            var sessionCookie = handler.CookieContainer.GetCookies(new Uri(BaseUri))["ASP.NET_SessionId"];
+            Assert.AreEqual(24, sessionCookie.Value.Length,
+                            "Cookie was not length 24, hence not a classic ASP.NET session id.");
+
+            var path = "/SessionFixation/BecomeUserOne";
+            var testUri = Helper.GetUri(BaseUri, path);
+
+            //Become user1
+            response = await HttpClient.GetAsync(testUri);
+            Assert.IsTrue(response.IsSuccessStatusCode, ReqFailed + testUri);
+            
+            var authCookieUser1 = handler.CookieContainer.GetCookies(new Uri(BaseUri))[".ASPXAUTH"];
+            Assert.IsNotNull(authCookieUser1, "Did not get Forms cookie");
+
+            //Make request to trigger authenticated session id.
+            response = await HttpClient.GetAsync(sessionTestUri);
+            Assert.IsTrue(response.IsSuccessStatusCode, ReqFailed + sessionTestUri);
+
+            var sessionCookieUser1 = handler.CookieContainer.GetCookies(new Uri(BaseUri))["ASP.NET_SessionId"];
+            Assert.Less(24, sessionCookieUser1.Value.Length,
+                            "Cookie length was not longer than 24, hence not an authenticated session id.");
+
+            path = "/SessionFixation/BecomeUserTwo";
+            testUri = Helper.GetUri(BaseUri, path);
+
+            //Become user2
+            response = await HttpClient.GetAsync(testUri);
+            Assert.IsTrue(response.IsSuccessStatusCode, ReqFailed + testUri);
+
+            var authCookieUser2 = handler.CookieContainer.GetCookies(new Uri(BaseUri))[".ASPXAUTH"];
+            Assert.IsNotNull(authCookieUser2, "Did not get Forms cookie");
+            Assert.AreNotEqual(authCookieUser1.Value, authCookieUser2.Value, "A new Forms cookie was not set for user 2.");
+
+            //Make request to trigger authenticated session id for user 2.
+            response = await HttpClient.GetAsync(sessionTestUri);
+            Assert.IsTrue(response.IsSuccessStatusCode, ReqFailed + sessionTestUri);
+
+            var sessionCookieUser2 = handler.CookieContainer.GetCookies(new Uri(BaseUri))["ASP.NET_SessionId"];
+            Assert.Less(24, sessionCookieUser2.Value.Length,
+                            "Cookie length was not longer than 24, hence not an authenticated session id.");
+            Assert.AreNotEqual(sessionCookieUser1.Value, sessionCookieUser2.Value, "Did not get a new authenticated session id for user2.");
+
+            //Make request as anonymous user with authenticated session id.
+            handler = new HttpClientHandler { AllowAutoRedirect = false, UseCookies = true };
+            handler.CookieContainer.Add(sessionCookieUser2);
+            HttpClient = new HttpClient(handler);
+            
+            response = await HttpClient.GetAsync(sessionTestUri);
+            Assert.IsTrue(response.IsSuccessStatusCode, ReqFailed + sessionTestUri);
+
+            var finalSessionCookie = handler.CookieContainer.GetCookies(new Uri(BaseUri))["ASP.NET_SessionId"];
+            Assert.AreEqual(24, finalSessionCookie.Value.Length,
+                            "Cookie was not length 24, hence not a classic ASP.NET session id.");
+
         }
     }
 }
