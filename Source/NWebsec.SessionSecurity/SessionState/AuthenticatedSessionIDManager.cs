@@ -8,7 +8,6 @@ namespace NWebsec.SessionSecurity.SessionState
 {
     public class AuthenticatedSessionIDManager : System.Web.SessionState.SessionIDManager
     {
-        private const string SessionIdContextKey = "NwebsecSessionIdCreated";
         internal const int SessionIdComponentLength = 16; //Length in bytes
         internal const int TruncatedMacLength = 16; //Length in bytes
         internal const int Base64SessionIdLength = 44; //Length in base64 characters
@@ -44,7 +43,6 @@ namespace NWebsec.SessionSecurity.SessionState
             if (authenticatedSessionsEnabled && currentIdentity.IsAuthenticated && !String.IsNullOrEmpty(currentIdentity.Name))
             {
                 var id = sessionIdHelper.Create(currentIdentity.Name);
-                CurrentContext.Items[SessionIdContextKey] = id;
                 return id;
             }
             return base.CreateSessionID(context);
@@ -58,12 +56,6 @@ namespace NWebsec.SessionSecurity.SessionState
                 return sessionIdHelper.Validate(currentIdentity.Name, id);
             }
             return base.Validate(id);
-        }
-
-        internal static bool AuthenticatedSessionCreated(HttpContextBase context)
-        {
-            var id = context.Items[SessionIdContextKey] as string;
-            return !String.IsNullOrEmpty(id) && context.Session != null && id.Equals(context.Session.SessionID);
         }
     }
 }

@@ -61,7 +61,6 @@
     <Compile Include="Crypto\CryptoRng.cs" />
     <Compile Include="Crypto\KbkdfHmacSha256Ctr.cs" />
     <Compile Include="ExtensionMethods\Base64StringExtensions.cs" />
-    <Compile Include="Modules\SessionSecurityModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SessionSecurityConfiguration.cs" />
     <Compile Include="SessionState\AuthenticatedSessionIDManager.cs" />
