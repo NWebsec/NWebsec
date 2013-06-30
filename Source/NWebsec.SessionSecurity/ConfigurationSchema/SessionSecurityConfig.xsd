@@ -15,7 +15,8 @@
       <xs:all>
         <xs:element name="sessionFixationProtection" minOccurs="0" maxOccurs="1">
           <xs:annotation>
-            <xs:documentation>Configures session fixation protection for the application.</xs:documentation>
+            <xs:documentation>Configures session fixation protection for the application. The AuthenticatedSessionIDManager must be configured in &lt;sessionState sessionIDManagerType="..." /&gt; for these settings to take effect. 
+          </xs:documentation>
           </xs:annotation>
           <xs:complexType>
             <xs:all>

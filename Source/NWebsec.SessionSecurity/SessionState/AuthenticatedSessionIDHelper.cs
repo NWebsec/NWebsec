@@ -1,6 +1,7 @@
 ﻿// Copyright (c) André N. Klingsheim. See License.txt in the project root for license information.
 
 using System;
+using System.Runtime.CompilerServices;
 using System.Security.Cryptography;
 using System.Text;
 using NWebsec.SessionSecurity.Configuration;
@@ -93,6 +94,12 @@ namespace NWebsec.SessionSecurity.SessionState
 
             var expectedMac = CalculateMac(username, sessionIdComponent);
 
+            return ValidateMac(expectedMac, binarySessionID);
+        }
+
+        [MethodImpl(MethodImplOptions.NoOptimization)]
+        internal bool ValidateMac(byte[] expectedMac, byte[] binarySessionID)
+        {
             var macDiffers = false;
             for (var i = 0; i < TruncatedMacLength; i++)
             {

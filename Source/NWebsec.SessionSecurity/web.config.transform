@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<configuration>
+  <configSections>
+    <sectionGroup name="nwebsec">
+      <!-- For information on how to configure NWebsec please visit: http://nwebsec.codeplex.com/wikipage?title=Configuration -->
+      <section name="sessionSecurity" type="NWebsec.SessionSecurity.Configuration.SessionSecurityConfigurationSection, NWebsec.SessionSecurity, Version=0.0.9.0, Culture=neutral, PublicKeyToken=3613da5f958908a1" requirePermission="false" allowDefinition="MachineToApplication" />
+    </sectionGroup>
+  </configSections>
+  <system.web>
+    <sessionState sessionIDManagerType="NWebsec.SessionSecurity.SessionState.AuthenticatedSessionIDManager, NWebsec.SessionSecurity, Version=0.0.9.0, Culture=neutral, PublicKeyToken=3613da5f958908a1"/>
+  </system.web>
+  <system.webServer>
+    <security>
+      <requestFiltering>
+        <hiddenSegments>
+          <add segment="NWebsecConfig" />
+        </hiddenSegments>
+      </requestFiltering>
+    </security>
+  </system.webServer>
+  <nwebsec>
+    <sessionSecurity xmlns="http://nwebsec.com/SessionSecurityConfig.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="NWebsecConfig/SessionSecurityConfig.xsd">
+    </sessionSecurity>
+  </nwebsec>
+</configuration>

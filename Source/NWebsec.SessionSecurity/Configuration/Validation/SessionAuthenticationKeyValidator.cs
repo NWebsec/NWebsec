@@ -18,9 +18,15 @@ namespace NWebsec.SessionSecurity.Configuration.Validation
         {
             var key = (string) value;
             
-            if (Regex.IsMatch(key, "^[0-9a-fA-F]{64}$")) return;
+            if (!Regex.IsMatch(key, "^[0-9a-fA-F]*$"))
+            {
+                throw new ConfigurationErrorsException("Key is not valid HEX. Make sure it is a HEX string without whitespace.");
+            }
 
-            throw new ConfigurationErrorsException("Unexpected SessionAuthenticationKey format. Expected a 256 bit hex encoded key (64 character hex string without whitespace).");
+            if (key.Length < 64)
+            {
+                throw new ConfigurationErrorsException("Key is too short, it should be at least 256 bits (64 character hex string).");
+            }
         }
     }
 

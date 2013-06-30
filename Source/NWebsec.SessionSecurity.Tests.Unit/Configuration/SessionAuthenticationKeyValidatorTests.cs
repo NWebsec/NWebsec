@@ -44,11 +44,11 @@ namespace NWebsec.SessionSecurity.Tests.Unit.Configuration
         }
 
         [Test]
-        public void Validate_HexStringTooLong_ThrowsException()
+        public void Validate_HexStringLongerThan256bit_NoException()
         {
 
             var key = BitConverter.ToString(new byte[33]).Replace("-", String.Empty);
-            Assert.Throws<ConfigurationErrorsException>(() => validator.Validate(key));
+            Assert.DoesNotThrow(() => validator.Validate(key));
         }
     }
 }

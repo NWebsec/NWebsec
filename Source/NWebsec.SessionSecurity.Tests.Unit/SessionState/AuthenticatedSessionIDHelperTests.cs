@@ -1,6 +1,7 @@
 ﻿// Copyright (c) André N. Klingsheim. See License.txt in the project root for license information.
 
 using System;
+using System.Diagnostics;
 using System.Linq;
 using System.Security.Cryptography;
 using Moq;
@@ -124,7 +125,7 @@ namespace NWebsec.SessionSecurity.Tests.Unit.SessionState
         {
             helper = new AuthenticatedSessionIDHelper(new RNGCryptoServiceProvider(), new byte[32], new HmacSha256Helper());
             var sessionId = helper.Create("klings");
-            foreach (var number in Enumerable.Range(0,10000000))
+            foreach (var number in Enumerable.Range(0, 10000000))
             {
                 helper.Validate("klings", sessionId);
             }
@@ -138,6 +139,57 @@ namespace NWebsec.SessionSecurity.Tests.Unit.SessionState
             {
                 helper.Create("klings");
             }
+        }
+
+        //[Test]
+        public void ValidateMac_Timing()
+        {
+            helper = new AuthenticatedSessionIDHelper(new RNGCryptoServiceProvider(), new byte[32], new HmacSha256Helper());
+            var expectedMac = GetMockMac();
+            Array.Resize(ref expectedMac, 16);
+            var sessionID = new byte[]
+            {
+                0x05, 0x05, 0x05, 0x05, 0x05, 0x05, 0x05, 0x05,
+                0x05, 0x05, 0x05, 0x05, 0x05, 0x05, 0x05, 0x05,
+                0x10, 0x10, 0x10, 0x10, 0x10, 0x10, 0x10, 0x10,
+                0x10, 0x10, 0x10, 0x10, 0x10, 0x10, 0x10, 0x10
+            };
+            var invalidSessionID = new byte[]
+            {
+                0x05, 0x05, 0x05, 0x05, 0x05, 0x05, 0x05, 0x05,
+                0x05, 0x05, 0x05, 0x05, 0x05, 0x05, 0x05, 0x05,
+                0x11, 0x10, 0x10, 0x10, 0x10, 0x10, 0x10, 0x10,
+                0x10, 0x10, 0x10, 0x10, 0x10, 0x10, 0x10, 0x10
+            };
+            var timer = new Stopwatch();
+            
+            //Warmup
+            for (var i = 0; i < 100000; i++)
+            {
+                helper.ValidateMac(expectedMac, invalidSessionID);
+            }
+
+            timer.Start();
+            
+            for (var i = 0; i < 10000000; i++)
+            {
+                helper.ValidateMac(expectedMac, sessionID);
+            }
+            
+            timer.Stop();
+            var validElapsed = timer.ElapsedTicks;
+            timer.Reset();
+            timer.Start();
+            
+            for (var i = 0; i < 10000000; i++)
+            {
+                helper.ValidateMac(expectedMac, invalidSessionID);
+            }
+            
+            timer.Stop();
+            var invalidElapsed = timer.ElapsedTicks;
+            //Unlikely to be exactly the same, so will output the two values.
+            Assert.AreEqual(validElapsed,invalidElapsed);
         }
 
         private byte[] GetMockMac()
