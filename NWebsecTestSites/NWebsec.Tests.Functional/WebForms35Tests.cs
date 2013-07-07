@@ -70,7 +70,7 @@ namespace NWebsec.Tests.Functional
         }
 
         [Test]
-        public async Task SessionFixation_ReIssuesCookies()
+        public async Task SessionFixation_ReIssuesCookiesAfterAuthentication()
         {
             const string sessionPath = "/SessionFixation.aspx";
             var sessionTestUri = Helper.GetUri(BaseUri, sessionPath);
@@ -83,11 +83,36 @@ namespace NWebsec.Tests.Functional
             Assert.AreEqual(24, sessionCookie.Value.Length,
                             "Cookie was not length 24, hence not a classic ASP.NET session id.");
 
-            var path = "/SessionFixation.aspx";
+            const string path = "/SessionFixation.aspx";
             var testUri = Helper.GetUri(BaseUri, path, "setUser=User1");
 
             //Become user1
             response = await HttpClient.GetAsync(testUri);
+            Assert.IsTrue(response.IsSuccessStatusCode, ReqFailed + testUri);
+
+            var authCookieUser1 = handler.CookieContainer.GetCookies(new Uri(BaseUri))[".ASPXAUTH"];
+            Assert.IsNotNull(authCookieUser1, "Did not get Forms cookie");
+
+            //Make request to trigger authenticated session id.
+            response = await HttpClient.GetAsync(sessionTestUri);
+            Assert.IsTrue(response.IsSuccessStatusCode, ReqFailed + sessionTestUri);
+
+            var sessionCookieUser1 = handler.CookieContainer.GetCookies(new Uri(BaseUri))["ASP.NET_SessionId"];
+            Assert.Less(24, sessionCookieUser1.Value.Length,
+                            "Cookie length was not longer than 24, hence not an authenticated session id.");
+        }
+
+        [Test]
+        public async Task SessionFixation_ReIssuesCookiesAfterSwitchingUsers()
+        {
+            const string sessionPath = "/SessionFixation.aspx";
+            var sessionTestUri = Helper.GetUri(BaseUri, sessionPath);
+
+            var path = "/SessionFixation.aspx";
+            var testUri = Helper.GetUri(BaseUri, path, "setUser=User1");
+
+            //Become user1
+            var response = await HttpClient.GetAsync(testUri);
             Assert.IsTrue(response.IsSuccessStatusCode, ReqFailed + testUri);
 
             var authCookieUser1 = handler.CookieContainer.GetCookies(new Uri(BaseUri))[".ASPXAUTH"];
@@ -120,6 +145,31 @@ namespace NWebsec.Tests.Functional
             Assert.Less(24, sessionCookieUser2.Value.Length,
                             "Cookie length was not longer than 24, hence not an authenticated session id.");
             Assert.AreNotEqual(sessionCookieUser1.Value, sessionCookieUser2.Value, "Did not get a new authenticated session id for user2.");
+        }
+
+        [Test]
+        public async Task SessionFixation_ReIssuesCookiesAfterLogout()
+        {
+            const string sessionPath = "/SessionFixation.aspx";
+            var sessionTestUri = Helper.GetUri(BaseUri, sessionPath);
+
+            const string path = "/SessionFixation.aspx";
+            var testUri = Helper.GetUri(BaseUri, path, "setUser=User2");
+
+            //Become user2
+            var response = await HttpClient.GetAsync(testUri);
+            Assert.IsTrue(response.IsSuccessStatusCode, ReqFailed + testUri);
+
+            var authCookieUser2 = handler.CookieContainer.GetCookies(new Uri(BaseUri))[".ASPXAUTH"];
+            Assert.IsNotNull(authCookieUser2, "Did not get Forms cookie");
+
+            //Make request to trigger authenticated session id for user 2.
+            response = await HttpClient.GetAsync(sessionTestUri);
+            Assert.IsTrue(response.IsSuccessStatusCode, ReqFailed + sessionTestUri);
+
+            var sessionCookieUser2 = handler.CookieContainer.GetCookies(new Uri(BaseUri))["ASP.NET_SessionId"];
+            Assert.Less(24, sessionCookieUser2.Value.Length,
+                            "Cookie length was not longer than 24, hence not an authenticated session id.");
 
             //Make request as anonymous user with authenticated session id.
             handler = new HttpClientHandler { AllowAutoRedirect = false, UseCookies = true };

@@ -50,8 +50,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\NWebsec.2.2.1\lib\35\NWebsec.dll</HintPath>
     </Reference>
-    <Reference Include="NWebsec.SessionSecurity">
-      <HintPath>..\packages\NWebsec.SessionSecurity.0.0.9-rc01\lib\35\NWebsec.SessionSecurity.dll</HintPath>
+    <Reference Include="NWebsec.SessionSecurity, Version=0.0.9.0, Culture=neutral, PublicKeyToken=3613da5f958908a1, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\NWebsec.SessionSecurity.0.0.9-rc02\lib\35\NWebsec.SessionSecurity.dll</HintPath>
     </Reference>
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Web.DynamicData" />
