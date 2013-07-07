@@ -64,6 +64,7 @@
     <Compile Include="Crypto\KbkdfHmacSha256CtrNistValidationTests.cs" />
     <Compile Include="Crypto\KbkdfHmacSha256CtrTests.cs" />
     <Compile Include="Crypto\NistKbkdfTestData.cs" />
+    <Compile Include="ExtensionMethods\Base64StringExtensionsTests.cs" />
     <Compile Include="PredictableNumberGenerator.cs" />
     <Compile Include="SessionState\AuthenticatedSessionIDHelperTests.cs" />
     <Compile Include="SessionState\AuthenticatedSessionIDManagerTests.cs" />

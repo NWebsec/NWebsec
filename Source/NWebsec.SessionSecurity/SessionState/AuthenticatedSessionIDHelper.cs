@@ -22,8 +22,8 @@ namespace NWebsec.SessionSecurity.SessionState
         private static readonly object LockObj = new Object();
 
         internal const int SessionIdComponentLength = 16; //Length in bytes
-        internal const int TruncatedMacLength = 16; //Length in bytes
-        internal const int Base64SessionIdLength = 43; //Length in base64 characters
+        internal const int MacComponentLength = 32; //Length in bytes
+        internal const int Base64SessionIdLength = 64; //Length in base64 characters
 
         private readonly UTF8Encoding utf8 = new UTF8Encoding(false, true);
         private readonly RandomNumberGenerator rng;
@@ -68,7 +68,7 @@ namespace NWebsec.SessionSecurity.SessionState
 
             var mac = CalculateMac(username, sessionBytes);
 
-            return GenerateSessionIdWithTruncatedMac(sessionBytes, mac);
+            return GenerateSessionIdWithMac(sessionBytes, mac);
         }
 
         public bool Validate(string username, string incomingSessionID)
@@ -87,7 +87,7 @@ namespace NWebsec.SessionSecurity.SessionState
                 return false;
             }
 
-            if (binarySessionID.Length != SessionIdComponentLength + TruncatedMacLength) return false;
+            if (binarySessionID.Length != SessionIdComponentLength + MacComponentLength) return false;
 
             var sessionIdComponent = new byte[SessionIdComponentLength];
             Array.Copy(binarySessionID, sessionIdComponent, SessionIdComponentLength);
@@ -97,11 +97,12 @@ namespace NWebsec.SessionSecurity.SessionState
             return ValidateMac(expectedMac, binarySessionID);
         }
 
+        //Hamper timing attacks.
         [MethodImpl(MethodImplOptions.NoOptimization)]
         internal bool ValidateMac(byte[] expectedMac, byte[] binarySessionID)
         {
             var macDiffers = false;
-            for (var i = 0; i < TruncatedMacLength; i++)
+            for (var i = 0; i < MacComponentLength; i++)
             {
                 macDiffers = macDiffers | expectedMac[i] != binarySessionID[i + SessionIdComponentLength];
             }
@@ -120,12 +121,12 @@ namespace NWebsec.SessionSecurity.SessionState
             return hmac.CalculateMac(key, input);
         }
 
-        private string GenerateSessionIdWithTruncatedMac(byte[] sessionId, byte[] mac)
+        private string GenerateSessionIdWithMac(byte[] sessionId, byte[] mac)
         {
-            var result = new byte[SessionIdComponentLength + TruncatedMacLength];
+            var result = new byte[sessionId.Length + mac.Length];
 
             Array.Copy(sessionId, result, sessionId.Length);
-            Array.Copy(mac, 0, result, sessionId.Length, TruncatedMacLength);
+            Array.Copy(mac, 0, result, sessionId.Length, mac.Length);
 
             return Convert.ToBase64String(result).TrimEnd('=');
         }
