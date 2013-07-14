@@ -16,6 +16,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{D3F413
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NWebsec.Tests.Functional", "NWebsec.Tests.Functional\NWebsec.Tests.Functional.csproj", "{6C622341-A09A-4582-92F0-F75CF2E2E605}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebAndLoadTestMVC", "WebAndLoadTestMVC\WebAndLoadTestMVC.csproj", "{DF87D735-AE75-4E95-A557-6C96FB8B5329}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{FCE20D2A-3DDA-4A38-85A5-4F438460CA72}"
+	ProjectSection(SolutionItems) = preProject
+		Local.testsettings = Local.testsettings
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -38,6 +45,10 @@ Global
 		{6C622341-A09A-4582-92F0-F75CF2E2E605}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6C622341-A09A-4582-92F0-F75CF2E2E605}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6C622341-A09A-4582-92F0-F75CF2E2E605}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DF87D735-AE75-4E95-A557-6C96FB8B5329}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DF87D735-AE75-4E95-A557-6C96FB8B5329}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DF87D735-AE75-4E95-A557-6C96FB8B5329}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DF87D735-AE75-4E95-A557-6C96FB8B5329}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
