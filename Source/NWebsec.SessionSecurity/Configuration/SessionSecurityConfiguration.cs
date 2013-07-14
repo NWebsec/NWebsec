@@ -1,9 +1,8 @@
 ﻿// Copyright (c) André N. Klingsheim. See License.txt in the project root for license information.
 
 using System.Web.Configuration;
-using NWebsec.SessionSecurity.Configuration;
 
-namespace NWebsec.SessionSecurity
+namespace NWebsec.SessionSecurity.Configuration
 {
     internal static class SessionSecurityConfiguration
     {

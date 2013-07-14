@@ -58,9 +58,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Configuration\MachineKeyConfigurationHelperTests.cs" />
-    <Compile Include="Configuration\SessionAuthenticationKeyValidatorTests.cs" />
-    <Compile Include="Configuration\SessionFixationConfigurationHelperTests.cs" />
-    <Compile Include="Configuration\SessionFixationProtectionValidatorTests.cs" />
+    <Compile Include="Configuration\SessionIDAuthenticationConfigurationHelperTests.cs" />
+    <Compile Include="Configuration\SessionIDAuthenticationValidatorTests.cs" />
     <Compile Include="Crypto\KbkdfHmacSha256CtrNistValidationTests.cs" />
     <Compile Include="Crypto\KbkdfHmacSha256CtrTests.cs" />
     <Compile Include="Crypto\NistKbkdfTestData.cs" />

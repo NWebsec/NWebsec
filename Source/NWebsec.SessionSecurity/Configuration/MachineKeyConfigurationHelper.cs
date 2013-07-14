@@ -31,7 +31,7 @@ namespace NWebsec.SessionSecurity.Configuration
 
             if (!Regex.IsMatch(cfg.ValidationKey, "^[0-9a-fA-F]+$"))
             {
-                throw new ApplicationException("A validation key must be explicitly set in the machineKey configuration, or you can disable the use of machine key and specify a separate \"sessionAuthenticationKey\" in config. ");
+                throw new ApplicationException("A validation key must be explicitly set in the machineKey configuration, or you can disable the use of machine key and specify a separate \"authenticationKey\" in config. ");
             }
             var hexbinary = SoapHexBinary.Parse(cfg.ValidationKey);
             var machineKey = hexbinary.Value;
@@ -47,7 +47,7 @@ namespace NWebsec.SessionSecurity.Configuration
             }
             catch (SecurityException)
             {
-                const string message = "Could not access machineKey settings, the application is probably not running with high or full trust. You can disable the use of machine key and specify a separate \"sessionAuthenticationKey\" in config.";
+                const string message = "Could not access machineKey settings, the application is probably not running with high or full trust. You can disable the use of machine key and specify a separate \"authenticationKey\" in config.";
                 throw new Exception(message);
             }
         }

@@ -7,17 +7,17 @@ namespace NWebsec.SessionSecurity.Configuration
 {
     public class SessionSecurityConfigurationSection : ConfigurationSection
     {
-        [ConfigurationProperty("sessionFixationProtection", IsRequired = true)]
-        [SessionFixationProtectionValidator]
-        public SessionFixationProtectionConfigurationElement SessionFixationProtection
+        [ConfigurationProperty("sessionIDAuthentication", IsRequired = true)]
+        [SessionIDAuthenticationValidator]
+        public SessionIDAuthenticationConfigurationElement SessionIDAuthentication
         {
             get
             {
-                return (SessionFixationProtectionConfigurationElement)this["sessionFixationProtection"];
+                return (SessionIDAuthenticationConfigurationElement)this["sessionIDAuthentication"];
             }
             set
             {
-                this["sessionFixationProtection"] = value;
+                this["sessionIDAuthentication"] = value;
             }
         }
 

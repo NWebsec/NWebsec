@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
   <metadata>
     <id>NWebsec.SessionSecurity</id>
-    <version>0.0.9-rc02</version>
+    <version>0.0.9-rc03</version>
     <title>NWebsec.SessionSecurity</title>
     <authors>André N. Klingsheim</authors>
     <owners>André N. Klingsheim</owners>

@@ -122,7 +122,6 @@ namespace NWebsec.SessionSecurity.Tests.Unit.Crypto
         public string TestName
         {
             get { return String.Format("NIST KDF HMAC_SHA256 Ctr validation #{0:d2}", Count); }
-            private set { throw new NotImplementedException(); }
         }
 
         public string Description { get; private set; }

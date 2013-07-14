@@ -4,7 +4,7 @@ using System.Configuration;
 
 namespace NWebsec.SessionSecurity.Configuration
 {
-    public class SessionFixationProtectionConfigurationElement : ConfigurationElement
+    public class SessionIDAuthenticationConfigurationElement : ConfigurationElement
     {
         [ConfigurationProperty("enabled", IsRequired = false, DefaultValue = false)]
         public bool Enabled
@@ -20,11 +20,11 @@ namespace NWebsec.SessionSecurity.Configuration
             set { this["useMachineKey"] = value; }
         }
 
-        [ConfigurationProperty("sessionAuthenticationKey", IsRequired = false)]
-        public SessionAuthenticationKeyConfigurationElement SessionAuthenticationKey
+        [ConfigurationProperty("authenticationKey", IsRequired = false, DefaultValue = "0000000000000000000000000000000000000000000000000000000000000000")]
+        public string AuthenticationKey
         {
-            get { return (SessionAuthenticationKeyConfigurationElement) this["sessionAuthenticationKey"]; }
-            set { this["sessionAuthenticationKey"] = value; }
+            get { return (string)this["authenticationKey"]; }
+            set { this["authenticationKey"] = value; }
         }
     }
 }

@@ -31,10 +31,9 @@ namespace NWebsec.SessionSecurity.Tests.Unit.SessionState
             Mock.Get(hmac).Setup(h => h.CalculateMac(It.IsAny<byte[]>(), It.IsAny<byte[]>())).Returns(GetMockMac);
 
             var config = new SessionSecurityConfigurationSection();
-            config.SessionFixationProtection.Enabled = true;
-            config.SessionFixationProtection.SessionAuthenticationKey.Value = "0101010101010101010101010101010101010101010101010101010101010101";
+            config.SessionIDAuthentication.Enabled = true;
+            config.SessionIDAuthentication.AuthenticationKey = "0101010101010101010101010101010101010101010101010101010101010101";
 
-            //configHelper = new SessionFixationConfigurationHelper(config);
             helper = new AuthenticatedSessionIDHelper(rng, new byte[32], hmac);
         }
 

@@ -50,14 +50,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Configuration\MachineKeyConfigurationHelper.cs" />
-    <Compile Include="Configuration\SessionAuthenticationKeyConfigurationElement.cs" />
-    <Compile Include="Configuration\SessionFixationProtectionConfigurationElement.cs" />
+    <Compile Include="Configuration\SessionIDAuthenticationConfigurationElement.cs" />
     <Compile Include="Configuration\SessionSecurityConfigurationSection.cs" />
-    <Compile Include="Configuration\SessionFixationConfigurationHelper.cs" />
-    <Compile Include="Configuration\Validation\SessionFixationProtectionValidator.cs" />
-    <Compile Include="Configuration\Validation\SessionFixationProtectionValidatorAttribute.cs" />
-    <Compile Include="Configuration\Validation\SessionAuthenticationKeyValidator.cs" />
-    <Compile Include="Configuration\Validation\SessionAuthenticationKeyValidatorAttribute.cs" />
+    <Compile Include="Configuration\SessionIDAuthenticationConfigurationHelper.cs" />
+    <Compile Include="Configuration\Validation\SessionIDAuthenticationValidator.cs" />
+    <Compile Include="Configuration\Validation\SessionIDAuthenticationValidatorAttribute.cs" />
     <Compile Include="Crypto\CryptoRng.cs" />
     <Compile Include="Crypto\KbkdfHmacSha256Ctr.cs" />
     <Compile Include="ExtensionMethods\Base64StringExtensions.cs" />

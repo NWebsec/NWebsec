@@ -40,7 +40,7 @@ namespace NWebsec.SessionSecurity.SessionState
                     {
                         if (instance == null)
                         {
-                            var configHelper = new SessionFixationConfigurationHelper();
+                            var configHelper = new SessionIDAuthenticationConfigurationHelper();
                             var keyMaterial = configHelper.GetKeyFromConfig();
                             var kdf = new KbkdfHmacSha256Ctr();
                             var key = kdf.DeriveKey(256, keyMaterial,

@@ -23,7 +23,7 @@ namespace NWebsec.SessionSecurity.Tests.Unit.SessionState
             var httpContextMock = new Mock<HttpContextBase>();
             httpContextMock.Setup(c => c.Items).Returns(new ListDictionary());
             httpContext = httpContextMock.Object;
-            configEnabled = new SessionSecurityConfigurationSection { SessionFixationProtection = { Enabled = true } };
+            configEnabled = new SessionSecurityConfigurationSection { SessionIDAuthentication = { Enabled = true } };
 
             sessionIDHelper = new Mock<IAuthenticatedSessionIDHelper>().Object;
         }
@@ -34,7 +34,7 @@ namespace NWebsec.SessionSecurity.Tests.Unit.SessionState
             var mock = Mock.Get(httpContext);
             mock.Setup(c => c.User.Identity.IsAuthenticated).Returns(true);
             mock.Setup(c => c.User.Identity.Name).Returns("klings");
-            var config = new SessionSecurityConfigurationSection {SessionFixationProtection = {Enabled = false}};
+            var config = new SessionSecurityConfigurationSection {SessionIDAuthentication = {Enabled = false}};
             var sessionIdManager = new AuthenticatedSessionIDManager(httpContext, config, sessionIDHelper);
             Mock.Get(sessionIDHelper).Setup(s => s.Create("klings")).Returns("secureid");
 
@@ -70,7 +70,7 @@ namespace NWebsec.SessionSecurity.Tests.Unit.SessionState
             var mock = Mock.Get(httpContext);
             mock.Setup(c => c.User.Identity.IsAuthenticated).Returns(true);
             mock.Setup(c => c.User.Identity.Name).Returns("klings");
-            var config = new SessionSecurityConfigurationSection {SessionFixationProtection = {Enabled = false}};
+            var config = new SessionSecurityConfigurationSection {SessionIDAuthentication = {Enabled = false}};
             var sessionIdManager = new AuthenticatedSessionIDManager(httpContext, config, sessionIDHelper);
             Mock.Get(sessionIDHelper).Setup(s => s.Validate(It.IsAny<String>(), It.IsAny<String>())).Returns(false);
 
