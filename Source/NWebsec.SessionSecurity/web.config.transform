@@ -3,11 +3,11 @@
   <configSections>
     <sectionGroup name="nwebsec">
       <!-- For information on how to configure NWebsec please visit: http://nwebsec.codeplex.com/wikipage?title=Configuration -->
-      <section name="sessionSecurity" type="NWebsec.SessionSecurity.Configuration.SessionSecurityConfigurationSection, NWebsec.SessionSecurity, Version=0.0.9.0, Culture=neutral, PublicKeyToken=3613da5f958908a1" requirePermission="false" allowDefinition="MachineToApplication" />
+      <section name="sessionSecurity" type="NWebsec.SessionSecurity.Configuration.SessionSecurityConfigurationSection, NWebsec.SessionSecurity, Version=1.0.0.0, Culture=neutral, PublicKeyToken=3613da5f958908a1" requirePermission="false" allowDefinition="MachineToApplication" />
     </sectionGroup>
   </configSections>
   <system.web>
-    <sessionState sessionIDManagerType="NWebsec.SessionSecurity.SessionState.AuthenticatedSessionIDManager, NWebsec.SessionSecurity, Version=0.0.9.0, Culture=neutral, PublicKeyToken=3613da5f958908a1"/>
+    <sessionState sessionIDManagerType="NWebsec.SessionSecurity.SessionState.AuthenticatedSessionIDManager, NWebsec.SessionSecurity, Version=1.0.0.0, Culture=neutral, PublicKeyToken=3613da5f958908a1"/>
   </system.web>
   <system.webServer>
     <security>
