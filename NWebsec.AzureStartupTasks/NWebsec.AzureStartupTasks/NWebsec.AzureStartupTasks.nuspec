@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+  <metadata>
+    <id>NWebsec.AzureStartupTasks</id>
+    <version>0.0.1-alpha03</version>
+    <title>NWebsec.AzureStartupTasks</title>
+    <authors>André N. Klingsheim</authors>
+    <owners>André N. Klingsheim</owners>
+    <licenseUrl>http://nwebsec.codeplex.com/license</licenseUrl>
+    <projectUrl>http://nwebsec.codeplex.com</projectUrl>
+    <iconUrl>http://www.nwebsec.com/Content/Logo/nwebsec_nuget.png</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>NWebsec.AzureStartupTasks provides startup tasks to tighten the security configuration on Azure roles. See project website for documentation.</description>
+    <releaseNotes>This very first release includes a startup task to harden TLS configuration on Azure roles. See release notes at project web site for details.</releaseNotes>
+    <copyright>Copyright © 2012, 2013</copyright>
+    <tags>NWebsec security asp.net Azure</tags>
+  </metadata>
+</package>
