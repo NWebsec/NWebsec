@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>cd195b70-59c8-4a1a-8b37-5ec3ea63f392</ProjectGuid>
+    <ProjectGuid>{2B784498-7014-4260-ACB5-2CA600FE0F51}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>NWebsec.AzureStartupTasks</RootNamespace>
@@ -31,6 +31,17 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <ItemGroup>
+    <Content Include="content\NWebsec.AzureStartupTasks\ReadMe.txt" />
+    <Content Include="Install.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="content\NWebsec.AzureStartupTasks\TLS_hardening.cmd" />
+    <None Include="content\NWebsec.AzureStartupTasks\scripts\TLS_hardening.ps1" />
+    <None Include="content\NWebsec.AzureStartupTasks\Web.config" />
+    <None Include="NWebsec.AzureStartupTasks.nuspec" />
+    <None Include="tools\Install.ps1" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

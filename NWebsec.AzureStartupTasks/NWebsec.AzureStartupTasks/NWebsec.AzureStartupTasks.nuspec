@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
   <metadata>
     <id>NWebsec.AzureStartupTasks</id>
-    <version>0.0.1-alpha03</version>
+    <version>0.0.1-alpha07</version>
     <title>NWebsec.AzureStartupTasks</title>
     <authors>André N. Klingsheim</authors>
     <owners>André N. Klingsheim</owners>
