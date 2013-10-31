@@ -6,29 +6,29 @@ namespace NWebsec.SessionSecurity.Configuration
 {
     internal class SessionIDAuthenticationConfigurationHelper
     {
-        private readonly SessionSecurityConfigurationSection sessionSecurityConfig;
-        private readonly IMachineKeyConfigurationHelper machineKeyHelper;
+        private readonly SessionSecurityConfigurationSection _sessionSecurityConfig;
+        private readonly IMachineKeyConfigurationHelper _machineKeyHelper;
 
         internal SessionIDAuthenticationConfigurationHelper()
         {
-            sessionSecurityConfig = SessionSecurityConfiguration.Configuration;
-            machineKeyHelper = new MachineKeyConfigurationHelper();
+            _sessionSecurityConfig = SessionSecurityConfiguration.Configuration;
+            _machineKeyHelper = new MachineKeyConfigurationHelper();
         }
 
         internal SessionIDAuthenticationConfigurationHelper(SessionSecurityConfigurationSection config, IMachineKeyConfigurationHelper machineKeyHelper)
         {
-            sessionSecurityConfig = config;
-            this.machineKeyHelper = machineKeyHelper;
+            _sessionSecurityConfig = config;
+            _machineKeyHelper = machineKeyHelper;
         }
 
         internal byte[] GetKeyFromConfig()
         {
-            return sessionSecurityConfig.SessionIDAuthentication.UseMachineKey ? machineKeyHelper.GetMachineKey() : GetSessionIDAuthenticationKey();
+            return _sessionSecurityConfig.SessionIDAuthentication.UseMachineKey ? _machineKeyHelper.GetMachineKey() : GetSessionIDAuthenticationKey();
         }
 
         private byte[] GetSessionIDAuthenticationKey()
         {
-            var hexBinary = SoapHexBinary.Parse(sessionSecurityConfig.SessionIDAuthentication.AuthenticationKey);
+            var hexBinary = SoapHexBinary.Parse(_sessionSecurityConfig.SessionIDAuthentication.AuthenticationKey);
             var key = hexBinary.Value;
             hexBinary.Value = new byte[0];
             return key;

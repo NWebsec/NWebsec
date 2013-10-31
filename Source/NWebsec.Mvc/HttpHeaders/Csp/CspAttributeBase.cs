@@ -11,7 +11,7 @@ namespace NWebsec.Mvc.HttpHeaders.Csp
     /// </summary>
     public abstract class CspAttributeBase : ActionFilterAttribute
     {
-        private readonly HttpHeaderHelper headerHelper;
+        private readonly HttpHeaderHelper _headerHelper;
         /// <summary>
         /// Gets or sets whether the header is set in the HTTP response. The default is true.
         /// </summary>
@@ -30,7 +30,7 @@ namespace NWebsec.Mvc.HttpHeaders.Csp
         protected CspAttributeBase()
         {
             Enabled = true;
-            headerHelper = new HttpHeaderHelper();
+            _headerHelper = new HttpHeaderHelper();
         }
 
         public override void OnActionExecuting(ActionExecutingContext filterContext)
@@ -42,7 +42,7 @@ namespace NWebsec.Mvc.HttpHeaders.Csp
                                  XWebKitCspHeader = XWebKitCspHeader
                              };
 
-            headerHelper.SetCspHeaderOverride(filterContext.HttpContext, config, ReportOnly);
+            _headerHelper.SetCspHeaderOverride(filterContext.HttpContext, config, ReportOnly);
             base.OnActionExecuting(filterContext);
         }
     }

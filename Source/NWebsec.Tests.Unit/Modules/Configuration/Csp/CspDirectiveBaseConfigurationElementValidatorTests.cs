@@ -10,33 +10,33 @@ namespace NWebsec.Tests.Unit.Modules.Configuration.Csp
     [TestFixture]
     public class CspDirectiveBaseConfigurationElementValidatorTests
     {
-        private CspDirectiveBaseConfigurationElementValidator validator;
-        private CspDirectiveBaseConfigurationElement configElement;
+        private CspDirectiveBaseConfigurationElementValidator _validator;
+        private CspDirectiveBaseConfigurationElement _configElement;
         private const string ValidSource = "nwebsec.codeplex.com";
 
         [SetUp]
         public void TestInitialize()
         {
-            validator = new CspDirectiveBaseConfigurationElementValidator();
-            configElement = new CspDirectiveBaseConfigurationElement();
+            _validator = new CspDirectiveBaseConfigurationElementValidator();
+            _configElement = new CspDirectiveBaseConfigurationElement();
         }
 
         [Test]
         public void Validate_NoneWithSource_ThrowsException()
         {
-            configElement.None= true;
-            configElement.Sources.Add(new CspSourceConfigurationElement() { Source = ValidSource });
+            _configElement.None= true;
+            _configElement.Sources.Add(new CspSourceConfigurationElement { Source = ValidSource });
 
-            Assert.Throws<ConfigurationErrorsException>(() => validator.Validate(configElement));
+            Assert.Throws<ConfigurationErrorsException>(() => _validator.Validate(_configElement));
         }
 
         [Test]
         public void Validate_NoneWithSelf_ThrowsException()
         {
-            configElement.None = true;
-            configElement.Self = true;
+            _configElement.None = true;
+            _configElement.Self = true;
 
-            Assert.Throws<ConfigurationErrorsException>(() => validator.Validate(configElement));
+            Assert.Throws<ConfigurationErrorsException>(() => _validator.Validate(_configElement));
         }
 
     }

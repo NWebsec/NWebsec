@@ -10,12 +10,12 @@ namespace NWebsec.SessionSecurity.Tests.Unit.Crypto
     [TestFixture]
     public class KbkdfHmacSha256CtrNistValidationTests
     {
-        private KbkdfHmacSha256Ctr kdf;
+        private KbkdfHmacSha256Ctr _kdf;
 
         [SetUp]
         public void Setup()
         {
-            kdf = new KbkdfHmacSha256Ctr();
+            _kdf = new KbkdfHmacSha256Ctr();
         }
 
         [Test, TestCaseSource(typeof(NistKbkdfTestData))]
@@ -25,7 +25,7 @@ namespace NWebsec.SessionSecurity.Tests.Unit.Crypto
             var ki = ParseHexString(keyDerivationKey);
             var input = ParseHexString(fixedInput);
             
-            var derivedKey = kdf.DeriveKey(l, ki, input);
+            var derivedKey = _kdf.DeriveKey(l, ki, input);
 
             Assert.AreEqual(expectedKey,GetLowerCaseHexString(derivedKey));
         }

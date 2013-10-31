@@ -41,11 +41,11 @@ namespace NWebsec.HttpHeaders
                                             };
 
         public static readonly string[] VersionHeaders = { "X-AspNet-Version", "X-AspNetMvc-Version", "X-AspNetWebPages-Version" };
-        private readonly HttpHeaders.XFrameOptionsPolicy xFrameOptionsPolicy = new HttpHeaders.XFrameOptionsPolicy();
+        private const XFrameOptionsPolicy XfoPolicy = new XFrameOptionsPolicy();
 
-        public HttpHeaders.XFrameOptionsPolicy XFrameOptionsPolicy
+        public XFrameOptionsPolicy XFrameOptionsPolicy
         {
-            get { return xFrameOptionsPolicy; }
+            get { return XfoPolicy; }
         }
     }
 }

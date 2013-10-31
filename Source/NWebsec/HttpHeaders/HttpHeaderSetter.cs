@@ -13,19 +13,19 @@ namespace NWebsec.HttpHeaders
 {
     class HttpHeaderSetter
     {
-        private readonly CspReportHelper reportHelper;
-        private readonly IHandlerTypeHelper handlerHelper;
+        private readonly CspReportHelper _reportHelper;
+        private readonly IHandlerTypeHelper _handlerHelper;
 
         internal HttpHeaderSetter()
         {
-            reportHelper = new CspReportHelper();
-            handlerHelper = new HandlerTypeHelper();
+            _reportHelper = new CspReportHelper();
+            _handlerHelper = new HandlerTypeHelper();
         }
 
         internal HttpHeaderSetter(IHandlerTypeHelper handlerTypeHelper, CspReportHelper reportHelper)
         {
-            this.reportHelper = reportHelper;
-            handlerHelper = handlerTypeHelper;
+            _reportHelper = reportHelper;
+            _handlerHelper = handlerTypeHelper;
         }
 
         public void SetNoCacheHeaders(HttpContextBase context, SimpleBooleanConfigurationElement getNoCacheHeadersWithOverride)
@@ -34,7 +34,7 @@ namespace NWebsec.HttpHeaders
             if (!getNoCacheHeadersWithOverride.Enabled)
                 return;
 
-            if (handlerHelper.IsUnmanagedHandler(context) || handlerHelper.IsStaticContentHandler(context))
+            if (_handlerHelper.IsUnmanagedHandler(context) || _handlerHelper.IsStaticContentHandler(context))
                 return;
 
             response.Cache.SetCacheability(HttpCacheability.NoCache);
@@ -130,8 +130,8 @@ namespace NWebsec.HttpHeaders
             var response = context.Response;
 
             if (response.HasStatusCodeThatRedirects() ||
-                handlerHelper.IsStaticContentHandler(context) ||
-                handlerHelper.IsUnmanagedHandler(context)) return;
+                _handlerHelper.IsStaticContentHandler(context) ||
+                _handlerHelper.IsUnmanagedHandler(context)) return;
 
             string value;
             switch (xXssProtectionConfig.Policy)
@@ -160,8 +160,8 @@ namespace NWebsec.HttpHeaders
             var response = context.Response;
             if (!cspConfig.Enabled ||
                 response.HasStatusCodeThatRedirects() ||
-                handlerHelper.IsStaticContentHandler(context) ||
-                handlerHelper.IsUnmanagedHandler(context)) return;
+                _handlerHelper.IsStaticContentHandler(context) ||
+                _handlerHelper.IsUnmanagedHandler(context)) return;
 
             var headerValue = CreateCspHeaderValue(cspConfig);
             if (String.IsNullOrEmpty(headerValue)) return;
@@ -260,7 +260,7 @@ namespace NWebsec.HttpHeaders
             var reportUris = new LinkedList<string>();
             if (directive.EnableBuiltinHandler)
             {
-                reportUris.AddLast(reportHelper.GetBuiltInCspReportHandlerRelativeUri());
+                reportUris.AddLast(_reportHelper.GetBuiltInCspReportHandlerRelativeUri());
             }
 
             foreach (ReportUriConfigurationElement reportUri in directive.ReportUris)

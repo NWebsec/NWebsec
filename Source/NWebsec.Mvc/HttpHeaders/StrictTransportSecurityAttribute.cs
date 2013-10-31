@@ -15,21 +15,21 @@ namespace NWebsec.Mvc.HttpHeaders
 #pragma warning disable 1591
     public class StrictTransportSecurityAttribute : ActionFilterAttribute
     {
-        private readonly TimeSpan ttl;
-        private readonly HttpHeaderHelper headerHelper;
+        private readonly TimeSpan _ttl;
+        private readonly HttpHeaderHelper _headerHelper;
         public bool IncludeSubdomains { get; set; }
 
         public StrictTransportSecurityAttribute(string maxAge)
         {
-            if (!TimeSpan.TryParse(maxAge,out ttl))
+            if (!TimeSpan.TryParse(maxAge,out _ttl))
                 throw new ArgumentException("Invalid timespan format. See TimeSpan.TryParse on MSDN for examples.","maxAge");
             IncludeSubdomains = false;
-            headerHelper = new HttpHeaderHelper();
+            _headerHelper = new HttpHeaderHelper();
         }
 
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
-            headerHelper.SetHstsOverride(filterContext.HttpContext, new HstsConfigurationElement { MaxAge = ttl, IncludeSubdomains = IncludeSubdomains });
+            _headerHelper.SetHstsOverride(filterContext.HttpContext, new HstsConfigurationElement { MaxAge = _ttl, IncludeSubdomains = IncludeSubdomains });
             base.OnActionExecuting(filterContext);
         }
     }

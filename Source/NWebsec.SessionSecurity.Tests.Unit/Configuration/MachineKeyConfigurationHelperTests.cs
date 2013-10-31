@@ -12,7 +12,8 @@ namespace NWebsec.SessionSecurity.Tests.Unit.Configuration
     {
         private const string MachineKeyValidation = "0505050505050505050505050505050505050505050505050505050505050505";
 
-        private readonly byte[] expectedMachineKey = new byte[] {
+        private readonly byte[] _expectedMachineKey =
+        {
             0x05, 0x05, 0x05, 0x05, 0x05, 0x05, 0x05, 0x05,
             0x05, 0x05, 0x05, 0x05, 0x05, 0x05, 0x05, 0x05,
             0x05, 0x05, 0x05, 0x05, 0x05, 0x05, 0x05, 0x05,
@@ -35,7 +36,7 @@ namespace NWebsec.SessionSecurity.Tests.Unit.Configuration
 
             var key = helper.GetMachineKey();
 
-            Assert.AreEqual(expectedMachineKey, key);
+            Assert.AreEqual(_expectedMachineKey, key);
         }
     }
 }

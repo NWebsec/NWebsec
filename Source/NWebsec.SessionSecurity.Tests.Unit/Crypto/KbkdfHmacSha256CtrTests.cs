@@ -9,12 +9,12 @@ namespace NWebsec.SessionSecurity.Tests.Unit.Crypto
     [TestFixture]
     public class KbkdfHmacSha256CtrTests
     {
-        private KbkdfHmacSha256Ctr kdf;
+        private KbkdfHmacSha256Ctr _kdf;
 
         [SetUp]
         public void Setup()
         {
-            kdf = new KbkdfHmacSha256Ctr();
+            _kdf = new KbkdfHmacSha256Ctr();
         }
 
         [Test]
@@ -24,8 +24,8 @@ namespace NWebsec.SessionSecurity.Tests.Unit.Crypto
             var ki = new byte[16];
             
             
-            var derivedKey = kdf.DeriveKey(keyLength, ki, "label");
-            var secondDerivedKey = kdf.DeriveKey(keyLength, ki, "label2");
+            var derivedKey = _kdf.DeriveKey(keyLength, ki, "label");
+            var secondDerivedKey = _kdf.DeriveKey(keyLength, ki, "label2");
 
             Assert.AreNotEqual(derivedKey,secondDerivedKey);
         }
@@ -37,8 +37,8 @@ namespace NWebsec.SessionSecurity.Tests.Unit.Crypto
             var ki = new byte[16];
 
 
-            var derivedKey = kdf.DeriveKey(keyLength, ki, "label");
-            var secondDerivedKey = kdf.DeriveKey(keyLength, ki, "label", "context");
+            var derivedKey = _kdf.DeriveKey(keyLength, ki, "label");
+            var secondDerivedKey = _kdf.DeriveKey(keyLength, ki, "label", "context");
 
             Assert.AreNotEqual(derivedKey, secondDerivedKey);
         }
@@ -49,7 +49,7 @@ namespace NWebsec.SessionSecurity.Tests.Unit.Crypto
             const int keyLength = 255*256;
             var ki = new byte[16];
 
-            Assert.DoesNotThrow(() =>  kdf.DeriveKey(keyLength, ki, "label"));
+            Assert.DoesNotThrow(() =>  _kdf.DeriveKey(keyLength, ki, "label"));
         }
 
         [Test]
@@ -58,7 +58,7 @@ namespace NWebsec.SessionSecurity.Tests.Unit.Crypto
             const int keyLength = (255 * 256)+1;
             var ki = new byte[16];
             
-            Assert.Throws<ArgumentException>(() => kdf.DeriveKey(keyLength, ki, "label"));
+            Assert.Throws<ArgumentException>(() => _kdf.DeriveKey(keyLength, ki, "label"));
         }
     }
 }

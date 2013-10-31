@@ -17,7 +17,7 @@ namespace NWebsec.Tests.Unit.HttpHeaders
     {
         protected HttpContextBase MockContext;
         protected HttpHeaderHelper HeaderHelper;
-        protected HttpHeaderSecurityConfigurationSection configSection;
+        protected HttpHeaderSecurityConfigurationSection ConfigSection;
         protected abstract bool ReportOnly { get; }
         protected abstract CspConfigurationElement CspConfig { get; }
 
@@ -28,8 +28,8 @@ namespace NWebsec.Tests.Unit.HttpHeaders
             IDictionary<String, Object> nwebsecContentItems = new Dictionary<string, object>();
             mockedContext.Setup(x => x.Items["nwebsecheaderoverride"]).Returns(nwebsecContentItems);
             MockContext = mockedContext.Object;
-            configSection = new HttpHeaderSecurityConfigurationSection();
-            HeaderHelper = new HttpHeaderHelper(configSection);
+            ConfigSection = new HttpHeaderSecurityConfigurationSection();
+            HeaderHelper = new HttpHeaderHelper(ConfigSection);
         }
 
         [Test]
@@ -67,7 +67,7 @@ namespace NWebsec.Tests.Unit.HttpHeaders
         {
             var element = CspConfig.DefaultSrc;
             element.Self = true;
-            element.Sources.Add(new CspSourceConfigurationElement() { Source = "transformtool.codeplex.com" });
+            element.Sources.Add(new CspSourceConfigurationElement { Source = "transformtool.codeplex.com" });
             var directive = new CspDirectiveBaseOverride { Self = Source.Disable, OtherSources = "nwebsec.codeplex.com", InheritOtherSources = true };
 
             HeaderHelper.SetContentSecurityPolicyDirectiveOverride(MockContext, HttpHeaderHelper.CspDirectives.DefaultSrc, directive, ReportOnly);
@@ -82,8 +82,8 @@ namespace NWebsec.Tests.Unit.HttpHeaders
         [Test]
         public void GetCspElementWithOverrides_DirectiveSourceOverridenMultipleTimes_LastOverrideWins()
         {
-            var firstOverride = new CspDirectiveBaseOverride() { OtherSources = "transformtool.codeplex.com", InheritOtherSources = false };
-            var secondOverride = new CspDirectiveBaseOverride() { OtherSources = "nwebsec.codeplex.com", InheritOtherSources = false };
+            var firstOverride = new CspDirectiveBaseOverride { OtherSources = "transformtool.codeplex.com", InheritOtherSources = false };
+            var secondOverride = new CspDirectiveBaseOverride { OtherSources = "nwebsec.codeplex.com", InheritOtherSources = false };
 
             HeaderHelper.SetContentSecurityPolicyDirectiveOverride(MockContext, HttpHeaderHelper.CspDirectives.DefaultSrc, firstOverride, ReportOnly);
             HeaderHelper.SetContentSecurityPolicyDirectiveOverride(MockContext, HttpHeaderHelper.CspDirectives.DefaultSrc, secondOverride, ReportOnly);
@@ -164,8 +164,8 @@ namespace NWebsec.Tests.Unit.HttpHeaders
         [Test]
         public void GetCspHeaderWithOverride_CspEnabledOverriden_ReturnsCspEnabled()
         {
-            var cspElement = new CspHeaderConfigurationElement()
-                                 {
+            var cspElement = new CspHeaderConfigurationElement
+            {
                                      Enabled = true,
                                      XContentSecurityPolicyHeader = true,
                                      XWebKitCspHeader = true
@@ -191,7 +191,7 @@ namespace NWebsec.Tests.Unit.HttpHeaders
         public void GetCspReportUriWithOverrides_ReportUriDisabledAndOverridden_ReturnsOverridenReportUri()
         {
             CspConfig.ReportUriDirective.Enabled = false;
-            var reportUri = new CspReportUriDirectiveConfigurationElement() { Enabled = true, EnableBuiltinHandler = true };
+            var reportUri = new CspReportUriDirectiveConfigurationElement { Enabled = true, EnableBuiltinHandler = true };
 
             HeaderHelper.SetCspReportUriOverride(MockContext, reportUri, ReportOnly);
             var overrideElement = HeaderHelper.GetCspReportUriDirectiveWithOverride(MockContext, ReportOnly);
@@ -211,7 +211,7 @@ namespace NWebsec.Tests.Unit.HttpHeaders
 
         protected override CspConfigurationElement CspConfig
         {
-            get { return configSection.SecurityHttpHeaders.Csp; }
+            get { return ConfigSection.SecurityHttpHeaders.Csp; }
         }
 
         [Test]
@@ -253,7 +253,7 @@ namespace NWebsec.Tests.Unit.HttpHeaders
 
         protected override CspConfigurationElement CspConfig
         {
-            get { return configSection.SecurityHttpHeaders.CspReportOnly; }
+            get { return ConfigSection.SecurityHttpHeaders.CspReportOnly; }
         }
     }
 }

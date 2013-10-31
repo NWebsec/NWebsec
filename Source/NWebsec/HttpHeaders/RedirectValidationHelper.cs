@@ -10,15 +10,15 @@ namespace NWebsec.HttpHeaders
 {
     internal class RedirectValidationHelper
     {
-        private readonly RedirectValidationConfigurationElement mockConfig;
-        private RedirectValidationConfigurationElement Config { get { return mockConfig ?? ConfigHelper.GetConfig().RedirectValidation; } }
+        private readonly RedirectValidationConfigurationElement _mockConfig;
+        private RedirectValidationConfigurationElement Config { get { return _mockConfig ?? ConfigHelper.GetConfig().RedirectValidation; } }
 
         internal RedirectValidationHelper()
         {}
 
         internal RedirectValidationHelper(RedirectValidationConfigurationElement redirectValidationConfig)
         {
-            mockConfig = redirectValidationConfig;
+            _mockConfig = redirectValidationConfig;
         }
 
         internal void ValidateIfRedirect(HttpContextBase context)
@@ -27,11 +27,22 @@ namespace NWebsec.HttpHeaders
             
             var response = context.Response;
             if (!response.HasStatusCodeThatRedirects()) return;
+
+            var locationHeaderValue = response.Headers["Location"];
+            if (String.IsNullOrEmpty(locationHeaderValue))
+            {
+                throw new Exception(String.Format("Response had statuscode {0}, but Location header was null or the empty string.", response.StatusCode));
+            }
             
-            var redirectUri = new Uri(response.RedirectLocation, UriKind.RelativeOrAbsolute);
+            var redirectUri = new Uri(locationHeaderValue, UriKind.RelativeOrAbsolute);
             if (!redirectUri.IsAbsoluteUri) return;
 
             var requestUri = context.Request.Url;
+            if (requestUri == null)
+            {
+                throw new Exception("The current request's url was null.");
+            }
+
             if (redirectUri.GetLeftPart(UriPartial.Authority).Equals(requestUri.GetLeftPart(UriPartial.Authority))) return;
 
             if (IsWhitelistedDestination(redirectUri)) return;

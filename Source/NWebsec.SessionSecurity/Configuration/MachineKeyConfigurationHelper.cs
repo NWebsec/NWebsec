@@ -15,19 +15,19 @@ namespace NWebsec.SessionSecurity.Configuration
 
     internal class MachineKeyConfigurationHelper : IMachineKeyConfigurationHelper
     {
-        private readonly MachineKeySection config;
+        private readonly MachineKeySection _config;
 
         internal MachineKeyConfigurationHelper()
         { }
 
         internal MachineKeyConfigurationHelper(MachineKeySection config)
         {
-            this.config = config;
+            _config = config;
         }
 
         public byte[] GetMachineKey()
         {
-            var cfg = config ?? GetConfig();
+            var cfg = _config ?? GetConfig();
 
             if (!Regex.IsMatch(cfg.ValidationKey, "^[0-9a-fA-F]+$"))
             {

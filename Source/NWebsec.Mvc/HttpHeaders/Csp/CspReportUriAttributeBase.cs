@@ -12,7 +12,7 @@ namespace NWebsec.Mvc.HttpHeaders.Csp
     /// </summary>
     public abstract class CspReportUriAttributeBase : ActionFilterAttribute
     {
-        private readonly HttpHeaderHelper helper;
+        private readonly HttpHeaderHelper _helper;
         /// <summary>
         /// Gets or sets whether the report-uri directive is enabled in the CSP header. The default is true.
         /// </summary>
@@ -31,12 +31,12 @@ namespace NWebsec.Mvc.HttpHeaders.Csp
         protected CspReportUriAttributeBase()
         {
             Enabled = true;
-            helper = new HttpHeaderHelper();
+            _helper = new HttpHeaderHelper();
         }
 
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
-            helper.SetCspReportUriOverride(filterContext.HttpContext, GetCspDirectiveConfig(), ReportOnly);
+            _helper.SetCspReportUriOverride(filterContext.HttpContext, GetCspDirectiveConfig(), ReportOnly);
             base.OnActionExecuting(filterContext);
         }
 

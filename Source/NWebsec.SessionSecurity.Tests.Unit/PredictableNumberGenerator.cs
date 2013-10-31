@@ -7,18 +7,18 @@ namespace NWebsec.SessionSecurity.Tests.Unit
 {
     public class PredictableNumberGenerator : RandomNumberGenerator
     {
-        private readonly byte theByte;
+        private readonly byte _theByte;
 
         public PredictableNumberGenerator(byte predictable)
         {
-            theByte = predictable;
+            _theByte = predictable;
         }
 
         public override void GetBytes(byte[] data)
         {
             for (var i = 0; i < data.Length; i++)
             {
-                data[i] = theByte;
+                data[i] = _theByte;
             }
         }
 

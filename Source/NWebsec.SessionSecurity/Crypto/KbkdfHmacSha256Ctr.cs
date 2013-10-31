@@ -9,13 +9,13 @@ namespace NWebsec.SessionSecurity.Crypto
 {
     internal class KbkdfHmacSha256Ctr
     {
-        private readonly UTF8Encoding utf8;
+        private readonly UTF8Encoding _utf8;
         internal const int RLen = 8; //We use a byte for the counter.
         internal const int H = 256; //The PRF output is 256 bits.
 
         internal KbkdfHmacSha256Ctr()
         {
-            utf8 = new UTF8Encoding(false, true);
+            _utf8 = new UTF8Encoding(false, true);
         }
 
         /// <summary>
@@ -32,13 +32,13 @@ namespace NWebsec.SessionSecurity.Crypto
 
             using (var ms = new MemoryStream(100))
             {
-                var labelBytes = utf8.GetBytes(label);
+                var labelBytes = _utf8.GetBytes(label);
                 ms.Write(labelBytes, 0, labelBytes.Length);
                 ms.WriteByte(0x00);
 
                 if (!String.IsNullOrEmpty(context))
                 {
-                    var contextBytes = utf8.GetBytes(context);
+                    var contextBytes = _utf8.GetBytes(context);
                     ms.Write(contextBytes, 0, contextBytes.Length);
                 }
 

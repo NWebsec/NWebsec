@@ -11,12 +11,12 @@ namespace NWebsec.SessionSecurity.Tests.Unit.Configuration
     [TestFixture]
     public class SessionIDAuthenticationValidatorTests
     {
-        private SessionIDAuthenticationValidator validator;
+        private SessionIDAuthenticationValidator _validator;
 
         [SetUp]
         public void Setup()
         {
-            validator = new SessionIDAuthenticationValidator();
+            _validator = new SessionIDAuthenticationValidator();
         }
 
         [Test]
@@ -24,7 +24,7 @@ namespace NWebsec.SessionSecurity.Tests.Unit.Configuration
         {
             var config = new SessionIDAuthenticationConfigurationElement { Enabled = false };
 
-            Assert.DoesNotThrow(() => validator.Validate(config));
+            Assert.DoesNotThrow(() => _validator.Validate(config));
         }
 
         [Test]
@@ -32,7 +32,7 @@ namespace NWebsec.SessionSecurity.Tests.Unit.Configuration
         {
             var config = new SessionIDAuthenticationConfigurationElement { Enabled = true, UseMachineKey = true };
 
-            Assert.DoesNotThrow(() => validator.Validate(config));
+            Assert.DoesNotThrow(() => _validator.Validate(config));
         }
 
         [Test]
@@ -40,7 +40,7 @@ namespace NWebsec.SessionSecurity.Tests.Unit.Configuration
         {
             var config = new SessionIDAuthenticationConfigurationElement { Enabled = true, UseMachineKey = false };
 
-            Assert.Throws<ConfigurationErrorsException>(() => validator.Validate(config));
+            Assert.Throws<ConfigurationErrorsException>(() => _validator.Validate(config));
         }
 
         [Test]
@@ -49,7 +49,7 @@ namespace NWebsec.SessionSecurity.Tests.Unit.Configuration
             var config = new SessionIDAuthenticationConfigurationElement { Enabled = true, UseMachineKey = false };
             config.AuthenticationKey = "1122334411223344112233441122334411223344112233441122334411223344";
 
-            Assert.DoesNotThrow(() => validator.Validate(config));
+            Assert.DoesNotThrow(() => _validator.Validate(config));
         }
 
         [Test]
@@ -60,7 +60,7 @@ namespace NWebsec.SessionSecurity.Tests.Unit.Configuration
             key[0] = 0x01;
             config.AuthenticationKey = BitConverter.ToString(key).Replace("-", String.Empty);
 
-            Assert.DoesNotThrow(() => validator.Validate(config));
+            Assert.DoesNotThrow(() => _validator.Validate(config));
         }
 
         [Test]
@@ -70,7 +70,7 @@ namespace NWebsec.SessionSecurity.Tests.Unit.Configuration
             config.AuthenticationKey = BitConverter.ToString(new byte[31]).Replace("-", String.Empty);
             config.AuthenticationKey += "0G";
 
-            Assert.Throws<ConfigurationErrorsException>(() => validator.Validate(config));
+            Assert.Throws<ConfigurationErrorsException>(() => _validator.Validate(config));
         }
 
         [Test]
@@ -79,7 +79,7 @@ namespace NWebsec.SessionSecurity.Tests.Unit.Configuration
             var config = new SessionIDAuthenticationConfigurationElement { Enabled = true, UseMachineKey = false };
             config.AuthenticationKey = BitConverter.ToString(new byte[31]).Replace("-", String.Empty);
 
-            Assert.Throws<ConfigurationErrorsException>(() => validator.Validate(config));
+            Assert.Throws<ConfigurationErrorsException>(() => _validator.Validate(config));
         }
 
         [Test]
@@ -90,7 +90,7 @@ namespace NWebsec.SessionSecurity.Tests.Unit.Configuration
             key[0] = 0xFF;
             config.AuthenticationKey = BitConverter.ToString(key).Replace("-", String.Empty);
 
-            Assert.DoesNotThrow(() => validator.Validate(config));
+            Assert.DoesNotThrow(() => _validator.Validate(config));
         }
     }
 }

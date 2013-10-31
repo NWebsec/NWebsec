@@ -10,18 +10,18 @@ namespace NWebsec.Modules
 {
     public class HttpHeaderSecurityModule : IHttpModule
     {
-        private readonly CspReportHelper cspReportHelper;
-        private readonly HttpHeaderHelper headerHelper;
-        private readonly HandlerTypeHelper handlerTypeHelper;
-        private readonly RedirectValidationHelper redirectValidationHelper;
+        private readonly CspReportHelper _cspReportHelper;
+        private readonly HttpHeaderHelper _headerHelper;
+        private readonly HandlerTypeHelper _handlerTypeHelper;
+        private readonly RedirectValidationHelper _redirectValidationHelper;
         public event CspViolationReportEventHandler CspViolationReported;
 
         public HttpHeaderSecurityModule()
         {
-            cspReportHelper = new CspReportHelper();
-            headerHelper = new HttpHeaderHelper();
-            handlerTypeHelper = new HandlerTypeHelper();
-            redirectValidationHelper = new RedirectValidationHelper();
+            _cspReportHelper = new CspReportHelper();
+            _headerHelper = new HttpHeaderHelper();
+            _handlerTypeHelper = new HandlerTypeHelper();
+            _redirectValidationHelper = new RedirectValidationHelper();
         }
 
         public void Init(HttpApplication app)
@@ -42,8 +42,8 @@ namespace NWebsec.Modules
             var app = (HttpApplication)sender;
             var context = new HttpContextWrapper(app.Context);
 
-            if (!cspReportHelper.IsRequestForBuiltInCspReportHandler(context.Request)) return;
-            var cspReport = cspReportHelper.GetCspReportFromRequest(context.Request);
+            if (!_cspReportHelper.IsRequestForBuiltInCspReportHandler(context.Request)) return;
+            var cspReport = _cspReportHelper.GetCspReportFromRequest(context.Request);
             var eventArgs = new CspViolationReportEventArgs { ViolationReport = cspReport };
             OnCspViolationReport(eventArgs);
             context.Response.StatusCode = 204;
@@ -55,7 +55,7 @@ namespace NWebsec.Modules
             var app = (HttpApplication)sender;
             var context = new HttpContextWrapper(app.Context);
 
-            handlerTypeHelper.RequestHandlerMapped(context);
+            _handlerTypeHelper.RequestHandlerMapped(context);
         }
 
         public void AppPreSendRequestHeaders(object sender, EventArgs ea)
@@ -63,8 +63,8 @@ namespace NWebsec.Modules
             var app = (HttpApplication)sender;
             var context = new HttpContextWrapper(app.Context);
 
-            headerHelper.SetHeaders(context);
-            redirectValidationHelper.ValidateIfRedirect(context);
+            _headerHelper.SetHeaders(context);
+            _redirectValidationHelper.ValidateIfRedirect(context);
         }
 
         public delegate void CspViolationReportEventHandler(object sender, CspViolationReportEventArgs e);

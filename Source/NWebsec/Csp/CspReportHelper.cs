@@ -8,27 +8,27 @@ namespace NWebsec.Csp
 {
     internal class CspReportHelper
     {
-        private readonly ICspReportHandlerPathHelper pathHelper;
+        private readonly ICspReportHandlerPathHelper _pathHelper;
 
         internal CspReportHelper()
         {
-            pathHelper = new CspReportHandlerPathHelper();
+            _pathHelper = new CspReportHandlerPathHelper();
         }
 
         internal CspReportHelper(ICspReportHandlerPathHelper pathHelper)
         {
-            this.pathHelper = pathHelper;
+            _pathHelper = pathHelper;
         }
 
         internal string GetBuiltInCspReportHandlerRelativeUri()
         {
-            var uri = new UriBuilder {Path = pathHelper.GetBuiltinCspReportHandlerPath(), Query = "cspReport=true"};
+            var uri = new UriBuilder {Path = _pathHelper.GetBuiltinCspReportHandlerPath(), Query = "cspReport=true"};
             return uri.Uri.PathAndQuery;
         }
 
         internal bool IsRequestForBuiltInCspReportHandler(HttpRequestBase request)
         {
-            return request.Path.Equals(pathHelper.GetBuiltinCspReportHandlerPath())
+            return request.Path.Equals(_pathHelper.GetBuiltinCspReportHandlerPath())
                    && request.QueryString["cspReport"] != null
                    && request.QueryString["cspReport"].Equals("true");
 

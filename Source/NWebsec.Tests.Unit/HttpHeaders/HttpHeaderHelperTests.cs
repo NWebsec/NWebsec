@@ -13,8 +13,8 @@ namespace NWebsec.Tests.Unit.HttpHeaders
     [TestFixture]
     public class HttpHeaderHelperTests
     {
-        private HttpContextBase mockContext;
-        private HttpHeaderHelper headerHelper;
+        private HttpContextBase _mockContext;
+        private HttpHeaderHelper _headerHelper;
 
         [SetUp]
         public void Setup()
@@ -22,8 +22,8 @@ namespace NWebsec.Tests.Unit.HttpHeaders
             var mockedContext = new Mock<HttpContextBase>();
             IDictionary<String, Object> nwebsecContentItems = new Dictionary<string, object>();
             mockedContext.Setup(x => x.Items["nwebsecheaderoverride"]).Returns(nwebsecContentItems);
-            mockContext = mockedContext.Object;
-            headerHelper = new HttpHeaderHelper();
+            _mockContext = mockedContext.Object;
+            _headerHelper = new HttpHeaderHelper();
         }
 
         [Test]
@@ -31,9 +31,9 @@ namespace NWebsec.Tests.Unit.HttpHeaders
         {
             var configOverride = new SimpleBooleanConfigurationElement { Enabled = true };
 
-            headerHelper.SetXContentTypeOptionsOverride(mockContext, configOverride);
+            _headerHelper.SetXContentTypeOptionsOverride(_mockContext, configOverride);
 
-            Assert.AreSame(configOverride, headerHelper.GetXContentTypeOptionsWithOverride(mockContext));
+            Assert.AreSame(configOverride, _headerHelper.GetXContentTypeOptionsWithOverride(_mockContext));
         }
 
         [Test]
@@ -41,9 +41,9 @@ namespace NWebsec.Tests.Unit.HttpHeaders
         {
             var configOverride = new XFrameOptionsConfigurationElement { Policy = XFrameOptionsPolicy.Deny };
 
-            headerHelper.SetXFrameoptionsOverride(mockContext, configOverride);
+            _headerHelper.SetXFrameoptionsOverride(_mockContext, configOverride);
 
-            Assert.AreSame(configOverride, headerHelper.GetXFrameoptionsWithOverride(mockContext));
+            Assert.AreSame(configOverride, _headerHelper.GetXFrameoptionsWithOverride(_mockContext));
         }
 
         [Test]
@@ -51,9 +51,9 @@ namespace NWebsec.Tests.Unit.HttpHeaders
         {
             var configOverride = new HstsConfigurationElement { MaxAge = new TimeSpan(1, 0, 0) };
 
-            headerHelper.SetHstsOverride(mockContext, configOverride);
+            _headerHelper.SetHstsOverride(_mockContext, configOverride);
 
-            Assert.AreSame(configOverride, headerHelper.GetHstsWithOverride(mockContext));
+            Assert.AreSame(configOverride, _headerHelper.GetHstsWithOverride(_mockContext));
         }
 
         [Test]
@@ -61,9 +61,9 @@ namespace NWebsec.Tests.Unit.HttpHeaders
         {
             var configOverride = new SimpleBooleanConfigurationElement { Enabled = true };
 
-            headerHelper.SetXContentTypeOptionsOverride(mockContext, configOverride);
+            _headerHelper.SetXContentTypeOptionsOverride(_mockContext, configOverride);
 
-            Assert.AreSame(configOverride, headerHelper.GetXContentTypeOptionsWithOverride(mockContext));
+            Assert.AreSame(configOverride, _headerHelper.GetXContentTypeOptionsWithOverride(_mockContext));
         }
 
         [Test]
@@ -71,9 +71,9 @@ namespace NWebsec.Tests.Unit.HttpHeaders
         {
             var configOverride = new SimpleBooleanConfigurationElement { Enabled = true };
 
-            headerHelper.SetXDownloadOptionsOverride(mockContext, configOverride);
+            _headerHelper.SetXDownloadOptionsOverride(_mockContext, configOverride);
 
-            Assert.AreSame(configOverride, headerHelper.GetXDownloadOptionsWithOverride(mockContext));
+            Assert.AreSame(configOverride, _headerHelper.GetXDownloadOptionsWithOverride(_mockContext));
 
         }
 
@@ -82,9 +82,9 @@ namespace NWebsec.Tests.Unit.HttpHeaders
         {
             var configOverride = new XXssProtectionConfigurationElement { Policy = XXssProtectionPolicy.FilterEnabled };
 
-            headerHelper.SetXXssProtectionOverride(mockContext, configOverride);
+            _headerHelper.SetXXssProtectionOverride(_mockContext, configOverride);
 
-            Assert.AreSame(configOverride, headerHelper.GetXXssProtectionWithOverride(mockContext));
+            Assert.AreSame(configOverride, _headerHelper.GetXXssProtectionWithOverride(_mockContext));
         }
 
         [Test]
@@ -92,9 +92,9 @@ namespace NWebsec.Tests.Unit.HttpHeaders
         {
             var configOverride = new SuppressVersionHeadersConfigurationElement { Enabled = true };
 
-            headerHelper.SetSuppressVersionHeadersOverride(mockContext, configOverride);
+            _headerHelper.SetSuppressVersionHeadersOverride(_mockContext, configOverride);
 
-            Assert.AreSame(configOverride, headerHelper.GetSuppressVersionHeadersWithOverride(mockContext));
+            Assert.AreSame(configOverride, _headerHelper.GetSuppressVersionHeadersWithOverride(_mockContext));
         }
 
         [Test]
@@ -102,9 +102,9 @@ namespace NWebsec.Tests.Unit.HttpHeaders
         {
             var configOverride = new XRobotsTagConfigurationElement { Enabled = true, NoIndex = true };
 
-            headerHelper.SetXRobotsTagHeaderOverride(mockContext, configOverride);
+            _headerHelper.SetXRobotsTagHeaderOverride(_mockContext, configOverride);
 
-            Assert.AreSame(configOverride, headerHelper.GetXRobotsTagHeaderWithOverride(mockContext));
+            Assert.AreSame(configOverride, _headerHelper.GetXRobotsTagHeaderWithOverride(_mockContext));
         }
     }
 }

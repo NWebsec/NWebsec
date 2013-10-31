@@ -9,12 +9,12 @@ namespace NWebsec.Tests.Unit.Modules.Configuration
     [TestFixture]
     public class RedirectUriValidatorTests
     {
-        private RedirectUriValidator validator;
+        private RedirectUriValidator _validator;
 
         [SetUp]
         public void Setup()
         {
-            validator = new RedirectUriValidator();
+            _validator = new RedirectUriValidator();
         }
 
         [Test]
@@ -22,7 +22,7 @@ namespace NWebsec.Tests.Unit.Modules.Configuration
         {
             var uri = new Uri("https://www.nwebsec.com");
             
-            Assert.DoesNotThrow(() => validator.Validate(uri));
+            Assert.DoesNotThrow(() => _validator.Validate(uri));
         }
 
         [Test]
@@ -30,7 +30,7 @@ namespace NWebsec.Tests.Unit.Modules.Configuration
         {
             var uri = new Uri("https://www.nwebsec.com/path");
 
-            Assert.DoesNotThrow(() => validator.Validate(uri));
+            Assert.DoesNotThrow(() => _validator.Validate(uri));
         }
 
         [Test]
@@ -38,7 +38,7 @@ namespace NWebsec.Tests.Unit.Modules.Configuration
         {
             var uri = new Uri("https://www.nwebsec.com/path?foo=bar");
 
-            Assert.Throws<RedirectValidationConfigurationException>(() => validator.Validate(uri));
+            Assert.Throws<RedirectValidationConfigurationException>(() => _validator.Validate(uri));
         }
 
         [Test]
@@ -46,7 +46,7 @@ namespace NWebsec.Tests.Unit.Modules.Configuration
         {
             var uri = new Uri("/testpath",UriKind.RelativeOrAbsolute);
 
-            Assert.Throws<RedirectValidationConfigurationException>(() => validator.Validate(uri));
+            Assert.Throws<RedirectValidationConfigurationException>(() => _validator.Validate(uri));
         }
 
         [Test]
@@ -54,7 +54,7 @@ namespace NWebsec.Tests.Unit.Modules.Configuration
         {
             var uri = new Uri("www.nwebsec.com", UriKind.RelativeOrAbsolute);
 
-            Assert.Throws<RedirectValidationConfigurationException>(() => validator.Validate(uri));
+            Assert.Throws<RedirectValidationConfigurationException>(() => _validator.Validate(uri));
         }
     }
 }

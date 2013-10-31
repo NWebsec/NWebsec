@@ -19,22 +19,22 @@ namespace NWebsec.SessionSecurity.Tests.Unit.SessionState
         internal const int MacComponentLength = 32; //Length in bytes
         internal const int Base64SessionIdLength = 64; //Length in base64 characters
 
-        private AuthenticatedSessionIDHelper helper;
-        private RandomNumberGenerator rng;
-        private IHmacHelper hmac;
+        private AuthenticatedSessionIDHelper _helper;
+        private RandomNumberGenerator _rng;
+        private IHmacHelper _hmac;
 
         [SetUp]
         public void Setup()
         {
-            rng = new PredictableNumberGenerator(0x05);
-            hmac = new Mock<IHmacHelper>().Object;
-            Mock.Get(hmac).Setup(h => h.CalculateMac(It.IsAny<byte[]>(), It.IsAny<byte[]>())).Returns(GetMockMac);
+            _rng = new PredictableNumberGenerator(0x05);
+            _hmac = new Mock<IHmacHelper>().Object;
+            Mock.Get(_hmac).Setup(h => h.CalculateMac(It.IsAny<byte[]>(), It.IsAny<byte[]>())).Returns(GetMockMac);
 
             var config = new SessionSecurityConfigurationSection();
             config.SessionIDAuthentication.Enabled = true;
             config.SessionIDAuthentication.AuthenticationKey = "0101010101010101010101010101010101010101010101010101010101010101";
 
-            helper = new AuthenticatedSessionIDHelper(rng, new byte[32], hmac);
+            _helper = new AuthenticatedSessionIDHelper(_rng, new byte[32], _hmac);
         }
 
         [Test]
@@ -42,7 +42,7 @@ namespace NWebsec.SessionSecurity.Tests.Unit.SessionState
         {
             var expectedSessionId = GetMockValidSessionID();
 
-            var sessionID = helper.Create("klings");
+            var sessionID = _helper.Create("klings");
 
             Assert.AreEqual(expectedSessionId, sessionID);
         }
@@ -50,10 +50,10 @@ namespace NWebsec.SessionSecurity.Tests.Unit.SessionState
         [Test]
         public void Create_CalculatesSameMacForSameUserWithSameSessionComponent()
         {
-            helper = new AuthenticatedSessionIDHelper(rng, new byte[32], new HmacSha256Helper());
+            _helper = new AuthenticatedSessionIDHelper(_rng, new byte[32], new HmacSha256Helper());
 
-            var session1 = helper.Create("klings").AddBase64Padding();
-            var session2 = helper.Create("klings").AddBase64Padding();
+            var session1 = _helper.Create("klings").AddBase64Padding();
+            var session2 = _helper.Create("klings").AddBase64Padding();
 
             Assert.AreEqual(session1, session2);
         }
@@ -61,10 +61,10 @@ namespace NWebsec.SessionSecurity.Tests.Unit.SessionState
         [Test]
         public void Create_CalculatesDifferentMacForDifferentUsersWithSameSessionComponent()
         {
-            helper = new AuthenticatedSessionIDHelper(rng, new byte[32], new HmacSha256Helper());
+            _helper = new AuthenticatedSessionIDHelper(_rng, new byte[32], new HmacSha256Helper());
 
-            var session1 = Convert.FromBase64String(helper.Create("klings").AddBase64Padding());
-            var session2 = Convert.FromBase64String(helper.Create("klings2").AddBase64Padding());
+            var session1 = Convert.FromBase64String(_helper.Create("klings").AddBase64Padding());
+            var session2 = Convert.FromBase64String(_helper.Create("klings2").AddBase64Padding());
 
             for (var i = 0; i < SessionIdComponentLength; i++)
             {
@@ -82,31 +82,31 @@ namespace NWebsec.SessionSecurity.Tests.Unit.SessionState
         [Test]
         public void Validate_ValidSessionID_ReturnsTrue()
         {
-            Assert.IsTrue(helper.Validate("klings", GetMockValidSessionID()));
+            Assert.IsTrue(_helper.Validate("klings", GetMockValidSessionID()));
         }
 
         [Test]
         public void Validate_SessionIDWithInvalidMacLeftBoundary_ReturnsFalse()
         {
-            Assert.IsFalse(helper.Validate("klings", GetMockSessionIDWithInvalidMacLeftBoundary()));
+            Assert.IsFalse(_helper.Validate("klings", GetMockSessionIDWithInvalidMacLeftBoundary()));
         }
 
         [Test]
         public void Validate_SessionIDWithInvalidMacRightBoundary_ReturnsFalse()
         {
-            Assert.IsFalse(helper.Validate("klings", GetMockSessionIDWithInvalidMacRightBoundary()));
+            Assert.IsFalse(_helper.Validate("klings", GetMockSessionIDWithInvalidMacRightBoundary()));
         }
 
         [Test]
         public void Validate_SessionIDWithInvalidMacMultipleBytes_ReturnsFalse()
         {
-            Assert.IsFalse(helper.Validate("klings", GetMockSessionIDWithInvalidMacMultipleBytes()));
+            Assert.IsFalse(_helper.Validate("klings", GetMockSessionIDWithInvalidMacMultipleBytes()));
         }
 
         [Test]
         public void Validate_SessionIDWithInvalidMacAllBytes_ReturnsFalse()
         {
-            Assert.IsFalse(helper.Validate("klings", GetMockSessionIDWithInvalidMacAllBytes()));
+            Assert.IsFalse(_helper.Validate("klings", GetMockSessionIDWithInvalidMacAllBytes()));
         }
 
         [Test]
@@ -116,34 +116,34 @@ namespace NWebsec.SessionSecurity.Tests.Unit.SessionState
             sessionid = "?" + sessionid.Substring(1);
 
             Assert.AreEqual(Base64SessionIdLength, sessionid.Length);
-            Assert.IsFalse(helper.Validate("klings", sessionid));
+            Assert.IsFalse(_helper.Validate("klings", sessionid));
         }
 
         //[Test]
         public void Validate_ValidSessionID_Performance()
         {
-            helper = new AuthenticatedSessionIDHelper(new RNGCryptoServiceProvider(), new byte[32], new HmacSha256Helper());
-            var sessionId = helper.Create("klings");
+            _helper = new AuthenticatedSessionIDHelper(new RNGCryptoServiceProvider(), new byte[32], new HmacSha256Helper());
+            var sessionId = _helper.Create("klings");
             foreach (var number in Enumerable.Range(0, 10000000))
             {
-                helper.Validate("klings", sessionId);
+                _helper.Validate("klings", sessionId);
             }
         }
 
         //[Test]
         public void Create_Performance()
         {
-            helper = new AuthenticatedSessionIDHelper(new RNGCryptoServiceProvider(), new byte[32], new HmacSha256Helper());
+            _helper = new AuthenticatedSessionIDHelper(new RNGCryptoServiceProvider(), new byte[32], new HmacSha256Helper());
             foreach (var number in Enumerable.Range(0, 10000000))
             {
-                helper.Create("klings");
+                _helper.Create("klings");
             }
         }
 
         //[Test]
         public void ValidateMac_Timing()
         {
-            helper = new AuthenticatedSessionIDHelper(new RNGCryptoServiceProvider(), new byte[32], new HmacSha256Helper());
+            _helper = new AuthenticatedSessionIDHelper(new RNGCryptoServiceProvider(), new byte[32], new HmacSha256Helper());
             var expectedMac = GetMockMac();
             Array.Resize(ref expectedMac, 16);
             var sessionID = new byte[]
@@ -165,14 +165,14 @@ namespace NWebsec.SessionSecurity.Tests.Unit.SessionState
             //Warmup
             for (var i = 0; i < 100000; i++)
             {
-                helper.ValidateMac(expectedMac, invalidSessionID);
+                _helper.ValidateMac(expectedMac, invalidSessionID);
             }
 
             timer.Start();
             
             for (var i = 0; i < 10000000; i++)
             {
-                helper.ValidateMac(expectedMac, sessionID);
+                _helper.ValidateMac(expectedMac, sessionID);
             }
             
             timer.Stop();
@@ -182,7 +182,7 @@ namespace NWebsec.SessionSecurity.Tests.Unit.SessionState
             
             for (var i = 0; i < 10000000; i++)
             {
-                helper.ValidateMac(expectedMac, invalidSessionID);
+                _helper.ValidateMac(expectedMac, invalidSessionID);
             }
             
             timer.Stop();

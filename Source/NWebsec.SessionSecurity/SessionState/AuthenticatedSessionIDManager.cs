@@ -12,37 +12,37 @@ namespace NWebsec.SessionSecurity.SessionState
         internal const int TruncatedMacLength = 16; //Length in bytes
         internal const int Base64SessionIdLength = 44; //Length in base64 characters
         
-        private readonly HttpContextBase mockContext;
-        private readonly IAuthenticatedSessionIDHelper sessionIdHelper;
-        private readonly bool authenticatedSessionsEnabled;
+        private readonly HttpContextBase _mockContext;
+        private readonly IAuthenticatedSessionIDHelper _sessionIdHelper;
+        private readonly bool _authenticatedSessionsEnabled;
 
         private HttpContextBase CurrentContext
         {
-            get { return mockContext ?? new HttpContextWrapper(HttpContext.Current); }
+            get { return _mockContext ?? new HttpContextWrapper(HttpContext.Current); }
         }
 
         public AuthenticatedSessionIDManager()
         {
-            authenticatedSessionsEnabled = SessionSecurityConfiguration.Configuration.SessionIDAuthentication.Enabled;
-            if (authenticatedSessionsEnabled)
+            _authenticatedSessionsEnabled = SessionSecurityConfiguration.Configuration.SessionIDAuthentication.Enabled;
+            if (_authenticatedSessionsEnabled)
             {
-                sessionIdHelper = AuthenticatedSessionIDHelper.Instance;
+                _sessionIdHelper = AuthenticatedSessionIDHelper.Instance;
             }
         }
 
         internal AuthenticatedSessionIDManager(HttpContextBase context, SessionSecurityConfigurationSection config, IAuthenticatedSessionIDHelper helper)
         {
-            mockContext = context;
-            authenticatedSessionsEnabled = config.SessionIDAuthentication.Enabled;
-            sessionIdHelper = helper;
+            _mockContext = context;
+            _authenticatedSessionsEnabled = config.SessionIDAuthentication.Enabled;
+            _sessionIdHelper = helper;
         }
 
         public override string CreateSessionID(HttpContext context)
         {
             var currentIdentity = CurrentContext.User.Identity;
-            if (authenticatedSessionsEnabled && currentIdentity.IsAuthenticated && !String.IsNullOrEmpty(currentIdentity.Name))
+            if (_authenticatedSessionsEnabled && currentIdentity.IsAuthenticated && !String.IsNullOrEmpty(currentIdentity.Name))
             {
-                var id = sessionIdHelper.Create(currentIdentity.Name);
+                var id = _sessionIdHelper.Create(currentIdentity.Name);
                 return id;
             }
             return base.CreateSessionID(context);
@@ -51,9 +51,9 @@ namespace NWebsec.SessionSecurity.SessionState
         public override bool Validate(string id)
         {
             var currentIdentity = CurrentContext.User.Identity;
-            if (authenticatedSessionsEnabled && currentIdentity.IsAuthenticated && !String.IsNullOrEmpty(currentIdentity.Name))
+            if (_authenticatedSessionsEnabled && currentIdentity.IsAuthenticated && !String.IsNullOrEmpty(currentIdentity.Name))
             {
-                return sessionIdHelper.Validate(currentIdentity.Name, id);
+                return _sessionIdHelper.Validate(currentIdentity.Name, id);
             }
             return base.Validate(id);
         }

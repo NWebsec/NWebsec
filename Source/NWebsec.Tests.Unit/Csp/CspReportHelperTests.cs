@@ -16,7 +16,7 @@ namespace NWebsec.Tests.Unit.Csp
         [Test]
         public void IsRequestForBuiltInCspReportHandler_IsBuiltinReportHandler_ReturnsTrue()
         {
-            var queryParams = new NameValueCollection() {{"cspReport", "true"}};
+            var queryParams = new NameValueCollection {{"cspReport", "true"}};
             var mockRequest = new Mock<HttpRequestBase>();
             mockRequest.Setup(r => r.Path).Returns("/NWebSec/WebResource.axd");
             mockRequest.Setup(r => r.QueryString).Returns(queryParams);
@@ -31,7 +31,7 @@ namespace NWebsec.Tests.Unit.Csp
         [Test]
         public void IsRequestForBuiltInCspReportHandler_IsNotBuiltinReportHandler_ReturnsFalse()
         {
-            var queryParams = new NameValueCollection() {{"cspReport", "true"}};
+            var queryParams = new NameValueCollection {{"cspReport", "true"}};
             var mockRequest = new Mock<HttpRequestBase>();
             mockRequest.Setup(r => r.Path).Returns("/NWebSec/SomeOtherResource");
             mockRequest.Setup(r => r.QueryString).Returns(queryParams);

@@ -9,12 +9,12 @@ namespace NWebsec.Tests.Unit.Modules.Configuration.Csp
     [TestFixture]
     public class ReportUriValidatorTests
     {
-        private ReportUriValidator validator;
+        private ReportUriValidator _validator;
 
         [SetUp]
         public void Setup()
         {
-            validator = new ReportUriValidator();
+            _validator = new ReportUriValidator();
         }
 
         [Test]
@@ -22,7 +22,7 @@ namespace NWebsec.Tests.Unit.Modules.Configuration.Csp
         {
             var relativeUri = new Uri("/Cspreport", UriKind.Relative);
 
-            Assert.DoesNotThrow(() => validator.Validate(relativeUri));
+            Assert.DoesNotThrow(() => _validator.Validate(relativeUri));
         }
 
         [Test]
@@ -30,7 +30,7 @@ namespace NWebsec.Tests.Unit.Modules.Configuration.Csp
         {
             var relativeUri = new Uri("https://www.nwebsec.com/Cspreport");
 
-            Assert.Throws<InvalidCspReportUriException>(() => validator.Validate(relativeUri));
+            Assert.Throws<InvalidCspReportUriException>(() => _validator.Validate(relativeUri));
         }
     }
 }

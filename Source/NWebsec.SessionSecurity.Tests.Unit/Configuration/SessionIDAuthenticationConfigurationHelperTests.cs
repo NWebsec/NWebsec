@@ -9,55 +9,57 @@ namespace NWebsec.SessionSecurity.Tests.Unit.Configuration
     [TestFixture]
     public class SessionIDAuthenticationConfigurationHelperTests
     {
-        private SessionSecurityConfigurationSection sessionSecurityConfig;
+        private SessionSecurityConfigurationSection _sessionSecurityConfig;
 
         private const string SessionAuthKey = "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF";
 
-        private readonly byte[] expectedSessionAuthKey = new byte[] {
+        private readonly byte[] _expectedSessionAuthKey =
+        {
             0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF,
             0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF,
             0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF,
             0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF
         };
-        private readonly byte[] expectedMachineKey = new byte[] {
+        private readonly byte[] _expectedMachineKey =
+        {
             0x05, 0x05, 0x05, 0x05, 0x05, 0x05, 0x05, 0x05,
             0x05, 0x05, 0x05, 0x05, 0x05, 0x05, 0x05, 0x05,
             0x05, 0x05, 0x05, 0x05, 0x05, 0x05, 0x05, 0x05,
             0x05, 0x05, 0x05, 0x05, 0x05, 0x05, 0x05, 0x05
         };
 
-        private IMachineKeyConfigurationHelper machineKeyHelper;
+        private IMachineKeyConfigurationHelper _machineKeyHelper;
 
         [SetUp]
         public void Setup()
         {
-            sessionSecurityConfig = new SessionSecurityConfigurationSection();
-            sessionSecurityConfig.SessionIDAuthentication.AuthenticationKey = SessionAuthKey;
+            _sessionSecurityConfig = new SessionSecurityConfigurationSection();
+            _sessionSecurityConfig.SessionIDAuthentication.AuthenticationKey = SessionAuthKey;
 
-            machineKeyHelper = new Mock<IMachineKeyConfigurationHelper>().Object;
-            Mock.Get(machineKeyHelper).Setup(mk => mk.GetMachineKey()).Returns(expectedMachineKey);
+            _machineKeyHelper = new Mock<IMachineKeyConfigurationHelper>().Object;
+            Mock.Get(_machineKeyHelper).Setup(mk => mk.GetMachineKey()).Returns(_expectedMachineKey);
         }
 
         [Test]
         public void GetKeyFromConfig_UseMachineKeyTrue_ReturnsMachineKey()
         {
-            sessionSecurityConfig.SessionIDAuthentication.UseMachineKey = true;
-            var helper = new SessionIDAuthenticationConfigurationHelper(sessionSecurityConfig, machineKeyHelper);
+            _sessionSecurityConfig.SessionIDAuthentication.UseMachineKey = true;
+            var helper = new SessionIDAuthenticationConfigurationHelper(_sessionSecurityConfig, _machineKeyHelper);
 
             var key = helper.GetKeyFromConfig();
 
-            Assert.AreEqual(expectedMachineKey, key);
+            Assert.AreEqual(_expectedMachineKey, key);
         }
 
         [Test]
         public void GetKeyFromConfig_UseMachineKeyFalse_ReturnsSessionIDAuthenticationKey()
         {
-            sessionSecurityConfig.SessionIDAuthentication.UseMachineKey = false;
-            var helper = new SessionIDAuthenticationConfigurationHelper(sessionSecurityConfig, machineKeyHelper);
+            _sessionSecurityConfig.SessionIDAuthentication.UseMachineKey = false;
+            var helper = new SessionIDAuthenticationConfigurationHelper(_sessionSecurityConfig, _machineKeyHelper);
 
             var key = helper.GetKeyFromConfig();
 
-            Assert.AreEqual(expectedSessionAuthKey, key);
+            Assert.AreEqual(_expectedSessionAuthKey, key);
         }
     }
 }

@@ -30,11 +30,11 @@ namespace NWebsec.Csp
     [DataContract]
     public class CspReportDetails
     {
-        private string documentUri;
-        private string referrer;
-        private string blockedUri;
-        private string violatedDirective;
-        private string originalPolicy;
+        private string _documentUri;
+        private string _referrer;
+        private string _blockedUri;
+        private string _violatedDirective;
+        private string _originalPolicy;
 
         /// <summary>
         /// Gets the address of the protected resource where the policy was violated. The default is the empty string.
@@ -42,8 +42,8 @@ namespace NWebsec.Csp
         [DataMember(Name = "document-uri")]
         public string DocumentUri
         {
-            get { return documentUri ?? String.Empty; }
-            internal set { documentUri = value; }
+            get { return _documentUri ?? String.Empty; }
+            internal set { _documentUri = value; }
         }
 
         /// <summary>
@@ -52,8 +52,8 @@ namespace NWebsec.Csp
         [DataMember(Name = "referrer")]
         public string Referrer
         {
-            get { return referrer ?? String.Empty; }
-            internal set { referrer = value; }
+            get { return _referrer ?? String.Empty; }
+            internal set { _referrer = value; }
         }
 
         /// <summary>
@@ -62,8 +62,8 @@ namespace NWebsec.Csp
         [DataMember(Name = "blocked-uri")]
         public string BlockedUri
         {
-            get { return blockedUri ?? String.Empty; }
-            internal set { blockedUri = value; }
+            get { return _blockedUri ?? String.Empty; }
+            internal set { _blockedUri = value; }
         }
 
         /// <summary>
@@ -72,8 +72,8 @@ namespace NWebsec.Csp
         [DataMember(Name = "violated-directive")]
         public string ViolatedDirective
         {
-            get { return violatedDirective ?? String.Empty; }
-            internal set { violatedDirective = value; }
+            get { return _violatedDirective ?? String.Empty; }
+            internal set { _violatedDirective = value; }
         }
 
         /// <summary>
@@ -82,8 +82,8 @@ namespace NWebsec.Csp
         [DataMember(Name = "original-policy")]
         public string OriginalPolicy 
         {
-            get { return originalPolicy ?? String.Empty; }
-            internal set { originalPolicy = value; }
+            get { return _originalPolicy ?? String.Empty; }
+            internal set { _originalPolicy = value; }
         }
     }
 }
