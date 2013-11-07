@@ -28,13 +28,18 @@ namespace NWebsec.HttpHeaders
             var response = context.Response;
             if (!response.HasStatusCodeThatRedirects()) return;
 
-            var locationHeaderValue = response.Headers["Location"];
-            if (String.IsNullOrEmpty(locationHeaderValue))
+            var redirectLocation = response.RedirectLocation;
+
+            if (String.IsNullOrEmpty(redirectLocation))
             {
-                throw new Exception(String.Format("Response had statuscode {0}, but Location header was null or the empty string.", response.StatusCode));
+                redirectLocation = response.Headers["Location"];
+                if (String.IsNullOrEmpty(redirectLocation))
+                {
+                    throw new Exception(String.Format("Response had statuscode {0}, but Location header was null or the empty string.", response.StatusCode));
+                }
             }
-            
-            var redirectUri = new Uri(locationHeaderValue, UriKind.RelativeOrAbsolute);
+
+            var redirectUri = new Uri(redirectLocation, UriKind.RelativeOrAbsolute);
             if (!redirectUri.IsAbsoluteUri) return;
 
             var requestUri = context.Request.Url;
