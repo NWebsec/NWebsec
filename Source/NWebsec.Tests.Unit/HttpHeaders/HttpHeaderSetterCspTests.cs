@@ -360,6 +360,24 @@ namespace NWebsec.Tests.Unit.HttpHeaders
         }
 
         [Test]
+        public void AddCspHeaders_XWebkitCspEnabledInConfigSafari5_DoesNotAddXWebkitCspHeader()
+        {
+            _mockRequest.Setup(r => r.UserAgent).Returns("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_6_8) AppleWebKit/537.13+ (KHTML, like Gecko) Version/5.1.7 Safari/534.57.2");
+            
+            var cspConfig = new CspConfigurationElement
+            {
+                Enabled = true,
+                XContentSecurityPolicyHeader = false,
+                XWebKitCspHeader = true,
+                DefaultSrc = { Self = true }
+            };
+
+            _headerSetter.AddCspHeaders(_mockContext.Object, cspConfig, false);
+
+            _mockResponse.Verify(x => x.AddHeader("X-WebKit-CSP", It.IsAny<String>()), Times.Never());
+        }
+
+        [Test]
         public void AddCspHeaders_XCspAndXWebkitCspEnabledInConfig_AddsXcspAndXWebkitCspHeader()
         {
             var cspConfig = new CspConfigurationElement { Enabled = true, XContentSecurityPolicyHeader = true, XWebKitCspHeader = true };

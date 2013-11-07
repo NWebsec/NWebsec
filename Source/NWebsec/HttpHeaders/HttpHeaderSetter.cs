@@ -163,6 +163,12 @@ namespace NWebsec.HttpHeaders
                 _handlerHelper.IsStaticContentHandler(context) ||
                 _handlerHelper.IsUnmanagedHandler(context)) return;
 
+            var userAgent = context.Request.UserAgent;
+            if (!String.IsNullOrEmpty(userAgent) && userAgent.Contains("Safari/5"))
+            {
+                return;
+            }
+
             var headerValue = CreateCspHeaderValue(cspConfig);
             if (String.IsNullOrEmpty(headerValue)) return;
 
