@@ -30,7 +30,7 @@ namespace NWebsec.Tests.Functional
         }
 
         [Test]
-        public async void NoCacheHeaders_EnabledInConfigAndWebResourceHandler_NoHeaders()
+        public async Task NoCacheHeaders_EnabledInConfigAndWebResourceHandler_NoHeaders()
         {
             const string path = "/WebResource.axd";
             const string query =
@@ -50,7 +50,7 @@ namespace NWebsec.Tests.Functional
         }
 
         [Test]
-        public async void NoCacheHeaders_EnabledInConfigAndScriptResourceHandler_NoHeaders()
+        public async Task NoCacheHeaders_EnabledInConfigAndScriptResourceHandler_NoHeaders()
         {
             const string path = "/ScriptResource.axd";
             const string query =

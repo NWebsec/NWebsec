@@ -27,7 +27,7 @@ namespace NWebsec.Tests.Functional
         }
 
         [Test]
-        public async void SuppressVersionHeaders_Enabled_NoHeaders()
+        public async Task SuppressVersionHeaders_Enabled_NoHeaders()
         {
             var testUri = new Uri(BaseUri);
 
@@ -39,7 +39,7 @@ namespace NWebsec.Tests.Functional
         }
 
         [Test]
-        public async void SuppressVersionHeaders_EnabledAnd404_NoHeaders()
+        public async Task SuppressVersionHeaders_EnabledAnd404_NoHeaders()
         {
             const string path = "/NonExistant.axd";
             var testUri = Helper.GetUri(BaseUri, path);
@@ -71,7 +71,7 @@ namespace NWebsec.Tests.Functional
         }
 
         [Test]
-        public async void NoCacheHeaders_Disabled_NoHeaders()
+        public async Task NoCacheHeaders_Disabled_NoHeaders()
         {
             IEnumerable<string> values;
             const string path = "/NoCacheHeaders/Disabled";
@@ -90,7 +90,7 @@ namespace NWebsec.Tests.Functional
         }
 
         [Test]
-        public async void RedirectValidation_EnabledAndRelative_Ok()
+        public async Task RedirectValidation_EnabledAndRelative_Ok()
         {
             const string path = "/Redirect/Relative";
             var testUri = Helper.GetUri(BaseUri, path);
@@ -101,7 +101,7 @@ namespace NWebsec.Tests.Functional
         }
 
         [Test]
-        public async void RedirectValidation_EnabledAndSameSite_Ok()
+        public async Task RedirectValidation_EnabledAndSameSite_Ok()
         {
             const string path = "/Redirect/SameSite";
             var testUri = Helper.GetUri(BaseUri, path);
@@ -112,7 +112,7 @@ namespace NWebsec.Tests.Functional
         }
 
         [Test]
-        public async void RedirectValidation_EnabledAndWhitelistedSite_Ok()
+        public async Task RedirectValidation_EnabledAndWhitelistedSite_Ok()
         {
             const string path = "/Redirect/WhitelistedSite";
             var testUri = Helper.GetUri(BaseUri, path);
@@ -123,7 +123,7 @@ namespace NWebsec.Tests.Functional
         }
 
         [Test]
-        public async void RedirectValidation_EnabledAndDangerousSite_500()
+        public async Task RedirectValidation_EnabledAndDangerousSite_500()
         {
             const string path = "/Redirect/DangerousSite";
             var testUri = Helper.GetUri(BaseUri, path);
@@ -136,7 +136,7 @@ namespace NWebsec.Tests.Functional
         }
 
         [Test]
-        public async void RedirectValidation_DisabledAndDangerousSite_Ok()
+        public async Task RedirectValidation_DisabledAndDangerousSite_Ok()
         {
             const string path = "/Redirect/ValidationDisabledDangerousSite";
             var testUri = Helper.GetUri(BaseUri, path);
@@ -158,7 +158,7 @@ namespace NWebsec.Tests.Functional
         }
 
         [Test]
-        public async void XContentTypeOptions_Disabled_NoHeaders()
+        public async Task XContentTypeOptions_Disabled_NoHeaders()
         {
             const string path = "/XContentTypeOptions/Disabled";
             var testUri = Helper.GetUri(BaseUri, path);
@@ -181,7 +181,7 @@ namespace NWebsec.Tests.Functional
         }
 
         [Test]
-        public async void XDownloadOptions_Disabled_NoHeaders()
+        public async Task XDownloadOptions_Disabled_NoHeaders()
         {
             const string path = "/XDownloadOptions/Disabled";
             var testUri = Helper.GetUri(BaseUri, path);
@@ -204,7 +204,7 @@ namespace NWebsec.Tests.Functional
         }
 
         [Test]
-        public async void XFrameOptions_Disabled_NoHeaders()
+        public async Task XFrameOptions_Disabled_NoHeaders()
         {
             IEnumerable<string> values;
             const string path = "/XFrameOptions/Disabled";
@@ -229,7 +229,7 @@ namespace NWebsec.Tests.Functional
         }
 
         [Test]
-        public async void XXssProtection_Disabled_NoHeaders()
+        public async Task XXssProtection_Disabled_NoHeaders()
         {
             IEnumerable<string> values;
             const string path = "/XXssProtection/Disabled";
@@ -280,7 +280,7 @@ namespace NWebsec.Tests.Functional
         }
 
         [Test]
-        public async void Csp_Disabled_NoHeaders()
+        public async Task Csp_Disabled_NoHeaders()
         {
             const string path = "/Csp/Disabled";
             var testUri = Helper.GetUri(BaseUri, path);
@@ -330,7 +330,7 @@ namespace NWebsec.Tests.Functional
         }
 
         [Test]
-        public async void CspReportOnly_Disabled_NoHeaders()
+        public async Task CspReportOnly_Disabled_NoHeaders()
         {
             const string path = "/CspReportOnly/Disabled";
             var testUri = Helper.GetUri(BaseUri, path);
