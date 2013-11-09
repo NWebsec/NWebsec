@@ -16,6 +16,7 @@
     <tags>NWebsec security asp.net mvc</tags>
     <dependencies>
       <dependency id="NWebsec" version="[2.2.1-alpha01]" />
+      <dependency id="Microsoft.AspNet.Mvc" version="3.0.20105.1" />
     </dependencies>
   </metadata>
 </package>
