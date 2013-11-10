@@ -101,7 +101,6 @@
     <Compile Include="Modules\Configuration\SecurityHttpHeadersConfigurationElement.cs" />
     <Compile Include="Modules\Configuration\Csp\Validation\CspDirectiveBaseConfigurationElementValidator.cs" />
     <Compile Include="Modules\Configuration\SimpleBooleanConfigurationElement.cs" />
-    <Compile Include="Modules\Configuration\SuppressVersionHeadersConfigurationElement.cs" />
     <Compile Include="Modules\Configuration\RedirectValidationConfigurationElement.cs" />
     <Compile Include="Modules\Configuration\Validation\RedirectValidationConfigurationException.cs" />
     <Compile Include="Modules\Configuration\Validation\XRobotsTagValidator.cs" />

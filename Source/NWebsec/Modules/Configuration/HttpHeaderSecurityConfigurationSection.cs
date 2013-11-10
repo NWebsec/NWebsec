@@ -20,19 +20,6 @@ namespace NWebsec.Modules.Configuration
             }
         }
 
-        [ConfigurationProperty("suppressVersionHttpHeaders", IsRequired = true)]
-        public SuppressVersionHeadersConfigurationElement SuppressVersionHeaders
-        {
-            get
-            {
-                return (SuppressVersionHeadersConfigurationElement)this["suppressVersionHttpHeaders"];
-            }
-            set
-            {
-                this["suppressVersionHttpHeaders"] = value;
-            }
-        }
-
         [ConfigurationProperty("x-Robots-Tag", IsRequired = true)]
         [XRobotsTagValidator]
         public XRobotsTagConfigurationElement XRobotsTag

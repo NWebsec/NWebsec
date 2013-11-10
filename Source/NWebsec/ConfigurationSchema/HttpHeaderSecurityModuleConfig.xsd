@@ -63,23 +63,6 @@
             </xs:attribute>
           </xs:complexType>
         </xs:element>
-        <xs:element name="suppressVersionHttpHeaders" minOccurs="0" maxOccurs="1">
-          <xs:annotation>
-            <xs:documentation>Specifies whether to suppress common version headers emitted by IIS and ASP.NET.</xs:documentation>
-          </xs:annotation>
-          <xs:complexType>
-            <xs:attribute name="enabled" type="simple_boolean" use="required">
-              <xs:annotation>
-                <xs:documentation>This attribute is required.</xs:documentation>
-              </xs:annotation>
-            </xs:attribute>
-            <xs:attribute name="serverHeader" type="xs:string" use="optional">
-              <xs:annotation>
-                <xs:documentation>Optional. Specifies a custom value for the Server header. Recommended format is "Webserver/1.0".</xs:documentation>
-              </xs:annotation>
-            </xs:attribute>
-          </xs:complexType>
-        </xs:element>
         <xs:element name="x-Robots-Tag" minOccurs="0" maxOccurs="1">
           <xs:annotation>
             <xs:documentation>Specifies whether the X-Robots-Tag header should be set in the HTTP responses.</xs:documentation>
