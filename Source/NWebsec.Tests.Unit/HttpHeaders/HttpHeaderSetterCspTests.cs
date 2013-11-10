@@ -58,8 +58,11 @@ namespace NWebsec.Tests.Unit.HttpHeaders
         }
 
         [Test]
-        public void AddCspHeaders_DisabledInConfig_DoesNotAddCspHeader()
+        public void AddCspHeaders_DisabledInConfig_RemovesCspHeaders()
         {
+            _responseHeaders.Add("Content-Security-Policy", "default-src 'self'");
+            _responseHeaders.Add("X-Content-Security-Policy", "default-src 'self'");
+            _responseHeaders.Add("X-WebKit-Csp", "default-src 'self'");
             var cspConfig = new CspConfigurationElement { Enabled = false, DefaultSrc = { Self = true } };
 
             _headerSetter.SetCspHeaders(_mockContext.Object, cspConfig, false);
@@ -101,8 +104,11 @@ namespace NWebsec.Tests.Unit.HttpHeaders
         }
 
         [Test]
-        public void AddCspHeaders_DefaultConfig_DoesNotAddCspHeader()
+        public void AddCspHeaders_DefaultConfig_RemovesCspHeader()
         {
+            _responseHeaders.Add("Content-Security-Policy", "default-src: self");
+            _responseHeaders.Add("X-Content-Security-Policy", "default-src: self");
+            _responseHeaders.Add("X-WebKit-Csp", "default-src: self");
             var cspConfig = new CspConfigurationElement();
 
             _headerSetter.SetCspHeaders(_mockContext.Object, cspConfig, false);
@@ -111,8 +117,11 @@ namespace NWebsec.Tests.Unit.HttpHeaders
         }
 
         [Test]
-        public void AddCspHeaders_EnabledButNoDirectivesOrReportUriEnabled_DoesNotAddCspHeader()
+        public void AddCspHeaders_EnabledButNoDirectivesOrReportUriEnabled_RemovesCspHeader()
         {
+            _responseHeaders.Add("Content-Security-Policy", "default-src: self");
+            _responseHeaders.Add("X-Content-Security-Policy", "default-src: self");
+            _responseHeaders.Add("X-WebKit-Csp", "default-src: self");
             var cspConfig = new CspConfigurationElement { Enabled = true };
 
             _headerSetter.SetCspHeaders(_mockContext.Object, cspConfig, false);
@@ -121,8 +130,11 @@ namespace NWebsec.Tests.Unit.HttpHeaders
         }
 
         [Test]
-        public void AddCspHeaders_EnabledButNoDirectivesEnabledAndReportUriEnabled_DoesNotAddCspHeader()
+        public void AddCspHeaders_EnabledButNoDirectivesEnabledAndReportUriEnabled_RemovesCspHeader()
         {
+            _responseHeaders.Add("Content-Security-Policy", "default-src: self");
+            _responseHeaders.Add("X-Content-Security-Policy", "default-src: self");
+            _responseHeaders.Add("X-WebKit-Csp", "default-src: self");
             var cspConfig = new CspConfigurationElement { Enabled = true };
             cspConfig.ReportUriDirective.Enabled = true;
             cspConfig.ReportUriDirective.EnableBuiltinHandler = true;
@@ -133,8 +145,9 @@ namespace NWebsec.Tests.Unit.HttpHeaders
         }
 
         [Test]
-        public void AddCspHeaders_CspEnabledWithDefaultSrc_AddsCspHeaderWithDefaultSrc()
+        public void AddCspHeaders_CspEnabledWithDefaultSrc_SetsCspHeaderWithDefaultSrc()
         {
+            _responseHeaders.Add("Content-Security-Policy", "script-src 'self'");
             var cspConfig = new CspConfigurationElement
             {
                 Enabled = true,
@@ -147,8 +160,9 @@ namespace NWebsec.Tests.Unit.HttpHeaders
         }
 
         [Test]
-        public void AddCspHeaders_CspEnabledWithScriptSrc_AddsCspHeaderWithScriptSrc()
+        public void AddCspHeaders_CspEnabledWithScriptSrc_SetsCspHeaderWithScriptSrc()
         {
+            _responseHeaders.Add("Content-Security-Policy", "default-src 'self'");
             var cspConfig = new CspConfigurationElement
             {
                 Enabled = true,
@@ -161,8 +175,9 @@ namespace NWebsec.Tests.Unit.HttpHeaders
         }
 
         [Test]
-        public void AddCspHeaders_CspEnabledWithObjectSrc_AddsCspHeaderWithObjectSrc()
+        public void AddCspHeaders_CspEnabledWithObjectSrc_SetsCspHeaderWithObjectSrc()
         {
+            _responseHeaders.Add("Content-Security-Policy", "default-src 'self'");
             var cspConfig = new CspConfigurationElement
             {
                 Enabled = true,
@@ -175,8 +190,9 @@ namespace NWebsec.Tests.Unit.HttpHeaders
         }
 
         [Test]
-        public void AddCspHeaders_CspEnabledWithStyleSrc_AddsCspHeaderWithStyleSrc()
+        public void AddCspHeaders_CspEnabledWithStyleSrc_SetsCspHeaderWithStyleSrc()
         {
+            _responseHeaders.Add("Content-Security-Policy", "default-src 'self'");
             var cspConfig = new CspConfigurationElement
             {
                 Enabled = true,
@@ -189,8 +205,9 @@ namespace NWebsec.Tests.Unit.HttpHeaders
         }
 
         [Test]
-        public void AddCspHeaders_CspEnabledWithImgSrc_AddsCspHeaderWithImgSrc()
+        public void AddCspHeaders_CspEnabledWithImgSrc_SetsCspHeaderWithImgSrc()
         {
+            _responseHeaders.Add("Content-Security-Policy", "default-src 'self'");
             var cspConfig = new CspConfigurationElement
             {
                 Enabled = true,
@@ -203,8 +220,9 @@ namespace NWebsec.Tests.Unit.HttpHeaders
         }
 
         [Test]
-        public void AddCspHeaders_CspEnabledWithMediaSrc_AddsCspHeaderWithMediaSrc()
+        public void AddCspHeaders_CspEnabledWithMediaSrc_SetsCspHeaderWithMediaSrc()
         {
+            _responseHeaders.Add("Content-Security-Policy", "default-src 'self'");
             var cspConfig = new CspConfigurationElement
             {
                 Enabled = true,
@@ -217,8 +235,9 @@ namespace NWebsec.Tests.Unit.HttpHeaders
         }
 
         [Test]
-        public void AddCspHeaders_CspEnabledWithFrameSrc_AddsCspHeaderWithFrameSrc()
+        public void AddCspHeaders_CspEnabledWithFrameSrc_SetssCspHeaderWithFrameSrc()
         {
+            _responseHeaders.Add("Content-Security-Policy", "default-src 'self'");
             var cspConfig = new CspConfigurationElement
             {
                 Enabled = true,
@@ -231,8 +250,9 @@ namespace NWebsec.Tests.Unit.HttpHeaders
         }
 
         [Test]
-        public void AddCspHeaders_CspEnabledWithFontSrc_AddsCspHeaderWithFontSrc()
+        public void AddCspHeaders_CspEnabledWithFontSrc_SetsCspHeaderWithFontSrc()
         {
+            _responseHeaders.Add("Content-Security-Policy", "default-src 'self'");
             var cspConfig = new CspConfigurationElement
             {
                 Enabled = true,
@@ -245,8 +265,9 @@ namespace NWebsec.Tests.Unit.HttpHeaders
         }
 
         [Test]
-        public void AddCspHeaders_CspEnabledWithConnectSrc_AddsCspHeaderWithConnectSrc()
+        public void AddCspHeaders_CspEnabledWithConnectSrc_SetsCspHeaderWithConnectSrc()
         {
+            _responseHeaders.Add("Content-Security-Policy", "default-src 'self'");
             var cspConfig = new CspConfigurationElement
             {
                 Enabled = true,
@@ -259,8 +280,9 @@ namespace NWebsec.Tests.Unit.HttpHeaders
         }
 
         [Test]
-        public void AddCspHeaders_CspWithTwoDirectives_AddsCorrectCspHeader()
+        public void AddCspHeaders_CspWithTwoDirectives_SetsCorrectCspHeader()
         {
+            _responseHeaders.Add("Content-Security-Policy", "img-src 'self'");
             var cspConfig = new CspConfigurationElement
             {
                 Enabled = true,
@@ -274,8 +296,9 @@ namespace NWebsec.Tests.Unit.HttpHeaders
         }
 
         [Test]
-        public void AddCspHeaders_CspDirectiveWithTwoSources_AddsCorrectlyFormattedCspHeader()
+        public void AddCspHeaders_CspDirectiveWithTwoSources_SetsCorrectlyFormattedCspHeader()
         {
+            _responseHeaders.Add("Content-Security-Policy", "img-src 'self'");
             var cspConfig = new CspConfigurationElement { Enabled = true, DefaultSrc = { Self = true } };
             cspConfig.DefaultSrc.Sources.Add(new CspSourceConfigurationElement { Source = "nwebsec.codeplex.com" });
 
@@ -285,8 +308,9 @@ namespace NWebsec.Tests.Unit.HttpHeaders
         }
 
         [Test]
-        public void AddCspHeaders_CspEnabledWithBuiltinReportUri_AddsCorrectCspHeader()
+        public void AddCspHeaders_CspEnabledWithBuiltinReportUri_SetsCorrectCspHeader()
         {
+            _responseHeaders.Add("Content-Security-Policy", "img-src 'self'");
             var cspConfig = new CspConfigurationElement
             {
                 Enabled = true,
@@ -301,8 +325,9 @@ namespace NWebsec.Tests.Unit.HttpHeaders
         }
 
         [Test]
-        public void AddCspHeaders_CspEnabledWithCustomReportUri_AddsCorrectCspHeader()
+        public void AddCspHeaders_CspEnabledWithCustomReportUri_SetsCorrectCspHeader()
         {
+            _responseHeaders.Add("Content-Security-Policy", "img-src 'self'");
             var cspConfig = new CspConfigurationElement
             {
                 Enabled = true,
@@ -316,8 +341,9 @@ namespace NWebsec.Tests.Unit.HttpHeaders
         }
 
         [Test]
-        public void AddCspHeaders_CspEnabledWithTwoReportUris_AddsCorrectCspHeader()
+        public void AddCspHeaders_CspEnabledWithTwoReportUris_SetsCorrectCspHeader()
         {
+            _responseHeaders.Add("Content-Security-Policy", "img-src 'self'");
             var cspConfig = new CspConfigurationElement
                                 {
                                     Enabled = true,
@@ -333,8 +359,9 @@ namespace NWebsec.Tests.Unit.HttpHeaders
         }
 
         [Test]
-        public void AddCspHeaders_XCspEnabledInConfig_AddsXCspHeader()
+        public void AddCspHeaders_XCspEnabledInConfig_SetsXCspHeader()
         {
+            _responseHeaders.Add("X-Content-Security-Policy", "img-src 'self'");
             var cspConfig = new CspConfigurationElement
             {
                 Enabled = true,
@@ -351,6 +378,7 @@ namespace NWebsec.Tests.Unit.HttpHeaders
         [Test]
         public void AddCspHeaders_XWebkitCspEnabledInConfig_AddsXWebkitCspHeader()
         {
+            _responseHeaders.Add("X-WebKit-CSP", "img-src 'self'");
             var cspConfig = new CspConfigurationElement
             {
                 Enabled = true,

@@ -44,7 +44,7 @@ namespace NWebsec.Tests.Unit.HttpHeaders
             mockedContext.Setup(c => c.Response).Returns(_mockResponse.Object);
 
             _mockHandlerHelper = new Mock<IHandlerTypeHelper>();
-            
+
             _mockContext = mockedContext.Object;
             _headerSetter = new HttpHeaderSetter(_mockHandlerHelper.Object, new CspReportHelper());
 
@@ -85,7 +85,7 @@ namespace NWebsec.Tests.Unit.HttpHeaders
             var strictMockCachePolicy = new Mock<HttpCachePolicyBase>(MockBehavior.Strict);
             _mockResponse.Setup(x => x.Cache).Returns(strictMockCachePolicy.Object);
             _mockHandlerHelper.Setup(h => h.IsStaticContentHandler(It.IsAny<HttpContextBase>())).Returns(true);
-            
+
             _headerSetter.SetNoCacheHeaders(_mockContext, noCache);
 
             _mockCachePolicy.Verify(c => c.SetCacheability(It.IsAny<HttpCacheability>()), Times.Never());
@@ -101,7 +101,7 @@ namespace NWebsec.Tests.Unit.HttpHeaders
             var strictMockCachePolicy = new Mock<HttpCachePolicyBase>(MockBehavior.Strict);
             _mockResponse.Setup(x => x.Cache).Returns(strictMockCachePolicy.Object);
             _mockHandlerHelper.Setup(h => h.IsUnmanagedHandler(It.IsAny<HttpContextBase>())).Returns(true);
-            
+
             _headerSetter.SetNoCacheHeaders(_mockContext, noCache);
 
             _mockCachePolicy.Verify(c => c.SetCacheability(It.IsAny<HttpCacheability>()), Times.Never());
@@ -111,8 +111,9 @@ namespace NWebsec.Tests.Unit.HttpHeaders
         }
 
         [Test]
-        public void AddXRobotsTagHeader_EnabledInConfigWithNoIndex_AddsXRobotsTagHeader()
+        public void AddXRobotsTagHeader_EnabledInConfigWithNoIndex_SetsXRobotsTagHeader()
         {
+            _responseHeaders.Add("X-Robots-Tag", "nofollow");
             var xRobotsTag = new XRobotsTagConfigurationElement { Enabled = true, NoIndex = true };
 
             _headerSetter.SetXRobotsTagHeader(_mockResponse.Object, xRobotsTag);
@@ -121,8 +122,9 @@ namespace NWebsec.Tests.Unit.HttpHeaders
         }
 
         [Test]
-        public void AddXRobotsTagHeader_EnabledInConfigWithNoFollow_AddsXRobotsTagHeader()
+        public void AddXRobotsTagHeader_EnabledInConfigWithNoFollow_SetsXRobotsTagHeader()
         {
+            _responseHeaders.Add("X-Robots-Tag", "noindex");
             var xRobotsTag = new XRobotsTagConfigurationElement { Enabled = true, NoFollow = true };
 
             _headerSetter.SetXRobotsTagHeader(_mockResponse.Object, xRobotsTag);
@@ -133,6 +135,7 @@ namespace NWebsec.Tests.Unit.HttpHeaders
         [Test]
         public void AddXRobotsTagHeader_EnabledInConfigWithNoSnippet_AddsXRobotsTagHeader()
         {
+            _responseHeaders.Add("X-Robots-Tag", "noindex");
             var xRobotsTag = new XRobotsTagConfigurationElement { Enabled = true, NoSnippet = true };
 
             _headerSetter.SetXRobotsTagHeader(_mockResponse.Object, xRobotsTag);
@@ -143,6 +146,7 @@ namespace NWebsec.Tests.Unit.HttpHeaders
         [Test]
         public void AddXRobotsTagHeader_EnabledInConfigWithNoArchive_AddsXRobotsTagHeader()
         {
+            _responseHeaders.Add("X-Robots-Tag", "noindex");
             var xRobotsTag = new XRobotsTagConfigurationElement { Enabled = true, NoArchive = true };
 
             _headerSetter.SetXRobotsTagHeader(_mockResponse.Object, xRobotsTag);
@@ -153,6 +157,7 @@ namespace NWebsec.Tests.Unit.HttpHeaders
         [Test]
         public void AddXRobotsTagHeader_EnabledInConfigWithNoOdp_AddsXRobotsTagHeader()
         {
+            _responseHeaders.Add("X-Robots-Tag", "noindex");
             var xRobotsTag = new XRobotsTagConfigurationElement { Enabled = true, NoOdp = true };
 
             _headerSetter.SetXRobotsTagHeader(_mockResponse.Object, xRobotsTag);
@@ -163,6 +168,7 @@ namespace NWebsec.Tests.Unit.HttpHeaders
         [Test]
         public void AddXRobotsTagHeader_EnabledInConfigWithNoTranslate_AddsXRobotsTagHeader()
         {
+            _responseHeaders.Add("X-Robots-Tag", "noindex");
             var xRobotsTag = new XRobotsTagConfigurationElement { Enabled = true, NoTranslate = true };
 
             _headerSetter.SetXRobotsTagHeader(_mockResponse.Object, xRobotsTag);
@@ -173,6 +179,7 @@ namespace NWebsec.Tests.Unit.HttpHeaders
         [Test]
         public void AddXRobotsTagHeader_EnabledInConfigWithNoImageIndex_AddsXRobotsTagHeader()
         {
+            _responseHeaders.Add("X-Robots-Tag", "noindex");
             var xRobotsTag = new XRobotsTagConfigurationElement { Enabled = true, NoImageIndex = true };
 
             _headerSetter.SetXRobotsTagHeader(_mockResponse.Object, xRobotsTag);
@@ -219,6 +226,7 @@ namespace NWebsec.Tests.Unit.HttpHeaders
 
             Assert.AreEqual("noindex", _responseHeaders["X-Robots-Tag"]);
         }
+
         [Test]
         public void AddXRobotsTagHeader_EnabledInConfigWithMultipleDirectives_AddsXRobotsTagHeaderWithDirectives()
         {
@@ -230,8 +238,9 @@ namespace NWebsec.Tests.Unit.HttpHeaders
         }
 
         [Test]
-        public void AddXRobotsTagHeader_DisabledInConfig_DoesNotAddXRobotsTagHeader()
+        public void AddXRobotsTagHeader_DisabledInConfig_RemovesAddXRobotsTagHeader()
         {
+            _responseHeaders.Add("X-Robots-Tag", "noindex");
             var xRobotsTag = new XRobotsTagConfigurationElement { Enabled = false, NoIndex = true };
 
             _headerSetter.SetXRobotsTagHeader(_mockResponse.Object, xRobotsTag);
@@ -240,8 +249,10 @@ namespace NWebsec.Tests.Unit.HttpHeaders
         }
 
         [Test]
-        public void AddXFrameoptionsHeader_DisabledInConfig_DoesNotAddXFrameOptionsHeader()
+        public void AddXFrameoptionsHeader_DisabledInConfig_RemovesAddXFrameOptionsHeader()
         {
+            _responseHeaders.Add("X-Frame-Options", "Deny");
+
             var xFramesConfig = new XFrameOptionsConfigurationElement { Policy = XFrameOptionsPolicy.Disabled };
 
             _headerSetter.SetXFrameoptionsHeader(_mockResponse.Object, xFramesConfig);
@@ -261,8 +272,9 @@ namespace NWebsec.Tests.Unit.HttpHeaders
         }
 
         [Test]
-        public void AddXFrameoptionsHeader_DenyInConfig_AddsAddXFrameOptionsDenyHeader()
+        public void AddXFrameoptionsHeader_DenyInConfig_SetsAddXFrameOptionsDenyHeader()
         {
+            _responseHeaders.Add("X-Frame-Options", "SameOrigin");
             var xFramesConfig = new XFrameOptionsConfigurationElement { Policy = XFrameOptionsPolicy.Deny };
 
             _headerSetter.SetXFrameoptionsHeader(_mockResponse.Object, xFramesConfig);
@@ -271,8 +283,10 @@ namespace NWebsec.Tests.Unit.HttpHeaders
         }
 
         [Test]
-        public void AddXFrameoptionsHeader_SameoriginInConfig_AddsXFrameoptionsSameoriginHeader()
+        public void AddXFrameoptionsHeader_SameoriginInConfig_SetsXFrameoptionsSameoriginHeader()
         {
+            _responseHeaders.Add("X-Frame-Options", "Deny");
+
             var xFramesConfig = new XFrameOptionsConfigurationElement { Policy = XFrameOptionsPolicy.SameOrigin };
 
             _headerSetter.SetXFrameoptionsHeader(_mockResponse.Object, xFramesConfig);
@@ -311,8 +325,9 @@ namespace NWebsec.Tests.Unit.HttpHeaders
         }
 
         [Test]
-        public void AddXContentTypeOptionsHeader_DisabledInConfig_DoesNotAddXContentTypeOptionsHeader()
+        public void AddXContentTypeOptionsHeader_DisabledInConfig_RemovesXContentTypeOptionsHeader()
         {
+            _responseHeaders.Add("X-Content-Type-Options", "nosniff");
             var contentTypeOptions = new SimpleBooleanConfigurationElement { Enabled = false };
 
             _headerSetter.SetXContentTypeOptionsHeader(_mockResponse.Object, contentTypeOptions);
@@ -321,7 +336,7 @@ namespace NWebsec.Tests.Unit.HttpHeaders
         }
 
         [Test]
-        public void AddXContentTypeOptionsHeader_EnabledInConfig_AddsXContentTypeOptionsHeader()
+        public void AddXContentTypeOptionsHeader_EnabledInConfig_SetsXContentTypeOptionsHeader()
         {
             var contentTypeOptions = new SimpleBooleanConfigurationElement { Enabled = true };
 
@@ -342,8 +357,9 @@ namespace NWebsec.Tests.Unit.HttpHeaders
         }
 
         [Test]
-        public void AddXDownloadOptionsHeader_DisabledInConfig_DoesNotAddXDownloadOptionsHeader()
+        public void AddXDownloadOptionsHeader_DisabledInConfig_RemovesXDownloadOptionsHeader()
         {
+            _responseHeaders.Add("X-Download-Options", "noopen");
             var downloadOptions = new SimpleBooleanConfigurationElement { Enabled = false };
 
             _headerSetter.SetXDownloadOptionsHeader(_mockResponse.Object, downloadOptions);
@@ -352,7 +368,7 @@ namespace NWebsec.Tests.Unit.HttpHeaders
         }
 
         [Test]
-        public void AddXDownloadOptionsHeader_EnabledInConfig_AddsXDownloadOptionsHeader()
+        public void AddXDownloadOptionsHeader_EnabledInConfig_SetsXDownloadOptionsHeader()
         {
             var downloadOptions = new SimpleBooleanConfigurationElement { Enabled = true };
 
@@ -375,13 +391,14 @@ namespace NWebsec.Tests.Unit.HttpHeaders
         [Test]
         public void AddXXssProtectionHeader_DisabledInConfig_DoesNotAddXXssProtectionHeader()
         {
+            _responseHeaders.Add("X-XSS-Protection", "0");
             var xssProtection = new XXssProtectionConfigurationElement { Policy = XXssProtectionPolicy.Disabled };
 
             _headerSetter.SetXXssProtectionHeader(_mockContext, xssProtection);
 
             Assert.IsEmpty(_responseHeaders);
         }
-        
+
         [Test]
         public void AddXXssProtectionHeader_EnabledInConfigAndRedirect_DoesNotAddXXssProtectionHeader()
         {
@@ -392,7 +409,7 @@ namespace NWebsec.Tests.Unit.HttpHeaders
 
             Assert.IsEmpty(_responseHeaders);
         }
-        
+
         [Test]
         public void AddXXssProtectionHeader_EnabledInConfigAndUnmanagedHandler_DoesNotAddXXssProtectionHeader()
         {
@@ -414,10 +431,11 @@ namespace NWebsec.Tests.Unit.HttpHeaders
 
             Assert.IsEmpty(_responseHeaders);
         }
-   
+
         [Test]
-        public void AddXXssProtectionHeader_FilterDisabledPolicyInConfig_AddsXXssProtectionDisabledHeader()
+        public void AddXXssProtectionHeader_FilterDisabledPolicyInConfig_SetsXXssProtectionDisabledHeader()
         {
+            _responseHeaders.Add("X-XSS-Protection", "1");
             var xssProtection = new XXssProtectionConfigurationElement { Policy = XXssProtectionPolicy.FilterDisabled };
 
             _headerSetter.SetXXssProtectionHeader(_mockContext, xssProtection);
@@ -436,8 +454,9 @@ namespace NWebsec.Tests.Unit.HttpHeaders
         }
 
         [Test]
-        public void AddXXssProtectionHeader_FilterEnabledPolicyInConfig_AddsXssProtectionHeaderEnabledWithoutBlockmode()
+        public void AddXXssProtectionHeader_FilterEnabledPolicyInConfig_SetsXssProtectionHeaderEnabledWithoutBlockmode()
         {
+            _responseHeaders.Add("X-XSS-Protection", "0");
             var xssProtection = new XXssProtectionConfigurationElement { Policy = XXssProtectionPolicy.FilterEnabled, BlockMode = false };
 
 
@@ -447,8 +466,9 @@ namespace NWebsec.Tests.Unit.HttpHeaders
         }
 
         [Test]
-        public void AddXXSSProtectionHeader_FilterEnabledPolicyWithBlockmode_AddsXssProtectionHeaderEnabledWithBlockMode()
+        public void AddXXSSProtectionHeader_FilterEnabledPolicyWithBlockmode_SetsXssProtectionHeaderEnabledWithBlockMode()
         {
+            _responseHeaders.Add("X-XSS-Protection", "0");
             var xssProtection = new XXssProtectionConfigurationElement { Policy = XXssProtectionPolicy.FilterEnabled, BlockMode = true };
 
             _headerSetter.SetXXssProtectionHeader(_mockContext, xssProtection);

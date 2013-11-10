@@ -32,7 +32,10 @@ namespace NWebsec.HttpHeaders
         {
             var response = context.Response;
             if (!getNoCacheHeadersWithOverride.Enabled)
+            {
+                RemoveHeader(context.Response, "Pragma");
                 return;
+            }
 
             if (_handlerHelper.IsUnmanagedHandler(context) || _handlerHelper.IsStaticContentHandler(context))
                 return;
@@ -46,7 +49,11 @@ namespace NWebsec.HttpHeaders
 
         public void SetXRobotsTagHeader(HttpResponseBase response, XRobotsTagConfigurationElement xRobotsTagConfig)
         {
-            if (!xRobotsTagConfig.Enabled) return;
+            if (!xRobotsTagConfig.Enabled)
+            {
+                RemoveHeader(response, HttpHeadersConstants.XRobotsTagHeader);
+                return;
+            }
 
             var sb = new StringBuilder();
             sb.Append(xRobotsTagConfig.NoIndex ? "noindex, " : String.Empty);
@@ -71,6 +78,7 @@ namespace NWebsec.HttpHeaders
             switch (xFrameOptionsConfig.Policy)
             {
                 case XFrameOptionsPolicy.Disabled:
+                    RemoveHeader(response, HttpHeadersConstants.XFrameOptionsHeader);
                     return;
 
                 case XFrameOptionsPolicy.Deny:
@@ -113,6 +121,10 @@ namespace NWebsec.HttpHeaders
             {
                 response.Headers.Set(HttpHeadersConstants.XContentTypeOptionsHeader, "nosniff");
             }
+            else
+            {
+                RemoveHeader(response, HttpHeadersConstants.XContentTypeOptionsHeader);
+            }
         }
 
         internal void SetXDownloadOptionsHeader(HttpResponseBase response, SimpleBooleanConfigurationElement xDownloadOptionsConfig)
@@ -122,6 +134,10 @@ namespace NWebsec.HttpHeaders
             if (xDownloadOptionsConfig.Enabled)
             {
                 response.Headers.Set(HttpHeadersConstants.XDownloadOptionsHeader, "noopen");
+            }
+            else
+            {
+                RemoveHeader(response, HttpHeadersConstants.XDownloadOptionsHeader);
             }
         }
 
@@ -137,6 +153,7 @@ namespace NWebsec.HttpHeaders
             switch (xXssProtectionConfig.Policy)
             {
                 case XXssProtectionPolicy.Disabled:
+                    RemoveHeader(response, HttpHeadersConstants.XXssProtectionHeader);
                     return;
 
                 case XXssProtectionPolicy.FilterDisabled:
@@ -161,7 +178,11 @@ namespace NWebsec.HttpHeaders
             if (!cspConfig.Enabled ||
                 response.HasStatusCodeThatRedirects() ||
                 _handlerHelper.IsStaticContentHandler(context) ||
-                _handlerHelper.IsUnmanagedHandler(context)) return;
+                _handlerHelper.IsUnmanagedHandler(context))
+            {
+                RemoveCspHeaders(response);
+                return;
+            }
 
             var userAgent = context.Request.UserAgent;
             if (!String.IsNullOrEmpty(userAgent) && userAgent.Contains("Safari/5"))
@@ -170,7 +191,11 @@ namespace NWebsec.HttpHeaders
             }
 
             var headerValue = CreateCspHeaderValue(cspConfig);
-            if (String.IsNullOrEmpty(headerValue)) return;
+            if (String.IsNullOrEmpty(headerValue))
+            {
+                RemoveCspHeaders(response);
+                return;
+            }
 
             var headerName = (reportOnly
                                           ? HttpHeadersConstants.ContentSecurityPolicyReportOnlyHeader
@@ -272,6 +297,21 @@ namespace NWebsec.HttpHeaders
             }
             sb.Insert(sb.Length - 1, ';');
             return sb.ToString();
+        }
+
+        private void RemoveHeader(HttpResponseBase response, string headerName)
+        {
+            response.Headers.Remove(headerName);
+        }
+
+        private void RemoveCspHeaders(HttpResponseBase response)
+        {
+            RemoveHeader(response, HttpHeadersConstants.ContentSecurityPolicyReportOnlyHeader);
+            RemoveHeader(response, HttpHeadersConstants.ContentSecurityPolicyHeader);
+            RemoveHeader(response, HttpHeadersConstants.XContentSecurityPolicyReportOnlyHeader);
+            RemoveHeader(response, HttpHeadersConstants.XContentSecurityPolicyHeader);
+            RemoveHeader(response, HttpHeadersConstants.XWebKitCspReportOnlyHeader);
+            RemoveHeader(response, HttpHeadersConstants.XWebKitCspHeader);
         }
     }
 }

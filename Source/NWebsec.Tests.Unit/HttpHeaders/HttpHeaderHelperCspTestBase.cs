@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Linq;
 using System.Web;
 using Moq;
@@ -26,6 +27,7 @@ namespace NWebsec.Tests.Unit.HttpHeaders
         {
             var mockResponse = new Mock<HttpResponseBase>();
             mockResponse.Setup(r => r.StatusCode).Returns(302);
+            mockResponse.Setup(r => r.Headers).Returns(new NameValueCollection());
             var mockedContext = new Mock<HttpContextBase>();
             IDictionary<String, Object> nwebsecContentItems = new Dictionary<string, object>();
             mockedContext.Setup(c => c.Items["nwebsecheaderoverride"]).Returns(nwebsecContentItems);
