@@ -41,10 +41,10 @@ namespace NWebsec.HttpHeaders
             response.Cache.SetNoStore();
             response.Cache.SetRevalidation(HttpCacheRevalidation.AllCaches);
 
-            response.AddHeader("Pragma", "no-cache");
+            response.Headers.Set("Pragma", "no-cache");
         }
 
-        public void AddXRobotsTagHeader(HttpResponseBase response, XRobotsTagConfigurationElement xRobotsTagConfig)
+        public void SetXRobotsTagHeader(HttpResponseBase response, XRobotsTagConfigurationElement xRobotsTagConfig)
         {
             if (!xRobotsTagConfig.Enabled) return;
 
@@ -60,10 +60,10 @@ namespace NWebsec.HttpHeaders
 
             if (value.Length == 0) return;
 
-            response.AddHeader(HttpHeadersConstants.XRobotsTagHeader, value);
+            response.Headers.Set(HttpHeadersConstants.XRobotsTagHeader, value);
         }
 
-        internal void AddXFrameoptionsHeader(HttpResponseBase response, XFrameOptionsConfigurationElement xFrameOptionsConfig)
+        internal void SetXFrameoptionsHeader(HttpResponseBase response, XFrameOptionsConfigurationElement xFrameOptionsConfig)
         {
             if (response.HasStatusCodeThatRedirects()) return;
 
@@ -89,10 +89,10 @@ namespace NWebsec.HttpHeaders
                     throw new NotImplementedException("Apparently someone forgot to implement support for: " + xFrameOptionsConfig.Policy);
 
             }
-            response.AddHeader(HttpHeadersConstants.XFrameOptionsHeader, frameOptions);
+            response.Headers.Set(HttpHeadersConstants.XFrameOptionsHeader, frameOptions);
         }
 
-        internal void AddHstsHeader(HttpResponseBase response, HstsConfigurationElement hstsConfig)
+        internal void SetHstsHeader(HttpResponseBase response, HstsConfigurationElement hstsConfig)
         {
 
             var seconds = (int)hstsConfig.MaxAge.TotalSeconds;
@@ -102,30 +102,30 @@ namespace NWebsec.HttpHeaders
             var includeSubdomains = (hstsConfig.IncludeSubdomains ? "; includeSubDomains" : "");
             var value = String.Format("max-age={0}{1}", seconds, includeSubdomains);
 
-            response.AddHeader(HttpHeadersConstants.StrictTransportSecurityHeader, value);
+            response.Headers.Set(HttpHeadersConstants.StrictTransportSecurityHeader, value);
         }
 
-        internal void AddXContentTypeOptionsHeader(HttpResponseBase response, SimpleBooleanConfigurationElement xContentTypeOptionsConfig)
+        internal void SetXContentTypeOptionsHeader(HttpResponseBase response, SimpleBooleanConfigurationElement xContentTypeOptionsConfig)
         {
             if (response.HasStatusCodeThatRedirects()) return;
 
             if (xContentTypeOptionsConfig.Enabled)
             {
-                response.AddHeader(HttpHeadersConstants.XContentTypeOptionsHeader, "nosniff");
+                response.Headers.Set(HttpHeadersConstants.XContentTypeOptionsHeader, "nosniff");
             }
         }
 
-        internal void AddXDownloadOptionsHeader(HttpResponseBase response, SimpleBooleanConfigurationElement xDownloadOptionsConfig)
+        internal void SetXDownloadOptionsHeader(HttpResponseBase response, SimpleBooleanConfigurationElement xDownloadOptionsConfig)
         {
             if (response.HasStatusCodeThatRedirects()) return;
 
             if (xDownloadOptionsConfig.Enabled)
             {
-                response.AddHeader(HttpHeadersConstants.XDownloadOptionsHeader, "noopen");
+                response.Headers.Set(HttpHeadersConstants.XDownloadOptionsHeader, "noopen");
             }
         }
 
-        internal void AddXXssProtectionHeader(HttpContextBase context, XXssProtectionConfigurationElement xXssProtectionConfig)
+        internal void SetXXssProtectionHeader(HttpContextBase context, XXssProtectionConfigurationElement xXssProtectionConfig)
         {
             var response = context.Response;
 
@@ -152,10 +152,10 @@ namespace NWebsec.HttpHeaders
 
             }
 
-            response.AddHeader(HttpHeadersConstants.XXssProtectionHeader, value);
+            response.Headers.Set(HttpHeadersConstants.XXssProtectionHeader, value);
         }
 
-        internal void AddCspHeaders(HttpContextBase context, CspConfigurationElement cspConfig, bool reportOnly)
+        internal void SetCspHeaders(HttpContextBase context, CspConfigurationElement cspConfig, bool reportOnly)
         {
             var response = context.Response;
             if (!cspConfig.Enabled ||
@@ -176,7 +176,7 @@ namespace NWebsec.HttpHeaders
                                           ? HttpHeadersConstants.ContentSecurityPolicyReportOnlyHeader
                                           : HttpHeadersConstants.ContentSecurityPolicyHeader);
 
-            response.AddHeader(headerName, headerValue);
+            response.Headers.Set(headerName, headerValue);
 
             if (cspConfig.XContentSecurityPolicyHeader)
             {
@@ -184,7 +184,7 @@ namespace NWebsec.HttpHeaders
                                   ? HttpHeadersConstants.XContentSecurityPolicyReportOnlyHeader
                                   : HttpHeadersConstants.XContentSecurityPolicyHeader);
 
-                response.AddHeader(headerName, headerValue);
+                response.Headers.Set(headerName, headerValue);
             }
 
             if (cspConfig.XWebKitCspHeader)
@@ -193,25 +193,8 @@ namespace NWebsec.HttpHeaders
                                   ? HttpHeadersConstants.XWebKitCspReportOnlyHeader
                                   : HttpHeadersConstants.XWebKitCspHeader);
 
-                response.AddHeader(headerName, headerValue);
+                response.Headers.Set(headerName, headerValue);
             }
-        }
-
-        internal void SuppressVersionHeaders(HttpResponseBase response, SuppressVersionHeadersConfigurationElement suppressVersionHeadersConfig)
-        {
-            if (!suppressVersionHeadersConfig.Enabled) return;
-
-            foreach (var header in HttpHeadersConstants.VersionHeaders)
-            {
-                response.Headers.Remove(header);
-            }
-            if (String.IsNullOrEmpty(suppressVersionHeadersConfig.ServerHeader))
-            {
-                response.Headers.Remove("Server");
-                return;
-            }
-
-            response.Headers.Set("Server", suppressVersionHeadersConfig.ServerHeader);
         }
 
         private string CreateCspHeaderValue(CspConfigurationElement config)

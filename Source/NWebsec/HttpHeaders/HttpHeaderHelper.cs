@@ -12,7 +12,6 @@ namespace NWebsec.HttpHeaders
 {
     public class HttpHeaderHelper
     {
-        private const string SuppressHeadersKey = "NWebsecSuppressHeaders";
         private const string SetNoCacheHeadersKey = "NWebsecSetNoCacheHeaders";
         private const string SetXRobotsTagHeadersKey = "NWebsecSetXRobotsTagHeaders";
         private const string CspHeaderKeyPrefix = "NWebsecCspHeader";
@@ -37,7 +36,7 @@ namespace NWebsec.HttpHeaders
         private readonly HttpHeaderSetter _headerSetter;
         private readonly HttpHeaderSecurityConfigurationSection _mockConfig;
         private readonly XRobotsTagValidator _xRobotsValidator;
-        
+
         private HttpHeaderSecurityConfigurationSection BaseConfig { get { return _mockConfig ?? ConfigHelper.GetConfig(); } }
 
         public HttpHeaderHelper()
@@ -50,42 +49,25 @@ namespace NWebsec.HttpHeaders
         internal HttpHeaderHelper(HttpHeaderSecurityConfigurationSection config)
         {
             _mockConfig = config;
+            _headerSetter = new HttpHeaderSetter();
             _cspHelper = new CspOverrideHelper();
             _xRobotsValidator = new XRobotsTagValidator();
         }
 
         internal void SetHeaders(HttpContextBase context)
         {
-            _headerSetter.SuppressVersionHeaders(context.Response, GetSuppressVersionHeadersWithOverride(context));
-            _headerSetter.AddHstsHeader(context.Response, GetHstsWithOverride(context));
+            _headerSetter.SetHstsHeader(context.Response, GetHstsWithOverride(context));
             _headerSetter.SetNoCacheHeaders(context, GetNoCacheHeadersWithOverride(context));
-            _headerSetter.AddXRobotsTagHeader(context.Response, GetXRobotsTagHeaderWithOverride(context));
-            _headerSetter.AddXFrameoptionsHeader(context.Response, GetXFrameoptionsWithOverride(context));
-            _headerSetter.AddXContentTypeOptionsHeader(context.Response, GetXContentTypeOptionsWithOverride(context));
-            _headerSetter.AddXDownloadOptionsHeader(context.Response, GetXDownloadOptionsWithOverride(context));
-            _headerSetter.AddXXssProtectionHeader(context, GetXXssProtectionWithOverride(context));
-            _headerSetter.AddCspHeaders(context, GetCspElementWithOverrides(context, false), false);
-            _headerSetter.AddCspHeaders(context, GetCspElementWithOverrides(context, true), true);
+            _headerSetter.SetXRobotsTagHeader(context.Response, GetXRobotsTagHeaderWithOverride(context));
+            _headerSetter.SetXFrameoptionsHeader(context.Response, GetXFrameoptionsWithOverride(context));
+            _headerSetter.SetXContentTypeOptionsHeader(context.Response, GetXContentTypeOptionsWithOverride(context));
+            _headerSetter.SetXDownloadOptionsHeader(context.Response, GetXDownloadOptionsWithOverride(context));
+            _headerSetter.SetXXssProtectionHeader(context, GetXXssProtectionWithOverride(context));
+            _headerSetter.SetCspHeaders(context, GetCspElementWithOverrides(context, false), false);
+            _headerSetter.SetCspHeaders(context, GetCspElementWithOverrides(context, true), true);
         }
 
-        public void SetNoCacheHeadersOverride(HttpContextBase context, SimpleBooleanConfigurationElement setNoCacheHeadersConfig)
-        {
-            var headerList = GetHeaderListFromContext(context);
-            const string headerKey = SetNoCacheHeadersKey;
 
-            if (headerList.ContainsKey(headerKey))
-                headerList.Remove(headerKey);
-
-            headerList.Add(headerKey, setNoCacheHeadersConfig);
-        }
-
-        internal XRobotsTagConfigurationElement GetXRobotsTagHeaderWithOverride(HttpContextBase context)
-        {
-            var headerList = GetHeaderListFromContext(context);
-            return headerList.ContainsKey(SetXRobotsTagHeadersKey)
-                       ? (XRobotsTagConfigurationElement)headerList[SetXRobotsTagHeadersKey]
-                       : BaseConfig.XRobotsTag;
-        }
 
         public void SetXRobotsTagHeaderOverride(HttpContextBase context, XRobotsTagConfigurationElement setXRobotsTagHeaderConfig)
         {
@@ -97,8 +79,26 @@ namespace NWebsec.HttpHeaders
                 headerList.Remove(headerKey);
 
             headerList.Add(headerKey, setXRobotsTagHeaderConfig);
+            _headerSetter.SetXRobotsTagHeader(context.Response, GetXRobotsTagHeaderWithOverride(context));
         }
+        internal XRobotsTagConfigurationElement GetXRobotsTagHeaderWithOverride(HttpContextBase context)
+        {
+            var headerList = GetHeaderListFromContext(context);
+            return headerList.ContainsKey(SetXRobotsTagHeadersKey)
+                       ? (XRobotsTagConfigurationElement)headerList[SetXRobotsTagHeadersKey]
+                       : BaseConfig.XRobotsTag;
+        }
+        public void SetNoCacheHeadersOverride(HttpContextBase context, SimpleBooleanConfigurationElement setNoCacheHeadersConfig)
+        {
+            var headerList = GetHeaderListFromContext(context);
+            const string headerKey = SetNoCacheHeadersKey;
 
+            if (headerList.ContainsKey(headerKey))
+                headerList.Remove(headerKey);
+
+            headerList.Add(headerKey, setNoCacheHeadersConfig);
+            _headerSetter.SetNoCacheHeaders(context, GetNoCacheHeadersWithOverride(context));
+        }
         internal SimpleBooleanConfigurationElement GetNoCacheHeadersWithOverride(HttpContextBase context)
         {
             var headerList = GetHeaderListFromContext(context);
@@ -116,6 +116,7 @@ namespace NWebsec.HttpHeaders
                 headerList.Remove(headerKey);
 
             headerList.Add(headerKey, xFrameOptionsConfig);
+            _headerSetter.SetXFrameoptionsHeader(context.Response, GetXFrameoptionsWithOverride(context));
         }
 
         internal XFrameOptionsConfigurationElement GetXFrameoptionsWithOverride(HttpContextBase context)
@@ -135,6 +136,7 @@ namespace NWebsec.HttpHeaders
                 headerList.Remove(headerKey);
 
             headerList.Add(headerKey, hstsConfig);
+            _headerSetter.SetHstsHeader(context.Response, GetHstsWithOverride(context));
         }
 
         internal HstsConfigurationElement GetHstsWithOverride(HttpContextBase context)
@@ -154,6 +156,7 @@ namespace NWebsec.HttpHeaders
                 headerList.Remove(headerKey);
 
             headerList.Add(headerKey, xContentTypeOptionsConfig);
+            _headerSetter.SetXContentTypeOptionsHeader(context.Response, GetXContentTypeOptionsWithOverride(context));
         }
 
         public SimpleBooleanConfigurationElement GetXContentTypeOptionsWithOverride(HttpContextBase context)
@@ -173,6 +176,7 @@ namespace NWebsec.HttpHeaders
                 headerList.Remove(headerKey);
 
             headerList.Add(headerKey, xDownloadOptionsConfig);
+            _headerSetter.SetXDownloadOptionsHeader(context.Response, GetXDownloadOptionsWithOverride(context));
         }
 
         internal SimpleBooleanConfigurationElement GetXDownloadOptionsWithOverride(HttpContextBase context)
@@ -192,6 +196,7 @@ namespace NWebsec.HttpHeaders
                 headerList.Remove(headerKey);
 
             headerList.Add(headerKey, xXssProtectionConfig);
+            _headerSetter.SetXXssProtectionHeader(context, GetXXssProtectionWithOverride(context));
         }
 
         internal XXssProtectionConfigurationElement GetXXssProtectionWithOverride(HttpContextBase context)
@@ -202,27 +207,6 @@ namespace NWebsec.HttpHeaders
                 ? (XXssProtectionConfigurationElement)headerList[HttpHeadersConstants.XXssProtectionHeader]
                 : BaseConfig.SecurityHttpHeaders.XXssProtection;
         }
-
-        public void SetSuppressVersionHeadersOverride(HttpContextBase context, SuppressVersionHeadersConfigurationElement suppressVersionHeadersConfig)
-        {
-            var headerList = GetHeaderListFromContext(context);
-            const string headerKey = SuppressHeadersKey;
-
-            if (headerList.ContainsKey(headerKey))
-                headerList.Remove(headerKey);
-
-            headerList.Add(headerKey, suppressVersionHeadersConfig);
-        }
-
-        internal SuppressVersionHeadersConfigurationElement GetSuppressVersionHeadersWithOverride(HttpContextBase context)
-        {
-            var headerList = GetHeaderListFromContext(context);
-
-            return headerList.ContainsKey(SuppressHeadersKey)
-                    ? (SuppressVersionHeadersConfigurationElement)headerList[SuppressHeadersKey]
-                    : BaseConfig.SuppressVersionHeaders;
-        }
-
         public void SetCspHeaderOverride(HttpContextBase context, CspHeaderConfigurationElement cspConfig, bool reportOnly)
         {
             var headerList = GetHeaderListFromContext(context);
@@ -232,6 +216,7 @@ namespace NWebsec.HttpHeaders
                 headerList.Remove(headerKey);
 
             headerList.Add(headerKey, cspConfig);
+            _headerSetter.SetCspHeaders(context, GetCspElementWithOverrides(context, reportOnly), reportOnly);
         }
 
         internal CspHeaderConfigurationElement GetCspHeaderWithOverride(HttpContextBase context, bool reportOnly)
@@ -255,6 +240,7 @@ namespace NWebsec.HttpHeaders
                 headerList.Remove(headerKey);
 
             headerList.Add(headerKey, reportUriConfig);
+            _headerSetter.SetCspHeaders(context, GetCspElementWithOverrides(context, reportOnly), reportOnly);
         }
 
         internal CspReportUriDirectiveConfigurationElement GetCspReportUriDirectiveWithOverride(HttpContextBase context, bool reportOnly)
@@ -285,6 +271,7 @@ namespace NWebsec.HttpHeaders
             if (directiveExists)
                 cspOverride.Remove(directive);
             cspOverride.Add(directive, newConfig);
+            _headerSetter.SetCspHeaders(context, GetCspElementWithOverrides(context, reportOnly), reportOnly);
         }
 
         private CspDirectiveBaseConfigurationElement GetCspDirectiveFromConfig(CspDirectives directive, bool reportOnly)
@@ -296,7 +283,7 @@ namespace NWebsec.HttpHeaders
             {
                 case CspDirectives.DefaultSrc:
                     return CloneElement(cspConfig.DefaultSrc);
-                
+
                 case CspDirectives.ConnectSrc:
                     return CloneElement(cspConfig.ConnectSrc);
 
@@ -338,7 +325,7 @@ namespace NWebsec.HttpHeaders
                                      UnsafeEval = unsafeEvalElement.UnsafeEval
                                  };
             }
-            
+
             var unsafeInlineElement = element as CspDirectiveUnsafeInlineConfigurationElement;
             if (unsafeInlineElement != null)
             {
@@ -351,7 +338,7 @@ namespace NWebsec.HttpHeaders
                 }
                 else
                 {
-                    ((CspDirectiveUnsafeInlineConfigurationElement) newElement).UnsafeInline =
+                    ((CspDirectiveUnsafeInlineConfigurationElement)newElement).UnsafeInline =
                         unsafeInlineElement.UnsafeInline;
                 }
             }

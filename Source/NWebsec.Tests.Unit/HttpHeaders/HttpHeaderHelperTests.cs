@@ -2,6 +2,7 @@
 
 using System.Collections.Generic;
 using System;
+using System.Collections.Specialized;
 using System.Web;
 using Moq;
 using NUnit.Framework;
@@ -19,9 +20,13 @@ namespace NWebsec.Tests.Unit.HttpHeaders
         [SetUp]
         public void Setup()
         {
+            var mockResponse = new Mock<HttpResponseBase>();
+            mockResponse.Setup(r => r.StatusCode).Returns(302);
+            mockResponse.Setup(r => r.Headers).Returns(new NameValueCollection());
             var mockedContext = new Mock<HttpContextBase>();
             IDictionary<String, Object> nwebsecContentItems = new Dictionary<string, object>();
             mockedContext.Setup(x => x.Items["nwebsecheaderoverride"]).Returns(nwebsecContentItems);
+            mockedContext.Setup(x => x.Response).Returns(mockResponse.Object);
             _mockContext = mockedContext.Object;
             _headerHelper = new HttpHeaderHelper();
         }
@@ -85,16 +90,6 @@ namespace NWebsec.Tests.Unit.HttpHeaders
             _headerHelper.SetXXssProtectionOverride(_mockContext, configOverride);
 
             Assert.AreSame(configOverride, _headerHelper.GetXXssProtectionWithOverride(_mockContext));
-        }
-
-        [Test]
-        public void GetSuppressVersionHeadersWithOverride_ConfigOverriden_ReturnsOverrideElement()
-        {
-            var configOverride = new SuppressVersionHeadersConfigurationElement { Enabled = true };
-
-            _headerHelper.SetSuppressVersionHeadersOverride(_mockContext, configOverride);
-
-            Assert.AreSame(configOverride, _headerHelper.GetSuppressVersionHeadersWithOverride(_mockContext));
         }
 
         [Test]

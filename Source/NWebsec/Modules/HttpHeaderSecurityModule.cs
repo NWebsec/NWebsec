@@ -4,7 +4,6 @@ using System;
 using System.Web;
 using NWebsec.Csp;
 using NWebsec.HttpHeaders;
-using System.Configuration;
 
 namespace NWebsec.Modules
 {
@@ -26,23 +25,19 @@ namespace NWebsec.Modules
 
         public void Init(HttpApplication app)
         {
-            var config = ConfigHelper.GetConfig();
-            if (config.SuppressVersionHeaders.Enabled && !HttpRuntime.UsingIntegratedPipeline)
-            {
-                throw new ConfigurationErrorsException("NWebsec config error: suppressVersionHeaders can only be enabled when using IIS integrated pipeline mode.");
-            }
-
             app.BeginRequest += AppBeginRequest;
             app.PostMapRequestHandler += AppPostMapRequestHandler;
-            app.PreSendRequestHeaders += AppPreSendRequestHeaders;
+            app.EndRequest += app_EndRequest;
         }
-
         void AppBeginRequest(object sender, EventArgs e)
         {
             var app = (HttpApplication)sender;
             var context = new HttpContextWrapper(app.Context);
 
+            _headerHelper.SetHeaders(context);
+
             if (!_cspReportHelper.IsRequestForBuiltInCspReportHandler(context.Request)) return;
+
             var cspReport = _cspReportHelper.GetCspReportFromRequest(context.Request);
             var eventArgs = new CspViolationReportEventArgs { ViolationReport = cspReport };
             OnCspViolationReport(eventArgs);
@@ -58,12 +53,10 @@ namespace NWebsec.Modules
             _handlerTypeHelper.RequestHandlerMapped(context);
         }
 
-        public void AppPreSendRequestHeaders(object sender, EventArgs ea)
+        void app_EndRequest(object sender, EventArgs e)
         {
             var app = (HttpApplication)sender;
             var context = new HttpContextWrapper(app.Context);
-
-            _headerHelper.SetHeaders(context);
             _redirectValidationHelper.ValidateIfRedirect(context);
         }
 

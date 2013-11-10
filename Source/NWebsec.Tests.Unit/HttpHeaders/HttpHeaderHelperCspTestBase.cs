@@ -24,9 +24,12 @@ namespace NWebsec.Tests.Unit.HttpHeaders
         [SetUp]
         public void Setup()
         {
+            var mockResponse = new Mock<HttpResponseBase>();
+            mockResponse.Setup(r => r.StatusCode).Returns(302);
             var mockedContext = new Mock<HttpContextBase>();
             IDictionary<String, Object> nwebsecContentItems = new Dictionary<string, object>();
-            mockedContext.Setup(x => x.Items["nwebsecheaderoverride"]).Returns(nwebsecContentItems);
+            mockedContext.Setup(c => c.Items["nwebsecheaderoverride"]).Returns(nwebsecContentItems);
+            mockedContext.Setup(c => c.Response).Returns(mockResponse.Object);
             MockContext = mockedContext.Object;
             ConfigSection = new HttpHeaderSecurityConfigurationSection();
             HeaderHelper = new HttpHeaderHelper(ConfigSection);

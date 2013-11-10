@@ -17,6 +17,7 @@
     <dependencies>
       <dependency id="NWebsec" version="[2.2.1-alpha01]" />
       <dependency id="Microsoft.AspNet.Mvc" version="3.0.20105.1" />
+      <dependency id="Microsoft.Web.Infrastructure" version="1.0.0.0"/>
     </dependencies>
   </metadata>
 </package>
