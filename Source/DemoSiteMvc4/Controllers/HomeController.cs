@@ -12,11 +12,13 @@ namespace DemoSiteMvc4.Controllers
     //[CspReportOnly(XWebKitCspHeader = true)]
     //[CspReportUriReportOnly(EnableBuiltinHandler = true)]
     //[CspStyleSrc(UnsafeInline = Source.Enable, OtherSources = "styles.nwebsec.com")]
-        [Csp]
-        [CspScriptSrcReportOnly(CustomSources = "www.klings.org")]
-    [CspScriptSrc(Self = Source.Disable, UnsafeEval = Source.Enable, UnsafeInline =Source.Enable)]
-    [CspStyleSrcReportOnly(UnsafeInline = Source.Enable)]
-    [CspReportUriReportOnly(ReportUris = "/Report")]
+        //[Csp]
+    //[CspReportOnly]
+    //[CspDefaultSrcReportOnly(None = Source.Enable)]
+        //[CspScriptSrcReportOnly(CustomSources = "www.klings.org")]
+    //[CspScriptSrc(Self = Source.Disable, UnsafeEval = Source.Enable, UnsafeInline =Source.Enable)]
+    //[CspStyleSrcReportOnly(UnsafeInline = Source.Enable)]
+    //[CspReportUriReportOnly(ReportUris = "/Report")]
     public class HomeController : Controller
     {
         //

@@ -6,6 +6,7 @@ using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
+using NWebsec.Csp;
 
 namespace DemoSiteMvc4
 {
@@ -14,6 +15,10 @@ namespace DemoSiteMvc4
 
     public class MvcApplication : System.Web.HttpApplication
     {
+        protected void NWebSecHttpHeaderSecurityModule_CspViolationReported(object sender, CspViolationReportEventArgs e)
+        {
+            var report = e.ViolationReport;
+        }
         protected void Application_Start()
         {
             AreaRegistration.RegisterAllAreas();
