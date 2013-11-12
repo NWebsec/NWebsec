@@ -55,7 +55,8 @@ namespace NWebsec.Tests.Unit.Csp
             {
                 mockRequest.Setup(r => r.InputStream).Returns(ms);
 
-                var violationReport = helper.GetCspReportFromRequest(mockRequest.Object);
+                CspViolationReport violationReport;
+                Assert.IsTrue(helper.TryGetCspReportFromRequest(mockRequest.Object, out violationReport));
                 var values = violationReport.Details;
 
                 Assert.IsNotNull(values);
@@ -83,7 +84,8 @@ namespace NWebsec.Tests.Unit.Csp
             {
                 mockRequest.Setup(r => r.InputStream).Returns(ms);
 
-                var violationReport = helper.GetCspReportFromRequest(mockRequest.Object);
+                CspViolationReport violationReport;
+                Assert.IsTrue(helper.TryGetCspReportFromRequest(mockRequest.Object, out violationReport));
                 var values = violationReport.Details;
 
                 Assert.IsNotNull(values);
@@ -98,7 +100,7 @@ namespace NWebsec.Tests.Unit.Csp
         [Test]
         public void GetCspReportFromRequest_IncludesUserAgentInCspReport()
         {
-            var userAgent = "Opera, of course!";
+            const string userAgent = "Opera, of course!";
             var helper = new CspReportHelper();
             var mockRequest = new Mock<HttpRequestBase>();
             mockRequest.Setup(r => r.UserAgent).Returns(userAgent);
@@ -109,8 +111,9 @@ namespace NWebsec.Tests.Unit.Csp
             {
                 mockRequest.Setup(r => r.InputStream).Returns(ms);
 
-                var violationReport = helper.GetCspReportFromRequest(mockRequest.Object);
-
+                CspViolationReport violationReport;
+                Assert.IsTrue(helper.TryGetCspReportFromRequest(mockRequest.Object, out violationReport));
+                
                 Assert.AreEqual(userAgent, violationReport.UserAgent);
             }
         }

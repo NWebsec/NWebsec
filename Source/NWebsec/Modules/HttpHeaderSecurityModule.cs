@@ -38,11 +38,19 @@ namespace NWebsec.Modules
 
             if (!_cspReportHelper.IsRequestForBuiltInCspReportHandler(context.Request)) return;
 
-            var cspReport = _cspReportHelper.GetCspReportFromRequest(context.Request);
-            var eventArgs = new CspViolationReportEventArgs { ViolationReport = cspReport };
-            OnCspViolationReport(eventArgs);
-            context.Response.StatusCode = 204;
-            app.CompleteRequest();
+            CspViolationReport cspReport;
+            if (_cspReportHelper.TryGetCspReportFromRequest(context.Request, out cspReport))
+            {
+                var eventArgs = new CspViolationReportEventArgs { ViolationReport = cspReport };
+                OnCspViolationReport(eventArgs);
+                context.Response.StatusCode = 204;
+                app.CompleteRequest();
+            }
+            else
+            {
+                context.Response.StatusCode = 400;
+                app.CompleteRequest();
+            }
         }
 
         void AppPostMapRequestHandler(object sender, EventArgs e)
@@ -51,6 +59,7 @@ namespace NWebsec.Modules
             var context = new HttpContextWrapper(app.Context);
 
             _handlerTypeHelper.RequestHandlerMapped(context);
+            _headerHelper.SetCacheHeaders(context);
         }
 
         void app_EndRequest(object sender, EventArgs e)

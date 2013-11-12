@@ -33,6 +33,7 @@ namespace NWebsec.HttpHeaders
             var response = context.Response;
             if (!getNoCacheHeadersWithOverride.Enabled)
             {
+                response.Cache.SetCacheability(HttpCacheability.Private);
                 RemoveHeader(context.Response, "Pragma");
                 return;
             }
@@ -180,12 +181,12 @@ namespace NWebsec.HttpHeaders
                 _handlerHelper.IsStaticContentHandler(context) ||
                 _handlerHelper.IsUnmanagedHandler(context))
             {
-                RemoveCspHeaders(response);
+                RemoveCspHeaders(response, reportOnly);
                 return;
             }
 
             var userAgent = context.Request.UserAgent;
-            if (!String.IsNullOrEmpty(userAgent) && userAgent.Contains("Safari/5"))
+            if (!String.IsNullOrEmpty(userAgent) && userAgent.Contains(" Version/5") && userAgent.Contains(" Safari/"))
             {
                 return;
             }
@@ -193,7 +194,7 @@ namespace NWebsec.HttpHeaders
             var headerValue = CreateCspHeaderValue(cspConfig);
             if (String.IsNullOrEmpty(headerValue))
             {
-                RemoveCspHeaders(response);
+                RemoveCspHeaders(response, reportOnly);
                 return;
             }
 
@@ -304,14 +305,11 @@ namespace NWebsec.HttpHeaders
             response.Headers.Remove(headerName);
         }
 
-        private void RemoveCspHeaders(HttpResponseBase response)
+        private void RemoveCspHeaders(HttpResponseBase response, bool reportOnly)
         {
-            RemoveHeader(response, HttpHeadersConstants.ContentSecurityPolicyReportOnlyHeader);
-            RemoveHeader(response, HttpHeadersConstants.ContentSecurityPolicyHeader);
-            RemoveHeader(response, HttpHeadersConstants.XContentSecurityPolicyReportOnlyHeader);
-            RemoveHeader(response, HttpHeadersConstants.XContentSecurityPolicyHeader);
-            RemoveHeader(response, HttpHeadersConstants.XWebKitCspReportOnlyHeader);
-            RemoveHeader(response, HttpHeadersConstants.XWebKitCspHeader);
+            RemoveHeader(response, reportOnly ? HttpHeadersConstants.ContentSecurityPolicyReportOnlyHeader : HttpHeadersConstants.ContentSecurityPolicyHeader);
+            RemoveHeader(response, reportOnly ? HttpHeadersConstants.XContentSecurityPolicyReportOnlyHeader : HttpHeadersConstants.XContentSecurityPolicyHeader);
+            RemoveHeader(response, reportOnly ? HttpHeadersConstants.XWebKitCspReportOnlyHeader : HttpHeadersConstants.XWebKitCspHeader);
         }
     }
 }

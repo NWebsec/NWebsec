@@ -57,7 +57,6 @@ namespace NWebsec.HttpHeaders
         internal void SetHeaders(HttpContextBase context)
         {
             _headerSetter.SetHstsHeader(context.Response, GetHstsWithOverride(context));
-            _headerSetter.SetNoCacheHeaders(context, GetNoCacheHeadersWithOverride(context));
             _headerSetter.SetXRobotsTagHeader(context.Response, GetXRobotsTagHeaderWithOverride(context));
             _headerSetter.SetXFrameoptionsHeader(context.Response, GetXFrameoptionsWithOverride(context));
             _headerSetter.SetXContentTypeOptionsHeader(context.Response, GetXContentTypeOptionsWithOverride(context));
@@ -65,6 +64,11 @@ namespace NWebsec.HttpHeaders
             _headerSetter.SetXXssProtectionHeader(context, GetXXssProtectionWithOverride(context));
             _headerSetter.SetCspHeaders(context, GetCspElementWithOverrides(context, false), false);
             _headerSetter.SetCspHeaders(context, GetCspElementWithOverrides(context, true), true);
+        }
+
+        internal void SetCacheHeaders(HttpContextBase context)
+        {
+            _headerSetter.SetNoCacheHeaders(context, GetNoCacheHeadersWithOverride(context));
         }
 
 

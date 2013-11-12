@@ -15,12 +15,12 @@ namespace NWebsec.Csp
         /// Gets the detailed Content Security Policy violation report. The default is the empty string.
         /// </summary>
         [DataMember(Name = "csp-report")]
-        public CspReportDetails Details { get; internal set; }
+        public CspReportDetails Details { get; set; }
 
         /// <summary>
         /// Gets the User Agent that reported the Content Security Policy violation. The default is the empty string.
         /// </summary>
-        public string UserAgent { get; internal set; }
+        public string UserAgent { get; set; }
     }
 
     /// <summary>
@@ -43,7 +43,7 @@ namespace NWebsec.Csp
         public string DocumentUri
         {
             get { return _documentUri ?? String.Empty; }
-            internal set { _documentUri = value; }
+            set { _documentUri = value; }
         }
 
         /// <summary>
@@ -53,7 +53,7 @@ namespace NWebsec.Csp
         public string Referrer
         {
             get { return _referrer ?? String.Empty; }
-            internal set { _referrer = value; }
+            set { _referrer = value; }
         }
 
         /// <summary>
@@ -63,7 +63,7 @@ namespace NWebsec.Csp
         public string BlockedUri
         {
             get { return _blockedUri ?? String.Empty; }
-            internal set { _blockedUri = value; }
+            set { _blockedUri = value; }
         }
 
         /// <summary>
@@ -73,7 +73,7 @@ namespace NWebsec.Csp
         public string ViolatedDirective
         {
             get { return _violatedDirective ?? String.Empty; }
-            internal set { _violatedDirective = value; }
+            set { _violatedDirective = value; }
         }
 
         /// <summary>
@@ -83,7 +83,7 @@ namespace NWebsec.Csp
         public string OriginalPolicy 
         {
             get { return _originalPolicy ?? String.Empty; }
-            internal set { _originalPolicy = value; }
+            set { _originalPolicy = value; }
         }
     }
 }

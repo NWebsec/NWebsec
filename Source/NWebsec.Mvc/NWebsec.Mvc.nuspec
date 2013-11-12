@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
   <metadata>
     <id>NWebsec.Mvc</id>
-    <version>3.0.0-alpha01</version>
+    <version>3.0.0-alpha04</version>
     <title>NWebsec.Mvc</title>
     <authors>André N. Klingsheim</authors>
     <owners>André N. Klingsheim</owners>
@@ -10,12 +10,12 @@
     <projectUrl>http://nwebsec.codeplex.com</projectUrl>
     <iconUrl>http://www.nwebsec.com/Content/Logo/nwebsec_nuget.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <description>NWebsec attributes for ASP.NET MVC 3/4 applications. NWebsec lets you remove version headers, control cache headers, stop potentially dangerous redirects, and set important security headers. See project website for documentation.</description>
-    <releaseNotes>This release introduces no features, but follows the release of the NWebsec 2.2.2 library. See release notes at project web site for details.</releaseNotes>
+    <description>NWebsec attributes for ASP.NET MVC 3/4/5 applications. NWebsec helps you set important security headers, detect potentially dangerous redirects, control cache headers, and remove version headers. See project website for documentation.</description>
+    <releaseNotes>This release introduces no features, but removes a few deprecated attributes. See release notes at project web site for details.</releaseNotes>
     <copyright>Copyright © 2012, 2013</copyright>
     <tags>NWebsec security asp.net mvc</tags>
     <dependencies>
-      <dependency id="NWebsec" version="[3.0.0-alpha01]" />
+      <dependency id="NWebsec" version="[3.0.0-alpha03]" />
       <dependency id="Microsoft.AspNet.Mvc" version="3.0.20105.1" />
       <dependency id="Microsoft.Web.Infrastructure" version="1.0.0.0"/>
     </dependencies>

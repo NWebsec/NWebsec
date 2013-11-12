@@ -51,17 +51,17 @@ namespace NWebsec.Tests.Unit.HttpHeaders
         }
 
         [Test]
-        public void SetNoCacheHeaders_DisabledInConfig_DoesNotChangeCachePolicy()
+        public void SetNoCacheHeaders_DisabledInConfig_SetsDefaultCachePolicy()
         {
+            _responseHeaders.Add("Pragma", "no-cache");
             var noCache = new SimpleBooleanConfigurationElement { Enabled = false };
             var strictMockCachePolicy = new Mock<HttpCachePolicyBase>(MockBehavior.Strict);
+            strictMockCachePolicy.Setup(p => p.SetCacheability(HttpCacheability.Private));
             _mockResponse.Setup(x => x.Cache).Returns(strictMockCachePolicy.Object);
 
             _headerSetter.SetNoCacheHeaders(_mockContext, noCache);
 
-            _mockCachePolicy.Verify(c => c.SetCacheability(It.IsAny<HttpCacheability>()), Times.Never());
-            _mockCachePolicy.Verify(c => c.SetNoStore(), Times.Never());
-            _mockCachePolicy.Verify(c => c.SetRevalidation(It.IsAny<HttpCacheRevalidation>()), Times.Never());
+            strictMockCachePolicy.Verify(c => c.SetCacheability(HttpCacheability.Private), Times.Once());
             Assert.IsEmpty(_responseHeaders);
         }
 

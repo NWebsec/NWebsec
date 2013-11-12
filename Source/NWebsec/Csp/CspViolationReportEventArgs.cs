@@ -10,7 +10,7 @@ namespace NWebsec.Csp
     public class CspViolationReportEventArgs : EventArgs
     {
         /// <summary>
-        /// Gets the Content Security Policy violation report.
+        /// Gets the Content Security Policy violation report. Treat the data as unvalidated input.
         /// </summary>
         public CspViolationReport ViolationReport { get; internal set; }
     }

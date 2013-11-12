@@ -34,13 +34,20 @@ namespace NWebsec.Csp
 
         }
 
-        internal CspViolationReport GetCspReportFromRequest(HttpRequestBase request)
+        internal bool TryGetCspReportFromRequest(HttpRequestBase request, out CspViolationReport violationReport)
         {
-            
+            violationReport = null;
             var serializer = new DataContractJsonSerializer(typeof(CspViolationReport));
-            var report = (CspViolationReport)serializer.ReadObject(request.InputStream);
-            report.UserAgent = request.UserAgent;
-            return report;
+            try
+            {
+                violationReport = (CspViolationReport) serializer.ReadObject(request.InputStream);
+                violationReport.UserAgent = request.UserAgent;
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
         }
     }
 }
