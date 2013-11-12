@@ -6,7 +6,7 @@ namespace NWebsec.Modules.Configuration
 {
     public class RedirectValidationConfigurationElement : ConfigurationElement
     {
-        [ConfigurationProperty("enabled", IsRequired = false, DefaultValue = false)]
+        [ConfigurationProperty("enabled", IsRequired = true, DefaultValue = false)]
         public bool Enabled
         {
             get

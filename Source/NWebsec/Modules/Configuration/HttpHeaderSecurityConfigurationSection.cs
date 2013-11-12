@@ -7,7 +7,7 @@ namespace NWebsec.Modules.Configuration
 {
     public class HttpHeaderSecurityConfigurationSection : ConfigurationSection
     {
-        [ConfigurationProperty("setNoCacheHttpHeaders", IsRequired = true)]
+        [ConfigurationProperty("setNoCacheHttpHeaders")]
         public SimpleBooleanConfigurationElement NoCacheHttpHeaders
         {
             get
@@ -20,7 +20,7 @@ namespace NWebsec.Modules.Configuration
             }
         }
 
-        [ConfigurationProperty("x-Robots-Tag", IsRequired = true)]
+        [ConfigurationProperty("x-Robots-Tag")]
         [XRobotsTagValidator]
         public XRobotsTagConfigurationElement XRobotsTag
         {
@@ -34,7 +34,7 @@ namespace NWebsec.Modules.Configuration
             }
         }
 
-        [ConfigurationProperty("redirectValidation", IsRequired = true)]
+        [ConfigurationProperty("redirectValidation")]
         public RedirectValidationConfigurationElement RedirectValidation
         {
             get
@@ -47,7 +47,7 @@ namespace NWebsec.Modules.Configuration
             }
         }
 
-        [ConfigurationProperty("securityHttpHeaders", IsRequired = true)]
+        [ConfigurationProperty("securityHttpHeaders")]
         public SecurityHttpHeadersConfigurationElement SecurityHttpHeaders
         {
             get
