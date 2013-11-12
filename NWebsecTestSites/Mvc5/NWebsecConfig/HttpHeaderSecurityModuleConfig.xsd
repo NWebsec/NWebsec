@@ -1,4 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (c) André N. Klingsheim. See NWebsec project website for license information. -->
 <xs:schema id="httpheadersecuritymoduleconfigschema" attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://nwebsec.com/HttpHeaderSecurityModuleConfig.xsd" targetNamespace="http://nwebsec.com/HttpHeaderSecurityModuleConfig.xsd">
   <xs:simpleType name="simple_boolean">
     <xs:restriction base="xs:NMTOKEN">
@@ -46,7 +47,7 @@
   </xs:simpleType>
   <xs:element name="httpHeaderSecurityModule" >
     <xs:annotation>
-      <xs:documentation>Configuration section for the NWebsec HttpHeaderSecurityModulde</xs:documentation>
+      <xs:documentation>Configuration section for the NWebsec HttpHeaderSecurityModule</xs:documentation>
     </xs:annotation>
     <xs:complexType>
       <xs:all>
@@ -58,23 +59,6 @@
             <xs:attribute name="enabled" type="simple_boolean" use="required">
               <xs:annotation>
                 <xs:documentation>This attribute is required.</xs:documentation>
-              </xs:annotation>
-            </xs:attribute>
-          </xs:complexType>
-        </xs:element>
-        <xs:element name="suppressVersionHttpHeaders" minOccurs="0" maxOccurs="1">
-          <xs:annotation>
-            <xs:documentation>Specifies whether to suppress common version headers emitted by IIS and ASP.NET.</xs:documentation>
-          </xs:annotation>
-          <xs:complexType>
-            <xs:attribute name="enabled" type="simple_boolean" use="required">
-              <xs:annotation>
-                <xs:documentation>This attribute is required.</xs:documentation>
-              </xs:annotation>
-            </xs:attribute>
-            <xs:attribute name="serverHeader" type="xs:string" use="optional">
-              <xs:annotation>
-                <xs:documentation>Optional. Specifies a custom value for the Server header. Recommended format is "Webserver/1.0".</xs:documentation>
               </xs:annotation>
             </xs:attribute>
           </xs:complexType>

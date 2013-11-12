@@ -48,13 +48,13 @@
       <HintPath>..\packages\WebGrease.1.1.0\lib\Antlr3.Runtime.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="NWebsec, Version=2.2.1.0, Culture=neutral, PublicKeyToken=3613da5f958908a1, processorArchitecture=MSIL">
+    <Reference Include="NWebsec, Version=3.0.0.0, Culture=neutral, PublicKeyToken=3613da5f958908a1, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\NWebsec.2.2.1\lib\40\NWebsec.dll</HintPath>
+      <HintPath>..\packages\NWebsec.3.0.0\lib\40\NWebsec.dll</HintPath>
     </Reference>
-    <Reference Include="NWebsec.Mvc, Version=2.2.1.0, Culture=neutral, PublicKeyToken=3613da5f958908a1, processorArchitecture=MSIL">
+    <Reference Include="NWebsec.Mvc, Version=3.0.0.0, Culture=neutral, PublicKeyToken=3613da5f958908a1, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\NWebsec.Mvc.2.2.1\lib\40\NWebsec.Mvc.dll</HintPath>
+      <HintPath>..\packages\NWebsec.Mvc.3.0.0\lib\40\NWebsec.Mvc.dll</HintPath>
     </Reference>
     <Reference Include="NWebsec.SessionSecurity, Version=1.0.0.0, Culture=neutral, PublicKeyToken=3613da5f958908a1, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -134,6 +134,20 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
+    <Compile Include="Areas\WithConfig\Controllers\CspConfigController.cs" />
+    <Compile Include="Areas\WithConfig\Controllers\CspController.cs" />
+    <Compile Include="Areas\WithConfig\Controllers\CspDirectivesController.cs" />
+    <Compile Include="Areas\WithConfig\Controllers\CspReportOnlyController.cs" />
+    <Compile Include="Areas\WithConfig\Controllers\HomeController.cs" />
+    <Compile Include="Areas\WithConfig\Controllers\NoCacheHeadersController.cs" />
+    <Compile Include="Areas\WithConfig\Controllers\RedirectController.cs" />
+    <Compile Include="Areas\WithConfig\Controllers\SessionFixationController.cs" />
+    <Compile Include="Areas\WithConfig\Controllers\XContentTypeOptionsController.cs" />
+    <Compile Include="Areas\WithConfig\Controllers\XDownloadOptionsController.cs" />
+    <Compile Include="Areas\WithConfig\Controllers\XFrameOptionsController.cs" />
+    <Compile Include="Areas\WithConfig\Controllers\XRobotsTagController.cs" />
+    <Compile Include="Areas\WithConfig\Controllers\XXssProtectionController.cs" />
+    <Compile Include="Areas\WithConfig\WithConfigAreaRegistration.cs" />
     <Compile Include="Controllers\CspConfigController.cs" />
     <Compile Include="Controllers\CspController.cs" />
     <Compile Include="Controllers\CspDirectivesController.cs" />
@@ -171,6 +185,8 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Areas\WithConfig\Models\" />
+    <Folder Include="Areas\WithConfig\Views\Shared\" />
     <Folder Include="Models\" />
     <Folder Include="Views\NoCacheHeaders\" />
   </ItemGroup>
@@ -181,6 +197,7 @@
     <Content Include="Views\Shared\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Areas\WithConfig\Views\Web.config" />
     <None Include="NWebsecConfig\HttpHeaderSecurityModuleConfig.xsd">
       <SubType>Designer</SubType>
     </None>
