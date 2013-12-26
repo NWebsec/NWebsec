@@ -3,6 +3,7 @@
 using System;
 using System.Collections.Generic;
 using System.Web;
+using NWebsec.Core;
 using NWebsec.Csp;
 using NWebsec.Modules.Configuration;
 using NWebsec.Modules.Configuration.Csp;

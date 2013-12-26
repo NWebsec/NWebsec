@@ -68,12 +68,9 @@
     <Compile Include="HttpHeaders\ConfigHelper.cs" />
     <Compile Include="HttpHeaders\CspOverrideHelper.cs" />
     <Compile Include="HttpHeaders\HttpHeaderHelper.cs" />
-    <Compile Include="HttpHeaders\HttpHeadersConstants.cs" />
     <Compile Include="HttpHeaders\HttpHeaderSetter.cs" />
     <Compile Include="HttpHeaders\RedirectValidationHelper.cs" />
     <Compile Include="HttpHeaders\HandlerTypeHelper.cs" />
-    <Compile Include="HttpHeaders\XFrameOptionsPolicy.cs" />
-    <Compile Include="HttpHeaders\XXssProtectionPolicy.cs" />
     <Compile Include="Modules\Configuration\Csp\CspDirectiveBaseConfigurationElement.cs" />
     <Compile Include="Modules\Configuration\Csp\CspDirectiveUnsafeInlineConfigurationElement.cs" />
     <Compile Include="Modules\Configuration\Csp\CspDirectiveUnsafeInlineUnsafeEvalConfigurationElement.cs" />
@@ -125,7 +122,12 @@
       <SubType>Designer</SubType>
     </None>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\NWebsec.Core\NWebsec.Core.csproj">
+      <Project>{e2d23d75-19d4-41a6-a57e-4b6d4f94941f}</Project>
+      <Name>NWebsec.Core</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Web;
+using NWebsec.Core;
 using NWebsec.Csp;
 using NWebsec.ExtensionMethods;
 using NWebsec.Modules.Configuration;

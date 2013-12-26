@@ -2,10 +2,11 @@
 
 using System;
 using System.Configuration;
+using NWebsec.Core.Configuration;
 
 namespace NWebsec.Modules.Configuration
 {
-    public class HstsConfigurationElement : ConfigurationElement
+    public class HstsConfigurationElement : ConfigurationElement, IHstsConfiguration
     {
         [ConfigurationProperty("max-age", IsRequired = true)]
         [TimeSpanValidator(MinValueString = "0:0:0")]

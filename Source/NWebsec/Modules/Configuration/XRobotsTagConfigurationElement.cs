@@ -1,10 +1,11 @@
 ﻿// Copyright (c) André N. Klingsheim. See License.txt in the project root for license information.
 
 using System.Configuration;
+using NWebsec.Core.Configuration;
 
 namespace NWebsec.Modules.Configuration
 {
-    public class XRobotsTagConfigurationElement : ConfigurationElement
+    public class XRobotsTagConfigurationElement : ConfigurationElement, IXRobotsTagConfiguration
     {
         [ConfigurationProperty("enabled", IsRequired = false, DefaultValue = false)]
         public bool Enabled

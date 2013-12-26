@@ -212,6 +212,10 @@
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\NWebsec.Core\NWebsec.Core.csproj">
+      <Project>{E2D23D75-19D4-41A6-A57E-4B6D4F94941F}</Project>
+      <Name>NWebsec.Core</Name>
+    </ProjectReference>
     <ProjectReference Include="..\NWebsec.Mvc\NWebsec.Mvc.csproj">
       <Project>{78ff86a6-c148-4d03-96cf-b429c1a36da9}</Project>
       <Name>NWebsec.Mvc</Name>

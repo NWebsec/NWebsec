@@ -1,6 +1,6 @@
 // Copyright (c) André N. Klingsheim. See License.txt in the project root for license information.
 
-namespace NWebsec.HttpHeaders
+namespace NWebsec.Core
 {
     public class HttpHeadersConstants
     {
@@ -39,13 +39,5 @@ namespace NWebsec.HttpHeaders
                                                 "https:",
                                                 "http:" 
                                             };
-
-        public static readonly string[] VersionHeaders = { "X-AspNet-Version", "X-AspNetMvc-Version", "X-AspNetWebPages-Version" };
-        private const XFrameOptionsPolicy XfoPolicy = new XFrameOptionsPolicy();
-
-        public XFrameOptionsPolicy XFrameOptionsPolicy
-        {
-            get { return XfoPolicy; }
-        }
     }
 }

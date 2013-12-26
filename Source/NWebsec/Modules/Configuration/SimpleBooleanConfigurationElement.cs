@@ -1,10 +1,11 @@
 ﻿// Copyright (c) André N. Klingsheim. See License.txt in the project root for license information.
 
 using System.Configuration;
+using NWebsec.Core.Configuration;
 
 namespace NWebsec.Modules.Configuration
 {
-    public class SimpleBooleanConfigurationElement : ConfigurationElement
+    public class SimpleBooleanConfigurationElement : ConfigurationElement, ISimpleBooleanConfiguration
     {
         [ConfigurationProperty("enabled", IsRequired = true, DefaultValue = false)]
         public bool Enabled
