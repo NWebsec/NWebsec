@@ -10,11 +10,11 @@ using Owin;
 
 namespace NWebsec.Owin.Tests.Unit
 {
-    [TestFixture]
+    //[TestFixture]
     public class Class1
     {
 
-        [Test]
+        //[Test]
         public async void OwinAppTest()
         {
             using (var server = TestServer.Create(app =>

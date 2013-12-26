@@ -23,7 +23,7 @@ namespace NWebsec.Owin.MiddleWare
             }
 
             Console.WriteLine("Doing work here!");
-            throw new Exception("It works!");
+            //throw new Exception("It works!");
         }
     }
 }
