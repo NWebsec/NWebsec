@@ -3,8 +3,9 @@
 using System;
 using System.Collections.Generic;
 using System.Web;
-using NWebsec.Core;
+using NWebsec.Core.HttpHeaders;
 using NWebsec.Csp;
+using NWebsec.ExtensionMethods;
 using NWebsec.Modules.Configuration;
 using NWebsec.Modules.Configuration.Csp;
 using NWebsec.Modules.Configuration.Validation;
@@ -57,9 +58,11 @@ namespace NWebsec.HttpHeaders
 
         internal void SetHeaders(HttpContextBase context)
         {
+            var nwContext = context.GetNWebsecContext();
             _headerSetter.SetHstsHeader(context.Response, GetHstsWithOverride(context));
             _headerSetter.SetXRobotsTagHeader(context.Response, GetXRobotsTagHeaderWithOverride(context));
             _headerSetter.SetXFrameoptionsHeader(context.Response, GetXFrameoptionsWithOverride(context));
+            nwContext.XFrameOptions = GetXFrameoptionsWithOverride(context);
             _headerSetter.SetXContentTypeOptionsHeader(context.Response, GetXContentTypeOptionsWithOverride(context));
             _headerSetter.SetXDownloadOptionsHeader(context.Response, GetXDownloadOptionsWithOverride(context));
             _headerSetter.SetXXssProtectionHeader(context, GetXXssProtectionWithOverride(context));
@@ -71,8 +74,6 @@ namespace NWebsec.HttpHeaders
         {
             _headerSetter.SetNoCacheHeaders(context, GetNoCacheHeadersWithOverride(context));
         }
-
-
 
         public void SetXRobotsTagHeaderOverride(HttpContextBase context, XRobotsTagConfigurationElement setXRobotsTagHeaderConfig)
         {
@@ -86,6 +87,7 @@ namespace NWebsec.HttpHeaders
             headerList.Add(headerKey, setXRobotsTagHeaderConfig);
             _headerSetter.SetXRobotsTagHeader(context.Response, GetXRobotsTagHeaderWithOverride(context));
         }
+
         internal XRobotsTagConfigurationElement GetXRobotsTagHeaderWithOverride(HttpContextBase context)
         {
             var headerList = GetHeaderListFromContext(context);
@@ -115,7 +117,7 @@ namespace NWebsec.HttpHeaders
         public void SetXFrameoptionsOverride(HttpContextBase context, XFrameOptionsConfigurationElement xFrameOptionsConfig)
         {
             var headerList = GetHeaderListFromContext(context);
-            var headerKey = HttpHeadersConstants.XFrameOptionsHeader;
+            var headerKey = HeaderConstants.XFrameOptionsHeader;
 
             if (headerList.ContainsKey(headerKey))
                 headerList.Remove(headerKey);
@@ -127,15 +129,15 @@ namespace NWebsec.HttpHeaders
         internal XFrameOptionsConfigurationElement GetXFrameoptionsWithOverride(HttpContextBase context)
         {
             var headerList = GetHeaderListFromContext(context);
-            return headerList.ContainsKey(HttpHeadersConstants.XFrameOptionsHeader)
-                       ? (XFrameOptionsConfigurationElement)headerList[HttpHeadersConstants.XFrameOptionsHeader]
+            return headerList.ContainsKey(HeaderConstants.XFrameOptionsHeader)
+                       ? (XFrameOptionsConfigurationElement)headerList[HeaderConstants.XFrameOptionsHeader]
                        : BaseConfig.SecurityHttpHeaders.XFrameOptions;
         }
 
         public void SetHstsOverride(HttpContextBase context, HstsConfigurationElement hstsConfig)
         {
             var headerList = GetHeaderListFromContext(context);
-            var headerKey = HttpHeadersConstants.StrictTransportSecurityHeader;
+            var headerKey = HeaderConstants.StrictTransportSecurityHeader;
 
             if (headerList.ContainsKey(headerKey))
                 headerList.Remove(headerKey);
@@ -147,15 +149,15 @@ namespace NWebsec.HttpHeaders
         internal HstsConfigurationElement GetHstsWithOverride(HttpContextBase context)
         {
             var headerList = GetHeaderListFromContext(context);
-            return headerList.ContainsKey(HttpHeadersConstants.StrictTransportSecurityHeader)
-                       ? (HstsConfigurationElement)headerList[HttpHeadersConstants.StrictTransportSecurityHeader]
+            return headerList.ContainsKey(HeaderConstants.StrictTransportSecurityHeader)
+                       ? (HstsConfigurationElement)headerList[HeaderConstants.StrictTransportSecurityHeader]
                        : BaseConfig.SecurityHttpHeaders.Hsts;
         }
 
         public void SetXContentTypeOptionsOverride(HttpContextBase context, SimpleBooleanConfigurationElement xContentTypeOptionsConfig)
         {
             var headerList = GetHeaderListFromContext(context);
-            var headerKey = HttpHeadersConstants.XContentTypeOptionsHeader;
+            var headerKey = HeaderConstants.XContentTypeOptionsHeader;
 
             if (headerList.ContainsKey(headerKey))
                 headerList.Remove(headerKey);
@@ -167,15 +169,15 @@ namespace NWebsec.HttpHeaders
         public SimpleBooleanConfigurationElement GetXContentTypeOptionsWithOverride(HttpContextBase context)
         {
             var headerList = GetHeaderListFromContext(context);
-            return headerList.ContainsKey(HttpHeadersConstants.XContentTypeOptionsHeader) ?
-                (SimpleBooleanConfigurationElement)headerList[HttpHeadersConstants.XContentTypeOptionsHeader]
+            return headerList.ContainsKey(HeaderConstants.XContentTypeOptionsHeader) ?
+                (SimpleBooleanConfigurationElement)headerList[HeaderConstants.XContentTypeOptionsHeader]
                 : BaseConfig.SecurityHttpHeaders.XContentTypeOptions;
         }
 
         public void SetXDownloadOptionsOverride(HttpContextBase context, SimpleBooleanConfigurationElement xDownloadOptionsConfig)
         {
             var headerList = GetHeaderListFromContext(context);
-            var headerKey = HttpHeadersConstants.XDownloadOptionsHeader;
+            var headerKey = HeaderConstants.XDownloadOptionsHeader;
 
             if (headerList.ContainsKey(headerKey))
                 headerList.Remove(headerKey);
@@ -187,15 +189,15 @@ namespace NWebsec.HttpHeaders
         internal SimpleBooleanConfigurationElement GetXDownloadOptionsWithOverride(HttpContextBase context)
         {
             var headerList = GetHeaderListFromContext(context);
-            return headerList.ContainsKey(HttpHeadersConstants.XDownloadOptionsHeader)
-                    ? (SimpleBooleanConfigurationElement)headerList[HttpHeadersConstants.XDownloadOptionsHeader]
+            return headerList.ContainsKey(HeaderConstants.XDownloadOptionsHeader)
+                    ? (SimpleBooleanConfigurationElement)headerList[HeaderConstants.XDownloadOptionsHeader]
                     : BaseConfig.SecurityHttpHeaders.XDownloadOptions;
         }
 
         public void SetXXssProtectionOverride(HttpContextBase context, XXssProtectionConfigurationElement xXssProtectionConfig)
         {
             var headerList = GetHeaderListFromContext(context);
-            var headerKey = HttpHeadersConstants.XXssProtectionHeader;
+            var headerKey = HeaderConstants.XXssProtectionHeader;
 
             if (headerList.ContainsKey(headerKey))
                 headerList.Remove(headerKey);
@@ -208,8 +210,8 @@ namespace NWebsec.HttpHeaders
         {
             var headerList = GetHeaderListFromContext(context);
 
-            return headerList.ContainsKey(HttpHeadersConstants.XXssProtectionHeader)
-                ? (XXssProtectionConfigurationElement)headerList[HttpHeadersConstants.XXssProtectionHeader]
+            return headerList.ContainsKey(HeaderConstants.XXssProtectionHeader)
+                ? (XXssProtectionConfigurationElement)headerList[HeaderConstants.XXssProtectionHeader]
                 : BaseConfig.SecurityHttpHeaders.XXssProtection;
         }
         public void SetCspHeaderOverride(HttpContextBase context, CspHeaderConfigurationElement cspConfig, bool reportOnly)
@@ -433,8 +435,8 @@ namespace NWebsec.HttpHeaders
         private string GetCspConfigKey(string prefix, bool reportOnly)
         {
             return prefix + (reportOnly
-                                 ? HttpHeadersConstants.XContentSecurityPolicyReportOnlyHeader
-                                 : HttpHeadersConstants.XContentSecurityPolicyHeader);
+                                 ? HeaderConstants.XContentSecurityPolicyReportOnlyHeader
+                                 : HeaderConstants.XContentSecurityPolicyHeader);
         }
     }
 }

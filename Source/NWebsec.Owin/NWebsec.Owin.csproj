@@ -44,14 +44,21 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Core\Environment.cs" />
+    <Compile Include="Core\OwinEnvironment.cs" />
     <Compile Include="Core\OwinKeys.cs" />
     <Compile Include="Core\ResponseHeaders.cs" />
     <Compile Include="IAppbuilderExtensions.cs" />
-    <Compile Include="MiddleWare\RedirectValidation.cs" />
+    <Compile Include="Middleware\MiddleWareBase.cs" />
+    <Compile Include="Middleware\XfoMiddleware.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="XFrameOptions.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\NWebsec.Core\NWebsec.Core.csproj">
+      <Project>{e2d23d75-19d4-41a6-a57e-4b6d4f94941f}</Project>
+      <Name>NWebsec.Core</Name>
+    </ProjectReference>
+  </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>

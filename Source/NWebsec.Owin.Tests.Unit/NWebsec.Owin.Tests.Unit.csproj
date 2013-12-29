@@ -67,6 +67,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\NWebsec.Core\NWebsec.Core.csproj">
+      <Project>{E2D23D75-19D4-41A6-A57E-4B6D4F94941F}</Project>
+      <Name>NWebsec.Core</Name>
+    </ProjectReference>
     <ProjectReference Include="..\NWebsec.Owin\NWebsec.Owin.csproj">
       <Project>{625ba5ec-141e-4aa4-abfa-b8b046215e1c}</Project>
       <Name>NWebsec.Owin</Name>

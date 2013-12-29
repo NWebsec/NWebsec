@@ -88,6 +88,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="HeaderResultHandler.cs" />
     <Compile Include="HttpHeaders\Csp\CspAttribute.cs" />
     <Compile Include="HttpHeaders\Csp\CspAttributeBase.cs" />
     <Compile Include="HttpHeaders\Csp\CspDefaultSrcAttribute.cs" />

@@ -64,6 +64,7 @@
     <Compile Include="Csp\CspDirectiveUnsafeInlineOverride.cs" />
     <Compile Include="Csp\CspDirectiveUnsafeInlineUnsafeEvalOverride.cs" />
     <Compile Include="Csp\Source.cs" />
+    <Compile Include="ExtensionMethods\HttpContextBaseExtensions.cs" />
     <Compile Include="ExtensionMethods\HttpResponseBaseExtensions.cs" />
     <Compile Include="HttpHeaders\ConfigHelper.cs" />
     <Compile Include="HttpHeaders\CspOverrideHelper.cs" />

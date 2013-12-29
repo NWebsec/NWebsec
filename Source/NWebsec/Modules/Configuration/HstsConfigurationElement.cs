@@ -2,7 +2,7 @@
 
 using System;
 using System.Configuration;
-using NWebsec.Core.Configuration;
+using NWebsec.Core.HttpHeaders.Configuration;
 
 namespace NWebsec.Modules.Configuration
 {

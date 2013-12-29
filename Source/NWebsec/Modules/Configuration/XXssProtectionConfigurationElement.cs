@@ -1,7 +1,7 @@
 ﻿// Copyright (c) André N. Klingsheim. See License.txt in the project root for license information.
 
 using System.Configuration;
-using NWebsec.Core.Configuration;
+using NWebsec.Core.HttpHeaders.Configuration;
 using NWebsec.HttpHeaders;
 
 namespace NWebsec.Modules.Configuration

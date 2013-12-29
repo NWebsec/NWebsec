@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Owin.Testing;
 using NUnit.Framework;
+using NWebsec.HttpHeaders;
 using Owin;
 
 namespace NWebsec.Owin.Tests.Unit
@@ -21,7 +22,7 @@ namespace NWebsec.Owin.Tests.Unit
             {
                 //app.UseErrorPage(); // See Microsoft.Owin.Diagnostics
                 app.UseWelcomePage("/Welcome"); // See Microsoft.Owin.Diagnostics
-                app.UseRedirectValidation();
+                app.UseXfo(XFrameOptionsPolicy.Deny);
                 app.Run(async context =>
                 {
                     await context.Response.WriteAsync("Hello world using OWIN TestServer");

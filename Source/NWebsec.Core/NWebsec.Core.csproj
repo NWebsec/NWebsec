@@ -45,18 +45,21 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Core\Configuration\HstsConfiguration.cs" />
-    <Compile Include="Core\Configuration\IHstsConfiguration.cs" />
-    <Compile Include="Core\Configuration\IRedirectValidationConfiguration.cs" />
-    <Compile Include="Core\Configuration\ISimpleBooleanConfiguration.cs" />
-    <Compile Include="Core\Configuration\IXFrameOptionsConfiguration.cs" />
-    <Compile Include="Core\Configuration\IXRobotsTagConfiguration.cs" />
-    <Compile Include="Core\Configuration\IXXssProtectionConfiguration.cs" />
-    <Compile Include="Core\Configuration\SimpleBooleanConfiguration.cs" />
-    <Compile Include="Core\Configuration\XFrameOptionsConfiguration.cs" />
-    <Compile Include="Core\Configuration\XRobotsTagConfiguration.cs" />
-    <Compile Include="Core\Configuration\XXssProtectionConfiguration.cs" />
-    <Compile Include="Core\HttpHeadersConstants.cs" />
+    <Compile Include="Core\HttpHeaders\Configuration\HstsConfiguration.cs" />
+    <Compile Include="Core\HttpHeaders\Configuration\IHstsConfiguration.cs" />
+    <Compile Include="Core\HttpHeaders\Configuration\IRedirectValidationConfiguration.cs" />
+    <Compile Include="Core\HttpHeaders\Configuration\ISimpleBooleanConfiguration.cs" />
+    <Compile Include="Core\HttpHeaders\Configuration\IXFrameOptionsConfiguration.cs" />
+    <Compile Include="Core\HttpHeaders\Configuration\IXRobotsTagConfiguration.cs" />
+    <Compile Include="Core\HttpHeaders\Configuration\IXXssProtectionConfiguration.cs" />
+    <Compile Include="Core\HttpHeaders\Configuration\SimpleBooleanConfiguration.cs" />
+    <Compile Include="Core\HttpHeaders\Configuration\XFrameOptionsConfiguration.cs" />
+    <Compile Include="Core\HttpHeaders\Configuration\XRobotsTagConfiguration.cs" />
+    <Compile Include="Core\HttpHeaders\Configuration\XXssProtectionConfiguration.cs" />
+    <Compile Include="Core\HttpHeaders\HeaderGenerator.cs" />
+    <Compile Include="Core\HttpHeaders\HeaderResult.cs" />
+    <Compile Include="Core\HttpHeaders\HeaderConstants.cs" />
+    <Compile Include="Core\NWebsecContext.cs" />
     <Compile Include="HttpHeaders\XFrameOptionsPolicy.cs" />
     <Compile Include="HttpHeaders\XXssProtectionPolicy.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

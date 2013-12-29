@@ -249,18 +249,6 @@ namespace NWebsec.Tests.Unit.HttpHeaders
         }
 
         [Test]
-        public void AddXFrameoptionsHeader_DisabledInConfig_RemovesAddXFrameOptionsHeader()
-        {
-            _responseHeaders.Add("X-Frame-Options", "Deny");
-
-            var xFramesConfig = new XFrameOptionsConfigurationElement { Policy = XFrameOptionsPolicy.Disabled };
-
-            _headerSetter.SetXFrameoptionsHeader(_mockResponse.Object, xFramesConfig);
-
-            Assert.IsEmpty(_responseHeaders);
-        }
-
-        [Test]
         public void AddXFrameoptionsHeader_EnabledInConfigAndRedirect_DoesNotAddXFrameOptionsHeader()
         {
             var xFramesConfig = new XFrameOptionsConfigurationElement { Policy = XFrameOptionsPolicy.Deny };
