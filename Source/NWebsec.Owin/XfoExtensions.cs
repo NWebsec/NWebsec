@@ -7,7 +7,7 @@ using Owin;
 
 namespace NWebsec.Owin
 {
-    public static class AppbuilderExtensions
+    public static class XfoExtensions
     {
         public static IAppBuilder UseXfo(this IAppBuilder app, XFrameOptionsPolicy options)
         {

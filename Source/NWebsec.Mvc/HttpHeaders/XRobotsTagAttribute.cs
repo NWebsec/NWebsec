@@ -9,7 +9,7 @@ namespace NWebsec.Mvc.HttpHeaders
 {
     
     /// <summary>
-    /// Specifies whether the X-Download-Options security header should be set in the HTTP response.
+    /// Specifies whether the X-Robots-Tag header should be set in the HTTP response.
     /// </summary>
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, Inherited = true, AllowMultiple = false)]
     public class XRobotsTagAttribute : ActionFilterAttribute
