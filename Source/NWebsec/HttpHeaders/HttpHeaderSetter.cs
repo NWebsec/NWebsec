@@ -17,16 +17,19 @@ namespace NWebsec.HttpHeaders
         private readonly CspReportHelper _reportHelper;
         private readonly IHandlerTypeHelper _handlerHelper;
         private readonly HeaderGenerator _headerGenerator;
+        private readonly bool _overrideHeaders;
 
-        internal HttpHeaderSetter()
+        internal HttpHeaderSetter(bool overrideHeaders)
         {
+            _overrideHeaders = overrideHeaders;
             _reportHelper = new CspReportHelper();
             _handlerHelper = new HandlerTypeHelper();
             _headerGenerator = new HeaderGenerator();
         }
 
-        internal HttpHeaderSetter(IHandlerTypeHelper handlerTypeHelper, CspReportHelper reportHelper)
+        internal HttpHeaderSetter(IHandlerTypeHelper handlerTypeHelper, CspReportHelper reportHelper, bool overrideHeaders=true)
         {
+            _overrideHeaders = overrideHeaders;
             _reportHelper = reportHelper;
             _handlerHelper = handlerTypeHelper;
             _headerGenerator = new HeaderGenerator();
@@ -37,6 +40,8 @@ namespace NWebsec.HttpHeaders
             var response = context.Response;
             if (!noCacheHeadersConfig.Enabled)
             {
+                if (!_overrideHeaders) return;
+
                 response.Cache.SetCacheability(HttpCacheability.Private);
                 RemoveHeader(context.Response, "Pragma");
                 return;
@@ -56,7 +61,9 @@ namespace NWebsec.HttpHeaders
         {
             if (!xRobotsTagConfig.Enabled)
             {
-                RemoveHeader(response, HeaderConstants.XRobotsTagHeader);
+                if (!_overrideHeaders) return;
+
+                RemoveHeader(response, HttpHeadersConstants.XRobotsTagHeader);
                 return;
             }
 
@@ -111,7 +118,7 @@ namespace NWebsec.HttpHeaders
             {
                 response.Headers.Set(HeaderConstants.XContentTypeOptionsHeader, "nosniff");
             }
-            else
+            else if (_overrideHeaders)
             {
                 RemoveHeader(response, HeaderConstants.XContentTypeOptionsHeader);
             }
@@ -125,7 +132,7 @@ namespace NWebsec.HttpHeaders
             {
                 response.Headers.Set(HeaderConstants.XDownloadOptionsHeader, "noopen");
             }
-            else
+            else if (_overrideHeaders)
             {
                 RemoveHeader(response, HeaderConstants.XDownloadOptionsHeader);
             }
@@ -143,7 +150,8 @@ namespace NWebsec.HttpHeaders
             switch (xXssProtectionConfig.Policy)
             {
                 case XXssProtectionPolicy.Disabled:
-                    RemoveHeader(response, HeaderConstants.XXssProtectionHeader);
+                    if (!_overrideHeaders) return;
+                    RemoveHeader(response, HttpHeadersConstants.XXssProtectionHeader);
                     return;
 
                 case XXssProtectionPolicy.FilterDisabled:
@@ -165,12 +173,18 @@ namespace NWebsec.HttpHeaders
         internal void SetCspHeaders(HttpContextBase context, CspConfigurationElement cspConfig, bool reportOnly)
         {
             var response = context.Response;
-            if (!cspConfig.Enabled ||
-                response.HasStatusCodeThatRedirects() ||
+            if (!cspConfig.Enabled)
+            {
+                if (!_overrideHeaders) return;
+             
+                RemoveCspHeaders(response, reportOnly);
+                return;
+            }
+
+            if (response.HasStatusCodeThatRedirects() ||
                 _handlerHelper.IsStaticContentHandler(context) ||
                 _handlerHelper.IsUnmanagedHandler(context))
             {
-                RemoveCspHeaders(response, reportOnly);
                 return;
             }
 
