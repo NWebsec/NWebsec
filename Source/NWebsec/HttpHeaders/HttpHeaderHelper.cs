@@ -39,17 +39,17 @@ namespace NWebsec.HttpHeaders
 
         private HttpHeaderSecurityConfigurationSection BaseConfig { get { return _mockConfig ?? ConfigHelper.GetConfig(); } }
 
-        public HttpHeaderHelper()
+        public HttpHeaderHelper(bool overrideHeaders=true)
         {
-            _headerSetter = new HttpHeaderSetter();
+            _headerSetter = new HttpHeaderSetter(overrideHeaders);
             _cspHelper = new CspOverrideHelper();
             _xRobotsValidator = new XRobotsTagValidator();
         }
 
-        internal HttpHeaderHelper(HttpHeaderSecurityConfigurationSection config)
+        internal HttpHeaderHelper(HttpHeaderSecurityConfigurationSection config, bool overrideHeaders=true)
         {
             _mockConfig = config;
-            _headerSetter = new HttpHeaderSetter();
+            _headerSetter = new HttpHeaderSetter(overrideHeaders);
             _cspHelper = new CspOverrideHelper();
             _xRobotsValidator = new XRobotsTagValidator();
         }

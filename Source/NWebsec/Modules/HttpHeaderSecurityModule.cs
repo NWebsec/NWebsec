@@ -18,7 +18,7 @@ namespace NWebsec.Modules
         public HttpHeaderSecurityModule()
         {
             _cspReportHelper = new CspReportHelper();
-            _headerHelper = new HttpHeaderHelper();
+            _headerHelper = new HttpHeaderHelper(false);
             _handlerTypeHelper = new HandlerTypeHelper();
             _redirectValidationHelper = new RedirectValidationHelper();
         }
