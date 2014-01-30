@@ -46,9 +46,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="NWebsec, Version=3.0.0.0, Culture=neutral, PublicKeyToken=3613da5f958908a1, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\NWebsec.3.0.0\lib\35\NWebsec.dll</HintPath>
+    <Reference Include="NWebsec">
+      <HintPath>..\packages\NWebsec.3.0.1\lib\35\NWebsec.dll</HintPath>
     </Reference>
     <Reference Include="NWebsec.SessionSecurity, Version=1.0.0.0, Culture=neutral, PublicKeyToken=3613da5f958908a1, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -69,6 +68,7 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="CacheProfiled\CustomCache.aspx" />
     <Content Include="Css\site.css" />
     <Content Include="Default.aspx" />
     <Content Include="SessionFixation.aspx" />

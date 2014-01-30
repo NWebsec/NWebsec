@@ -30,6 +30,26 @@ namespace NWebsec.Tests.Functional
         }
 
         [Test]
+        public async Task NoCacheHeaders_DisabledInConfigWithCustomCacheProfile_DoesNotTouchHeaders()
+        {
+            const string path = "/CacheProfiled/CustomCache.aspx";
+            var testUri = Helper.GetUri(BaseUri, path);
+
+            var response = await HttpClient.GetAsync(testUri);
+
+            Assert.IsTrue(response.IsSuccessStatusCode, ReqFailed + testUri);
+            var cacheControlHeader = response.Headers.CacheControl;
+            var pragmaHeader = response.Headers.Pragma;
+
+            Assert.IsTrue(cacheControlHeader.Public);
+            Assert.IsFalse(cacheControlHeader.NoCache, testUri.ToString());
+            Assert.IsFalse(cacheControlHeader.NoStore, testUri.ToString());
+            Assert.IsFalse(cacheControlHeader.MustRevalidate, testUri.ToString());
+            Assert.IsEmpty(pragmaHeader, testUri.ToString());
+            Assert.IsFalse(response.Content.Headers.GetValues("Expires").Single().Equals("-1"), testUri.ToString());
+        }
+
+        [Test]
         public async Task NoCacheHeaders_EnabledInConfigAndWebResourceHandler_NoHeaders()
         {
             const string path = "/WebResource.axd";
