@@ -47,8 +47,14 @@
     <Compile Include="Core\OwinEnvironment.cs" />
     <Compile Include="Core\OwinKeys.cs" />
     <Compile Include="Core\ResponseHeaders.cs" />
+    <Compile Include="CspDirective.cs" />
+    <Compile Include="CspDirectiveExtensions.cs" />
+    <Compile Include="CspDirectiveUnsafeEval.cs" />
+    <Compile Include="CspDirectiveUnsafeInline.cs" />
     <Compile Include="CspExtensions.cs" />
+    <Compile Include="CspOptions.cs" />
     <Compile Include="Middleware\CspMiddleware.cs" />
+    <Compile Include="Testing.cs" />
     <Compile Include="XfoExtensions.cs" />
     <Compile Include="Middleware\MiddleWareBase.cs" />
     <Compile Include="Middleware\XfoMiddleware.cs" />

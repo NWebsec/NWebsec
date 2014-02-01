@@ -24,7 +24,7 @@ namespace NWebsec.Tests.Unit.Modules.Configuration.Csp
         [Test]
         public void Validate_NoneWithSource_ThrowsException()
         {
-            _configElement.None= true;
+            _configElement.NoneSrc= true;
             _configElement.Sources.Add(new CspSourceConfigurationElement { Source = ValidSource });
 
             Assert.Throws<ConfigurationErrorsException>(() => _validator.Validate(_configElement));
@@ -33,8 +33,8 @@ namespace NWebsec.Tests.Unit.Modules.Configuration.Csp
         [Test]
         public void Validate_NoneWithSelf_ThrowsException()
         {
-            _configElement.None = true;
-            _configElement.Self = true;
+            _configElement.NoneSrc = true;
+            _configElement.SelfSrc = true;
 
             Assert.Throws<ConfigurationErrorsException>(() => _validator.Validate(_configElement));
         }

@@ -16,9 +16,9 @@ namespace NWebsec.Modules.Configuration.Csp.Validation
         {
             var element = (CspDirectiveUnsafeInlineConfigurationElement)value;
 
-            if (!element.UnsafeInline) return;
+            if (!element.UnsafeInlineSrc) return;
 
-            if (element.None && element.UnsafeInline)
+            if (element.NoneSrc && element.UnsafeInlineSrc)
                 throw new ConfigurationErrorsException("Both \"None\" and \"UnsafeInline\" are enabled. \"None\" cannot be combined with other sources");
             base.Validate(value);
         }

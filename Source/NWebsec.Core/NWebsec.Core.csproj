@@ -46,6 +46,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Core\HttpHeaders\Configuration\HstsConfiguration.cs" />
+    <Compile Include="Core\HttpHeaders\Configuration\ICspDirective.cs" />
+    <Compile Include="Core\HttpHeaders\Configuration\ICspDirectiveUnsafeEval.cs" />
+    <Compile Include="Core\HttpHeaders\Configuration\ICspDirectiveUnsafeInline.cs" />
     <Compile Include="Core\HttpHeaders\Configuration\IHstsConfiguration.cs" />
     <Compile Include="Core\HttpHeaders\Configuration\IRedirectValidationConfiguration.cs" />
     <Compile Include="Core\HttpHeaders\Configuration\ISimpleBooleanConfiguration.cs" />

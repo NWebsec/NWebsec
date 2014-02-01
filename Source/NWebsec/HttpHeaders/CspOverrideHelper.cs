@@ -18,10 +18,10 @@ namespace NWebsec.HttpHeaders
                         var theOverride = (CspDirectiveUnsafeInlineUnsafeEvalOverride)directiveOverride;
 
                         if (theOverride.UnsafeEval != Source.Inherit)
-                            config.UnsafeEval = theOverride.UnsafeEval == Source.Enable;
+                            config.UnsafeEvalSrc = theOverride.UnsafeEval == Source.Enable;
 
                         if (theOverride.UnsafeInline != Source.Inherit)
-                            config.UnsafeInline = theOverride.UnsafeInline == Source.Enable;
+                            config.UnsafeInlineSrc = theOverride.UnsafeInline == Source.Enable;
                     }
                     break;
                 case HttpHeaderHelper.CspDirectives.StyleSrc:
@@ -30,7 +30,7 @@ namespace NWebsec.HttpHeaders
                         var theOverride = (CspDirectiveUnsafeInlineOverride)directiveOverride;
 
                         if (theOverride.UnsafeInline != Source.Inherit)
-                            config.UnsafeInline = theOverride.UnsafeInline == Source.Enable;
+                            config.UnsafeInlineSrc = theOverride.UnsafeInline == Source.Enable;
                     }
                     break;
             }
@@ -38,10 +38,10 @@ namespace NWebsec.HttpHeaders
             directiveElement.Enabled = directiveOverride.Enabled;
 
             if (directiveOverride.None != Source.Inherit)
-                directiveElement.None = directiveOverride.None == Source.Enable;
+                directiveElement.NoneSrc = directiveOverride.None == Source.Enable;
 
             if (directiveOverride.Self != Source.Inherit)
-                directiveElement.Self = directiveOverride.Self == Source.Enable;
+                directiveElement.SelfSrc = directiveOverride.Self == Source.Enable;
 
             if (!directiveOverride.InheritOtherSources)
             {

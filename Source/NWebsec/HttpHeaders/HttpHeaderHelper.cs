@@ -329,7 +329,7 @@ namespace NWebsec.HttpHeaders
             {
                 newElement = new CspDirectiveUnsafeInlineUnsafeEvalConfigurationElement
                                  {
-                                     UnsafeEval = unsafeEvalElement.UnsafeEval
+                                     UnsafeEvalSrc = unsafeEvalElement.UnsafeEvalSrc
                                  };
             }
 
@@ -340,13 +340,13 @@ namespace NWebsec.HttpHeaders
                 {
                     newElement = new CspDirectiveUnsafeInlineUnsafeEvalConfigurationElement
                                      {
-                                         UnsafeEval = unsafeInlineElement.UnsafeInline
+                                         UnsafeEvalSrc = unsafeInlineElement.UnsafeInlineSrc
                                      };
                 }
                 else
                 {
-                    ((CspDirectiveUnsafeInlineConfigurationElement)newElement).UnsafeInline =
-                        unsafeInlineElement.UnsafeInline;
+                    ((CspDirectiveUnsafeInlineConfigurationElement)newElement).UnsafeInlineSrc =
+                        unsafeInlineElement.UnsafeInlineSrc;
                 }
             }
 
@@ -355,8 +355,8 @@ namespace NWebsec.HttpHeaders
                 newElement = new CspDirectiveBaseConfigurationElement();
             }
             newElement.Enabled = element.Enabled;
-            newElement.None = element.None;
-            newElement.Self = element.Self;
+            newElement.NoneSrc = element.NoneSrc;
+            newElement.SelfSrc = element.SelfSrc;
             newElement.Sources = new CspSourcesElementCollection();
             foreach (CspSourceConfigurationElement source in element.Sources)
             {

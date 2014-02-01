@@ -252,18 +252,18 @@ namespace NWebsec.HttpHeaders
             if (!directive.Enabled)
                 return sources;
 
-            if (directive.None)
+            if (directive.NoneSrc)
                 sources.AddLast("'none'");
 
-            if (directive.Self)
+            if (directive.SelfSrc)
                 sources.AddLast("'self'");
 
             var allowUnsafeInlineElement = directive as CspDirectiveUnsafeInlineConfigurationElement;
-            if (allowUnsafeInlineElement != null && allowUnsafeInlineElement.UnsafeInline)
+            if (allowUnsafeInlineElement != null && allowUnsafeInlineElement.UnsafeInlineSrc)
                 sources.AddLast("'unsafe-inline'");
 
             var allowUnsafeEvalElement = directive as CspDirectiveUnsafeInlineUnsafeEvalConfigurationElement;
-            if (allowUnsafeEvalElement != null && allowUnsafeEvalElement.UnsafeEval)
+            if (allowUnsafeEvalElement != null && allowUnsafeEvalElement.UnsafeEvalSrc)
                 sources.AddLast("'unsafe-eval'");
 
             foreach (CspSourceConfigurationElement sourceElement in directive.Sources)

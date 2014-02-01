@@ -16,10 +16,10 @@ namespace NWebsec.Modules.Configuration.Csp.Validation
         {
             var element = (CspDirectiveUnsafeInlineUnsafeEvalConfigurationElement)value;
 
-            if (!element.UnsafeEval) return;
+            if (!element.UnsafeEvalSrc) return;
 
-            if (element.None && element.UnsafeEval)
-                throw new ConfigurationErrorsException("Both \"None\" and \"UnsafeEval\" are enabled. \"None\" cannot be combined with other sources");
+            if (element.NoneSrc && element.UnsafeEvalSrc)
+                throw new ConfigurationErrorsException("Both \"None\" and \"UnsafeEval\" are enabled. \"NoneSrc\" cannot be combined with other sources");
             base.Validate(value);
         }
     }

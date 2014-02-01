@@ -1,10 +1,14 @@
 // Copyright (c) André N. Klingsheim. See License.txt in the project root for license information.
 
+using System;
+using System.Collections.Generic;
 using System.Configuration;
+using System.Linq;
+using NWebsec.Core.HttpHeaders.Configuration;
 
 namespace NWebsec.Modules.Configuration.Csp
 {
-    public class CspDirectiveBaseConfigurationElement : ConfigurationElement
+    public class CspDirectiveBaseConfigurationElement : ConfigurationElement, ICspDirective
     {
         [ConfigurationProperty("enabled", IsRequired = false, DefaultValue = true)]
         public bool Enabled
@@ -20,7 +24,7 @@ namespace NWebsec.Modules.Configuration.Csp
         }
 
         [ConfigurationProperty("none", IsRequired = false, DefaultValue = false)]
-        public bool None
+        public bool NoneSrc
         {
             get
             {
@@ -33,7 +37,7 @@ namespace NWebsec.Modules.Configuration.Csp
         }
 
         [ConfigurationProperty("self", IsRequired = false, DefaultValue = false)]
-        public bool Self
+        public bool SelfSrc
         {
             get
             {
@@ -43,6 +47,15 @@ namespace NWebsec.Modules.Configuration.Csp
             {
                 this["self"] = value;
             }
+        }
+
+        public IEnumerable<string> CustomSources
+        {
+            get
+            {
+                return Sources.Cast<CspSourceConfigurationElement>().Select(s => s.Source);
+            }
+            set { throw new NotImplementedException(); }
         }
 
         [ConfigurationProperty("", IsRequired = false, IsDefaultCollection = true)]

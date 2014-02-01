@@ -1,13 +1,14 @@
 ﻿// Copyright (c) André N. Klingsheim. See License.txt in the project root for license information.
 
 using System.Configuration;
+using NWebsec.Core.HttpHeaders.Configuration;
 
 namespace NWebsec.Modules.Configuration.Csp
 {
-    public class CspDirectiveUnsafeInlineConfigurationElement : CspDirectiveBaseConfigurationElement
+    public class CspDirectiveUnsafeInlineConfigurationElement : CspDirectiveBaseConfigurationElement, ICspDirectiveUnsafeInline
     {
         [ConfigurationProperty("unsafeInline", IsRequired = false, DefaultValue = false)]
-        public bool UnsafeInline
+        public bool UnsafeInlineSrc
         {
             get
             {

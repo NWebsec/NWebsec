@@ -16,15 +16,15 @@ namespace NWebsec.Modules.Configuration.Csp.Validation
         {
             var directive = (CspDirectiveBaseConfigurationElement)value;
 
-            if (!(directive.None || directive.Self || directive.Sources.Count > 0))
+            if (!(directive.NoneSrc || directive.SelfSrc || directive.Sources.Count > 0))
                 return;
 
-            if (directive.None && directive.Sources.Count > 0)
+            if (directive.NoneSrc && directive.Sources.Count > 0)
             {
                 throw new ConfigurationErrorsException("Other sources are not allowed when \"None\" is enabled. Disable \"None\" or remove other sources.");
             }
 
-            if (directive.None && directive.Self)
+            if (directive.NoneSrc && directive.SelfSrc)
             {
                 throw new ConfigurationErrorsException("Both \"None\" and \"Self\" are enabled. \"None\" cannot be combined with other sources");
             }

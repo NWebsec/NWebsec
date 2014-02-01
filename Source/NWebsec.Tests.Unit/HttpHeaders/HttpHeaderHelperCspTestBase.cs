@@ -40,14 +40,14 @@ namespace NWebsec.Tests.Unit.HttpHeaders
         [Test]
         public void GetCspElementWithOverrides_DirectiveConfiguredAndOverridenWithSource_SourceOverridden()
         {
-            CspConfig.DefaultSrc.Self = true;
+            CspConfig.DefaultSrc.SelfSrc = true;
             CspConfig.DefaultSrc.Sources.Add(new CspSourceConfigurationElement { Source = "www.nwebsec.com" });
             var directive = new CspDirectiveBaseOverride { Self = Source.Disable, OtherSources = "*.nwebsec.com", InheritOtherSources = false };
 
             HeaderHelper.SetContentSecurityPolicyDirectiveOverride(MockContext, HttpHeaderHelper.CspDirectives.DefaultSrc, directive, ReportOnly);
 
             var overrideElement = HeaderHelper.GetCspElementWithOverrides(MockContext, ReportOnly).DefaultSrc;
-            Assert.IsFalse(overrideElement.Self);
+            Assert.IsFalse(overrideElement.SelfSrc);
             Assert.IsTrue(overrideElement.Sources.GetAllKeys().Length == 1);
             Assert.IsTrue(overrideElement.Sources[0].Source.Equals("*.nwebsec.com"));
         }
@@ -55,30 +55,30 @@ namespace NWebsec.Tests.Unit.HttpHeaders
         [Test]
         public void GetCspElementWithOverrides_ScriptSrcDirectiveConfiguredAndOverridenWithUnsafeEval_DirectiveReplaced()
         {
-            CspConfig.ScriptSrc.Self = true;
-            CspConfig.ScriptSrc.UnsafeInline = false;
+            CspConfig.ScriptSrc.SelfSrc = true;
+            CspConfig.ScriptSrc.UnsafeInlineSrc = false;
             var directive = new CspDirectiveUnsafeInlineUnsafeEvalOverride { UnsafeEval = Source.Enable };
 
             HeaderHelper.SetContentSecurityPolicyDirectiveOverride(MockContext, HttpHeaderHelper.CspDirectives.ScriptSrc, directive, ReportOnly);
             var overrideElement = HeaderHelper.GetCspElementWithOverrides(MockContext, ReportOnly).ScriptSrc;
 
-            Assert.IsTrue(overrideElement.Self);
-            Assert.IsTrue(overrideElement.UnsafeEval);
-            Assert.IsFalse(overrideElement.UnsafeInline);
+            Assert.IsTrue(overrideElement.SelfSrc);
+            Assert.IsTrue(overrideElement.UnsafeEvalSrc);
+            Assert.IsFalse(overrideElement.UnsafeInlineSrc);
         }
 
         [Test]
         public void GetCspElementWithOverrides_DirectiveConfiguredAndOverridenWithSourcesInherited_KeepsAllSources()
         {
             var element = CspConfig.DefaultSrc;
-            element.Self = true;
+            element.SelfSrc = true;
             element.Sources.Add(new CspSourceConfigurationElement { Source = "transformtool.codeplex.com" });
             var directive = new CspDirectiveBaseOverride { Self = Source.Disable, OtherSources = "nwebsec.codeplex.com", InheritOtherSources = true };
 
             HeaderHelper.SetContentSecurityPolicyDirectiveOverride(MockContext, HttpHeaderHelper.CspDirectives.DefaultSrc, directive, ReportOnly);
 
             var overrideElement = HeaderHelper.GetCspElementWithOverrides(MockContext, ReportOnly).DefaultSrc;
-            Assert.IsFalse(overrideElement.Self);
+            Assert.IsFalse(overrideElement.SelfSrc);
             Assert.IsTrue(overrideElement.Sources.GetAllKeys().Length == 2);
             Assert.IsTrue(overrideElement.Sources.OfType<CspSourceConfigurationElement>().Any(elm => elm.Source.Equals("transformtool.codeplex.com")));
             Assert.IsTrue(overrideElement.Sources.OfType<CspSourceConfigurationElement>().Any(elm => elm.Source.Equals("nwebsec.codeplex.com")));
@@ -122,9 +122,9 @@ namespace NWebsec.Tests.Unit.HttpHeaders
             HeaderHelper.SetContentSecurityPolicyDirectiveOverride(MockContext, HttpHeaderHelper.CspDirectives.ScriptSrc, directive2, ReportOnly);
 
             var overrideElement = HeaderHelper.GetCspElementWithOverrides(MockContext, ReportOnly).ScriptSrc;
-            Assert.IsTrue(overrideElement.Self);
-            Assert.IsTrue(overrideElement.UnsafeInline);
-            Assert.IsTrue(overrideElement.UnsafeEval);
+            Assert.IsTrue(overrideElement.SelfSrc);
+            Assert.IsTrue(overrideElement.UnsafeInlineSrc);
+            Assert.IsTrue(overrideElement.UnsafeEvalSrc);
         }
 
         [Test]
@@ -138,7 +138,7 @@ namespace NWebsec.Tests.Unit.HttpHeaders
 
             var overrideElement = HeaderHelper.GetCspElementWithOverrides(MockContext, ReportOnly);
             Assert.IsTrue(overrideElement.Enabled);
-            Assert.IsTrue(overrideElement.ScriptSrc.Self);
+            Assert.IsTrue(overrideElement.ScriptSrc.SelfSrc);
         }
 
         [Test]
@@ -152,18 +152,18 @@ namespace NWebsec.Tests.Unit.HttpHeaders
 
             var overrideElement = HeaderHelper.GetCspElementWithOverrides(MockContext, ReportOnly);
             Assert.IsTrue(overrideElement.Enabled);
-            Assert.IsTrue(overrideElement.ScriptSrc.Self);
+            Assert.IsTrue(overrideElement.ScriptSrc.SelfSrc);
         }
 
         [Test]
         public void GetCspElementWithOverrides_CspConfigured_ReturnsConfiguredCsp()
         {
             CspConfig.Enabled = true;
-            CspConfig.DefaultSrc.Self = true;
+            CspConfig.DefaultSrc.SelfSrc = true;
 
             var overrideElement = HeaderHelper.GetCspElementWithOverrides(MockContext, ReportOnly);
             Assert.IsTrue(overrideElement.Enabled);
-            Assert.IsTrue(overrideElement.DefaultSrc.Self);
+            Assert.IsTrue(overrideElement.DefaultSrc.SelfSrc);
         }
 
         [Test]
