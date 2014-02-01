@@ -2,12 +2,15 @@
 
 msbuild NWebsec.csproj /p:Configuration=Release /p:TargetFrameworkVersion=v3.5 /p:OutputPath="d:\nuget\nwebsecstage\lib\35" /t:Rebuild /v:q /p:DocumentationFile="NWebsec.xml" /p:NoWarn=1591 /p:SignAssembly=true /p:AssemblyOriginatorKeyFile=C:\NWebsecKey\NWebsec.pfx
 msbuild NWebsec.csproj /p:Configuration=Release /p:TargetFrameworkVersion=v4.0 /p:OutputPath="d:\nuget\nwebsecstage\lib\40" /t:Rebuild /v:q /p:DocumentationFile="NWebsec.xml" /p:NoWarn=1591 /p:SignAssembly=true /p:AssemblyOriginatorKeyFile=C:\NWebsecKey\NWebsec.pfx
+msbuild NWebsec.csproj /p:Configuration=Release /p:TargetFrameworkVersion=v4.5 /p:OutputPath="d:\nuget\nwebsecstage\lib\45" /t:Rebuild /v:q /p:DocumentationFile="NWebsec.xml" /p:NoWarn=1591 /p:SignAssembly=true /p:AssemblyOriginatorKeyFile=C:\NWebsecKey\NWebsec.pfx
 
 @rd /s /q d:\nuget\nwebsec
 @xcopy /f /y d:\nuget\nwebsecstage\lib\35\NWebsec.dll d:\nuget\nwebsec\lib\35\
 @xcopy /f /y d:\nuget\nwebsecstage\lib\35\NWebsec.xml d:\nuget\nwebsec\lib\35\
 @xcopy /f /y d:\nuget\nwebsecstage\lib\40\NWebsec.dll d:\nuget\nwebsec\lib\40\
 @xcopy /f /y d:\nuget\nwebsecstage\lib\40\NWebsec.xml d:\nuget\nwebsec\lib\40\
+@xcopy /f /y d:\nuget\nwebsecstage\lib\40\NWebsec.dll d:\nuget\nwebsec\lib\45\
+@xcopy /f /y d:\nuget\nwebsecstage\lib\40\NWebsec.xml d:\nuget\nwebsec\lib\45\
 @xcopy /f /y NWebsec.nuspec d:\nuget\nwebsec\
 @xcopy /f /y web.config.transform d:\nuget\nwebsec\content\
 @xcopy /f /y /s d:\nuget\nwebsecstage\lib\40\ConfigurationSchema d:\nuget\nwebsec\content\NWebsecConfig\
@@ -15,10 +18,13 @@ msbuild NWebsec.csproj /p:Configuration=Release /p:TargetFrameworkVersion=v4.0 /
 @pushd NWebsec.Mvc
 
 msbuild NWebsec.Mvc.csproj /p:Configuration=Release /p:TargetFrameworkVersion=v4.0 /p:OutputPath="d:\nuget\nwebsec.mvcstage\lib\40" /t:Rebuild /v:q /p:DocumentationFile="NWebsec.Mvc.xml" /p:NoWarn=1591 /p:SignAssembly=true /p:AssemblyOriginatorKeyFile=C:\NWebsecKey\NWebsec.pfx
+msbuild NWebsec.Mvc.csproj /p:Configuration=Release /p:TargetFrameworkVersion=v4.5 /p:OutputPath="d:\nuget\nwebsec.mvcstage\lib\45" /t:Rebuild /v:q /p:DocumentationFile="NWebsec.Mvc.xml" /p:NoWarn=1591 /p:SignAssembly=true /p:AssemblyOriginatorKeyFile=C:\NWebsecKey\NWebsec.pfx
 
 @rd /s /q d:\nuget\nwebsec.mvc
 @xcopy /f /y d:\nuget\nwebsec.mvcstage\lib\40\NWebsec.Mvc.dll d:\nuget\nwebsec.mvc\lib\40\
 @xcopy /f /y d:\nuget\nwebsec.mvcstage\lib\40\NWebsec.Mvc.xml d:\nuget\nwebsec.mvc\lib\40\
+@xcopy /f /y d:\nuget\nwebsec.mvcstage\lib\40\NWebsec.Mvc.dll d:\nuget\nwebsec.mvc\lib\45\
+@xcopy /f /y d:\nuget\nwebsec.mvcstage\lib\40\NWebsec.Mvc.xml d:\nuget\nwebsec.mvc\lib\45\
 
 @xcopy /f /y NWebsec.Mvc.nuspec d:\nuget\nwebsec.Mvc\
 @popd

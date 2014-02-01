@@ -63,7 +63,7 @@ namespace NWebsec.HttpHeaders
             {
                 if (!_overrideHeaders) return;
 
-                RemoveHeader(response, HttpHeadersConstants.XRobotsTagHeader);
+                RemoveHeader(response, HeaderConstants.XRobotsTagHeader);
                 return;
             }
 
@@ -151,7 +151,7 @@ namespace NWebsec.HttpHeaders
             {
                 case XXssProtectionPolicy.Disabled:
                     if (!_overrideHeaders) return;
-                    RemoveHeader(response, HttpHeadersConstants.XXssProtectionHeader);
+                    RemoveHeader(response, HeaderConstants.XXssProtectionHeader);
                     return;
 
                 case XXssProtectionPolicy.FilterDisabled:
