@@ -46,6 +46,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Core\HttpHeaders\Configuration\HstsConfiguration.cs" />
+    <Compile Include="Core\HttpHeaders\Configuration\ICspConfiguration.cs" />
     <Compile Include="Core\HttpHeaders\Configuration\ICspDirective.cs" />
     <Compile Include="Core\HttpHeaders\Configuration\ICspDirectiveUnsafeEval.cs" />
     <Compile Include="Core\HttpHeaders\Configuration\ICspDirectiveUnsafeInline.cs" />

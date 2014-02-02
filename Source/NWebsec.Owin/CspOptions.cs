@@ -1,80 +1,87 @@
 // Copyright (c) André N. Klingsheim. See License.txt in the project root for license information.
 
 using System;
+using NWebsec.Core.HttpHeaders.Configuration;
 
 namespace NWebsec.Owin
 {
-    public class CspOptions
+    
+
+    public class CspOptions : ICspConfiguration
     {
         public CspOptions()
         {
+            Enabled = true;
             DefaultSrcDirective = new CspDirective();
-            ScriptSrc = new CspDirectiveUnsafeEval();
-            ObjectSrc = new CspDirective();
-            StyleSrc = new CspDirectiveUnsafeInline();
-            ImgSrc = new CspDirective();
-            MediaSrc = new CspDirective();
-            FrameSrc = new CspDirective();
-            FontSrc = new CspDirective();
-            ConnectSrc = new CspDirective();
+            ScriptSrcDirective = new CspDirectiveUnsafeEval();
+            ObjectSrcDirective = new CspDirective();
+            StyleSrcDirective = new CspDirectiveUnsafeInline();
+            ImgSrcDirective = new CspDirective();
+            MediaSrcDirective = new CspDirective();
+            FrameSrcDirective = new CspDirective();
+            FontSrcDirective = new CspDirective();
+            ConnectSrcDirective = new CspDirective();
         }
 
-        internal CspDirective DefaultSrcDirective { get; set; }
-        public CspDirectiveUnsafeEval ScriptSrc { get; set; }
-        public CspDirective ObjectSrc { get; set; }
-        public CspDirectiveUnsafeInline StyleSrc { get; set; }
-        public CspDirective ImgSrc { get; set; }
-        public CspDirective MediaSrc { get; set; }
-        public CspDirective FrameSrc { get; set; }
-        public CspDirective FontSrc { get; set; }
-        public CspDirective ConnectSrc { get; set; }
+        public bool Enabled { get; set; }
+        public bool XContentSecurityPolicyHeader { get; set; }
+        public bool XWebKitCspHeader { get; set; }
+        public ICspDirective DefaultSrcDirective { get; set; }
+        public ICspDirectiveUnsafeEval ScriptSrcDirective { get; set; }
+        public ICspDirective ObjectSrcDirective { get; set; }
+        public ICspDirectiveUnsafeInline StyleSrcDirective { get; set; }
+        public ICspDirective ImgSrcDirective { get; set; }
+        public ICspDirective MediaSrcDirective { get; set; }
+        public ICspDirective FrameSrcDirective { get; set; }
+        public ICspDirective FontSrcDirective { get; set; }
+        public ICspDirective ConnectSrcDirective { get; set; }
 
-        public CspOptions WithDefaultSrc(Action<CspDirective> action)
+        public CspOptions WithDefaultSrc(Action<ICspDirective> action)
         {
             action(DefaultSrcDirective);
             return this;
         }
 
-        public CspOptions WithScriptSrc(Action<CspDirectiveUnsafeEval> action)
+        public CspOptions WithScriptSrc(Action<ICspDirectiveUnsafeEval> action)
         {
-            action(ScriptSrc);
+            action(ScriptSrcDirective);
             return this;
         }
 
-        public CspOptions WithObjectSources(Action<CspDirective> action)
+        public CspOptions WithObjectSources(Action<ICspDirective> action)
         {
-            action(ObjectSrc);
+            action(ObjectSrcDirective);
             return this;
         }
-        public CspOptions WithStyleSrc(Action<CspDirectiveUnsafeInline> action)
+        public CspOptions WithStyleSrc(Action<ICspDirectiveUnsafeInline> action)
         {
-            action(StyleSrc);
+            action(StyleSrcDirective);
             return this;
         }
-        public CspOptions WithImageSrc(Action<CspDirective> action)
+        public CspOptions WithImageSrc(Action<ICspDirective> action)
         {
-            action(ImgSrc);
+            action(ImgSrcDirective);
             return this;
         }
-        public CspOptions WithMediaSrc(Action<CspDirective> action)
+        public CspOptions WithMediaSrc(Action<ICspDirective> action)
         {
-            action(MediaSrc);
+            action(MediaSrcDirective);
             return this;
         }
-        public CspOptions WithFrameSrc(Action<CspDirective> action)
+        public CspOptions WithFrameSrc(Action<ICspDirective> action)
         {
-            action(FrameSrc);
+            action(FrameSrcDirective);
             return this;
         }
-        public CspOptions WithFontSrc(Action<CspDirective> action)
+        public CspOptions WithFontSrc(Action<ICspDirective> action)
         {
-            action(FontSrc);
+            action(FontSrcDirective);
             return this;
         }
 
-        public CspOptions WithConnectSrc(Action<CspDirective> action)
+        public CspOptions WithConnectSrc(Action<ICspDirective> action)
         {
-            action(ConnectSrc);
+            action(ConnectSrcDirective);
             return this;
         }
 

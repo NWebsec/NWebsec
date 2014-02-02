@@ -1,11 +1,13 @@
 ﻿// Copyright (c) André N. Klingsheim. See License.txt in the project root for license information.
 
+using System;
 using System.Configuration;
+using NWebsec.Core.HttpHeaders.Configuration;
 using NWebsec.Modules.Configuration.Csp.Validation;
 
 namespace NWebsec.Modules.Configuration.Csp
 {
-    public class CspConfigurationElement : CspHeaderConfigurationElement
+    public class CspConfigurationElement : CspHeaderConfigurationElement, ICspConfiguration
     {
 
         [ConfigurationProperty("default-src", IsRequired = false)]
@@ -147,5 +149,50 @@ namespace NWebsec.Modules.Configuration.Csp
             }
         }
 
+        public ICspDirective DefaultSrcDirective
+        {
+            get { return DefaultSrc; }
+            set { throw new NotImplementedException(); }
+        }
+        public ICspDirectiveUnsafeEval ScriptSrcDirective
+        {
+            get { return ScriptSrc; }
+            set { throw new NotImplementedException(); }
+        }
+        public ICspDirective ObjectSrcDirective
+        {
+            get { return ObjectSrc; }
+            set { throw new NotImplementedException(); }
+        }
+        public ICspDirectiveUnsafeInline StyleSrcDirective
+        {
+            get { return StyleSrc; }
+            set { throw new NotImplementedException(); }
+        }
+        public ICspDirective ImgSrcDirective
+        {
+            get { return ImgSrc; }
+            set { throw new NotImplementedException(); }
+        }
+        public ICspDirective MediaSrcDirective
+        {
+            get { return MediaSrc; }
+            set { throw new NotImplementedException(); }
+        }
+        public ICspDirective FrameSrcDirective
+        {
+            get { return FrameSrc; }
+            set { throw new NotImplementedException(); }
+        }
+        public ICspDirective FontSrcDirective
+        {
+            get { return FontSrc; }
+            set { throw new NotImplementedException(); }
+        }
+        public ICspDirective ConnectSrcDirective
+        {
+            get { return ConnectSrc; }
+            set { throw new NotImplementedException(); }
+        }
     }
 }

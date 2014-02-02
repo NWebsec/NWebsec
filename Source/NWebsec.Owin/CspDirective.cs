@@ -7,6 +7,11 @@ namespace NWebsec.Owin
 {
     public class CspDirective : ICspDirective
     {
+        public CspDirective()
+        {
+            Enabled = true;
+        }
+        public bool Enabled { get; set; }
         public bool NoneSrc { get; set; }
         public bool SelfSrc { get; set; }
 
