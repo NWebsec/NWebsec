@@ -183,12 +183,14 @@ namespace NWebsec.HttpHeaders
                 return;
             }
 
-            foreach(var header in _headerGenerator.CreateCspHeader(cspConfig, reportOnly, _reportHelper.GetBuiltInCspReportHandlerRelativeUri()))
+            var headers = _headerGenerator.CreateCspHeader(cspConfig, reportOnly, _reportHelper.GetBuiltInCspReportHandlerRelativeUri());
+
+            if (headers == null) return;
+
+            foreach(var header in headers)
             {
                 switch (header.Action)
                 {
-                    case HeaderResult.ResponseAction.Noop:
-                        continue;
                     case HeaderResult.ResponseAction.Set:
                         response.Headers.Set(header.Name, header.Value);
                         continue;
@@ -201,13 +203,6 @@ namespace NWebsec.HttpHeaders
         private void RemoveHeader(HttpResponseBase response, string headerName)
         {
             response.Headers.Remove(headerName);
-        }
-
-        private void RemoveCspHeaders(HttpResponseBase response, bool reportOnly)
-        {
-            RemoveHeader(response, reportOnly ? HeaderConstants.ContentSecurityPolicyReportOnlyHeader : HeaderConstants.ContentSecurityPolicyHeader);
-            RemoveHeader(response, reportOnly ? HeaderConstants.XContentSecurityPolicyReportOnlyHeader : HeaderConstants.XContentSecurityPolicyHeader);
-            RemoveHeader(response, reportOnly ? HeaderConstants.XWebKitCspReportOnlyHeader : HeaderConstants.XWebKitCspHeader);
         }
     }
 }
