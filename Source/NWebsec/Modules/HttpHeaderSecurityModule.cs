@@ -34,7 +34,7 @@ namespace NWebsec.Modules
             var app = (HttpApplication)sender;
             var context = new HttpContextWrapper(app.Context);
 
-            _headerHelper.SetHeaders(context);
+            _headerHelper.SetSitewideHeaders(context);
 
             if (!_cspReportHelper.IsRequestForBuiltInCspReportHandler(context.Request)) return;
 
@@ -59,7 +59,7 @@ namespace NWebsec.Modules
             var context = new HttpContextWrapper(app.Context);
 
             _handlerTypeHelper.RequestHandlerMapped(context);
-            _headerHelper.SetCacheHeaders(context);
+            _headerHelper.SetContentRelatedHeaders(context);
         }
 
         void app_EndRequest(object sender, EventArgs e)

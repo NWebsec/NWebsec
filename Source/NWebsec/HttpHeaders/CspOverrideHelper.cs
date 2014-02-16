@@ -1,6 +1,8 @@
 ﻿// Copyright (c) André N. Klingsheim. See License.txt in the project root for license information.
 
 using System;
+using System.Collections.Generic;
+using NWebsec.Core.HttpHeaders.Configuration;
 using NWebsec.Csp;
 using NWebsec.Modules.Configuration.Csp;
 
@@ -8,13 +10,13 @@ namespace NWebsec.HttpHeaders
 {
     internal class CspOverrideHelper
     {
-        internal CspDirectiveBaseConfigurationElement GetOverridenCspDirectiveConfig(HttpHeaderHelper.CspDirectives directive, CspDirectiveBaseOverride directiveOverride, CspDirectiveBaseConfigurationElement directiveElement)
+        internal ICspDirectiveConfiguration GetOverridenCspDirectiveConfig(HttpHeaderHelper.CspDirectives directive, CspDirectiveBaseOverride directiveOverride, ICspDirectiveConfiguration directiveElement)
         {
             switch (directive)
             {
                 case HttpHeaderHelper.CspDirectives.ScriptSrc:
                     {
-                        var config = (CspDirectiveUnsafeInlineUnsafeEvalConfigurationElement)directiveElement;
+                        var config = (ICspDirectiveUnsafeEvalConfiguration)directiveElement;
                         var theOverride = (CspDirectiveUnsafeInlineUnsafeEvalOverride)directiveOverride;
 
                         if (theOverride.UnsafeEval != Source.Inherit)
@@ -45,14 +47,14 @@ namespace NWebsec.HttpHeaders
 
             if (!directiveOverride.InheritOtherSources)
             {
-                directiveElement.Sources.Clear();
+                directiveElement.CustomSources = new string[]{};
             }
 
             AddSources(directiveElement, directiveOverride.OtherSources);
             return directiveElement;
         }
 
-        private void AddSources(CspDirectiveBaseConfigurationElement directiveElement, string sources)
+        private void AddSources(ICspDirectiveConfiguration directiveElement, string sources)
         {
             if (String.IsNullOrEmpty(sources)) return;
 
@@ -64,10 +66,11 @@ namespace NWebsec.HttpHeaders
 
             var sourceList = sources.Split(' ');
 
-            foreach (var source in sourceList)
-            {
-                directiveElement.Sources.Add(new CspSourceConfigurationElement { Source = source });
-            }
+            var newSources = new List<string>();
+            
+            newSources.AddRange(directiveElement.CustomSources);
+            newSources.AddRange(sourceList);
+            directiveElement.CustomSources = newSources;
         }
     }
 }

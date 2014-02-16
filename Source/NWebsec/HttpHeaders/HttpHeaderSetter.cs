@@ -172,6 +172,10 @@ namespace NWebsec.HttpHeaders
         internal void SetCspHeaders(HttpContextBase context, ICspConfiguration cspConfig, bool reportOnly)
         {
             var response = context.Response;
+            
+            if (_handlerHelper.IsStaticContentHandler(context) ||
+                _handlerHelper.IsUnmanagedHandler(context)) return;
+
             var userAgent = context.Request.UserAgent;
             
             if (!String.IsNullOrEmpty(userAgent) && userAgent.Contains(" Version/5") && userAgent.Contains(" Safari/"))
@@ -179,7 +183,7 @@ namespace NWebsec.HttpHeaders
                 return;
             }
 
-            foreach(var header in _headerGenerator.CreateCspHeader(cspConfig, reportOnly))
+            foreach(var header in _headerGenerator.CreateCspHeader(cspConfig, reportOnly, _reportHelper.GetBuiltInCspReportHandlerRelativeUri()))
             {
                 switch (header.Action)
                 {

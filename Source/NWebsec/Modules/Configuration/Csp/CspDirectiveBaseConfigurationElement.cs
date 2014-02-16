@@ -8,7 +8,7 @@ using NWebsec.Core.HttpHeaders.Configuration;
 
 namespace NWebsec.Modules.Configuration.Csp
 {
-    public class CspDirectiveBaseConfigurationElement : ConfigurationElement, ICspDirective
+    public class CspDirectiveBaseConfigurationElement : ConfigurationElement, ICspDirectiveConfiguration
     {
         [ConfigurationProperty("enabled", IsRequired = false, DefaultValue = true)]
         public bool Enabled

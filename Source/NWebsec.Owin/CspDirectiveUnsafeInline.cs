@@ -4,7 +4,7 @@ using NWebsec.Core.HttpHeaders.Configuration;
 
 namespace NWebsec.Owin
 {
-    public class CspDirectiveUnsafeInline : CspDirective, ICspDirectiveUnsafeInline
+    public class CspDirectiveUnsafeInline : CspDirective, ICspDirectiveUnsafeInlineConfiguration
     {
         public bool UnsafeInlineSrc { get; set; }
 

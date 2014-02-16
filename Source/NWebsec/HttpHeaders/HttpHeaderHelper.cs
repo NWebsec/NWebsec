@@ -4,10 +4,10 @@ using System;
 using System.Collections.Generic;
 using System.Web;
 using NWebsec.Core.HttpHeaders;
+using NWebsec.Core.HttpHeaders.Configuration;
 using NWebsec.Csp;
 using NWebsec.ExtensionMethods;
 using NWebsec.Modules.Configuration;
-using NWebsec.Modules.Configuration.Csp;
 using NWebsec.Modules.Configuration.Validation;
 
 namespace NWebsec.HttpHeaders
@@ -56,22 +56,22 @@ namespace NWebsec.HttpHeaders
             _xRobotsValidator = new XRobotsTagValidator();
         }
 
-        internal void SetHeaders(HttpContextBase context)
+        internal void SetSitewideHeaders(HttpContextBase context)
         {
             var nwContext = context.GetNWebsecContext();
-            _headerSetter.SetHstsHeader(context.Response, GetHstsWithOverride(context));
+            _headerSetter.SetHstsHeader(context.Response, BaseConfig.SecurityHttpHeaders.Hsts);
             _headerSetter.SetXRobotsTagHeader(context.Response, GetXRobotsTagHeaderWithOverride(context));
             _headerSetter.SetXFrameoptionsHeader(context.Response, GetXFrameoptionsWithOverride(context));
             nwContext.XFrameOptions = GetXFrameoptionsWithOverride(context);
             _headerSetter.SetXContentTypeOptionsHeader(context.Response, GetXContentTypeOptionsWithOverride(context));
             _headerSetter.SetXDownloadOptionsHeader(context.Response, GetXDownloadOptionsWithOverride(context));
-            _headerSetter.SetXXssProtectionHeader(context, GetXXssProtectionWithOverride(context));
-            _headerSetter.SetCspHeaders(context, BaseConfig.SecurityHttpHeaders.Csp, false);
-            _headerSetter.SetCspHeaders(context, BaseConfig.SecurityHttpHeaders.Csp, true);
         }
 
-        internal void SetCacheHeaders(HttpContextBase context)
+        internal void SetContentRelatedHeaders(HttpContextBase context)
         {
+            _headerSetter.SetXXssProtectionHeader(context, GetXXssProtectionWithOverride(context));
+            _headerSetter.SetCspHeaders(context, BaseConfig.SecurityHttpHeaders.Csp, false);
+            _headerSetter.SetCspHeaders(context, BaseConfig.SecurityHttpHeaders.CspReportOnly, true);
             _headerSetter.SetNoCacheHeaders(context, GetNoCacheHeadersWithOverride(context));
         }
 
@@ -134,26 +134,6 @@ namespace NWebsec.HttpHeaders
                        : BaseConfig.SecurityHttpHeaders.XFrameOptions;
         }
 
-        public void SetHstsOverride(HttpContextBase context, HstsConfigurationElement hstsConfig)
-        {
-            var headerList = GetHeaderListFromContext(context);
-            var headerKey = HeaderConstants.StrictTransportSecurityHeader;
-
-            if (headerList.ContainsKey(headerKey))
-                headerList.Remove(headerKey);
-
-            headerList.Add(headerKey, hstsConfig);
-            _headerSetter.SetHstsHeader(context.Response, GetHstsWithOverride(context));
-        }
-
-        internal HstsConfigurationElement GetHstsWithOverride(HttpContextBase context)
-        {
-            var headerList = GetHeaderListFromContext(context);
-            return headerList.ContainsKey(HeaderConstants.StrictTransportSecurityHeader)
-                       ? (HstsConfigurationElement)headerList[HeaderConstants.StrictTransportSecurityHeader]
-                       : BaseConfig.SecurityHttpHeaders.Hsts;
-        }
-
         public void SetXContentTypeOptionsOverride(HttpContextBase context, SimpleBooleanConfigurationElement xContentTypeOptionsConfig)
         {
             var headerList = GetHeaderListFromContext(context);
@@ -214,7 +194,8 @@ namespace NWebsec.HttpHeaders
                 ? (XXssProtectionConfigurationElement)headerList[HeaderConstants.XXssProtectionHeader]
                 : BaseConfig.SecurityHttpHeaders.XXssProtection;
         }
-        public void SetCspHeaderOverride(HttpContextBase context, CspHeaderConfigurationElement cspConfig, bool reportOnly)
+
+        public void SetCspHeaderOverride(HttpContextBase context, ICspHeaderConfiguration cspConfig, bool reportOnly)
         {
             var headerList = GetHeaderListFromContext(context);
             var headerKey = GetCspConfigKey(CspHeaderKeyPrefix, reportOnly);
@@ -223,22 +204,22 @@ namespace NWebsec.HttpHeaders
                 headerList.Remove(headerKey);
 
             headerList.Add(headerKey, cspConfig);
-            _headerSetter.SetCspHeaders(context, GetCspElementWithOverrides(context, reportOnly), reportOnly);
         }
 
-        internal CspHeaderConfigurationElement GetCspHeaderWithOverride(HttpContextBase context, bool reportOnly)
+        internal ICspHeaderConfiguration GetCspHeaderWithOverride(HttpContextBase context, bool reportOnly)
         {
             var cspConfig = reportOnly
                                 ? BaseConfig.SecurityHttpHeaders.CspReportOnly
                                 : BaseConfig.SecurityHttpHeaders.Csp;
+
             var headerList = GetHeaderListFromContext(context);
             var headerkey = GetCspConfigKey(CspHeaderKeyPrefix, reportOnly);
             return headerList.ContainsKey(headerkey)
-                    ? (CspHeaderConfigurationElement)headerList[headerkey]
+                    ? (ICspHeaderConfiguration)headerList[headerkey]
                     : cspConfig;
         }
 
-        public void SetCspReportUriOverride(HttpContextBase context, CspReportUriDirectiveConfigurationElement reportUriConfig, bool reportOnly)
+        public void SetCspReportUriOverride(HttpContextBase context, ICspReportUriDirective reportUriConfig, bool reportOnly)
         {
             var headerList = GetHeaderListFromContext(context);
             var headerKey = GetCspConfigKey(CspReportUriKeyPrefix, reportOnly);
@@ -247,25 +228,24 @@ namespace NWebsec.HttpHeaders
                 headerList.Remove(headerKey);
 
             headerList.Add(headerKey, reportUriConfig);
-            _headerSetter.SetCspHeaders(context, GetCspElementWithOverrides(context, reportOnly), reportOnly);
         }
 
-        internal CspReportUriDirectiveConfigurationElement GetCspReportUriDirectiveWithOverride(HttpContextBase context, bool reportOnly)
+        internal ICspReportUriDirective GetCspReportUriDirectiveWithOverride(HttpContextBase context, bool reportOnly)
         {
             var reportUriConfig = reportOnly
-                                      ? BaseConfig.SecurityHttpHeaders.CspReportOnly.ReportUriDirective
-                                      : BaseConfig.SecurityHttpHeaders.Csp.ReportUriDirective;
+                                      ? BaseConfig.SecurityHttpHeaders.CspReportOnly.ReportUri
+                                      : BaseConfig.SecurityHttpHeaders.Csp.ReportUri;
             var headerList = GetHeaderListFromContext(context);
             var headerkey = GetCspConfigKey(CspReportUriKeyPrefix, reportOnly);
             return headerList.ContainsKey(headerkey)
-                    ? (CspReportUriDirectiveConfigurationElement)headerList[headerkey]
+                    ? (ICspReportUriDirective)headerList[headerkey]
                     : reportUriConfig;
         }
 
         public void SetContentSecurityPolicyDirectiveOverride(HttpContextBase context, CspDirectives directive, CspDirectiveBaseOverride config, bool reportOnly)
         {
             var cspOverride = GetCspDirectiveOverides(context, reportOnly);
-            CspDirectiveBaseConfigurationElement directiveElement;
+            ICspDirectiveConfiguration directiveElement;
             var directiveExists = cspOverride.TryGetValue(directive, out directiveElement);
 
             if (!directiveExists)
@@ -278,10 +258,9 @@ namespace NWebsec.HttpHeaders
             if (directiveExists)
                 cspOverride.Remove(directive);
             cspOverride.Add(directive, newConfig);
-            _headerSetter.SetCspHeaders(context, GetCspElementWithOverrides(context, reportOnly), reportOnly);
         }
 
-        private CspDirectiveBaseConfigurationElement GetCspDirectiveFromConfig(CspDirectives directive, bool reportOnly)
+        private ICspDirectiveConfiguration GetCspDirectiveFromConfig(CspDirectives directive, bool reportOnly)
         {
             var cspConfig = reportOnly
                                 ? BaseConfig.SecurityHttpHeaders.CspReportOnly
@@ -320,65 +299,64 @@ namespace NWebsec.HttpHeaders
             }
         }
 
-        private CspDirectiveBaseConfigurationElement CloneElement(CspDirectiveBaseConfigurationElement element)
+        internal ICspDirectiveConfiguration CloneElement(ICspDirectiveConfiguration element)
         {
-            CspDirectiveBaseConfigurationElement newElement = null;
+            ICspDirectiveConfiguration newElement = null;
 
-            var unsafeEvalElement = element as CspDirectiveUnsafeInlineUnsafeEvalConfigurationElement;
+            var unsafeEvalElement = element as ICspDirectiveUnsafeEvalConfiguration;
             if (unsafeEvalElement != null)
             {
-                newElement = new CspDirectiveUnsafeInlineUnsafeEvalConfigurationElement
+                newElement = new CspDirectiveUnsafeEvalConfiguration
                                  {
                                      UnsafeEvalSrc = unsafeEvalElement.UnsafeEvalSrc
                                  };
             }
 
-            var unsafeInlineElement = element as CspDirectiveUnsafeInlineConfigurationElement;
+            var unsafeInlineElement = element as ICspDirectiveUnsafeInlineConfiguration;
             if (unsafeInlineElement != null)
             {
                 if (newElement == null)
                 {
-                    newElement = new CspDirectiveUnsafeInlineUnsafeEvalConfigurationElement
+                    newElement = new CspDirectiveUnsafeInlineConfiguration
                                      {
-                                         UnsafeEvalSrc = unsafeInlineElement.UnsafeInlineSrc
+                                         UnsafeInlineSrc = unsafeInlineElement.UnsafeInlineSrc
                                      };
                 }
                 else
                 {
-                    ((CspDirectiveUnsafeInlineConfigurationElement)newElement).UnsafeInlineSrc =
+                    ((ICspDirectiveUnsafeInlineConfiguration)newElement).UnsafeInlineSrc =
                         unsafeInlineElement.UnsafeInlineSrc;
                 }
             }
 
             if (newElement == null)
             {
-                newElement = new CspDirectiveBaseConfigurationElement();
+                newElement = new CspDirectiveConfiguration();
             }
             newElement.Enabled = element.Enabled;
             newElement.NoneSrc = element.NoneSrc;
             newElement.SelfSrc = element.SelfSrc;
-            newElement.Sources = new CspSourcesElementCollection();
-            foreach (CspSourceConfigurationElement source in element.Sources)
-            {
-                newElement.Sources.Add(source);
-            }
+            var newSources = new List<string>();
+            newSources.AddRange(element.CustomSources);
+            newElement.CustomSources = newSources;
+            
             return newElement;
         }
 
-        private IDictionary<CspDirectives, CspDirectiveBaseConfigurationElement> GetCspDirectiveOverides(HttpContextBase context, bool reportOnly)
+        private IDictionary<CspDirectives, ICspDirectiveConfiguration> GetCspDirectiveOverides(HttpContextBase context, bool reportOnly)
         {
             var headerKey = GetCspConfigKey(CspDirectivesKeyPrefix, reportOnly);
             var headerList = GetHeaderListFromContext(context);
 
             if (!headerList.ContainsKey(headerKey))
-                headerList[headerKey] = new Dictionary<CspDirectives, CspDirectiveBaseConfigurationElement>();
-            return (IDictionary<CspDirectives, CspDirectiveBaseConfigurationElement>)headerList[headerKey];
+                headerList[headerKey] = new Dictionary<CspDirectives, ICspDirectiveConfiguration>();
+            return (IDictionary<CspDirectives, ICspDirectiveConfiguration>)headerList[headerKey];
         }
 
-        internal CspConfigurationElement GetCspElementWithOverrides(HttpContextBase context, bool reportOnly)
+        internal ICspConfiguration GetCspElementWithOverrides(HttpContextBase context, bool reportOnly)
         {
             var cspHeaderOverride = GetCspHeaderWithOverride(context, reportOnly);
-            var overriddenConfig = new CspConfigurationElement();
+            var overriddenConfig = new CspConfiguration();
             {
 
                 overriddenConfig.Enabled = cspHeaderOverride.Enabled;
@@ -392,33 +370,33 @@ namespace NWebsec.HttpHeaders
 
             var cspConfig = reportOnly ? BaseConfig.SecurityHttpHeaders.CspReportOnly : BaseConfig.SecurityHttpHeaders.Csp;
 
-            CspDirectiveBaseConfigurationElement element;
+            ICspDirectiveConfiguration element;
             var isOverriden = directiveOverrides.TryGetValue(CspDirectives.DefaultSrc, out element);
-            overriddenConfig.DefaultSrc = (isOverriden ? element : cspConfig.DefaultSrc);
+            overriddenConfig.DefaultSrcDirective = (isOverriden ? element : cspConfig.DefaultSrc);
 
             isOverriden = directiveOverrides.TryGetValue(CspDirectives.ScriptSrc, out element);
-            overriddenConfig.ScriptSrc = (isOverriden ? (CspDirectiveUnsafeInlineUnsafeEvalConfigurationElement)element : cspConfig.ScriptSrc);
+            overriddenConfig.ScriptSrcDirective = (isOverriden ? (ICspDirectiveUnsafeEvalConfiguration)element : cspConfig.ScriptSrc);
 
             isOverriden = directiveOverrides.TryGetValue(CspDirectives.ObjectSrc, out element);
-            overriddenConfig.ObjectSrc = (isOverriden ? element : cspConfig.ObjectSrc);
+            overriddenConfig.ObjectSrcDirective = (isOverriden ? element : cspConfig.ObjectSrc);
 
             isOverriden = directiveOverrides.TryGetValue(CspDirectives.StyleSrc, out element);
-            overriddenConfig.StyleSrc = (isOverriden ? (CspDirectiveUnsafeInlineConfigurationElement)element : cspConfig.StyleSrc);
+            overriddenConfig.StyleSrcDirective = (isOverriden ? (ICspDirectiveUnsafeInlineConfiguration)element : cspConfig.StyleSrc);
 
             isOverriden = directiveOverrides.TryGetValue(CspDirectives.ImgSrc, out element);
-            overriddenConfig.ImgSrc = (isOverriden ? element : cspConfig.ImgSrc);
+            overriddenConfig.ImgSrcDirective = (isOverriden ? element : cspConfig.ImgSrc);
 
             isOverriden = directiveOverrides.TryGetValue(CspDirectives.MediaSrc, out element);
-            overriddenConfig.MediaSrc = (isOverriden ? element : cspConfig.MediaSrc);
+            overriddenConfig.MediaSrcDirective = (isOverriden ? element : cspConfig.MediaSrc);
 
             isOverriden = directiveOverrides.TryGetValue(CspDirectives.FrameSrc, out element);
-            overriddenConfig.FrameSrc = (isOverriden ? element : cspConfig.FrameSrc);
+            overriddenConfig.FrameSrcDirective = (isOverriden ? element : cspConfig.FrameSrc);
 
             isOverriden = directiveOverrides.TryGetValue(CspDirectives.FontSrc, out element);
-            overriddenConfig.FontSrc = (isOverriden ? element : cspConfig.FontSrc);
+            overriddenConfig.FontSrcDirective = (isOverriden ? element : cspConfig.FontSrc);
 
             isOverriden = directiveOverrides.TryGetValue(CspDirectives.ConnectSrc, out element);
-            overriddenConfig.ConnectSrc = (isOverriden ? element : cspConfig.ConnectSrc);
+            overriddenConfig.ConnectSrcDirective = (isOverriden ? element : cspConfig.ConnectSrc);
 
             return overriddenConfig;
         }

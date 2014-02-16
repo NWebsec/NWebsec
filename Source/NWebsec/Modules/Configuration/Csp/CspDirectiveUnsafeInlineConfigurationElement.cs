@@ -5,7 +5,7 @@ using NWebsec.Core.HttpHeaders.Configuration;
 
 namespace NWebsec.Modules.Configuration.Csp
 {
-    public class CspDirectiveUnsafeInlineConfigurationElement : CspDirectiveBaseConfigurationElement, ICspDirectiveUnsafeInline
+    public class CspDirectiveUnsafeInlineConfigurationElement : CspDirectiveBaseConfigurationElement, ICspDirectiveUnsafeInlineConfiguration
     {
         [ConfigurationProperty("unsafeInline", IsRequired = false, DefaultValue = false)]
         public bool UnsafeInlineSrc

@@ -40,14 +40,14 @@ namespace NWebsec.Core.HttpHeaders
             }
         }
 
-        public IEnumerable<HeaderResult> CreateCspHeader(ICspConfiguration cspConfig, bool reportOnly)
+        public IEnumerable<HeaderResult> CreateCspHeader(ICspConfiguration cspConfig, bool reportOnly, string builtinReportHandlerUri = null)
         {
             if (!cspConfig.Enabled)
             {
                 return new[] { new HeaderResult(HeaderResult.ResponseAction.Noop, HeaderConstants.ContentSecurityPolicyHeader) };
             }
 
-            var headerValue = CreateCspHeaderValue(cspConfig);
+            var headerValue = CreateCspHeaderValue(cspConfig, builtinReportHandlerUri);
             if (String.IsNullOrEmpty(headerValue))
             {
                 return new[] { new HeaderResult(HeaderResult.ResponseAction.Noop, HeaderConstants.ContentSecurityPolicyHeader) };
@@ -56,16 +56,16 @@ namespace NWebsec.Core.HttpHeaders
 
             return new[]{ 
                 new HeaderResult(HeaderResult.ResponseAction.Set,
-                    (reportOnly ? HeaderConstants.ContentSecurityPolicyReportOnlyHeader : HeaderConstants.ContentSecurityPolicyHeader)),
+                    (reportOnly ? HeaderConstants.ContentSecurityPolicyReportOnlyHeader : HeaderConstants.ContentSecurityPolicyHeader),headerValue),
 
                 new HeaderResult(cspConfig.XContentSecurityPolicyHeader ? HeaderResult.ResponseAction.Set : HeaderResult.ResponseAction.Noop, 
-                (reportOnly ? HeaderConstants.XContentSecurityPolicyReportOnlyHeader: HeaderConstants.XContentSecurityPolicyHeader)),
+                (reportOnly ? HeaderConstants.XContentSecurityPolicyReportOnlyHeader: HeaderConstants.XContentSecurityPolicyHeader),headerValue),
 
                 new HeaderResult(cspConfig.XWebKitCspHeader ? HeaderResult.ResponseAction.Set : HeaderResult.ResponseAction.Noop, 
-                (reportOnly ? HeaderConstants.XWebKitCspReportOnlyHeader: HeaderConstants.XWebKitCspHeader))};
+                (reportOnly ? HeaderConstants.XWebKitCspReportOnlyHeader: HeaderConstants.XWebKitCspHeader),headerValue)};
         }
 
-        private string CreateCspHeaderValue(ICspConfiguration config)
+        private string CreateCspHeaderValue(ICspConfiguration config, string builtinReportHandlerUri = null)
         {
             var sb = new StringBuilder();
 
@@ -80,55 +80,14 @@ namespace NWebsec.Core.HttpHeaders
             sb.Append(CreateDirectiveValue("connect-src", GetDirectiveList(config.ConnectSrcDirective)));
             if (sb.Length == 0) return null;
             // TODO add support for reporturi
-            //sb.Append(CreateDirectiveValue("report-uri", GetReportUriList(config.ReportUriDirective)));
+            sb.Append(CreateDirectiveValue("report-uri", GetReportUriList(config.ReportUriDirective, builtinReportHandlerUri)));
 
             return sb.ToString().TrimEnd(new[] { ' ', ';' });
         }
 
-        private List<string> GetDirectiveList(ICspDirective directive)
-        {
-            var sources = new List<string>();
-
-            if (!directive.Enabled)
-                return sources;
-
-            if (directive.NoneSrc)
-                sources.Add("'none'");
-
-            if (directive.SelfSrc)
-                sources.Add("'self'");
-
-            var allowUnsafeInlineElement = directive as ICspDirectiveUnsafeInline;
-            if (allowUnsafeInlineElement != null && allowUnsafeInlineElement.UnsafeInlineSrc)
-                sources.Add("'unsafe-inline'");
-
-            var allowUnsafeEvalElement = directive as ICspDirectiveUnsafeEval;
-            if (allowUnsafeEvalElement != null && allowUnsafeEvalElement.UnsafeEvalSrc)
-                sources.Add("'unsafe-eval'");
-
-            sources.AddRange(directive.CustomSources);
-
-            return sources;
-        }
-
-        //private ICollection<string> GetReportUriList(CspReportUriDirectiveConfigurationElement directive)
-        //{
-        //    var reportUris = new LinkedList<string>();
-        //    if (directive.EnableBuiltinHandler)
-        //    {
-        //        reportUris.AddLast(_reportHelper.GetBuiltInCspReportHandlerRelativeUri());
-        //    }
-
-        //    foreach (ReportUriConfigurationElement reportUri in directive.ReportUris)
-        //    {
-        //        reportUris.AddLast(reportUri.ReportUri.ToString());
-        //    }
-        //    return reportUris;
-        //}
-
         private string CreateDirectiveValue(string directiveName, List<string> sources)
         {
-            if (sources.Count < 1) return String.Empty;
+            if (sources == null || sources.Count < 1) return String.Empty;
 
             var sb = new StringBuilder();
             sb.Append(directiveName);
@@ -141,6 +100,53 @@ namespace NWebsec.Core.HttpHeaders
             }
             sb.Insert(sb.Length - 1, ';');
             return sb.ToString();
+        }
+
+        private List<string> GetDirectiveList(ICspDirectiveConfiguration directive)
+        {
+
+            if (directive == null || !directive.Enabled)
+                return null;
+
+            var sources = new List<string>();
+
+            if (directive.NoneSrc)
+                sources.Add("'none'");
+
+            if (directive.SelfSrc)
+                sources.Add("'self'");
+
+            var allowUnsafeInlineElement = directive as ICspDirectiveUnsafeInlineConfiguration;
+            if (allowUnsafeInlineElement != null && allowUnsafeInlineElement.UnsafeInlineSrc)
+                sources.Add("'unsafe-inline'");
+
+            var allowUnsafeEvalElement = directive as ICspDirectiveUnsafeEvalConfiguration;
+            if (allowUnsafeEvalElement != null && allowUnsafeEvalElement.UnsafeEvalSrc)
+                sources.Add("'unsafe-eval'");
+
+            if (directive.CustomSources != null)
+                sources.AddRange(directive.CustomSources);
+
+            return sources;
+        }
+
+        private List<string> GetReportUriList(ICspReportUriDirective directive, string builtinReportHandlerUri = null)
+        {
+
+            if (directive == null || !directive.Enabled)
+                return null;
+
+            var reportUris = new List<string>();
+
+            if (directive.EnableBuiltinHandler)
+            {
+                reportUris.Add(builtinReportHandlerUri);
+            }
+
+            if (directive.ReportUris != null)
+                reportUris.AddRange(directive.ReportUris);
+
+            return reportUris;
         }
     }
 }

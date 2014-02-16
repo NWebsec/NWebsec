@@ -75,6 +75,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Csp\CspReportHelperTests.cs" />
+    <Compile Include="HttpHeaders\HttpHeaderHelperCspReportOnlyTest.cs" />
+    <Compile Include="HttpHeaders\HttpHeaderHelperCspTest.cs" />
     <Compile Include="HttpHeaders\HttpHeaderHelperCspTestBase.cs" />
     <Compile Include="HttpHeaders\HttpHeaderHelperTests.cs" />
     <Compile Include="HttpHeaders\HttpHeaderSetterCspTests.cs" />

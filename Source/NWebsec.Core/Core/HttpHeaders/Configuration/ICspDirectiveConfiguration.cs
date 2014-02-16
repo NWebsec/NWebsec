@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace NWebsec.Core.HttpHeaders.Configuration
 {
-    public interface ICspDirective
+    public interface ICspDirectiveConfiguration
     {
         bool Enabled { get; set; }
         bool NoneSrc { get; set; }

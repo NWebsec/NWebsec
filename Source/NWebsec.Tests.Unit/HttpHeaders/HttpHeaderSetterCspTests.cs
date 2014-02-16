@@ -5,6 +5,7 @@ using System.Collections.Specialized;
 using System.Web;
 using Moq;
 using NUnit.Framework;
+using NWebsec.Core.HttpHeaders.Configuration;
 using NWebsec.Csp;
 using NWebsec.HttpHeaders;
 using NWebsec.Modules.Configuration.Csp;
@@ -58,30 +59,6 @@ namespace NWebsec.Tests.Unit.HttpHeaders
         }
 
         [Test]
-        public void AddCspHeaders_DisabledInConfig_RemovesCspHeaders()
-        {
-            _responseHeaders.Add("Content-Security-Policy", "default-src 'self'");
-            _responseHeaders.Add("X-Content-Security-Policy", "default-src 'self'");
-            _responseHeaders.Add("X-WebKit-Csp", "default-src 'self'");
-            var cspConfig = new CspConfigurationElement { Enabled = false, DefaultSrc = { SelfSrc = true } };
-
-            _headerSetter.SetCspHeaders(_mockContext.Object, cspConfig, false);
-
-            Assert.IsEmpty(_responseHeaders);
-        }
-
-        [Test]
-        public void AddCspHeaders_EnabledInConfigAndRedirect_DoesNotAddCspHeader()
-        {
-            var cspConfig = new CspConfigurationElement { Enabled = true, DefaultSrc = { SelfSrc = true } };
-            _mockResponse.Setup(r => r.StatusCode).Returns(302);
-
-            _headerSetter.SetCspHeaders(_mockContext.Object, cspConfig, false);
-
-            Assert.IsEmpty(_responseHeaders);
-        }
-
-        [Test]
         public void AddCspHeaders_EnabledInConfigAndStaticContentHandler_DoesNotAddCspHeader()
         {
             var cspConfig = new CspConfigurationElement { Enabled = true, DefaultSrc = { SelfSrc = true } };
@@ -104,12 +81,9 @@ namespace NWebsec.Tests.Unit.HttpHeaders
         }
 
         [Test]
-        public void AddCspHeaders_DefaultConfig_RemovesCspHeader()
+        public void AddCspHeaders_DisabledInConfig_DoesNotAddCspHeader()
         {
-            _responseHeaders.Add("Content-Security-Policy", "default-src: self");
-            _responseHeaders.Add("X-Content-Security-Policy", "default-src: self");
-            _responseHeaders.Add("X-WebKit-Csp", "default-src: self");
-            var cspConfig = new CspConfigurationElement();
+            var cspConfig = new CspConfiguration { Enabled = false, DefaultSrcDirective = { SelfSrc = true } };
 
             _headerSetter.SetCspHeaders(_mockContext.Object, cspConfig, false);
 
@@ -117,12 +91,9 @@ namespace NWebsec.Tests.Unit.HttpHeaders
         }
 
         [Test]
-        public void AddCspHeaders_EnabledButNoDirectivesOrReportUriEnabled_RemovesCspHeader()
+        public void AddCspHeaders_EnabledButNoDirectivesOrReportUriEnabled_DoesNotAddCspHeader()
         {
-            _responseHeaders.Add("Content-Security-Policy", "default-src: self");
-            _responseHeaders.Add("X-Content-Security-Policy", "default-src: self");
-            _responseHeaders.Add("X-WebKit-Csp", "default-src: self");
-            var cspConfig = new CspConfigurationElement { Enabled = true };
+            var cspConfig = new CspConfiguration { Enabled = true };
 
             _headerSetter.SetCspHeaders(_mockContext.Object, cspConfig, false);
 
@@ -130,12 +101,9 @@ namespace NWebsec.Tests.Unit.HttpHeaders
         }
 
         [Test]
-        public void AddCspHeaders_EnabledButNoDirectivesEnabledAndReportUriEnabled_RemovesCspHeader()
+        public void AddCspHeaders_EnabledButNoDirectivesEnabledAndReportUriEnabled_DoesNotAddCspHeader()
         {
-            _responseHeaders.Add("Content-Security-Policy", "default-src: self");
-            _responseHeaders.Add("X-Content-Security-Policy", "default-src: self");
-            _responseHeaders.Add("X-WebKit-Csp", "default-src: self");
-            var cspConfig = new CspConfigurationElement { Enabled = true };
+            var cspConfig = new CspConfiguration { Enabled = true };
             cspConfig.ReportUriDirective.Enabled = true;
             cspConfig.ReportUriDirective.EnableBuiltinHandler = true;
 
@@ -315,7 +283,7 @@ namespace NWebsec.Tests.Unit.HttpHeaders
             {
                 Enabled = true,
                 DefaultSrc = { SelfSrc = true },
-                ReportUriDirective = { EnableBuiltinHandler = true }
+                ReportUri = { EnableBuiltinHandler = true }
             };
 
             _headerSetter.SetCspHeaders(_mockContext.Object, cspConfig, false);
@@ -333,7 +301,7 @@ namespace NWebsec.Tests.Unit.HttpHeaders
                 Enabled = true,
                 DefaultSrc = { SelfSrc = true }
             };
-            cspConfig.ReportUriDirective.ReportUris.Add(new ReportUriConfigurationElement { ReportUri = new Uri("/CspViolationReported", UriKind.Relative) });
+            cspConfig.ReportUri.ReportUriCollection.Add(new ReportUriConfigurationElement { ReportUri = new Uri("/CspViolationReported", UriKind.Relative) });
 
             _headerSetter.SetCspHeaders(_mockContext.Object, cspConfig, false);
 
@@ -348,9 +316,9 @@ namespace NWebsec.Tests.Unit.HttpHeaders
                                 {
                                     Enabled = true,
                                     DefaultSrc = { SelfSrc = true },
-                                    ReportUriDirective = { EnableBuiltinHandler = true }
+                                    ReportUri = { EnableBuiltinHandler = true }
                                 };
-            cspConfig.ReportUriDirective.ReportUris.Add(new ReportUriConfigurationElement { ReportUri = new Uri("/CspViolationReported", UriKind.Relative) });
+            cspConfig.ReportUri.ReportUriCollection.Add(new ReportUriConfigurationElement { ReportUri = new Uri("/CspViolationReported", UriKind.Relative) });
 
             _headerSetter.SetCspHeaders(_mockContext.Object, cspConfig, false);
 
@@ -361,13 +329,12 @@ namespace NWebsec.Tests.Unit.HttpHeaders
         [Test]
         public void AddCspHeaders_XCspEnabledInConfig_SetsXCspHeader()
         {
-            _responseHeaders.Add("X-Content-Security-Policy", "img-src 'self'");
-            var cspConfig = new CspConfigurationElement
+            var cspConfig = new CspConfiguration
             {
                 Enabled = true,
                 XContentSecurityPolicyHeader = true,
                 XWebKitCspHeader = false,
-                DefaultSrc = { SelfSrc = true }
+                DefaultSrcDirective = { SelfSrc = true }
             };
 
             _headerSetter.SetCspHeaders(_mockContext.Object, cspConfig, false);
@@ -378,13 +345,12 @@ namespace NWebsec.Tests.Unit.HttpHeaders
         [Test]
         public void AddCspHeaders_XWebkitCspEnabledInConfig_AddsXWebkitCspHeader()
         {
-            _responseHeaders.Add("X-WebKit-CSP", "img-src 'self'");
-            var cspConfig = new CspConfigurationElement
+            var cspConfig = new CspConfiguration
             {
                 Enabled = true,
                 XContentSecurityPolicyHeader = false,
                 XWebKitCspHeader = true,
-                DefaultSrc = { SelfSrc = true }
+                DefaultSrcDirective = { SelfSrc = true }
             };
 
             _headerSetter.SetCspHeaders(_mockContext.Object, cspConfig, false);
@@ -397,12 +363,12 @@ namespace NWebsec.Tests.Unit.HttpHeaders
         {
             _mockRequest.Setup(r => r.UserAgent).Returns("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_6_8) AppleWebKit/537.13+ (KHTML, like Gecko) Version/5.1.7 Safari/534.57.2");
 
-            var cspConfig = new CspConfigurationElement
+            var cspConfig = new CspConfiguration
             {
                 Enabled = true,
                 XContentSecurityPolicyHeader = false,
                 XWebKitCspHeader = true,
-                DefaultSrc = { SelfSrc = true }
+                DefaultSrcDirective = { SelfSrc = true }
             };
 
             _headerSetter.SetCspHeaders(_mockContext.Object, cspConfig, false);

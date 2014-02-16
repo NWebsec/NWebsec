@@ -46,10 +46,10 @@ namespace NWebsec.Tests.Unit.HttpHeaders
 
             HeaderHelper.SetContentSecurityPolicyDirectiveOverride(MockContext, HttpHeaderHelper.CspDirectives.DefaultSrc, directive, ReportOnly);
 
-            var overrideElement = HeaderHelper.GetCspElementWithOverrides(MockContext, ReportOnly).DefaultSrc;
+            var overrideElement = HeaderHelper.GetCspElementWithOverrides(MockContext, ReportOnly).DefaultSrcDirective;
             Assert.IsFalse(overrideElement.SelfSrc);
-            Assert.IsTrue(overrideElement.Sources.GetAllKeys().Length == 1);
-            Assert.IsTrue(overrideElement.Sources[0].Source.Equals("*.nwebsec.com"));
+            Assert.IsTrue(overrideElement.CustomSources.Count() == 1);
+            Assert.IsTrue(overrideElement.CustomSources.First().Equals("*.nwebsec.com"));
         }
 
         [Test]
@@ -60,7 +60,7 @@ namespace NWebsec.Tests.Unit.HttpHeaders
             var directive = new CspDirectiveUnsafeInlineUnsafeEvalOverride { UnsafeEval = Source.Enable };
 
             HeaderHelper.SetContentSecurityPolicyDirectiveOverride(MockContext, HttpHeaderHelper.CspDirectives.ScriptSrc, directive, ReportOnly);
-            var overrideElement = HeaderHelper.GetCspElementWithOverrides(MockContext, ReportOnly).ScriptSrc;
+            var overrideElement = HeaderHelper.GetCspElementWithOverrides(MockContext, ReportOnly).ScriptSrcDirective;
 
             Assert.IsTrue(overrideElement.SelfSrc);
             Assert.IsTrue(overrideElement.UnsafeEvalSrc);
@@ -77,11 +77,11 @@ namespace NWebsec.Tests.Unit.HttpHeaders
 
             HeaderHelper.SetContentSecurityPolicyDirectiveOverride(MockContext, HttpHeaderHelper.CspDirectives.DefaultSrc, directive, ReportOnly);
 
-            var overrideElement = HeaderHelper.GetCspElementWithOverrides(MockContext, ReportOnly).DefaultSrc;
+            var overrideElement = HeaderHelper.GetCspElementWithOverrides(MockContext, ReportOnly).DefaultSrcDirective;
             Assert.IsFalse(overrideElement.SelfSrc);
-            Assert.IsTrue(overrideElement.Sources.GetAllKeys().Length == 2);
-            Assert.IsTrue(overrideElement.Sources.OfType<CspSourceConfigurationElement>().Any(elm => elm.Source.Equals("transformtool.codeplex.com")));
-            Assert.IsTrue(overrideElement.Sources.OfType<CspSourceConfigurationElement>().Any(elm => elm.Source.Equals("nwebsec.codeplex.com")));
+            Assert.IsTrue(overrideElement.CustomSources.Count() == 2);
+            Assert.IsTrue(overrideElement.CustomSources.Any(src => src.Equals("transformtool.codeplex.com")));
+            Assert.IsTrue(overrideElement.CustomSources.Any(src => src.Equals("nwebsec.codeplex.com")));
         }
 
         [Test]
@@ -95,8 +95,8 @@ namespace NWebsec.Tests.Unit.HttpHeaders
 
             var overrideElement = HeaderHelper.GetCspElementWithOverrides(MockContext, ReportOnly);
 
-            Assert.IsTrue(overrideElement.DefaultSrc.Sources.GetAllKeys().Length == 1);
-            Assert.IsTrue(overrideElement.DefaultSrc.Sources[0].Source.Equals("nwebsec.codeplex.com"));
+            Assert.IsTrue(overrideElement.DefaultSrcDirective.CustomSources.Count() == 1);
+            Assert.IsTrue(overrideElement.DefaultSrcDirective.CustomSources.First().Equals("nwebsec.codeplex.com"));
         }
 
         [Test]
@@ -108,7 +108,7 @@ namespace NWebsec.Tests.Unit.HttpHeaders
             HeaderHelper.SetContentSecurityPolicyDirectiveOverride(MockContext, HttpHeaderHelper.CspDirectives.DefaultSrc, directive1, ReportOnly);
             HeaderHelper.SetContentSecurityPolicyDirectiveOverride(MockContext, HttpHeaderHelper.CspDirectives.DefaultSrc, directive2, ReportOnly);
 
-            var overrideElement = HeaderHelper.GetCspElementWithOverrides(MockContext, ReportOnly).DefaultSrc;
+            var overrideElement = HeaderHelper.GetCspElementWithOverrides(MockContext, ReportOnly).DefaultSrcDirective;
             Assert.IsFalse(overrideElement.Enabled);
         }
 
@@ -121,7 +121,7 @@ namespace NWebsec.Tests.Unit.HttpHeaders
             HeaderHelper.SetContentSecurityPolicyDirectiveOverride(MockContext, HttpHeaderHelper.CspDirectives.ScriptSrc, directive1, ReportOnly);
             HeaderHelper.SetContentSecurityPolicyDirectiveOverride(MockContext, HttpHeaderHelper.CspDirectives.ScriptSrc, directive2, ReportOnly);
 
-            var overrideElement = HeaderHelper.GetCspElementWithOverrides(MockContext, ReportOnly).ScriptSrc;
+            var overrideElement = HeaderHelper.GetCspElementWithOverrides(MockContext, ReportOnly).ScriptSrcDirective;
             Assert.IsTrue(overrideElement.SelfSrc);
             Assert.IsTrue(overrideElement.UnsafeInlineSrc);
             Assert.IsTrue(overrideElement.UnsafeEvalSrc);
@@ -138,7 +138,7 @@ namespace NWebsec.Tests.Unit.HttpHeaders
 
             var overrideElement = HeaderHelper.GetCspElementWithOverrides(MockContext, ReportOnly);
             Assert.IsTrue(overrideElement.Enabled);
-            Assert.IsTrue(overrideElement.ScriptSrc.SelfSrc);
+            Assert.IsTrue(overrideElement.ScriptSrcDirective.SelfSrc);
         }
 
         [Test]
@@ -152,7 +152,7 @@ namespace NWebsec.Tests.Unit.HttpHeaders
 
             var overrideElement = HeaderHelper.GetCspElementWithOverrides(MockContext, ReportOnly);
             Assert.IsTrue(overrideElement.Enabled);
-            Assert.IsTrue(overrideElement.ScriptSrc.SelfSrc);
+            Assert.IsTrue(overrideElement.ScriptSrcDirective.SelfSrc);
         }
 
         [Test]
@@ -163,7 +163,7 @@ namespace NWebsec.Tests.Unit.HttpHeaders
 
             var overrideElement = HeaderHelper.GetCspElementWithOverrides(MockContext, ReportOnly);
             Assert.IsTrue(overrideElement.Enabled);
-            Assert.IsTrue(overrideElement.DefaultSrc.SelfSrc);
+            Assert.IsTrue(overrideElement.DefaultSrcDirective.SelfSrc);
         }
 
         [Test]
@@ -186,7 +186,7 @@ namespace NWebsec.Tests.Unit.HttpHeaders
         [Test]
         public void GetCspReportUriWithOverrides_BuiltinHandlerConfigured_ReturnsConfiguredBuiltinHandler()
         {
-            CspConfig.ReportUriDirective.EnableBuiltinHandler = true;
+            CspConfig.ReportUri.EnableBuiltinHandler = true;
 
             var overrideElement = HeaderHelper.GetCspReportUriDirectiveWithOverride(MockContext, ReportOnly);
             Assert.IsTrue(overrideElement.EnableBuiltinHandler);
@@ -195,7 +195,7 @@ namespace NWebsec.Tests.Unit.HttpHeaders
         [Test]
         public void GetCspReportUriWithOverrides_ReportUriDisabledAndOverridden_ReturnsOverridenReportUri()
         {
-            CspConfig.ReportUriDirective.Enabled = false;
+            CspConfig.ReportUri.Enabled = false;
             var reportUri = new CspReportUriDirectiveConfigurationElement { Enabled = true, EnableBuiltinHandler = true };
 
             HeaderHelper.SetCspReportUriOverride(MockContext, reportUri, ReportOnly);
@@ -203,62 +203,6 @@ namespace NWebsec.Tests.Unit.HttpHeaders
 
             Assert.IsTrue(overrideElement.Enabled);
             Assert.IsTrue(overrideElement.EnableBuiltinHandler);
-        }
-    }
-
-    [TestFixture]
-    public class HttpHeaderHelperCspTest : HttpHeaderHelperCspTestBase
-    {
-        protected override bool ReportOnly
-        {
-            get { return false; }
-        }
-
-        protected override CspConfigurationElement CspConfig
-        {
-            get { return ConfigSection.SecurityHttpHeaders.Csp; }
-        }
-
-        [Test]
-        public void GetCspHeaderWithOverride_CspEnabledReportOnlyDisabledInConfig_CspEnabledReportOnlyDisabled()
-        {
-            var configSection = new HttpHeaderSecurityConfigurationSection();
-            configSection.SecurityHttpHeaders.Csp.Enabled = true;
-            configSection.SecurityHttpHeaders.CspReportOnly.Enabled = false;
-            HeaderHelper = new HttpHeaderHelper(configSection);
-
-            var cspOverrideElement = HeaderHelper.GetCspHeaderWithOverride(MockContext, false);
-            var cspReportOnlyOverrideElement = HeaderHelper.GetCspHeaderWithOverride(MockContext, true);
-            Assert.IsTrue(cspOverrideElement.Enabled);
-            Assert.IsFalse(cspReportOnlyOverrideElement.Enabled);
-        }
-
-        [Test]
-        public void GetCspHeaderWithOverride_CspDisabledReportOnlyEnabledInConfig_CspDisabledReportOnlyEnabled()
-        {
-            var configSection = new HttpHeaderSecurityConfigurationSection();
-            configSection.SecurityHttpHeaders.Csp.Enabled = false;
-            configSection.SecurityHttpHeaders.CspReportOnly.Enabled = true;
-            HeaderHelper = new HttpHeaderHelper(configSection);
-
-            var cspOverrideElement = HeaderHelper.GetCspHeaderWithOverride(MockContext, false);
-            var cspReportOnlyOverrideElement = HeaderHelper.GetCspHeaderWithOverride(MockContext, true);
-            Assert.IsFalse(cspOverrideElement.Enabled);
-            Assert.IsTrue(cspReportOnlyOverrideElement.Enabled);
-        }
-    }
-
-    [TestFixture]
-    public class HttpHeaderHelperCspReportOnlyTest : HttpHeaderHelperCspTestBase
-    {
-        protected override bool ReportOnly
-        {
-            get { return true; }
-        }
-
-        protected override CspConfigurationElement CspConfig
-        {
-            get { return ConfigSection.SecurityHttpHeaders.CspReportOnly; }
         }
     }
 }

@@ -1,10 +1,14 @@
 ﻿// Copyright (c) André N. Klingsheim. See License.txt in the project root for license information.
 
+using System;
+using System.Collections.Generic;
 using System.Configuration;
+using System.Linq;
+using NWebsec.Core.HttpHeaders.Configuration;
 
 namespace NWebsec.Modules.Configuration.Csp
 {
-    public class CspReportUriDirectiveConfigurationElement : ConfigurationElement
+    public class CspReportUriDirectiveConfigurationElement : ConfigurationElement, ICspReportUriDirective
     {
         [ConfigurationProperty("enabled", IsRequired = false, DefaultValue = true)]
         public bool Enabled
@@ -32,9 +36,14 @@ namespace NWebsec.Modules.Configuration.Csp
             }
         }
 
+        public IEnumerable<string> ReportUris {
+            get { return ReportUriCollection.Cast<ReportUriConfigurationElement>().Select(e => e.ReportUri.ToString()); }
+            set { throw  new NotImplementedException(); }
+        }
+
         [ConfigurationProperty("", IsRequired = false, IsDefaultCollection = true)]
         [ConfigurationCollection(typeof(CspReportUriConfigurationElementCollection), CollectionType = ConfigurationElementCollectionType.AddRemoveClearMap)]
-        public CspReportUriConfigurationElementCollection ReportUris
+        public CspReportUriConfigurationElementCollection ReportUriCollection
         {
             get
             {

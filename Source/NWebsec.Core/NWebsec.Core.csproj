@@ -45,11 +45,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Core\HttpHeaders\Configuration\CspConfiguration.cs" />
+    <Compile Include="Core\HttpHeaders\Configuration\CspDirectiveConfiguration.cs" />
+    <Compile Include="Core\HttpHeaders\Configuration\CspDirectiveUnsafeEvalConfiguration.cs" />
+    <Compile Include="Core\HttpHeaders\Configuration\CspDirectiveUnsafeInlineConfiguration.cs" />
+    <Compile Include="Core\HttpHeaders\Configuration\CspHeaderConfiguration.cs" />
+    <Compile Include="Core\HttpHeaders\Configuration\CspReportUriDirective.cs" />
     <Compile Include="Core\HttpHeaders\Configuration\HstsConfiguration.cs" />
     <Compile Include="Core\HttpHeaders\Configuration\ICspConfiguration.cs" />
-    <Compile Include="Core\HttpHeaders\Configuration\ICspDirective.cs" />
-    <Compile Include="Core\HttpHeaders\Configuration\ICspDirectiveUnsafeEval.cs" />
-    <Compile Include="Core\HttpHeaders\Configuration\ICspDirectiveUnsafeInline.cs" />
+    <Compile Include="Core\HttpHeaders\Configuration\ICspDirectiveConfiguration.cs" />
+    <Compile Include="Core\HttpHeaders\Configuration\ICspDirectiveUnsafeEvalConfiguration.cs" />
+    <Compile Include="Core\HttpHeaders\Configuration\ICspDirectiveUnsafeInlineConfiguration.cs" />
+    <Compile Include="Core\HttpHeaders\Configuration\ICspHeaderConfiguration.cs" />
+    <Compile Include="Core\HttpHeaders\Configuration\ICspReportUriDirective.cs" />
     <Compile Include="Core\HttpHeaders\Configuration\IHstsConfiguration.cs" />
     <Compile Include="Core\HttpHeaders\Configuration\IRedirectValidationConfiguration.cs" />
     <Compile Include="Core\HttpHeaders\Configuration\ISimpleBooleanConfiguration.cs" />

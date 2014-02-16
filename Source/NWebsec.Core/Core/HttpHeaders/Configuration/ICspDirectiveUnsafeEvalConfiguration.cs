@@ -4,7 +4,7 @@ using System.ComponentModel;
 
 namespace NWebsec.Core.HttpHeaders.Configuration
 {
-    public interface ICspDirectiveUnsafeEval : ICspDirectiveUnsafeInline
+    public interface ICspDirectiveUnsafeEvalConfiguration : ICspDirectiveUnsafeInlineConfiguration
     {
         [EditorBrowsable(EditorBrowsableState.Never)]
         bool UnsafeEvalSrc { get; set; }

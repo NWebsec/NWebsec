@@ -2,7 +2,7 @@
 
 namespace NWebsec.Core.HttpHeaders.Configuration
 {
-    public interface ICspDirectiveUnsafeInline : ICspDirective
+    public interface ICspDirectiveUnsafeInlineConfiguration : ICspDirectiveConfiguration
     {
         bool UnsafeInlineSrc { get; set; }
     }

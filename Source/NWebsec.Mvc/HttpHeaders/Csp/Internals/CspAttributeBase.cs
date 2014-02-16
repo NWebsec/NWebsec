@@ -1,7 +1,6 @@
 ﻿// Copyright (c) André N. Klingsheim. See License.txt in the project root for license information.
 
 using System;
-using System.ComponentModel;
 using System.Web.Mvc;
 using NWebsec.HttpHeaders;
 using NWebsec.Modules.Configuration.Csp;
@@ -32,8 +31,6 @@ namespace NWebsec.Mvc.HttpHeaders.Csp.Internals
 
         protected abstract bool ReportOnly { get; }
         
-        [Browsable(false)]
-        [EditorBrowsable(EditorBrowsableState.Never)]
         protected CspAttributeBase()
         {
             Enabled = true;

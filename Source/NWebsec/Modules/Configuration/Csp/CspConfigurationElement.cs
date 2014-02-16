@@ -137,7 +137,7 @@ namespace NWebsec.Modules.Configuration.Csp
         }
 
         [ConfigurationProperty("report-uri", IsRequired = false)]
-        public CspReportUriDirectiveConfigurationElement ReportUriDirective
+        public CspReportUriDirectiveConfigurationElement ReportUri
         {
             get
             {
@@ -149,49 +149,55 @@ namespace NWebsec.Modules.Configuration.Csp
             }
         }
 
-        public ICspDirective DefaultSrcDirective
+        public ICspDirectiveConfiguration DefaultSrcDirective
         {
             get { return DefaultSrc; }
             set { throw new NotImplementedException(); }
         }
-        public ICspDirectiveUnsafeEval ScriptSrcDirective
+        public ICspDirectiveUnsafeEvalConfiguration ScriptSrcDirective
         {
             get { return ScriptSrc; }
             set { throw new NotImplementedException(); }
         }
-        public ICspDirective ObjectSrcDirective
+        public ICspDirectiveConfiguration ObjectSrcDirective
         {
             get { return ObjectSrc; }
             set { throw new NotImplementedException(); }
         }
-        public ICspDirectiveUnsafeInline StyleSrcDirective
+        public ICspDirectiveUnsafeInlineConfiguration StyleSrcDirective
         {
             get { return StyleSrc; }
             set { throw new NotImplementedException(); }
         }
-        public ICspDirective ImgSrcDirective
+        public ICspDirectiveConfiguration ImgSrcDirective
         {
             get { return ImgSrc; }
             set { throw new NotImplementedException(); }
         }
-        public ICspDirective MediaSrcDirective
+        public ICspDirectiveConfiguration MediaSrcDirective
         {
             get { return MediaSrc; }
             set { throw new NotImplementedException(); }
         }
-        public ICspDirective FrameSrcDirective
+        public ICspDirectiveConfiguration FrameSrcDirective
         {
             get { return FrameSrc; }
             set { throw new NotImplementedException(); }
         }
-        public ICspDirective FontSrcDirective
+        public ICspDirectiveConfiguration FontSrcDirective
         {
             get { return FontSrc; }
             set { throw new NotImplementedException(); }
         }
-        public ICspDirective ConnectSrcDirective
+        public ICspDirectiveConfiguration ConnectSrcDirective
         {
             get { return ConnectSrc; }
+            set { throw new NotImplementedException(); }
+        }
+
+        public ICspReportUriDirective ReportUriDirective
+        {
+            get { return ReportUri; }
             set { throw new NotImplementedException(); }
         }
     }

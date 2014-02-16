@@ -7,14 +7,15 @@ namespace NWebsec.Core.HttpHeaders.Configuration
         bool Enabled { get; set; }
         bool XContentSecurityPolicyHeader { get; set; }
         bool XWebKitCspHeader { get; set; }
-        ICspDirective DefaultSrcDirective { get; set; }
-        ICspDirectiveUnsafeEval ScriptSrcDirective { get; set; }
-        ICspDirective ObjectSrcDirective { get; set; }
-        ICspDirectiveUnsafeInline StyleSrcDirective { get; set; }
-        ICspDirective ImgSrcDirective { get; set; }
-        ICspDirective MediaSrcDirective { get; set; }
-        ICspDirective FrameSrcDirective { get; set; }
-        ICspDirective FontSrcDirective { get; set; }
-        ICspDirective ConnectSrcDirective { get; set; }
+        ICspDirectiveConfiguration DefaultSrcDirective { get; set; }
+        ICspDirectiveUnsafeEvalConfiguration ScriptSrcDirective { get; set; }
+        ICspDirectiveConfiguration ObjectSrcDirective { get; set; }
+        ICspDirectiveUnsafeInlineConfiguration StyleSrcDirective { get; set; }
+        ICspDirectiveConfiguration ImgSrcDirective { get; set; }
+        ICspDirectiveConfiguration MediaSrcDirective { get; set; }
+        ICspDirectiveConfiguration FrameSrcDirective { get; set; }
+        ICspDirectiveConfiguration FontSrcDirective { get; set; }
+        ICspDirectiveConfiguration ConnectSrcDirective { get; set; }
+        ICspReportUriDirective ReportUriDirective { get; set; }
     }
 }

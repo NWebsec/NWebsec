@@ -52,16 +52,6 @@ namespace NWebsec.Tests.Unit.HttpHeaders
         }
 
         [Test]
-        public void GetHstsWithOverride_ConfigOverriden_ReturnsOverrideElement()
-        {
-            var configOverride = new HstsConfigurationElement { MaxAge = new TimeSpan(1, 0, 0) };
-
-            _headerHelper.SetHstsOverride(_mockContext, configOverride);
-
-            Assert.AreSame(configOverride, _headerHelper.GetHstsWithOverride(_mockContext));
-        }
-
-        [Test]
         public void GetXContentTypeOptionsWithOverride_ConfigOverriden_ReturnsOverrideElement()
         {
             var configOverride = new SimpleBooleanConfigurationElement { Enabled = true };
