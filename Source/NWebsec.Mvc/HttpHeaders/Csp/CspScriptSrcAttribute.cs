@@ -2,6 +2,7 @@
 
 using NWebsec.Csp;
 using NWebsec.HttpHeaders;
+using NWebsec.Mvc.HttpHeaders.Csp.Internals;
 
 namespace NWebsec.Mvc.HttpHeaders.Csp
 {

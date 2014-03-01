@@ -5,7 +5,7 @@ using System.Web.Mvc;
 using NWebsec.Csp;
 using NWebsec.HttpHeaders;
 
-namespace NWebsec.Mvc.HttpHeaders.Csp
+namespace NWebsec.Mvc.HttpHeaders.Csp.Internals
 {
     /// <summary>
     /// This is a base class which should not be used directly.

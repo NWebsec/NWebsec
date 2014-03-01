@@ -5,7 +5,7 @@ using System.Web.Mvc;
 using NWebsec.HttpHeaders;
 using NWebsec.Modules.Configuration.Csp;
 
-namespace NWebsec.Mvc.HttpHeaders.Csp
+namespace NWebsec.Mvc.HttpHeaders.Csp.Internals
 {
     /// <summary>
     /// This class is abstract and cannot be used directly.

@@ -1,6 +1,7 @@
 ﻿// Copyright (c) André N. Klingsheim. See License.txt in the project root for license information.
 
 using NWebsec.HttpHeaders;
+using NWebsec.Mvc.HttpHeaders.Csp.Internals;
 
 namespace NWebsec.Mvc.HttpHeaders.Csp
 {

@@ -95,7 +95,7 @@
     <Compile Include="HttpHeaders\Csp\CspConnectSrcReportOnlyAttribute.cs" />
     <Compile Include="HttpHeaders\Csp\CspDefaultSrcAttribute.cs" />
     <Compile Include="HttpHeaders\Csp\CspDefaultSrcReportOnlyAttribute.cs" />
-    <Compile Include="HttpHeaders\Csp\CspDirectiveAttributeBase.cs" />
+    <Compile Include="HttpHeaders\Csp\Internals\CspDirectiveAttributeBase.cs" />
     <Compile Include="HttpHeaders\Csp\CspFontSrcAttribute.cs" />
     <Compile Include="HttpHeaders\Csp\CspFontSrcReportOnlyAttribute.cs" />
     <Compile Include="HttpHeaders\Csp\CspFrameSrcAttribute.cs" />
@@ -108,12 +108,13 @@
     <Compile Include="HttpHeaders\Csp\CspObjectSrcReportOnlyAttribute.cs" />
     <Compile Include="HttpHeaders\Csp\CspReportOnlyAttribute.cs" />
     <Compile Include="HttpHeaders\Csp\CspReportUriAttribute.cs" />
-    <Compile Include="HttpHeaders\Csp\CspReportUriAttributeBase.cs" />
+    <Compile Include="HttpHeaders\Csp\Internals\CspReportUriAttributeBase.cs" />
     <Compile Include="HttpHeaders\Csp\CspReportUriReportOnlyAttribute.cs" />
     <Compile Include="HttpHeaders\Csp\CspScriptSrcAttribute.cs" />
     <Compile Include="HttpHeaders\Csp\CspScriptSrcReportOnlyAttribute.cs" />
     <Compile Include="HttpHeaders\Csp\CspStyleSrcAttribute.cs" />
     <Compile Include="HttpHeaders\Csp\CspStyleSrcReportOnlyAttribute.cs" />
+    <Compile Include="HttpHeaders\Internals\HttpHeaderAttribute.cs" />
     <Compile Include="HttpHeaders\SetNoCacheHttpHeadersAttribute.cs" />
     <Compile Include="HttpHeaders\StrictTransportSecurityAttribute.cs" />
     <Compile Include="HttpHeaders\SuppressVersionHttpHeadersAttribute.cs" />
