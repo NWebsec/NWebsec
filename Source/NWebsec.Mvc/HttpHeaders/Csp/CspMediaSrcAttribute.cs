@@ -10,9 +10,9 @@ namespace NWebsec.Mvc.HttpHeaders.Csp
     /// </summary>
     public class CspMediaSrcAttribute : CspDirectiveAttributeBase
     {
-        protected override HttpHeaderHelper.CspDirectives Directive
+        protected override HttpHeaderConfigurationHelper.CspDirectives Directive
         {
-            get { return HttpHeaderHelper.CspDirectives.MediaSrc; }
+            get { return HttpHeaderConfigurationHelper.CspDirectives.MediaSrc; }
         }
 
         protected override bool ReportOnly

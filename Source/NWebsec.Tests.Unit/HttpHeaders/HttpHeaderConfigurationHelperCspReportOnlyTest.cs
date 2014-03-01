@@ -6,7 +6,7 @@ using NWebsec.Modules.Configuration.Csp;
 namespace NWebsec.Tests.Unit.HttpHeaders
 {
     [TestFixture]
-    public class HttpHeaderHelperCspReportOnlyTest : HttpHeaderHelperCspTestBase
+    public class HttpHeaderConfigurationHelperCspReportOnlyTest : HttpHeaderConfigurationHelperCspTestBase
     {
         protected override bool ReportOnly
         {

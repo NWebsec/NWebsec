@@ -13,7 +13,7 @@ namespace NWebsec.Mvc.HttpHeaders
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, Inherited = true, AllowMultiple = false)]
     public class XXssProtectionAttribute : ActionFilterAttribute
     {
-        private readonly HttpHeaderHelper _headerHelper;
+        private readonly HttpHeaderConfigurationHelper _headerConfigurationHelper;
 
         /// <summary>
         /// Gets or sets whether the X-Xss-Protection security header should be set in the HTTP response.
@@ -34,12 +34,12 @@ namespace NWebsec.Mvc.HttpHeaders
         {
             Policy = XXssProtectionPolicy.FilterEnabled;
             BlockMode = true;
-            _headerHelper = new HttpHeaderHelper();
+            _headerConfigurationHelper = new HttpHeaderConfigurationHelper();
         }
 
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
-            _headerHelper.SetXXssProtectionOverride(filterContext.HttpContext, new XXssProtectionConfigurationElement { Policy = Policy, BlockMode = BlockMode });
+            _headerConfigurationHelper.SetXXssProtectionOverride(filterContext.HttpContext, new XXssProtectionConfigurationElement { Policy = Policy, BlockMode = BlockMode });
             base.OnActionExecuting(filterContext);
         }
     }

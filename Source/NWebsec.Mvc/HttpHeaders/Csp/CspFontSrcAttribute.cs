@@ -10,9 +10,9 @@ namespace NWebsec.Mvc.HttpHeaders.Csp
     /// </summary>
     public class CspFontSrcAttribute : CspDirectiveAttributeBase
     {
-        protected override HttpHeaderHelper.CspDirectives Directive
+        protected override HttpHeaderConfigurationHelper.CspDirectives Directive
         {
-            get { return HttpHeaderHelper.CspDirectives.FontSrc; }
+            get { return HttpHeaderConfigurationHelper.CspDirectives.FontSrc; }
         }
 
         protected override bool ReportOnly

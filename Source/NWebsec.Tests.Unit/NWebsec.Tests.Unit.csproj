@@ -75,10 +75,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Csp\CspReportHelperTests.cs" />
-    <Compile Include="HttpHeaders\HttpHeaderHelperCspReportOnlyTest.cs" />
-    <Compile Include="HttpHeaders\HttpHeaderHelperCspTest.cs" />
-    <Compile Include="HttpHeaders\HttpHeaderHelperCspTestBase.cs" />
-    <Compile Include="HttpHeaders\HttpHeaderHelperTests.cs" />
+    <Compile Include="HttpHeaders\HttpHeaderConfigurationHelperCspReportOnlyTest.cs" />
+    <Compile Include="HttpHeaders\HttpHeaderConfigurationHelperCspTest.cs" />
+    <Compile Include="HttpHeaders\HttpHeaderConfigurationHelperCspTestBase.cs" />
+    <Compile Include="HttpHeaders\HttpHeaderConfigurationHelperTests.cs" />
     <Compile Include="HttpHeaders\HttpHeaderSetterCspTests.cs" />
     <Compile Include="HttpHeaders\HttpHeaderSetterTests.cs" />
     <Compile Include="HttpHeaders\RedirectValidationHelperTests.cs" />

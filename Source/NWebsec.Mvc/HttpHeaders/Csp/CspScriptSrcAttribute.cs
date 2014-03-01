@@ -20,9 +20,9 @@ namespace NWebsec.Mvc.HttpHeaders.Csp
         /// </summary>
         public Source UnsafeEval { get; set; }
 
-        protected override HttpHeaderHelper.CspDirectives Directive
+        protected override HttpHeaderConfigurationHelper.CspDirectives Directive
         {
-            get { return HttpHeaderHelper.CspDirectives.ScriptSrc; }
+            get { return HttpHeaderConfigurationHelper.CspDirectives.ScriptSrc; }
         }
 
         protected override bool ReportOnly

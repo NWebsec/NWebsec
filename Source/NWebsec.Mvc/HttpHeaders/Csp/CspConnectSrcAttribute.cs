@@ -10,9 +10,9 @@ namespace NWebsec.Mvc.HttpHeaders.Csp
     /// </summary>
     public class CspConnectSrcAttribute : CspDirectiveAttributeBase
     {
-        protected override HttpHeaderHelper.CspDirectives Directive
+        protected override HttpHeaderConfigurationHelper.CspDirectives Directive
         {
-            get { return HttpHeaderHelper.CspDirectives.ConnectSrc; }
+            get { return HttpHeaderConfigurationHelper.CspDirectives.ConnectSrc; }
         }
 
         protected override bool ReportOnly

@@ -13,7 +13,7 @@ namespace NWebsec.Mvc.HttpHeaders.Csp.Internals
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, Inherited = true, AllowMultiple = true)]
     public abstract class CspDirectiveAttributeBase : ActionFilterAttribute
     {
-        private readonly HttpHeaderHelper _headerHelper;
+        private readonly HttpHeaderConfigurationHelper _headerConfigurationHelper;
 
         /// <summary>
         /// Gets or sets whether the CSP directive is enabled in the CSP header. The default is true.
@@ -38,7 +38,7 @@ namespace NWebsec.Mvc.HttpHeaders.Csp.Internals
         /// </summary>
         public string CustomSources { get; set; }
 
-        protected abstract HttpHeaderHelper.CspDirectives Directive { get; }
+        protected abstract HttpHeaderConfigurationHelper.CspDirectives Directive { get; }
         protected abstract bool ReportOnly { get; }
 
         protected CspDirectiveAttributeBase()
@@ -47,7 +47,7 @@ namespace NWebsec.Mvc.HttpHeaders.Csp.Internals
             None = Source.Inherit;
             Self = Source.Inherit;
             InheritCustomSources = true;
-            _headerHelper = new HttpHeaderHelper();
+            _headerConfigurationHelper = new HttpHeaderConfigurationHelper();
 
         }
 
@@ -55,7 +55,7 @@ namespace NWebsec.Mvc.HttpHeaders.Csp.Internals
         {
             ValidateParams();
 
-            _headerHelper.SetContentSecurityPolicyDirectiveOverride(filterContext.HttpContext, Directive, GetCspDirectiveOverride(CustomSources), ReportOnly);
+            _headerConfigurationHelper.SetContentSecurityPolicyDirectiveOverride(filterContext.HttpContext, Directive, GetCspDirectiveOverride(CustomSources), ReportOnly);
 
             base.OnActionExecuting(filterContext);
         }

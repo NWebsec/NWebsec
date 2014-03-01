@@ -10,11 +10,11 @@ namespace NWebsec.HttpHeaders
 {
     internal class CspOverrideHelper
     {
-        internal ICspDirectiveConfiguration GetOverridenCspDirectiveConfig(HttpHeaderHelper.CspDirectives directive, CspDirectiveBaseOverride directiveOverride, ICspDirectiveConfiguration directiveElement)
+        internal ICspDirectiveConfiguration GetOverridenCspDirectiveConfig(HttpHeaderConfigurationHelper.CspDirectives directive, CspDirectiveBaseOverride directiveOverride, ICspDirectiveConfiguration directiveElement)
         {
             switch (directive)
             {
-                case HttpHeaderHelper.CspDirectives.ScriptSrc:
+                case HttpHeaderConfigurationHelper.CspDirectives.ScriptSrc:
                     {
                         var config = (ICspDirectiveUnsafeEvalConfiguration)directiveElement;
                         var theOverride = (CspDirectiveUnsafeInlineUnsafeEvalOverride)directiveOverride;
@@ -26,7 +26,7 @@ namespace NWebsec.HttpHeaders
                             config.UnsafeInlineSrc = theOverride.UnsafeInline == Source.Enable;
                     }
                     break;
-                case HttpHeaderHelper.CspDirectives.StyleSrc:
+                case HttpHeaderConfigurationHelper.CspDirectives.StyleSrc:
                     {
                         var config = (CspDirectiveUnsafeInlineConfigurationElement)directiveElement;
                         var theOverride = (CspDirectiveUnsafeInlineOverride)directiveOverride;

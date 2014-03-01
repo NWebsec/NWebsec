@@ -68,7 +68,7 @@
     <Compile Include="ExtensionMethods\HttpResponseBaseExtensions.cs" />
     <Compile Include="HttpHeaders\ConfigHelper.cs" />
     <Compile Include="HttpHeaders\CspOverrideHelper.cs" />
-    <Compile Include="HttpHeaders\HttpHeaderHelper.cs" />
+    <Compile Include="HttpHeaders\HttpHeaderConfigurationHelper.cs" />
     <Compile Include="HttpHeaders\HttpHeaderSetter.cs" />
     <Compile Include="HttpHeaders\RedirectValidationHelper.cs" />
     <Compile Include="HttpHeaders\HandlerTypeHelper.cs" />

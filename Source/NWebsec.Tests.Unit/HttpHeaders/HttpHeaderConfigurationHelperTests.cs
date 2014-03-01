@@ -12,10 +12,10 @@ using NWebsec.Modules.Configuration;
 namespace NWebsec.Tests.Unit.HttpHeaders
 {
     [TestFixture]
-    public class HttpHeaderHelperTests
+    public class HttpHeaderConfigurationHelperTests
     {
         private HttpContextBase _mockContext;
-        private HttpHeaderHelper _headerHelper;
+        private HttpHeaderConfigurationHelper _headerConfigurationHelper;
 
         [SetUp]
         public void Setup()
@@ -28,7 +28,7 @@ namespace NWebsec.Tests.Unit.HttpHeaders
             mockedContext.Setup(x => x.Items["nwebsecheaderoverride"]).Returns(nwebsecContentItems);
             mockedContext.Setup(x => x.Response).Returns(mockResponse.Object);
             _mockContext = mockedContext.Object;
-            _headerHelper = new HttpHeaderHelper();
+            _headerConfigurationHelper = new HttpHeaderConfigurationHelper();
         }
 
         [Test]
@@ -36,9 +36,9 @@ namespace NWebsec.Tests.Unit.HttpHeaders
         {
             var configOverride = new SimpleBooleanConfigurationElement { Enabled = true };
 
-            _headerHelper.SetXContentTypeOptionsOverride(_mockContext, configOverride);
+            _headerConfigurationHelper.SetXContentTypeOptionsOverride(_mockContext, configOverride);
 
-            Assert.AreSame(configOverride, _headerHelper.GetXContentTypeOptionsWithOverride(_mockContext));
+            Assert.AreSame(configOverride, _headerConfigurationHelper.GetXContentTypeOptionsWithOverride(_mockContext));
         }
 
         [Test]
@@ -46,9 +46,9 @@ namespace NWebsec.Tests.Unit.HttpHeaders
         {
             var configOverride = new XFrameOptionsConfigurationElement { Policy = XFrameOptionsPolicy.Deny };
 
-            _headerHelper.SetXFrameoptionsOverride(_mockContext, configOverride);
+            _headerConfigurationHelper.SetXFrameoptionsOverride(_mockContext, configOverride);
 
-            Assert.AreSame(configOverride, _headerHelper.GetXFrameoptionsWithOverride(_mockContext));
+            Assert.AreSame(configOverride, _headerConfigurationHelper.GetXFrameoptionsWithOverride(_mockContext));
         }
 
         [Test]
@@ -56,9 +56,9 @@ namespace NWebsec.Tests.Unit.HttpHeaders
         {
             var configOverride = new SimpleBooleanConfigurationElement { Enabled = true };
 
-            _headerHelper.SetXContentTypeOptionsOverride(_mockContext, configOverride);
+            _headerConfigurationHelper.SetXContentTypeOptionsOverride(_mockContext, configOverride);
 
-            Assert.AreSame(configOverride, _headerHelper.GetXContentTypeOptionsWithOverride(_mockContext));
+            Assert.AreSame(configOverride, _headerConfigurationHelper.GetXContentTypeOptionsWithOverride(_mockContext));
         }
 
         [Test]
@@ -66,9 +66,9 @@ namespace NWebsec.Tests.Unit.HttpHeaders
         {
             var configOverride = new SimpleBooleanConfigurationElement { Enabled = true };
 
-            _headerHelper.SetXDownloadOptionsOverride(_mockContext, configOverride);
+            _headerConfigurationHelper.SetXDownloadOptionsOverride(_mockContext, configOverride);
 
-            Assert.AreSame(configOverride, _headerHelper.GetXDownloadOptionsWithOverride(_mockContext));
+            Assert.AreSame(configOverride, _headerConfigurationHelper.GetXDownloadOptionsWithOverride(_mockContext));
 
         }
 
@@ -77,9 +77,9 @@ namespace NWebsec.Tests.Unit.HttpHeaders
         {
             var configOverride = new XXssProtectionConfigurationElement { Policy = XXssProtectionPolicy.FilterEnabled };
 
-            _headerHelper.SetXXssProtectionOverride(_mockContext, configOverride);
+            _headerConfigurationHelper.SetXXssProtectionOverride(_mockContext, configOverride);
 
-            Assert.AreSame(configOverride, _headerHelper.GetXXssProtectionWithOverride(_mockContext));
+            Assert.AreSame(configOverride, _headerConfigurationHelper.GetXXssProtectionWithOverride(_mockContext));
         }
 
         [Test]
@@ -87,9 +87,9 @@ namespace NWebsec.Tests.Unit.HttpHeaders
         {
             var configOverride = new XRobotsTagConfigurationElement { Enabled = true, NoIndex = true };
 
-            _headerHelper.SetXRobotsTagHeaderOverride(_mockContext, configOverride);
+            _headerConfigurationHelper.SetXRobotsTagHeaderOverride(_mockContext, configOverride);
 
-            Assert.AreSame(configOverride, _headerHelper.GetXRobotsTagHeaderWithOverride(_mockContext));
+            Assert.AreSame(configOverride, _headerConfigurationHelper.GetXRobotsTagHeaderWithOverride(_mockContext));
         }
     }
 }

@@ -13,7 +13,7 @@ namespace NWebsec.Mvc.HttpHeaders
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, Inherited = true, AllowMultiple = false)]
     public class XDownloadOptionsAttribute : ActionFilterAttribute
     {
-        private readonly HttpHeaderHelper _headerHelper;
+        private readonly HttpHeaderConfigurationHelper _headerConfigurationHelper;
 
         /// <summary>
         /// Gets or sets whether the X-Download-Options security header should be set in the HTTP response. The default is true.
@@ -26,12 +26,12 @@ namespace NWebsec.Mvc.HttpHeaders
         public XDownloadOptionsAttribute()
         {
             Enabled = true;
-            _headerHelper = new HttpHeaderHelper();
+            _headerConfigurationHelper = new HttpHeaderConfigurationHelper();
         }
 
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
-            _headerHelper.SetXDownloadOptionsOverride(filterContext.HttpContext, new SimpleBooleanConfigurationElement { Enabled = Enabled });
+            _headerConfigurationHelper.SetXDownloadOptionsOverride(filterContext.HttpContext, new SimpleBooleanConfigurationElement { Enabled = Enabled });
             base.OnActionExecuting(filterContext);
         }
     }

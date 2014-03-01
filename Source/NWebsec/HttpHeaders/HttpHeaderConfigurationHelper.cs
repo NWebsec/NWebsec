@@ -12,7 +12,7 @@ using NWebsec.Modules.Configuration.Validation;
 
 namespace NWebsec.HttpHeaders
 {
-    public class HttpHeaderHelper
+    public class HttpHeaderConfigurationHelper
     {
         private const string SetNoCacheHeadersKey = "NWebsecSetNoCacheHeaders";
         private const string SetXRobotsTagHeadersKey = "NWebsecSetXRobotsTagHeaders";
@@ -41,14 +41,14 @@ namespace NWebsec.HttpHeaders
 
         private HttpHeaderSecurityConfigurationSection BaseConfig { get { return _mockConfig ?? ConfigHelper.GetConfig(); } }
 
-        public HttpHeaderHelper(bool overrideHeaders=true)
+        public HttpHeaderConfigurationHelper(bool overrideHeaders=true)
         {
             _headerSetter = new HttpHeaderSetter(overrideHeaders);
             _cspHelper = new CspOverrideHelper();
             _xRobotsValidator = new XRobotsTagValidator();
         }
 
-        internal HttpHeaderHelper(HttpHeaderSecurityConfigurationSection config, bool overrideHeaders=true)
+        internal HttpHeaderConfigurationHelper(HttpHeaderSecurityConfigurationSection config, bool overrideHeaders=true)
         {
             _mockConfig = config;
             _headerSetter = new HttpHeaderSetter(overrideHeaders);
