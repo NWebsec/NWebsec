@@ -5,7 +5,7 @@ using System.Collections.Specialized;
 using System.Web;
 using Moq;
 using NUnit.Framework;
-using NWebsec.HttpHeaders;
+using NWebsec.Helpers;
 using NWebsec.Modules.Configuration;
 
 namespace NWebsec.Tests.Unit.HttpHeaders

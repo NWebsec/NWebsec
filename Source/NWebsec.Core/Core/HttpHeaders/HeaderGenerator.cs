@@ -10,6 +10,81 @@ namespace NWebsec.Core.HttpHeaders
 {
     public class HeaderGenerator
     {
+
+        public HeaderResult GenerateXRobotsTagHeader(IXRobotsTagConfiguration xRobotsTagConfig, IXRobotsTagConfiguration oldXRobotsTagConfig = null)
+        {
+            if (oldXRobotsTagConfig != null && oldXRobotsTagConfig.Enabled && xRobotsTagConfig.Enabled == false)
+            {
+                return new HeaderResult(HeaderResult.ResponseAction.Delete, HeaderConstants.XRobotsTagHeader);
+            }
+
+            if (xRobotsTagConfig.Enabled == false)
+            {
+                return null;
+            }
+
+            var sb = new StringBuilder();
+            sb.Append(xRobotsTagConfig.NoIndex ? "noindex, " : String.Empty);
+            sb.Append(xRobotsTagConfig.NoFollow ? "nofollow, " : String.Empty);
+            sb.Append(xRobotsTagConfig.NoSnippet && !xRobotsTagConfig.NoIndex ? "nosnippet, " : String.Empty);
+            sb.Append(xRobotsTagConfig.NoArchive && !xRobotsTagConfig.NoIndex ? "noarchive, " : String.Empty);
+            sb.Append(xRobotsTagConfig.NoOdp && !xRobotsTagConfig.NoIndex ? "noodp, " : String.Empty);
+            sb.Append(xRobotsTagConfig.NoTranslate && !xRobotsTagConfig.NoIndex ? "notranslate, " : String.Empty);
+            sb.Append(xRobotsTagConfig.NoImageIndex ? "noimageindex" : String.Empty);
+            var value = sb.ToString().TrimEnd(new[] { ' ', ',' });
+
+            if (value.Length == 0) return null;
+
+            return new HeaderResult(HeaderResult.ResponseAction.Set, HeaderConstants.XRobotsTagHeader, value);
+        }
+
+        public HeaderResult GenerateHstsHeader(IHstsConfiguration hstsConfig)
+        {
+
+            var seconds = (int)hstsConfig.MaxAge.TotalSeconds;
+
+            if (seconds == 0) return null;
+
+            var includeSubdomains = (hstsConfig.IncludeSubdomains ? "; includeSubDomains" : "");
+            var value = String.Format("max-age={0}{1}", seconds, includeSubdomains);
+
+            return new HeaderResult(HeaderResult.ResponseAction.Set, HeaderConstants.StrictTransportSecurityHeader, value);
+        }
+
+        public HeaderResult GenerateXContentTypeOptionsHeader(ISimpleBooleanConfiguration xContentTypeOptionsConfig, ISimpleBooleanConfiguration oldXContentTypeOptionsConfig = null)
+        {
+            return xContentTypeOptionsConfig.Enabled ? new HeaderResult(HeaderResult.ResponseAction.Set, HeaderConstants.XContentTypeOptionsHeader, "nosniff") : null;
+        }
+
+        public HeaderResult GenerateXDownloadOptionsHeader(ISimpleBooleanConfiguration xDownloadOptionsConfig, ISimpleBooleanConfiguration oldXDownloadOptionsConfig = null)
+        {
+            return xDownloadOptionsConfig.Enabled ? new HeaderResult(HeaderResult.ResponseAction.Set, HeaderConstants.XDownloadOptionsHeader, "noopen") : null;
+        }
+
+        public HeaderResult GenerateXXssProtectionHeader(IXXssProtectionConfiguration xXssProtectionConfig, IXXssProtectionConfiguration oldXXssProtectionConfig = null)
+        {
+            string value;
+            switch (xXssProtectionConfig.Policy)
+            {
+                case XXssProtectionPolicy.Disabled:
+                    return null;
+
+                case XXssProtectionPolicy.FilterDisabled:
+                    value = "0";
+                    break;
+
+                case XXssProtectionPolicy.FilterEnabled:
+                    value = (xXssProtectionConfig.BlockMode ? "1; mode=block" : "1");
+                    break;
+
+                default:
+                    throw new NotImplementedException("Somebody apparently forgot to implement support for: " + xXssProtectionConfig.Policy);
+
+            }
+
+            return new HeaderResult(HeaderResult.ResponseAction.Set, HeaderConstants.XXssProtectionHeader, value);
+        }
+
         public HeaderResult GenerateXfoHeader(IXFrameOptionsConfiguration xfoConfig, IXFrameOptionsConfiguration oldXfoConfig = null)
         {
 
@@ -54,7 +129,7 @@ namespace NWebsec.Core.HttpHeaders
             }
 
             var headerResults = new List<HeaderResult>();
-            
+
             var cspHeader = new HeaderResult(HeaderResult.ResponseAction.Set,
                 (reportOnly ? HeaderConstants.ContentSecurityPolicyReportOnlyHeader : HeaderConstants.ContentSecurityPolicyHeader), headerValue);
 
@@ -70,8 +145,8 @@ namespace NWebsec.Core.HttpHeaders
 
             if (cspConfig.XWebKitCspHeader)
             {
-                var webkitHeader = new HeaderResult(HeaderResult.ResponseAction.Set, 
-                (reportOnly ? HeaderConstants.XWebKitCspReportOnlyHeader: HeaderConstants.XWebKitCspHeader),headerValue);
+                var webkitHeader = new HeaderResult(HeaderResult.ResponseAction.Set,
+                (reportOnly ? HeaderConstants.XWebKitCspReportOnlyHeader : HeaderConstants.XWebKitCspHeader), headerValue);
 
                 headerResults.Add(webkitHeader);
             }

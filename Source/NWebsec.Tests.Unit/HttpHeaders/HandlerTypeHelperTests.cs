@@ -5,7 +5,7 @@ using System.Web;
 using System.Web.Handlers;
 using Moq;
 using NUnit.Framework;
-using NWebsec.HttpHeaders;
+using NWebsec.Helpers;
 
 namespace NWebsec.Tests.Unit.HttpHeaders
 {

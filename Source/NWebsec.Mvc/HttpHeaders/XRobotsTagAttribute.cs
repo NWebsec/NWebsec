@@ -2,6 +2,7 @@
 
 using System;
 using System.Web.Mvc;
+using NWebsec.Helpers;
 using NWebsec.HttpHeaders;
 using NWebsec.Modules.Configuration;
 
@@ -14,7 +15,7 @@ namespace NWebsec.Mvc.HttpHeaders
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, Inherited = true, AllowMultiple = false)]
     public class XRobotsTagAttribute : ActionFilterAttribute
     {
-        private readonly HttpHeaderConfigurationHelper _headerConfigurationHelper;
+        private readonly HttpHeaderConfigurationOverrideHelper _headerConfigurationOverrideHelper;
 
         /// <summary>
         /// Gets or sets whether the X-Robots-Tag header should be set in the HTTP response. The default is true.
@@ -55,7 +56,7 @@ namespace NWebsec.Mvc.HttpHeaders
         public XRobotsTagAttribute()
         {
             Enabled = true;
-            _headerConfigurationHelper = new HttpHeaderConfigurationHelper();
+            _headerConfigurationOverrideHelper = new HttpHeaderConfigurationOverrideHelper();
         }
 
         public override void OnActionExecuting(ActionExecutingContext filterContext)
@@ -71,7 +72,7 @@ namespace NWebsec.Mvc.HttpHeaders
                                   NoTranslate = NoTranslate,
                                   NoImageIndex = NoImageIndex
                               };
-            _headerConfigurationHelper.SetXRobotsTagHeaderOverride(filterContext.HttpContext, xRobots);
+            _headerConfigurationOverrideHelper.SetXRobotsTagHeaderOverride(filterContext.HttpContext, xRobots);
             base.OnActionExecuting(filterContext);
         }
     }

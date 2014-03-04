@@ -10,6 +10,7 @@ using NWebsec.Owin.Core;
 namespace NWebsec.Owin.Middleware
 {
     using AppFunc = Func<IDictionary<string, object>, Task>;
+
     public class XfoMiddleware : MiddlewareBase
     {
         private readonly HeaderResult _headerResult;

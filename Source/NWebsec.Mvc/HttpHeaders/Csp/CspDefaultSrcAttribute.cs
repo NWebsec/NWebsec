@@ -1,5 +1,6 @@
 ﻿// Copyright (c) André N. Klingsheim. See License.txt in the project root for license information.
 
+using NWebsec.Helpers;
 using NWebsec.HttpHeaders;
 using NWebsec.Mvc.HttpHeaders.Csp.Internals;
 
@@ -10,9 +11,9 @@ namespace NWebsec.Mvc.HttpHeaders.Csp
     /// </summary>
     public class CspDefaultSrcAttribute : CspDirectiveAttributeBase
     {
-        protected override HttpHeaderConfigurationHelper.CspDirectives Directive
+        protected override HttpHeaderConfigurationOverrideHelper.CspDirectives Directive
         {
-            get { return HttpHeaderConfigurationHelper.CspDirectives.DefaultSrc; }
+            get { return HttpHeaderConfigurationOverrideHelper.CspDirectives.DefaultSrc; }
         }
 
         protected override bool ReportOnly

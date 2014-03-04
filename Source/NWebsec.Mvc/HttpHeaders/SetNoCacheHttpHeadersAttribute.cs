@@ -2,6 +2,7 @@
 
 using System;
 using System.Web.Mvc;
+using NWebsec.Helpers;
 using NWebsec.HttpHeaders;
 using NWebsec.Modules.Configuration;
 
@@ -13,7 +14,7 @@ namespace NWebsec.Mvc.HttpHeaders
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, Inherited = true, AllowMultiple = false)]
     public class SetNoCacheHttpHeadersAttribute : ActionFilterAttribute
     {
-        private readonly HttpHeaderConfigurationHelper _headerConfigurationHelper;
+        private readonly HttpHeaderConfigurationOverrideHelper _headerConfigurationOverrideHelper;
 
         /// <summary>
         /// Gets of sets whether cache headers should be included in the response to prevent browser caching. The default is true.
@@ -26,12 +27,12 @@ namespace NWebsec.Mvc.HttpHeaders
         public SetNoCacheHttpHeadersAttribute()
         {
             Enabled = true;
-            _headerConfigurationHelper = new HttpHeaderConfigurationHelper();
+            _headerConfigurationOverrideHelper = new HttpHeaderConfigurationOverrideHelper();
         }
 
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
-            _headerConfigurationHelper.SetNoCacheHeadersOverride(filterContext.HttpContext, new SimpleBooleanConfigurationElement { Enabled = Enabled });
+            _headerConfigurationOverrideHelper.SetNoCacheHeadersOverride(filterContext.HttpContext, new SimpleBooleanConfigurationElement { Enabled = Enabled });
             base.OnActionExecuting(filterContext);
         }
     }

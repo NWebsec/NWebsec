@@ -6,7 +6,7 @@ using System.Web;
 using NWebsec.ExtensionMethods;
 using NWebsec.Modules.Configuration;
 
-namespace NWebsec.HttpHeaders
+namespace NWebsec.Helpers
 {
     internal class RedirectValidationHelper
     {

@@ -2,6 +2,7 @@
 
 using System;
 using System.Web.Mvc;
+using NWebsec.Helpers;
 using NWebsec.HttpHeaders;
 using NWebsec.Modules.Configuration.Csp;
 
@@ -12,7 +13,7 @@ namespace NWebsec.Mvc.HttpHeaders.Csp.Internals
     /// </summary>
     public abstract class CspReportUriAttributeBase : ActionFilterAttribute
     {
-        private readonly HttpHeaderConfigurationHelper _configurationHelper;
+        private readonly HttpHeaderConfigurationOverrideHelper _configurationOverrideHelper;
         /// <summary>
         /// Gets or sets whether the report-uri directive is enabled in the CSP header. The default is true.
         /// </summary>
@@ -31,12 +32,12 @@ namespace NWebsec.Mvc.HttpHeaders.Csp.Internals
         protected CspReportUriAttributeBase()
         {
             Enabled = true;
-            _configurationHelper = new HttpHeaderConfigurationHelper();
+            _configurationOverrideHelper = new HttpHeaderConfigurationOverrideHelper();
         }
 
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
-            _configurationHelper.SetCspReportUriOverride(filterContext.HttpContext, GetCspDirectiveConfig(), ReportOnly);
+            _configurationOverrideHelper.SetCspReportUriOverride(filterContext.HttpContext, GetCspDirectiveConfig(), ReportOnly);
             base.OnActionExecuting(filterContext);
         }
 

@@ -3,6 +3,7 @@
 using System;
 using System.Web.Mvc;
 using NWebsec.Csp;
+using NWebsec.Helpers;
 using NWebsec.HttpHeaders;
 
 namespace NWebsec.Mvc.HttpHeaders.Csp.Internals
@@ -13,7 +14,7 @@ namespace NWebsec.Mvc.HttpHeaders.Csp.Internals
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, Inherited = true, AllowMultiple = true)]
     public abstract class CspDirectiveAttributeBase : ActionFilterAttribute
     {
-        private readonly HttpHeaderConfigurationHelper _headerConfigurationHelper;
+        private readonly HttpHeaderConfigurationOverrideHelper _headerConfigurationOverrideHelper;
 
         /// <summary>
         /// Gets or sets whether the CSP directive is enabled in the CSP header. The default is true.
@@ -38,7 +39,7 @@ namespace NWebsec.Mvc.HttpHeaders.Csp.Internals
         /// </summary>
         public string CustomSources { get; set; }
 
-        protected abstract HttpHeaderConfigurationHelper.CspDirectives Directive { get; }
+        protected abstract HttpHeaderConfigurationOverrideHelper.CspDirectives Directive { get; }
         protected abstract bool ReportOnly { get; }
 
         protected CspDirectiveAttributeBase()
@@ -47,7 +48,7 @@ namespace NWebsec.Mvc.HttpHeaders.Csp.Internals
             None = Source.Inherit;
             Self = Source.Inherit;
             InheritCustomSources = true;
-            _headerConfigurationHelper = new HttpHeaderConfigurationHelper();
+            _headerConfigurationOverrideHelper = new HttpHeaderConfigurationOverrideHelper();
 
         }
 
@@ -55,7 +56,7 @@ namespace NWebsec.Mvc.HttpHeaders.Csp.Internals
         {
             ValidateParams();
 
-            _headerConfigurationHelper.SetContentSecurityPolicyDirectiveOverride(filterContext.HttpContext, Directive, GetCspDirectiveOverride(CustomSources), ReportOnly);
+            _headerConfigurationOverrideHelper.SetContentSecurityPolicyDirectiveOverride(filterContext.HttpContext, Directive, GetCspDirectiveOverride(CustomSources), ReportOnly);
 
             base.OnActionExecuting(filterContext);
         }

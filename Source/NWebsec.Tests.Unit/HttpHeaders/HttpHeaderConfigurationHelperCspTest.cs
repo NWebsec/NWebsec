@@ -2,6 +2,7 @@
 
 using NUnit.Framework;
 using NWebsec.Core.HttpHeaders.Configuration;
+using NWebsec.Helpers;
 using NWebsec.HttpHeaders;
 using NWebsec.Modules.Configuration;
 using NWebsec.Modules.Configuration.Csp;
@@ -27,10 +28,10 @@ namespace NWebsec.Tests.Unit.HttpHeaders
             var configSection = new HttpHeaderSecurityConfigurationSection();
             configSection.SecurityHttpHeaders.Csp.Enabled = true;
             configSection.SecurityHttpHeaders.CspReportOnly.Enabled = false;
-            HeaderConfigurationHelper = new HttpHeaderConfigurationHelper(configSection);
+            HeaderConfigurationOverrideHelper = new HttpHeaderConfigurationOverrideHelper(configSection);
 
-            var cspOverrideElement = HeaderConfigurationHelper.GetCspHeaderWithOverride(MockContext, false);
-            var cspReportOnlyOverrideElement = HeaderConfigurationHelper.GetCspHeaderWithOverride(MockContext, true);
+            var cspOverrideElement = HeaderConfigurationOverrideHelper.GetCspHeaderWithOverride(MockContext, false);
+            var cspReportOnlyOverrideElement = HeaderConfigurationOverrideHelper.GetCspHeaderWithOverride(MockContext, true);
             Assert.IsTrue(cspOverrideElement.Enabled);
             Assert.IsFalse(cspReportOnlyOverrideElement.Enabled);
         }
@@ -41,10 +42,10 @@ namespace NWebsec.Tests.Unit.HttpHeaders
             var configSection = new HttpHeaderSecurityConfigurationSection();
             configSection.SecurityHttpHeaders.Csp.Enabled = false;
             configSection.SecurityHttpHeaders.CspReportOnly.Enabled = true;
-            HeaderConfigurationHelper = new HttpHeaderConfigurationHelper(configSection);
+            HeaderConfigurationOverrideHelper = new HttpHeaderConfigurationOverrideHelper(configSection);
 
-            var cspOverrideElement = HeaderConfigurationHelper.GetCspHeaderWithOverride(MockContext, false);
-            var cspReportOnlyOverrideElement = HeaderConfigurationHelper.GetCspHeaderWithOverride(MockContext, true);
+            var cspOverrideElement = HeaderConfigurationOverrideHelper.GetCspHeaderWithOverride(MockContext, false);
+            var cspReportOnlyOverrideElement = HeaderConfigurationOverrideHelper.GetCspHeaderWithOverride(MockContext, true);
             Assert.IsFalse(cspOverrideElement.Enabled);
             Assert.IsTrue(cspReportOnlyOverrideElement.Enabled);
         }
@@ -56,7 +57,7 @@ namespace NWebsec.Tests.Unit.HttpHeaders
             directive.UnsafeEvalSrc = true;
             directive.UnsafeInlineSrc = false;
             directive.CustomSources = new string[] {};
-                var clone = (ICspDirectiveUnsafeEvalConfiguration)HeaderConfigurationHelper.CloneElement(directive);
+                var clone = (ICspDirectiveUnsafeEvalConfiguration)HeaderConfigurationOverrideHelper.CloneElement(directive);
 
             Assert.IsTrue(clone.UnsafeEvalSrc);
         }
@@ -67,7 +68,7 @@ namespace NWebsec.Tests.Unit.HttpHeaders
             var directive = new CspDirectiveUnsafeInlineConfiguration();
             directive.UnsafeInlineSrc = true;
             directive.CustomSources = new string[] { };
-            var clone = (ICspDirectiveUnsafeInlineConfiguration)HeaderConfigurationHelper.CloneElement(directive);
+            var clone = (ICspDirectiveUnsafeInlineConfiguration)HeaderConfigurationOverrideHelper.CloneElement(directive);
 
             Assert.IsTrue(clone.UnsafeInlineSrc);
         }

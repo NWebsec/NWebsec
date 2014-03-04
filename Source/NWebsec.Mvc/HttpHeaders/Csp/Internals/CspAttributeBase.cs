@@ -2,6 +2,7 @@
 
 using System;
 using System.Web.Mvc;
+using NWebsec.Helpers;
 using NWebsec.HttpHeaders;
 using NWebsec.Modules.Configuration.Csp;
 
@@ -13,7 +14,7 @@ namespace NWebsec.Mvc.HttpHeaders.Csp.Internals
     [AttributeUsage(AttributeTargets.Assembly , Inherited = false)]
     public abstract class CspAttributeBase : ActionFilterAttribute
     {
-        private readonly HttpHeaderConfigurationHelper _headerConfigurationHelper;
+        private readonly HttpHeaderConfigurationOverrideHelper _headerConfigurationOverrideHelper;
         /// <summary>
         /// Gets or sets whether the header is set in the HTTP response. The default is true.
         /// </summary>
@@ -34,7 +35,7 @@ namespace NWebsec.Mvc.HttpHeaders.Csp.Internals
         protected CspAttributeBase()
         {
             Enabled = true;
-            _headerConfigurationHelper = new HttpHeaderConfigurationHelper();
+            _headerConfigurationOverrideHelper = new HttpHeaderConfigurationOverrideHelper();
         }
 
         public override void OnActionExecuting(ActionExecutingContext filterContext)
@@ -48,7 +49,7 @@ namespace NWebsec.Mvc.HttpHeaders.Csp.Internals
 #pragma warning restore 618
                              };
 
-            _headerConfigurationHelper.SetCspHeaderOverride(filterContext.HttpContext, config, ReportOnly);
+            _headerConfigurationOverrideHelper.SetCspHeaderOverride(filterContext.HttpContext, config, ReportOnly);
             base.OnActionExecuting(filterContext);
         }
     }

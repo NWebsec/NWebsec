@@ -1,6 +1,7 @@
 // Copyright (c) André N. Klingsheim. See License.txt in the project root for license information.
 
 using NWebsec.Csp;
+using NWebsec.Helpers;
 using NWebsec.HttpHeaders;
 using NWebsec.Mvc.HttpHeaders.Csp.Internals;
 
@@ -20,9 +21,9 @@ namespace NWebsec.Mvc.HttpHeaders.Csp
         /// </summary>
         public Source UnsafeEval { get; set; }
 
-        protected override HttpHeaderConfigurationHelper.CspDirectives Directive
+        protected override HttpHeaderConfigurationOverrideHelper.CspDirectives Directive
         {
-            get { return HttpHeaderConfigurationHelper.CspDirectives.ScriptSrc; }
+            get { return HttpHeaderConfigurationOverrideHelper.CspDirectives.ScriptSrc; }
         }
 
         protected override bool ReportOnly
