@@ -1,8 +1,7 @@
 // Copyright (c) André N. Klingsheim. See License.txt in the project root for license information.
 
 using NWebsec.Csp;
-using NWebsec.Helpers;
-using NWebsec.HttpHeaders;
+using NWebsec.Mvc.Helpers;
 using NWebsec.Mvc.HttpHeaders.Csp.Internals;
 
 namespace NWebsec.Mvc.HttpHeaders.Csp
@@ -17,9 +16,9 @@ namespace NWebsec.Mvc.HttpHeaders.Csp
         /// </summary>
         public Source UnsafeInline { get; set; }
 
-        protected override HttpHeaderConfigurationOverrideHelper.CspDirectives Directive
+        protected override CspConfigurationOverrideHelper.CspDirectives Directive
         {
-            get { return HttpHeaderConfigurationOverrideHelper.CspDirectives.StyleSrc; }
+            get { return CspConfigurationOverrideHelper.CspDirectives.StyleSrc; }
         }
 
         protected override bool ReportOnly

@@ -3,10 +3,11 @@
 using System;
 using System.Web;
 using NWebsec.Core.HttpHeaders;
+using NWebsec.Core.HttpHeaders.Configuration;
 using NWebsec.Csp;
-using NWebsec.ExtensionMethods;
+using NWebsec.Helpers;
 
-namespace NWebsec.Helpers
+namespace NWebsec.Mvc.Helpers
 {
     public class HttpHeaderOverrideHelper
     {
@@ -14,52 +15,59 @@ namespace NWebsec.Helpers
         private readonly HttpHeaderConfigurationOverrideHelper _headerConfigurationOverrideHelper;
         private readonly IHandlerTypeHelper _handlerHelper;
         private readonly CspReportHelper _reportHelper;
+        private readonly HeaderResultHandler _headerResultHandler;
+        private readonly CspConfigurationOverrideHelper _cspConfigurationOverrideHelper;
+        private readonly ContextHelper _contextHelper;
 
         public HttpHeaderOverrideHelper()
         {
             _headerConfigurationOverrideHelper = new HttpHeaderConfigurationOverrideHelper();
+            _cspConfigurationOverrideHelper = new CspConfigurationOverrideHelper();
             _headerGenerator = new HeaderGenerator();
+            _headerResultHandler = new HeaderResultHandler();
             _handlerHelper = new HandlerTypeHelper();
             _reportHelper = new CspReportHelper();
+            _contextHelper = new ContextHelper();
         }
 
-       
-        internal void SetHstsHeader(HttpContextBase context)
+        internal void SetXRobotsTagHeaderWithOverride(HttpContextBase context)
         {
-            var nwebsecContext = context.GetNWebsecOwinContext() ?? context.GetNWebsecContext();
-            var newConfig = _headerConfigurationOverrideHelper.GetHstsHeaderConfiguration(context);
-            var result = _headerGenerator.GenerateHstsHeader(newConfig);
-            HandleHeaderResult(context.Response, result);
-        }
+            var oldConfig = _contextHelper.GetXRobotsTagConfiguration(context);
+            var config = _headerConfigurationOverrideHelper.GetXRobotsTagWithOverride(context);
 
-        internal void SetXRobotsTagHeader(HttpContextBase context)
-        {
-            var result = _headerGenerator.GenerateXRobotsTagHeader(_headerConfigurationOverrideHelper.GetXRobotsTagWithOverride(context));
-            HandleHeaderResult(context.Response, result);
+            if (config == null)
+            {
+                return;
+            }
+
+            var result = _headerGenerator.GenerateXRobotsTagHeader(config, oldConfig);
+            _headerResultHandler.HandleHeaderResult(context.Response, result);
         }
 
         internal void SetXFrameoptionsHeader(HttpContextBase context)
         {
-            var result = _headerGenerator.GenerateXfoHeader(_headerConfigurationOverrideHelper.GetXFrameoptionsWithOverride(context));
-            HandleHeaderResult(context.Response, result);
+            var oldConfig = _contextHelper.GetXFrameOptionsConfiguration(context);
+            IXFrameOptionsConfiguration xFrameOptionsConfiguration = _headerConfigurationOverrideHelper.GetXFrameoptionsWithOverride(context);
+            var result = _headerGenerator.GenerateXfoHeader(xFrameOptionsConfiguration, oldConfig);
+            _headerResultHandler.HandleHeaderResult(context.Response, result);
         }
 
         internal void SetXContentTypeOptionsHeader(HttpContextBase context)
         {
             var result = _headerGenerator.GenerateXContentTypeOptionsHeader(_headerConfigurationOverrideHelper.GetXContentTypeOptionsWithOverride(context));
-            HandleHeaderResult(context.Response, result);
+            _headerResultHandler.HandleHeaderResult(context.Response, result);
         }
 
         internal void SetXDownloadOptionsHeader(HttpContextBase context)
         {
             var result = _headerGenerator.GenerateXDownloadOptionsHeader(_headerConfigurationOverrideHelper.GetXDownloadOptionsWithOverride(context));
-            HandleHeaderResult(context.Response, result);
+            _headerResultHandler.HandleHeaderResult(context.Response, result);
         }
 
         internal void SetXXssProtectionHeader(HttpContextBase context)
         {
             var result = _headerGenerator.GenerateXXssProtectionHeader(_headerConfigurationOverrideHelper.GetXXssProtectionWithOverride(context));
-            HandleHeaderResult(context.Response, result);
+            _headerResultHandler.HandleHeaderResult(context.Response, result);
         }
 
         public void SetNoCacheHeaders(HttpContextBase context)
@@ -82,8 +90,8 @@ namespace NWebsec.Helpers
 
         internal void SetCspHeaders(HttpContextBase context, bool reportOnly)
         {
-            var cspConfig = _headerConfigurationOverrideHelper.GetCspElementWithOverrides(context, reportOnly);
-            
+            var cspConfig = _cspConfigurationOverrideHelper.GetCspElementWithOverrides(context, reportOnly);
+
             if (_handlerHelper.IsStaticContentHandler(context) ||
                 _handlerHelper.IsUnmanagedHandler(context)) return;
 
@@ -96,30 +104,9 @@ namespace NWebsec.Helpers
 
             var headers = _headerGenerator.CreateCspHeader(cspConfig, reportOnly, _reportHelper.GetBuiltInCspReportHandlerRelativeUri());
 
-            if (headers == null) return;
-
             foreach (var header in headers)
             {
-                HandleHeaderResult(context.Response, header);
-            }
-        }
-
-        private void HandleHeaderResult(HttpResponseBase response, HeaderResult result)
-        {
-            if (result == null)
-            {
-                return;
-            }
-
-            switch (result.Action)
-            {
-                case HeaderResult.ResponseAction.Set:
-                    response.Headers.Set(result.Name, result.Value);
-                    return;
-                case HeaderResult.ResponseAction.Delete:
-                    response.Headers.Remove(result.Name);
-                    return;
-
+                _headerResultHandler.HandleHeaderResult(context.Response, header);
             }
         }
     }

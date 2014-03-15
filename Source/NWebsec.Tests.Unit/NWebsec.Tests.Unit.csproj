@@ -86,7 +86,6 @@
     <Compile Include="Modules\Configuration\Csp\CspSourceValidatorTests.cs" />
     <Compile Include="Modules\Configuration\Csp\ReportUriValidatorTests.cs" />
     <Compile Include="Modules\Configuration\RedirectUriValidatorTests.cs" />
-    <Compile Include="Modules\Configuration\XRobotsTagValidatorTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Modules\Configuration\Csp\CspDirectiveBaseConfigurationElementValidatorTests.cs" />
   </ItemGroup>

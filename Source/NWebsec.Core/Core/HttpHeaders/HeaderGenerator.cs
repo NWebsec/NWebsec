@@ -97,7 +97,7 @@ namespace NWebsec.Core.HttpHeaders
             switch (xfoConfig.Policy)
             {
                 case XFrameOptionsPolicy.Disabled:
-                    return new HeaderResult(HeaderResult.ResponseAction.Noop, HeaderConstants.XFrameOptionsHeader);
+                    return null;
 
                 case XFrameOptionsPolicy.Deny:
                     return new HeaderResult(HeaderResult.ResponseAction.Set, HeaderConstants.XFrameOptionsHeader, "Deny");
@@ -115,43 +115,66 @@ namespace NWebsec.Core.HttpHeaders
             }
         }
 
-        public IEnumerable<HeaderResult> CreateCspHeader(ICspConfiguration cspConfig, bool reportOnly, string builtinReportHandlerUri = null)
+        public IEnumerable<HeaderResult> CreateCspHeader(ICspConfiguration cspConfig, bool reportOnly, string builtinReportHandlerUri = null, ICspConfiguration oldCspConfig = null)
         {
-            if (!cspConfig.Enabled)
-            {
-                return null;
-            }
-
             var headerValue = CreateCspHeaderValue(cspConfig, builtinReportHandlerUri);
-            if (String.IsNullOrEmpty(headerValue))
+
+            if (oldCspConfig != null && oldCspConfig.Enabled)
             {
-                return null;
+                if (!cspConfig.Enabled || String.IsNullOrEmpty(headerValue))
+                {
+                    foreach (var headerRemoveResult in EnabledCspHeaderRemoveResults(oldCspConfig, reportOnly))
+                    {
+                        yield return headerRemoveResult;
+                    }
+
+                    yield break;
+                }
             }
 
-            var headerResults = new List<HeaderResult>();
+            if (!cspConfig.Enabled || String.IsNullOrEmpty(headerValue))
+            {
+                yield break;
+            }
 
-            var cspHeader = new HeaderResult(HeaderResult.ResponseAction.Set,
-                (reportOnly ? HeaderConstants.ContentSecurityPolicyReportOnlyHeader : HeaderConstants.ContentSecurityPolicyHeader), headerValue);
+            yield return new HeaderResult(HeaderResult.ResponseAction.Set, 
+                (reportOnly ? HeaderConstants.ContentSecurityPolicyReportOnlyHeader : HeaderConstants.ContentSecurityPolicyHeader),
+                headerValue);
 
-            headerResults.Add(cspHeader);
 
             if (cspConfig.XContentSecurityPolicyHeader)
             {
-                var xCspHeader = new HeaderResult(HeaderResult.ResponseAction.Set,
-                    (reportOnly ? HeaderConstants.XContentSecurityPolicyReportOnlyHeader : HeaderConstants.XContentSecurityPolicyHeader), headerValue);
-
-                headerResults.Add(xCspHeader);
+                yield return new HeaderResult(HeaderResult.ResponseAction.Set,
+                    (reportOnly ? HeaderConstants.XContentSecurityPolicyReportOnlyHeader : HeaderConstants.XContentSecurityPolicyHeader),
+                    headerValue);
             }
 
             if (cspConfig.XWebKitCspHeader)
             {
-                var webkitHeader = new HeaderResult(HeaderResult.ResponseAction.Set,
-                (reportOnly ? HeaderConstants.XWebKitCspReportOnlyHeader : HeaderConstants.XWebKitCspHeader), headerValue);
+                yield return new HeaderResult(HeaderResult.ResponseAction.Set,
+                (reportOnly ? HeaderConstants.XWebKitCspReportOnlyHeader : HeaderConstants.XWebKitCspHeader),
+                headerValue);
+            }
+        }
 
-                headerResults.Add(webkitHeader);
+        private IEnumerable<HeaderResult> EnabledCspHeaderRemoveResults(ICspConfiguration cspConfig, bool reportOnly)
+        {
+            yield return new HeaderResult(HeaderResult.ResponseAction.Delete, 
+                (reportOnly ? HeaderConstants.ContentSecurityPolicyReportOnlyHeader : HeaderConstants.ContentSecurityPolicyHeader));
+
+
+            if (cspConfig.XContentSecurityPolicyHeader)
+            {
+                yield return new HeaderResult(HeaderResult.ResponseAction.Delete,
+                    (reportOnly ? HeaderConstants.XContentSecurityPolicyReportOnlyHeader : HeaderConstants.XContentSecurityPolicyHeader));
             }
 
-            return headerResults;
+            if (cspConfig.XWebKitCspHeader)
+            {
+                yield return new HeaderResult(HeaderResult.ResponseAction.Delete,
+                (reportOnly ? HeaderConstants.XWebKitCspReportOnlyHeader : HeaderConstants.XWebKitCspHeader));
+
+            }
         }
 
         private string CreateCspHeaderValue(ICspConfiguration config, string builtinReportHandlerUri = null)

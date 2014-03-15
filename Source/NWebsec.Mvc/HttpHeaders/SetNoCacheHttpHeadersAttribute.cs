@@ -2,9 +2,8 @@
 
 using System;
 using System.Web.Mvc;
-using NWebsec.Helpers;
-using NWebsec.HttpHeaders;
 using NWebsec.Modules.Configuration;
+using NWebsec.Mvc.Helpers;
 
 namespace NWebsec.Mvc.HttpHeaders
 {

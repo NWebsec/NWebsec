@@ -3,8 +3,7 @@
 using System;
 using System.Web.Mvc;
 using NWebsec.Csp;
-using NWebsec.Helpers;
-using NWebsec.HttpHeaders;
+using NWebsec.Mvc.Helpers;
 
 namespace NWebsec.Mvc.HttpHeaders.Csp.Internals
 {
@@ -14,7 +13,7 @@ namespace NWebsec.Mvc.HttpHeaders.Csp.Internals
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, Inherited = true, AllowMultiple = true)]
     public abstract class CspDirectiveAttributeBase : ActionFilterAttribute
     {
-        private readonly HttpHeaderConfigurationOverrideHelper _headerConfigurationOverrideHelper;
+        private readonly CspConfigurationOverrideHelper _headerConfigurationOverrideHelper;
 
         /// <summary>
         /// Gets or sets whether the CSP directive is enabled in the CSP header. The default is true.
@@ -39,7 +38,7 @@ namespace NWebsec.Mvc.HttpHeaders.Csp.Internals
         /// </summary>
         public string CustomSources { get; set; }
 
-        protected abstract HttpHeaderConfigurationOverrideHelper.CspDirectives Directive { get; }
+        protected abstract CspConfigurationOverrideHelper.CspDirectives Directive { get; }
         protected abstract bool ReportOnly { get; }
 
         protected CspDirectiveAttributeBase()
@@ -48,7 +47,7 @@ namespace NWebsec.Mvc.HttpHeaders.Csp.Internals
             None = Source.Inherit;
             Self = Source.Inherit;
             InheritCustomSources = true;
-            _headerConfigurationOverrideHelper = new HttpHeaderConfigurationOverrideHelper();
+            _headerConfigurationOverrideHelper = new CspConfigurationOverrideHelper();
 
         }
 

@@ -7,7 +7,7 @@ namespace NWebsec.Helpers
 {
     public class HeaderResultHandler
     {
-        internal void HandleHeaderResult(HttpResponseBase response, HeaderResult result)
+        public void HandleHeaderResult(HttpResponseBase response, HeaderResult result)
         {
             if (result == null)
             {

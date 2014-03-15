@@ -6,11 +6,11 @@ using System.Web;
 
 namespace NWebsec.Csp
 {
-    internal class CspReportHelper
+    public class CspReportHelper
     {
         private readonly ICspReportHandlerPathHelper _pathHelper;
 
-        internal CspReportHelper()
+        public CspReportHelper()
         {
             _pathHelper = new CspReportHandlerPathHelper();
         }
@@ -20,7 +20,7 @@ namespace NWebsec.Csp
             _pathHelper = pathHelper;
         }
 
-        internal string GetBuiltInCspReportHandlerRelativeUri()
+        public string GetBuiltInCspReportHandlerRelativeUri()
         {
             var uri = new UriBuilder {Path = _pathHelper.GetBuiltinCspReportHandlerPath(), Query = "cspReport=true"};
             return uri.Uri.PathAndQuery;

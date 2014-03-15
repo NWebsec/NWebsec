@@ -67,12 +67,8 @@
     <Compile Include="ExtensionMethods\HttpContextBaseExtensions.cs" />
     <Compile Include="ExtensionMethods\HttpResponseBaseExtensions.cs" />
     <Compile Include="Helpers\ConfigHelper.cs" />
-    <Compile Include="Helpers\CspOverrideHelper.cs" />
     <Compile Include="Helpers\HeaderConfigurationHelper.cs" />
     <Compile Include="Helpers\HeaderResultHandler.cs" />
-    <Compile Include="Helpers\HttpHeaderConfigurationOverrideHelper.cs" />
-    <Compile Include="Helpers\HttpHeaderOverrideHelper.cs" />
-    <Compile Include="Helpers\HttpHeaderSetter.cs" />
     <Compile Include="Helpers\RedirectValidationHelper.cs" />
     <Compile Include="Helpers\HandlerTypeHelper.cs" />
     <Compile Include="Modules\Configuration\Csp\CspDirectiveBaseConfigurationElement.cs" />

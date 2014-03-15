@@ -2,9 +2,9 @@
 
 using System;
 using System.Web.Mvc;
-using NWebsec.Helpers;
-using NWebsec.HttpHeaders;
 using NWebsec.Modules.Configuration.Csp;
+using NWebsec.Mvc.Helpers;
+using NWebsec.Mvc.HttpHeaders.Internals;
 
 namespace NWebsec.Mvc.HttpHeaders.Csp.Internals
 {
@@ -12,9 +12,11 @@ namespace NWebsec.Mvc.HttpHeaders.Csp.Internals
     /// This is an abstract class which cannot be used directly.
     /// </summary>
     [AttributeUsage(AttributeTargets.Assembly , Inherited = false)]
-    public abstract class CspAttributeBase : ActionFilterAttribute
+    public abstract class CspAttributeBase : HttpHeaderAttribute
     {
-        private readonly HttpHeaderConfigurationOverrideHelper _headerConfigurationOverrideHelper;
+        private readonly CspConfigurationOverrideHelper _headerConfigurationOverrideHelper;
+        private readonly HttpHeaderOverrideHelper _headerOverrideHelper;
+
         /// <summary>
         /// Gets or sets whether the header is set in the HTTP response. The default is true.
         /// </summary>
@@ -35,7 +37,8 @@ namespace NWebsec.Mvc.HttpHeaders.Csp.Internals
         protected CspAttributeBase()
         {
             Enabled = true;
-            _headerConfigurationOverrideHelper = new HttpHeaderConfigurationOverrideHelper();
+            _headerConfigurationOverrideHelper = new CspConfigurationOverrideHelper();
+            _headerOverrideHelper = new HttpHeaderOverrideHelper();
         }
 
         public override void OnActionExecuting(ActionExecutingContext filterContext)
@@ -51,6 +54,12 @@ namespace NWebsec.Mvc.HttpHeaders.Csp.Internals
 
             _headerConfigurationOverrideHelper.SetCspHeaderOverride(filterContext.HttpContext, config, ReportOnly);
             base.OnActionExecuting(filterContext);
+        }
+
+        protected override void SetHttpHeadersOnActionExecuted(ActionExecutedContext filterContext)
+        {
+            _headerOverrideHelper.SetCspHeaders(filterContext.HttpContext, ReportOnly);
+            base.OnActionExecuted(filterContext);
         }
     }
 }

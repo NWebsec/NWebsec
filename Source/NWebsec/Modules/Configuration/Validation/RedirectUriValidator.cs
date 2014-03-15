@@ -15,15 +15,15 @@ namespace NWebsec.Modules.Configuration.Validation
 
         public override void Validate(object value)
         {
-            var uri = (Uri) value;
+            var uri = (Uri)value;
             if (!uri.IsAbsoluteUri)
             {
-                throw new RedirectValidationConfigurationException("You must specify an absolute URI. Got: " + uri);    
+                throw new RedirectValidationConfigurationException("You must specify an absolute URI. Got: " + uri);
             }
 
-            if (! String.IsNullOrEmpty(uri.Query))
+            if (!String.IsNullOrEmpty(uri.Query))
             {
-                throw new RedirectValidationConfigurationException("You must specify an absolute URI without a query string. Got: " + uri);    
+                throw new RedirectValidationConfigurationException("You must specify an absolute URI without a query string. Got: " + uri);
             }
         }
     }

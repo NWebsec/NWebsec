@@ -1,40 +1,41 @@
 ﻿// Copyright (c) André N. Klingsheim. See License.txt in the project root for license information.
 
+using System;
 using NUnit.Framework;
-using NWebsec.Modules.Configuration;
-using NWebsec.Modules.Configuration.Validation;
+using NWebsec.Core.HttpHeaders.Configuration;
+using NWebsec.Core.HttpHeaders.Configuration.Validation;
 
-namespace NWebsec.Tests.Unit.Modules.Configuration
+namespace NWebsec.Core.Tests.Unit.Core.HttpHeaders.Configuration.Validation
 {
     [TestFixture]
     public class XRobotsTagValidatorTests
     {
-        private XRobotsTagValidator _validator;
+        private XRobotsTagConfigurationValidator _validator;
 
         [SetUp]
         public void Setup()
         {
-            _validator = new XRobotsTagValidator();
+            _validator = new XRobotsTagConfigurationValidator();
         }
 
         [Test]
         public void Validate_HeaderDisabled_NoException()
         {
-            var xRobotsConfig = new XRobotsTagConfigurationElement { Enabled = false };
+            var xRobotsConfig = new XRobotsTagConfiguration { Enabled = false };
             Assert.DoesNotThrow(() => _validator.Validate(xRobotsConfig));
         }
 
         [Test]
         public void Validate_HeaderEnabledWithNoDirectives_ThrowsException()
         {
-            var xRobotsConfig = new XRobotsTagConfigurationElement { Enabled = true };
-            Assert.Throws<XRobotsTagException>(() => _validator.Validate(xRobotsConfig));
+            var xRobotsConfig = new XRobotsTagConfiguration { Enabled = true };
+            Assert.Throws<Exception>(() => _validator.Validate(xRobotsConfig));
         }
 
         [Test]
         public void Validate_HeaderEnabledWithDirectives_NoException()
         {
-            var xRobotsConfig = new XRobotsTagConfigurationElement { Enabled = true, NoIndex = true };
+            var xRobotsConfig = new XRobotsTagConfiguration { Enabled = true, NoIndex = true };
             Assert.DoesNotThrow(() => _validator.Validate(xRobotsConfig));
         }
     }

@@ -2,6 +2,7 @@
 
 using System;
 using System.Configuration;
+using NWebsec.Core.HttpHeaders.Configuration.Validation;
 
 namespace NWebsec.Modules.Configuration.Validation
 {
@@ -16,25 +17,17 @@ namespace NWebsec.Modules.Configuration.Validation
         public override void Validate(object value)
         {
             var xRobotsConfig = (XRobotsTagConfigurationElement)value;
-            if (!xRobotsConfig.Enabled) return;
 
-            if (xRobotsConfig.NoArchive ||
-                xRobotsConfig.NoFollow ||
-                xRobotsConfig.NoImageIndex ||
-                xRobotsConfig.NoIndex ||
-                xRobotsConfig.NoOdp ||
-                xRobotsConfig.NoSnippet ||
-                xRobotsConfig.NoTranslate) return;
-            throw new XRobotsTagException("One or more directives must be enabled when header is enabled. Enable directives or disable header.");
-        }
-    }
+            var validator = new XRobotsTagConfigurationValidator();
 
-    [Serializable]
-    public class XRobotsTagException : ConfigurationErrorsException
-    {
-        public XRobotsTagException(string s)
-            : base(s)
-        {
+            try
+            {
+                validator.Validate(xRobotsConfig);
+            }
+            catch(Exception e)
+            {
+                throw new ConfigurationErrorsException("xRobotsTag configuration error.", e);
+            }
         }
     }
 }

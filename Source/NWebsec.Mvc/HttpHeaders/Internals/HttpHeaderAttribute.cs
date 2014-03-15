@@ -1,12 +1,11 @@
 ﻿// Copyright (c) André N. Klingsheim. See License.txt in the project root for license information.
 
 using System;
-using System.Web;
 using System.Web.Mvc;
 
 namespace NWebsec.Mvc.HttpHeaders.Internals
 {
-    internal abstract class HttpHeaderAttribute : ActionFilterAttribute
+    public abstract class HttpHeaderAttribute : ActionFilterAttribute
     {
         private static readonly Object MarkerObject = new Object();
 
@@ -27,11 +26,11 @@ namespace NWebsec.Mvc.HttpHeaders.Internals
             }
 
             context.Items[_contextKey] = MarkerObject;
-            SetHttpHeaders(context);
+            SetHttpHeadersOnActionExecuted(filterContext);
             base.OnActionExecuted(filterContext);
         }
 
-        protected abstract void SetHttpHeaders(HttpContextBase context);
+        protected abstract void SetHttpHeadersOnActionExecuted(ActionExecutedContext filterContext);
 
     }
 }
