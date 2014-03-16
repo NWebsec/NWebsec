@@ -63,6 +63,11 @@ namespace NWebsec.Core.HttpHeaders
 
         public HeaderResult CreateXDownloadOptionsResult(ISimpleBooleanConfiguration xDownloadOptionsConfig, ISimpleBooleanConfiguration oldXDownloadOptionsConfig = null)
         {
+            if (oldXDownloadOptionsConfig != null && oldXDownloadOptionsConfig.Enabled &&
+                !xDownloadOptionsConfig.Enabled)
+            {
+                return new HeaderResult(HeaderResult.ResponseAction.Remove, HeaderConstants.XDownloadOptionsHeader);
+            }
             return xDownloadOptionsConfig.Enabled ? new HeaderResult(HeaderResult.ResponseAction.Set, HeaderConstants.XDownloadOptionsHeader, "noopen") : null;
         }
 
