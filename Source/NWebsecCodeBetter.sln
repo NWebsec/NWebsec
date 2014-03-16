@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.21005.1
+VisualStudioVersion = 12.0.30110.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{07D0ADD6-1502-453F-8F21-F69748F0D188}"
 	ProjectSection(SolutionItems) = preProject
@@ -9,8 +9,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		nwebsec.vsmdi = nwebsec.vsmdi
 		TraceAndTestImpact.testsettings = TraceAndTestImpact.testsettings
 	EndProjectSection
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NWebsec", "NWebsec\NWebsec.csproj", "{A011D84B-B731-4404-8BC1-FE94D2B37599}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NWebsec.Mvc", "NWebsec.Mvc\NWebsec.Mvc.csproj", "{78FF86A6-C148-4D03-96CF-B429C1A36DA9}"
 EndProject
@@ -20,8 +18,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{F37533
 		.nuget\NuGet.exe = .nuget\NuGet.exe
 		.nuget\NuGet.targets = .nuget\NuGet.targets
 	EndProjectSection
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NWebsec.Tests.Unit", "NWebsec.Tests.Unit\NWebsec.Tests.Unit.csproj", "{2E83CDC3-152A-4139-8B00-0CDECD3F5BDC}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NWebsec.SessionSecurity", "NWebsec.SessionSecurity\NWebsec.SessionSecurity.csproj", "{678B7F4E-2F0C-45B9-8236-4F178BE7C301}"
 EndProject
@@ -35,24 +31,22 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NWebsec.Owin", "NWebsec.Owi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NWebsec.Owin.Tests.Unit", "NWebsec.Owin.Tests.Unit\NWebsec.Owin.Tests.Unit.csproj", "{738F0620-1291-41BC-99F8-DAED551EDEE3}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NWebsec.Classic", "NWebsec\NWebsec.Classic.csproj", "{A011D84B-B731-4404-8BC1-FE94D2B37599}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NWebsec.Classic.Tests.Unit", "NWebsec.Tests.Unit\NWebsec.Classic.Tests.Unit.csproj", "{2E83CDC3-152A-4139-8B00-0CDECD3F5BDC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NWebsec.Mvc.Tests.Unit", "NWebsec.Mvc.Tests.Unit\NWebsec.Mvc.Tests.Unit.csproj", "{BEB101EF-8EB2-4857-84CB-F44118D41ACA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{A011D84B-B731-4404-8BC1-FE94D2B37599}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A011D84B-B731-4404-8BC1-FE94D2B37599}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A011D84B-B731-4404-8BC1-FE94D2B37599}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A011D84B-B731-4404-8BC1-FE94D2B37599}.Release|Any CPU.Build.0 = Release|Any CPU
 		{78FF86A6-C148-4D03-96CF-B429C1A36DA9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{78FF86A6-C148-4D03-96CF-B429C1A36DA9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{78FF86A6-C148-4D03-96CF-B429C1A36DA9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{78FF86A6-C148-4D03-96CF-B429C1A36DA9}.Release|Any CPU.Build.0 = Release|Any CPU
-		{2E83CDC3-152A-4139-8B00-0CDECD3F5BDC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2E83CDC3-152A-4139-8B00-0CDECD3F5BDC}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2E83CDC3-152A-4139-8B00-0CDECD3F5BDC}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2E83CDC3-152A-4139-8B00-0CDECD3F5BDC}.Release|Any CPU.Build.0 = Release|Any CPU
 		{678B7F4E-2F0C-45B9-8236-4F178BE7C301}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{678B7F4E-2F0C-45B9-8236-4F178BE7C301}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{678B7F4E-2F0C-45B9-8236-4F178BE7C301}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -77,6 +71,18 @@ Global
 		{738F0620-1291-41BC-99F8-DAED551EDEE3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{738F0620-1291-41BC-99F8-DAED551EDEE3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{738F0620-1291-41BC-99F8-DAED551EDEE3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A011D84B-B731-4404-8BC1-FE94D2B37599}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A011D84B-B731-4404-8BC1-FE94D2B37599}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A011D84B-B731-4404-8BC1-FE94D2B37599}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A011D84B-B731-4404-8BC1-FE94D2B37599}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2E83CDC3-152A-4139-8B00-0CDECD3F5BDC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2E83CDC3-152A-4139-8B00-0CDECD3F5BDC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2E83CDC3-152A-4139-8B00-0CDECD3F5BDC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2E83CDC3-152A-4139-8B00-0CDECD3F5BDC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BEB101EF-8EB2-4857-84CB-F44118D41ACA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BEB101EF-8EB2-4857-84CB-F44118D41ACA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BEB101EF-8EB2-4857-84CB-F44118D41ACA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BEB101EF-8EB2-4857-84CB-F44118D41ACA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
