@@ -19,7 +19,7 @@ namespace NWebsec.Helpers
                 case HeaderResult.ResponseAction.Set:
                     response.Headers.Set(result.Name, result.Value);
                     return;
-                case HeaderResult.ResponseAction.Delete:
+                case HeaderResult.ResponseAction.Remove:
                     response.Headers.Remove(result.Name);
                     return;
 

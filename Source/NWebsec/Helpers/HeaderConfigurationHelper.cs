@@ -57,42 +57,42 @@ namespace NWebsec.Helpers
         internal void SetHstsHeader(HttpResponseBase response, NWebsecContext nwebsecContext)
         {
             nwebsecContext.Hsts = WebConfig.SecurityHttpHeaders.Hsts;
-            var result = _headerGenerator.GenerateHstsHeader(WebConfig.SecurityHttpHeaders.Hsts);
+            var result = _headerGenerator.CreateHstsResult(WebConfig.SecurityHttpHeaders.Hsts);
             _headerResultHandler.HandleHeaderResult(response, result);
         }
 
         internal void SetXRobotsTagHeader(HttpResponseBase response, NWebsecContext nwebsecContext)
         {
             nwebsecContext.XRobotsTag = WebConfig.XRobotsTag;
-            var result = _headerGenerator.GenerateXRobotsTagHeader(WebConfig.XRobotsTag);
+            var result = _headerGenerator.CreateXRobotsTagResult(WebConfig.XRobotsTag);
             _headerResultHandler.HandleHeaderResult(response, result);
         }
 
         internal void SetXFrameoptionsHeader(HttpResponseBase response, NWebsecContext nwebsecContext)
         {
             nwebsecContext.XFrameOptions = WebConfig.SecurityHttpHeaders.XFrameOptions;
-            var result = _headerGenerator.GenerateXfoHeader(WebConfig.SecurityHttpHeaders.XFrameOptions);
+            var result = _headerGenerator.CreateXfoResult(WebConfig.SecurityHttpHeaders.XFrameOptions);
             _headerResultHandler.HandleHeaderResult(response, result);
         }
 
         internal void SetXContentTypeOptionsHeader(HttpResponseBase response, NWebsecContext nwebsecContext)
         {
             nwebsecContext.XContentTypeOptions = WebConfig.SecurityHttpHeaders.XContentTypeOptions;
-            var result = _headerGenerator.GenerateXContentTypeOptionsHeader(WebConfig.SecurityHttpHeaders.XContentTypeOptions);
+            var result = _headerGenerator.CreateXContentTypeOptionsResult(WebConfig.SecurityHttpHeaders.XContentTypeOptions);
             _headerResultHandler.HandleHeaderResult(response, result);
         }
 
         internal void SetXDownloadOptionsHeader(HttpResponseBase response, NWebsecContext nwebsecContext)
         {
             nwebsecContext.XDownloadOptions = WebConfig.SecurityHttpHeaders.XDownloadOptions;
-            var result = _headerGenerator.GenerateXDownloadOptionsHeader(WebConfig.SecurityHttpHeaders.XDownloadOptions);
+            var result = _headerGenerator.CreateXDownloadOptionsResult(WebConfig.SecurityHttpHeaders.XDownloadOptions);
             _headerResultHandler.HandleHeaderResult(response, result);
         }
 
         internal void SetXXssProtectionHeader(HttpResponseBase response, NWebsecContext nwebsecContext)
         {
             nwebsecContext.XXssProtection = WebConfig.SecurityHttpHeaders.XXssProtection;
-            var result = _headerGenerator.GenerateXXssProtectionHeader(WebConfig.SecurityHttpHeaders.XXssProtection);
+            var result = _headerGenerator.CreateXXssProtectionResult(WebConfig.SecurityHttpHeaders.XXssProtection);
             _headerResultHandler.HandleHeaderResult(response, result);
         }
 
@@ -135,9 +135,7 @@ namespace NWebsec.Helpers
                 return;
             }
 
-            var headerResults = _headerGenerator.CreateCspHeader(cspConfig, reportOnly, _reportHelper.GetBuiltInCspReportHandlerRelativeUri());
-
-            if (headerResults == null) return;
+            var headerResults = _headerGenerator.CreateCspResults(cspConfig, reportOnly, _reportHelper.GetBuiltInCspReportHandlerRelativeUri());
 
             foreach (var result in headerResults)
             {

@@ -40,7 +40,7 @@ namespace NWebsec.Mvc.Helpers
                 return;
             }
 
-            var result = _headerGenerator.GenerateXRobotsTagHeader(config, oldConfig);
+            var result = _headerGenerator.CreateXRobotsTagResult(config, oldConfig);
             _headerResultHandler.HandleHeaderResult(context.Response, result);
         }
 
@@ -48,25 +48,25 @@ namespace NWebsec.Mvc.Helpers
         {
             var oldConfig = _contextHelper.GetXFrameOptionsConfiguration(context);
             IXFrameOptionsConfiguration xFrameOptionsConfiguration = _headerConfigurationOverrideHelper.GetXFrameoptionsWithOverride(context);
-            var result = _headerGenerator.GenerateXfoHeader(xFrameOptionsConfiguration, oldConfig);
+            var result = _headerGenerator.CreateXfoResult(xFrameOptionsConfiguration, oldConfig);
             _headerResultHandler.HandleHeaderResult(context.Response, result);
         }
 
         internal void SetXContentTypeOptionsHeader(HttpContextBase context)
         {
-            var result = _headerGenerator.GenerateXContentTypeOptionsHeader(_headerConfigurationOverrideHelper.GetXContentTypeOptionsWithOverride(context));
+            var result = _headerGenerator.CreateXContentTypeOptionsResult(_headerConfigurationOverrideHelper.GetXContentTypeOptionsWithOverride(context));
             _headerResultHandler.HandleHeaderResult(context.Response, result);
         }
 
         internal void SetXDownloadOptionsHeader(HttpContextBase context)
         {
-            var result = _headerGenerator.GenerateXDownloadOptionsHeader(_headerConfigurationOverrideHelper.GetXDownloadOptionsWithOverride(context));
+            var result = _headerGenerator.CreateXDownloadOptionsResult(_headerConfigurationOverrideHelper.GetXDownloadOptionsWithOverride(context));
             _headerResultHandler.HandleHeaderResult(context.Response, result);
         }
 
         internal void SetXXssProtectionHeader(HttpContextBase context)
         {
-            var result = _headerGenerator.GenerateXXssProtectionHeader(_headerConfigurationOverrideHelper.GetXXssProtectionWithOverride(context));
+            var result = _headerGenerator.CreateXXssProtectionResult(_headerConfigurationOverrideHelper.GetXXssProtectionWithOverride(context));
             _headerResultHandler.HandleHeaderResult(context.Response, result);
         }
 
@@ -102,7 +102,7 @@ namespace NWebsec.Mvc.Helpers
                 return;
             }
 
-            var headers = _headerGenerator.CreateCspHeader(cspConfig, reportOnly, _reportHelper.GetBuiltInCspReportHandlerRelativeUri());
+            var headers = _headerGenerator.CreateCspResults(cspConfig, reportOnly, _reportHelper.GetBuiltInCspReportHandlerRelativeUri());
 
             foreach (var header in headers)
             {

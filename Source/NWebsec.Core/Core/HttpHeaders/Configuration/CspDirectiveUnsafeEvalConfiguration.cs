@@ -6,6 +6,11 @@ namespace NWebsec.Core.HttpHeaders.Configuration
 {
     public class CspDirectiveUnsafeEvalConfiguration : ICspDirectiveUnsafeEvalConfiguration
     {
+        public CspDirectiveUnsafeEvalConfiguration()
+        {
+            Enabled = true;
+        }
+
         public bool Enabled { get; set; }
         public bool NoneSrc { get; set; }
         public bool SelfSrc { get; set; }

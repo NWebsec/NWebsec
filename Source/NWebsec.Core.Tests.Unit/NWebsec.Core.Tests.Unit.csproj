@@ -45,9 +45,17 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Core\HttpHeaders\Configuration\Validation\XRobotsTagValidatorTests.cs" />
+    <Compile Include="Core\HttpHeaders\HeaderGeneratorCspTestsBase.cs" />
+    <Compile Include="Core\HttpHeaders\HeaderGeneratorTests.XRobots.cs" />
+    <Compile Include="Core\HttpHeaders\HeaderGeneratorTests.Xfo.cs" />
+    <Compile Include="Core\HttpHeaders\HeaderGeneratorTests.Hsts.cs" />
+    <Compile Include="Core\HttpHeaders\HeaderGeneratorTests.XContentTypeOptions.cs" />
+    <Compile Include="Core\HttpHeaders\HeaderGeneratorTests.XDownloadOptions.cs" />
+    <Compile Include="Core\HttpHeaders\HeaderGeneratorTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Core\HttpHeaders\HeaderGeneratorTests.Xss.cs" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

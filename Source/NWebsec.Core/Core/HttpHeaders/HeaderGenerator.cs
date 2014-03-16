@@ -11,11 +11,11 @@ namespace NWebsec.Core.HttpHeaders
     public class HeaderGenerator
     {
 
-        public HeaderResult GenerateXRobotsTagHeader(IXRobotsTagConfiguration xRobotsTagConfig, IXRobotsTagConfiguration oldXRobotsTagConfig = null)
+        public HeaderResult CreateXRobotsTagResult(IXRobotsTagConfiguration xRobotsTagConfig, IXRobotsTagConfiguration oldXRobotsTagConfig = null)
         {
             if (oldXRobotsTagConfig != null && oldXRobotsTagConfig.Enabled && xRobotsTagConfig.Enabled == false)
             {
-                return new HeaderResult(HeaderResult.ResponseAction.Delete, HeaderConstants.XRobotsTagHeader);
+                return new HeaderResult(HeaderResult.ResponseAction.Remove, HeaderConstants.XRobotsTagHeader);
             }
 
             if (xRobotsTagConfig.Enabled == false)
@@ -38,9 +38,8 @@ namespace NWebsec.Core.HttpHeaders
             return new HeaderResult(HeaderResult.ResponseAction.Set, HeaderConstants.XRobotsTagHeader, value);
         }
 
-        public HeaderResult GenerateHstsHeader(IHstsConfiguration hstsConfig)
+        public HeaderResult CreateHstsResult(IHstsConfiguration hstsConfig)
         {
-
             var seconds = (int)hstsConfig.MaxAge.TotalSeconds;
 
             if (seconds == 0) return null;
@@ -51,18 +50,30 @@ namespace NWebsec.Core.HttpHeaders
             return new HeaderResult(HeaderResult.ResponseAction.Set, HeaderConstants.StrictTransportSecurityHeader, value);
         }
 
-        public HeaderResult GenerateXContentTypeOptionsHeader(ISimpleBooleanConfiguration xContentTypeOptionsConfig, ISimpleBooleanConfiguration oldXContentTypeOptionsConfig = null)
+        public HeaderResult CreateXContentTypeOptionsResult(ISimpleBooleanConfiguration xContentTypeOptionsConfig, ISimpleBooleanConfiguration oldXContentTypeOptionsConfig = null)
         {
+            if (oldXContentTypeOptionsConfig != null && oldXContentTypeOptionsConfig.Enabled &&
+                !xContentTypeOptionsConfig.Enabled)
+            {
+                return new HeaderResult(HeaderResult.ResponseAction.Remove, HeaderConstants.XContentTypeOptionsHeader);
+            }
+
             return xContentTypeOptionsConfig.Enabled ? new HeaderResult(HeaderResult.ResponseAction.Set, HeaderConstants.XContentTypeOptionsHeader, "nosniff") : null;
         }
 
-        public HeaderResult GenerateXDownloadOptionsHeader(ISimpleBooleanConfiguration xDownloadOptionsConfig, ISimpleBooleanConfiguration oldXDownloadOptionsConfig = null)
+        public HeaderResult CreateXDownloadOptionsResult(ISimpleBooleanConfiguration xDownloadOptionsConfig, ISimpleBooleanConfiguration oldXDownloadOptionsConfig = null)
         {
             return xDownloadOptionsConfig.Enabled ? new HeaderResult(HeaderResult.ResponseAction.Set, HeaderConstants.XDownloadOptionsHeader, "noopen") : null;
         }
 
-        public HeaderResult GenerateXXssProtectionHeader(IXXssProtectionConfiguration xXssProtectionConfig, IXXssProtectionConfiguration oldXXssProtectionConfig = null)
+        public HeaderResult CreateXXssProtectionResult(IXXssProtectionConfiguration xXssProtectionConfig, IXXssProtectionConfiguration oldXXssProtectionConfig = null)
         {
+            if (oldXXssProtectionConfig != null && oldXXssProtectionConfig.Policy != XXssProtectionPolicy.Disabled &&
+                xXssProtectionConfig.Policy == XXssProtectionPolicy.Disabled)
+            {
+                return new HeaderResult(HeaderResult.ResponseAction.Remove, HeaderConstants.XXssProtectionHeader);
+            }
+
             string value;
             switch (xXssProtectionConfig.Policy)
             {
@@ -85,13 +96,13 @@ namespace NWebsec.Core.HttpHeaders
             return new HeaderResult(HeaderResult.ResponseAction.Set, HeaderConstants.XXssProtectionHeader, value);
         }
 
-        public HeaderResult GenerateXfoHeader(IXFrameOptionsConfiguration xfoConfig, IXFrameOptionsConfiguration oldXfoConfig = null)
+        public HeaderResult CreateXfoResult(IXFrameOptionsConfiguration xfoConfig, IXFrameOptionsConfiguration oldXfoConfig = null)
         {
 
             if (oldXfoConfig != null && oldXfoConfig.Policy != XFrameOptionsPolicy.Disabled &&
                 xfoConfig.Policy == XFrameOptionsPolicy.Disabled)
             {
-                return new HeaderResult(HeaderResult.ResponseAction.Delete, HeaderConstants.XFrameOptionsHeader);
+                return new HeaderResult(HeaderResult.ResponseAction.Remove, HeaderConstants.XFrameOptionsHeader);
             }
 
             switch (xfoConfig.Policy)
@@ -115,7 +126,7 @@ namespace NWebsec.Core.HttpHeaders
             }
         }
 
-        public IEnumerable<HeaderResult> CreateCspHeader(ICspConfiguration cspConfig, bool reportOnly, string builtinReportHandlerUri = null, ICspConfiguration oldCspConfig = null)
+        public IEnumerable<HeaderResult> CreateCspResults(ICspConfiguration cspConfig, bool reportOnly, string builtinReportHandlerUri = null, ICspConfiguration oldCspConfig = null)
         {
             var headerValue = CreateCspHeaderValue(cspConfig, builtinReportHandlerUri);
 
@@ -159,19 +170,19 @@ namespace NWebsec.Core.HttpHeaders
 
         private IEnumerable<HeaderResult> EnabledCspHeaderRemoveResults(ICspConfiguration cspConfig, bool reportOnly)
         {
-            yield return new HeaderResult(HeaderResult.ResponseAction.Delete, 
+            yield return new HeaderResult(HeaderResult.ResponseAction.Remove, 
                 (reportOnly ? HeaderConstants.ContentSecurityPolicyReportOnlyHeader : HeaderConstants.ContentSecurityPolicyHeader));
 
 
             if (cspConfig.XContentSecurityPolicyHeader)
             {
-                yield return new HeaderResult(HeaderResult.ResponseAction.Delete,
+                yield return new HeaderResult(HeaderResult.ResponseAction.Remove,
                     (reportOnly ? HeaderConstants.XContentSecurityPolicyReportOnlyHeader : HeaderConstants.XContentSecurityPolicyHeader));
             }
 
             if (cspConfig.XWebKitCspHeader)
             {
-                yield return new HeaderResult(HeaderResult.ResponseAction.Delete,
+                yield return new HeaderResult(HeaderResult.ResponseAction.Remove,
                 (reportOnly ? HeaderConstants.XWebKitCspReportOnlyHeader : HeaderConstants.XWebKitCspHeader));
 
             }

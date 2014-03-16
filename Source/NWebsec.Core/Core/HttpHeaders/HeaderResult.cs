@@ -18,7 +18,7 @@ namespace NWebsec.Core.HttpHeaders
         public enum ResponseAction 
         {
             Set=0,
-            Delete=1
+            Remove=1
         }
     }
 }

@@ -21,7 +21,7 @@ namespace NWebsec.Owin.Middleware
         {
             _config = options as IXFrameOptionsConfiguration;
             var headerGenerator = new HeaderGenerator();
-            _headerResult = headerGenerator.GenerateXfoHeader(_config);
+            _headerResult = headerGenerator.CreateXfoResult(_config);
         }
 
         internal override void PreInvokeNext(OwinEnvironment owinEnvironment)
