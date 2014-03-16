@@ -191,9 +191,9 @@
       <Project>{625ba5ec-141e-4aa4-abfa-b8b046215e1c}</Project>
       <Name>NWebsec.Owin</Name>
     </ProjectReference>
-    <ProjectReference Include="..\NWebsec\NWebsec.csproj">
+    <ProjectReference Include="..\NWebsec\NWebsec.Classic.csproj">
       <Project>{a011d84b-b731-4404-8bc1-fe94d2b37599}</Project>
-      <Name>NWebsec</Name>
+      <Name>NWebsec.Classic</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

@@ -32,6 +32,7 @@ namespace DemoSiteMvc4.Controllers
         }
 
         [AllowMultiple("Action")]
+        [XFrameOptions(Policy = XFrameOptionsPolicy.Disabled)]
         [CspScriptSrcReportOnly(None = Source.Inherit)]
         public ActionResult Other()
         {

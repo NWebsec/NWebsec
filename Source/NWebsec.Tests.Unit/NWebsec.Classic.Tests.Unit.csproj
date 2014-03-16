@@ -103,9 +103,9 @@
       <Project>{e2d23d75-19d4-41a6-a57e-4b6d4f94941f}</Project>
       <Name>NWebsec.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\NWebsec\NWebsec.csproj">
+    <ProjectReference Include="..\NWebsec\NWebsec.Classic.csproj">
       <Project>{a011d84b-b731-4404-8bc1-fe94d2b37599}</Project>
-      <Name>NWebsec</Name>
+      <Name>NWebsec.Classic</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

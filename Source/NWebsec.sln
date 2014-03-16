@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.21005.1
+VisualStudioVersion = 12.0.30110.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{07D0ADD6-1502-453F-8F21-F69748F0D188}"
 	ProjectSection(SolutionItems) = preProject
@@ -19,9 +19,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{F37533
 		.nuget\NuGet.targets = .nuget\NuGet.targets
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NWebsec", "NWebsec\NWebsec.csproj", "{A011D84B-B731-4404-8BC1-FE94D2B37599}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NWebsec.Classic", "NWebsec\NWebsec.Classic.csproj", "{A011D84B-B731-4404-8BC1-FE94D2B37599}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NWebsec.Tests.Unit", "NWebsec.Tests.Unit\NWebsec.Tests.Unit.csproj", "{2E83CDC3-152A-4139-8B00-0CDECD3F5BDC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NWebsec.Classic.Tests.Unit", "NWebsec.Tests.Unit\NWebsec.Classic.Tests.Unit.csproj", "{2E83CDC3-152A-4139-8B00-0CDECD3F5BDC}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NWebsec.Mvc", "NWebsec.Mvc\NWebsec.Mvc.csproj", "{78FF86A6-C148-4D03-96CF-B429C1A36DA9}"
 EndProject
@@ -44,6 +44,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NWebsec.Core.Tests.Unit", "NWebsec.Core.Tests.Unit\NWebsec.Core.Tests.Unit.csproj", "{6375C681-A781-4C36-BD06-4475F25534EE}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DemoSiteMvc5", "DemoSiteMvc5\DemoSiteMvc5.csproj", "{E971E626-83F5-4AAE-8CFD-A9D37FBAD439}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NWebsec.Mvc.Tests.Unit", "NWebsec.Mvc.Tests.Unit\NWebsec.Mvc.Tests.Unit.csproj", "{BEB101EF-8EB2-4857-84CB-F44118D41ACA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -103,6 +105,10 @@ Global
 		{E971E626-83F5-4AAE-8CFD-A9D37FBAD439}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E971E626-83F5-4AAE-8CFD-A9D37FBAD439}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E971E626-83F5-4AAE-8CFD-A9D37FBAD439}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BEB101EF-8EB2-4857-84CB-F44118D41ACA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BEB101EF-8EB2-4857-84CB-F44118D41ACA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BEB101EF-8EB2-4857-84CB-F44118D41ACA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BEB101EF-8EB2-4857-84CB-F44118D41ACA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
