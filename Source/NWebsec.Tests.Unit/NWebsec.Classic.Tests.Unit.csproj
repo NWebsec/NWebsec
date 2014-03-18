@@ -76,7 +76,6 @@
   <ItemGroup>
     <Compile Include="Csp\CspReportHelperTests.cs" />
     <Compile Include="Helpers\HeaderResultHandlerTests.cs" />
-    <Compile Include="Helpers\HttpHeaderSetterCspTests.cs" />
     <Compile Include="Helpers\ConfigurationHeaderSetterTests.cs" />
     <Compile Include="Helpers\RedirectValidationHelperTests.cs" />
     <Compile Include="Helpers\HandlerTypeHelperTests.cs" />
