@@ -94,12 +94,12 @@ namespace NWebsec.Helpers
 
         internal void SetXXssProtectionHeader(HttpContextBase context, NWebsecContext nwebsecContext)
         {
-            nwebsecContext.XXssProtection = WebConfig.SecurityHttpHeaders.XXssProtection;
-
             if (_handlerHelper.IsUnmanagedHandler(context) || _handlerHelper.IsStaticContentHandler(context))
             {
                 return;
             }
+
+            nwebsecContext.XXssProtection = WebConfig.SecurityHttpHeaders.XXssProtection;
 
             var result = _headerGenerator.CreateXXssProtectionResult(WebConfig.SecurityHttpHeaders.XXssProtection);
             _headerResultHandler.HandleHeaderResult(context.Response, result);
@@ -107,12 +107,12 @@ namespace NWebsec.Helpers
 
         public void SetNoCacheHeaders(HttpContextBase context, NWebsecContext nwebsecContext)
         {
-            nwebsecContext.NoCacheHeaders = WebConfig.NoCacheHttpHeaders;
-
             if (!WebConfig.NoCacheHttpHeaders.Enabled || _handlerHelper.IsUnmanagedHandler(context) || _handlerHelper.IsStaticContentHandler(context))
             {
                 return;
             }
+
+            nwebsecContext.NoCacheHeaders = WebConfig.NoCacheHttpHeaders;
 
             var response = context.Response;
 
@@ -124,16 +124,6 @@ namespace NWebsec.Helpers
 
         internal void SetCspHeaders(HttpContextBase context, NWebsecContext nwebsecContext, bool reportOnly)
         {
-            ICspConfiguration cspConfig;
-            if (reportOnly)
-            {
-                cspConfig = nwebsecContext.CspReportOnly = WebConfig.SecurityHttpHeaders.CspReportOnly;
-            }
-            else
-            {
-                cspConfig = nwebsecContext.Csp = WebConfig.SecurityHttpHeaders.Csp;
-            }
-
             if (_handlerHelper.IsStaticContentHandler(context) ||
                 _handlerHelper.IsUnmanagedHandler(context)) return;
 
@@ -142,6 +132,16 @@ namespace NWebsec.Helpers
             if (!String.IsNullOrEmpty(userAgent) && userAgent.Contains(" Version/5") && userAgent.Contains(" Safari/"))
             {
                 return;
+            }
+
+            ICspConfiguration cspConfig;
+            if (reportOnly)
+            {
+                cspConfig = nwebsecContext.CspReportOnly = WebConfig.SecurityHttpHeaders.CspReportOnly;
+            }
+            else
+            {
+                cspConfig = nwebsecContext.Csp = WebConfig.SecurityHttpHeaders.Csp;
             }
 
             var headerResults = _headerGenerator.CreateCspResults(cspConfig, reportOnly, _reportHelper.GetBuiltInCspReportHandlerRelativeUri());

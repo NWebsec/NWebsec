@@ -59,46 +59,6 @@
 
 //        }
 
-//        [Test]
-//        public void AddCspHeaders_EnabledInConfigAndStaticContentHandler_DoesNotAddCspHeader()
-//        {
-//            var cspConfig = new CspConfigurationElement { Enabled = true, DefaultSrc = { SelfSrc = true } };
-//            _mockHandlerHelper.Setup(h => h.IsStaticContentHandler(It.IsAny<HttpContextBase>())).Returns(true);
-
-//            _headerSetter.SetCspHeaders(_mockContext.Object, cspConfig, false);
-
-//            Assert.IsEmpty(_responseHeaders);
-//        }
-
-//        [Test]
-//        public void AddCspHeaders_EnabledInConfigAndUnmanagedHandler_DoesNotAddCspHeader()
-//        {
-//            var cspConfig = new CspConfigurationElement { Enabled = true, DefaultSrc = { SelfSrc = true } };
-//            _mockHandlerHelper.Setup(h => h.IsUnmanagedHandler(It.IsAny<HttpContextBase>())).Returns(true);
-
-//            _headerSetter.SetCspHeaders(_mockContext.Object, cspConfig, false);
-
-//            Assert.IsEmpty(_responseHeaders);
-//        }
-
-       
-
-//        [Test]
-//        public void AddCspHeaders_XWebkitCspEnabledInConfigSafari5_DoesNotAddXWebkitCspHeader()
-//        {
-//            _mockRequest.Setup(r => r.UserAgent).Returns("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_6_8) AppleWebKit/537.13+ (KHTML, like Gecko) Version/5.1.7 Safari/534.57.2");
-
-//            var cspConfig = new CspConfiguration
-//            {
-//                Enabled = true,
-//                XContentSecurityPolicyHeader = false,
-//                XWebKitCspHeader = true,
-//                DefaultSrcDirective = { SelfSrc = true }
-//            };
-
-//            _headerSetter.SetCspHeaders(_mockContext.Object, cspConfig, false);
-
-//            Assert.IsEmpty(_responseHeaders);
-//        }
+//        
 //    }
 //}
