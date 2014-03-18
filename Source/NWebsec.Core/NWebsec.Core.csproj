@@ -21,6 +21,8 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <RunCodeAnalysis>true</RunCodeAnalysis>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -50,7 +52,7 @@
     <Compile Include="Core\HttpHeaders\Configuration\CspDirectiveUnsafeEvalConfiguration.cs" />
     <Compile Include="Core\HttpHeaders\Configuration\CspDirectiveUnsafeInlineConfiguration.cs" />
     <Compile Include="Core\HttpHeaders\Configuration\CspHeaderConfiguration.cs" />
-    <Compile Include="Core\HttpHeaders\Configuration\CspReportUriDirective.cs" />
+    <Compile Include="Core\HttpHeaders\Configuration\CspReportUriDirectiveConfiguration.cs" />
     <Compile Include="Core\HttpHeaders\Configuration\HstsConfiguration.cs" />
     <Compile Include="Core\HttpHeaders\Configuration\ICspConfiguration.cs" />
     <Compile Include="Core\HttpHeaders\Configuration\ICspDirectiveConfiguration.cs" />

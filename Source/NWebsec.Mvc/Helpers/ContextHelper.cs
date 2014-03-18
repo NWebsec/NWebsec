@@ -6,9 +6,9 @@ using NWebsec.ExtensionMethods;
 
 namespace NWebsec.Mvc.Helpers
 {
-    internal class ContextHelper
+    internal class ContextHelper : IContextHelper
     {
-        internal IXRobotsTagConfiguration GetXRobotsTagConfiguration(HttpContextBase context)
+        public IXRobotsTagConfiguration GetXRobotsTagConfiguration(HttpContextBase context)
         {
             var owinContext = context.GetNWebsecOwinContext();
             if (owinContext != null && owinContext.XRobotsTag != null)
@@ -18,7 +18,7 @@ namespace NWebsec.Mvc.Helpers
             return context.GetNWebsecContext().XRobotsTag;
         }
 
-        internal IXFrameOptionsConfiguration GetXFrameOptionsConfiguration(HttpContextBase context)
+        public IXFrameOptionsConfiguration GetXFrameOptionsConfiguration(HttpContextBase context)
         {
             var owinContext = context.GetNWebsecOwinContext();
             if (owinContext != null && owinContext.XRobotsTag != null)
@@ -28,7 +28,7 @@ namespace NWebsec.Mvc.Helpers
             return context.GetNWebsecContext().XFrameOptions;
         }
 
-        internal ISimpleBooleanConfiguration GetXContentTypeOptionsConfiguration(HttpContextBase context)
+        public ISimpleBooleanConfiguration GetXContentTypeOptionsConfiguration(HttpContextBase context)
         {
             var owinContext = context.GetNWebsecOwinContext();
             if (owinContext != null && owinContext.XContentTypeOptions != null)
@@ -38,7 +38,7 @@ namespace NWebsec.Mvc.Helpers
             return context.GetNWebsecContext().XContentTypeOptions;
         }
         
-        internal ISimpleBooleanConfiguration GetXDownloadOptionsConfiguration(HttpContextBase context)
+        public ISimpleBooleanConfiguration GetXDownloadOptionsConfiguration(HttpContextBase context)
         {
             var owinContext = context.GetNWebsecOwinContext();
             if (owinContext != null && owinContext.XDownloadOptions != null)
@@ -48,7 +48,7 @@ namespace NWebsec.Mvc.Helpers
             return context.GetNWebsecContext().XDownloadOptions;
         }
 
-        internal IXXssProtectionConfiguration GetXXssProtectionConfiguration(HttpContextBase context)
+        public IXXssProtectionConfiguration GetXXssProtectionConfiguration(HttpContextBase context)
         {
             var owinContext = context.GetNWebsecOwinContext();
             if (owinContext != null && owinContext.XXssProtection != null)
@@ -58,7 +58,7 @@ namespace NWebsec.Mvc.Helpers
             return context.GetNWebsecContext().XXssProtection;
         }
 
-        internal ICspConfiguration GetCspConfiguration(HttpContextBase context)
+        public ICspConfiguration GetCspConfiguration(HttpContextBase context)
         {
             var owinContext = context.GetNWebsecOwinContext();
             if (owinContext != null && owinContext.Csp != null)
@@ -68,7 +68,7 @@ namespace NWebsec.Mvc.Helpers
             return context.GetNWebsecContext().Csp;
         }
 
-        internal ICspConfiguration GetCspReportonlyConfiguration(HttpContextBase context)
+        public ICspConfiguration GetCspReportonlyConfiguration(HttpContextBase context)
         {
             var owinContext = context.GetNWebsecOwinContext();
             if (owinContext != null && owinContext.Csp != null)

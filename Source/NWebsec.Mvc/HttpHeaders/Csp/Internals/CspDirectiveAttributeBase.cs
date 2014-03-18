@@ -3,6 +3,7 @@
 using System;
 using System.Web.Mvc;
 using NWebsec.Csp;
+using NWebsec.Mvc.Csp;
 using NWebsec.Mvc.Helpers;
 
 namespace NWebsec.Mvc.HttpHeaders.Csp.Internals
@@ -55,7 +56,7 @@ namespace NWebsec.Mvc.HttpHeaders.Csp.Internals
         {
             ValidateParams();
 
-            _headerConfigurationOverrideHelper.SetContentSecurityPolicyDirectiveOverride(filterContext.HttpContext, Directive, GetCspDirectiveOverride(CustomSources), ReportOnly);
+            _headerConfigurationOverrideHelper.SetCspDirectiveOverride(filterContext.HttpContext, Directive, GetCspDirectiveOverride(CustomSources), ReportOnly);
 
             base.OnActionExecuting(filterContext);
         }

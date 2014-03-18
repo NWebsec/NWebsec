@@ -15,7 +15,7 @@ namespace NWebsec.Core.HttpHeaders.Configuration
             FrameSrcDirective = new CspDirectiveConfiguration();
             FontSrcDirective = new CspDirectiveConfiguration();
             ConnectSrcDirective = new CspDirectiveConfiguration();
-            ReportUriDirective = new CspReportUriDirective();
+            ReportUriDirective = new CspReportUriDirectiveConfiguration();
         }
         public bool Enabled { get; set; }
         public bool XContentSecurityPolicyHeader { get; set; }

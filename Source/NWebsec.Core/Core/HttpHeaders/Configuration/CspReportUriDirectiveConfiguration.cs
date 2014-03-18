@@ -4,9 +4,9 @@ using System.Collections.Generic;
 
 namespace NWebsec.Core.HttpHeaders.Configuration
 {
-    public class CspReportUriDirective : ICspReportUriDirective
+    public class CspReportUriDirectiveConfiguration : ICspReportUriDirective
     {
-        public CspReportUriDirective()
+        public CspReportUriDirectiveConfiguration()
         {
             Enabled = true;
         }
