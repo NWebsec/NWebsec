@@ -8,7 +8,7 @@ using NWebsec.HttpHeaders;
 
 namespace NWebsec.Core.HttpHeaders
 {
-    public class HeaderGenerator
+    public class HeaderGenerator : IHeaderGenerator
     {
 
         public HeaderResult CreateXRobotsTagResult(IXRobotsTagConfiguration xRobotsTagConfig, IXRobotsTagConfiguration oldXRobotsTagConfig = null)

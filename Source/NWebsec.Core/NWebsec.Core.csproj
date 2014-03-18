@@ -74,6 +74,7 @@
     <Compile Include="Core\HttpHeaders\HeaderGenerator.cs" />
     <Compile Include="Core\HttpHeaders\HeaderResult.cs" />
     <Compile Include="Core\HttpHeaders\HeaderConstants.cs" />
+    <Compile Include="Core\HttpHeaders\IHeaderGenerator.cs" />
     <Compile Include="Core\NWebsecContext.cs" />
     <Compile Include="HttpHeaders\XFrameOptionsPolicy.cs" />
     <Compile Include="HttpHeaders\XXssProtectionPolicy.cs" />

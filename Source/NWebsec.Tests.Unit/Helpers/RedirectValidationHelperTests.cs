@@ -8,7 +8,7 @@ using NUnit.Framework;
 using NWebsec.Helpers;
 using NWebsec.Modules.Configuration;
 
-namespace NWebsec.Tests.Unit.HttpHeaders
+namespace NWebsec.Tests.Unit.Helpers
 {
     [TestFixture]
     public class RedirectValidationHelperTests

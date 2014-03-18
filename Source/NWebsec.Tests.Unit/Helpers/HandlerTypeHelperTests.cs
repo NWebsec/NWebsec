@@ -7,7 +7,7 @@ using Moq;
 using NUnit.Framework;
 using NWebsec.Helpers;
 
-namespace NWebsec.Tests.Unit.HttpHeaders
+namespace NWebsec.Tests.Unit.Helpers
 {
     [TestFixture]
     public class HandlerTypeHelperTests
