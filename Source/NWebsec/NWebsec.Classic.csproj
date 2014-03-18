@@ -60,12 +60,14 @@
     <Compile Include="Csp\CspViolationReportEventArgs.cs" />
     <Compile Include="Csp\CspReportHandlerUriHelper.cs" />
     <Compile Include="Csp\CspReportHelper.cs" />
+    <Compile Include="Csp\ICspReportHelper.cs" />
     <Compile Include="Csp\Source.cs" />
     <Compile Include="ExtensionMethods\HttpContextBaseExtensions.cs" />
     <Compile Include="ExtensionMethods\HttpResponseBaseExtensions.cs" />
     <Compile Include="Helpers\ConfigHelper.cs" />
-    <Compile Include="Helpers\HeaderConfigurationHelper.cs" />
+    <Compile Include="Helpers\ConfigurationHeaderSetter.cs" />
     <Compile Include="Helpers\HeaderResultHandler.cs" />
+    <Compile Include="Helpers\IHeaderResultHandler.cs" />
     <Compile Include="Helpers\RedirectValidationHelper.cs" />
     <Compile Include="Helpers\HandlerTypeHelper.cs" />
     <Compile Include="Modules\Configuration\Csp\CspDirectiveBaseConfigurationElement.cs" />

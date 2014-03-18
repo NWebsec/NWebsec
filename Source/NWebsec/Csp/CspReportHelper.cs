@@ -6,7 +6,7 @@ using System.Web;
 
 namespace NWebsec.Csp
 {
-    public class CspReportHelper
+    public class CspReportHelper : ICspReportHelper
     {
         private readonly ICspReportHandlerPathHelper _pathHelper;
 

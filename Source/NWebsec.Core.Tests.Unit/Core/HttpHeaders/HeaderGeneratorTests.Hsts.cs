@@ -10,7 +10,7 @@ namespace NWebsec.Core.Tests.Unit.Core.HttpHeaders
     public partial class HeaderGeneratorTests
     {
         [Test]
-        public void CreateHstsResult_ZeroTimespanInConfig_DoesNotAddHSTSHeaderHeader()
+        public void CreateHstsResult_ZeroTimespanInConfig_ReturnsNull()
         {
             var hstsConfig = new HstsConfiguration { MaxAge = new TimeSpan(0) };
 

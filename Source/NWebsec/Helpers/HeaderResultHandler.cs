@@ -5,7 +5,7 @@ using NWebsec.Core.HttpHeaders;
 
 namespace NWebsec.Helpers
 {
-    public class HeaderResultHandler
+    public class HeaderResultHandler : IHeaderResultHandler
     {
         public void HandleHeaderResult(HttpResponseBase response, HeaderResult result)
         {

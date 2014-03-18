@@ -10,7 +10,7 @@ namespace NWebsec.Modules
     public class HttpHeaderSecurityModule : IHttpModule
     {
         private readonly CspReportHelper _cspReportHelper;
-        private readonly HeaderConfigurationHelper _headerHelper;
+        private readonly ConfigurationHeaderSetter _configHeaderSetter;
         private readonly HandlerTypeHelper _handlerTypeHelper;
         private readonly RedirectValidationHelper _redirectValidationHelper;
         public event CspViolationReportEventHandler CspViolationReported;
@@ -18,7 +18,7 @@ namespace NWebsec.Modules
         public HttpHeaderSecurityModule()
         {
             _cspReportHelper = new CspReportHelper();
-            _headerHelper = new HeaderConfigurationHelper();
+            _configHeaderSetter = new ConfigurationHeaderSetter();
             _handlerTypeHelper = new HandlerTypeHelper();
             _redirectValidationHelper = new RedirectValidationHelper();
         }
@@ -34,7 +34,7 @@ namespace NWebsec.Modules
             var app = (HttpApplication)sender;
             var context = new HttpContextWrapper(app.Context);
 
-            _headerHelper.SetSitewideHeadersFromConfig(context);
+            _configHeaderSetter.SetSitewideHeadersFromConfig(context);
 
             if (!_cspReportHelper.IsRequestForBuiltInCspReportHandler(context.Request)) return;
 
@@ -59,7 +59,7 @@ namespace NWebsec.Modules
             var context = new HttpContextWrapper(app.Context);
 
             _handlerTypeHelper.RequestHandlerMapped(context);
-            _headerHelper.SetContentRelatedHeadersFromConfig(context);
+            _configHeaderSetter.SetContentRelatedHeadersFromConfig(context);
         }
 
         void app_EndRequest(object sender, EventArgs e)

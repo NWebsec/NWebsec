@@ -11,15 +11,15 @@ using NWebsec.Modules.Configuration;
 
 namespace NWebsec.Helpers
 {
-    public class HeaderConfigurationHelper
+    public class ConfigurationHeaderSetter
     {
-        private readonly HeaderGenerator _headerGenerator;
+        private readonly IHeaderGenerator _headerGenerator;
+        private readonly IHeaderResultHandler _headerResultHandler;
         private readonly IHandlerTypeHelper _handlerHelper;
-        private readonly CspReportHelper _reportHelper;
-        private readonly HeaderResultHandler _headerResultHandler;
+        private readonly ICspReportHelper _reportHelper;
         private readonly HttpHeaderSecurityConfigurationSection _mockConfig;
 
-        public HeaderConfigurationHelper()
+        public ConfigurationHeaderSetter()
         {
             _headerGenerator = new HeaderGenerator();
             _headerResultHandler = new HeaderResultHandler();
@@ -27,14 +27,17 @@ namespace NWebsec.Helpers
             _reportHelper = new CspReportHelper();
         }
 
-        internal HeaderConfigurationHelper(HttpHeaderSecurityConfigurationSection config)
+        internal ConfigurationHeaderSetter(HttpHeaderSecurityConfigurationSection config, IHeaderGenerator headerGenerator, IHeaderResultHandler headerResultHandler, IHandlerTypeHelper handlerTypeHelper, ICspReportHelper cspReportHelper )
         {
             _mockConfig = config;
+            _headerGenerator = headerGenerator;
+            _headerResultHandler = headerResultHandler;
+            _handlerHelper = handlerTypeHelper;
+            _reportHelper = cspReportHelper;
         }
 
         private HttpHeaderSecurityConfigurationSection WebConfig { get { return _mockConfig ?? ConfigHelper.GetConfig(); } }
-
-
+        
         internal void SetSitewideHeadersFromConfig(HttpContextBase context)
         {
             var nwebsecContext = context.GetNWebsecContext();
@@ -48,7 +51,7 @@ namespace NWebsec.Helpers
         internal void SetContentRelatedHeadersFromConfig(HttpContextBase context)
         {
             var nwebsecContext = context.GetNWebsecContext();
-            SetXXssProtectionHeader(context.Response, nwebsecContext);
+            SetXXssProtectionHeader(context, nwebsecContext);
             SetCspHeaders(context, nwebsecContext, false);
             SetCspHeaders(context, nwebsecContext, true);
             SetNoCacheHeaders(context, nwebsecContext);
@@ -89,11 +92,17 @@ namespace NWebsec.Helpers
             _headerResultHandler.HandleHeaderResult(response, result);
         }
 
-        internal void SetXXssProtectionHeader(HttpResponseBase response, NWebsecContext nwebsecContext)
+        internal void SetXXssProtectionHeader(HttpContextBase context, NWebsecContext nwebsecContext)
         {
             nwebsecContext.XXssProtection = WebConfig.SecurityHttpHeaders.XXssProtection;
+
+            if (_handlerHelper.IsUnmanagedHandler(context) || _handlerHelper.IsStaticContentHandler(context))
+            {
+                return;
+            }
+
             var result = _headerGenerator.CreateXXssProtectionResult(WebConfig.SecurityHttpHeaders.XXssProtection);
-            _headerResultHandler.HandleHeaderResult(response, result);
+            _headerResultHandler.HandleHeaderResult(context.Response, result);
         }
 
         public void SetNoCacheHeaders(HttpContextBase context, NWebsecContext nwebsecContext)
