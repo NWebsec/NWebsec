@@ -8,19 +8,19 @@ using NWebsec.Core.HttpHeaders.Configuration.Validation;
 
 namespace NWebsec.Mvc.Helpers
 {
-    public class HttpHeaderConfigurationOverrideHelper
+    public class HeaderConfigurationOverrideHelper : IHeaderConfigurationOverrideHelper
     {
         private const string SetNoCacheHeadersKey = "NWebsecSetNoCacheHeaders";
         private const string SetXRobotsTagHeadersKey = "NWebsecSetXRobotsTagHeaders";
 
         private readonly XRobotsTagConfigurationValidator _xRobotsValidator;
 
-        public HttpHeaderConfigurationOverrideHelper()
+        public HeaderConfigurationOverrideHelper()
         {
             _xRobotsValidator = new XRobotsTagConfigurationValidator();
         }
 
-        public void SetXRobotsTagHeaderOverride(HttpContextBase context, IXRobotsTagConfiguration setXRobotsTagHeaderConfig)
+        internal void SetXRobotsTagHeaderOverride(HttpContextBase context, IXRobotsTagConfiguration setXRobotsTagHeaderConfig)
         {
             _xRobotsValidator.Validate(setXRobotsTagHeaderConfig);
             var headerList = GetHeaderListFromContext(context);
@@ -32,7 +32,7 @@ namespace NWebsec.Mvc.Helpers
             headerList.Add(headerKey, setXRobotsTagHeaderConfig);
         }
 
-        internal IXRobotsTagConfiguration GetXRobotsTagWithOverride(HttpContextBase context)
+        public IXRobotsTagConfiguration GetXRobotsTagWithOverride(HttpContextBase context)
         {
             var headerList = GetHeaderListFromContext(context);
             return headerList.ContainsKey(SetXRobotsTagHeadersKey)
@@ -40,7 +40,7 @@ namespace NWebsec.Mvc.Helpers
                 : null;
         }
 
-        public void SetNoCacheHeadersOverride(HttpContextBase context, ISimpleBooleanConfiguration setNoCacheHeadersConfig)
+        internal void SetNoCacheHeadersOverride(HttpContextBase context, ISimpleBooleanConfiguration setNoCacheHeadersConfig)
         {
             var headerList = GetHeaderListFromContext(context);
             const string headerKey = SetNoCacheHeadersKey;
@@ -51,7 +51,7 @@ namespace NWebsec.Mvc.Helpers
             headerList.Add(headerKey, setNoCacheHeadersConfig);
         }
 
-        internal ISimpleBooleanConfiguration GetNoCacheHeadersWithOverride(HttpContextBase context)
+        public ISimpleBooleanConfiguration GetNoCacheHeadersWithOverride(HttpContextBase context)
         {
             var headerList = GetHeaderListFromContext(context);
             return headerList.ContainsKey(SetNoCacheHeadersKey)
@@ -59,7 +59,7 @@ namespace NWebsec.Mvc.Helpers
                        : null;
         }
 
-        public void SetXFrameoptionsOverride(HttpContextBase context, IXFrameOptionsConfiguration xFrameOptionsConfig)
+        internal void SetXFrameoptionsOverride(HttpContextBase context, IXFrameOptionsConfiguration xFrameOptionsConfig)
         {
             var headerList = GetHeaderListFromContext(context);
             var headerKey = HeaderConstants.XFrameOptionsHeader;
@@ -70,7 +70,7 @@ namespace NWebsec.Mvc.Helpers
             headerList.Add(headerKey, xFrameOptionsConfig);
         }
 
-        internal IXFrameOptionsConfiguration GetXFrameoptionsWithOverride(HttpContextBase context)
+        public IXFrameOptionsConfiguration GetXFrameoptionsWithOverride(HttpContextBase context)
         {
             var headerList = GetHeaderListFromContext(context);
             return headerList.ContainsKey(HeaderConstants.XFrameOptionsHeader)
@@ -78,7 +78,7 @@ namespace NWebsec.Mvc.Helpers
                        : null;
         }
 
-        public void SetXContentTypeOptionsOverride(HttpContextBase context, ISimpleBooleanConfiguration xContentTypeOptionsConfig)
+        internal void SetXContentTypeOptionsOverride(HttpContextBase context, ISimpleBooleanConfiguration xContentTypeOptionsConfig)
         {
             var headerList = GetHeaderListFromContext(context);
             var headerKey = HeaderConstants.XContentTypeOptionsHeader;
@@ -97,7 +97,7 @@ namespace NWebsec.Mvc.Helpers
                 : null;
         }
 
-        public void SetXDownloadOptionsOverride(HttpContextBase context, ISimpleBooleanConfiguration xDownloadOptionsConfig)
+        internal void SetXDownloadOptionsOverride(HttpContextBase context, ISimpleBooleanConfiguration xDownloadOptionsConfig)
         {
             var headerList = GetHeaderListFromContext(context);
             var headerKey = HeaderConstants.XDownloadOptionsHeader;
@@ -108,7 +108,7 @@ namespace NWebsec.Mvc.Helpers
             headerList.Add(headerKey, xDownloadOptionsConfig);
         }
 
-        internal ISimpleBooleanConfiguration GetXDownloadOptionsWithOverride(HttpContextBase context)
+        public ISimpleBooleanConfiguration GetXDownloadOptionsWithOverride(HttpContextBase context)
         {
             var headerList = GetHeaderListFromContext(context);
             return headerList.ContainsKey(HeaderConstants.XDownloadOptionsHeader)
@@ -116,7 +116,7 @@ namespace NWebsec.Mvc.Helpers
                     : null;
         }
 
-        public void SetXXssProtectionOverride(HttpContextBase context, IXXssProtectionConfiguration xXssProtectionConfig)
+        internal void SetXXssProtectionOverride(HttpContextBase context, IXXssProtectionConfiguration xXssProtectionConfig)
         {
             var headerList = GetHeaderListFromContext(context);
             var headerKey = HeaderConstants.XXssProtectionHeader;
@@ -127,7 +127,7 @@ namespace NWebsec.Mvc.Helpers
             headerList.Add(headerKey, xXssProtectionConfig);
         }
 
-        internal IXXssProtectionConfiguration GetXXssProtectionWithOverride(HttpContextBase context)
+        public IXXssProtectionConfiguration GetXXssProtectionWithOverride(HttpContextBase context)
         {
             var headerList = GetHeaderListFromContext(context);
 

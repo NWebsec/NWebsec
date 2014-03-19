@@ -93,9 +93,11 @@
     <Compile Include="Csp\CspDirectiveUnsafeInlineUnsafeEvalOverride.cs" />
     <Compile Include="Helpers\ContextHelper.cs" />
     <Compile Include="Helpers\CspConfigurationOverrideHelper.cs" />
-    <Compile Include="Helpers\HttpHeaderConfigurationOverrideHelper.cs" />
-    <Compile Include="Helpers\HttpHeaderOverrideHelper.cs" />
+    <Compile Include="Helpers\HeaderConfigurationOverrideHelper.cs" />
+    <Compile Include="Helpers\HeaderOverrideHelper.cs" />
     <Compile Include="Helpers\IContextHelper.cs" />
+    <Compile Include="Helpers\ICspConfigurationOverrideHelper.cs" />
+    <Compile Include="Helpers\IHeaderConfigurationOverrideHelper.cs" />
     <Compile Include="HttpHeaders\Csp\CspAttribute.cs" />
     <Compile Include="HttpHeaders\Csp\Internals\CspAttributeBase.cs" />
     <Compile Include="HttpHeaders\Csp\CspConnectSrcAttribute.cs" />

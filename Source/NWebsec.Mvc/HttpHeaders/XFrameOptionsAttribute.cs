@@ -20,7 +20,7 @@ namespace NWebsec.Mvc.HttpHeaders
     public class XFrameOptionsAttribute : HttpHeaderAttribute
     {
         private readonly IXFrameOptionsConfiguration _config;
-        private readonly HttpHeaderConfigurationOverrideHelper _headerConfigurationOverrideHelper;
+        private readonly HeaderConfigurationOverrideHelper _headerConfigurationOverrideHelper;
         private HttpHeaderOverrideHelper _headerOverrideHelper;
 
 
@@ -35,7 +35,7 @@ namespace NWebsec.Mvc.HttpHeaders
         /// </summary>
         public XFrameOptionsAttribute()
         {
-            _headerConfigurationOverrideHelper = new HttpHeaderConfigurationOverrideHelper();
+            _headerConfigurationOverrideHelper = new HeaderConfigurationOverrideHelper();
             _headerOverrideHelper = new HttpHeaderOverrideHelper();
 
             _config = new XFrameOptionsConfiguration { Policy = XFrameOptionsPolicy.Deny };

@@ -15,7 +15,7 @@ namespace NWebsec.Mvc.Tests.Unit.Helpers
     public class HttpHeaderConfigurationOverrideHelperTests
     {
         private HttpContextBase _mockContext;
-        private HttpHeaderConfigurationOverrideHelper _headerConfigurationOverrideHelper;
+        private HeaderConfigurationOverrideHelper _headerConfigurationOverrideHelper;
 
         [SetUp]
         public void Setup()
@@ -24,7 +24,7 @@ namespace NWebsec.Mvc.Tests.Unit.Helpers
             IDictionary<String, Object> nwebsecContentItems = new Dictionary<string, object>();
             mockedContext.Setup(x => x.Items["nwebsecheaderoverride"]).Returns(nwebsecContentItems);
             _mockContext = mockedContext.Object;
-            _headerConfigurationOverrideHelper = new HttpHeaderConfigurationOverrideHelper();
+            _headerConfigurationOverrideHelper = new HeaderConfigurationOverrideHelper();
         }
 
         [Test]
