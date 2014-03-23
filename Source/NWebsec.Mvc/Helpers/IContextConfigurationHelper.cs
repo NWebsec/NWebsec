@@ -5,7 +5,7 @@ using NWebsec.Core.HttpHeaders.Configuration;
 
 namespace NWebsec.Mvc.Helpers
 {
-    public interface IContextHelper
+    public interface IContextConfigurationHelper
     {
         IXRobotsTagConfiguration GetXRobotsTagConfiguration(HttpContextBase context);
         IXFrameOptionsConfiguration GetXFrameOptionsConfiguration(HttpContextBase context);

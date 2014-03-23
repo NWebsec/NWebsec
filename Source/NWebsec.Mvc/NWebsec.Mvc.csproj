@@ -91,11 +91,11 @@
     <Compile Include="Csp\CspDirectiveBaseOverride.cs" />
     <Compile Include="Csp\CspDirectiveUnsafeInlineOverride.cs" />
     <Compile Include="Csp\CspDirectiveUnsafeInlineUnsafeEvalOverride.cs" />
-    <Compile Include="Helpers\ContextHelper.cs" />
+    <Compile Include="Helpers\ContextConfigurationHelper.cs" />
     <Compile Include="Helpers\CspConfigurationOverrideHelper.cs" />
     <Compile Include="Helpers\HeaderConfigurationOverrideHelper.cs" />
     <Compile Include="Helpers\HeaderOverrideHelper.cs" />
-    <Compile Include="Helpers\IContextHelper.cs" />
+    <Compile Include="Helpers\IContextConfigurationHelper.cs" />
     <Compile Include="Helpers\ICspConfigurationOverrideHelper.cs" />
     <Compile Include="Helpers\IHeaderConfigurationOverrideHelper.cs" />
     <Compile Include="HttpHeaders\Csp\CspAttribute.cs" />

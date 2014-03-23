@@ -12,19 +12,19 @@ namespace NWebsec.Mvc.Helpers
 {
     public class CspConfigurationOverrideHelper : ICspConfigurationOverrideHelper
     {
-        private readonly IContextHelper _contextHelper;
+        private readonly IContextConfigurationHelper _contextConfigurationHelper;
         private const string CspHeaderKeyPrefix = "NWebsecCspHeader";
         private const string CspDirectivesKeyPrefix = "NWebsecCspDirectives";
         private const string CspReportUriKeyPrefix = "NWebsecCspReportUri";
 
         public CspConfigurationOverrideHelper()
         {
-            _contextHelper = new ContextHelper();
+            _contextConfigurationHelper = new ContextConfigurationHelper();
         }
 
-        internal CspConfigurationOverrideHelper(IContextHelper contextHelper)
+        internal CspConfigurationOverrideHelper(IContextConfigurationHelper contextConfigurationHelper)
         {
-            _contextHelper = contextHelper;
+            _contextConfigurationHelper = contextConfigurationHelper;
         }
 
         public ICspConfiguration GetCspElementWithOverrides(HttpContextBase context, bool reportOnly)
@@ -47,8 +47,8 @@ namespace NWebsec.Mvc.Helpers
             var directiveOverrides = GetCspDirectiveOverides(context, reportOnly);
 
             var cspConfig = reportOnly
-                                ? _contextHelper.GetCspReportonlyConfiguration(context)
-                                : _contextHelper.GetCspConfiguration(context);
+                                ? _contextConfigurationHelper.GetCspReportonlyConfiguration(context)
+                                : _contextConfigurationHelper.GetCspConfiguration(context);
 
             ICspDirectiveConfiguration element;
             var isOverriden = directiveOverrides.TryGetValue(CspDirectives.DefaultSrc, out element);
@@ -161,8 +161,8 @@ namespace NWebsec.Mvc.Helpers
         private ICspDirectiveConfiguration GetCspDirectiveFromContext(HttpContextBase context, CspDirectives directive, bool reportOnly)
         {
             var cspConfig = reportOnly
-                                ? _contextHelper.GetCspReportonlyConfiguration(context)
-                                : _contextHelper.GetCspConfiguration(context);
+                                ? _contextConfigurationHelper.GetCspReportonlyConfiguration(context)
+                                : _contextConfigurationHelper.GetCspConfiguration(context);
             switch (directive)
             {
                 case CspDirectives.DefaultSrc:

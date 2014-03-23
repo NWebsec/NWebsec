@@ -57,10 +57,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Helpers\HttpHeaderOverrideHelperTests.cs" />
-    <Compile Include="Helpers\HttpHeaderConfigurationHelperCspReportOnlyTest.cs" />
-    <Compile Include="Helpers\HttpHeaderConfigurationHelperCspTest.cs" />
-    <Compile Include="Helpers\HttpHeaderConfigurationHelperCspTestBase.cs" />
+    <Compile Include="Helpers\ContextConfigurationHelperTests.cs" />
+    <Compile Include="Helpers\HeaderOverrideHelperTests.cs" />
+    <Compile Include="Helpers\CspConfigurationOverrideHelperReportOnlyTest.cs" />
+    <Compile Include="Helpers\CspConfigurationOverrideHelperTest.cs" />
+    <Compile Include="Helpers\CspConfigurationOverrideHelperTestBase.cs" />
     <Compile Include="Helpers\HttpHeaderConfigurationOverrideHelperTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

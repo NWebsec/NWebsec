@@ -6,7 +6,7 @@ using NWebsec.ExtensionMethods;
 
 namespace NWebsec.Mvc.Helpers
 {
-    internal class ContextHelper : IContextHelper
+    internal class ContextConfigurationHelper : IContextConfigurationHelper
     {
         public IXRobotsTagConfiguration GetXRobotsTagConfiguration(HttpContextBase context)
         {
@@ -21,7 +21,7 @@ namespace NWebsec.Mvc.Helpers
         public IXFrameOptionsConfiguration GetXFrameOptionsConfiguration(HttpContextBase context)
         {
             var owinContext = context.GetNWebsecOwinContext();
-            if (owinContext != null && owinContext.XRobotsTag != null)
+            if (owinContext != null && owinContext.XFrameOptions != null)
             {
                 return owinContext.XFrameOptions;
             }
@@ -71,11 +71,11 @@ namespace NWebsec.Mvc.Helpers
         public ICspConfiguration GetCspReportonlyConfiguration(HttpContextBase context)
         {
             var owinContext = context.GetNWebsecOwinContext();
-            if (owinContext != null && owinContext.Csp != null)
+            if (owinContext != null && owinContext.CspReportOnly != null)
             {
-                return owinContext.Csp;
+                return owinContext.CspReportOnly;
             }
-            return context.GetNWebsecContext().Csp;
+            return context.GetNWebsecContext().CspReportOnly;
         }
     }
 }

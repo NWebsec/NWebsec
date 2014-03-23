@@ -15,7 +15,7 @@ namespace NWebsec.Mvc.HttpHeaders.Csp.Internals
     public abstract class CspAttributeBase : HttpHeaderAttribute
     {
         private readonly CspConfigurationOverrideHelper _headerConfigurationOverrideHelper;
-        private readonly HttpHeaderOverrideHelper _headerOverrideHelper;
+        private readonly HeaderOverrideHelper _headerOverrideHelper;
 
         /// <summary>
         /// Gets or sets whether the header is set in the HTTP response. The default is true.
@@ -38,7 +38,7 @@ namespace NWebsec.Mvc.HttpHeaders.Csp.Internals
         {
             Enabled = true;
             _headerConfigurationOverrideHelper = new CspConfigurationOverrideHelper();
-            _headerOverrideHelper = new HttpHeaderOverrideHelper();
+            _headerOverrideHelper = new HeaderOverrideHelper();
         }
 
         public override void OnActionExecuting(ActionExecutingContext filterContext)

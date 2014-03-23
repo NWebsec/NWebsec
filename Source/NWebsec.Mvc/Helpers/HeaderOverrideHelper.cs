@@ -8,18 +8,18 @@ using NWebsec.Helpers;
 
 namespace NWebsec.Mvc.Helpers
 {
-    public class HttpHeaderOverrideHelper
+    public class HeaderOverrideHelper
     {
-        private readonly IContextHelper _contextHelper;
+        private readonly IContextConfigurationHelper _contextConfigurationHelper;
         private readonly IHeaderConfigurationOverrideHelper _headerConfigurationOverrideHelper;
         private readonly IHeaderGenerator _headerGenerator;
         private readonly IHeaderResultHandler _headerResultHandler;
         private readonly ICspConfigurationOverrideHelper _cspConfigurationOverrideHelper;
         private readonly ICspReportHelper _reportHelper;
 
-        public HttpHeaderOverrideHelper()
+        public HeaderOverrideHelper()
         {
-            _contextHelper = new ContextHelper();
+            _contextConfigurationHelper = new ContextConfigurationHelper();
             _headerConfigurationOverrideHelper = new HeaderConfigurationOverrideHelper();
             _headerGenerator = new HeaderGenerator();
             _headerResultHandler = new HeaderResultHandler();
@@ -27,9 +27,9 @@ namespace NWebsec.Mvc.Helpers
             _reportHelper = new CspReportHelper();
         }
 
-        internal HttpHeaderOverrideHelper(IContextHelper contextHelper, IHeaderConfigurationOverrideHelper headerConfigurationOverrideHelper, IHeaderGenerator headerGenerator, IHeaderResultHandler headerResultHandler, ICspConfigurationOverrideHelper cspConfigurationOverrideHelper, ICspReportHelper reportHelper)
+        internal HeaderOverrideHelper(IContextConfigurationHelper contextConfigurationHelper, IHeaderConfigurationOverrideHelper headerConfigurationOverrideHelper, IHeaderGenerator headerGenerator, IHeaderResultHandler headerResultHandler, ICspConfigurationOverrideHelper cspConfigurationOverrideHelper, ICspReportHelper reportHelper)
         {
-            _contextHelper = contextHelper;
+            _contextConfigurationHelper = contextConfigurationHelper;
             _headerConfigurationOverrideHelper = headerConfigurationOverrideHelper;
             _headerGenerator = headerGenerator;
             _headerResultHandler = headerResultHandler;
@@ -46,7 +46,7 @@ namespace NWebsec.Mvc.Helpers
                 return;
             }
 
-            var oldConfig = _contextHelper.GetXRobotsTagConfiguration(context);
+            var oldConfig = _contextConfigurationHelper.GetXRobotsTagConfiguration(context);
 
             var result = _headerGenerator.CreateXRobotsTagResult(config, oldConfig);
             _headerResultHandler.HandleHeaderResult(context.Response, result);
@@ -61,7 +61,7 @@ namespace NWebsec.Mvc.Helpers
                 return;
             }
 
-            var oldConfig = _contextHelper.GetXFrameOptionsConfiguration(context);
+            var oldConfig = _contextConfigurationHelper.GetXFrameOptionsConfiguration(context);
 
             var result = _headerGenerator.CreateXfoResult(config, oldConfig);
             _headerResultHandler.HandleHeaderResult(context.Response, result);
@@ -76,7 +76,7 @@ namespace NWebsec.Mvc.Helpers
                 return;
             }
 
-            var oldConfig = _contextHelper.GetXContentTypeOptionsConfiguration(context);
+            var oldConfig = _contextConfigurationHelper.GetXContentTypeOptionsConfiguration(context);
 
             var result = _headerGenerator.CreateXContentTypeOptionsResult(config, oldConfig);
             _headerResultHandler.HandleHeaderResult(context.Response, result);
@@ -91,7 +91,7 @@ namespace NWebsec.Mvc.Helpers
                 return;
             }
 
-            var oldConfig = _contextHelper.GetXDownloadOptionsConfiguration(context);
+            var oldConfig = _contextConfigurationHelper.GetXDownloadOptionsConfiguration(context);
 
             var result = _headerGenerator.CreateXDownloadOptionsResult(config, oldConfig);
             _headerResultHandler.HandleHeaderResult(context.Response, result);
@@ -106,7 +106,7 @@ namespace NWebsec.Mvc.Helpers
                 return;
             }
 
-            var oldConfig = _contextHelper.GetXXssProtectionConfiguration(context);
+            var oldConfig = _contextConfigurationHelper.GetXXssProtectionConfiguration(context);
 
             var result = _headerGenerator.CreateXXssProtectionResult(config, oldConfig);
             _headerResultHandler.HandleHeaderResult(context.Response, result);
@@ -147,8 +147,8 @@ namespace NWebsec.Mvc.Helpers
             }
 
             var oldConfig = reportOnly
-                ? _contextHelper.GetCspReportonlyConfiguration(context)
-                : _contextHelper.GetCspConfiguration(context);
+                ? _contextConfigurationHelper.GetCspReportonlyConfiguration(context)
+                : _contextConfigurationHelper.GetCspConfiguration(context);
 
             var headers = _headerGenerator.CreateCspResults(cspConfig, reportOnly, _reportHelper.GetBuiltInCspReportHandlerRelativeUri(), oldConfig);
 
