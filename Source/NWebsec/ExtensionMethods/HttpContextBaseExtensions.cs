@@ -21,10 +21,12 @@ namespace NWebsec.ExtensionMethods
         public static NWebsecContext GetNWebsecOwinContext(this HttpContextBase context)
         {
             var environment = context.Items["owin.Environment"] as IDictionary<string, object>;
+            
             if (environment == null || !environment.ContainsKey(NWebsecContext.ContextKey))
             {
                 return null;
             }
+         
             return environment[NWebsecContext.ContextKey] as NWebsecContext;
         }
     }
