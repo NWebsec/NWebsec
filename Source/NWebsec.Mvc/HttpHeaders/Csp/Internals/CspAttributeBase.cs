@@ -12,7 +12,7 @@ namespace NWebsec.Mvc.HttpHeaders.Csp.Internals
     /// This is an abstract class which cannot be used directly.
     /// </summary>
     [AttributeUsage(AttributeTargets.Assembly , Inherited = false)]
-    public abstract class CspAttributeBase : HttpHeaderAttribute
+    public abstract class CspAttributeBase : HttpHeaderAttributeBase
     {
         private readonly CspConfigurationOverrideHelper _headerConfigurationOverrideHelper;
         private readonly HeaderOverrideHelper _headerOverrideHelper;
@@ -56,7 +56,7 @@ namespace NWebsec.Mvc.HttpHeaders.Csp.Internals
             base.OnActionExecuting(filterContext);
         }
 
-        protected override void SetHttpHeadersOnActionExecuted(ActionExecutedContext filterContext)
+        public override void SetHttpHeadersOnActionExecuted(ActionExecutedContext filterContext)
         {
             _headerOverrideHelper.SetCspHeaders(filterContext.HttpContext, ReportOnly);
             base.OnActionExecuted(filterContext);

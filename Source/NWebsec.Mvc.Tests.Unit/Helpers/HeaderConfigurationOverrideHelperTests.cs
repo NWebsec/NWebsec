@@ -12,7 +12,7 @@ using NWebsec.Mvc.Helpers;
 namespace NWebsec.Mvc.Tests.Unit.Helpers
 {
     [TestFixture]
-    public class HttpHeaderConfigurationOverrideHelperTests
+    public class HeaderConfigurationOverrideHelperTests
     {
         private HttpContextBase _mockContext;
         private HeaderConfigurationOverrideHelper _headerConfigurationOverrideHelper;

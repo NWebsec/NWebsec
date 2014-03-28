@@ -1,12 +1,8 @@
 ﻿// Copyright (c) André N. Klingsheim. See License.txt in the project root for license information.
 
 using System;
-using System.Web;
 using System.Web.Mvc;
-using NWebsec.Core;
-using NWebsec.Core.HttpHeaders;
 using NWebsec.Core.HttpHeaders.Configuration;
-using NWebsec.ExtensionMethods;
 using NWebsec.HttpHeaders;
 using NWebsec.Mvc.Helpers;
 using NWebsec.Mvc.HttpHeaders.Internals;
@@ -17,11 +13,11 @@ namespace NWebsec.Mvc.HttpHeaders
     /// Specifies whether the X-Frame-Options security header should be set in the HTTP response.
     /// </summary>
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, Inherited = true, AllowMultiple = false)]
-    public class XFrameOptionsAttribute : HttpHeaderAttribute
+    public class XFrameOptionsAttribute : HttpHeaderAttributeBase
     {
         private readonly IXFrameOptionsConfiguration _config;
-        private readonly HeaderConfigurationOverrideHelper _headerConfigurationOverrideHelper;
-        private HeaderOverrideHelper _headerOverrideHelper;
+        private readonly HeaderConfigurationOverrideHelper _configurationOverrideHelper;
+        private readonly HeaderOverrideHelper _headerOverrideHelper;
 
 
         /// <summary>
@@ -35,7 +31,7 @@ namespace NWebsec.Mvc.HttpHeaders
         /// </summary>
         public XFrameOptionsAttribute()
         {
-            _headerConfigurationOverrideHelper = new HeaderConfigurationOverrideHelper();
+            _configurationOverrideHelper = new HeaderConfigurationOverrideHelper();
             _headerOverrideHelper = new HeaderOverrideHelper();
 
             _config = new XFrameOptionsConfiguration { Policy = XFrameOptionsPolicy.Deny };
@@ -43,11 +39,11 @@ namespace NWebsec.Mvc.HttpHeaders
 
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
-            _headerConfigurationOverrideHelper.SetXFrameoptionsOverride(filterContext.HttpContext, _config);
+            _configurationOverrideHelper.SetXFrameoptionsOverride(filterContext.HttpContext, _config);
             base.OnActionExecuting(filterContext);
         }
 
-        protected override void SetHttpHeadersOnActionExecuted(ActionExecutedContext filterContext)
+        public override void SetHttpHeadersOnActionExecuted(ActionExecutedContext filterContext)
         {
             _headerOverrideHelper.SetXFrameoptionsHeader(filterContext.HttpContext);
         }

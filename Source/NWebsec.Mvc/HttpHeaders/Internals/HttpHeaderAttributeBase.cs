@@ -5,32 +5,39 @@ using System.Web.Mvc;
 
 namespace NWebsec.Mvc.HttpHeaders.Internals
 {
-    public abstract class HttpHeaderAttribute : ActionFilterAttribute
+    public abstract class HttpHeaderAttributeBase : ActionFilterAttribute
     {
         private static readonly Object MarkerObject = new Object();
+        private string _contextKey;
 
-        private readonly string _contextKey;
-
-        protected HttpHeaderAttribute()
+        private string ContextKey
         {
-            _contextKey = "NWebsecHeaderSet" + GetType().Name;
+            get
+            {
+                if (_contextKey == null)
+                {
+                    _contextKey = "NWebsecHeaderSet" + ContextKeyIdentifier;
+                }
+                return _contextKey;
+            }
         }
+        internal virtual string ContextKeyIdentifier { get { return GetType().Name; } }
+
 
         public override void OnActionExecuted(ActionExecutedContext filterContext)
         {
             var context = filterContext.HttpContext;
-            if (context.Items[_contextKey] != null)
+            if (context.Items[ContextKey] != null)
             {
                 base.OnActionExecuted(filterContext);
                 return;
             }
 
-            context.Items[_contextKey] = MarkerObject;
+            context.Items[ContextKey] = MarkerObject;
             SetHttpHeadersOnActionExecuted(filterContext);
             base.OnActionExecuted(filterContext);
         }
 
-        protected abstract void SetHttpHeadersOnActionExecuted(ActionExecutedContext filterContext);
-
+        public abstract void SetHttpHeadersOnActionExecuted(ActionExecutedContext filterContext);
     }
 }

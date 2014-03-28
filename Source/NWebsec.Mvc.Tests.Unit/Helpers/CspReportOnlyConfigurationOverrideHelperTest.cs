@@ -5,7 +5,7 @@ using NUnit.Framework;
 namespace NWebsec.Mvc.Tests.Unit.Helpers
 {
     [TestFixture]
-    public class CspConfigurationOverrideHelperReportOnlyTest : CspConfigurationOverrideHelperTestBase
+    public class CspReportOnlyConfigurationOverrideHelperTest : CspConfigurationOverrideHelperTestBase
     {
         protected override bool ReportOnly
         {

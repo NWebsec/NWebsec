@@ -123,7 +123,7 @@
     <Compile Include="HttpHeaders\Csp\CspScriptSrcReportOnlyAttribute.cs" />
     <Compile Include="HttpHeaders\Csp\CspStyleSrcAttribute.cs" />
     <Compile Include="HttpHeaders\Csp\CspStyleSrcReportOnlyAttribute.cs" />
-    <Compile Include="HttpHeaders\Internals\HttpHeaderAttribute.cs" />
+    <Compile Include="HttpHeaders\Internals\HttpHeaderAttributeBase.cs" />
     <Compile Include="HttpHeaders\SetNoCacheHttpHeadersAttribute.cs" />
     <Compile Include="HttpHeaders\StrictTransportSecurityAttribute.cs" />
     <Compile Include="HttpHeaders\SuppressVersionHttpHeadersAttribute.cs" />
