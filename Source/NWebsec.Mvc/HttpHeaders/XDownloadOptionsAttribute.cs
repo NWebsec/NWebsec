@@ -2,8 +2,9 @@
 
 using System;
 using System.Web.Mvc;
-using NWebsec.Modules.Configuration;
+using NWebsec.Core.HttpHeaders.Configuration;
 using NWebsec.Mvc.Helpers;
+using NWebsec.Mvc.HttpHeaders.Internals;
 
 namespace NWebsec.Mvc.HttpHeaders
 {
@@ -11,28 +12,36 @@ namespace NWebsec.Mvc.HttpHeaders
     /// Specifies whether the X-Download-Options security header should be set in the HTTP response.
     /// </summary>
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, Inherited = true, AllowMultiple = false)]
-    public class XDownloadOptionsAttribute : ActionFilterAttribute
+    public class XDownloadOptionsAttribute : HttpHeaderAttributeBase
     {
         private readonly HeaderConfigurationOverrideHelper _headerConfigurationOverrideHelper;
-
-        /// <summary>
-        /// Gets or sets whether the X-Download-Options security header should be set in the HTTP response. The default is true.
-        /// </summary>
-        public bool Enabled { get; set; }
+        private readonly HeaderOverrideHelper _headerOverrideHelper;
+        private readonly SimpleBooleanConfiguration _config;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="XDownloadOptionsAttribute"/> class
         /// </summary>
         public XDownloadOptionsAttribute()
         {
-            Enabled = true;
+            _config = new SimpleBooleanConfiguration { Enabled = true };
             _headerConfigurationOverrideHelper = new HeaderConfigurationOverrideHelper();
+            _headerOverrideHelper = new HeaderOverrideHelper();
         }
+
+        /// <summary>
+        /// Gets or sets whether the X-Download-Options security header should be set in the HTTP response. The default is true.
+        /// </summary>
+        public bool Enabled { get { return _config.Enabled; } set { _config.Enabled = value; } }
 
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
-            _headerConfigurationOverrideHelper.SetXDownloadOptionsOverride(filterContext.HttpContext, new SimpleBooleanConfigurationElement { Enabled = Enabled });
+            _headerConfigurationOverrideHelper.SetXDownloadOptionsOverride(filterContext.HttpContext, _config);
             base.OnActionExecuting(filterContext);
+        }
+
+        public override void SetHttpHeadersOnActionExecuted(ActionExecutedContext filterContext)
+        {
+            _headerOverrideHelper.SetXDownloadOptionsHeader(filterContext.HttpContext);
         }
     }
 }

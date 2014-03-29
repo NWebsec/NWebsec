@@ -5,6 +5,7 @@ using System.Web.Mvc;
 using NWebsec.Csp;
 using NWebsec.Mvc.Csp;
 using NWebsec.Mvc.Helpers;
+using NWebsec.Mvc.HttpHeaders.Internals;
 
 namespace NWebsec.Mvc.HttpHeaders.Csp.Internals
 {
@@ -12,9 +13,25 @@ namespace NWebsec.Mvc.HttpHeaders.Csp.Internals
     /// This is a base class which should not be used directly.
     /// </summary>
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, Inherited = true, AllowMultiple = true)]
-    public abstract class CspDirectiveAttributeBase : ActionFilterAttribute
+    public abstract class CspDirectiveAttributeBase : HttpHeaderAttributeBase
     {
         private readonly CspConfigurationOverrideHelper _headerConfigurationOverrideHelper;
+        private readonly HeaderOverrideHelper _headerOverrideHelper;
+
+        protected CspDirectiveAttributeBase()
+        {
+            Enabled = true;
+            None = Source.Inherit;
+            Self = Source.Inherit;
+            InheritCustomSources = true;
+            _headerConfigurationOverrideHelper = new CspConfigurationOverrideHelper();
+            _headerOverrideHelper = new HeaderOverrideHelper();
+        }
+
+        internal sealed override string ContextKeyIdentifier
+        {
+            get { return ReportOnly ? "CspReportOnly" : "Csp"; }
+        }
 
         /// <summary>
         /// Gets or sets whether the CSP directive is enabled in the CSP header. The default is true.
@@ -41,16 +58,6 @@ namespace NWebsec.Mvc.HttpHeaders.Csp.Internals
 
         protected abstract CspConfigurationOverrideHelper.CspDirectives Directive { get; }
         protected abstract bool ReportOnly { get; }
-
-        protected CspDirectiveAttributeBase()
-        {
-            Enabled = true;
-            None = Source.Inherit;
-            Self = Source.Inherit;
-            InheritCustomSources = true;
-            _headerConfigurationOverrideHelper = new CspConfigurationOverrideHelper();
-
-        }
 
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
@@ -82,6 +89,11 @@ namespace NWebsec.Mvc.HttpHeaders.Csp.Internals
             directiveOverride.OtherSources = sources;
 
             return directiveOverride;
+        }
+
+        public sealed override void SetHttpHeadersOnActionExecuted(ActionExecutedContext filterContext)
+        {
+            _headerOverrideHelper.SetCspHeaders(filterContext.HttpContext, ReportOnly);
         }
     }
 }

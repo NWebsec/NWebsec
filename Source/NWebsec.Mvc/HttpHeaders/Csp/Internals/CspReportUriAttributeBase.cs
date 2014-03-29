@@ -2,68 +2,76 @@
 
 using System;
 using System.Web.Mvc;
-using NWebsec.Modules.Configuration.Csp;
+using NWebsec.Core.HttpHeaders.Configuration;
 using NWebsec.Mvc.Helpers;
+using NWebsec.Mvc.HttpHeaders.Internals;
 
 namespace NWebsec.Mvc.HttpHeaders.Csp.Internals
 {
     /// <summary>
     /// This class is abstract and cannot be used directly.
     /// </summary>
-    public abstract class CspReportUriAttributeBase : ActionFilterAttribute
+    public abstract class CspReportUriAttributeBase : HttpHeaderAttributeBase
     {
+        private readonly CspReportUriDirectiveConfiguration _directive;
         private readonly CspConfigurationOverrideHelper _configurationOverrideHelper;
-        /// <summary>
-        /// Gets or sets whether the report-uri directive is enabled in the CSP header. The default is true.
-        /// </summary>
-        public bool Enabled { get; set; }
-        /// <summary>
-        /// Gets or sets whether the URI for the built in CSP report handler should be included in the directive. The default is false.
-        /// </summary>
-        public bool EnableBuiltinHandler { get; set; }
-        /// <summary>
-        /// Gets or sets custom report URIs for the directive. Report URIs are separated by exactly one whitespace, and they must be relative URIs.
-        /// </summary>
-        public string ReportUris { get; set; }
-        
-        protected abstract bool ReportOnly { get; }
+        private readonly HeaderOverrideHelper _headerOverrideHelper;
 
         protected CspReportUriAttributeBase()
         {
-            Enabled = true;
+            _directive = new CspReportUriDirectiveConfiguration { Enabled = true };
             _configurationOverrideHelper = new CspConfigurationOverrideHelper();
+            _headerOverrideHelper = new HeaderOverrideHelper();
         }
+
+        internal sealed override string ContextKeyIdentifier
+        {
+            get { return ReportOnly ? "CspReportOnly" : "Csp"; }
+        }
+
+        /// <summary>
+        /// Gets or sets whether the report-uri directive is enabled in the CSP header. The default is true.
+        /// </summary>
+        public bool Enabled { get { return _directive.Enabled; } set { _directive.Enabled = value; } }
+        /// <summary>
+        /// Gets or sets whether the URI for the built in CSP report handler should be included in the directive. The default is false.
+        /// </summary>
+        public bool EnableBuiltinHandler { get { return _directive.EnableBuiltinHandler; } set { _directive.EnableBuiltinHandler = value; } }
+        /// <summary>
+        /// Gets or sets custom report URIs for the directive. Report URIs are separated by exactly one whitespace, and they must be relative URIs.
+        /// </summary>
+        public string ReportUris
+        {
+            get { return String.Join(" ", _directive.ReportUris); }
+            set
+            {
+                if (String.IsNullOrEmpty(value))
+                    throw new ArgumentException("ReportUris cannot be set to null or an empty string.");
+                if (value.StartsWith(" ") || value.EndsWith(" "))
+                    throw new ArgumentException("ReportUris must not contain leading or trailing whitespace: " + value);
+                if (value.Contains("  "))
+                    throw new ArgumentException("ReportUris must be separated by exactly one whitespace: " + value);
+
+                _directive.ReportUris = value.Split(' ');
+            }
+        }
+
+        protected abstract bool ReportOnly { get; }
 
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
-            _configurationOverrideHelper.SetCspReportUriOverride(filterContext.HttpContext, GetCspDirectiveConfig(), ReportOnly);
+            if (_directive.Enabled && !_directive.EnableBuiltinHandler && _directive.ReportUris == null)
+            {
+                throw new ApplicationException("You need to either set EnableBuiltinHandler to true, or supply at least one Reporturi to enable the reporturi directive.");
+            }
+
+            _configurationOverrideHelper.SetCspReportUriOverride(filterContext.HttpContext, _directive, ReportOnly);
             base.OnActionExecuting(filterContext);
         }
 
-        protected CspReportUriDirectiveConfigurationElement GetCspDirectiveConfig()
+        public sealed override void SetHttpHeadersOnActionExecuted(ActionExecutedContext filterContext)
         {
-            if (Enabled && !EnableBuiltinHandler && String.IsNullOrEmpty(ReportUris))
-                throw new ApplicationException("You need to either set EnableBuiltinHandler to true, or supply at least one Reporturi.");
-            var directive = new CspReportUriDirectiveConfigurationElement
-                                {
-                                    Enabled = Enabled,
-                                    EnableBuiltinHandler = EnableBuiltinHandler
-                                };
-
-            if (String.IsNullOrEmpty(ReportUris)) return directive;
-
-            if (ReportUris.StartsWith(" ") || ReportUris.EndsWith(" "))
-                throw new ApplicationException("ReportUris must not contain leading or trailing whitespace: " + ReportUris);
-            if (ReportUris.Contains("  "))
-                throw new ApplicationException("ReportUris must be separated by exactly one whitespace: " + ReportUris);
-
-            var uris = ReportUris.Split(' ');
-
-            foreach (var uri in uris)
-            {
-                directive.ReportUriCollection.Add(new ReportUriConfigurationElement { ReportUri = new Uri(uri, UriKind.Relative) });
-            }
-            return directive;
+            _headerOverrideHelper.SetCspHeaders(filterContext.HttpContext, ReportOnly);
         }
     }
 }

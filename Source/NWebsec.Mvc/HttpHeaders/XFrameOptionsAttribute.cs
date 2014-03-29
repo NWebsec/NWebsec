@@ -18,24 +18,22 @@ namespace NWebsec.Mvc.HttpHeaders
         private readonly IXFrameOptionsConfiguration _config;
         private readonly HeaderConfigurationOverrideHelper _configurationOverrideHelper;
         private readonly HeaderOverrideHelper _headerOverrideHelper;
-
+        
+        /// <summary>
+        /// Initializes a new instance of the <see cref="XFrameOptionsAttribute"/> class
+        /// </summary>
+        public XFrameOptionsAttribute()
+        {
+            _config = new XFrameOptionsConfiguration { Policy = XFrameOptionsPolicy.Deny };
+            _configurationOverrideHelper = new HeaderConfigurationOverrideHelper();
+            _headerOverrideHelper = new HeaderOverrideHelper();
+        }
 
         /// <summary>
         /// Gets or sets whether the X-Frame-Options security header should be set in the HTTP response.
         /// Possible values are: Disabled, Deny, SameOrigin. The default is Deny.
         /// </summary>
         public XFrameOptionsPolicy Policy { get { return _config.Policy; } set { _config.Policy = value; } }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="XFrameOptionsAttribute"/> class
-        /// </summary>
-        public XFrameOptionsAttribute()
-        {
-            _configurationOverrideHelper = new HeaderConfigurationOverrideHelper();
-            _headerOverrideHelper = new HeaderOverrideHelper();
-
-            _config = new XFrameOptionsConfiguration { Policy = XFrameOptionsPolicy.Deny };
-        }
 
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {

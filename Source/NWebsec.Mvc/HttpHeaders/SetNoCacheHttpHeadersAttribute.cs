@@ -19,15 +19,6 @@ namespace NWebsec.Mvc.HttpHeaders
         private readonly HeaderOverrideHelper _headerOverrideHelper;
 
         /// <summary>
-        /// Gets of sets whether cache headers should be included in the response to prevent browser caching. The default is true.
-        /// </summary>
-        public bool Enabled
-        {
-            get { return _config.Enabled; }
-            set { _config.Enabled = value; }
-        }
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="SetNoCacheHttpHeadersAttribute"/> class
         /// </summary>
         public SetNoCacheHttpHeadersAttribute()
@@ -36,6 +27,11 @@ namespace NWebsec.Mvc.HttpHeaders
             _configurationOverrideHelper = new HeaderConfigurationOverrideHelper();
             _headerOverrideHelper = new HeaderOverrideHelper();
         }
+        
+        /// <summary>
+        /// Gets of sets whether cache headers should be included in the response to prevent browser caching. The default is true.
+        /// </summary>
+        public bool Enabled { get { return _config.Enabled; } set { _config.Enabled = value; } }
 
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
