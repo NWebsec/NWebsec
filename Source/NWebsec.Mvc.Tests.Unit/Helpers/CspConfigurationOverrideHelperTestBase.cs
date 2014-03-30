@@ -79,7 +79,7 @@ namespace NWebsec.Mvc.Tests.Unit.Helpers
         {
             var oldDirective = CspConfigOnContext.DefaultSrcDirective;
             oldDirective.SelfSrc = true;
-            oldDirective.CustomSources = new[]{ "transformtool.codeplex.com" };
+            oldDirective.CustomSources = new[] { "transformtool.codeplex.com" };
             var directive = new CspDirectiveBaseOverride { Self = Source.Disable, OtherSources = "nwebsec.codeplex.com", InheritOtherSources = true };
 
             HeaderConfigurationOverrideHelper.SetCspDirectiveOverride(MockContext, CspConfigurationOverrideHelper.CspDirectives.DefaultSrc, directive, ReportOnly);
@@ -167,8 +167,28 @@ namespace NWebsec.Mvc.Tests.Unit.Helpers
         {
 
             var overrideElement = HeaderConfigurationOverrideHelper.GetCspElementWithOverrides(MockContext, ReportOnly);
-            
+
             Assert.IsNull(overrideElement);
+        }
+
+        [Test]
+        public void GetCspElementWithOverrides_NoOverride_ReturnsConfiguredReportUri()
+        {
+            CspConfigOnContext.ReportUriDirective.Enabled = true;
+            CspConfigOnContext.ReportUriDirective.EnableBuiltinHandler = true;
+
+            var cspOverride = new CspHeaderConfiguration { Enabled = true };
+            var directive1 = new CspDirectiveUnsafeInlineUnsafeEvalOverride { Self = Source.Enable };
+
+            HeaderConfigurationOverrideHelper.SetCspHeaderOverride(MockContext, cspOverride, ReportOnly);
+            HeaderConfigurationOverrideHelper.SetCspDirectiveOverride(MockContext, CspConfigurationOverrideHelper.CspDirectives.ScriptSrc, directive1, ReportOnly);
+
+            var overrideElement = HeaderConfigurationOverrideHelper.GetCspElementWithOverrides(MockContext, ReportOnly);
+
+            Assert.IsNotNull(overrideElement);
+            Assert.IsNotNull(overrideElement.ReportUriDirective);
+            Assert.IsTrue(overrideElement.ReportUriDirective.Enabled);
+            Assert.IsTrue(overrideElement.ReportUriDirective.EnableBuiltinHandler);
         }
 
         [Test]
@@ -192,7 +212,7 @@ namespace NWebsec.Mvc.Tests.Unit.Helpers
         public void GetCspReportUriWithOverride_NoOverride_ReturnsNull()
         {
             var overrideElement = HeaderConfigurationOverrideHelper.GetCspReportUriDirectiveWithOverride(MockContext, ReportOnly);
-            
+
             Assert.IsNull(overrideElement);
         }
 
@@ -208,6 +228,5 @@ namespace NWebsec.Mvc.Tests.Unit.Helpers
             Assert.IsTrue(overrideElement.Enabled);
             Assert.IsTrue(overrideElement.EnableBuiltinHandler);
         }
-
     }
 }

@@ -82,6 +82,9 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <None Include="NWebsec.Core.nuspec">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="NWebsecDevKey.snk" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

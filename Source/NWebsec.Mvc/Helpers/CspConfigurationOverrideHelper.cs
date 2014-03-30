@@ -32,7 +32,7 @@ namespace NWebsec.Mvc.Helpers
             var cspWasOverridden = false;
 
             var cspHeaderOverride = GetCspHeaderWithOverride(context, reportOnly);
-            var overriddenConfig = new CspConfiguration();
+            var overriddenConfig = new CspConfiguration { Enabled = true };
 
             if (cspHeaderOverride != null)
             {
@@ -43,49 +43,81 @@ namespace NWebsec.Mvc.Helpers
                 cspWasOverridden = true;
             }
 
-            //Now deal with the directives.
-            var directiveOverrides = GetCspDirectiveOverides(context, reportOnly);
-
             var cspConfig = reportOnly
                                 ? _contextConfigurationHelper.GetCspReportonlyConfiguration(context)
                                 : _contextConfigurationHelper.GetCspConfiguration(context);
 
+            if (cspConfig != null)
+            {
+                overriddenConfig.DefaultSrcDirective = cspConfig.DefaultSrcDirective;
+                overriddenConfig.ScriptSrcDirective = cspConfig.ScriptSrcDirective;
+                overriddenConfig.ObjectSrcDirective = cspConfig.ObjectSrcDirective;
+                overriddenConfig.StyleSrcDirective = cspConfig.StyleSrcDirective;
+                overriddenConfig.ImgSrcDirective = cspConfig.ImgSrcDirective;
+                overriddenConfig.MediaSrcDirective = cspConfig.MediaSrcDirective;
+                overriddenConfig.FrameSrcDirective = cspConfig.FrameSrcDirective;
+                overriddenConfig.FontSrcDirective = cspConfig.FontSrcDirective;
+                overriddenConfig.ConnectSrcDirective = cspConfig.ConnectSrcDirective;
+                overriddenConfig.ReportUriDirective = cspConfig.ReportUriDirective;
+            }
+
+            //Now deal with the directives.
+            var directiveOverrides = GetCspDirectiveOverides(context, reportOnly);
+
             ICspDirectiveConfiguration element;
-            var isOverriden = directiveOverrides.TryGetValue(CspDirectives.DefaultSrc, out element);
-            overriddenConfig.DefaultSrcDirective = (isOverriden ? element : cspConfig.DefaultSrcDirective);
-            cspWasOverridden = isOverriden || cspWasOverridden;
+            if (directiveOverrides.TryGetValue(CspDirectives.DefaultSrc, out element))
+            {
+                overriddenConfig.DefaultSrcDirective = element;
+                cspWasOverridden = true;
+            }
 
-            isOverriden = directiveOverrides.TryGetValue(CspDirectives.ScriptSrc, out element);
-            overriddenConfig.ScriptSrcDirective = (isOverriden ? (ICspDirectiveUnsafeEvalConfiguration)element : cspConfig.ScriptSrcDirective);
-            cspWasOverridden = isOverriden || cspWasOverridden;
+            if (directiveOverrides.TryGetValue(CspDirectives.ScriptSrc, out element))
+            {
+                overriddenConfig.ScriptSrcDirective = (ICspDirectiveUnsafeEvalConfiguration)element;
+                cspWasOverridden = true;
+            }
 
-            isOverriden = directiveOverrides.TryGetValue(CspDirectives.ObjectSrc, out element);
-            overriddenConfig.ObjectSrcDirective = (isOverriden ? element : cspConfig.ObjectSrcDirective);
-            cspWasOverridden = isOverriden || cspWasOverridden;
+            if (directiveOverrides.TryGetValue(CspDirectives.ObjectSrc, out element))
+            {
+                overriddenConfig.ObjectSrcDirective = element;
+                cspWasOverridden = true;
+            }
 
-            isOverriden = directiveOverrides.TryGetValue(CspDirectives.StyleSrc, out element);
-            overriddenConfig.StyleSrcDirective = (isOverriden ? (ICspDirectiveUnsafeInlineConfiguration)element : cspConfig.StyleSrcDirective);
-            cspWasOverridden = isOverriden || cspWasOverridden;
+            if (directiveOverrides.TryGetValue(CspDirectives.StyleSrc, out element))
+            {
+                overriddenConfig.StyleSrcDirective = (ICspDirectiveUnsafeInlineConfiguration)element;
+                cspWasOverridden = true;
+            }
 
-            isOverriden = directiveOverrides.TryGetValue(CspDirectives.ImgSrc, out element);
-            overriddenConfig.ImgSrcDirective = (isOverriden ? element : cspConfig.ImgSrcDirective);
-            cspWasOverridden = isOverriden || cspWasOverridden;
+            if (directiveOverrides.TryGetValue(CspDirectives.ImgSrc, out element))
+            {
+                overriddenConfig.ImgSrcDirective = element;
+                cspWasOverridden = true;
+            }
 
-            isOverriden = directiveOverrides.TryGetValue(CspDirectives.MediaSrc, out element);
-            overriddenConfig.MediaSrcDirective = (isOverriden ? element : cspConfig.MediaSrcDirective);
-            cspWasOverridden = isOverriden || cspWasOverridden;
+            if (directiveOverrides.TryGetValue(CspDirectives.MediaSrc, out element))
+            {
+                overriddenConfig.MediaSrcDirective = element;
+                cspWasOverridden = true;
+            }
 
-            isOverriden = directiveOverrides.TryGetValue(CspDirectives.FrameSrc, out element);
-            overriddenConfig.FrameSrcDirective = (isOverriden ? element : cspConfig.FrameSrcDirective);
-            cspWasOverridden = isOverriden || cspWasOverridden;
+            if (directiveOverrides.TryGetValue(CspDirectives.FrameSrc, out element))
+            {
+                overriddenConfig.FrameSrcDirective = element;
+                cspWasOverridden = true;
+            }
 
-            isOverriden = directiveOverrides.TryGetValue(CspDirectives.FontSrc, out element);
-            overriddenConfig.FontSrcDirective = (isOverriden ? element : cspConfig.FontSrcDirective);
-            cspWasOverridden = isOverriden || cspWasOverridden;
+            if (directiveOverrides.TryGetValue(CspDirectives.FontSrc, out element))
+            {
+                overriddenConfig.FontSrcDirective = element;
+                cspWasOverridden = true;
+            }
 
-            isOverriden = directiveOverrides.TryGetValue(CspDirectives.ConnectSrc, out element);
-            overriddenConfig.ConnectSrcDirective = (isOverriden ? element : cspConfig.ConnectSrcDirective);
-            cspWasOverridden = isOverriden || cspWasOverridden;
+            if (directiveOverrides.TryGetValue(CspDirectives.ConnectSrc, out element))
+            {
+                overriddenConfig.ConnectSrcDirective = element;
+                cspWasOverridden = true;
+            }
 
             //Special treatment for the reportUri
             var reportOverride = GetCspReportUriDirectiveWithOverride(context, reportOnly);
@@ -163,6 +195,12 @@ namespace NWebsec.Mvc.Helpers
             var cspConfig = reportOnly
                                 ? _contextConfigurationHelper.GetCspReportonlyConfiguration(context)
                                 : _contextConfigurationHelper.GetCspConfiguration(context);
+
+            if (cspConfig == null)
+            {
+                return null;
+            }
+
             switch (directive)
             {
                 case CspDirectives.DefaultSrc:
@@ -199,6 +237,11 @@ namespace NWebsec.Mvc.Helpers
 
         internal ICspDirectiveConfiguration CloneElement(ICspDirectiveConfiguration element)
         {
+            if (element == null)
+            {
+                return null;
+            }
+
             ICspDirectiveConfiguration newElement = null;
 
             var unsafeEvalElement = element as ICspDirectiveUnsafeEvalConfiguration;
@@ -257,13 +300,17 @@ namespace NWebsec.Mvc.Helpers
             return (IDictionary<CspDirectives, ICspDirectiveConfiguration>)headerList[headerKey];
         }
 
-        internal ICspDirectiveConfiguration GetOverridenCspDirectiveConfig(CspDirectives directive, CspDirectiveBaseOverride directiveOverride, ICspDirectiveConfiguration directiveElement)
+        internal ICspDirectiveConfiguration GetOverridenCspDirectiveConfig(CspDirectives directive, CspDirectiveBaseOverride directiveOverride, ICspDirectiveConfiguration directiveConfig)
         {
+            ICspDirectiveConfiguration result=null;
+
             switch (directive)
             {
                 case CspDirectives.ScriptSrc:
                     {
-                        var config = (ICspDirectiveUnsafeEvalConfiguration)directiveElement;
+                        var config = (ICspDirectiveUnsafeEvalConfiguration)directiveConfig ?? new CspDirectiveUnsafeEvalConfiguration();
+                        result = config;
+
                         var theOverride = (CspDirectiveUnsafeInlineUnsafeEvalOverride)directiveOverride;
 
                         if (theOverride.UnsafeEval != Source.Inherit)
@@ -275,7 +322,8 @@ namespace NWebsec.Mvc.Helpers
                     break;
                 case CspDirectives.StyleSrc:
                     {
-                        var config = (ICspDirectiveUnsafeInlineConfiguration)directiveElement;
+                        var config = (ICspDirectiveUnsafeInlineConfiguration)directiveConfig ?? new CspDirectiveUnsafeInlineConfiguration();
+                        result = config;
                         var theOverride = (CspDirectiveUnsafeInlineOverride)directiveOverride;
 
                         if (theOverride.UnsafeInline != Source.Inherit)
@@ -284,21 +332,26 @@ namespace NWebsec.Mvc.Helpers
                     break;
             }
 
-            directiveElement.Enabled = directiveOverride.Enabled;
+            if (result == null)
+            {
+                result = directiveConfig ?? new CspDirectiveConfiguration();
+            }
+
+            result.Enabled = directiveOverride.Enabled;
 
             if (directiveOverride.None != Source.Inherit)
-                directiveElement.NoneSrc = directiveOverride.None == Source.Enable;
+                result.NoneSrc = directiveOverride.None == Source.Enable;
 
             if (directiveOverride.Self != Source.Inherit)
-                directiveElement.SelfSrc = directiveOverride.Self == Source.Enable;
+                result.SelfSrc = directiveOverride.Self == Source.Enable;
 
             if (!directiveOverride.InheritOtherSources)
             {
-                directiveElement.CustomSources = new string[] { };
+                result.CustomSources = new string[] { };
             }
 
-            AddSources(directiveElement, directiveOverride.OtherSources);
-            return directiveElement;
+            AddSources(result, directiveOverride.OtherSources);
+            return result;
         }
 
         private void AddSources(ICspDirectiveConfiguration directiveElement, string sources)
