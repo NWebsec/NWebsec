@@ -37,50 +37,50 @@ namespace NWebsec.Owin
         public ICspDirectiveConfiguration ConnectSrcDirective { get; set; }
         public ICspReportUriDirective ReportUriDirective { get; set; }
 
-        public CspOptions WithDefaultSrc(Action<ICspDirectiveConfiguration> action)
+        public CspOptions DefaultSources(Action<ICspDirectiveConfiguration> action)
         {
-            action(DefaultSrcDirective);
+            action(DefaultSrcDirective as CspDirective);
             return this;
         }
 
-        public CspOptions WithScriptSrc(Action<ICspDirectiveUnsafeEvalConfiguration> action)
+        public CspOptions ScriptSources(Action<ICspDirectiveUnsafeEvalConfiguration> action)
         {
             action(ScriptSrcDirective);
             return this;
         }
 
-        public CspOptions WithObjectSources(Action<ICspDirectiveConfiguration> action)
+        public CspOptions ObjectSources(Action<ICspDirectiveConfiguration> action)
         {
             action(ObjectSrcDirective);
             return this;
         }
-        public CspOptions WithStyleSrc(Action<ICspDirectiveUnsafeInlineConfiguration> action)
+        public CspOptions StyleSources(Action<ICspDirectiveUnsafeInlineConfiguration> action)
         {
             action(StyleSrcDirective);
             return this;
         }
-        public CspOptions WithImageSrc(Action<ICspDirectiveConfiguration> action)
+        public CspOptions ImageSources(Action<ICspDirectiveConfiguration> action)
         {
             action(ImgSrcDirective);
             return this;
         }
-        public CspOptions WithMediaSrc(Action<ICspDirectiveConfiguration> action)
+        public CspOptions MediaSources(Action<ICspDirectiveConfiguration> action)
         {
             action(MediaSrcDirective);
             return this;
         }
-        public CspOptions WithFrameSrc(Action<ICspDirectiveConfiguration> action)
+        public CspOptions FrameSources(Action<ICspDirectiveConfiguration> action)
         {
             action(FrameSrcDirective);
             return this;
         }
-        public CspOptions WithFontSrc(Action<ICspDirectiveConfiguration> action)
+        public CspOptions FontSources(Action<ICspDirectiveConfiguration> action)
         {
             action(FontSrcDirective);
             return this;
         }
 
-        public CspOptions WithConnectSrc(Action<ICspDirectiveConfiguration> action)
+        public CspOptions ConnectSources(Action<ICspDirectiveConfiguration> action)
         {
             action(ConnectSrcDirective);
             return this;

@@ -1,6 +1,5 @@
 // Copyright (c) André N. Klingsheim. See License.txt in the project root for license information.
 
-using System.Collections.Generic;
 using NWebsec.Core.HttpHeaders.Configuration;
 
 namespace NWebsec.Owin
@@ -16,7 +15,6 @@ namespace NWebsec.Owin
         {
             directive.NoneSrc = true;
         }
-
 
         /// <summary>
         /// Sets the "self" source for the CSP directive.
@@ -37,14 +35,14 @@ namespace NWebsec.Owin
         /// <param name="directive">The CSP directive configuration object.</param>
         /// <param name="sources"></param>
         /// <returns>The CSP directive configuration object.</returns>
-        public static T CustomSources<T>(this T directive, IEnumerable<string> sources) where T : ICspDirectiveConfiguration
+        public static T CustomSources<T>(this T directive, params string[] sources) where T : ICspDirectiveConfiguration
         {
             directive.CustomSources = sources;
             return directive;
         }
 
         /// <summary>
-        /// Sets "unsafe-inline" source for the CSP directive. 
+        /// Sets the "unsafe-inline" source for the CSP directive. 
         /// </summary>
         /// <typeparam name="T">The type of the CSP directive configuration object.</typeparam>
         /// <param name="directive">The CSP directive configuration object.</param>
@@ -56,7 +54,7 @@ namespace NWebsec.Owin
         }
 
         /// <summary>
-        /// Sets "unsafe-eval" source for the CSP directive. 
+        /// Sets the "unsafe-eval" source for the CSP directive. 
         /// </summary>
         /// <typeparam name="T">The type of the CSP directive configuration object.</typeparam>
         /// <param name="directive">The CSP directive configuration object.</param>
