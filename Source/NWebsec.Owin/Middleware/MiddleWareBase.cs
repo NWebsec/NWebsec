@@ -12,7 +12,7 @@ namespace NWebsec.Owin.Middleware
     public class MiddlewareBase
     {
         private readonly AppFunc _next;
-        
+
         public MiddlewareBase(AppFunc next)
         {
             _next = next;
@@ -21,9 +21,9 @@ namespace NWebsec.Owin.Middleware
         public async Task Invoke(IDictionary<string, object> environment)
         {
             var env = new OwinEnvironment(environment);
-            
+
             PreInvokeNext(env);
-            
+
             if (_next != null)
             {
                 await _next(environment);

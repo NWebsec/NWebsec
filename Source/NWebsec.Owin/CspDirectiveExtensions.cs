@@ -7,7 +7,7 @@ namespace NWebsec.Owin
     public static class CspDirectiveExtensions
     {
         /// <summary>
-        /// Sets the "none" source for the CSP directive. This source cannot be combined with other sources on a CSP directive.
+        ///     Sets the "none" source for the CSP directive. This source cannot be combined with other sources on a CSP directive.
         /// </summary>
         /// <typeparam name="T">The type of the CSP directive configuration object.</typeparam>
         /// <param name="directive">The CSP directive configuration object.</param>
@@ -17,19 +17,19 @@ namespace NWebsec.Owin
         }
 
         /// <summary>
-        /// Sets the "self" source for the CSP directive.
+        ///     Sets the "self" source for the CSP directive.
         /// </summary>
         /// <typeparam name="T">The type of the CSP directive configuration object.</typeparam>
         /// <param name="directive">The CSP directive configuration object.</param>
         /// <returns>The CSP directive configuration object.</returns>
-        public static T Self<T>(this T directive) where T :  ICspDirectiveConfiguration
+        public static T Self<T>(this T directive) where T : ICspDirectiveConfiguration
         {
             directive.SelfSrc = true;
             return directive;
         }
 
         /// <summary>
-        /// Sets custom sources for the CSP directive. 
+        ///     Sets custom sources for the CSP directive.
         /// </summary>
         /// <typeparam name="T">The type of the CSP directive configuration object.</typeparam>
         /// <param name="directive">The CSP directive configuration object.</param>
@@ -42,7 +42,7 @@ namespace NWebsec.Owin
         }
 
         /// <summary>
-        /// Sets the "unsafe-inline" source for the CSP directive. 
+        ///     Sets the "unsafe-inline" source for the CSP directive.
         /// </summary>
         /// <typeparam name="T">The type of the CSP directive configuration object.</typeparam>
         /// <param name="directive">The CSP directive configuration object.</param>
@@ -54,7 +54,7 @@ namespace NWebsec.Owin
         }
 
         /// <summary>
-        /// Sets the "unsafe-eval" source for the CSP directive. 
+        ///     Sets the "unsafe-eval" source for the CSP directive.
         /// </summary>
         /// <typeparam name="T">The type of the CSP directive configuration object.</typeparam>
         /// <param name="directive">The CSP directive configuration object.</param>

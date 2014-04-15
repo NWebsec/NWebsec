@@ -12,7 +12,7 @@ namespace NWebsec.Owin.Core
         internal OwinEnvironment(IDictionary<string, object> env)
         {
             _environment = env;
-            ResponseHeaders = new ResponseHeaders((IDictionary<string, string[]>)_environment[OwinKeys.ResponseHeaders]);
+            ResponseHeaders = new ResponseHeaders((IDictionary<string, string[]>) _environment[OwinKeys.ResponseHeaders]);
         }
 
         internal ResponseHeaders ResponseHeaders { get; private set; }

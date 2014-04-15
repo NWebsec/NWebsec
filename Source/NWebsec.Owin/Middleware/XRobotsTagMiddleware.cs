@@ -13,14 +13,14 @@ namespace NWebsec.Owin.Middleware
 
     public class XRobotsTagMiddleware : MiddlewareBase
     {
-        private readonly HeaderResult _headerResult;
         private readonly IXRobotsTagConfiguration _config;
+        private readonly HeaderResult _headerResult;
 
         public XRobotsTagMiddleware(AppFunc next, Object options)
             : base(next)
         {
             _config = options as IXRobotsTagConfiguration;
-            
+
             var headerGenerator = new HeaderGenerator();
             _headerResult = headerGenerator.CreateXRobotsTagResult(_config);
         }

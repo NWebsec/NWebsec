@@ -57,21 +57,16 @@
     <Compile Include="HstsOptions.cs" />
     <Compile Include="Middleware\CspMiddleware.cs" />
     <Compile Include="Middleware\HstsMiddleware.cs" />
+    <Compile Include="Middleware\XXssMiddleware.cs" />
     <Compile Include="Middleware\XRobotsTagMiddleware.cs" />
     <Compile Include="Middleware\XDownloadOptionsMiddleware.cs" />
     <Compile Include="Middleware\XContentTypeOptionsMiddleware.cs" />
     <Compile Include="Middleware\MiddleWareBase.cs" />
     <Compile Include="Middleware\XfoMiddleware.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="WithCsp.cs" />
-    <Compile Include="WithXfo.cs" />
-    <Compile Include="WithHsts.cs" />
-    <Compile Include="WithXRobotsTag.cs" />
-    <Compile Include="WithXxssProtection.cs" />
     <Compile Include="XFrameOptions.cs" />
     <Compile Include="XRobotsTagOptions.cs" />
     <Compile Include="XXssProtectionOptions.cs" />
-    <Compile Include="XXssProtectionOptionsExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\NWebsec.Core\NWebsec.Core.csproj">

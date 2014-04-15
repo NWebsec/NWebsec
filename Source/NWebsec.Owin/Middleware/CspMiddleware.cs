@@ -2,7 +2,11 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
+using NWebsec.Core.HttpHeaders;
+using NWebsec.Core.HttpHeaders.Configuration;
+using NWebsec.Owin.Core;
 
 namespace NWebsec.Owin.Middleware
 {
@@ -10,8 +14,37 @@ namespace NWebsec.Owin.Middleware
 
     public class CspMiddleware : MiddlewareBase
     {
-        public CspMiddleware(AppFunc next) : base(next)
+        private readonly ICspConfiguration _config;
+        private readonly HeaderResult[] _headerResults;
+        private readonly bool _reportOnly;
+
+        public CspMiddleware(AppFunc next, Object options, bool reportOnly) : base(next)
         {
+            _config = (ICspConfiguration) options;
+            _reportOnly = reportOnly;
+
+            var headerGenerator = new HeaderGenerator();
+            _headerResults = headerGenerator.CreateCspResults(_config, reportOnly).ToArray();
+        }
+
+        internal override void PreInvokeNext(OwinEnvironment owinEnvironment)
+        {
+            if (_reportOnly)
+            {
+                owinEnvironment.NWebsecContext.CspReportOnly = _config;
+            }
+            else
+            {
+                owinEnvironment.NWebsecContext.Csp = _config;
+            }
+
+            foreach (HeaderResult headerResult in _headerResults)
+            {
+                if (headerResult.Action == HeaderResult.ResponseAction.Set)
+                {
+                    owinEnvironment.ResponseHeaders.SetHeader(headerResult.Name, headerResult.Value);
+                }
+            }
         }
     }
 }

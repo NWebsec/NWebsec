@@ -1,52 +1,38 @@
 ﻿// Copyright (c) André N. Klingsheim. See License.txt in the project root for license information.
 
 using System;
+using System.ComponentModel;
 using NWebsec.Core.HttpHeaders.Configuration;
 using NWebsec.Owin.Fluent;
 
 namespace NWebsec.Owin
 {
-
-    //public interface IHstsOptions : IFluentInterface
-    //{
-
-    //    HstsOptions WithMaxAge(int days = 0, int hours = 0, int minutes = 0, int seconds = 0);
-    //    HstsOptions IncludeSubdomains();
-    //}
-    public interface IHstsOptionsWithMaxAge { }
-
-    public class HstsOptions : IHstsConfiguration, IFluentInterface, IHstsOptionsWithMaxAge
+    public class HstsOptionsConfiguration : IHstsConfiguration, IFluentInterface
     {
-        /// <summary>
-        /// Creates a new instance. Use the fluent API to configure object.
-        /// </summary>
-        public HstsOptions()
+        public HstsOptionsConfiguration()
         {
-
+            MaxAge = TimeSpan.Zero;
         }
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public TimeSpan MaxAge { get; set; }
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public bool IncludeSubdomains { get; set; }
-
-
-        public HstsOptionsWithMaxage SetMaxAge(int days = 0, int hours = 0, int minutes = 0, int seconds = 0)
-        {
-            var maxAge = new TimeSpan(days, hours, minutes, seconds);
-            return new HstsOptionsWithMaxage(maxAge);
-        }
     }
 
-    public class HstsOptionsWithMaxage : HstsOptions
+    public class HstsOptions : HstsOptionsConfiguration
     {
-        internal HstsOptionsWithMaxage(TimeSpan maxAge)
+        public HstsOptions MaxAge(int days = 0, int hours = 0, int minutes = 0, int seconds = 0)
         {
-            MaxAge = maxAge;
+            base.MaxAge = new TimeSpan(days, hours, minutes, seconds);
+            return this;
         }
 
-        public new HstsOptionsWithMaxage IncludeSubdomains()
+        public new HstsOptions IncludeSubdomains()
         {
             base.IncludeSubdomains = true;
             return this;
         }
-
     }
 }

@@ -13,8 +13,8 @@ namespace NWebsec.Owin.Middleware
 
     public class XDownloadOptionsMiddleware : MiddlewareBase
     {
-        private readonly HeaderResult _headerResult;
         private readonly ISimpleBooleanConfiguration _config;
+        private readonly HeaderResult _headerResult;
 
         public XDownloadOptionsMiddleware(AppFunc next)
             : base(next)

@@ -11,23 +11,22 @@ namespace NWebsec.Owin.Middleware
 {
     using AppFunc = Func<IDictionary<string, object>, Task>;
 
-    public class XContentTypeOptionsMiddleware : MiddlewareBase
+    public class XXssMiddleware : MiddlewareBase
     {
-        private readonly ISimpleBooleanConfiguration _config;
+        private readonly IXXssProtectionConfiguration _config;
         private readonly HeaderResult _headerResult;
 
-        public XContentTypeOptionsMiddleware(AppFunc next)
+        public XXssMiddleware(AppFunc next, Object options)
             : base(next)
         {
-            _config = new SimpleBooleanConfiguration { Enabled = true };
+            _config = (IXXssProtectionConfiguration) options;
             var headerGenerator = new HeaderGenerator();
-            _headerResult = headerGenerator.CreateXContentTypeOptionsResult(_config);
+            _headerResult = headerGenerator.CreateXXssProtectionResult(_config);
         }
 
         internal override void PreInvokeNext(OwinEnvironment owinEnvironment)
         {
-            owinEnvironment.NWebsecContext.XContentTypeOptions = _config;
-
+            owinEnvironment.NWebsecContext.XXssProtection = _config;
             if (_headerResult.Action == HeaderResult.ResponseAction.Set)
             {
                 owinEnvironment.ResponseHeaders.SetHeader(_headerResult.Name, _headerResult.Value);
