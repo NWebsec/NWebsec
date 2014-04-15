@@ -40,9 +40,9 @@ namespace NWebsec.Core.HttpHeaders
 
         public HeaderResult CreateHstsResult(IHstsConfiguration hstsConfig)
         {
+            if (hstsConfig.MaxAge < TimeSpan.Zero) return null;
+            
             var seconds = (int)hstsConfig.MaxAge.TotalSeconds;
-
-            if (seconds == 0) return null;
 
             var includeSubdomains = (hstsConfig.IncludeSubdomains ? "; includeSubDomains" : "");
             var value = String.Format("max-age={0}{1}", seconds, includeSubdomains);

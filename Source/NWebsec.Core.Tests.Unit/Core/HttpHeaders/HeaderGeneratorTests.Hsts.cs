@@ -10,13 +10,25 @@ namespace NWebsec.Core.Tests.Unit.Core.HttpHeaders
     public partial class HeaderGeneratorTests
     {
         [Test]
-        public void CreateHstsResult_ZeroTimespanInConfig_ReturnsNull()
+        public void CreateHstsResult_NegativeTimespanInConfig_ReturnsNull()
+        {
+            var hstsConfig = new HstsConfiguration { MaxAge = new TimeSpan(-1) };
+
+            var result = _generator.CreateHstsResult(hstsConfig);
+
+            Assert.IsNull(result);
+        }
+
+        [Test]
+        public void CreateHstsResult_ZeroTimespanInConfig_ReturnsSetHstsResult()
         {
             var hstsConfig = new HstsConfiguration { MaxAge = new TimeSpan(0) };
 
             var result = _generator.CreateHstsResult(hstsConfig);
 
-            Assert.IsNull(result);
+            Assert.AreEqual(HeaderResult.ResponseAction.Set, result.Action);
+            Assert.AreEqual("Strict-Transport-Security", result.Name);
+            Assert.AreEqual("max-age=0", result.Value);
         }
 
         [Test]
