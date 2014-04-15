@@ -415,6 +415,7 @@ namespace NWebsec.Tests.Functional
             var response = await HttpClient.GetAsync(testUri);
 
             Assert.IsTrue(response.IsSuccessStatusCode, ReqFailed + testUri);
+            Assert.IsTrue(response.Headers.Contains("Content-Security-Policy"), testUri.ToString());
             var cspHeader = response.Headers.GetValues("Content-Security-Policy").Single();
             Assert.IsTrue(cspHeader.Contains("script-src 'unsafe-inline' 'unsafe-eval' configscripthost;"), testUri.ToString());
         }
