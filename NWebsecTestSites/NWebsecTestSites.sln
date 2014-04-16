@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.21005.1
+VisualStudioVersion = 12.0.30110.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{D3F413CD-5D3E-4C55-B9A6-AE7FCD60E140}"
 	ProjectSection(SolutionItems) = preProject
@@ -21,7 +21,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mvc3", "Mvc3\Mvc3.csproj", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mvc4", "Mvc4\Mvc4.csproj", "{0F77B971-0484-44EA-B3F1-D1AF0F520922}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NWebsec.Tests.Functional", "NWebsec.Tests.Functional\NWebsec.Tests.Functional.csproj", "{6C622341-A09A-4582-92F0-F75CF2E2E605}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NWebsec.Tests.Integration", "NWebsec.Tests.Integration\NWebsec.Tests.Integration.csproj", "{6C622341-A09A-4582-92F0-F75CF2E2E605}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebAndLoadTestMVC", "WebAndLoadTestMVC\WebAndLoadTestMVC.csproj", "{DF87D735-AE75-4E95-A557-6C96FB8B5329}"
 EndProject

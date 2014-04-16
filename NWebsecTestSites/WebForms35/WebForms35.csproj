@@ -47,7 +47,12 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="NWebsec">
-      <HintPath>..\packages\NWebsec.3.0.1\lib\35\NWebsec.dll</HintPath>
+      <HintPath>..\packages\NWebsec.3.0.2-alpha03\lib\35\NWebsec.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="NWebsec.Core">
+      <HintPath>..\packages\NWebsec.Core.1.0.0-alpha02\lib\35\NWebsec.Core.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="NWebsec.SessionSecurity, Version=1.0.0.0, Culture=neutral, PublicKeyToken=3613da5f958908a1, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>

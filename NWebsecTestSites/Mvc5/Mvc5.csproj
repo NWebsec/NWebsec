@@ -43,10 +43,16 @@
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="NWebsec">
-      <HintPath>..\packages\NWebsec.3.0.1\lib\40\NWebsec.dll</HintPath>
+      <HintPath>..\packages\NWebsec.3.0.2-alpha03\lib\45\NWebsec.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="NWebsec.Core">
+      <HintPath>..\packages\NWebsec.Core.1.0.0-alpha02\lib\45\NWebsec.Core.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="NWebsec.Mvc">
-      <HintPath>..\packages\NWebsec.Mvc.3.0.1\lib\40\NWebsec.Mvc.dll</HintPath>
+      <HintPath>..\packages\NWebsec.Mvc.3.0.2-alpha04\lib\45\NWebsec.Mvc.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="NWebsec.SessionSecurity">
       <HintPath>..\packages\NWebsec.SessionSecurity.1.0.0\lib\45\NWebsec.SessionSecurity.dll</HintPath>
