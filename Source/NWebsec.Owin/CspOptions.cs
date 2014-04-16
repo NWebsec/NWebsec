@@ -3,11 +3,10 @@
 using System;
 using System.ComponentModel;
 using NWebsec.Core.HttpHeaders.Configuration;
-using NWebsec.Owin.Fluent;
 
 namespace NWebsec.Owin
 {
-    public class CspOptions : ICspConfiguration, IFluentInterface
+    public class CspOptions : ICspConfiguration, IFluentCspOptions
     {
         internal CspOptions()
         {
@@ -62,57 +61,102 @@ namespace NWebsec.Owin
         [EditorBrowsable(EditorBrowsableState.Never)]
         public ICspReportUriDirective ReportUriDirective { get; set; }
 
-        public CspOptions DefaultSources(Action<ICspDirectiveConfiguration> action)
+        /// <summary>
+        /// Configures the CSP default-src directive.
+        /// </summary>
+        /// <param name="configurer">An <see cref="Action"/> that configures the sources for the directive.</param>
+        /// <returns>The current <see cref="CspOptions" /> instance.</returns>
+        public CspOptions DefaultSources(Action<ICspDirectiveConfiguration> configurer)
         {
-            action(DefaultSrcDirective as CspDirective);
+            configurer(DefaultSrcDirective);
             return this;
         }
 
-        public CspOptions ScriptSources(Action<ICspDirectiveUnsafeEvalConfiguration> action)
+        /// <summary>
+        /// Configures the CSP script-src directive.
+        /// </summary>
+        /// <param name="configurer">An <see cref="Action"/> that configures the sources for the directive.</param>
+        /// <returns>The current <see cref="CspOptions" /> instance.</returns>
+        public CspOptions ScriptSources(Action<ICspDirectiveUnsafeEvalConfiguration> configurer)
         {
-            action(ScriptSrcDirective);
+            configurer(ScriptSrcDirective);
             return this;
         }
 
-        public CspOptions ObjectSources(Action<ICspDirectiveConfiguration> action)
+        /// <summary>
+        /// Configures the CSP object-src directive.
+        /// </summary>
+        /// <param name="configurer">An <see cref="Action"/> that configures the sources for the directive.</param>
+        /// <returns>The current <see cref="CspOptions" /> instance.</returns>
+        public CspOptions ObjectSources(Action<ICspDirectiveConfiguration> configurer)
         {
-            action(ObjectSrcDirective);
+            configurer(ObjectSrcDirective);
             return this;
         }
 
-        public CspOptions StyleSources(Action<ICspDirectiveUnsafeInlineConfiguration> action)
+        /// <summary>
+        /// Configures the CSP style-src directive.
+        /// </summary>
+        /// <param name="configurer">An <see cref="Action"/> that configures the sources for the directive.</param>
+        /// <returns>The current <see cref="CspOptions" /> instance.</returns>
+        public CspOptions StyleSources(Action<ICspDirectiveUnsafeInlineConfiguration> configurer)
         {
-            action(StyleSrcDirective);
+            configurer(StyleSrcDirective);
             return this;
         }
 
-        public CspOptions ImageSources(Action<ICspDirectiveConfiguration> action)
+        /// <summary>
+        /// Configures the CSP image-src directive.
+        /// </summary>
+        /// <param name="configurer">An <see cref="Action"/> that configures the sources for the directive.</param>
+        /// <returns>The current <see cref="CspOptions" /> instance.</returns>
+        public CspOptions ImageSources(Action<ICspDirectiveConfiguration> configurer)
         {
-            action(ImgSrcDirective);
+            configurer(ImgSrcDirective);
             return this;
         }
 
-        public CspOptions MediaSources(Action<ICspDirectiveConfiguration> action)
+        /// <summary>
+        /// Configures the CSP media-src directive.
+        /// </summary>
+        /// <param name="configurer">An <see cref="Action"/> that configures the sources for the directive.</param>
+        /// <returns>The current <see cref="CspOptions" /> instance.</returns>
+        public CspOptions MediaSources(Action<ICspDirectiveConfiguration> configurer)
         {
-            action(MediaSrcDirective);
+            configurer(MediaSrcDirective);
             return this;
         }
 
-        public CspOptions FrameSources(Action<ICspDirectiveConfiguration> action)
+        /// <summary>
+        /// Configures the CSP frame-src directive.
+        /// </summary>
+        /// <param name="configurer">An <see cref="Action"/> that configures the sources for the directive.</param>
+        /// <returns>The current <see cref="CspOptions" /> instance.</returns>
+        public CspOptions FrameSources(Action<ICspDirectiveConfiguration> configurer)
         {
-            action(FrameSrcDirective);
+            configurer(FrameSrcDirective);
             return this;
         }
 
-        public CspOptions FontSources(Action<ICspDirectiveConfiguration> action)
+        /// <summary>
+        /// Configures the CSP font-src directive.
+        /// </summary>
+        /// <param name="configurer">An <see cref="Action"/> that configures the sources for the directive.</param>
+        /// <returns>The current <see cref="CspOptions" /> instance.</returns>
+        public CspOptions FontSources(Action<ICspDirectiveConfiguration> configurer)
         {
-            action(FontSrcDirective);
+            configurer(FontSrcDirective);
             return this;
         }
 
-        public CspOptions ConnectSources(Action<ICspDirectiveConfiguration> action)
+        /// <summary>
+        /// Configures the CSP connect-src directive.
+        /// </summary>
+        /// <param name="configurer">An <see cref="Action"/> that configures the sources for the directive.</param>
+        /// <returns>The current <see cref="CspOptions" /> instance.</returns>
+        public CspOptions ConnectSources(Action<ICspDirectiveConfiguration> configurer)
         {
-            action(ConnectSrcDirective);
+            configurer(ConnectSrcDirective);
             return this;
         }
     }

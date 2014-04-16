@@ -14,7 +14,7 @@ namespace NWebsec.Owin
         /// <param name="app">The <see cref="IAppBuilder" /> to which the middleware is added.</param>
         /// <param name="configurer">An <see cref="Action" /> that configures the options for the middleware.</param>
         /// <returns>The <see cref="IAppBuilder" /> supplied in the app parameter.</returns>
-        public static IAppBuilder UseHsts(this IAppBuilder app, Action<HstsOptions> configurer)
+        public static IAppBuilder UseHsts(this IAppBuilder app, Action<IFluentHstsOptions> configurer)
         {
             if (app == null) throw new ArgumentNullException("app");
             if (configurer == null) throw new ArgumentNullException("configurer");
@@ -38,7 +38,7 @@ namespace NWebsec.Owin
             return app.Use(typeof (XDownloadOptionsMiddleware));
         }
 
-        public static IAppBuilder UseXfo(this IAppBuilder app, Action<XFrameOptions> configurer)
+        public static IAppBuilder UseXfo(this IAppBuilder app, Action<IFluentXFrameOptions> configurer)
         {
             if (app == null) throw new ArgumentNullException("app");
             if (configurer == null) throw new ArgumentNullException("configurer");
@@ -48,7 +48,7 @@ namespace NWebsec.Owin
             return app.Use(typeof (XfoMiddleware), options);
         }
 
-        public static IAppBuilder UseXRobotsTag(this IAppBuilder app, Action<XRobotsTagOptions> configurer)
+        public static IAppBuilder UseXRobotsTag(this IAppBuilder app, Action<IFluentXRobotsTagOptions> configurer)
         {
             if (app == null) throw new ArgumentNullException("app");
             if (configurer == null) throw new ArgumentNullException("configurer");
@@ -58,7 +58,7 @@ namespace NWebsec.Owin
             return app.Use(typeof (XRobotsTagMiddleware), options.Config);
         }
 
-        public static IAppBuilder UseXXssProtection(this IAppBuilder app, Action<XXssProtectionOptions> configurer)
+        public static IAppBuilder UseXXssProtection(this IAppBuilder app, Action<IFluentXXssProtectionOptions> configurer)
         {
             if (app == null) throw new ArgumentNullException("app");
             if (configurer == null) throw new ArgumentNullException("configurer");
@@ -68,7 +68,7 @@ namespace NWebsec.Owin
             return app.Use(typeof (XXssMiddleware), options);
         }
 
-        public static IAppBuilder UseCsp(this IAppBuilder app, Action<CspOptions> configurer)
+        public static IAppBuilder UseCsp(this IAppBuilder app, Action<IFluentCspOptions> configurer)
         {
             if (app == null) throw new ArgumentNullException("app");
             if (configurer == null) throw new ArgumentNullException("configurer");
@@ -78,7 +78,7 @@ namespace NWebsec.Owin
             return app.Use(typeof (CspMiddleware), options, false); //Last param indicates it's not reportOnly.
         }
 
-        public static IAppBuilder UseCspReportOnly(this IAppBuilder app, Action<CspOptions> configurer)
+        public static IAppBuilder UseCspReportOnly(this IAppBuilder app, Action<IFluentCspOptions> configurer)
         {
             if (app == null) throw new ArgumentNullException("app");
             if (configurer == null) throw new ArgumentNullException("configurer");

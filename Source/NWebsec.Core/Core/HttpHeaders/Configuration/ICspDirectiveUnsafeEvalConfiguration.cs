@@ -4,8 +4,14 @@ using System.ComponentModel;
 
 namespace NWebsec.Core.HttpHeaders.Configuration
 {
+    /// <summary>
+    /// Defines the properties required for CSP directive configuration.
+    /// </summary>
     public interface ICspDirectiveUnsafeEvalConfiguration : ICspDirectiveUnsafeInlineConfiguration
     {
+        /// <summary>
+        /// Infrastructure. Not intended to be used by your code directly. An attempt to hide this from Intellisense has been made.
+        /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         bool UnsafeEvalSrc { get; set; }
     }

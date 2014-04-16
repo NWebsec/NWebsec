@@ -3,11 +3,10 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using NWebsec.Core.HttpHeaders.Configuration;
-using NWebsec.Owin.Fluent;
 
 namespace NWebsec.Owin
 {
-    public class CspDirective : ICspDirectiveConfiguration, IFluentInterface
+    public class CspDirective : ICspDirectiveConfiguration
     {
         public CspDirective()
         {

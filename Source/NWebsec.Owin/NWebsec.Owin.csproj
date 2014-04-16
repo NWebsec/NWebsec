@@ -22,6 +22,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <RunCodeAnalysis>true</RunCodeAnalysis>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -53,8 +54,13 @@
     <Compile Include="CspDirectiveUnsafeEval.cs" />
     <Compile Include="CspDirectiveUnsafeInline.cs" />
     <Compile Include="CspOptions.cs" />
-    <Compile Include="Fluent\IFluentInterface.cs" />
     <Compile Include="HstsOptions.cs" />
+    <Compile Include="HstsOptionsConfiguration.cs" />
+    <Compile Include="IFluentCspOptions.cs" />
+    <Compile Include="IFluentHstsOptions.cs" />
+    <Compile Include="IFluentXFrameOptions.cs" />
+    <Compile Include="IFluentXRobotsTagOptions.cs" />
+    <Compile Include="IFluentXXssProtectionOptions.cs" />
     <Compile Include="Middleware\CspMiddleware.cs" />
     <Compile Include="Middleware\HstsMiddleware.cs" />
     <Compile Include="Middleware\XXssMiddleware.cs" />
@@ -75,6 +81,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="NWebsec.Owin.nuspec">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

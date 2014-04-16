@@ -1,11 +1,10 @@
 ﻿// Copyright (c) André N. Klingsheim. See License.txt in the project root for license information.
 
 using NWebsec.Core.HttpHeaders.Configuration;
-using NWebsec.Owin.Fluent;
 
 namespace NWebsec.Owin
 {
-    public class XRobotsTagOptions : IFluentInterface
+    public class XRobotsTagOptions : IFluentXRobotsTagOptions
     {
         internal XRobotsTagOptions()
         {

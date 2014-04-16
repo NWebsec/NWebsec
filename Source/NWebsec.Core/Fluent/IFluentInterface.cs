@@ -3,7 +3,7 @@
 using System;
 using System.ComponentModel;
 
-namespace NWebsec.Owin.Fluent
+namespace NWebsec.Fluent
 {
     /// <summary>
     ///     Interface that is used to build fluent interfaces and hides methods declared by <see cref="object" /> from

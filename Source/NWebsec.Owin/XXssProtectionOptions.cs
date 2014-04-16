@@ -3,11 +3,10 @@
 using System.ComponentModel;
 using NWebsec.Core.HttpHeaders.Configuration;
 using NWebsec.HttpHeaders;
-using NWebsec.Owin.Fluent;
 
 namespace NWebsec.Owin
 {
-    public class XXssProtectionOptions : IXXssProtectionConfiguration, IFluentInterface
+    public class XXssProtectionOptions : IXXssProtectionConfiguration, IFluentXXssProtectionOptions
     {
         internal XXssProtectionOptions()
         {
