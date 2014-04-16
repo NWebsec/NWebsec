@@ -52,6 +52,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Mvc3Tests.cs" />
+    <Compile Include="Mvc5OwinTests.cs" />
     <Compile Include="Mvc5Tests.cs" />
     <Compile Include="Mvc4Tests.cs" />
     <Compile Include="MvcTestsBase.cs" />

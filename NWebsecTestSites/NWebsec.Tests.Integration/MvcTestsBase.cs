@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using NUnit.Framework;
 
@@ -193,7 +192,6 @@ namespace NWebsec.Tests.Functional
         [Test]
         public async Task XFrameOptions_Disabled_NoHeaders()
         {
-            IEnumerable<string> values;
             const string path = "/XFrameOptions/Disabled";
             var testUri = Helper.GetUri(BaseUri, path);
 
@@ -218,7 +216,6 @@ namespace NWebsec.Tests.Functional
         [Test]
         public async Task XXssProtection_Disabled_NoHeaders()
         {
-            IEnumerable<string> values;
             const string path = "/XXssProtection/Disabled";
             var testUri = Helper.GetUri(BaseUri, path);
 
