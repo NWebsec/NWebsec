@@ -32,6 +32,12 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>NWebsecDevKey.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Owin">
       <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
@@ -85,6 +91,7 @@
     <None Include="NWebsec.Owin.nuspec">
       <SubType>Designer</SubType>
     </None>
+    <None Include="NWebsecDevKey.snk" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

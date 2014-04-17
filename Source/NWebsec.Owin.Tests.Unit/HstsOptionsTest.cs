@@ -1,0 +1,53 @@
+﻿// Copyright (c) André N. Klingsheim. See License.txt in the project root for license information.
+
+using System;
+using NUnit.Framework;
+using NWebsec.Core.HttpHeaders.Configuration;
+
+namespace NWebsec.Owin.Tests.Unit
+{
+    [TestFixture]
+    public class HstsOptionsTest
+    {
+        private HstsOptions _options;
+
+        [SetUp]
+        public void Setup()
+        {
+            _options = new HstsOptions();
+        }
+
+        [Test]
+        public void MaxAge_ValidMaxage_SetsMaxage()
+        {
+            _options.MaxAge(minutes: 30);
+            
+            Assert.IsTrue(new TimeSpan(0,30,0) == ((IHstsConfiguration)_options).MaxAge);
+        }
+
+        [Test]
+        public void MaxAge_ZeroMaxage_SetsMaxage()
+        {
+            _options.MaxAge();
+
+            Assert.IsTrue(TimeSpan.Zero == ((IHstsConfiguration)_options).MaxAge);
+        }
+
+        [Test]
+        public void MaxAge_NegativeValues_ThrowsException()
+        {
+            Assert.Throws<ArgumentOutOfRangeException>(() => _options.MaxAge(0, 0, 0, -1));
+            Assert.Throws<ArgumentOutOfRangeException>(() => _options.MaxAge(0, 0, -1));
+            Assert.Throws<ArgumentOutOfRangeException>(() => _options.MaxAge(0, -1));
+            Assert.Throws<ArgumentOutOfRangeException>(() => _options.MaxAge(-1));
+        }
+
+        [Test]
+        public void MaxAge_IncludeSubdomains_SetsIncludeSubdomains()
+        {
+            _options.IncludeSubdomains();
+
+            Assert.IsTrue(((IHstsConfiguration)_options).IncludeSubdomains);
+        }
+    }
+}

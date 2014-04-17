@@ -31,6 +31,12 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>NWebsecDevKey.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.Owin, Version=2.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -66,10 +72,16 @@
   <ItemGroup>
     <Compile Include="Class1.cs" />
     <Compile Include="CspDirectiveExtensionsTests.cs" />
+    <Compile Include="CspReportUriDirectiveTests.cs" />
+    <Compile Include="HstsOptionsTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="XFrameOptionsTests.cs" />
+    <Compile Include="XRobotsTagOptions.cs" />
+    <Compile Include="XXssProtectionOptions.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+    <None Include="NWebsecDevKey.snk" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
