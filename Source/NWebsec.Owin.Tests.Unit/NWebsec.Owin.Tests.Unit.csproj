@@ -71,6 +71,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Class1.cs" />
+    <Compile Include="Core\OwinEnvironmentTests.cs" />
+    <Compile Include="Core\ResponseHeadersTests.cs" />
     <Compile Include="CspDirectiveExtensionsTests.cs" />
     <Compile Include="CspReportUriDirectiveTests.cs" />
     <Compile Include="HstsOptionsTest.cs" />

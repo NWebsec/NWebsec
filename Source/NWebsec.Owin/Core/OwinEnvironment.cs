@@ -15,7 +15,9 @@ namespace NWebsec.Owin.Core
             ResponseHeaders = new ResponseHeaders((IDictionary<string, string[]>) _environment[OwinKeys.ResponseHeaders]);
         }
 
+        internal string RequestScheme { get { return (string) _environment[OwinKeys.RequestScheme]; }}
         internal ResponseHeaders ResponseHeaders { get; private set; }
+        internal int ResponseStatusCode { get { return (int) _environment[OwinKeys.ResponseStatusCode]; } }
 
         internal NWebsecContext NWebsecContext
         {
