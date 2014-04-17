@@ -81,9 +81,9 @@
     <Compile Include="Modules\Configuration\Csp\Validation\CspDirectiveUnsafeInlineConfigurationElementValidatorAttribute.cs" />
     <Compile Include="Modules\Configuration\Csp\Validation\CspDirectiveUnsafeInlineUnsafeEvalConfigurationElementValidator.cs" />
     <Compile Include="Modules\Configuration\Csp\Validation\CspDirectiveUnsafeInlineUnsafeEvalConfigurationElementValidatorAttribute.cs" />
-    <Compile Include="Modules\Configuration\Csp\Validation\CspSourceValidator.cs" />
+    <Compile Include="Modules\Configuration\Csp\Validation\CspSourceConfigurationValidator.cs" />
     <Compile Include="Modules\Configuration\Csp\Validation\CspSourceValidatorAttribute.cs" />
-    <Compile Include="Modules\Configuration\Csp\Validation\ReportUriValidator.cs" />
+    <Compile Include="Modules\Configuration\Csp\Validation\ReportUriConfigurationValidator.cs" />
     <Compile Include="Modules\Configuration\Csp\CspSourceConfigurationElement.cs" />
     <Compile Include="Modules\Configuration\Csp\CspSourcesElementCollection.cs" />
     <Compile Include="Modules\Configuration\Csp\Validation\ReportUriValidatorAttribute.cs" />

@@ -67,6 +67,8 @@
     <Compile Include="Core\HttpHeaders\Configuration\IXRobotsTagConfiguration.cs" />
     <Compile Include="Core\HttpHeaders\Configuration\IXXssProtectionConfiguration.cs" />
     <Compile Include="Core\HttpHeaders\Configuration\SimpleBooleanConfiguration.cs" />
+    <Compile Include="Core\HttpHeaders\Configuration\Validation\CspSourceValidator.cs" />
+    <Compile Include="Core\HttpHeaders\Configuration\Validation\ReportUriValidator.cs" />
     <Compile Include="Core\HttpHeaders\Configuration\Validation\XRobotsTagConfigurationValidator.cs" />
     <Compile Include="Core\HttpHeaders\Configuration\XFrameOptionsConfiguration.cs" />
     <Compile Include="Core\HttpHeaders\Configuration\XRobotsTagConfiguration.cs" />

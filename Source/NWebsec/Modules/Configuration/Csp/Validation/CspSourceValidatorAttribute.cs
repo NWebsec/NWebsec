@@ -10,7 +10,7 @@ namespace NWebsec.Modules.Configuration.Csp.Validation
         {
             get
             {
-                return new CspSourceValidator();
+                return new CspSourceConfigurationValidator();
             }
         }
     }

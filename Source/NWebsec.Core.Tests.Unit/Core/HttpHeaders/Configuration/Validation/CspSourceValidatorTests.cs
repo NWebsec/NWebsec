@@ -1,9 +1,9 @@
 ﻿// Copyright (c) André N. Klingsheim. See License.txt in the project root for license information.
 
 using NUnit.Framework;
-using NWebsec.Modules.Configuration.Csp.Validation;
+using NWebsec.Core.HttpHeaders.Configuration.Validation;
 
-namespace NWebsec.Tests.Unit.Modules.Configuration.Csp
+namespace NWebsec.Core.Tests.Unit.Core.HttpHeaders.Configuration.Validation
 {
     [TestFixture]
     public class CspSourceValidatorTests

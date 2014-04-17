@@ -2,9 +2,9 @@
 
 using System;
 using NUnit.Framework;
-using NWebsec.Modules.Configuration.Csp.Validation;
+using NWebsec.Core.HttpHeaders.Configuration.Validation;
 
-namespace NWebsec.Tests.Unit.Modules.Configuration.Csp
+namespace NWebsec.Core.Tests.Unit.Core.HttpHeaders.Configuration.Validation
 {
     [TestFixture]
     public class ReportUriValidatorTests
@@ -18,19 +18,30 @@ namespace NWebsec.Tests.Unit.Modules.Configuration.Csp
         }
 
         [Test]
-        public void Validate_RelativeUri_NoException()
+        public void ValidateUri_RelativeUri_NoException()
         {
             var relativeUri = new Uri("/Cspreport", UriKind.Relative);
 
             Assert.DoesNotThrow(() => _validator.Validate(relativeUri));
         }
 
+        public void ValidateString_RelativeUri_NoException()
+        {
+            Assert.DoesNotThrow(() => _validator.Validate("/Cspreport"));
+        }
+
         [Test]
-        public void Validate_AbsoluteUri_ThrowsException()
+        public void ValidateUri_AbsoluteUri_ThrowsException()
         {
             var relativeUri = new Uri("https://www.nwebsec.com/Cspreport");
 
             Assert.Throws<InvalidCspReportUriException>(() => _validator.Validate(relativeUri));
+        }
+
+        [Test]
+        public void ValidateString_AbsoluteUri_ThrowsException()
+        {
+            Assert.Throws<InvalidCspReportUriException>(() => _validator.Validate("https://www.nwebsec.com/Cspreport"));
         }
     }
 }

@@ -44,6 +44,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Core\HttpHeaders\Configuration\Validation\CspSourceValidatorTests.cs" />
+    <Compile Include="Core\HttpHeaders\Configuration\Validation\ReportUriValidatorTests.cs" />
     <Compile Include="Core\HttpHeaders\Configuration\Validation\XRobotsTagValidatorTests.cs" />
     <Compile Include="Core\HttpHeaders\HeaderGeneratorCspTestsBase.cs" />
     <Compile Include="Core\HttpHeaders\HeaderGeneratorTests.XRobots.cs" />

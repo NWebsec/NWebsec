@@ -26,7 +26,7 @@ namespace NWebsec.Modules.Configuration.Validation
             }
             catch(Exception e)
             {
-                throw new ConfigurationErrorsException("xRobotsTag configuration error.", e);
+                throw new ConfigurationErrorsException("xRobotsTag configuration error. Details: " + e.Message, e);
             }
         }
     }
