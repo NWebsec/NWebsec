@@ -29,6 +29,6 @@ namespace NWebsec.Core.HttpHeaders.Configuration
         public ICspDirectiveConfiguration FrameSrcDirective { get; set; }
         public ICspDirectiveConfiguration FontSrcDirective { get; set; }
         public ICspDirectiveConfiguration ConnectSrcDirective { get; set; }
-        public ICspReportUriDirective ReportUriDirective { get; set; }
+        public ICspReportUriDirectiveConfiguration ReportUriDirective { get; set; }
     }
 }

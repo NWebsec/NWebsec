@@ -1,7 +1,6 @@
 // Copyright (c) André N. Klingsheim. See License.txt in the project root for license information.
 
 using System;
-using System.ComponentModel;
 using NWebsec.Core.HttpHeaders.Configuration;
 
 namespace NWebsec.Owin
@@ -20,46 +19,34 @@ namespace NWebsec.Owin
             FrameSrcDirective = new CspDirective();
             FontSrcDirective = new CspDirective();
             ConnectSrcDirective = new CspDirective();
+            ReportUriDirective = new CspReportUriDirective();
         }
 
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public bool Enabled { get; set; }
 
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public bool XContentSecurityPolicyHeader { get; set; }
 
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public bool XWebKitCspHeader { get; set; }
 
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public ICspDirectiveConfiguration DefaultSrcDirective { get; set; }
 
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public ICspDirectiveUnsafeEvalConfiguration ScriptSrcDirective { get; set; }
 
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public ICspDirectiveConfiguration ObjectSrcDirective { get; set; }
 
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public ICspDirectiveUnsafeInlineConfiguration StyleSrcDirective { get; set; }
 
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public ICspDirectiveConfiguration ImgSrcDirective { get; set; }
 
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public ICspDirectiveConfiguration MediaSrcDirective { get; set; }
 
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public ICspDirectiveConfiguration FrameSrcDirective { get; set; }
 
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public ICspDirectiveConfiguration FontSrcDirective { get; set; }
 
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public ICspDirectiveConfiguration ConnectSrcDirective { get; set; }
 
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public ICspReportUriDirective ReportUriDirective { get; set; }
+        public ICspReportUriDirectiveConfiguration ReportUriDirective { get; set; }
 
         /// <summary>
         /// Configures the CSP default-src directive.
@@ -157,6 +144,17 @@ namespace NWebsec.Owin
         public CspOptions ConnectSources(Action<ICspDirectiveConfiguration> configurer)
         {
             configurer(ConnectSrcDirective);
+            return this;
+        }
+
+        /// <summary>
+        /// Configures the CSP report-uri directive.
+        /// </summary>
+        /// <param name="configurer">An <see cref="Action"/> that configures the report URIs.</param>
+        /// <returns>The current <see cref="CspOptions" /> instance.</returns>
+        public CspOptions ReportUris(Action<IFluentCspReportUriDirective> configurer)
+        {
+            configurer((IFluentCspReportUriDirective)ReportUriDirective);
             return this;
         }
     }

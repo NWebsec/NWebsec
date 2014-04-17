@@ -258,7 +258,7 @@ namespace NWebsec.Core.HttpHeaders
             return sources;
         }
 
-        private List<string> GetReportUriList(ICspReportUriDirective directive, string builtinReportHandlerUri = null)
+        private List<string> GetReportUriList(ICspReportUriDirectiveConfiguration directive, string builtinReportHandlerUri = null)
         {
 
             if (directive == null || !directive.Enabled)

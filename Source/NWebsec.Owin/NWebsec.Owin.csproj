@@ -54,6 +54,7 @@
     <Compile Include="CspDirectiveUnsafeEval.cs" />
     <Compile Include="CspDirectiveUnsafeInline.cs" />
     <Compile Include="CspOptions.cs" />
+    <Compile Include="CspReportUriDirective.cs" />
     <Compile Include="HstsOptions.cs" />
     <Compile Include="HstsOptionsConfiguration.cs" />
     <Compile Include="IFluentCspOptions.cs" />

@@ -8,7 +8,7 @@ using NWebsec.Core.HttpHeaders.Configuration;
 
 namespace NWebsec.Modules.Configuration.Csp
 {
-    public class CspReportUriDirectiveConfigurationElement : ConfigurationElement, ICspReportUriDirective
+    public class CspReportUriDirectiveConfigurationElement : ConfigurationElement, ICspReportUriDirectiveConfiguration
     {
         [ConfigurationProperty("enabled", IsRequired = false, DefaultValue = true)]
         public bool Enabled

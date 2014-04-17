@@ -195,7 +195,7 @@ namespace NWebsec.Modules.Configuration.Csp
             set { throw new NotImplementedException(); }
         }
 
-        public ICspReportUriDirective ReportUriDirective
+        public ICspReportUriDirectiveConfiguration ReportUriDirective
         {
             get { return ReportUri; }
             set { throw new NotImplementedException(); }

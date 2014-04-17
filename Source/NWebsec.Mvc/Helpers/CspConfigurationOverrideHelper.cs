@@ -152,7 +152,7 @@ namespace NWebsec.Mvc.Helpers
                     : null;
         }
 
-        internal void SetCspReportUriOverride(HttpContextBase context, ICspReportUriDirective reportUriConfig, bool reportOnly)
+        internal void SetCspReportUriOverride(HttpContextBase context, ICspReportUriDirectiveConfiguration reportUriConfig, bool reportOnly)
         {
             var headerList = GetHeaderListFromContext(context);
             var headerKey = GetCspConfigKey(CspReportUriKeyPrefix, reportOnly);
@@ -163,12 +163,12 @@ namespace NWebsec.Mvc.Helpers
             headerList.Add(headerKey, reportUriConfig);
         }
 
-        internal ICspReportUriDirective GetCspReportUriDirectiveWithOverride(HttpContextBase context, bool reportOnly)
+        internal ICspReportUriDirectiveConfiguration GetCspReportUriDirectiveWithOverride(HttpContextBase context, bool reportOnly)
         {
             var headerList = GetHeaderListFromContext(context);
             var headerkey = GetCspConfigKey(CspReportUriKeyPrefix, reportOnly);
             return headerList.ContainsKey(headerkey)
-                    ? (ICspReportUriDirective)headerList[headerkey]
+                    ? (ICspReportUriDirectiveConfiguration)headerList[headerkey]
                     : null;
         }
 
