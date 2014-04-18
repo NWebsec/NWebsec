@@ -18,9 +18,10 @@ namespace NWebsec.Owin.Middleware
         private readonly HeaderResult[] _headerResults;
         private readonly bool _reportOnly;
 
-        public CspMiddleware(AppFunc next, Object options, bool reportOnly) : base(next)
+        public CspMiddleware(AppFunc next, ICspConfiguration options, bool reportOnly)
+            : base(next)
         {
-            _config = (ICspConfiguration) options;
+            _config = options;
             _reportOnly = reportOnly;
 
             var headerGenerator = new HeaderGenerator();

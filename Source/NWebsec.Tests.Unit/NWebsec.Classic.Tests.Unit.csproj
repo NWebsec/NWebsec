@@ -76,10 +76,8 @@
   <ItemGroup>
     <Compile Include="Csp\CspReportHelperTests.cs" />
     <Compile Include="ExtensionMethods\HttpContextBaseExtensionsTests.cs" />
-    <Compile Include="ExtensionMethods\HttpResponseBaseExtensionsTests.cs" />
     <Compile Include="Helpers\HeaderResultHandlerTests.cs" />
     <Compile Include="Helpers\ConfigurationHeaderSetterTests.cs" />
-    <Compile Include="Helpers\RedirectValidationHelperTests.cs" />
     <Compile Include="Helpers\HandlerTypeHelperTests.cs" />
     <Compile Include="Modules\Configuration\RedirectUriValidatorTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

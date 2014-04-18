@@ -66,6 +66,7 @@
     <Compile Include="Core\HttpHeaders\Configuration\IXFrameOptionsConfiguration.cs" />
     <Compile Include="Core\HttpHeaders\Configuration\IXRobotsTagConfiguration.cs" />
     <Compile Include="Core\HttpHeaders\Configuration\IXXssProtectionConfiguration.cs" />
+    <Compile Include="Core\HttpHeaders\Configuration\RedirectValidationConfiguration.cs" />
     <Compile Include="Core\HttpHeaders\Configuration\SimpleBooleanConfiguration.cs" />
     <Compile Include="Core\HttpHeaders\Configuration\Validation\CspSourceValidator.cs" />
     <Compile Include="Core\HttpHeaders\Configuration\Validation\ReportUriValidator.cs" />
@@ -78,6 +79,8 @@
     <Compile Include="Core\HttpHeaders\HeaderConstants.cs" />
     <Compile Include="Core\HttpHeaders\IHeaderGenerator.cs" />
     <Compile Include="Core\NWebsecContext.cs" />
+    <Compile Include="Core\RedirectValidator.cs" />
+    <Compile Include="Core\Exceptions\RedirectValidationException.cs" />
     <Compile Include="Fluent\IFluentInterface.cs" />
     <Compile Include="HttpHeaders\XFrameOptionsPolicy.cs" />
     <Compile Include="HttpHeaders\XXssProtectionPolicy.cs" />

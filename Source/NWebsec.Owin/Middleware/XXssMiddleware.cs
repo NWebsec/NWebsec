@@ -16,10 +16,10 @@ namespace NWebsec.Owin.Middleware
         private readonly IXXssProtectionConfiguration _config;
         private readonly HeaderResult _headerResult;
 
-        public XXssMiddleware(AppFunc next, Object options)
+        public XXssMiddleware(AppFunc next, XXssProtectionOptions options)
             : base(next)
         {
-            _config = (IXXssProtectionConfiguration) options;
+            _config = options;
             var headerGenerator = new HeaderGenerator();
             _headerResult = headerGenerator.CreateXXssProtectionResult(_config);
         }

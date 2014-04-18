@@ -6,6 +6,11 @@ namespace NWebsec.Core.HttpHeaders.Configuration
 {
     public interface IRedirectValidationConfiguration
     {
-        IEnumerable<string> RedirectUris { get; set; }
+        bool Enabled { get; set; }
+
+        /// <summary>
+        /// URIs allowed for redirect. Strings in this list should be created with Uri.AbsoluteUri to assure consistency.
+        /// </summary>
+        IEnumerable<string> AllowedUris { get; set; }
     }
 }

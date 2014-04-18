@@ -1,32 +1,28 @@
 ﻿// Copyright (c) André N. Klingsheim. See License.txt in the project root for license information.
 
 using System;
-using System.Linq;
 using System.Web;
-using NWebsec.ExtensionMethods;
-using NWebsec.Modules.Configuration;
+using NWebsec.Core;
+using NWebsec.Core.HttpHeaders.Configuration;
 
 namespace NWebsec.Helpers
 {
     internal class RedirectValidationHelper
     {
-        private readonly RedirectValidationConfigurationElement _mockConfig;
-        private RedirectValidationConfigurationElement Config { get { return _mockConfig ?? ConfigHelper.GetConfig().RedirectValidation; } }
+        private readonly RedirectValidator _redirectValidator;
+        private IRedirectValidationConfiguration Config { get { return ConfigHelper.GetConfig().RedirectValidation; } }
 
         internal RedirectValidationHelper()
-        {}
-
-        internal RedirectValidationHelper(RedirectValidationConfigurationElement redirectValidationConfig)
         {
-            _mockConfig = redirectValidationConfig;
+            _redirectValidator = new RedirectValidator();
         }
 
         internal void ValidateIfRedirect(HttpContextBase context)
         {
             if (!Config.Enabled) return;
-            
+
             var response = context.Response;
-            if (!response.HasStatusCodeThatRedirects()) return;
+            if (!_redirectValidator.IsRedirectStatusCode(response.StatusCode)) return;
 
             var redirectLocation = response.RedirectLocation;
 
@@ -39,37 +35,13 @@ namespace NWebsec.Helpers
                 }
             }
 
-            var redirectUri = new Uri(redirectLocation, UriKind.RelativeOrAbsolute);
-            if (!redirectUri.IsAbsoluteUri) return;
-
             var requestUri = context.Request.Url;
             if (requestUri == null)
             {
                 throw new Exception("The current request's url was null.");
             }
 
-            if (redirectUri.GetLeftPart(UriPartial.Authority).Equals(requestUri.GetLeftPart(UriPartial.Authority))) return;
-
-            if (IsWhitelistedDestination(redirectUri)) return;
-
-            throw new RedirectValidationException("A potentially dangerous redirect was detected. Add the destination to the whitelist in configuration if the redirect was intended. Offending redirect: " + redirectUri);
-        }
-
-        private bool IsWhitelistedDestination(Uri redirectUri)
-        {
-            var authorityAndPath = redirectUri.GetLeftPart(UriPartial.Path);
-
-            return Config.RedirectUris.OfType<RedirectUriConfigurationElement>()
-                  .Any(c => authorityAndPath.StartsWith(c.RedirectUri.GetLeftPart(UriPartial.Path), StringComparison.InvariantCultureIgnoreCase));
-        }
-    }
-
-    [Serializable]
-    public class RedirectValidationException : Exception
-    {
-        public RedirectValidationException(string s) : base(s)
-        {
-            
+            _redirectValidator.ValidateRedirect(context.Response.StatusCode, redirectLocation, requestUri, Config);
         }
     }
 }

@@ -32,6 +32,12 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>NWebsecDevKey.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="nunit.framework">
       <HintPath>..\packages\NUnit.2.6.3\lib\nunit.framework.dll</HintPath>
@@ -54,10 +60,12 @@
     <Compile Include="Core\HttpHeaders\HeaderGeneratorTests.XContentTypeOptions.cs" />
     <Compile Include="Core\HttpHeaders\HeaderGeneratorTests.XDownloadOptions.cs" />
     <Compile Include="Core\HttpHeaders\HeaderGeneratorTests.cs" />
+    <Compile Include="Core\HttpHeaders\RedirectValidatorTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Core\HttpHeaders\HeaderGeneratorTests.Xss.cs" />
+    <None Include="NWebsecDevKey.snk" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

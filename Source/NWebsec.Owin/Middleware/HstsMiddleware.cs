@@ -16,10 +16,10 @@ namespace NWebsec.Owin.Middleware
         private readonly IHstsConfiguration _config;
         private readonly HeaderResult _headerResult;
 
-        public HstsMiddleware(AppFunc next, Object options)
+        public HstsMiddleware(AppFunc next, HstsOptions options)
             : base(next)
         {
-            _config = (IHstsConfiguration) options;
+            _config = options;
 
             var headerGenerator = new HeaderGenerator();
             _headerResult = headerGenerator.CreateHstsResult(_config);

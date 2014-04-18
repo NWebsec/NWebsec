@@ -63,7 +63,6 @@
     <Compile Include="Csp\ICspReportHelper.cs" />
     <Compile Include="Csp\Source.cs" />
     <Compile Include="ExtensionMethods\HttpContextBaseExtensions.cs" />
-    <Compile Include="ExtensionMethods\HttpResponseBaseExtensions.cs" />
     <Compile Include="Helpers\ConfigHelper.cs" />
     <Compile Include="Helpers\ConfigurationHeaderSetter.cs" />
     <Compile Include="Helpers\HeaderResultHandler.cs" />

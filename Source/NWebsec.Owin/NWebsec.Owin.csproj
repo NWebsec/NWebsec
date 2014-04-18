@@ -54,6 +54,7 @@
     <Compile Include="AppBuilderExtensions.cs" />
     <Compile Include="Core\OwinEnvironment.cs" />
     <Compile Include="Core\OwinKeys.cs" />
+    <Compile Include="Core\RequestHeaders.cs" />
     <Compile Include="Core\ResponseHeaders.cs" />
     <Compile Include="CspDirective.cs" />
     <Compile Include="CspDirectiveExtensions.cs" />
@@ -70,6 +71,7 @@
     <Compile Include="IFluentXXssProtectionOptions.cs" />
     <Compile Include="Middleware\CspMiddleware.cs" />
     <Compile Include="Middleware\HstsMiddleware.cs" />
+    <Compile Include="Middleware\RedirectValidationMiddleware.cs" />
     <Compile Include="Middleware\XXssMiddleware.cs" />
     <Compile Include="Middleware\XRobotsTagMiddleware.cs" />
     <Compile Include="Middleware\XDownloadOptionsMiddleware.cs" />
@@ -77,6 +79,7 @@
     <Compile Include="Middleware\MiddleWareBase.cs" />
     <Compile Include="Middleware\XfoMiddleware.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RedirectValidationOptions.cs" />
     <Compile Include="XFrameOptions.cs" />
     <Compile Include="XRobotsTagOptions.cs" />
     <Compile Include="XXssProtectionOptions.cs" />

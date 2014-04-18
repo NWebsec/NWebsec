@@ -16,10 +16,10 @@ namespace NWebsec.Owin.Middleware
         private readonly IXFrameOptionsConfiguration _config;
         private readonly HeaderResult _headerResult;
 
-        public XfoMiddleware(AppFunc next, Object options)
+        public XfoMiddleware(AppFunc next, XFrameOptions options)
             : base(next)
         {
-            _config = (IXFrameOptionsConfiguration)options;
+            _config = options;
             var headerGenerator = new HeaderGenerator();
             _headerResult = headerGenerator.CreateXfoResult(_config);
         }

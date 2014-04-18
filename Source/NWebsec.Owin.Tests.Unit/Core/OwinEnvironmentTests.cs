@@ -12,6 +12,7 @@ namespace NWebsec.Owin.Tests.Unit.Core
     {
         //Comments from the OWIN 1.0 spec.
         private const string RequestScheme = "owin.RequestScheme"; //A string containing the URI scheme used for the request (e.g., "http", "https");
+        private const string RequestHeaderKey = "owin.RequestHeaders"; //An IDictionary<string, string[]> of request headers.
         private const string ResponseHeaderKey = "owin.ResponseHeaders"; //An IDictionary<string, string[]> of response headers.
         private const string ResponseHeaderStatusCode = "owin.ResponseStatusCode"; //An optional int containing the HTTP response status code as defined in RFC 2616 section 6.1.1. The default is 200.
         
@@ -22,6 +23,7 @@ namespace NWebsec.Owin.Tests.Unit.Core
         public void Setup()
         {
             _env = new Dictionary<string, object>();
+            _env[RequestHeaderKey] = new Dictionary<string, string[]>(StringComparer.OrdinalIgnoreCase); //Per OWIN 1.0 spec.
             _env[ResponseHeaderKey] = new Dictionary<string, string[]>(StringComparer.OrdinalIgnoreCase); //Per OWIN 1.0 spec.
             _owinEnvironment = new OwinEnvironment(_env);
         }

@@ -1,6 +1,8 @@
 ﻿// Copyright (c) André N. Klingsheim. See License.txt in the project root for license information.
 
+using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace NWebsec.Owin.Core
 {
@@ -11,6 +13,24 @@ namespace NWebsec.Owin.Core
         internal ResponseHeaders(IDictionary<string, string[]> headers)
         {
             _headers = headers;
+        }
+
+        /// <summary>
+        /// Gets the value of the Location header if present. Otherwise returns null.
+        /// </summary>
+        public string Location
+        {
+            get
+            {
+                try
+                {
+                    return _headers.ContainsKey("Location") ? _headers["Location"].Single() : null;
+                }
+                catch (Exception)
+                {
+                    throw new Exception("Multiple Location headers detected: " + String.Join(" ", _headers["Location"]));
+                }
+            }
         }
 
         internal void SetHeader(string name, string value)
