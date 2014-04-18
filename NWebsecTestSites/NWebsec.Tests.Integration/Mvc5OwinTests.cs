@@ -26,7 +26,7 @@ namespace NWebsec.Tests.Functional
         [SetUp]
         public void Setup()
         {
-            _handler = new HttpClientHandler { AllowAutoRedirect = false, UseCookies = true };
+            _handler = new HttpClientHandler { AllowAutoRedirect = false, UseCookies = false };
             HttpClient = new HttpClient(_handler);
             Helper = new TestHelper();
         }
@@ -75,17 +75,6 @@ namespace NWebsec.Tests.Functional
 
             Assert.AreEqual(HttpStatusCode.InternalServerError, response.StatusCode, ReqFailed + testUri);
             Assert.IsTrue(body.Contains("RedirectValidationException"), "RedirectValidationException not found in body.");
-        }
-
-        [Test]
-        public async Task RedirectValidation_DisabledAndDangerousSite_Ok()
-        {
-            const string path = "/Redirect/ValidationDisabledDangerousSite";
-            var testUri = Helper.GetUri(BaseUri, path);
-
-            var response = await HttpClient.GetAsync(testUri);
-
-            Assert.AreEqual(HttpStatusCode.Redirect, response.StatusCode, ReqFailed + testUri);
         }
 
         [Test]
@@ -219,7 +208,7 @@ namespace NWebsec.Tests.Functional
         }
 
         [Test]
-        public async Task Csp_Enabled_SetsHeaders()
+        public async Task CspConfig_Enabled_SetsHeaders()
         {
             const string path = "/CspConfig";
             var testUri = Helper.GetUri(BaseUri, path);
