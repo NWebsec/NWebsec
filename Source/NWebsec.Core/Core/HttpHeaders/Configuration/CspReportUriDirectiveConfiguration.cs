@@ -9,6 +9,7 @@ namespace NWebsec.Core.HttpHeaders.Configuration
         public CspReportUriDirectiveConfiguration()
         {
             Enabled = true;
+            ReportUris = new string[0];
         }
         public bool Enabled { get; set; }
         public bool EnableBuiltinHandler { get; set; }

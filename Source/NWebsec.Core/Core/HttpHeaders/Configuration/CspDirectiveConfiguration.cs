@@ -9,6 +9,7 @@ namespace NWebsec.Core.HttpHeaders.Configuration
         public CspDirectiveConfiguration()
         {
             Enabled = true;
+            CustomSources = new string[0];
         }
 
         public bool Enabled { get; set; }
