@@ -1,7 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
-using Microsoft.Owin;
-using NWebsec.HttpHeaders;
+﻿using Microsoft.Owin;
 using Owin;
 using NWebsec.Owin;
 
@@ -13,8 +10,27 @@ namespace DemoSiteMvc5
     {
         public void Configuration(IAppBuilder app)
         {
-            app.UseXfo(XFrameOptionsPolicy.Deny);
             // For more information on how to configure your application, visit http://go.microsoft.com/fwlink/?LinkID=316888
+
+            app.UseRedirectValidation(options => 
+                options.AllowedDestinations("http://www.nwebsec.com/", "https://www.google.com/accounts/"));
+
+            app.UseHsts(options => options.MaxAge(days:30).IncludeSubdomains());
+            app.UseXContentTypeOptions();
+            app.UseXDownloadOptions();
+            app.UseXfo(options => options.SameOrigin());
+
+            app.UseXRobotsTag(options => options.NoIndex().NoFollow());
+            app.UseXXssProtection(options => options.EnabledWithBlockMode());
+
+            app.UseCsp(options => options
+                .DefaultSources(s => s.Self())
+                .ScriptSources(s => s.Self().CustomSources("scripts.nwebsec.com"))
+                .ReportUris(r => r.Uris("/report")));
+
+            app.UseCspReportOnly(options => options
+                .DefaultSources(s => s.Self())
+                .ImageSources(s => s.None()));
         }
     }
 }

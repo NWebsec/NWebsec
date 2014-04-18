@@ -12,13 +12,13 @@ namespace DemoSiteMvc4.Controllers
     //[CspReportOnly(XWebKitCspHeader = true)]
     //[CspReportUriReportOnly(EnableBuiltinHandler = true)]
     //[CspStyleSrc(UnsafeInline = Source.Enable, OtherSources = "styles.nwebsec.com")]
-        //[Csp]
-    //[CspReportOnly]
-    //[CspDefaultSrcReportOnly(None = Source.Enable)]
-        //[CspScriptSrcReportOnly(CustomSources = "www.klings.org")]
-    //[CspScriptSrc(Self = Source.Disable, UnsafeEval = Source.Enable, UnsafeInline =Source.Enable)]
-    //[CspStyleSrcReportOnly(UnsafeInline = Source.Enable)]
-    //[CspReportUriReportOnly(ReportUris = "/Report")]
+    [Csp]
+    [CspReportOnly]
+    [CspDefaultSrcReportOnly(None = Source.Enable)]
+    [CspScriptSrcReportOnly(CustomSources = "www.klings.org")]
+    [CspScriptSrc(Self = Source.Disable, UnsafeEval = Source.Enable, UnsafeInline = Source.Enable)]
+    [CspStyleSrcReportOnly(UnsafeInline = Source.Enable)]
+    [CspReportUriReportOnly(ReportUris = "/Report")]
     public class HomeController : Controller
     {
         //
@@ -33,6 +33,7 @@ namespace DemoSiteMvc4.Controllers
 
         [AllowMultiple("Action")]
         [XFrameOptions(Policy = XFrameOptionsPolicy.Disabled)]
+        [CspReportOnly(XWebKitCspHeader = true)]
         [CspScriptSrcReportOnly(None = Source.Inherit)]
         public ActionResult Other()
         {
