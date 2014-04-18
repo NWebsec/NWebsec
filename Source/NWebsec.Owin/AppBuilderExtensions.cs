@@ -9,7 +9,20 @@ namespace NWebsec.Owin
     public static class AppBuilderExtensions
     {
         /// <summary>
-        ///     Adds a middleware to the OWIN pipeline that sets the Strict-Transport-Security header.
+        ///     Adds a middleware to the OWIN pipeline that validates redirects.
+        /// </summary>
+        /// <param name="app">The <see cref="IAppBuilder" /> to which the middleware is added.</param>
+        /// <returns>The <see cref="IAppBuilder" /> supplied in the app parameter.</returns>
+        public static IAppBuilder UseRedirectValidation(this IAppBuilder app)
+        {
+            if (app == null) throw new ArgumentNullException("app");
+
+            var options = new RedirectValidationOptions();
+            return app.Use(typeof(RedirectValidationMiddleware), options);
+        }
+
+        /// <summary>
+        ///     Adds a middleware to the OWIN pipeline that validates redirects.
         /// </summary>
         /// <param name="app">The <see cref="IAppBuilder" /> to which the middleware is added.</param>
         /// <param name="configurer">An <see cref="Action" /> that configures the options for the middleware.</param>

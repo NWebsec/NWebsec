@@ -17,6 +17,7 @@ namespace NWebsec.Owin
         public RedirectValidationOptions()
         {
             Enabled = true;
+            AllowedUris = new string[0];
         }
 
         public bool Enabled { get; set; }
