@@ -13,43 +13,43 @@ namespace NWebsec.Owin
 
         internal XRobotsTagConfiguration Config { get; private set; }
 
-        public XRobotsTagOptions NoIndex()
+        public IFluentXRobotsTagOptions NoIndex()
         {
             Config.NoIndex = Config.Enabled = true;
             return this;
         }
 
-        public XRobotsTagOptions NoFollow()
+        public IFluentXRobotsTagOptions NoFollow()
         {
             Config.NoFollow = Config.Enabled = true;
             return this;
         }
 
-        public XRobotsTagOptions NoSnippet()
+        public IFluentXRobotsTagOptions NoSnippet()
         {
             Config.NoSnippet = Config.Enabled = true;
             return this;
         }
 
-        public XRobotsTagOptions NoArchive()
+        public IFluentXRobotsTagOptions NoArchive()
         {
             Config.NoArchive = Config.Enabled = true;
             return this;
         }
 
-        public XRobotsTagOptions NoOdp()
+        public IFluentXRobotsTagOptions NoOdp()
         {
             Config.NoOdp = Config.Enabled = true;
             return this;
         }
 
-        public XRobotsTagOptions NoTranslate()
+        public IFluentXRobotsTagOptions NoTranslate()
         {
             Config.NoTranslate = Config.Enabled = true;
             return this;
         }
 
-        public XRobotsTagOptions NoImageIndex()
+        public IFluentXRobotsTagOptions NoImageIndex()
         {
             Config.NoImageIndex = Config.Enabled = true;
             return this;

@@ -4,9 +4,19 @@ using NWebsec.Fluent;
 
 namespace NWebsec.Owin
 {
+    /// <summary>
+    /// Fluent interface to configure options for X-Frame-Options.
+    /// </summary>
     public interface IFluentXFrameOptions : IFluentInterface
     {
+        /// <summary>
+        /// Enables the Deny directive.
+        /// </summary>
         void Deny();
+
+        /// <summary>
+        /// Enables the SameOrigin directive.
+        /// </summary>
         void SameOrigin();
     }
 }

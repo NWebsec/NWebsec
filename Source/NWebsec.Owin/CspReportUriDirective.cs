@@ -4,15 +4,9 @@ using System;
 using System.Collections.Generic;
 using NWebsec.Core.HttpHeaders.Configuration;
 using NWebsec.Core.HttpHeaders.Configuration.Validation;
-using NWebsec.Fluent;
 
 namespace NWebsec.Owin
 {
-    public interface IFluentCspReportUriDirective : IFluentInterface
-    {
-        void Uris(params string[] reportUris);
-    }
-
     public class CspReportUriDirective : ICspReportUriDirectiveConfiguration, IFluentCspReportUriDirective
     {
         internal CspReportUriDirective()

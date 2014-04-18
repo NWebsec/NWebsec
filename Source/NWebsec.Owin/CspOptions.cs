@@ -49,7 +49,7 @@ namespace NWebsec.Owin
         public ICspReportUriDirectiveConfiguration ReportUriDirective { get; set; }
 
         /// <summary>
-        /// Configures the CSP default-src directive.
+        /// Configures the default-src directive.
         /// </summary>
         /// <param name="configurer">An <see cref="Action"/> that configures the sources for the directive.</param>
         /// <returns>The current <see cref="CspOptions" /> instance.</returns>
@@ -60,7 +60,7 @@ namespace NWebsec.Owin
         }
 
         /// <summary>
-        /// Configures the CSP script-src directive.
+        /// Configures the script-src directive.
         /// </summary>
         /// <param name="configurer">An <see cref="Action"/> that configures the sources for the directive.</param>
         /// <returns>The current <see cref="CspOptions" /> instance.</returns>
@@ -71,7 +71,7 @@ namespace NWebsec.Owin
         }
 
         /// <summary>
-        /// Configures the CSP object-src directive.
+        /// Configures the object-src directive.
         /// </summary>
         /// <param name="configurer">An <see cref="Action"/> that configures the sources for the directive.</param>
         /// <returns>The current <see cref="CspOptions" /> instance.</returns>
@@ -82,7 +82,7 @@ namespace NWebsec.Owin
         }
 
         /// <summary>
-        /// Configures the CSP style-src directive.
+        /// Configures the style-src directive.
         /// </summary>
         /// <param name="configurer">An <see cref="Action"/> that configures the sources for the directive.</param>
         /// <returns>The current <see cref="CspOptions" /> instance.</returns>
@@ -93,7 +93,7 @@ namespace NWebsec.Owin
         }
 
         /// <summary>
-        /// Configures the CSP image-src directive.
+        /// Configures the image-src directive.
         /// </summary>
         /// <param name="configurer">An <see cref="Action"/> that configures the sources for the directive.</param>
         /// <returns>The current <see cref="CspOptions" /> instance.</returns>
@@ -104,7 +104,7 @@ namespace NWebsec.Owin
         }
 
         /// <summary>
-        /// Configures the CSP media-src directive.
+        /// Configures the media-src directive.
         /// </summary>
         /// <param name="configurer">An <see cref="Action"/> that configures the sources for the directive.</param>
         /// <returns>The current <see cref="CspOptions" /> instance.</returns>
@@ -115,7 +115,7 @@ namespace NWebsec.Owin
         }
 
         /// <summary>
-        /// Configures the CSP frame-src directive.
+        /// Configures the frame-src directive.
         /// </summary>
         /// <param name="configurer">An <see cref="Action"/> that configures the sources for the directive.</param>
         /// <returns>The current <see cref="CspOptions" /> instance.</returns>
@@ -126,7 +126,7 @@ namespace NWebsec.Owin
         }
 
         /// <summary>
-        /// Configures the CSP font-src directive.
+        /// Configures the font-src directive.
         /// </summary>
         /// <param name="configurer">An <see cref="Action"/> that configures the sources for the directive.</param>
         /// <returns>The current <see cref="CspOptions" /> instance.</returns>
@@ -137,7 +137,7 @@ namespace NWebsec.Owin
         }
 
         /// <summary>
-        /// Configures the CSP connect-src directive.
+        /// Configures the connect-src directive.
         /// </summary>
         /// <param name="configurer">An <see cref="Action"/> that configures the sources for the directive.</param>
         /// <returns>The current <see cref="CspOptions" /> instance.</returns>
@@ -148,7 +148,7 @@ namespace NWebsec.Owin
         }
 
         /// <summary>
-        /// Configures the CSP report-uri directive.
+        /// Configures the report-uri directive.
         /// </summary>
         /// <param name="configurer">An <see cref="Action"/> that configures the report URIs.</param>
         /// <returns>The current <see cref="CspOptions" /> instance.</returns>

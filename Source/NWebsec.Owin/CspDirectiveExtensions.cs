@@ -42,7 +42,7 @@ namespace NWebsec.Owin
         /// </summary>
         /// <typeparam name="T">The type of the CSP directive configuration object.</typeparam>
         /// <param name="directive">The CSP directive configuration object.</param>
-        /// <param name="sources"></param>
+        /// <param name="sources">One or more custom sources.</param>
         /// <returns>The CSP directive configuration object.</returns>
         public static T CustomSources<T>(this T directive, params string[] sources) where T : class, ICspDirectiveConfiguration
         {

@@ -3,15 +3,9 @@
 using System;
 using System.Collections.Generic;
 using NWebsec.Core.HttpHeaders.Configuration;
-using NWebsec.Fluent;
 
 namespace NWebsec.Owin
 {
-    public interface IFluentRedirectValidationOptions : IFluentInterface
-    {
-        void AllowedDestinations(params string[] uris);
-    }
-
     public class RedirectValidationOptions : IRedirectValidationConfiguration, IFluentRedirectValidationOptions
     {
         public RedirectValidationOptions()

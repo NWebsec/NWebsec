@@ -65,7 +65,9 @@
     <Compile Include="HstsOptions.cs" />
     <Compile Include="HstsOptionsConfiguration.cs" />
     <Compile Include="IFluentCspOptions.cs" />
+    <Compile Include="IFluentCspReportUriDirective.cs" />
     <Compile Include="IFluentHstsOptions.cs" />
+    <Compile Include="IFluentRedirectValidationOptions.cs" />
     <Compile Include="IFluentXFrameOptions.cs" />
     <Compile Include="IFluentXRobotsTagOptions.cs" />
     <Compile Include="IFluentXXssProtectionOptions.cs" />

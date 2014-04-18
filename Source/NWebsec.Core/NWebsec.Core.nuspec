@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
   <metadata>
     <id>NWebsec.Core</id>
-    <version>1.0.0-alpha07</version>
+    <version>1.0.0-alpha09</version>
     <title>NWebsec.Core</title>
     <authors>André N. Klingsheim</authors>
     <owners>André N. Klingsheim</owners>
