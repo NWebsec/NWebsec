@@ -17,27 +17,33 @@ namespace NWebsec.Core.HttpHeaders
         public static readonly string XWebKitCspHeader = "X-WebKit-CSP";
         public static readonly string XWebKitCspReportOnlyHeader = "X-WebKit-CSP-Report-Only";
 
-        public static readonly string[] CspSourceList = {   "'none'",
-                                                            "'self'",
-                                                            "'unsafe-inline'",
-                                                            "'unsafe-eval'"
-                                               };
+        public static readonly string[] CspSourceList =
+        {
+            "'none'",
+            "'self'",
+            "'unsafe-inline'",
+            "'unsafe-eval'"
+        };
 
-        public static readonly string[] CspDirectives = {   "default-src",
-                                                            "script-src",
-                                                            "object-src",
-                                                            "style-src", 
-                                                            "img-src",
-                                                            "media-src", 
-                                                            "frame-src", 
-                                                            "font-src", 
-                                                            "connect-src", 
-                                                            "report-uri" 
-                                               };
+        public static readonly string[] CspDirectives =
+        {
+            "default-src",
+            "script-src",
+            "object-src",
+            "style-src",
+            "img-src",
+            "media-src",
+            "frame-src",
+            "font-src",
+            "connect-src",
+            "report-uri"
+        };
 
-        public static readonly string[] CspSchemes = {  "data:",
-                                                        "https:",
-                                                        "http:" 
-                                            };
+        public static readonly string[] CspSchemes =
+        {
+            "data:",
+            "https:",
+            "http:"
+        };
     }
 }

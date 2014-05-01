@@ -7,9 +7,8 @@ namespace NWebsec.Core.Exceptions
     [Serializable]
     public class RedirectValidationException : Exception
     {
-        public RedirectValidationException(string message):base(message)
+        public RedirectValidationException(string message) : base(message)
         {
-            
         }
     }
 }

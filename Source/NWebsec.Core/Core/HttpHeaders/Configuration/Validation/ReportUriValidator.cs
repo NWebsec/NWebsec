@@ -15,7 +15,7 @@ namespace NWebsec.Core.HttpHeaders.Configuration.Validation
         public void Validate(string uri)
         {
             Uri result;
-            if (! Uri.TryCreate(uri,UriKind.Relative, out result))
+            if (! Uri.TryCreate(uri, UriKind.Relative, out result))
                 throw new InvalidCspReportUriException("The Csp report-uri must be a relative URI.");
         }
     }

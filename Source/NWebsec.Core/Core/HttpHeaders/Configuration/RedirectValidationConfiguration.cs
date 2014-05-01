@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace NWebsec.Core.HttpHeaders.Configuration
 {
-    class RedirectValidationConfiguration : IRedirectValidationConfiguration
+    internal class RedirectValidationConfiguration : IRedirectValidationConfiguration
     {
         public RedirectValidationConfiguration()
         {

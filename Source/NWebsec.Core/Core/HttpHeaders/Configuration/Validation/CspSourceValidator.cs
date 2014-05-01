@@ -7,8 +7,8 @@ namespace NWebsec.Core.HttpHeaders.Configuration.Validation
 {
     public class CspSourceValidator
     {
-        private static readonly string SchemeRegex = "^[a-zA-Z]*[a-zA-Z0-9" + Regex.Escape("+.-") + "]:$";
         private const string HostRegex = @"^(\*\.)?([a-zA-Z0-9\-]+)(\.[a-zA-Z0-9\-]+)*$";
+        private static readonly string SchemeRegex = "^[a-zA-Z]*[a-zA-Z0-9" + Regex.Escape("+.-") + "]:$";
 
         public void Validate(string source)
         {
@@ -41,11 +41,11 @@ namespace NWebsec.Core.HttpHeaders.Configuration.Validation
 
         private bool ValidateHostString(string host)
         {
-            char[] pathSplit = { '/' };
+            char[] pathSplit = {'/'};
             var hostParts = host.Split(pathSplit, 2);
             var actualHost = hostParts[0];
-            
-            char[] portSplit = { ':' };
+
+            char[] portSplit = {':'};
             var actualHostParts = actualHost.Split(portSplit, 2);
 
             if (actualHostParts.Length == 2 && !ValidatePort(actualHostParts[1]))
@@ -59,7 +59,7 @@ namespace NWebsec.Core.HttpHeaders.Configuration.Validation
             if (port.Equals("*")) return true;
 
             int portNumber;
-            var isInt= Int32.TryParse(port, out portNumber);
+            var isInt = Int32.TryParse(port, out portNumber);
             return isInt && portNumber > 0 && portNumber <= 65535;
         }
     }

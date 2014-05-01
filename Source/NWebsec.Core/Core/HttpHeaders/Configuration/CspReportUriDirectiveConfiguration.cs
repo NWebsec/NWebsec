@@ -11,6 +11,7 @@ namespace NWebsec.Core.HttpHeaders.Configuration
             Enabled = true;
             ReportUris = new string[0];
         }
+
         public bool Enabled { get; set; }
         public bool EnableBuiltinHandler { get; set; }
         public IEnumerable<string> ReportUris { get; set; }
