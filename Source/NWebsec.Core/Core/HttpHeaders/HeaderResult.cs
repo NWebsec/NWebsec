@@ -4,21 +4,22 @@ namespace NWebsec.Core.HttpHeaders
 {
     public class HeaderResult
     {
-        public HeaderResult(ResponseAction action, string name, string value=null)
+        public enum ResponseAction
+        {
+            Set = 0,
+            Remove = 1
+        }
+
+        public HeaderResult(ResponseAction action, string name, string value = null)
         {
             Action = action;
             Name = name;
             Value = value;
         }
-        
+
 
         public ResponseAction Action { get; set; }
         public string Name { get; set; }
         public string Value { get; set; }
-        public enum ResponseAction 
-        {
-            Set=0,
-            Remove=1
-        }
     }
 }

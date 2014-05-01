@@ -7,12 +7,24 @@ namespace NWebsec.Core.HttpHeaders
 {
     public interface IHeaderGenerator
     {
-        HeaderResult CreateXRobotsTagResult(IXRobotsTagConfiguration xRobotsTagConfig, IXRobotsTagConfiguration oldXRobotsTagConfig = null);
+        HeaderResult CreateXRobotsTagResult(IXRobotsTagConfiguration xRobotsTagConfig,
+            IXRobotsTagConfiguration oldXRobotsTagConfig = null);
+
         HeaderResult CreateHstsResult(IHstsConfiguration hstsConfig);
-        HeaderResult CreateXContentTypeOptionsResult(ISimpleBooleanConfiguration xContentTypeOptionsConfig, ISimpleBooleanConfiguration oldXContentTypeOptionsConfig = null);
-        HeaderResult CreateXDownloadOptionsResult(ISimpleBooleanConfiguration xDownloadOptionsConfig, ISimpleBooleanConfiguration oldXDownloadOptionsConfig = null);
-        HeaderResult CreateXXssProtectionResult(IXXssProtectionConfiguration xXssProtectionConfig, IXXssProtectionConfiguration oldXXssProtectionConfig = null);
-        HeaderResult CreateXfoResult(IXFrameOptionsConfiguration xfoConfig, IXFrameOptionsConfiguration oldXfoConfig = null);
-        IEnumerable<HeaderResult> CreateCspResults(ICspConfiguration cspConfig, bool reportOnly, string builtinReportHandlerUri = null, ICspConfiguration oldCspConfig = null);
+
+        HeaderResult CreateXContentTypeOptionsResult(ISimpleBooleanConfiguration xContentTypeOptionsConfig,
+            ISimpleBooleanConfiguration oldXContentTypeOptionsConfig = null);
+
+        HeaderResult CreateXDownloadOptionsResult(ISimpleBooleanConfiguration xDownloadOptionsConfig,
+            ISimpleBooleanConfiguration oldXDownloadOptionsConfig = null);
+
+        HeaderResult CreateXXssProtectionResult(IXXssProtectionConfiguration xXssProtectionConfig,
+            IXXssProtectionConfiguration oldXXssProtectionConfig = null);
+
+        HeaderResult CreateXfoResult(IXFrameOptionsConfiguration xfoConfig,
+            IXFrameOptionsConfiguration oldXfoConfig = null);
+
+        IEnumerable<HeaderResult> CreateCspResults(ICspConfiguration cspConfig, bool reportOnly,
+            string builtinReportHandlerUri = null, ICspConfiguration oldCspConfig = null);
     }
 }

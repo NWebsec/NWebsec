@@ -9,7 +9,8 @@ namespace NWebsec.Core
 {
     public class RedirectValidator
     {
-        public void ValidateRedirect(int statusCode, string locationHeader, Uri requestAuthority, IRedirectValidationConfiguration config)
+        public void ValidateRedirect(int statusCode, string locationHeader, Uri requestAuthority,
+            IRedirectValidationConfiguration config)
         {
             if (!config.Enabled)
             {
@@ -52,7 +53,9 @@ namespace NWebsec.Core
                 return;
             }
 
-            throw new RedirectValidationException("A potentially dangerous redirect was detected. Add the destination to the whitelist in configuration if the redirect was intended. Offending redirect: " + locationHeader);
+            throw new RedirectValidationException(
+                "A potentially dangerous redirect was detected. Add the destination to the whitelist in configuration if the redirect was intended. Offending redirect: " +
+                locationHeader);
         }
 
         public bool IsRedirectStatusCode(int statusCode)

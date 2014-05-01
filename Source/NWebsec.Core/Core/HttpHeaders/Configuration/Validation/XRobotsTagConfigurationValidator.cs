@@ -6,7 +6,6 @@ namespace NWebsec.Core.HttpHeaders.Configuration.Validation
 {
     public class XRobotsTagConfigurationValidator
     {
-
         public void Validate(IXRobotsTagConfiguration xRobotsConfig)
         {
             if (!xRobotsConfig.Enabled) return;
@@ -18,7 +17,8 @@ namespace NWebsec.Core.HttpHeaders.Configuration.Validation
                 xRobotsConfig.NoOdp ||
                 xRobotsConfig.NoSnippet ||
                 xRobotsConfig.NoTranslate) return;
-            throw new Exception("One or more directives must be enabled when header is enabled. Enable directives or disable header.");
+            throw new Exception(
+                "One or more directives must be enabled when header is enabled. Enable directives or disable header.");
         }
     }
 }

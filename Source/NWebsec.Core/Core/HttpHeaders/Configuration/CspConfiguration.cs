@@ -17,6 +17,7 @@ namespace NWebsec.Core.HttpHeaders.Configuration
             ConnectSrcDirective = new CspDirectiveConfiguration();
             ReportUriDirective = new CspReportUriDirectiveConfiguration();
         }
+
         public bool Enabled { get; set; }
         public bool XContentSecurityPolicyHeader { get; set; }
         public bool XWebKitCspHeader { get; set; }

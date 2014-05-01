@@ -10,8 +10,8 @@ namespace NWebsec.Core.HttpHeaders
 {
     public class HeaderGenerator : IHeaderGenerator
     {
-
-        public HeaderResult CreateXRobotsTagResult(IXRobotsTagConfiguration xRobotsTagConfig, IXRobotsTagConfiguration oldXRobotsTagConfig = null)
+        public HeaderResult CreateXRobotsTagResult(IXRobotsTagConfiguration xRobotsTagConfig,
+            IXRobotsTagConfiguration oldXRobotsTagConfig = null)
         {
             if (oldXRobotsTagConfig != null && oldXRobotsTagConfig.Enabled && xRobotsTagConfig.Enabled == false)
             {
@@ -31,7 +31,7 @@ namespace NWebsec.Core.HttpHeaders
             sb.Append(xRobotsTagConfig.NoOdp && !xRobotsTagConfig.NoIndex ? "noodp, " : String.Empty);
             sb.Append(xRobotsTagConfig.NoTranslate && !xRobotsTagConfig.NoIndex ? "notranslate, " : String.Empty);
             sb.Append(xRobotsTagConfig.NoImageIndex ? "noimageindex" : String.Empty);
-            var value = sb.ToString().TrimEnd(new[] { ' ', ',' });
+            var value = sb.ToString().TrimEnd(new[] {' ', ','});
 
             if (value.Length == 0) return null;
 
@@ -41,16 +41,18 @@ namespace NWebsec.Core.HttpHeaders
         public HeaderResult CreateHstsResult(IHstsConfiguration hstsConfig)
         {
             if (hstsConfig.MaxAge < TimeSpan.Zero) return null;
-            
-            var seconds = (int)hstsConfig.MaxAge.TotalSeconds;
+
+            var seconds = (int) hstsConfig.MaxAge.TotalSeconds;
 
             var includeSubdomains = (hstsConfig.IncludeSubdomains ? "; includeSubDomains" : "");
             var value = String.Format("max-age={0}{1}", seconds, includeSubdomains);
 
-            return new HeaderResult(HeaderResult.ResponseAction.Set, HeaderConstants.StrictTransportSecurityHeader, value);
+            return new HeaderResult(HeaderResult.ResponseAction.Set, HeaderConstants.StrictTransportSecurityHeader,
+                value);
         }
 
-        public HeaderResult CreateXContentTypeOptionsResult(ISimpleBooleanConfiguration xContentTypeOptionsConfig, ISimpleBooleanConfiguration oldXContentTypeOptionsConfig = null)
+        public HeaderResult CreateXContentTypeOptionsResult(ISimpleBooleanConfiguration xContentTypeOptionsConfig,
+            ISimpleBooleanConfiguration oldXContentTypeOptionsConfig = null)
         {
             if (oldXContentTypeOptionsConfig != null && oldXContentTypeOptionsConfig.Enabled &&
                 !xContentTypeOptionsConfig.Enabled)
@@ -58,20 +60,26 @@ namespace NWebsec.Core.HttpHeaders
                 return new HeaderResult(HeaderResult.ResponseAction.Remove, HeaderConstants.XContentTypeOptionsHeader);
             }
 
-            return xContentTypeOptionsConfig.Enabled ? new HeaderResult(HeaderResult.ResponseAction.Set, HeaderConstants.XContentTypeOptionsHeader, "nosniff") : null;
+            return xContentTypeOptionsConfig.Enabled
+                ? new HeaderResult(HeaderResult.ResponseAction.Set, HeaderConstants.XContentTypeOptionsHeader, "nosniff")
+                : null;
         }
 
-        public HeaderResult CreateXDownloadOptionsResult(ISimpleBooleanConfiguration xDownloadOptionsConfig, ISimpleBooleanConfiguration oldXDownloadOptionsConfig = null)
+        public HeaderResult CreateXDownloadOptionsResult(ISimpleBooleanConfiguration xDownloadOptionsConfig,
+            ISimpleBooleanConfiguration oldXDownloadOptionsConfig = null)
         {
             if (oldXDownloadOptionsConfig != null && oldXDownloadOptionsConfig.Enabled &&
                 !xDownloadOptionsConfig.Enabled)
             {
                 return new HeaderResult(HeaderResult.ResponseAction.Remove, HeaderConstants.XDownloadOptionsHeader);
             }
-            return xDownloadOptionsConfig.Enabled ? new HeaderResult(HeaderResult.ResponseAction.Set, HeaderConstants.XDownloadOptionsHeader, "noopen") : null;
+            return xDownloadOptionsConfig.Enabled
+                ? new HeaderResult(HeaderResult.ResponseAction.Set, HeaderConstants.XDownloadOptionsHeader, "noopen")
+                : null;
         }
 
-        public HeaderResult CreateXXssProtectionResult(IXXssProtectionConfiguration xXssProtectionConfig, IXXssProtectionConfiguration oldXXssProtectionConfig = null)
+        public HeaderResult CreateXXssProtectionResult(IXXssProtectionConfiguration xXssProtectionConfig,
+            IXXssProtectionConfiguration oldXXssProtectionConfig = null)
         {
             if (oldXXssProtectionConfig != null && oldXXssProtectionConfig.Policy != XXssProtectionPolicy.Disabled &&
                 xXssProtectionConfig.Policy == XXssProtectionPolicy.Disabled)
@@ -94,16 +102,16 @@ namespace NWebsec.Core.HttpHeaders
                     break;
 
                 default:
-                    throw new NotImplementedException("Somebody apparently forgot to implement support for: " + xXssProtectionConfig.Policy);
-
+                    throw new NotImplementedException("Somebody apparently forgot to implement support for: " +
+                                                      xXssProtectionConfig.Policy);
             }
 
             return new HeaderResult(HeaderResult.ResponseAction.Set, HeaderConstants.XXssProtectionHeader, value);
         }
 
-        public HeaderResult CreateXfoResult(IXFrameOptionsConfiguration xfoConfig, IXFrameOptionsConfiguration oldXfoConfig = null)
+        public HeaderResult CreateXfoResult(IXFrameOptionsConfiguration xfoConfig,
+            IXFrameOptionsConfiguration oldXfoConfig = null)
         {
-
             if (oldXfoConfig != null && oldXfoConfig.Policy != XFrameOptionsPolicy.Disabled &&
                 xfoConfig.Policy == XFrameOptionsPolicy.Disabled)
             {
@@ -119,11 +127,12 @@ namespace NWebsec.Core.HttpHeaders
                     return new HeaderResult(HeaderResult.ResponseAction.Set, HeaderConstants.XFrameOptionsHeader, "Deny");
 
                 case XFrameOptionsPolicy.SameOrigin:
-                    return new HeaderResult(HeaderResult.ResponseAction.Set, HeaderConstants.XFrameOptionsHeader, "SameOrigin");
+                    return new HeaderResult(HeaderResult.ResponseAction.Set, HeaderConstants.XFrameOptionsHeader,
+                        "SameOrigin");
 
-                //case HttpHeadersConstants.XFrameOptions.AllowFrom:
-                //    frameOptions = "ALLOW-FROM " + headerConfig.SecurityHttpHeaders.XFrameOptions.Origin.GetLeftPart(UriPartial.Authority);
-                //    break;
+                    //case HttpHeadersConstants.XFrameOptions.AllowFrom:
+                    //    frameOptions = "ALLOW-FROM " + headerConfig.SecurityHttpHeaders.XFrameOptions.Origin.GetLeftPart(UriPartial.Authority);
+                    //    break;
 
                 default:
                     throw new NotImplementedException("Apparently someone forgot to implement support for: " +
@@ -131,7 +140,8 @@ namespace NWebsec.Core.HttpHeaders
             }
         }
 
-        public IEnumerable<HeaderResult> CreateCspResults(ICspConfiguration cspConfig, bool reportOnly, string builtinReportHandlerUri = null, ICspConfiguration oldCspConfig = null)
+        public IEnumerable<HeaderResult> CreateCspResults(ICspConfiguration cspConfig, bool reportOnly,
+            string builtinReportHandlerUri = null, ICspConfiguration oldCspConfig = null)
         {
             var headerValue = CreateCspHeaderValue(cspConfig, builtinReportHandlerUri);
 
@@ -153,43 +163,50 @@ namespace NWebsec.Core.HttpHeaders
                 yield break;
             }
 
-            yield return new HeaderResult(HeaderResult.ResponseAction.Set, 
-                (reportOnly ? HeaderConstants.ContentSecurityPolicyReportOnlyHeader : HeaderConstants.ContentSecurityPolicyHeader),
+            yield return new HeaderResult(HeaderResult.ResponseAction.Set,
+                (reportOnly
+                    ? HeaderConstants.ContentSecurityPolicyReportOnlyHeader
+                    : HeaderConstants.ContentSecurityPolicyHeader),
                 headerValue);
 
 
             if (cspConfig.XContentSecurityPolicyHeader)
             {
                 yield return new HeaderResult(HeaderResult.ResponseAction.Set,
-                    (reportOnly ? HeaderConstants.XContentSecurityPolicyReportOnlyHeader : HeaderConstants.XContentSecurityPolicyHeader),
+                    (reportOnly
+                        ? HeaderConstants.XContentSecurityPolicyReportOnlyHeader
+                        : HeaderConstants.XContentSecurityPolicyHeader),
                     headerValue);
             }
 
             if (cspConfig.XWebKitCspHeader)
             {
                 yield return new HeaderResult(HeaderResult.ResponseAction.Set,
-                (reportOnly ? HeaderConstants.XWebKitCspReportOnlyHeader : HeaderConstants.XWebKitCspHeader),
-                headerValue);
+                    (reportOnly ? HeaderConstants.XWebKitCspReportOnlyHeader : HeaderConstants.XWebKitCspHeader),
+                    headerValue);
             }
         }
 
         private IEnumerable<HeaderResult> EnabledCspHeaderRemoveResults(ICspConfiguration cspConfig, bool reportOnly)
         {
-            yield return new HeaderResult(HeaderResult.ResponseAction.Remove, 
-                (reportOnly ? HeaderConstants.ContentSecurityPolicyReportOnlyHeader : HeaderConstants.ContentSecurityPolicyHeader));
+            yield return new HeaderResult(HeaderResult.ResponseAction.Remove,
+                (reportOnly
+                    ? HeaderConstants.ContentSecurityPolicyReportOnlyHeader
+                    : HeaderConstants.ContentSecurityPolicyHeader));
 
 
             if (cspConfig.XContentSecurityPolicyHeader)
             {
                 yield return new HeaderResult(HeaderResult.ResponseAction.Remove,
-                    (reportOnly ? HeaderConstants.XContentSecurityPolicyReportOnlyHeader : HeaderConstants.XContentSecurityPolicyHeader));
+                    (reportOnly
+                        ? HeaderConstants.XContentSecurityPolicyReportOnlyHeader
+                        : HeaderConstants.XContentSecurityPolicyHeader));
             }
 
             if (cspConfig.XWebKitCspHeader)
             {
                 yield return new HeaderResult(HeaderResult.ResponseAction.Remove,
-                (reportOnly ? HeaderConstants.XWebKitCspReportOnlyHeader : HeaderConstants.XWebKitCspHeader));
-
+                    (reportOnly ? HeaderConstants.XWebKitCspReportOnlyHeader : HeaderConstants.XWebKitCspHeader));
             }
         }
 
@@ -206,11 +223,13 @@ namespace NWebsec.Core.HttpHeaders
             sb.Append(CreateDirectiveValue("frame-src", GetDirectiveList(config.FrameSrcDirective)));
             sb.Append(CreateDirectiveValue("font-src", GetDirectiveList(config.FontSrcDirective)));
             sb.Append(CreateDirectiveValue("connect-src", GetDirectiveList(config.ConnectSrcDirective)));
+            
             if (sb.Length == 0) return null;
-            // TODO add support for reporturi
-            sb.Append(CreateDirectiveValue("report-uri", GetReportUriList(config.ReportUriDirective, builtinReportHandlerUri)));
 
-            return sb.ToString().TrimEnd(new[] { ' ', ';' });
+            sb.Append(CreateDirectiveValue("report-uri",
+                GetReportUriList(config.ReportUriDirective, builtinReportHandlerUri)));
+
+            return sb.ToString().TrimEnd(new[] {' ', ';'});
         }
 
         private string CreateDirectiveValue(string directiveName, List<string> sources)
@@ -232,7 +251,6 @@ namespace NWebsec.Core.HttpHeaders
 
         private List<string> GetDirectiveList(ICspDirectiveConfiguration directive)
         {
-
             if (directive == null || !directive.Enabled)
                 return null;
 
@@ -258,9 +276,9 @@ namespace NWebsec.Core.HttpHeaders
             return sources;
         }
 
-        private List<string> GetReportUriList(ICspReportUriDirectiveConfiguration directive, string builtinReportHandlerUri = null)
+        private List<string> GetReportUriList(ICspReportUriDirectiveConfiguration directive,
+            string builtinReportHandlerUri = null)
         {
-
             if (directive == null || !directive.Enabled)
                 return null;
 

@@ -2,7 +2,8 @@
 
 namespace NWebsec.Core.HttpHeaders.Configuration
 {
-    public class CspDirectiveUnsafeInlineConfiguration : CspDirectiveConfiguration, ICspDirectiveUnsafeInlineConfiguration
+    public class CspDirectiveUnsafeInlineConfiguration : CspDirectiveConfiguration,
+        ICspDirectiveUnsafeInlineConfiguration
     {
         public CspDirectiveUnsafeInlineConfiguration()
         {
