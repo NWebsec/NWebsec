@@ -21,6 +21,8 @@ updates your registry and reboots your machine. :)
 Note! The startup scripts require osFamily="2" or newer - so please check your
 ServiceConfiguration.Cloud.cscfg.
 
+Note also that the AES-GCM ciphers introduced with "Windows Server 2012 R2 Update" are available from guest OS version 4.7 (released May 2. 2014).
+
 <ServiceDefinition>
   <WebRole>
     <Startup>
