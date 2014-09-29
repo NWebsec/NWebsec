@@ -161,6 +161,11 @@
                       <xs:documentation>Optional. Specifies whether Strict Transport Security also applies to subdomains. The default is false.</xs:documentation>
                     </xs:annotation>
                   </xs:attribute>
+                  <xs:attribute name="preload" type="simple_boolean" use="optional">
+                    <xs:annotation>
+                      <xs:documentation>Optional. Enables the Preload directive in the HSTS header. MaxAge must be at least 18 weeks, and IncludeSubdomains must be enabled. The default is false.</xs:documentation>
+                    </xs:annotation>
+                  </xs:attribute>
                 </xs:complexType>
               </xs:element>
               <xs:element name="x-Content-Type-Options" minOccurs="0" maxOccurs="1">

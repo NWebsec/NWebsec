@@ -41,11 +41,17 @@ namespace NWebsec.Core.HttpHeaders
         public HeaderResult CreateHstsResult(IHstsConfiguration hstsConfig)
         {
             if (hstsConfig.MaxAge < TimeSpan.Zero) return null;
+
+            if (hstsConfig.Preload && (hstsConfig.MaxAge.TotalSeconds < 10886400 || !hstsConfig.IncludeSubdomains))
+            {
+                return null;
+            }
             
             var seconds = (int)hstsConfig.MaxAge.TotalSeconds;
 
-            var includeSubdomains = (hstsConfig.IncludeSubdomains ? "; includeSubDomains" : "");
-            var value = String.Format("max-age={0}{1}", seconds, includeSubdomains);
+            var includeSubdomains = (hstsConfig.IncludeSubdomains ? "; includeSubdomains" : "");
+            var preload = (hstsConfig.Preload ? "; preload" : "");
+            var value = String.Format("max-age={0}{1}{2}", seconds, includeSubdomains, preload);
 
             return new HeaderResult(HeaderResult.ResponseAction.Set, HeaderConstants.StrictTransportSecurityHeader, value);
         }

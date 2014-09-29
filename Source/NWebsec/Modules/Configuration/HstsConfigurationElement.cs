@@ -8,8 +8,8 @@ namespace NWebsec.Modules.Configuration
 {
     public class HstsConfigurationElement : ConfigurationElement, IHstsConfiguration
     {
-        [ConfigurationProperty("max-age", IsRequired = true)]
-        [TimeSpanValidator(MinValueString = "0:0:0")]
+        [ConfigurationProperty("max-age", IsRequired = true, DefaultValue = "-0:0:1")]
+        [TimeSpanValidator(MinValueString = "-0:0:1")]
         public TimeSpan MaxAge
         {
 
@@ -35,6 +35,21 @@ namespace NWebsec.Modules.Configuration
             set
             {
                 this["includeSubdomains"] = value;
+            }
+
+        }
+
+        [ConfigurationProperty("preload", IsRequired = false, DefaultValue = false)]
+        public bool Preload
+        {
+
+            get
+            {
+                return (bool)this["preload"];
+            }
+            set
+            {
+                this["preload"] = value;
             }
 
         }

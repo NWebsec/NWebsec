@@ -69,6 +69,7 @@
     <Compile Include="Core\HttpHeaders\Configuration\RedirectValidationConfiguration.cs" />
     <Compile Include="Core\HttpHeaders\Configuration\SimpleBooleanConfiguration.cs" />
     <Compile Include="Core\HttpHeaders\Configuration\Validation\CspSourceValidator.cs" />
+    <Compile Include="Core\HttpHeaders\Configuration\Validation\HstsConfigurationValidator.cs" />
     <Compile Include="Core\HttpHeaders\Configuration\Validation\ReportUriValidator.cs" />
     <Compile Include="Core\HttpHeaders\Configuration\Validation\XRobotsTagConfigurationValidator.cs" />
     <Compile Include="Core\HttpHeaders\Configuration\XFrameOptionsConfiguration.cs" />
