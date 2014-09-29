@@ -18,5 +18,8 @@ namespace NWebsec.Owin
 
         [EditorBrowsable(EditorBrowsableState.Never)]
         public bool IncludeSubdomains { get; set; }
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public bool Preload { get; set; }
     }
 }

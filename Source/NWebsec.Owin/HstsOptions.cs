@@ -22,5 +22,11 @@ namespace NWebsec.Owin
             base.IncludeSubdomains = true;
             return this;
         }
+
+        public new IFluentHstsOptions Preload()
+        {
+            base.Preload = true;
+            return this;
+        }
     }
 }

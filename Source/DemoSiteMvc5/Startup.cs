@@ -15,7 +15,7 @@ namespace DemoSiteMvc5
             app.UseRedirectValidation(options => 
                 options.AllowedDestinations("http://www.nwebsec.com/", "https://www.google.com/accounts/"));
 
-            app.UseHsts(options => options.MaxAge(days:30).IncludeSubdomains());
+            app.UseHsts(options => options.MaxAge(days:18*7).IncludeSubdomains());
             app.UseXContentTypeOptions();
             app.UseXDownloadOptions();
             app.UseXfo(options => options.SameOrigin());

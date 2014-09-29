@@ -1,6 +1,7 @@
 ﻿// Copyright (c) André N. Klingsheim. See License.txt in the project root for license information.
 
 using System;
+using NWebsec.Core.HttpHeaders.Configuration.Validation;
 using NWebsec.Owin.Middleware;
 using Owin;
 
@@ -50,6 +51,7 @@ namespace NWebsec.Owin
 
             var options = new HstsOptions();
             configurer(options);
+            new HstsConfigurationValidator().Validate(options);
             return app.Use(typeof (HstsMiddleware), options);
         }
 

@@ -76,6 +76,7 @@
     <Content Include="CacheProfiled\CustomCache.aspx" />
     <Content Include="Css\site.css" />
     <Content Include="Default.aspx" />
+    <Content Include="Hsts\Default.aspx" />
     <Content Include="SessionFixation.aspx" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
@@ -93,6 +94,13 @@
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Hsts\Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Hsts\Default.aspx.designer.cs">
       <DependentUpon>Default.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />

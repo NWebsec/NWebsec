@@ -98,7 +98,9 @@
     <Compile Include="Modules\Configuration\SimpleBooleanConfigurationElement.cs" />
     <Compile Include="Modules\Configuration\RedirectValidationConfigurationElement.cs" />
     <Compile Include="Modules\Configuration\Validation\RedirectValidationConfigurationException.cs" />
+    <Compile Include="Modules\Configuration\Validation\HstsValidator.cs" />
     <Compile Include="Modules\Configuration\Validation\XRobotsTagValidator.cs" />
+    <Compile Include="Modules\Configuration\Validation\HstsValidatorAttribute.cs" />
     <Compile Include="Modules\Configuration\Validation\XRobotsTagValidatorAttribute.cs" />
     <Compile Include="Modules\Configuration\XFrameOptionsConfigurationElement.cs" />
     <Compile Include="Modules\Configuration\XRobotsTagConfigurationElement.cs" />

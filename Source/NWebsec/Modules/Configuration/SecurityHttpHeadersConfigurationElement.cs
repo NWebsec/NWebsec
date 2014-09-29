@@ -2,6 +2,7 @@
 
 using System.Configuration;
 using NWebsec.Modules.Configuration.Csp;
+using NWebsec.Modules.Configuration.Validation;
 
 namespace NWebsec.Modules.Configuration
 {
@@ -19,7 +20,9 @@ namespace NWebsec.Modules.Configuration
                 this["x-Frame-Options"] = value;
             }
         }
+        
         [ConfigurationProperty("strict-Transport-Security", IsRequired = false)]
+        [HstsValidator]
         public HstsConfigurationElement Hsts
         {
             get

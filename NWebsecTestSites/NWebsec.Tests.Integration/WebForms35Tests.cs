@@ -14,7 +14,7 @@ namespace NWebsec.Tests.Functional
         protected const String ReqFailed = "Request failed: ";
         protected HttpClient HttpClient;
         protected TestHelper Helper;
-        private HttpClientHandler handler;
+        private HttpClientHandler _handler;
 
         protected string BaseUri
         {
@@ -24,9 +24,33 @@ namespace NWebsec.Tests.Functional
         [SetUp]
         public void Setup()
         {
-            handler = new HttpClientHandler { AllowAutoRedirect = false, UseCookies = true };
-            HttpClient = new HttpClient(handler);
+            _handler = new HttpClientHandler { AllowAutoRedirect = false, UseCookies = true };
+            HttpClient = new HttpClient(_handler);
             Helper = new TestHelper();
+        }
+
+        [Test]
+        public async Task Hsts_NotConfigured_NoHeader()
+        {
+            const string path = "/Default.aspx";
+            var testUri = Helper.GetUri(BaseUri, path);
+
+            var response = await HttpClient.GetAsync(testUri);
+
+            Assert.IsTrue(response.IsSuccessStatusCode, ReqFailed + testUri);
+            Assert.IsFalse(response.Headers.Any(c => c.Key.Equals("Strict-Transport-Security", StringComparison.OrdinalIgnoreCase)));
+        }
+
+        [Test]
+        public async Task Hsts_Configured_AddsHeader()
+        {
+            const string path = "/Hsts/Default.aspx";
+            var testUri = Helper.GetUri(BaseUri, path);
+
+            var response = await HttpClient.GetAsync(testUri);
+
+            Assert.IsTrue(response.IsSuccessStatusCode, ReqFailed + testUri);
+            Assert.IsNotNull(response.Headers.SingleOrDefault(c => c.Key.Equals("Strict-Transport-Security", StringComparison.OrdinalIgnoreCase)));
         }
 
         [Test]
@@ -99,7 +123,7 @@ namespace NWebsec.Tests.Functional
             var response = await HttpClient.GetAsync(sessionTestUri);
 
             Assert.IsTrue(response.IsSuccessStatusCode, ReqFailed + sessionTestUri);
-            var sessionCookie = handler.CookieContainer.GetCookies(new Uri(BaseUri))["ASP.NET_SessionId"];
+            var sessionCookie = _handler.CookieContainer.GetCookies(new Uri(BaseUri))["ASP.NET_SessionId"];
             Assert.AreEqual(24, sessionCookie.Value.Length,
                             "Cookie was not length 24, hence not a classic ASP.NET session id.");
 
@@ -110,14 +134,14 @@ namespace NWebsec.Tests.Functional
             response = await HttpClient.GetAsync(testUri);
             Assert.IsTrue(response.IsSuccessStatusCode, ReqFailed + testUri);
 
-            var authCookieUser1 = handler.CookieContainer.GetCookies(new Uri(BaseUri))[".ASPXAUTH"];
+            var authCookieUser1 = _handler.CookieContainer.GetCookies(new Uri(BaseUri))[".ASPXAUTH"];
             Assert.IsNotNull(authCookieUser1, "Did not get Forms cookie");
 
             //Make request to trigger authenticated session id.
             response = await HttpClient.GetAsync(sessionTestUri);
             Assert.IsTrue(response.IsSuccessStatusCode, ReqFailed + sessionTestUri);
 
-            var sessionCookieUser1 = handler.CookieContainer.GetCookies(new Uri(BaseUri))["ASP.NET_SessionId"];
+            var sessionCookieUser1 = _handler.CookieContainer.GetCookies(new Uri(BaseUri))["ASP.NET_SessionId"];
             Assert.Less(24, sessionCookieUser1.Value.Length,
                             "Cookie length was not longer than 24, hence not an authenticated session id.");
         }
@@ -135,14 +159,14 @@ namespace NWebsec.Tests.Functional
             var response = await HttpClient.GetAsync(testUri);
             Assert.IsTrue(response.IsSuccessStatusCode, ReqFailed + testUri);
 
-            var authCookieUser1 = handler.CookieContainer.GetCookies(new Uri(BaseUri))[".ASPXAUTH"];
+            var authCookieUser1 = _handler.CookieContainer.GetCookies(new Uri(BaseUri))[".ASPXAUTH"];
             Assert.IsNotNull(authCookieUser1, "Did not get Forms cookie");
 
             //Make request to trigger authenticated session id.
             response = await HttpClient.GetAsync(sessionTestUri);
             Assert.IsTrue(response.IsSuccessStatusCode, ReqFailed + sessionTestUri);
 
-            var sessionCookieUser1 = handler.CookieContainer.GetCookies(new Uri(BaseUri))["ASP.NET_SessionId"];
+            var sessionCookieUser1 = _handler.CookieContainer.GetCookies(new Uri(BaseUri))["ASP.NET_SessionId"];
             Assert.Less(24, sessionCookieUser1.Value.Length,
                             "Cookie length was not longer than 24, hence not an authenticated session id.");
 
@@ -153,7 +177,7 @@ namespace NWebsec.Tests.Functional
             response = await HttpClient.GetAsync(testUri);
             Assert.IsTrue(response.IsSuccessStatusCode, ReqFailed + testUri);
 
-            var authCookieUser2 = handler.CookieContainer.GetCookies(new Uri(BaseUri))[".ASPXAUTH"];
+            var authCookieUser2 = _handler.CookieContainer.GetCookies(new Uri(BaseUri))[".ASPXAUTH"];
             Assert.IsNotNull(authCookieUser2, "Did not get Forms cookie");
             Assert.AreNotEqual(authCookieUser1.Value, authCookieUser2.Value, "A new Forms cookie was not set for user 2.");
 
@@ -161,7 +185,7 @@ namespace NWebsec.Tests.Functional
             response = await HttpClient.GetAsync(sessionTestUri);
             Assert.IsTrue(response.IsSuccessStatusCode, ReqFailed + sessionTestUri);
 
-            var sessionCookieUser2 = handler.CookieContainer.GetCookies(new Uri(BaseUri))["ASP.NET_SessionId"];
+            var sessionCookieUser2 = _handler.CookieContainer.GetCookies(new Uri(BaseUri))["ASP.NET_SessionId"];
             Assert.Less(24, sessionCookieUser2.Value.Length,
                             "Cookie length was not longer than 24, hence not an authenticated session id.");
             Assert.AreNotEqual(sessionCookieUser1.Value, sessionCookieUser2.Value, "Did not get a new authenticated session id for user2.");
@@ -180,26 +204,26 @@ namespace NWebsec.Tests.Functional
             var response = await HttpClient.GetAsync(testUri);
             Assert.IsTrue(response.IsSuccessStatusCode, ReqFailed + testUri);
 
-            var authCookieUser2 = handler.CookieContainer.GetCookies(new Uri(BaseUri))[".ASPXAUTH"];
+            var authCookieUser2 = _handler.CookieContainer.GetCookies(new Uri(BaseUri))[".ASPXAUTH"];
             Assert.IsNotNull(authCookieUser2, "Did not get Forms cookie");
 
             //Make request to trigger authenticated session id for user 2.
             response = await HttpClient.GetAsync(sessionTestUri);
             Assert.IsTrue(response.IsSuccessStatusCode, ReqFailed + sessionTestUri);
 
-            var sessionCookieUser2 = handler.CookieContainer.GetCookies(new Uri(BaseUri))["ASP.NET_SessionId"];
+            var sessionCookieUser2 = _handler.CookieContainer.GetCookies(new Uri(BaseUri))["ASP.NET_SessionId"];
             Assert.Less(24, sessionCookieUser2.Value.Length,
                             "Cookie length was not longer than 24, hence not an authenticated session id.");
 
             //Make request as anonymous user with authenticated session id.
-            handler = new HttpClientHandler { AllowAutoRedirect = false, UseCookies = true };
-            handler.CookieContainer.Add(sessionCookieUser2);
-            HttpClient = new HttpClient(handler);
+            _handler = new HttpClientHandler { AllowAutoRedirect = false, UseCookies = true };
+            _handler.CookieContainer.Add(sessionCookieUser2);
+            HttpClient = new HttpClient(_handler);
 
             response = await HttpClient.GetAsync(sessionTestUri);
             Assert.IsTrue(response.IsSuccessStatusCode, ReqFailed + sessionTestUri);
 
-            var finalSessionCookie = handler.CookieContainer.GetCookies(new Uri(BaseUri))["ASP.NET_SessionId"];
+            var finalSessionCookie = _handler.CookieContainer.GetCookies(new Uri(BaseUri))["ASP.NET_SessionId"];
             Assert.AreEqual(24, finalSessionCookie.Value.Length,
                             "Cookie was not length 24, hence not a classic ASP.NET session id.");
 
