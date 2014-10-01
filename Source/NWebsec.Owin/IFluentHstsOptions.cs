@@ -33,5 +33,11 @@ namespace NWebsec.Owin
         /// <remarks>Read more about preloaded HSTS sites at <a href="http://www.chromium.org/sts">www.chromium.org/sts</a></remarks>
         /// <returns>The current instance.</returns>
         IFluentHstsOptions Preload();
+
+        /// <summary>
+        /// Specifies that the HSTS header should be set for HTTPS requests only.
+        /// </summary>
+        /// <returns>The current instance.</returns>
+        IFluentHstsOptions HttpsOnly();
     }
 }

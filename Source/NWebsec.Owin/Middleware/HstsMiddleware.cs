@@ -15,6 +15,7 @@ namespace NWebsec.Owin.Middleware
     {
         private readonly IHstsConfiguration _config;
         private readonly HeaderResult _headerResult;
+        private const string Https = "https";
 
         public HstsMiddleware(AppFunc next, HstsOptions options)
             : base(next)
@@ -29,6 +30,11 @@ namespace NWebsec.Owin.Middleware
         {
             owinEnvironment.NWebsecContext.Hsts = _config;
 
+            if (_config.HttpsOnly && !Https.Equals(owinEnvironment.RequestScheme, StringComparison.OrdinalIgnoreCase))
+            {
+                return;
+            }
+            
             if (_headerResult.Action == HeaderResult.ResponseAction.Set)
             {
                 owinEnvironment.ResponseHeaders.SetHeader(_headerResult.Name, _headerResult.Value);

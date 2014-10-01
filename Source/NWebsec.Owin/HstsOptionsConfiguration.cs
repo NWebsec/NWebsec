@@ -21,5 +21,8 @@ namespace NWebsec.Owin
 
         [EditorBrowsable(EditorBrowsableState.Never)]
         public bool Preload { get; set; }
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public bool HttpsOnly { get; set; }
     }
 }

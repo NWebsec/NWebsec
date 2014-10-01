@@ -9,5 +9,6 @@ namespace NWebsec.Core.HttpHeaders.Configuration
         public TimeSpan MaxAge { get; set; }
         public bool IncludeSubdomains { get; set; }
         public bool Preload { get; set; }
+        public bool HttpsOnly { get; set; }
     }
 }

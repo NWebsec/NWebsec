@@ -11,5 +11,7 @@ namespace NWebsec.Core.HttpHeaders.Configuration
         bool IncludeSubdomains { get; set; }
 
         bool Preload { get; set; }
+
+        bool HttpsOnly { get; set; }
     }
 }

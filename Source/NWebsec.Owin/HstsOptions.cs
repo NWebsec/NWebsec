@@ -6,7 +6,9 @@ namespace NWebsec.Owin
 {
     public class HstsOptions : HstsOptionsConfiguration, IFluentHstsOptions
     {
-        public IFluentHstsOptions MaxAge(int days = 0, int hours = 0, int minutes = 0, int seconds = 0)
+
+        // ReSharper disable once CSharpWarnings::CS0109
+        public new IFluentHstsOptions MaxAge(int days = 0, int hours = 0, int minutes = 0, int seconds = 0)
         {
             if (days < 0) throw new ArgumentOutOfRangeException("days", "Value must be equal to or larger than 0.");
             if (hours < 0) throw new ArgumentOutOfRangeException("hours", "Value must be equal to or larger than 0.");
@@ -26,6 +28,12 @@ namespace NWebsec.Owin
         public new IFluentHstsOptions Preload()
         {
             base.Preload = true;
+            return this;
+        }
+
+        public new IFluentHstsOptions HttpsOnly()
+        {
+            base.HttpsOnly = true;
             return this;
         }
     }
