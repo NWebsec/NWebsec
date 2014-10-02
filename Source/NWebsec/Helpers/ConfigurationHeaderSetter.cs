@@ -41,7 +41,7 @@ namespace NWebsec.Helpers
         internal void SetSitewideHeadersFromConfig(HttpContextBase context)
         {
             var nwebsecContext = context.GetNWebsecContext();
-            SetHstsHeader(context.Response, nwebsecContext);
+            SetHstsHeader(context.Response, nwebsecContext, context.Request.IsSecureConnection);
             SetXRobotsTagHeader(context.Response, nwebsecContext);
             SetXFrameoptionsHeader(context.Response, nwebsecContext);
             SetXContentTypeOptionsHeader(context.Response, nwebsecContext);
@@ -57,8 +57,13 @@ namespace NWebsec.Helpers
             SetNoCacheHeaders(context, nwebsecContext);
         }
 
-        internal void SetHstsHeader(HttpResponseBase response, NWebsecContext nwebsecContext)
+        internal void SetHstsHeader(HttpResponseBase response, NWebsecContext nwebsecContext, bool isHttps)
         {
+            if (!isHttps && WebConfig.SecurityHttpHeaders.Hsts.HttpsOnly)
+            {
+                return;
+            }
+
             nwebsecContext.Hsts = WebConfig.SecurityHttpHeaders.Hsts;
             var result = _headerGenerator.CreateHstsResult(WebConfig.SecurityHttpHeaders.Hsts);
             _headerResultHandler.HandleHeaderResult(response, result);

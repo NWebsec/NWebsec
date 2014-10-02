@@ -64,11 +64,47 @@ namespace NWebsec.Tests.Unit.Helpers
         }
 
         [Test]
-        public void SetHstsHeader_UpdatesContextAndHandlesResult()
+        public void SetHstsHeader_HttpAndNoHttpsOnly_UpdatesContextAndHandlesResult()
         {
             _mockHeaderGenerator.Setup(g => g.CreateHstsResult(_config.SecurityHttpHeaders.Hsts)).Returns(_expectedHeaderResult);
 
-            _configHeaderSetter.SetHstsHeader(_mockResponse.Object, _nwebsecContext);
+            _configHeaderSetter.SetHstsHeader(_mockResponse.Object, _nwebsecContext, false);
+
+            Assert.AreSame(_config.SecurityHttpHeaders.Hsts, _nwebsecContext.Hsts);
+            _mockHeaderResultHandler.Verify(h => h.HandleHeaderResult(It.IsAny<HttpResponseBase>(), _expectedHeaderResult), Times.Once);
+        }
+
+        [Test]
+        public void SetHstsHeader_HttpAndHttpsOnly_DoesNotUpdateContextAndHandleResult()
+        {
+            _config.SecurityHttpHeaders.Hsts.HttpsOnly = true;
+            _mockHeaderGenerator.Setup(g => g.CreateHstsResult(_config.SecurityHttpHeaders.Hsts)).Returns(_expectedHeaderResult);
+
+            _configHeaderSetter.SetHstsHeader(_mockResponse.Object, _nwebsecContext, false);
+
+            Assert.IsNull(_nwebsecContext.Hsts);
+            _mockHeaderGenerator.Verify(g => g.CreateHstsResult(It.IsAny<IHstsConfiguration>()), Times.Never);
+            _mockHeaderResultHandler.Verify(h => h.HandleHeaderResult(It.IsAny<HttpResponseBase>(), _expectedHeaderResult), Times.Never);
+        }
+
+        [Test]
+        public void SetHstsHeader_HttpsAndNoHttpsOnly_UpdatesContextAndHandlesResult()
+        {
+            _mockHeaderGenerator.Setup(g => g.CreateHstsResult(_config.SecurityHttpHeaders.Hsts)).Returns(_expectedHeaderResult);
+
+            _configHeaderSetter.SetHstsHeader(_mockResponse.Object, _nwebsecContext, true);
+
+            Assert.AreSame(_config.SecurityHttpHeaders.Hsts, _nwebsecContext.Hsts);
+            _mockHeaderResultHandler.Verify(h => h.HandleHeaderResult(It.IsAny<HttpResponseBase>(), _expectedHeaderResult), Times.Once);
+        }
+
+        [Test]
+        public void SetHstsHeader_HttpsAndHttpsOnly_UpdatesContextAndHandlesResult()
+        {
+            _config.SecurityHttpHeaders.Hsts.HttpsOnly = true;
+            _mockHeaderGenerator.Setup(g => g.CreateHstsResult(_config.SecurityHttpHeaders.Hsts)).Returns(_expectedHeaderResult);
+
+            _configHeaderSetter.SetHstsHeader(_mockResponse.Object, _nwebsecContext, true);
 
             Assert.AreSame(_config.SecurityHttpHeaders.Hsts, _nwebsecContext.Hsts);
             _mockHeaderResultHandler.Verify(h => h.HandleHeaderResult(It.IsAny<HttpResponseBase>(), _expectedHeaderResult), Times.Once);
