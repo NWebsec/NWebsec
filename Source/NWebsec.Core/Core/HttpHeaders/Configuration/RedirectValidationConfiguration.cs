@@ -9,9 +9,11 @@ namespace NWebsec.Core.HttpHeaders.Configuration
         public RedirectValidationConfiguration()
         {
             AllowedUris = new string[0];
+            SameHostRedirectConfiguration = new SameHostHttpsRedirectConfiguration();
         }
 
         public bool Enabled { get; set; }
         public IEnumerable<string> AllowedUris { get; set; }
+        public ISameHostHttpsRedirectConfiguration SameHostRedirectConfiguration { get; set; }
     }
 }

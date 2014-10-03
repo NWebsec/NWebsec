@@ -89,6 +89,9 @@
     <Compile Include="Modules\Configuration\Csp\Validation\CspDirectiveBaseConfigurationElementValidatorAttribute.cs" />
     <Compile Include="Modules\Configuration\HstsConfigurationElement.cs" />
     <Compile Include="Modules\Configuration\HttpHeaderSecurityConfigurationSection.cs" />
+    <Compile Include="Modules\Configuration\RedirectSameHostConfigurationElement.cs" />
+    <Compile Include="Modules\Configuration\Validation\RedirectSameHostConfigurationElementValidator.cs" />
+    <Compile Include="Modules\Configuration\Validation\RedirectSameHostConfigurationElementValidatorAttribute.cs" />
     <Compile Include="Modules\Configuration\RedirectUriConfigurationElement.cs" />
     <Compile Include="Modules\Configuration\RedirectUriElementCollection.cs" />
     <Compile Include="Modules\Configuration\Validation\RedirectUriValidator.cs" />

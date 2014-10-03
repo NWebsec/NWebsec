@@ -16,6 +16,7 @@ namespace NWebsec.Owin
 
         public bool Enabled { get; set; }
         public IEnumerable<string> AllowedUris { get; set; }
+        public ISameHostHttpsRedirectConfiguration SameHostRedirectConfiguration { get; set; }
 
         public void AllowedDestinations(params string[] uris)
         {

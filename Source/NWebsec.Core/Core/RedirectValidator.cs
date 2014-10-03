@@ -41,9 +41,26 @@ namespace NWebsec.Core
             }
 
             // Same origin
-            if (locationUri.AbsoluteUri.StartsWith(requestAuthority.GetLeftPart(UriPartial.Authority)))
+            if (locationUri.GetLeftPart(UriPartial.Authority).Equals(requestAuthority.GetLeftPart(UriPartial.Authority)))
             {
                 return;
+            }
+
+            //Same host https
+            if (config.SameHostRedirectConfiguration.Enabled && locationUri.Scheme.Equals("https") && requestAuthority.Host.Equals(locationUri.Host))
+            {
+                var sameHostConfig = config.SameHostRedirectConfiguration;
+                
+                if (sameHostConfig.Ports.Length == 0 && locationUri.IsDefaultPort)
+                {
+                    return;
+                }
+
+                if (sameHostConfig.Ports.Contains(locationUri.Port))
+                {
+                    return;
+                }
+                throw new RedirectValidationException("A potentially dangerous redirect was detected. Allow same host redirects to this port number in configuration if the redirect was intended. Offending redirect: " + locationHeader);
             }
 
             // Allowed Uri

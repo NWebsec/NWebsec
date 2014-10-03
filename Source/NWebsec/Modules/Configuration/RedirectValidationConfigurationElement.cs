@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
 using NWebsec.Core.HttpHeaders.Configuration;
+using NWebsec.Modules.Configuration.Validation;
 
 namespace NWebsec.Modules.Configuration
 {
@@ -25,6 +26,20 @@ namespace NWebsec.Modules.Configuration
             }
         }
 
+        [ConfigurationProperty("allowSameHostRedirectsToHttps", IsRequired = false)]
+        [RedirectSameHostConfigurationElementValidator]
+        public RedirectSameHostConfigurationElement SameHostRedirectConfig
+        {
+            get
+            {
+                return (RedirectSameHostConfigurationElement)this["allowSameHostRedirectsToHttps"];
+            }
+            set
+            {
+                this["allowSameHostRedirectsToHttps"] = value;
+            }
+        }
+
         [ConfigurationProperty("", IsRequired = false, IsDefaultCollection = true)]
         [ConfigurationCollection(typeof(RedirectUriElementCollection), CollectionType = ConfigurationElementCollectionType.AddRemoveClearMap)]
         public RedirectUriElementCollection RedirectUris
@@ -39,7 +54,8 @@ namespace NWebsec.Modules.Configuration
             }
         }
 
-        public IEnumerable<string> AllowedUris {
+        public IEnumerable<string> AllowedUris
+        {
             get
             {
                 if (_redirectUris == null)
@@ -48,6 +64,16 @@ namespace NWebsec.Modules.Configuration
                 }
                 return _redirectUris;
             }
-            set { throw new NotImplementedException(); } }
+            set { throw new NotImplementedException(); }
+        }
+
+        public ISameHostHttpsRedirectConfiguration SameHostRedirectConfiguration
+        {
+            get
+            {
+                return SameHostRedirectConfig;
+            }
+            set { throw new NotImplementedException(); }
+        }
     }
 }

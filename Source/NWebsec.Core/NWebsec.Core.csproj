@@ -62,11 +62,13 @@
     <Compile Include="Core\HttpHeaders\Configuration\ICspReportUriDirectiveConfiguration.cs" />
     <Compile Include="Core\HttpHeaders\Configuration\IHstsConfiguration.cs" />
     <Compile Include="Core\HttpHeaders\Configuration\IRedirectValidationConfiguration.cs" />
+    <Compile Include="Core\HttpHeaders\Configuration\ISameHostHttpsRedirectConfiguration.cs" />
     <Compile Include="Core\HttpHeaders\Configuration\ISimpleBooleanConfiguration.cs" />
     <Compile Include="Core\HttpHeaders\Configuration\IXFrameOptionsConfiguration.cs" />
     <Compile Include="Core\HttpHeaders\Configuration\IXRobotsTagConfiguration.cs" />
     <Compile Include="Core\HttpHeaders\Configuration\IXXssProtectionConfiguration.cs" />
     <Compile Include="Core\HttpHeaders\Configuration\RedirectValidationConfiguration.cs" />
+    <Compile Include="Core\HttpHeaders\Configuration\SameHostHttpsRedirectConfiguration.cs" />
     <Compile Include="Core\HttpHeaders\Configuration\SimpleBooleanConfiguration.cs" />
     <Compile Include="Core\HttpHeaders\Configuration\Validation\CspSourceValidator.cs" />
     <Compile Include="Core\HttpHeaders\Configuration\Validation\HstsConfigurationValidator.cs" />
