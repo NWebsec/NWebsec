@@ -54,5 +54,11 @@ namespace DemoSiteMvc5.Controllers
         {
             return new RedirectResult("http://www.nwebsec.com");
         }
+
+    
+        public ActionResult RequireHttps()
+        {
+            return Redirect("https://localhost:8443/DemoSiteMvc5");
+        }
     }
 }

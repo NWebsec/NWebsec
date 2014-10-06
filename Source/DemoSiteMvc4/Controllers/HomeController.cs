@@ -49,5 +49,11 @@ namespace DemoSiteMvc4.Controllers
             Session["Hey"] = "whatever";
             return View("Index");
         }
+
+        [RequireHttps]
+        public ActionResult RequireHttps()
+        {
+            return Redirect("https://localhost:8443/DemoSiteMvc4");
+        }
     }
 }

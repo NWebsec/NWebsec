@@ -13,7 +13,7 @@ namespace DemoSiteMvc5
             // For more information on how to configure your application, visit http://go.microsoft.com/fwlink/?LinkID=316888
 
             app.UseRedirectValidation(options => 
-                options.AllowedDestinations("http://www.nwebsec.com/", "https://www.google.com/accounts/"));
+                options.AllowedDestinations("http://www.nwebsec.com/", "https://www.google.com/accounts/").AllowSameHostRedirectsToHttps(8443,443));
 
             app.UseHsts(options => options.MaxAge(days:18*7).IncludeSubdomains());
             app.UseXContentTypeOptions();
