@@ -76,9 +76,10 @@
     <Compile Include="CspReportUriDirectiveTests.cs" />
     <Compile Include="HstsOptionsTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RedirectValidationOptionsTests.cs" />
     <Compile Include="XFrameOptionsTests.cs" />
-    <Compile Include="XRobotsTagOptions.cs" />
-    <Compile Include="XXssProtectionOptions.cs" />
+    <Compile Include="XRobotsTagOptionsTests.cs" />
+    <Compile Include="XXssProtectionOptionsTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config">

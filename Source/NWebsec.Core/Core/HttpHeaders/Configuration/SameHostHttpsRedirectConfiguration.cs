@@ -2,7 +2,7 @@
 
 namespace NWebsec.Core.HttpHeaders.Configuration
 {
-    class SameHostHttpsRedirectConfiguration : ISameHostHttpsRedirectConfiguration
+    public class SameHostHttpsRedirectConfiguration : ISameHostHttpsRedirectConfiguration
     {
         public SameHostHttpsRedirectConfiguration()
         {
