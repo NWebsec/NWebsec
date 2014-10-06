@@ -21,6 +21,11 @@ namespace NWebsec.Tests.Functional
             get { return ConfigurationManager.AppSettings["WebForms35BaseUri"]; }
         }
 
+        protected string BaseUriHttps
+        {
+            get { return ConfigurationManager.AppSettings["WebForms35BaseUri"]; }
+        }
+
         [SetUp]
         public void Setup()
         {
@@ -42,7 +47,7 @@ namespace NWebsec.Tests.Functional
         }
 
         [Test]
-        public async Task Hsts_Configured_AddsHeader()
+        public async Task Hsts_HttpNoHttpsOnly_AddsHeader()
         {
             const string path = "/Hsts/Default.aspx";
             var testUri = Helper.GetUri(BaseUri, path);
