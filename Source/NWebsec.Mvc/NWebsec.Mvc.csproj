@@ -99,6 +99,8 @@
     <Compile Include="Helpers\ICspConfigurationOverrideHelper.cs" />
     <Compile Include="Helpers\IHeaderConfigurationOverrideHelper.cs" />
     <Compile Include="HttpHeaders\Csp\CspAttribute.cs" />
+    <Compile Include="HttpHeaders\Csp\CspFrameAncestorsReportOnlyAttribute.cs" />
+    <Compile Include="HttpHeaders\Csp\CspFrameAncestorsAttribute.cs" />
     <Compile Include="HttpHeaders\Csp\Internals\CspAttributeBase.cs" />
     <Compile Include="HttpHeaders\Csp\CspConnectSrcAttribute.cs" />
     <Compile Include="HttpHeaders\Csp\CspConnectSrcReportOnlyAttribute.cs" />

@@ -15,6 +15,7 @@ namespace NWebsec.Core.HttpHeaders.Configuration
             FrameSrcDirective = new CspDirectiveConfiguration();
             FontSrcDirective = new CspDirectiveConfiguration();
             ConnectSrcDirective = new CspDirectiveConfiguration();
+            FrameAncestorsDirective = new CspDirectiveConfiguration();
             ReportUriDirective = new CspReportUriDirectiveConfiguration();
         }
 
@@ -30,6 +31,7 @@ namespace NWebsec.Core.HttpHeaders.Configuration
         public ICspDirectiveConfiguration FrameSrcDirective { get; set; }
         public ICspDirectiveConfiguration FontSrcDirective { get; set; }
         public ICspDirectiveConfiguration ConnectSrcDirective { get; set; }
+        public ICspDirectiveConfiguration FrameAncestorsDirective { get; set; }
         public ICspReportUriDirectiveConfiguration ReportUriDirective { get; set; }
     }
 }

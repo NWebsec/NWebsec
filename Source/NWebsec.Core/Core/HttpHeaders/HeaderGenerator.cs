@@ -229,7 +229,8 @@ namespace NWebsec.Core.HttpHeaders
             sb.Append(CreateDirectiveValue("frame-src", GetDirectiveList(config.FrameSrcDirective)));
             sb.Append(CreateDirectiveValue("font-src", GetDirectiveList(config.FontSrcDirective)));
             sb.Append(CreateDirectiveValue("connect-src", GetDirectiveList(config.ConnectSrcDirective)));
-
+            sb.Append(CreateDirectiveValue("frame-ancestors", GetDirectiveList(config.FrameAncestorsDirective)));
+            
             if (sb.Length == 0) return null;
 
             sb.Append(CreateDirectiveValue("report-uri",

@@ -19,6 +19,7 @@ namespace NWebsec.Owin
             FrameSrcDirective = new CspDirective();
             FontSrcDirective = new CspDirective();
             ConnectSrcDirective = new CspDirective();
+            FrameAncestorsDirective = new CspDirective();
             ReportUriDirective = new CspReportUriDirective();
         }
 
@@ -45,6 +46,7 @@ namespace NWebsec.Owin
         public ICspDirectiveConfiguration FontSrcDirective { get; set; }
 
         public ICspDirectiveConfiguration ConnectSrcDirective { get; set; }
+        public ICspDirectiveConfiguration FrameAncestorsDirective { get; set; }
 
         public ICspReportUriDirectiveConfiguration ReportUriDirective { get; set; }
 
@@ -144,6 +146,17 @@ namespace NWebsec.Owin
         public CspOptions ConnectSources(Action<ICspDirectiveConfiguration> configurer)
         {
             configurer(ConnectSrcDirective);
+            return this;
+        }
+
+        /// <summary>
+        /// Configures the frame-ancestors directive.
+        /// </summary>
+        /// <param name="configurer">An <see cref="Action"/> that configures the sources for the directive.</param>
+        /// <returns>The current <see cref="CspOptions" /> instance.</returns>
+        public CspOptions FrameAncestors(Action<ICspDirectiveConfiguration> configurer)
+        {
+            configurer(FrameAncestorsDirective);
             return this;
         }
 

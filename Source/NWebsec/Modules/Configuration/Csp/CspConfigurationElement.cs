@@ -136,6 +136,20 @@ namespace NWebsec.Modules.Configuration.Csp
             }
         }
 
+        [ConfigurationProperty("frame-ancestors", IsRequired = false)]
+        [CspDirectiveBaseConfigurationElementValidator]
+        public CspDirectiveBaseConfigurationElement FrameAncestors
+        {
+            get
+            {
+                return (CspDirectiveBaseConfigurationElement)this["frame-ancestors"];
+            }
+            set
+            {
+                this["frame-ancestors"] = value;
+            }
+        }
+
         [ConfigurationProperty("report-uri", IsRequired = false)]
         public CspReportUriDirectiveConfigurationElement ReportUri
         {
@@ -192,6 +206,12 @@ namespace NWebsec.Modules.Configuration.Csp
         public ICspDirectiveConfiguration ConnectSrcDirective
         {
             get { return ConnectSrc; }
+            set { throw new NotImplementedException(); }
+        }
+
+        public ICspDirectiveConfiguration FrameAncestorsDirective
+        {
+            get { return FrameAncestors; }
             set { throw new NotImplementedException(); }
         }
 

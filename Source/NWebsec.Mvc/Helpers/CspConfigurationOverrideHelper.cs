@@ -58,6 +58,7 @@ namespace NWebsec.Mvc.Helpers
                 overriddenConfig.FrameSrcDirective = cspConfig.FrameSrcDirective;
                 overriddenConfig.FontSrcDirective = cspConfig.FontSrcDirective;
                 overriddenConfig.ConnectSrcDirective = cspConfig.ConnectSrcDirective;
+                overriddenConfig.FrameAncestorsDirective = cspConfig.FrameAncestorsDirective;
                 overriddenConfig.ReportUriDirective = cspConfig.ReportUriDirective;
             }
 
@@ -116,6 +117,12 @@ namespace NWebsec.Mvc.Helpers
             if (directiveOverrides.TryGetValue(CspDirectives.ConnectSrc, out element))
             {
                 overriddenConfig.ConnectSrcDirective = element;
+                cspWasOverridden = true;
+            }
+
+            if (directiveOverrides.TryGetValue(CspDirectives.FrameAncestors, out element))
+            {
+                overriddenConfig.FrameAncestorsDirective = element;
                 cspWasOverridden = true;
             }
 
@@ -206,14 +213,14 @@ namespace NWebsec.Mvc.Helpers
                 case CspDirectives.DefaultSrc:
                     return CloneElement(cspConfig.DefaultSrcDirective);
 
-                case CspDirectives.ConnectSrc:
-                    return CloneElement(cspConfig.ConnectSrcDirective);
+                case CspDirectives.ScriptSrc:
+                    return CloneElement(cspConfig.ScriptSrcDirective);
 
-                case CspDirectives.FontSrc:
-                    return CloneElement(cspConfig.FontSrcDirective);
+                case CspDirectives.ObjectSrc:
+                    return CloneElement(cspConfig.ObjectSrcDirective);
 
-                case CspDirectives.FrameSrc:
-                    return CloneElement(cspConfig.FrameSrcDirective);
+                case CspDirectives.StyleSrc:
+                    return CloneElement(cspConfig.StyleSrcDirective);
 
                 case CspDirectives.ImgSrc:
                     return CloneElement(cspConfig.ImgSrcDirective);
@@ -221,14 +228,17 @@ namespace NWebsec.Mvc.Helpers
                 case CspDirectives.MediaSrc:
                     return CloneElement(cspConfig.MediaSrcDirective);
 
-                case CspDirectives.ObjectSrc:
-                    return CloneElement(cspConfig.ObjectSrcDirective);
+                case CspDirectives.FrameSrc:
+                    return CloneElement(cspConfig.FrameSrcDirective);
 
-                case CspDirectives.ScriptSrc:
-                    return CloneElement(cspConfig.ScriptSrcDirective);
+                case CspDirectives.FontSrc:
+                    return CloneElement(cspConfig.FontSrcDirective);
 
-                case CspDirectives.StyleSrc:
-                    return CloneElement(cspConfig.StyleSrcDirective);
+                case CspDirectives.ConnectSrc:
+                    return CloneElement(cspConfig.ConnectSrcDirective);
+
+                case CspDirectives.FrameAncestors:
+                    return CloneElement(cspConfig.ConnectSrcDirective);
 
                 default:
                     throw new NotImplementedException("The mapping for " + directive + " was not implemented.");
@@ -302,7 +312,7 @@ namespace NWebsec.Mvc.Helpers
 
         internal ICspDirectiveConfiguration GetOverridenCspDirectiveConfig(CspDirectives directive, CspDirectiveBaseOverride directiveOverride, ICspDirectiveConfiguration directiveConfig)
         {
-            ICspDirectiveConfiguration result=null;
+            ICspDirectiveConfiguration result = null;
 
             switch (directive)
             {
@@ -400,7 +410,8 @@ namespace NWebsec.Mvc.Helpers
             FrameSrc = 6,
             FontSrc = 7,
             ConnectSrc = 8,
-            ReportUri = 9
+            ReportUri = 9,
+            FrameAncestors = 10
         }
     }
 }

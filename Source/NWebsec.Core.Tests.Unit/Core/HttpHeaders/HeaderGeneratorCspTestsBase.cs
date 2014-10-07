@@ -200,6 +200,22 @@ namespace NWebsec.Core.Tests.Unit.Core.HttpHeaders
         }
 
         [Test]
+        public void AddCspHeaders_CspEnabledWithFrameAncestors_ReturnsSetCspWithFrameAncestorsResult()
+        {
+            var cspConfig = new CspConfiguration
+            {
+                Enabled = true,
+                FrameAncestorsDirective = { SelfSrc = true }
+            };
+
+            var result = _generator.CreateCspResults(cspConfig, Reportonly).Single();
+
+            Assert.AreEqual(HeaderResult.ResponseAction.Set, result.Action);
+            Assert.AreEqual(CspHeaderName, result.Name);
+            Assert.AreEqual("frame-ancestors 'self'", result.Value);
+        }
+
+        [Test]
         public void AddCspHeaders_CspWithTwoDirectives_ReturnsSetSetCspWithBothDirectivesResult()
         {
             var cspConfig = new CspConfiguration
