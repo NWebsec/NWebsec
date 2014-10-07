@@ -2,20 +2,20 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
   <metadata>
     <id>NWebsec.Owin</id>
-    <version>1.0.0</version>
+    <version>1.1.0</version>
     <title>NWebsec.Owin</title>
     <authors>André N. Klingsheim</authors>
     <owners>André N. Klingsheim</owners>
     <licenseUrl>https://nwebsec.codeplex.com/license</licenseUrl>
     <projectUrl>https://nwebsec.codeplex.com</projectUrl>
-    <iconUrl>http://klings.blob.core.windows.net/nwebsecicon/nwebsec_nuget.png</iconUrl>
+    <iconUrl>https://klings.blob.core.windows.net/nwebsecicon/nwebsec_nuget.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>NWebsec middleware for OWIN applications. NWebsec helps you set important security headers and detect potentially dangerous redirects. See project website for documentation.</description>
-    <releaseNotes>This release includes middleware to set security headers and enforce redirect validation. See release notes at project web site for details.</releaseNotes>
+    <releaseNotes>This release adds support for the HSTS preload directive and more sophisticated redirect validation configuration. See release notes at project web site for details.</releaseNotes>
     <copyright>Copyright © 2014</copyright>
     <tags>NWebsec security asp.net mvc owin</tags>
     <dependencies>
-      <dependency id="NWebsec.Core" version="[1.0.0]" />
+      <dependency id="NWebsec.Core" version="[1.1.0]" />
       <dependency id="Owin" version="1.0" />
     </dependencies>
   </metadata>

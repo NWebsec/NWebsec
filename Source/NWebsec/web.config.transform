@@ -3,7 +3,7 @@
   <configSections>
     <sectionGroup name="nwebsec">
       <!-- For information on how to configure NWebsec please visit: http://nwebsec.codeplex.com/wikipage?title=Configuration -->
-      <section name="httpHeaderSecurityModule" type="NWebsec.Modules.Configuration.HttpHeaderSecurityConfigurationSection, NWebsec, Version=3.0.2.0, Culture=neutral, PublicKeyToken=3613da5f958908a1" requirePermission="false"/>
+      <section name="httpHeaderSecurityModule" type="NWebsec.Modules.Configuration.HttpHeaderSecurityConfigurationSection, NWebsec, Version=3.1.0.0, Culture=neutral, PublicKeyToken=3613da5f958908a1" requirePermission="false"/>
     </sectionGroup>
   </configSections>
   <system.web>
@@ -11,7 +11,7 @@
   </system.web>
   <system.webServer>
     <modules>
-      <add name="NWebsecHttpHeaderSecurityModule" type="NWebsec.Modules.HttpHeaderSecurityModule, NWebsec, Version=3.0.2.0, Culture=neutral, PublicKeyToken=3613da5f958908a1"/>
+      <add name="NWebsecHttpHeaderSecurityModule" type="NWebsec.Modules.HttpHeaderSecurityModule, NWebsec, Version=3.1.0.0, Culture=neutral, PublicKeyToken=3613da5f958908a1"/>
     </modules>
     <httpProtocol>
       <customHeaders>

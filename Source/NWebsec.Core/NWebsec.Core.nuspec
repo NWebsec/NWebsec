@@ -2,16 +2,16 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
   <metadata>
     <id>NWebsec.Core</id>
-    <version>1.0.0</version>
+    <version>1.1.0</version>
     <title>NWebsec.Core</title>
     <authors>André N. Klingsheim</authors>
     <owners>André N. Klingsheim</owners>
     <licenseUrl>https://nwebsec.codeplex.com/license</licenseUrl>
     <projectUrl>https://nwebsec.codeplex.com</projectUrl>
-    <iconUrl>http://klings.blob.core.windows.net/nwebsecicon/nwebsec_nuget.png</iconUrl>
+    <iconUrl>https://klings.blob.core.windows.net/nwebsecicon/nwebsec_nuget.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>This library provides core functionality for the various NWebsec security libraries.</description>
-    <releaseNotes>This release includes core functions moved from the other NWebsec libaries.</releaseNotes>
+    <releaseNotes>This release includes core functions for the other NWebsec libaries.</releaseNotes>
     <copyright>Copyright © 2014</copyright>
     <tags>NWebsec security asp.net</tags>
   </metadata>
