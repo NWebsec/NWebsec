@@ -59,6 +59,42 @@ namespace NWebsec.Tests.Functional
         }
 
         [Test]
+        public async Task Hsts_HttpsNoHttpsOnly_AddsHeader()
+        {
+            const string path = "/Hsts/Default.aspx";
+            var testUri = Helper.GetHttpsUri(BaseUri, path);
+
+            var response = await HttpClient.GetAsync(testUri);
+
+            Assert.IsTrue(response.IsSuccessStatusCode, ReqFailed + testUri);
+            Assert.IsNotNull(response.Headers.SingleOrDefault(c => c.Key.Equals("Strict-Transport-Security", StringComparison.OrdinalIgnoreCase)));
+        }
+
+        [Test]
+        public async Task Hsts_HttpAndHttpsOnly_NoHeader()
+        {
+            const string path = "/Hsts/HttpsOnly/Default.aspx";
+            var testUri = Helper.GetUri(BaseUri, path);
+
+            var response = await HttpClient.GetAsync(testUri);
+
+            Assert.IsTrue(response.IsSuccessStatusCode, ReqFailed + testUri);
+            Assert.IsFalse(response.Headers.Any(c => c.Key.Equals("Strict-Transport-Security", StringComparison.OrdinalIgnoreCase)));
+        }
+
+        [Test]
+        public async Task Hsts_HttpsAndHttpsOnly_AddsHeader()
+        {
+            const string path = "/Hsts/HttpsOnly/Default.aspx";
+            var testUri = Helper.GetHttpsUri(BaseUri, path);
+
+            var response = await HttpClient.GetAsync(testUri);
+
+            Assert.IsTrue(response.IsSuccessStatusCode, ReqFailed + testUri);
+            Assert.IsNotNull(response.Headers.SingleOrDefault(c => c.Key.Equals("Strict-Transport-Security", StringComparison.OrdinalIgnoreCase)));
+        }
+
+        [Test]
         public async Task NoCacheHeaders_DisabledInConfigWithCustomCacheProfile_DoesNotTouchHeaders()
         {
             const string path = "/CacheProfiled/CustomCache.aspx";

@@ -51,21 +51,21 @@
       <Private>True</Private>
       <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
     </Reference>
-    <Reference Include="NWebsec">
-      <HintPath>..\packages\NWebsec.3.0.2\lib\45\NWebsec.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="NWebsec, Version=3.0.2.0, Culture=neutral, PublicKeyToken=3613da5f958908a1, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\NWebsec.3.1.0-alpha01\lib\45\NWebsec.dll</HintPath>
     </Reference>
-    <Reference Include="NWebsec.Core">
-      <HintPath>..\packages\NWebsec.Core.1.0.0\lib\45\NWebsec.Core.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="NWebsec.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=3613da5f958908a1, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\NWebsec.Core.1.1.0-alpha01\lib\45\NWebsec.Core.dll</HintPath>
     </Reference>
-    <Reference Include="NWebsec.Mvc">
-      <HintPath>..\packages\NWebsec.Mvc.3.0.2\lib\45\NWebsec.Mvc.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="NWebsec.Mvc, Version=3.0.2.0, Culture=neutral, PublicKeyToken=3613da5f958908a1, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\NWebsec.Mvc.3.1.0-alpha01\lib\45\NWebsec.Mvc.dll</HintPath>
     </Reference>
-    <Reference Include="NWebsec.Owin">
-      <HintPath>..\packages\NWebsec.Owin.1.0.0\lib\45\NWebsec.Owin.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="NWebsec.Owin, Version=1.0.0.0, Culture=neutral, PublicKeyToken=3613da5f958908a1, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\NWebsec.Owin.1.1.0-alpha01\lib\45\NWebsec.Owin.dll</HintPath>
     </Reference>
     <Reference Include="Owin">
       <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
@@ -116,6 +116,7 @@
     <Compile Include="Controllers\CspConfigController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\HstsController.cs" />
+    <Compile Include="Controllers\RedirectHttpsController.cs" />
     <Compile Include="Controllers\RedirectController.cs" />
     <Compile Include="Controllers\XContentTypeOptionsController.cs" />
     <Compile Include="Controllers\XDownloadOptionsController.cs" />

@@ -48,14 +48,17 @@
       <HintPath>..\packages\WebGrease.1.1.0\lib\Antlr3.Runtime.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="NWebsec">
-      <HintPath>..\packages\NWebsec.3.0.2\lib\45\NWebsec.dll</HintPath>
+    <Reference Include="NWebsec, Version=3.0.2.0, Culture=neutral, PublicKeyToken=3613da5f958908a1, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\NWebsec.3.1.0-alpha01\lib\45\NWebsec.dll</HintPath>
     </Reference>
-    <Reference Include="NWebsec.Core">
-      <HintPath>..\packages\NWebsec.Core.1.0.0\lib\45\NWebsec.Core.dll</HintPath>
+    <Reference Include="NWebsec.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=3613da5f958908a1, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\NWebsec.Core.1.1.0-alpha01\lib\45\NWebsec.Core.dll</HintPath>
     </Reference>
-    <Reference Include="NWebsec.Mvc">
-      <HintPath>..\packages\NWebsec.Mvc.3.0.2\lib\45\NWebsec.Mvc.dll</HintPath>
+    <Reference Include="NWebsec.Mvc, Version=3.0.2.0, Culture=neutral, PublicKeyToken=3613da5f958908a1, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\NWebsec.Mvc.3.1.0-alpha01\lib\45\NWebsec.Mvc.dll</HintPath>
     </Reference>
     <Reference Include="NWebsec.SessionSecurity, Version=1.0.0.0, Culture=neutral, PublicKeyToken=3613da5f958908a1, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>

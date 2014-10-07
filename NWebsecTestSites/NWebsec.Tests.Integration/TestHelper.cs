@@ -13,5 +13,15 @@ namespace NWebsec.Tests.Functional
             absoluteUri.Query = query;
             return absoluteUri.Uri;
         }
+
+        internal Uri GetHttpsUri(string baseUri, string path, string query = "")
+        {
+            var absoluteUri = new UriBuilder(baseUri);
+            absoluteUri.Scheme = "https";
+            absoluteUri.Port = 4443;
+            absoluteUri.Path += path;
+            absoluteUri.Query = query;
+            return absoluteUri.Uri;
+        }
     }
 }

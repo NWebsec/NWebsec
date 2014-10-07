@@ -13,5 +13,10 @@ namespace Mvc5owin.Controllers
         {
             return View("Index");
         }
+
+        public ActionResult HttpsOnly()
+        {
+            return View("Index");
+        }
     }
 }

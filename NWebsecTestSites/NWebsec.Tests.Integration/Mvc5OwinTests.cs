@@ -78,10 +78,99 @@ namespace NWebsec.Tests.Functional
         }
 
         [Test]
-        public async Task Hsts_Enabled_SetsHeaders()
+        public async Task RedirectValidation_DefaultHttpsAllowed_Ok()
         {
-            const string path = "/Hsts";
+            const string path = "/RedirectHttps/DefaultHttpsAllowed";
             var testUri = Helper.GetUri(BaseUri, path);
+
+            var response = await HttpClient.GetAsync(testUri);
+            await response.Content.ReadAsStringAsync();
+
+            Assert.AreEqual(HttpStatusCode.Redirect, response.StatusCode, ReqFailed + testUri);
+            Assert.AreEqual("https", response.Headers.Location.GetComponents(UriComponents.Scheme,UriFormat.UriEscaped));
+        }
+
+        [Test]
+        public async Task RedirectValidation_DefaultHttpsDenied_500()
+        {
+            const string path = "/RedirectHttps/DefaultHttpsDenied";
+            var testUri = Helper.GetUri(BaseUri, path);
+
+            var response = await HttpClient.GetAsync(testUri);
+            var body = await response.Content.ReadAsStringAsync();
+
+            Assert.AreEqual(HttpStatusCode.InternalServerError, response.StatusCode, ReqFailed + testUri);
+            Assert.IsTrue(body.Contains("RedirectValidationException"), "RedirectValidationException not found in body.");
+        }
+
+        [Test]
+        public async Task RedirectValidation_CustomHttpsAllowed_Ok()
+        {
+            const string path = "/RedirectHttps/CustomHttpsAllowed";
+            var testUri = Helper.GetUri(BaseUri, path);
+
+            var response = await HttpClient.GetAsync(testUri);
+            await response.Content.ReadAsStringAsync();
+
+            Assert.AreEqual(HttpStatusCode.Redirect, response.StatusCode, ReqFailed + testUri);
+            Assert.AreEqual("https", response.Headers.Location.GetComponents(UriComponents.Scheme, UriFormat.UriEscaped));
+            Assert.AreEqual("4443", response.Headers.Location.GetComponents(UriComponents.Port, UriFormat.UriEscaped));
+        }
+
+        [Test]
+        public async Task RedirectValidation_CustomHttpsDenied_500()
+        {
+            const string path = "/RedirectHttps/CustomHttpsDenied";
+            var testUri = Helper.GetUri(BaseUri, path);
+
+            var response = await HttpClient.GetAsync(testUri);
+            var body = await response.Content.ReadAsStringAsync();
+
+            Assert.AreEqual(HttpStatusCode.InternalServerError, response.StatusCode, ReqFailed + testUri);
+            Assert.IsTrue(body.Contains("RedirectValidationException"), "RedirectValidationException not found in body.");
+        }
+
+        [Test]
+        public async Task Hsts_EnabledOverHttp_SetsHeaders()
+        {
+            const string path = "/Hsts/Index";
+            var testUri = Helper.GetUri(BaseUri, path);
+
+            var response = await HttpClient.GetAsync(testUri);
+
+            Assert.IsTrue(response.IsSuccessStatusCode, ReqFailed + testUri);
+            Assert.IsTrue(response.Headers.Contains("Strict-Transport-Security"), testUri.ToString());
+        }
+
+        [Test]
+        public async Task Hsts_EnabledOverHttps_SetsHeaders()
+        {
+            const string path = "/Hsts/Index";
+            var testUri = Helper.GetHttpsUri(BaseUri, path);
+
+            var response = await HttpClient.GetAsync(testUri);
+
+            Assert.IsTrue(response.IsSuccessStatusCode, ReqFailed + testUri);
+            Assert.IsTrue(response.Headers.Contains("Strict-Transport-Security"), testUri.ToString());
+        }
+
+        [Test]
+        public async Task Hsts_EnabledHttpsOnlyOverHttp_NoHeaders()
+        {
+            const string path = "/Hsts/HttpsOnly";
+            var testUri = Helper.GetUri(BaseUri, path);
+
+            var response = await HttpClient.GetAsync(testUri);
+
+            Assert.IsTrue(response.IsSuccessStatusCode, ReqFailed + testUri);
+            Assert.IsFalse(response.Headers.Contains("Strict-Transport-Security"), testUri.ToString());
+        }
+
+        [Test]
+        public async Task Hsts_EnabledHttpsOnlyOverHttps_SetsHeaders()
+        {
+            const string path = "/Hsts/HttpsOnly";
+            var testUri = Helper.GetHttpsUri(BaseUri, path);
 
             var response = await HttpClient.GetAsync(testUri);
 

@@ -112,15 +112,36 @@
         </xs:element>
         <xs:element name="redirectValidation" minOccurs="0" maxOccurs="1">
           <xs:annotation>
-            <xs:documentation>Specifies whether to validate redirects in the application. Redirects to relative URIs and
-            to the same scheme/host/port are allowed. Redirects to other destinations must be explicitly allowed through config.</xs:documentation>
+            <xs:documentation>
+              Specifies whether to validate redirects in the application. Redirects to relative URIs and
+              to the same scheme/host/port are allowed. Redirects to other destinations must be explicitly allowed through config.
+            </xs:documentation>
           </xs:annotation>
           <xs:complexType>
-            <xs:choice minOccurs="0" maxOccurs="unbounded">
-              <xs:element name="add" type="RedirectUri" />
-              <xs:element name="remove" type="RedirectUri" />
-              <xs:element name="clear"/>
-            </xs:choice>
+            <xs:sequence minOccurs="0" maxOccurs="1">
+              <xs:element name="allowSameHostRedirectsToHttps" minOccurs="0" maxOccurs="1">
+                <xs:annotation>
+                  <xs:documentation>Specifies whether redirects to HTTPS on the same host should be allowed.</xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                  <xs:attribute name="enabled" type="simple_boolean" use="required">
+                    <xs:annotation>
+                      <xs:documentation>This attribute is required.</xs:documentation>
+                    </xs:annotation>
+                  </xs:attribute>
+                  <xs:attribute name="httpsPorts" type="xs:string" use="optional">
+                    <xs:annotation>
+                      <xs:documentation>Optional. Specifies allowed destination port(s) for redirects to HTTPS. The default HTTPS port (443) is assumed if no value is configured. Specify multiple ports through a comma-separated list.</xs:documentation>
+                    </xs:annotation>
+                  </xs:attribute>
+                </xs:complexType>
+              </xs:element>
+              <xs:choice minOccurs="0" maxOccurs="unbounded">
+                <xs:element name="add" type="RedirectUri"  />
+                <xs:element name="remove" type="RedirectUri" />
+                <xs:element name="clear"/>
+              </xs:choice>
+            </xs:sequence>
             <xs:attribute name="enabled" type="simple_boolean" use="required">
               <xs:annotation>
                 <xs:documentation>This attribute is required.</xs:documentation>
@@ -159,6 +180,16 @@
                   <xs:attribute name="includeSubdomains" type="simple_boolean" use="optional">
                     <xs:annotation>
                       <xs:documentation>Optional. Specifies whether Strict Transport Security also applies to subdomains. The default is false.</xs:documentation>
+                    </xs:annotation>
+                  </xs:attribute>
+                  <xs:attribute name="preload" type="simple_boolean" use="optional">
+                    <xs:annotation>
+                      <xs:documentation>Optional. Enables the Preload directive in the HSTS header. MaxAge must be at least 18 weeks, and IncludeSubdomains must be enabled. The default is false.</xs:documentation>
+                    </xs:annotation>
+                  </xs:attribute>
+                  <xs:attribute name="httpsOnly" type="simple_boolean" use="optional">
+                    <xs:annotation>
+                      <xs:documentation>Optional. Specifies that the HSTS header should be set for HTTPS requests only. The default is false.</xs:documentation>
                     </xs:annotation>
                   </xs:attribute>
                 </xs:complexType>
