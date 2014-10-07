@@ -46,13 +46,13 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="NWebsec, Version=3.0.2.0, Culture=neutral, PublicKeyToken=3613da5f958908a1, processorArchitecture=MSIL">
+    <Reference Include="NWebsec, Version=3.1.0.0, Culture=neutral, PublicKeyToken=3613da5f958908a1, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\NWebsec.3.1.0-alpha01\lib\35\NWebsec.dll</HintPath>
+      <HintPath>..\packages\NWebsec.3.1.0\lib\35\NWebsec.dll</HintPath>
     </Reference>
-    <Reference Include="NWebsec.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=3613da5f958908a1, processorArchitecture=MSIL">
+    <Reference Include="NWebsec.Core, Version=1.1.0.0, Culture=neutral, PublicKeyToken=3613da5f958908a1, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\NWebsec.Core.1.1.0-alpha01\lib\35\NWebsec.Core.dll</HintPath>
+      <HintPath>..\packages\NWebsec.Core.1.1.0\lib\35\NWebsec.Core.dll</HintPath>
     </Reference>
     <Reference Include="NWebsec.SessionSecurity, Version=1.0.0.0, Culture=neutral, PublicKeyToken=3613da5f958908a1, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -121,7 +121,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="packages.config" />
+    <Content Include="packages.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Hsts\Web.config" />
     <Content Include="Hsts\HttpsOnly\Web.config" />
     <None Include="NWebsecConfig\HttpHeaderSecurityModuleConfig.xsd">
