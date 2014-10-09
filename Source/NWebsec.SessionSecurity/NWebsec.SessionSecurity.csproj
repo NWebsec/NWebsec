@@ -51,11 +51,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Configuration\AppsettingKeyHelper.cs" />
+    <Compile Include="Configuration\IAppsettingKeyHelper.cs" />
     <Compile Include="Configuration\MachineKeyConfigurationHelper.cs" />
     <Compile Include="Configuration\SessionIDAuthenticationConfigurationElement.cs" />
     <Compile Include="Configuration\SessionSecurityConfigurationSection.cs" />
     <Compile Include="Configuration\SessionIDAuthenticationConfigurationHelper.cs" />
-    <Compile Include="Configuration\Validation\SessionIDAuthenticationValidator.cs" />
+    <Compile Include="Configuration\Validation\SessionAuthenticationKeyValidator.cs" />
+    <Compile Include="Configuration\Validation\SessionIDAuthenticationConfigurationElementValidator.cs" />
     <Compile Include="Configuration\Validation\SessionIDAuthenticationValidatorAttribute.cs" />
     <Compile Include="Crypto\CryptoRng.cs" />
     <Compile Include="Crypto\KbkdfHmacSha256Ctr.cs" />

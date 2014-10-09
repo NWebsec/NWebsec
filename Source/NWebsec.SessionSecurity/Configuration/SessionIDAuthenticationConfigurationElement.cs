@@ -26,5 +26,12 @@ namespace NWebsec.SessionSecurity.Configuration
             get { return (string)this["authenticationKey"]; }
             set { this["authenticationKey"] = value; }
         }
+
+        [ConfigurationProperty("authenticationKeyAppsetting", IsRequired = false, DefaultValue = "")]
+        public string AuthenticationKeyAppsetting
+        {
+            get { return (string)this["authenticationKeyAppsetting"]; }
+            set { this["authenticationKeyAppsetting"] = value; }
+        }
     }
 }

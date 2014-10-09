@@ -10,7 +10,7 @@ namespace NWebsec.SessionSecurity.Configuration.Validation
         {
             get
             {
-                return new SessionIDAuthenticationValidator();
+                return new SessionIDAuthenticationConfigurationElementValidator();
             }
         }
     }
