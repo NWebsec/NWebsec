@@ -60,9 +60,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\NWebsec.Mvc.3.1.0\lib\45\NWebsec.Mvc.dll</HintPath>
     </Reference>
-    <Reference Include="NWebsec.SessionSecurity, Version=1.0.0.0, Culture=neutral, PublicKeyToken=3613da5f958908a1, processorArchitecture=MSIL">
+    <Reference Include="NWebsec.SessionSecurity, Version=1.1.0.0, Culture=neutral, PublicKeyToken=3613da5f958908a1, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\NWebsec.SessionSecurity.1.0.0\lib\45\NWebsec.SessionSecurity.dll</HintPath>
+      <HintPath>..\packages\NWebsec.SessionSecurity.1.1.0\lib\45\NWebsec.SessionSecurity.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
