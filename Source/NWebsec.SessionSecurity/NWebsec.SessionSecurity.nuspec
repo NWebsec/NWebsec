@@ -2,17 +2,17 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
   <metadata>
     <id>NWebsec.SessionSecurity</id>
-    <version>1.0.0</version>
+    <version>1.1.0</version>
     <title>NWebsec.SessionSecurity</title>
     <authors>André N. Klingsheim</authors>
     <owners>André N. Klingsheim</owners>
     <licenseUrl>https://nwebsec.codeplex.com/license</licenseUrl>
     <projectUrl>https://nwebsec.codeplex.com</projectUrl>
-    <iconUrl>http://klings.blob.core.windows.net/nwebsecicon/nwebsec_nuget.png</iconUrl>
+    <iconUrl>https://klings.blob.core.windows.net/nwebsecicon/nwebsec_nuget.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>NWebsec.SessionSecurity is an easy to use session security library for ASP.NET applications. See project website for documentation.</description>
-    <releaseNotes>This release includes support for authenticated session identifiers. See release notes at project web site for details.</releaseNotes>
-    <copyright>Copyright © 2013</copyright>
+    <releaseNotes>This release lets you specify session authentication keys in AppSettings. See release notes at project web site for details.</releaseNotes>
+    <copyright>Copyright © 2013 - 2014</copyright>
     <tags>NWebsec security asp.net</tags>
   </metadata>
 </package>
