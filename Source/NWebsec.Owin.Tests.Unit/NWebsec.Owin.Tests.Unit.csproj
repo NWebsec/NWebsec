@@ -69,6 +69,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CspOptionsTest.cs" />
     <Compile Include="Middleware\HstsMiddlewareTests.cs" />
     <Compile Include="Core\OwinEnvironmentTests.cs" />
     <Compile Include="Core\ResponseHeadersTests.cs" />

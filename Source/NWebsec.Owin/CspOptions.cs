@@ -55,7 +55,7 @@ namespace NWebsec.Owin
         /// </summary>
         /// <param name="configurer">An <see cref="Action"/> that configures the sources for the directive.</param>
         /// <returns>The current <see cref="CspOptions" /> instance.</returns>
-        public CspOptions DefaultSources(Action<ICspDirectiveConfiguration> configurer)
+        public IFluentCspOptions DefaultSources(Action<ICspDirectiveConfiguration> configurer)
         {
             configurer(DefaultSrcDirective);
             return this;
@@ -66,7 +66,7 @@ namespace NWebsec.Owin
         /// </summary>
         /// <param name="configurer">An <see cref="Action"/> that configures the sources for the directive.</param>
         /// <returns>The current <see cref="CspOptions" /> instance.</returns>
-        public CspOptions ScriptSources(Action<ICspDirectiveUnsafeEvalConfiguration> configurer)
+        public IFluentCspOptions ScriptSources(Action<ICspDirectiveUnsafeEvalConfiguration> configurer)
         {
             configurer(ScriptSrcDirective);
             return this;
@@ -77,7 +77,7 @@ namespace NWebsec.Owin
         /// </summary>
         /// <param name="configurer">An <see cref="Action"/> that configures the sources for the directive.</param>
         /// <returns>The current <see cref="CspOptions" /> instance.</returns>
-        public CspOptions ObjectSources(Action<ICspDirectiveConfiguration> configurer)
+        public IFluentCspOptions ObjectSources(Action<ICspDirectiveConfiguration> configurer)
         {
             configurer(ObjectSrcDirective);
             return this;
@@ -88,7 +88,7 @@ namespace NWebsec.Owin
         /// </summary>
         /// <param name="configurer">An <see cref="Action"/> that configures the sources for the directive.</param>
         /// <returns>The current <see cref="CspOptions" /> instance.</returns>
-        public CspOptions StyleSources(Action<ICspDirectiveUnsafeInlineConfiguration> configurer)
+        public IFluentCspOptions StyleSources(Action<ICspDirectiveUnsafeInlineConfiguration> configurer)
         {
             configurer(StyleSrcDirective);
             return this;
@@ -99,7 +99,7 @@ namespace NWebsec.Owin
         /// </summary>
         /// <param name="configurer">An <see cref="Action"/> that configures the sources for the directive.</param>
         /// <returns>The current <see cref="CspOptions" /> instance.</returns>
-        public CspOptions ImageSources(Action<ICspDirectiveConfiguration> configurer)
+        public IFluentCspOptions ImageSources(Action<ICspDirectiveConfiguration> configurer)
         {
             configurer(ImgSrcDirective);
             return this;
@@ -110,7 +110,7 @@ namespace NWebsec.Owin
         /// </summary>
         /// <param name="configurer">An <see cref="Action"/> that configures the sources for the directive.</param>
         /// <returns>The current <see cref="CspOptions" /> instance.</returns>
-        public CspOptions MediaSources(Action<ICspDirectiveConfiguration> configurer)
+        public IFluentCspOptions MediaSources(Action<ICspDirectiveConfiguration> configurer)
         {
             configurer(MediaSrcDirective);
             return this;
@@ -121,7 +121,7 @@ namespace NWebsec.Owin
         /// </summary>
         /// <param name="configurer">An <see cref="Action"/> that configures the sources for the directive.</param>
         /// <returns>The current <see cref="CspOptions" /> instance.</returns>
-        public CspOptions FrameSources(Action<ICspDirectiveConfiguration> configurer)
+        public IFluentCspOptions FrameSources(Action<ICspDirectiveConfiguration> configurer)
         {
             configurer(FrameSrcDirective);
             return this;
@@ -132,7 +132,7 @@ namespace NWebsec.Owin
         /// </summary>
         /// <param name="configurer">An <see cref="Action"/> that configures the sources for the directive.</param>
         /// <returns>The current <see cref="CspOptions" /> instance.</returns>
-        public CspOptions FontSources(Action<ICspDirectiveConfiguration> configurer)
+        public IFluentCspOptions FontSources(Action<ICspDirectiveConfiguration> configurer)
         {
             configurer(FontSrcDirective);
             return this;
@@ -143,7 +143,7 @@ namespace NWebsec.Owin
         /// </summary>
         /// <param name="configurer">An <see cref="Action"/> that configures the sources for the directive.</param>
         /// <returns>The current <see cref="CspOptions" /> instance.</returns>
-        public CspOptions ConnectSources(Action<ICspDirectiveConfiguration> configurer)
+        public IFluentCspOptions ConnectSources(Action<ICspDirectiveConfiguration> configurer)
         {
             configurer(ConnectSrcDirective);
             return this;
@@ -154,7 +154,7 @@ namespace NWebsec.Owin
         /// </summary>
         /// <param name="configurer">An <see cref="Action"/> that configures the sources for the directive.</param>
         /// <returns>The current <see cref="CspOptions" /> instance.</returns>
-        public CspOptions FrameAncestors(Action<ICspDirectiveConfiguration> configurer)
+        public IFluentCspOptions FrameAncestors(Action<ICspDirectiveConfiguration> configurer)
         {
             configurer(FrameAncestorsDirective);
             return this;
@@ -165,7 +165,7 @@ namespace NWebsec.Owin
         /// </summary>
         /// <param name="configurer">An <see cref="Action"/> that configures the report URIs.</param>
         /// <returns>The current <see cref="CspOptions" /> instance.</returns>
-        public CspOptions ReportUris(Action<IFluentCspReportUriDirective> configurer)
+        public IFluentCspOptions ReportUris(Action<IFluentCspReportUriDirective> configurer)
         {
             configurer((IFluentCspReportUriDirective)ReportUriDirective);
             return this;

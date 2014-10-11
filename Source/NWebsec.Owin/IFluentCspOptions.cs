@@ -16,62 +16,76 @@ namespace NWebsec.Owin
         /// </summary>
         /// <param name="configurer">An <see cref="Action"/> that configures the sources for the directive.</param>
         /// <returns>The current <see cref="CspOptions" /> instance.</returns>
-        CspOptions DefaultSources(Action<ICspDirectiveConfiguration> configurer);
+        IFluentCspOptions DefaultSources(Action<ICspDirectiveConfiguration> configurer);
 
         /// <summary>
         /// Configures the script-src directive.
         /// </summary>
         /// <param name="configurer">An <see cref="Action"/> that configures the sources for the directive.</param>
         /// <returns>The current <see cref="CspOptions" /> instance.</returns>
-        CspOptions ScriptSources(Action<ICspDirectiveUnsafeEvalConfiguration> configurer);
+        IFluentCspOptions ScriptSources(Action<ICspDirectiveUnsafeEvalConfiguration> configurer);
 
         /// <summary>
         /// Configures the object-src directive.
         /// </summary>
         /// <param name="configurer">An <see cref="Action"/> that configures the sources for the directive.</param>
         /// <returns>The current <see cref="CspOptions" /> instance.</returns>
-        CspOptions ObjectSources(Action<ICspDirectiveConfiguration> configurer);
+        IFluentCspOptions ObjectSources(Action<ICspDirectiveConfiguration> configurer);
 
         /// <summary>
         /// Configures the style-src directive.
         /// </summary>
         /// <param name="configurer">An <see cref="Action"/> that configures the sources for the directive.</param>
         /// <returns>The current <see cref="CspOptions" /> instance.</returns>
-        CspOptions StyleSources(Action<ICspDirectiveUnsafeInlineConfiguration> configurer);
+        IFluentCspOptions StyleSources(Action<ICspDirectiveUnsafeInlineConfiguration> configurer);
 
         /// <summary>
         /// Configures the image-src directive.
         /// </summary>
         /// <param name="configurer">An <see cref="Action"/> that configures the sources for the directive.</param>
         /// <returns>The current <see cref="CspOptions" /> instance.</returns>
-        CspOptions ImageSources(Action<ICspDirectiveConfiguration> configurer);
+        IFluentCspOptions ImageSources(Action<ICspDirectiveConfiguration> configurer);
 
         /// <summary>
         /// Configures the media-src directive.
         /// </summary>
         /// <param name="configurer">An <see cref="Action"/> that configures the sources for the directive.</param>
         /// <returns>The current <see cref="CspOptions" /> instance.</returns>
-        CspOptions MediaSources(Action<ICspDirectiveConfiguration> configurer);
+        IFluentCspOptions MediaSources(Action<ICspDirectiveConfiguration> configurer);
 
         /// <summary>
         /// Configures the frame-src directive.
         /// </summary>
         /// <param name="configurer">An <see cref="Action"/> that configures the sources for the directive.</param>
         /// <returns>The current <see cref="CspOptions" /> instance.</returns>
-        CspOptions FrameSources(Action<ICspDirectiveConfiguration> configurer);
+        IFluentCspOptions FrameSources(Action<ICspDirectiveConfiguration> configurer);
 
         /// <summary>
         /// Configures the font-src directive.
         /// </summary>
         /// <param name="configurer">An <see cref="Action"/> that configures the sources for the directive.</param>
         /// <returns>The current <see cref="CspOptions" /> instance.</returns>
-        CspOptions FontSources(Action<ICspDirectiveConfiguration> configurer);
+        IFluentCspOptions FontSources(Action<ICspDirectiveConfiguration> configurer);
 
         /// <summary>
         /// Configures the connect-src directive.
         /// </summary>
         /// <param name="configurer">An <see cref="Action"/> that configures the sources for the directive.</param>
         /// <returns>The current <see cref="CspOptions" /> instance.</returns>
-        CspOptions ConnectSources(Action<ICspDirectiveConfiguration> configurer);
+        IFluentCspOptions ConnectSources(Action<ICspDirectiveConfiguration> configurer);
+
+        /// <summary>
+        /// Configures the fram-ancestors directive.
+        /// </summary>
+        /// <param name="configurer">An <see cref="Action"/> that configures the sources for the directive.</param>
+        /// <returns>The current <see cref="CspOptions" /> instance.</returns>
+        IFluentCspOptions FrameAncestors(Action<ICspDirectiveConfiguration> configurer);
+
+        /// <summary>
+        /// Configures the report-uri directive.
+        /// </summary>
+        /// <param name="configurer">An <see cref="Action"/> that configures the report URIs.</param>
+        /// <returns>The current <see cref="CspOptions" /> instance.</returns>
+        IFluentCspOptions ReportUris(Action<IFluentCspReportUriDirective> configurer);
     }
 }

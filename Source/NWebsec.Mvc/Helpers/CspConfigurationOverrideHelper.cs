@@ -238,7 +238,7 @@ namespace NWebsec.Mvc.Helpers
                     return CloneElement(cspConfig.ConnectSrcDirective);
 
                 case CspDirectives.FrameAncestors:
-                    return CloneElement(cspConfig.ConnectSrcDirective);
+                    return CloneElement(cspConfig.FrameAncestorsDirective);
 
                 default:
                     throw new NotImplementedException("The mapping for " + directive + " was not implemented.");
