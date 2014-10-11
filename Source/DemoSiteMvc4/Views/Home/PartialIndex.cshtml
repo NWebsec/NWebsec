@@ -1,0 +1,13 @@
+﻿@using NWebsec.Mvc.HttpHeaders.Csp
+<div>
+    <script @Html.CspScriptNonce()> document.write("script from partial view is here");</script>
+    <br />
+    <script @Html.CspScriptNonce()> document.write("secondscript from partial view is here");</script>
+    
+    
+    <style @Html.CspStyleNonce()>
+        h2 {
+            font-size: 9em; /* partial*/
+        }
+    </style>
+</div>

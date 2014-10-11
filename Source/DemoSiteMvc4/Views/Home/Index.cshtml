@@ -1,10 +1,22 @@
-﻿@model dynamic
+﻿@using NWebsec.Mvc.HttpHeaders.Csp
+@model dynamic
 
 @{
     ViewBag.Title = "title";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    //Layout = "";
     
 }
 
 <h2>title</h2>
-<script> document.write("script is here");</script>
+<script @Html.CspScriptNonce()> document.write("script is here");</script>
+<br/>
+<script @Html.CspScriptNonce()> document.write("secondscript is here");</script>
+
+<style @Html.CspStyleNonce()>
+    h2 {
+        font-size: 5em; /* view */
+    }
+</style>
+
+@Html.Partial("PartialIndex")

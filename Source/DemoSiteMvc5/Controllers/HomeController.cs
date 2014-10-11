@@ -1,7 +1,9 @@
-﻿using System.Web.Mvc;
+﻿using System.Web.Http.Filters;
+using System.Web.Mvc;
 using NWebsec.HttpHeaders;
 using NWebsec.Mvc.HttpHeaders;
 using NWebsec.Mvc.HttpHeaders.Csp;
+using ActionFilterAttribute = System.Web.Mvc.ActionFilterAttribute;
 
 namespace DemoSiteMvc5.Controllers
 {
@@ -40,6 +42,13 @@ namespace DemoSiteMvc5.Controllers
             return View();
         }
 
+        [ActionFilterId]
+        public ActionResult ActionDescriptor()
+        {
+            ViewBag.ActionDescriptorId = HttpContext.Items["ActionDescriptorId"];
+            return View();
+        }
+
         public ActionResult RedirectLocal()
         {
             return RedirectToAction("About");
@@ -59,6 +68,15 @@ namespace DemoSiteMvc5.Controllers
         public ActionResult RequireHttps()
         {
             return Redirect("https://localhost:8443/DemoSiteMvc5");
+        }
+    }
+
+    public class ActionFilterIdAttribute : ActionFilterAttribute
+    {
+        public override void OnActionExecuting(ActionExecutingContext filterContext)
+        {
+            filterContext.HttpContext.Items["ActionDescriptorId"] = filterContext.ActionDescriptor.UniqueId;
+            base.OnActionExecuting(filterContext);
         }
     }
 }

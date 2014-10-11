@@ -1,14 +1,25 @@
-﻿<!DOCTYPE html>
+﻿@using NWebsec.Mvc.HttpHeaders.Csp
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
     <title>@ViewBag.Title</title>
-    @Styles.Render("~/Content/css")
-    @Scripts.Render("~/bundles/modernizr")
+    @*@Styles.Render("~/Content/css")*@
+    @*@Scripts.Render("~/bundles/modernizr")*@
+    
+    <style @Html.CspStyleNonce()>
+        h4 {
+            font-size: 7em; /* layout */
+        }
+    </style>
 </head>
 <body>
     @RenderBody()
+    
+    <script @Html.CspScriptNonce()> document.write("layout script is here");</script>
+    <br />
+    <script @Html.CspScriptNonce()> document.write("second layout script is here");</script>
 
     @Scripts.Render("~/bundles/jquery")
     @RenderSection("scripts", required: false)
