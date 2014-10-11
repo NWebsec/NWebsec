@@ -230,7 +230,7 @@ namespace NWebsec.Core.HttpHeaders
             sb.Append(CreateDirectiveValue("font-src", GetDirectiveList(config.FontSrcDirective)));
             sb.Append(CreateDirectiveValue("connect-src", GetDirectiveList(config.ConnectSrcDirective)));
             sb.Append(CreateDirectiveValue("frame-ancestors", GetDirectiveList(config.FrameAncestorsDirective)));
-            
+
             if (sb.Length == 0) return null;
 
             sb.Append(CreateDirectiveValue("report-uri",
@@ -270,9 +270,21 @@ namespace NWebsec.Core.HttpHeaders
                 sources.Add("'self'");
 
             var allowUnsafeInlineElement = directive as ICspDirectiveUnsafeInlineConfiguration;
-            if (allowUnsafeInlineElement != null && allowUnsafeInlineElement.UnsafeInlineSrc)
-                sources.Add("'unsafe-inline'");
+            if (allowUnsafeInlineElement != null)
+            {
+                if (allowUnsafeInlineElement.UnsafeInlineSrc)
+                {
+                    sources.Add("'unsafe-inline'");
+                }
 
+                if (!String.IsNullOrEmpty(allowUnsafeInlineElement.Nonce))
+                {
+                    var sb = new StringBuilder("'nonce-");
+                    sb.Append(allowUnsafeInlineElement.Nonce);
+                    sb.Append("'");
+                    sources.Add(sb.ToString());
+                }
+            }
             var allowUnsafeEvalElement = directive as ICspDirectiveUnsafeEvalConfiguration;
             if (allowUnsafeEvalElement != null && allowUnsafeEvalElement.UnsafeEvalSrc)
                 sources.Add("'unsafe-eval'");

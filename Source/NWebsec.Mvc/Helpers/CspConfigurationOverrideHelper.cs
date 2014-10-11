@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Security.Cryptography;
 using System.Web;
 using NWebsec.Core.HttpHeaders;
 using NWebsec.Core.HttpHeaders.Configuration;
@@ -16,6 +17,9 @@ namespace NWebsec.Mvc.Helpers
         private const string CspHeaderKeyPrefix = "NWebsecCspHeader";
         private const string CspDirectivesKeyPrefix = "NWebsecCspDirectives";
         private const string CspReportUriKeyPrefix = "NWebsecCspReportUri";
+        private const string CspScriptNonceKey = "NWebsecCspScriptNonce";
+        private const string CspStyleNonceKey = "NWebsecCspStyleNonce";
+        private readonly char[] _nonceTrimChars = {'='};
 
         public CspConfigurationOverrideHelper()
         {
@@ -31,17 +35,7 @@ namespace NWebsec.Mvc.Helpers
         {
             var cspWasOverridden = false;
 
-            var cspHeaderOverride = GetCspHeaderWithOverride(context, reportOnly);
-            var overriddenConfig = new CspConfiguration { Enabled = true };
-
-            if (cspHeaderOverride != null)
-            {
-                overriddenConfig.Enabled = cspHeaderOverride.Enabled;
-                overriddenConfig.XContentSecurityPolicyHeader = cspHeaderOverride.XContentSecurityPolicyHeader;
-                overriddenConfig.XWebKitCspHeader = cspHeaderOverride.XWebKitCspHeader;
-
-                cspWasOverridden = true;
-            }
+            var overriddenConfig = new CspConfiguration();
 
             var cspConfig = reportOnly
                                 ? _contextConfigurationHelper.GetCspReportonlyConfiguration(context)
@@ -49,6 +43,10 @@ namespace NWebsec.Mvc.Helpers
 
             if (cspConfig != null)
             {
+                overriddenConfig.Enabled = cspConfig.Enabled;
+                overriddenConfig.XContentSecurityPolicyHeader = cspConfig.XContentSecurityPolicyHeader;
+                overriddenConfig.XWebKitCspHeader = cspConfig.XContentSecurityPolicyHeader;
+
                 overriddenConfig.DefaultSrcDirective = cspConfig.DefaultSrcDirective;
                 overriddenConfig.ScriptSrcDirective = cspConfig.ScriptSrcDirective;
                 overriddenConfig.ObjectSrcDirective = cspConfig.ObjectSrcDirective;
@@ -60,6 +58,17 @@ namespace NWebsec.Mvc.Helpers
                 overriddenConfig.ConnectSrcDirective = cspConfig.ConnectSrcDirective;
                 overriddenConfig.FrameAncestorsDirective = cspConfig.FrameAncestorsDirective;
                 overriddenConfig.ReportUriDirective = cspConfig.ReportUriDirective;
+            }
+
+            //Deal with header override
+            var cspHeaderOverride = GetCspHeaderWithOverride(context, reportOnly);
+            if (cspHeaderOverride != null)
+            {
+                overriddenConfig.Enabled = cspHeaderOverride.Enabled;
+                overriddenConfig.XContentSecurityPolicyHeader = cspHeaderOverride.XContentSecurityPolicyHeader;
+                overriddenConfig.XWebKitCspHeader = cspHeaderOverride.XWebKitCspHeader;
+
+                cspWasOverridden = true;
             }
 
             //Now deal with the directives.
@@ -151,7 +160,6 @@ namespace NWebsec.Mvc.Helpers
 
         internal ICspHeaderConfiguration GetCspHeaderWithOverride(HttpContextBase context, bool reportOnly)
         {
-
             var headerList = GetHeaderListFromContext(context);
             var headerkey = GetCspConfigKey(CspHeaderKeyPrefix, reportOnly);
             return headerList.ContainsKey(headerkey)
@@ -195,6 +203,59 @@ namespace NWebsec.Mvc.Helpers
             if (directiveExists)
                 cspOverride.Remove(directive);
             cspOverride.Add(directive, newConfig);
+        }
+
+        internal string GetCspScriptNonce(HttpContextBase context)
+        {
+            var nonce = context.Items[CspScriptNonceKey] as String;
+            if (nonce != null)
+            {
+                return nonce;
+            }
+
+            context.Items[CspScriptNonceKey] = nonce = GenerateCspNonceValue();
+            SetCspNonce(context, CspDirectives.ScriptSrc, false, nonce);
+            SetCspNonce(context, CspDirectives.ScriptSrc, true, nonce);
+            return nonce;
+        }
+
+        internal string GetCspStyleNonce(HttpContextBase context)
+        {
+            var nonce = context.Items[CspStyleNonceKey] as String;
+            if (nonce != null)
+            {
+                return nonce;
+            }
+
+            context.Items[CspStyleNonceKey] = nonce = GenerateCspNonceValue();
+            SetCspNonce(context, CspDirectives.StyleSrc, false, nonce);
+            SetCspNonce(context, CspDirectives.StyleSrc, true, nonce);
+            return nonce;
+        }
+
+        private void SetCspNonce(HttpContextBase context, CspDirectives directive, bool reportOnly, string nonce)
+        {
+            switch (directive)
+            {
+                    case CspDirectives.ScriptSrc:
+                    case CspDirectives.StyleSrc:
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException("Unexpected directive when setting csp nonce: " + directive);
+            }
+
+            var cspOverride = GetCspDirectiveOverides(context, reportOnly);
+            ICspDirectiveConfiguration directiveConfiguration;
+            var directiveExists = cspOverride.TryGetValue(directive, out directiveConfiguration);
+
+            if (!directiveExists)
+            {
+                directiveConfiguration = GetCspDirectiveFromContext(context, directive, reportOnly);
+                cspOverride.Add(directive, directiveConfiguration);
+            }
+
+            var config = (ICspDirectiveUnsafeInlineConfiguration) directiveConfiguration;
+            config.Nonce = nonce;
         }
 
         private ICspDirectiveConfiguration GetCspDirectiveFromContext(HttpContextBase context, CspDirectives directive, bool reportOnly)
@@ -397,6 +458,16 @@ namespace NWebsec.Mvc.Helpers
             return prefix + (reportOnly
                                  ? HeaderConstants.XContentSecurityPolicyReportOnlyHeader
                                  : HeaderConstants.XContentSecurityPolicyHeader);
+        }
+
+        private string GenerateCspNonceValue()
+        {
+            using (var rng = new RNGCryptoServiceProvider())
+            {
+                var nonceBytes = new byte[16];
+                rng.GetBytes(nonceBytes);
+                return Convert.ToBase64String(nonceBytes, Base64FormattingOptions.None).TrimEnd(_nonceTrimChars);
+            }
         }
 
         public enum CspDirectives

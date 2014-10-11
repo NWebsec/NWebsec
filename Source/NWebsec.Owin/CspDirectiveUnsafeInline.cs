@@ -9,5 +9,8 @@ namespace NWebsec.Owin
     {
         [EditorBrowsable(EditorBrowsableState.Never)]
         public bool UnsafeInlineSrc { get; set; }
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public string Nonce { get; set; }
     }
 }
