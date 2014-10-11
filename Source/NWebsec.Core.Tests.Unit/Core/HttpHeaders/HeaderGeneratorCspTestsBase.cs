@@ -33,6 +33,15 @@ namespace NWebsec.Core.Tests.Unit.Core.HttpHeaders
             Assert.IsEmpty(result);
         }
 
+        public void AddCspHeaders_DisabledButNoncesPresent_ReturnsEmptyResults()
+        {
+            var cspConfig = new CspConfiguration { Enabled = false, ScriptSrcDirective = { Nonce = "Heyhey"} };
+
+            var result = _generator.CreateCspResults(cspConfig, Reportonly);
+
+            Assert.IsEmpty(result);
+        }
+
         [Test]
         public void AddCspHeaders_EnabledButNoDirectivesOrReportUriEnabled_ReturnsEmptyResults()
         {
@@ -88,6 +97,23 @@ namespace NWebsec.Core.Tests.Unit.Core.HttpHeaders
         }
 
         [Test]
+        public void AddCspHeaders_CspEnabledWithScriptSrcAndNonce_ReturnsSetCspWithScriptSrcAndNonceResult()
+        {
+            var cspConfig = new CspConfiguration
+            {
+                Enabled = true,
+                ScriptSrcDirective = { SelfSrc = true, Nonce = "Nc3n83cnSAd3wc3Sasdfn939hc3" }
+                
+            };
+
+            var result = _generator.CreateCspResults(cspConfig, Reportonly).Single();
+
+            Assert.AreEqual(HeaderResult.ResponseAction.Set, result.Action);
+            Assert.AreEqual(CspHeaderName, result.Name);
+            Assert.AreEqual("script-src 'self' 'nonce-Nc3n83cnSAd3wc3Sasdfn939hc3'", result.Value);
+        }
+
+        [Test]
         public void AddCspHeaders_CspEnabledWithObjectSrc_ReturnsSetCspWithObjectSrcResult()
         {
             var cspConfig = new CspConfiguration
@@ -117,6 +143,22 @@ namespace NWebsec.Core.Tests.Unit.Core.HttpHeaders
             Assert.AreEqual(HeaderResult.ResponseAction.Set, result.Action);
             Assert.AreEqual(CspHeaderName, result.Name);
             Assert.AreEqual("style-src 'unsafe-inline'", result.Value);
+        }
+
+        [Test]
+        public void AddCspHeaders_CspEnabledWithStyleSrcAndNonce_ReturnsSetCspWithStyleSrcAndNonceResult()
+        {
+            var cspConfig = new CspConfiguration
+            {
+                Enabled = true,
+                StyleSrcDirective = { UnsafeInlineSrc = true, Nonce = "Nc3n83cnSAd3wc3Sasdfn939hc3" }
+            };
+
+            var result = _generator.CreateCspResults(cspConfig, Reportonly).Single();
+
+            Assert.AreEqual(HeaderResult.ResponseAction.Set, result.Action);
+            Assert.AreEqual(CspHeaderName, result.Name);
+            Assert.AreEqual("style-src 'unsafe-inline' 'nonce-Nc3n83cnSAd3wc3Sasdfn939hc3'", result.Value);
         }
 
         [Test]

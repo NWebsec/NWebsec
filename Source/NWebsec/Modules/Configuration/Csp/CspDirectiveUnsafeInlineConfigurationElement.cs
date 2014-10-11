@@ -19,5 +19,7 @@ namespace NWebsec.Modules.Configuration.Csp
                 this["unsafeInline"] = value;
             }
         }
+
+        public string Nonce { get; set; }
     }
 }

@@ -11,5 +11,7 @@ namespace NWebsec.Core.HttpHeaders.Configuration
         }
 
         public bool UnsafeInlineSrc { get; set; }
+
+        public string Nonce { get; set; }
     }
 }

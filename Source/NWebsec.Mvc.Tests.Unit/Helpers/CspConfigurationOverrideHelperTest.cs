@@ -22,7 +22,7 @@ namespace NWebsec.Mvc.Tests.Unit.Helpers
                 UnsafeInlineSrc = false,
                 CustomSources = new string[] {}
             };
-            var clone = (ICspDirectiveUnsafeEvalConfiguration)HeaderConfigurationOverrideHelper.CloneElement(directive);
+            var clone = (ICspDirectiveUnsafeEvalConfiguration)CspConfigurationOverrideHelper.CloneElement(directive);
 
             Assert.IsTrue(clone.UnsafeEvalSrc);
         }
@@ -35,7 +35,7 @@ namespace NWebsec.Mvc.Tests.Unit.Helpers
                 UnsafeInlineSrc = true,
                 CustomSources = new string[] {}
             };
-            var clone = (ICspDirectiveUnsafeInlineConfiguration)HeaderConfigurationOverrideHelper.CloneElement(directive);
+            var clone = (ICspDirectiveUnsafeInlineConfiguration)CspConfigurationOverrideHelper.CloneElement(directive);
 
             Assert.IsTrue(clone.UnsafeInlineSrc);
         }
