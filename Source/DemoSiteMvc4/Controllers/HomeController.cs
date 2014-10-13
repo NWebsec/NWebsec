@@ -15,7 +15,9 @@ namespace DemoSiteMvc4.Controllers
         //
         // GET: /Home/
 
-        //[CspScriptSrc(CustomSources = "www.nwebsec.com")]
+        //[CspScriptSrc(UnsafeInline = Source.Enable, CustomSources = "www.nwebsec.com")]
+        //[CspStyleSrc(UnsafeInline = Source.Enable, CustomSources = "www.nwebsec.com")]
+        [CspFrameAncestors(Self = Source.Enable)]
         public ActionResult Index()
         {
             return View();
@@ -44,6 +46,12 @@ namespace DemoSiteMvc4.Controllers
         public ActionResult RequireHttps()
         {
             return Redirect("https://localhost:8443/DemoSiteMvc4");
+        }
+
+        [CspFrameAncestors(None = Source.Enable)]
+        public ActionResult Framed()
+        {
+            return View();
         }
     }
 }

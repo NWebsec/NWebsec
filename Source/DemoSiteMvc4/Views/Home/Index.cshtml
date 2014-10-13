@@ -20,3 +20,9 @@
 </style>
 
 @Html.Partial("PartialIndex")
+
+@{
+    var ub = new UriBuilder(Request.Url);
+    ub.Path = "/DemositeMvc4/Home/Framed";
+}
+<iframe height="300" width="700" src="@ub.Uri.AbsoluteUri"></iframe>
