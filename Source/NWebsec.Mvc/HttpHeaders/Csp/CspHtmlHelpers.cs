@@ -10,7 +10,7 @@ namespace NWebsec.Mvc.HttpHeaders.Csp
     public static class CspHtmlHelpers
     {
         /// <summary>
-        /// Generates a CSP nonce HTML attribute. The 128-bit random nonce will be included in the CSP script-src directive.
+        /// Generates a CSP nonce HTML attribute. The 120-bit random nonce will be included in the CSP script-src directive.
         /// </summary>
         /// <param name="helper"></param>
         public static IHtmlString CspScriptNonce(this HtmlHelper helper)
@@ -29,7 +29,7 @@ namespace NWebsec.Mvc.HttpHeaders.Csp
         }
 
         /// <summary>
-        /// Generates a CSP nonce HTML attribute. The 128-bit random nonce will be included in the CSP style-src directive.
+        /// Generates a CSP nonce HTML attribute. The 120-bit random nonce will be included in the CSP style-src directive.
         /// </summary>
         /// <param name="helper"></param>
         public static IHtmlString CspStyleNonce(this HtmlHelper helper)
