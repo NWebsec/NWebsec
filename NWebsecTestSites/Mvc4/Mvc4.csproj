@@ -50,15 +50,15 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="NWebsec, Version=3.2.0.0, Culture=neutral, PublicKeyToken=3613da5f958908a1, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\NWebsec.3.2.0-ctp02\lib\45\NWebsec.dll</HintPath>
+      <HintPath>..\packages\NWebsec.3.2.0\lib\45\NWebsec.dll</HintPath>
     </Reference>
     <Reference Include="NWebsec.Core, Version=1.2.0.0, Culture=neutral, PublicKeyToken=3613da5f958908a1, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\NWebsec.Core.1.2.0-ctp02\lib\45\NWebsec.Core.dll</HintPath>
+      <HintPath>..\packages\NWebsec.Core.1.2.0\lib\45\NWebsec.Core.dll</HintPath>
     </Reference>
     <Reference Include="NWebsec.Mvc, Version=3.2.0.0, Culture=neutral, PublicKeyToken=3613da5f958908a1, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\NWebsec.Mvc.3.2.0-ctp02\lib\45\NWebsec.Mvc.dll</HintPath>
+      <HintPath>..\packages\NWebsec.Mvc.3.2.0\lib\45\NWebsec.Mvc.dll</HintPath>
     </Reference>
     <Reference Include="NWebsec.SessionSecurity, Version=1.1.0.0, Culture=neutral, PublicKeyToken=3613da5f958908a1, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
