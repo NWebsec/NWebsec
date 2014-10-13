@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using NUnit.Framework;
 
@@ -532,6 +533,42 @@ namespace NWebsec.Tests.Functional
             Assert.IsTrue(response.IsSuccessStatusCode, ReqFailed + testUri);
             var cspHeader = response.Headers.GetValues("Content-Security-Policy").Single();
             Assert.AreEqual("object-src 'self'", cspHeader, testUri.ToString());
+        }
+
+        [Test]
+        public async Task CspDirectives_FrameAncestorsEnabled_SetsHeader()
+        {
+            const string path = "/CspDirectives/FrameAncestors";
+            var testUri = Helper.GetUri(BaseUri, path);
+
+            var response = await HttpClient.GetAsync(testUri);
+
+            Assert.IsTrue(response.IsSuccessStatusCode, ReqFailed + testUri);
+            var cspHeader = response.Headers.GetValues("Content-Security-Policy").Single();
+            Assert.AreEqual("frame-ancestors 'self'", cspHeader, testUri.ToString());
+        }
+
+        [Test]
+        public async Task CspDirectives_NoncesEnabled_SetsHeader()
+        {
+            const string path = "/CspDirectives/Nonces";
+            var testUri = Helper.GetUri(BaseUri, path);
+
+            var response = await HttpClient.GetAsync(testUri);
+            Assert.IsTrue(response.IsSuccessStatusCode, ReqFailed + testUri);
+            var body = await response.Content.ReadAsStringAsync();
+
+            var scriptCaptures = Regex.Match(body, @"<script nonce=""(.+)"">").Groups;
+            Assert.AreEqual(2, scriptCaptures.Count, "Expected 2 script captures, captured " + scriptCaptures.Count);
+            var bodyScriptNonce = scriptCaptures[1].Value;
+
+            var styleCaptures = Regex.Match(body, @"<style nonce=""(.+)"">").Groups;
+            Assert.AreEqual(2, styleCaptures.Count, "Expected 2 style captures, captured " + styleCaptures.Count);
+            var bodyStyleNonce = styleCaptures[1].Value;
+
+            var cspHeader = response.Headers.GetValues("Content-Security-Policy").Single();
+            var expectedDirective = String.Format("script-src 'nonce-{0}'; style-src 'nonce-{1}'", bodyScriptNonce, bodyStyleNonce);
+            Assert.AreEqual(expectedDirective, cspHeader, testUri.ToString());
         }
 
         [Test]

@@ -65,6 +65,12 @@ namespace Mvc5.Controllers
             return View("Index");
         }
 
+        [CspFrameAncestors(Self = Source.Enable)]
+        public ActionResult FrameAncestors()
+        {
+            return View("Index");
+        }
+
         [CspDefaultSrc(Self = Source.Enable)]
         [CspReportUri(EnableBuiltinHandler = true)]
         public ActionResult ReportUriBuiltin()
@@ -85,5 +91,9 @@ namespace Mvc5.Controllers
             return View("Index");
         }
 
+        public ActionResult Nonces()
+        {
+            return View();
+        }
     }
 }

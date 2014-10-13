@@ -46,13 +46,13 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="NWebsec, Version=3.1.0.0, Culture=neutral, PublicKeyToken=3613da5f958908a1, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\NWebsec.3.1.0\lib\35\NWebsec.dll</HintPath>
+    <Reference Include="NWebsec">
+      <HintPath>..\packages\NWebsec.3.2.0-ctp02\lib\35\NWebsec.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="NWebsec.Core, Version=1.1.0.0, Culture=neutral, PublicKeyToken=3613da5f958908a1, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\NWebsec.Core.1.1.0\lib\35\NWebsec.Core.dll</HintPath>
+    <Reference Include="NWebsec.Core">
+      <HintPath>..\packages\NWebsec.Core.1.2.0-ctp02\lib\35\NWebsec.Core.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="NWebsec.SessionSecurity, Version=1.1.0.0, Culture=neutral, PublicKeyToken=3613da5f958908a1, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>

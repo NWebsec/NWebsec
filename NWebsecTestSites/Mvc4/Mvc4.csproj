@@ -48,17 +48,17 @@
       <HintPath>..\packages\WebGrease.1.1.0\lib\Antlr3.Runtime.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="NWebsec, Version=3.1.0.0, Culture=neutral, PublicKeyToken=3613da5f958908a1, processorArchitecture=MSIL">
+    <Reference Include="NWebsec, Version=3.2.0.0, Culture=neutral, PublicKeyToken=3613da5f958908a1, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\NWebsec.3.1.0\lib\45\NWebsec.dll</HintPath>
+      <HintPath>..\packages\NWebsec.3.2.0-ctp02\lib\45\NWebsec.dll</HintPath>
     </Reference>
-    <Reference Include="NWebsec.Core, Version=1.1.0.0, Culture=neutral, PublicKeyToken=3613da5f958908a1, processorArchitecture=MSIL">
+    <Reference Include="NWebsec.Core, Version=1.2.0.0, Culture=neutral, PublicKeyToken=3613da5f958908a1, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\NWebsec.Core.1.1.0\lib\45\NWebsec.Core.dll</HintPath>
+      <HintPath>..\packages\NWebsec.Core.1.2.0-ctp02\lib\45\NWebsec.Core.dll</HintPath>
     </Reference>
-    <Reference Include="NWebsec.Mvc, Version=3.1.0.0, Culture=neutral, PublicKeyToken=3613da5f958908a1, processorArchitecture=MSIL">
+    <Reference Include="NWebsec.Mvc, Version=3.2.0.0, Culture=neutral, PublicKeyToken=3613da5f958908a1, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\NWebsec.Mvc.3.1.0\lib\45\NWebsec.Mvc.dll</HintPath>
+      <HintPath>..\packages\NWebsec.Mvc.3.2.0-ctp02\lib\45\NWebsec.Mvc.dll</HintPath>
     </Reference>
     <Reference Include="NWebsec.SessionSecurity, Version=1.1.0.0, Culture=neutral, PublicKeyToken=3613da5f958908a1, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -210,6 +210,7 @@
     <None Include="NWebsecConfig\SessionSecurityConfig.xsd">
       <SubType>Designer</SubType>
     </None>
+    <Content Include="Views\CspDirectives\Nonces.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

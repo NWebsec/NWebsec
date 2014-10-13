@@ -4,7 +4,7 @@ using System.Web.Mvc;
 using NWebsec.Csp;
 using NWebsec.Mvc.HttpHeaders.Csp;
 
-namespace Mvc4.Controllers
+namespace Mvc3.Controllers
 {
     [Csp]
     public class CspDirectivesController : Controller
@@ -65,6 +65,12 @@ namespace Mvc4.Controllers
             return View("Index");
         }
 
+        [CspFrameAncestors(Self = Source.Enable)]
+        public ActionResult FrameAncestors()
+        {
+            return View("Index");
+        }
+
         [CspDefaultSrc(Self = Source.Enable)]
         [CspReportUri(EnableBuiltinHandler = true)]
         public ActionResult ReportUriBuiltin()
@@ -85,5 +91,9 @@ namespace Mvc4.Controllers
             return View("Index");
         }
 
+        public ActionResult Nonces()
+        {
+            return View();
+        }
     }
 }
