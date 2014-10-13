@@ -11,7 +11,7 @@
     <iconUrl>https://klings.blob.core.windows.net/nwebsecicon/nwebsec_nuget.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>NWebsec middleware for OWIN applications. NWebsec helps you set important security headers and detect potentially dangerous redirects. See project website for documentation.</description>
-    <releaseNotes>This release adds support for the HSTS preload directive and more sophisticated redirect validation configuration. See release notes at project web site for details.</releaseNotes>
+    <releaseNotes>This release adds support for the new CSP2 frame-ancestors directive. See release notes at project web site for details.</releaseNotes>
     <copyright>Copyright © 2014</copyright>
     <tags>NWebsec security asp.net mvc owin</tags>
     <dependencies>

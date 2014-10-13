@@ -11,7 +11,7 @@
     <iconUrl>https://klings.blob.core.windows.net/nwebsecicon/nwebsec_nuget.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>NWebsec attributes for ASP.NET MVC 3/4/5 applications. NWebsec helps you set important security headers, detect potentially dangerous redirects, control cache headers, and remove version headers. See project website for documentation.</description>
-    <releaseNotes>This release follows the release of the NWebsec package. See release notes at project web site for details.</releaseNotes>
+    <releaseNotes>This release adds support for the new CSP2 script/style nonces and frame-ancestors directive. See release notes at project web site for details.</releaseNotes>
     <copyright>Copyright © 2012 - 2014</copyright>
     <tags>NWebsec security asp.net mvc</tags>
     <dependencies>
