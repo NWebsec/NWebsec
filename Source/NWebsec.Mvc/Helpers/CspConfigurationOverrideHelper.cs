@@ -19,7 +19,6 @@ namespace NWebsec.Mvc.Helpers
         private const string CspReportUriKeyPrefix = "NWebsecCspReportUri";
         private const string CspScriptNonceKey = "NWebsecCspScriptNonce";
         private const string CspStyleNonceKey = "NWebsecCspStyleNonce";
-        private readonly char[] _nonceTrimChars = {'='};
 
         public CspConfigurationOverrideHelper()
         {
@@ -464,9 +463,9 @@ namespace NWebsec.Mvc.Helpers
         {
             using (var rng = new RNGCryptoServiceProvider())
             {
-                var nonceBytes = new byte[16];
+                var nonceBytes = new byte[15];
                 rng.GetBytes(nonceBytes);
-                return Convert.ToBase64String(nonceBytes, Base64FormattingOptions.None).TrimEnd(_nonceTrimChars);
+                return Convert.ToBase64String(nonceBytes);
             }
         }
 
