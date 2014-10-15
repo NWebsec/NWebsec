@@ -17,7 +17,7 @@ namespace DemoSiteMvc4.Controllers
 
         //[CspScriptSrc(UnsafeInline = Source.Enable, CustomSources = "www.nwebsec.com")]
         //[CspStyleSrc(UnsafeInline = Source.Enable, CustomSources = "www.nwebsec.com")]
-        [CspFrameAncestors(Self = Source.Enable)]
+        //[CspFrameAncestors(Self = Source.Enable)]
         public ActionResult Index()
         {
             return View();
