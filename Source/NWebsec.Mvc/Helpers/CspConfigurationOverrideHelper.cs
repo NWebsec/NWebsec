@@ -82,7 +82,7 @@ namespace NWebsec.Mvc.Helpers
 
             if (directiveOverrides.TryGetValue(CspDirectives.ScriptSrc, out element))
             {
-                overriddenConfig.ScriptSrcDirective = (ICspDirectiveUnsafeEvalConfiguration)element;
+                overriddenConfig.ScriptSrcDirective = element;
                 cspWasOverridden = true;
             }
 
@@ -94,7 +94,7 @@ namespace NWebsec.Mvc.Helpers
 
             if (directiveOverrides.TryGetValue(CspDirectives.StyleSrc, out element))
             {
-                overriddenConfig.StyleSrcDirective = (ICspDirectiveUnsafeInlineConfiguration)element;
+                overriddenConfig.StyleSrcDirective = element;
                 cspWasOverridden = true;
             }
 
@@ -186,7 +186,7 @@ namespace NWebsec.Mvc.Helpers
                     : null;
         }
 
-        internal void SetCspDirectiveOverride(HttpContextBase context, CspDirectives directive, CspDirectiveBaseOverride config, bool reportOnly)
+        internal void SetCspDirectiveOverride(HttpContextBase context, CspDirectives directive, CspDirectiveOverride config, bool reportOnly)
         {
             var cspOverride = GetCspDirectiveOverides(context, reportOnly);
             ICspDirectiveConfiguration directiveElement;
@@ -236,8 +236,8 @@ namespace NWebsec.Mvc.Helpers
         {
             switch (directive)
             {
-                    case CspDirectives.ScriptSrc:
-                    case CspDirectives.StyleSrc:
+                case CspDirectives.ScriptSrc:
+                case CspDirectives.StyleSrc:
                     break;
                 default:
                     throw new ArgumentOutOfRangeException("Unexpected directive when setting csp nonce: " + directive);
@@ -253,7 +253,7 @@ namespace NWebsec.Mvc.Helpers
                 cspOverride.Add(directive, directiveConfiguration);
             }
 
-            var config = (ICspDirectiveUnsafeInlineConfiguration) directiveConfiguration;
+            var config = directiveConfiguration;
             config.Nonce = nonce;
         }
 
@@ -265,7 +265,7 @@ namespace NWebsec.Mvc.Helpers
 
             if (cspConfig == null)
             {
-                return null;
+                return new CspDirectiveConfiguration();
             }
 
             switch (directive)
@@ -312,42 +312,15 @@ namespace NWebsec.Mvc.Helpers
                 return null;
             }
 
-            ICspDirectiveConfiguration newElement = null;
+            var newConfig = new CspDirectiveConfiguration();
 
-            var unsafeEvalElement = element as ICspDirectiveUnsafeEvalConfiguration;
-            if (unsafeEvalElement != null)
-            {
-                newElement = new CspDirectiveUnsafeEvalConfiguration
-                {
-                    UnsafeEvalSrc = unsafeEvalElement.UnsafeEvalSrc
-                };
-            }
-
-            var unsafeInlineElement = element as ICspDirectiveUnsafeInlineConfiguration;
-            if (unsafeInlineElement != null)
-            {
-                if (newElement == null)
-                {
-                    newElement = new CspDirectiveUnsafeInlineConfiguration
-                    {
-                        UnsafeInlineSrc = unsafeInlineElement.UnsafeInlineSrc
-                    };
-                }
-                else
-                {
-                    ((ICspDirectiveUnsafeInlineConfiguration)newElement).UnsafeInlineSrc =
-                        unsafeInlineElement.UnsafeInlineSrc;
-                }
-            }
-
-            if (newElement == null)
-            {
-                newElement = new CspDirectiveConfiguration();
-            }
-            newElement.Enabled = element.Enabled;
-            newElement.NoneSrc = element.NoneSrc;
-            newElement.SelfSrc = element.SelfSrc;
-
+            newConfig.Enabled = element.Enabled;
+            newConfig.NoneSrc = element.NoneSrc;
+            newConfig.SelfSrc = element.SelfSrc;
+            newConfig.UnsafeEvalSrc = element.UnsafeEvalSrc;
+            newConfig.UnsafeInlineSrc = element.UnsafeInlineSrc;
+            newConfig.Nonce = element.Nonce;
+            
             var newSources = new List<string>();
 
             if (element.CustomSources != null)
@@ -355,9 +328,9 @@ namespace NWebsec.Mvc.Helpers
                 newSources.AddRange(element.CustomSources);
             }
 
-            newElement.CustomSources = newSources;
+            newConfig.CustomSources = newSources;
 
-            return newElement;
+            return newConfig;
         }
 
         private IDictionary<CspDirectives, ICspDirectiveConfiguration> GetCspDirectiveOverides(HttpContextBase context, bool reportOnly)
@@ -370,42 +343,9 @@ namespace NWebsec.Mvc.Helpers
             return (IDictionary<CspDirectives, ICspDirectiveConfiguration>)headerList[headerKey];
         }
 
-        internal ICspDirectiveConfiguration GetOverridenCspDirectiveConfig(CspDirectives directive, CspDirectiveBaseOverride directiveOverride, ICspDirectiveConfiguration directiveConfig)
+        internal ICspDirectiveConfiguration GetOverridenCspDirectiveConfig(CspDirectives directive, CspDirectiveOverride directiveOverride, ICspDirectiveConfiguration directiveConfig)
         {
-            ICspDirectiveConfiguration result = null;
-
-            switch (directive)
-            {
-                case CspDirectives.ScriptSrc:
-                    {
-                        var config = (ICspDirectiveUnsafeEvalConfiguration)directiveConfig ?? new CspDirectiveUnsafeEvalConfiguration();
-                        result = config;
-
-                        var theOverride = (CspDirectiveUnsafeInlineUnsafeEvalOverride)directiveOverride;
-
-                        if (theOverride.UnsafeEval != Source.Inherit)
-                            config.UnsafeEvalSrc = theOverride.UnsafeEval == Source.Enable;
-
-                        if (theOverride.UnsafeInline != Source.Inherit)
-                            config.UnsafeInlineSrc = theOverride.UnsafeInline == Source.Enable;
-                    }
-                    break;
-                case CspDirectives.StyleSrc:
-                    {
-                        var config = (ICspDirectiveUnsafeInlineConfiguration)directiveConfig ?? new CspDirectiveUnsafeInlineConfiguration();
-                        result = config;
-                        var theOverride = (CspDirectiveUnsafeInlineOverride)directiveOverride;
-
-                        if (theOverride.UnsafeInline != Source.Inherit)
-                            config.UnsafeInlineSrc = theOverride.UnsafeInline == Source.Enable;
-                    }
-                    break;
-            }
-
-            if (result == null)
-            {
-                result = directiveConfig ?? new CspDirectiveConfiguration();
-            }
+            var result = directiveConfig ?? new CspDirectiveConfiguration();
 
             result.Enabled = directiveOverride.Enabled;
 
@@ -414,6 +354,12 @@ namespace NWebsec.Mvc.Helpers
 
             if (directiveOverride.Self != Source.Inherit)
                 result.SelfSrc = directiveOverride.Self == Source.Enable;
+
+            if (directiveOverride.UnsafeEval != Source.Inherit)
+                result.UnsafeEvalSrc = directiveOverride.UnsafeEval == Source.Enable;
+
+            if (directiveOverride.UnsafeInline != Source.Inherit)
+                result.UnsafeInlineSrc = directiveOverride.UnsafeInline == Source.Enable;
 
             if (!directiveOverride.InheritOtherSources)
             {

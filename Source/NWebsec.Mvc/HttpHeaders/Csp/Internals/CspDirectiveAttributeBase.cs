@@ -74,12 +74,12 @@ namespace NWebsec.Mvc.HttpHeaders.Csp.Internals
                 throw new ApplicationException("No sources enabled for attribute. Remove attribute, or set \"Enabled=false\"");
         }
 
-        protected virtual CspDirectiveBaseOverride GetNewDirectiveConfigurationElement()
+        protected virtual CspDirectiveOverride GetNewDirectiveConfigurationElement()
         {
-            return new CspDirectiveBaseOverride();
+            return new CspDirectiveOverride();
         }
 
-        protected CspDirectiveBaseOverride GetCspDirectiveOverride(string sources)
+        protected CspDirectiveOverride GetCspDirectiveOverride(string sources)
         {
             var directiveOverride = GetNewDirectiveConfigurationElement();
             directiveOverride.Enabled = Enabled;

@@ -269,24 +269,19 @@ namespace NWebsec.Core.HttpHeaders
             if (directive.SelfSrc)
                 sources.Add("'self'");
 
-            var allowUnsafeInlineElement = directive as ICspDirectiveUnsafeInlineConfiguration;
-            if (allowUnsafeInlineElement != null)
-            {
-                if (allowUnsafeInlineElement.UnsafeInlineSrc)
-                {
-                    sources.Add("'unsafe-inline'");
-                }
 
-                if (!String.IsNullOrEmpty(allowUnsafeInlineElement.Nonce))
-                {
-                    var sb = new StringBuilder("'nonce-");
-                    sb.Append(allowUnsafeInlineElement.Nonce);
-                    sb.Append("'");
-                    sources.Add(sb.ToString());
-                }
+            if (directive.UnsafeInlineSrc)
+            {
+                sources.Add("'unsafe-inline'");
             }
-            var allowUnsafeEvalElement = directive as ICspDirectiveUnsafeEvalConfiguration;
-            if (allowUnsafeEvalElement != null && allowUnsafeEvalElement.UnsafeEvalSrc)
+
+            if (!String.IsNullOrEmpty(directive.Nonce))
+            {
+                var nonce = "'nonce-" + directive.Nonce + "'";
+                sources.Add(nonce);
+            }
+
+            if (directive.UnsafeEvalSrc)
                 sources.Add("'unsafe-eval'");
 
             if (directive.CustomSources != null)

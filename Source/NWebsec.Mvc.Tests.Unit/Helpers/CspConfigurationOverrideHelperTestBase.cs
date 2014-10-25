@@ -50,7 +50,7 @@ namespace NWebsec.Mvc.Tests.Unit.Helpers
         public void GetCspElementWithOverrides_CspDisabledOnContextAndNonceRequested_CspDisabledSourceOverridden()
         {
             CspConfigOnContext.Enabled = false;
-            var directive = new CspDirectiveBaseOverride { Self = Source.Disable, OtherSources = "*.nwebsec.com", InheritOtherSources = false };
+            var directive = new CspDirectiveOverride { Self = Source.Disable, OtherSources = "*.nwebsec.com", InheritOtherSources = false };
 
             CspConfigurationOverrideHelper.SetCspDirectiveOverride(MockContext, CspConfigurationOverrideHelper.CspDirectives.DefaultSrc, directive, ReportOnly);
             var overrideElement = CspConfigurationOverrideHelper.GetCspElementWithOverrides(MockContext, ReportOnly);
@@ -63,7 +63,7 @@ namespace NWebsec.Mvc.Tests.Unit.Helpers
         {
             CspConfigOnContext.DefaultSrcDirective.SelfSrc = true;
             CspConfigOnContext.DefaultSrcDirective.CustomSources = new[] { "www.nwebsec.com" };
-            var directive = new CspDirectiveBaseOverride { Self = Source.Disable, OtherSources = "*.nwebsec.com", InheritOtherSources = false };
+            var directive = new CspDirectiveOverride { Self = Source.Disable, OtherSources = "*.nwebsec.com", InheritOtherSources = false };
 
             CspConfigurationOverrideHelper.SetCspDirectiveOverride(MockContext, CspConfigurationOverrideHelper.CspDirectives.DefaultSrc, directive, ReportOnly);
 
@@ -78,7 +78,7 @@ namespace NWebsec.Mvc.Tests.Unit.Helpers
         {
             CspConfigOnContext.ScriptSrcDirective.SelfSrc = true;
             CspConfigOnContext.ScriptSrcDirective.UnsafeInlineSrc = false;
-            var directive = new CspDirectiveUnsafeInlineUnsafeEvalOverride { UnsafeEval = Source.Enable };
+            var directive = new CspDirectiveOverride { UnsafeEval = Source.Enable };
 
             CspConfigurationOverrideHelper.SetCspDirectiveOverride(MockContext, CspConfigurationOverrideHelper.CspDirectives.ScriptSrc, directive, ReportOnly);
             var overrideElement = CspConfigurationOverrideHelper.GetCspElementWithOverrides(MockContext, ReportOnly).ScriptSrcDirective;
@@ -94,7 +94,7 @@ namespace NWebsec.Mvc.Tests.Unit.Helpers
             var oldDirective = CspConfigOnContext.DefaultSrcDirective;
             oldDirective.SelfSrc = true;
             oldDirective.CustomSources = new[] { "transformtool.codeplex.com" };
-            var directive = new CspDirectiveBaseOverride { Self = Source.Disable, OtherSources = "nwebsec.codeplex.com", InheritOtherSources = true };
+            var directive = new CspDirectiveOverride { Self = Source.Disable, OtherSources = "nwebsec.codeplex.com", InheritOtherSources = true };
 
             CspConfigurationOverrideHelper.SetCspDirectiveOverride(MockContext, CspConfigurationOverrideHelper.CspDirectives.DefaultSrc, directive, ReportOnly);
 
@@ -108,8 +108,8 @@ namespace NWebsec.Mvc.Tests.Unit.Helpers
         [Test]
         public void GetCspElementWithOverrides_DirectiveSourceOverridenMultipleTimes_LastOverrideWins()
         {
-            var firstOverride = new CspDirectiveBaseOverride { OtherSources = "transformtool.codeplex.com", InheritOtherSources = false };
-            var secondOverride = new CspDirectiveBaseOverride { OtherSources = "nwebsec.codeplex.com", InheritOtherSources = false };
+            var firstOverride = new CspDirectiveOverride { OtherSources = "transformtool.codeplex.com", InheritOtherSources = false };
+            var secondOverride = new CspDirectiveOverride { OtherSources = "nwebsec.codeplex.com", InheritOtherSources = false };
 
             CspConfigurationOverrideHelper.SetCspDirectiveOverride(MockContext, CspConfigurationOverrideHelper.CspDirectives.DefaultSrc, firstOverride, ReportOnly);
             CspConfigurationOverrideHelper.SetCspDirectiveOverride(MockContext, CspConfigurationOverrideHelper.CspDirectives.DefaultSrc, secondOverride, ReportOnly);
@@ -123,8 +123,8 @@ namespace NWebsec.Mvc.Tests.Unit.Helpers
         [Test]
         public void GetCspElementWithOverrides_DirectiveEnabledThenDisabledThroughOverride_DirectiveDisabled()
         {
-            var directive1 = new CspDirectiveBaseOverride { Self = Source.Enable };
-            var directive2 = new CspDirectiveBaseOverride { Enabled = false };
+            var directive1 = new CspDirectiveOverride { Self = Source.Enable };
+            var directive2 = new CspDirectiveOverride { Enabled = false };
 
             CspConfigurationOverrideHelper.SetCspDirectiveOverride(MockContext, CspConfigurationOverrideHelper.CspDirectives.DefaultSrc, directive1, ReportOnly);
             CspConfigurationOverrideHelper.SetCspDirectiveOverride(MockContext, CspConfigurationOverrideHelper.CspDirectives.DefaultSrc, directive2, ReportOnly);
@@ -136,8 +136,8 @@ namespace NWebsec.Mvc.Tests.Unit.Helpers
         [Test]
         public void GetCspElementWithOverrides_DirectiveOverriddenTwiceWithDifferentSources_BothOverridesEnabled()
         {
-            var directive1 = new CspDirectiveUnsafeInlineUnsafeEvalOverride { Self = Source.Enable, UnsafeInline = Source.Enable };
-            var directive2 = new CspDirectiveUnsafeInlineUnsafeEvalOverride { UnsafeEval = Source.Enable };
+            var directive1 = new CspDirectiveOverride { Self = Source.Enable, UnsafeInline = Source.Enable };
+            var directive2 = new CspDirectiveOverride { UnsafeEval = Source.Enable };
 
             CspConfigurationOverrideHelper.SetCspDirectiveOverride(MockContext, CspConfigurationOverrideHelper.CspDirectives.ScriptSrc, directive1, ReportOnly);
             CspConfigurationOverrideHelper.SetCspDirectiveOverride(MockContext, CspConfigurationOverrideHelper.CspDirectives.ScriptSrc, directive2, ReportOnly);
@@ -152,7 +152,7 @@ namespace NWebsec.Mvc.Tests.Unit.Helpers
         public void GetCspElementWithOverrides_DefaultConfigAndDefaultOverridden_HeaderEnabled()
         {
             var cspOverride = new CspHeaderConfiguration { Enabled = true };
-            var directive1 = new CspDirectiveUnsafeInlineUnsafeEvalOverride { Self = Source.Enable };
+            var directive1 = new CspDirectiveOverride { Self = Source.Enable };
 
             CspConfigurationOverrideHelper.SetCspHeaderOverride(MockContext, cspOverride, ReportOnly);
             CspConfigurationOverrideHelper.SetCspDirectiveOverride(MockContext, CspConfigurationOverrideHelper.CspDirectives.ScriptSrc, directive1, ReportOnly);
@@ -166,7 +166,7 @@ namespace NWebsec.Mvc.Tests.Unit.Helpers
         public void GetCspElementWithOverrides_ReportOnlyDefaultConfigAndDefaultOverridden_HeaderEnabled()
         {
             var cspOverride = new CspHeaderConfiguration { Enabled = true };
-            var directive1 = new CspDirectiveUnsafeInlineUnsafeEvalOverride { Self = Source.Enable };
+            var directive1 = new CspDirectiveOverride { Self = Source.Enable };
 
             CspConfigurationOverrideHelper.SetCspHeaderOverride(MockContext, cspOverride, ReportOnly);
             CspConfigurationOverrideHelper.SetCspDirectiveOverride(MockContext, CspConfigurationOverrideHelper.CspDirectives.ScriptSrc, directive1, ReportOnly);
@@ -192,7 +192,7 @@ namespace NWebsec.Mvc.Tests.Unit.Helpers
             CspConfigOnContext.ReportUriDirective.EnableBuiltinHandler = true;
 
             var cspOverride = new CspHeaderConfiguration { Enabled = true };
-            var directive1 = new CspDirectiveUnsafeInlineUnsafeEvalOverride { Self = Source.Enable };
+            var directive1 = new CspDirectiveOverride { Self = Source.Enable };
 
             CspConfigurationOverrideHelper.SetCspHeaderOverride(MockContext, cspOverride, ReportOnly);
             CspConfigurationOverrideHelper.SetCspDirectiveOverride(MockContext, CspConfigurationOverrideHelper.CspDirectives.ScriptSrc, directive1, ReportOnly);

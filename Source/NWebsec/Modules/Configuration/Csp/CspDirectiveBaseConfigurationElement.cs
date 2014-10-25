@@ -10,6 +10,8 @@ namespace NWebsec.Modules.Configuration.Csp
 {
     public class CspDirectiveBaseConfigurationElement : ConfigurationElement, ICspDirectiveConfiguration
     {
+        private string[] _customSources;
+
         [ConfigurationProperty("enabled", IsRequired = false, DefaultValue = true)]
         public bool Enabled
         {
@@ -49,14 +51,23 @@ namespace NWebsec.Modules.Configuration.Csp
             }
         }
 
+        public virtual bool UnsafeInlineSrc { get; set; }
+        public virtual bool UnsafeEvalSrc { get; set; }
+
         public IEnumerable<string> CustomSources
         {
             get
             {
-                return Sources.Cast<CspSourceConfigurationElement>().Select(s => s.Source);
+                if (_customSources == null)
+                {
+                    _customSources = Sources.Cast<CspSourceConfigurationElement>().Select(s => s.Source).ToArray();
+                }
+                return _customSources;
             }
             set { throw new NotImplementedException(); }
         }
+
+        public string Nonce { get; set; }
 
         [ConfigurationProperty("", IsRequired = false, IsDefaultCollection = true)]
         [ConfigurationCollection(typeof(CspSourcesElementCollection), CollectionType = ConfigurationElementCollectionType.AddRemoveClearMap)]

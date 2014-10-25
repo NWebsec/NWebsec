@@ -7,9 +7,9 @@ namespace NWebsec.Core.HttpHeaders.Configuration
         public CspConfiguration()
         {
             DefaultSrcDirective = new CspDirectiveConfiguration();
-            ScriptSrcDirective = new CspDirectiveUnsafeEvalConfiguration();
+            ScriptSrcDirective = new CspDirectiveConfiguration();
             ObjectSrcDirective = new CspDirectiveConfiguration();
-            StyleSrcDirective = new CspDirectiveUnsafeInlineConfiguration();
+            StyleSrcDirective = new CspDirectiveConfiguration();
             ImgSrcDirective = new CspDirectiveConfiguration();
             MediaSrcDirective = new CspDirectiveConfiguration();
             FrameSrcDirective = new CspDirectiveConfiguration();
@@ -23,9 +23,9 @@ namespace NWebsec.Core.HttpHeaders.Configuration
         public bool XContentSecurityPolicyHeader { get; set; }
         public bool XWebKitCspHeader { get; set; }
         public ICspDirectiveConfiguration DefaultSrcDirective { get; set; }
-        public ICspDirectiveUnsafeEvalConfiguration ScriptSrcDirective { get; set; }
+        public ICspDirectiveConfiguration ScriptSrcDirective { get; set; }
         public ICspDirectiveConfiguration ObjectSrcDirective { get; set; }
-        public ICspDirectiveUnsafeInlineConfiguration StyleSrcDirective { get; set; }
+        public ICspDirectiveConfiguration StyleSrcDirective { get; set; }
         public ICspDirectiveConfiguration ImgSrcDirective { get; set; }
         public ICspDirectiveConfiguration MediaSrcDirective { get; set; }
         public ICspDirectiveConfiguration FrameSrcDirective { get; set; }

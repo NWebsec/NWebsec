@@ -1,14 +1,13 @@
 ﻿// Copyright (c) André N. Klingsheim. See License.txt in the project root for license information.
 
 using System.Configuration;
-using NWebsec.Core.HttpHeaders.Configuration;
 
 namespace NWebsec.Modules.Configuration.Csp
 {
-    public class CspDirectiveUnsafeInlineConfigurationElement : CspDirectiveBaseConfigurationElement, ICspDirectiveUnsafeInlineConfiguration
+    public class CspDirectiveUnsafeInlineConfigurationElement : CspDirectiveBaseConfigurationElement
     {
         [ConfigurationProperty("unsafeInline", IsRequired = false, DefaultValue = false)]
-        public bool UnsafeInlineSrc
+        public override bool UnsafeInlineSrc
         {
             get
             {
@@ -19,7 +18,5 @@ namespace NWebsec.Modules.Configuration.Csp
                 this["unsafeInline"] = value;
             }
         }
-
-        public string Nonce { get; set; }
     }
 }

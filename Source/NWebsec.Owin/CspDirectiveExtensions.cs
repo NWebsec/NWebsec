@@ -15,7 +15,7 @@ namespace NWebsec.Owin
         /// <typeparam name="T">The type of the CSP directive configuration object.</typeparam>
         /// <param name="directive">The CSP directive configuration object.</param>
         /// <exception cref="InvalidOperationException">Thrown when sources have already been configured for the directive.</exception>
-        public static void None<T>(this T directive) where T : class, ICspDirectiveConfiguration
+        public static void None<T>(this T directive) where T : class, ICspDirectiveBasicConfiguration
         {
             if (directive == null) throw new ArgumentNullException("directive");
 
@@ -29,7 +29,7 @@ namespace NWebsec.Owin
         /// <typeparam name="T">The type of the CSP directive configuration object.</typeparam>
         /// <param name="directive">The CSP directive configuration object.</param>
         /// <returns>The CSP directive configuration object.</returns>
-        public static T Self<T>(this T directive) where T : class, ICspDirectiveConfiguration
+        public static T Self<T>(this T directive) where T : class, ICspDirectiveBasicConfiguration
         {
             if (directive == null) throw new ArgumentNullException("directive");
 
@@ -44,7 +44,7 @@ namespace NWebsec.Owin
         /// <param name="directive">The CSP directive configuration object.</param>
         /// <param name="sources">One or more custom sources.</param>
         /// <returns>The CSP directive configuration object.</returns>
-        public static T CustomSources<T>(this T directive, params string[] sources) where T : class, ICspDirectiveConfiguration
+        public static T CustomSources<T>(this T directive, params string[] sources) where T : class, ICspDirectiveBasicConfiguration
         {
             if (directive == null) throw new ArgumentNullException("directive");
             if (sources.Length == 0) throw new ArgumentException("You must supply at least one source.", "sources");
@@ -87,7 +87,7 @@ namespace NWebsec.Owin
         /// <typeparam name="T">The type of the CSP directive configuration object.</typeparam>
         /// <param name="directive">The CSP directive configuration object.</param>
         /// <returns>The CSP directive configuration object.</returns>
-        public static T UnsafeEval<T>(this T directive) where T : class, ICspDirectiveUnsafeEvalConfiguration
+        public static T UnsafeEval<T>(this T directive) where T : class, ICspDirectiveConfiguration
         {
             if (directive == null) throw new ArgumentNullException("directive");
 
@@ -95,7 +95,7 @@ namespace NWebsec.Owin
             return directive;
         }
 
-        private static void ValidateBeforeSettingNoneSource(ICspDirectiveConfiguration directive)
+        private static void ValidateBeforeSettingNoneSource(ICspDirectiveBasicConfiguration directive)
         {
             if (directive.SelfSrc || (directive.CustomSources != null && directive.CustomSources.Any()))
             {
@@ -109,7 +109,7 @@ namespace NWebsec.Owin
                 throw new InvalidOperationException("It is a logical error to combine the \"None\" source with other sources.");
             }
 
-            var unsafeEval = directive as ICspDirectiveUnsafeEvalConfiguration;
+            var unsafeEval = directive as ICspDirectiveConfiguration;
 
             if (unsafeEval != null && unsafeEval.UnsafeEvalSrc)
             {

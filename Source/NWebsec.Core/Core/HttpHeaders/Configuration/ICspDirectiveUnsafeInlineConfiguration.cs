@@ -7,7 +7,7 @@ namespace NWebsec.Core.HttpHeaders.Configuration
     /// <summary>
     ///     Defines the properties required for CSP directive configuration.
     /// </summary>
-    public interface ICspDirectiveUnsafeInlineConfiguration : ICspDirectiveConfiguration
+    public interface ICspDirectiveUnsafeInlineConfiguration : ICspDirectiveBasicConfiguration
     {
         /// <summary>
         ///     Infrastructure. Not intended to be used by your code directly. An attempt to hide this from Intellisense has been

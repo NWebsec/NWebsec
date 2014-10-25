@@ -88,9 +88,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Csp\CspDirectiveBaseOverride.cs" />
-    <Compile Include="Csp\CspDirectiveUnsafeInlineOverride.cs" />
-    <Compile Include="Csp\CspDirectiveUnsafeInlineUnsafeEvalOverride.cs" />
+    <Compile Include="Csp\CspDirectiveOverride.cs" />
     <Compile Include="Helpers\ContextConfigurationHelper.cs" />
     <Compile Include="Helpers\CspConfigurationOverrideHelper.cs" />
     <Compile Include="Helpers\HeaderConfigurationOverrideHelper.cs" />

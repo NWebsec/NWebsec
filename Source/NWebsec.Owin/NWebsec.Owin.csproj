@@ -58,8 +58,6 @@
     <Compile Include="Core\ResponseHeaders.cs" />
     <Compile Include="CspDirective.cs" />
     <Compile Include="CspDirectiveExtensions.cs" />
-    <Compile Include="CspDirectiveUnsafeEval.cs" />
-    <Compile Include="CspDirectiveUnsafeInline.cs" />
     <Compile Include="CspOptions.cs" />
     <Compile Include="CspReportUriDirective.cs" />
     <Compile Include="HstsOptions.cs" />

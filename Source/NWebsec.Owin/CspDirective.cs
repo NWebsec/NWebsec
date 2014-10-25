@@ -23,6 +23,15 @@ namespace NWebsec.Owin
         public bool SelfSrc { get; set; }
 
         [EditorBrowsable(EditorBrowsableState.Never)]
+        public bool UnsafeInlineSrc { get; set; }
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public bool UnsafeEvalSrc { get; set; }
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public string Nonce { get; set; }
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public IEnumerable<string> CustomSources { get; set; }
     }
 }

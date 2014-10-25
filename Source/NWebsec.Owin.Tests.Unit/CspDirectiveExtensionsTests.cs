@@ -14,8 +14,8 @@ namespace NWebsec.Owin.Tests.Unit
         {
             var directiveSelf = new CspDirective();
             var directiveSources = new CspDirective();
-            var directiveUnsafeInline = new CspDirectiveUnsafeInline();
-            var directiveUnsafeEval = new CspDirectiveUnsafeEval();
+            var directiveUnsafeInline = new CspDirective();
+            var directiveUnsafeEval = new CspDirective();
             directiveSelf.Self();
             directiveSources.CustomSources("https:");
             directiveUnsafeInline.UnsafeInline();
@@ -77,7 +77,7 @@ namespace NWebsec.Owin.Tests.Unit
         [Test]
         public void UnsafeInline_SetsUnsafeInline()
         {
-            var directiveUnsafeInline = new CspDirectiveUnsafeInline();
+            var directiveUnsafeInline = new CspDirective();
             
             directiveUnsafeInline.UnsafeInline();
 
@@ -87,7 +87,7 @@ namespace NWebsec.Owin.Tests.Unit
         [Test]
         public void UnsafeEval_SetsUnsafeEval()
         {
-            var directiveUnsafeEval = new CspDirectiveUnsafeEval();
+            var directiveUnsafeEval = new CspDirective();
             
             directiveUnsafeEval.UnsafeEval();
 

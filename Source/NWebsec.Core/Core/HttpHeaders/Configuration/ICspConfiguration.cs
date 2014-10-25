@@ -8,9 +8,9 @@ namespace NWebsec.Core.HttpHeaders.Configuration
         bool XContentSecurityPolicyHeader { get; set; }
         bool XWebKitCspHeader { get; set; }
         ICspDirectiveConfiguration DefaultSrcDirective { get; set; }
-        ICspDirectiveUnsafeEvalConfiguration ScriptSrcDirective { get; set; }
+        ICspDirectiveConfiguration ScriptSrcDirective { get; set; }
         ICspDirectiveConfiguration ObjectSrcDirective { get; set; }
-        ICspDirectiveUnsafeInlineConfiguration StyleSrcDirective { get; set; }
+        ICspDirectiveConfiguration StyleSrcDirective { get; set; }
         ICspDirectiveConfiguration ImgSrcDirective { get; set; }
         ICspDirectiveConfiguration MediaSrcDirective { get; set; }
         ICspDirectiveConfiguration FrameSrcDirective { get; set; }

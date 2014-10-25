@@ -168,7 +168,7 @@ namespace NWebsec.Modules.Configuration.Csp
             get { return DefaultSrc; }
             set { throw new NotImplementedException(); }
         }
-        public ICspDirectiveUnsafeEvalConfiguration ScriptSrcDirective
+        public ICspDirectiveConfiguration ScriptSrcDirective
         {
             get { return ScriptSrc; }
             set { throw new NotImplementedException(); }
@@ -178,7 +178,7 @@ namespace NWebsec.Modules.Configuration.Csp
             get { return ObjectSrc; }
             set { throw new NotImplementedException(); }
         }
-        public ICspDirectiveUnsafeInlineConfiguration StyleSrcDirective
+        public ICspDirectiveConfiguration StyleSrcDirective
         {
             get { return StyleSrc; }
             set { throw new NotImplementedException(); }

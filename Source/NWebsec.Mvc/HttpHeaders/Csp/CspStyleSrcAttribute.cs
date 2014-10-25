@@ -27,9 +27,9 @@ namespace NWebsec.Mvc.HttpHeaders.Csp
             get { return false; }
         }
 
-        protected override CspDirectiveBaseOverride GetNewDirectiveConfigurationElement()
+        protected override CspDirectiveOverride GetNewDirectiveConfigurationElement()
         {
-            return new CspDirectiveUnsafeInlineOverride { UnsafeInline = UnsafeInline };
+            return new CspDirectiveOverride { UnsafeInline = UnsafeInline };
         }
 
         protected override void ValidateParams()

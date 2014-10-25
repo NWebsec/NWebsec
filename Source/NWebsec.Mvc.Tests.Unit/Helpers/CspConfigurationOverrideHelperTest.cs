@@ -16,13 +16,13 @@ namespace NWebsec.Mvc.Tests.Unit.Helpers
         [Test]
         public void CloneElement_UnsafeEval_ClonesElement()
         {
-            var directive = new CspDirectiveUnsafeEvalConfiguration
+            var directive = new CspDirectiveConfiguration
             {
                 UnsafeEvalSrc = true,
                 UnsafeInlineSrc = false,
                 CustomSources = new string[] {}
             };
-            var clone = (ICspDirectiveUnsafeEvalConfiguration)CspConfigurationOverrideHelper.CloneElement(directive);
+            var clone = CspConfigurationOverrideHelper.CloneElement(directive);
 
             Assert.IsTrue(clone.UnsafeEvalSrc);
         }
@@ -30,12 +30,12 @@ namespace NWebsec.Mvc.Tests.Unit.Helpers
         [Test]
         public void CloneElement_UnsafeInline_ClonesElement()
         {
-            var directive = new CspDirectiveUnsafeInlineConfiguration
+            var directive = new CspDirectiveConfiguration
             {
                 UnsafeInlineSrc = true,
                 CustomSources = new string[] {}
             };
-            var clone = (ICspDirectiveUnsafeInlineConfiguration)CspConfigurationOverrideHelper.CloneElement(directive);
+            var clone = CspConfigurationOverrideHelper.CloneElement(directive);
 
             Assert.IsTrue(clone.UnsafeInlineSrc);
         }
