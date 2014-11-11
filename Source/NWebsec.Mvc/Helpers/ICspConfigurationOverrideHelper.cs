@@ -7,6 +7,6 @@ namespace NWebsec.Mvc.Helpers
 {
     public interface ICspConfigurationOverrideHelper
     {
-        ICspConfiguration GetCspElementWithOverrides(HttpContextBase context, bool reportOnly);
+        ICspConfiguration GetCspConfigWithOverrides(HttpContextBase context, bool reportOnly);
     }
 }

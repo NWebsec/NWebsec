@@ -10,9 +10,9 @@ namespace NWebsec.Mvc.HttpHeaders.Csp
     /// </summary>
     public class CspDefaultSrcAttribute : CspDirectiveAttributeBase
     {
-        protected override CspConfigurationOverrideHelper.CspDirectives Directive
+        protected override CspDirectives Directive
         {
-            get { return CspConfigurationOverrideHelper.CspDirectives.DefaultSrc; }
+            get { return CspDirectives.DefaultSrc; }
         }
 
         protected override bool ReportOnly

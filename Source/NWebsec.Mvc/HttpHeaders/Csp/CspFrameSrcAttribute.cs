@@ -10,9 +10,9 @@ namespace NWebsec.Mvc.HttpHeaders.Csp
     /// </summary>
     public class CspFrameSrcAttribute : CspDirectiveAttributeBase
     {
-        protected override CspConfigurationOverrideHelper.CspDirectives Directive
+        protected override CspDirectives Directive
         {
-            get { return CspConfigurationOverrideHelper.CspDirectives.FrameSrc; }
+            get { return CspDirectives.FrameSrc; }
         }
 
         protected override bool ReportOnly

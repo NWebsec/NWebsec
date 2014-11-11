@@ -6,10 +6,12 @@ namespace NWebsec.Core.HttpHeaders.Configuration
 {
     public class CspDirectiveConfiguration : ICspDirectiveConfiguration
     {
+        private static readonly string[] EmptySources = new string[0];
+
         public CspDirectiveConfiguration()
         {
             Enabled = true;
-            CustomSources = new string[0];
+            CustomSources = EmptySources;
         }
 
         public bool Enabled { get; set; }

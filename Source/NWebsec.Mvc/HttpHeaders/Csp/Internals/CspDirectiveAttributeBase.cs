@@ -56,7 +56,7 @@ namespace NWebsec.Mvc.HttpHeaders.Csp.Internals
         /// </summary>
         public string CustomSources { get; set; }
 
-        protected abstract CspConfigurationOverrideHelper.CspDirectives Directive { get; }
+        protected abstract CspDirectives Directive { get; }
         protected abstract bool ReportOnly { get; }
 
         public override void OnActionExecuting(ActionExecutingContext filterContext)

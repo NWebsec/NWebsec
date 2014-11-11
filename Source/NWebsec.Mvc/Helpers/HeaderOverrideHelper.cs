@@ -132,7 +132,7 @@ namespace NWebsec.Mvc.Helpers
 
         internal void SetCspHeaders(HttpContextBase context, bool reportOnly)
         {
-            var cspConfig = _cspConfigurationOverrideHelper.GetCspElementWithOverrides(context, reportOnly);
+            var cspConfig = _cspConfigurationOverrideHelper.GetCspConfigWithOverrides(context, reportOnly);
 
             if (cspConfig == null)
             {
@@ -146,9 +146,7 @@ namespace NWebsec.Mvc.Helpers
                 return;
             }
 
-            var oldConfig = reportOnly
-                ? _contextConfigurationHelper.GetCspReportonlyConfiguration(context)
-                : _contextConfigurationHelper.GetCspConfiguration(context);
+            var oldConfig = _contextConfigurationHelper.GetCspConfiguration(context, reportOnly);
 
             var headers = _headerGenerator.CreateCspResults(cspConfig, reportOnly, _reportHelper.GetBuiltInCspReportHandlerRelativeUri(), oldConfig);
 

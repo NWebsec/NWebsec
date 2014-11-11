@@ -62,13 +62,16 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Helpers\ContextConfigurationHelperTests.cs" />
+    <Compile Include="TestHelpers\CspDirectiveComparerTests.cs" />
+    <Compile Include="TestHelpers\CspDirectiveComparer.cs" />
+    <Compile Include="Helpers\CspDirectiveOverrideHelperTests.cs" />
     <Compile Include="Helpers\HeaderOverrideHelperTests.cs" />
-    <Compile Include="Helpers\CspReportOnlyConfigurationOverrideHelperTest.cs" />
-    <Compile Include="Helpers\CspConfigurationOverrideHelperTest.cs" />
-    <Compile Include="Helpers\CspConfigurationOverrideHelperTestBase.cs" />
+    <Compile Include="Helpers\CspConfigMapperTests.cs" />
+    <Compile Include="Helpers\CspConfigurationOverrideHelperTests.cs" />
     <Compile Include="Helpers\HeaderConfigurationOverrideHelperTests.cs" />
     <Compile Include="HttpHeaders\Internals\HttpHeaderAttributeBaseTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TestHelpers\CspCommonDirectives.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="NWebsecDevKey.snk" />

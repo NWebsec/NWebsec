@@ -17,5 +17,13 @@ namespace NWebsec.Core
         public IXXssProtectionConfiguration XXssProtection { get; set; }
         public ICspConfiguration Csp { get; set; }
         public ICspConfiguration CspReportOnly { get; set; }
+
+        public ConfigurationOverrides ConfigOverrides { get; set; }
+    }
+
+    public class ConfigurationOverrides
+    {
+        public ICspConfiguration CspOverride { get; set; }
+        public ICspConfiguration CspReportOnlyOverride { get; set; }
     }
 }

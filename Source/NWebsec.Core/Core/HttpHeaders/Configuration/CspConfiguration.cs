@@ -4,8 +4,13 @@ namespace NWebsec.Core.HttpHeaders.Configuration
 {
     public class CspConfiguration : ICspConfiguration
     {
-        public CspConfiguration()
+        public CspConfiguration(bool initializeDirectives=true)
         {
+            if (!initializeDirectives)
+            {
+                return;
+            }
+
             DefaultSrcDirective = new CspDirectiveConfiguration();
             ScriptSrcDirective = new CspDirectiveConfiguration();
             ObjectSrcDirective = new CspDirectiveConfiguration();

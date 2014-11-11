@@ -1,8 +1,10 @@
 ﻿// Copyright (c) André N. Klingsheim. See License.txt in the project root for license information.
 
 using System.Web;
+using NWebsec.Core;
 using NWebsec.Core.HttpHeaders.Configuration;
 using NWebsec.ExtensionMethods;
+using NWebsec.Mvc.Csp;
 
 namespace NWebsec.Mvc.Helpers
 {
@@ -37,7 +39,7 @@ namespace NWebsec.Mvc.Helpers
             }
             return context.GetNWebsecContext().XContentTypeOptions;
         }
-        
+
         public ISimpleBooleanConfiguration GetXDownloadOptionsConfiguration(HttpContextBase context)
         {
             var owinContext = context.GetNWebsecOwinContext();
@@ -58,8 +60,13 @@ namespace NWebsec.Mvc.Helpers
             return context.GetNWebsecContext().XXssProtection;
         }
 
-        public ICspConfiguration GetCspConfiguration(HttpContextBase context)
+        public ICspConfiguration GetCspConfiguration(HttpContextBase context, bool reportOnly)
         {
+            if (reportOnly)
+            {
+                return GetCspReportonlyConfiguration(context);
+            }
+
             var owinContext = context.GetNWebsecOwinContext();
             if (owinContext != null && owinContext.Csp != null)
             {
@@ -68,7 +75,7 @@ namespace NWebsec.Mvc.Helpers
             return context.GetNWebsecContext().Csp;
         }
 
-        public ICspConfiguration GetCspReportonlyConfiguration(HttpContextBase context)
+        private ICspConfiguration GetCspReportonlyConfiguration(HttpContextBase context)
         {
             var owinContext = context.GetNWebsecOwinContext();
             if (owinContext != null && owinContext.CspReportOnly != null)
@@ -76,6 +83,41 @@ namespace NWebsec.Mvc.Helpers
                 return owinContext.CspReportOnly;
             }
             return context.GetNWebsecContext().CspReportOnly;
+        }
+
+        public CspOverrideConfiguration GetCspConfigurationOverride(HttpContextBase httpContext, bool reportOnly, bool allowNull)
+        {
+            var context = httpContext.GetNWebsecOwinContext() ?? httpContext.GetNWebsecContext();
+            var configOverride = GetConfigOverrides(context);
+
+            if (allowNull)
+            {
+                return (reportOnly ? configOverride.CspReportOnlyOverride : configOverride.CspOverride) as CspOverrideConfiguration;
+            }
+
+            if (reportOnly)
+            {
+                if (configOverride.CspReportOnlyOverride == null)
+                {
+                    configOverride.CspReportOnlyOverride = new CspOverrideConfiguration();
+                }
+                return configOverride.CspReportOnlyOverride as CspOverrideConfiguration;
+            }
+
+            if (configOverride.CspOverride == null)
+            {
+                configOverride.CspOverride = new CspOverrideConfiguration();
+            }
+            return configOverride.CspOverride as CspOverrideConfiguration;
+        }
+
+        private ConfigurationOverrides GetConfigOverrides(NWebsecContext context)
+        {
+            if (context.ConfigOverrides == null)
+            {
+                context.ConfigOverrides = new ConfigurationOverrides();
+            }
+            return context.ConfigOverrides;
         }
     }
 }

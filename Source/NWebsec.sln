@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.30110.0
+VisualStudioVersion = 12.0.30723.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{07D0ADD6-1502-453F-8F21-F69748F0D188}"
 	ProjectSection(SolutionItems) = preProject
@@ -48,6 +48,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NWebsec.Mvc.Tests.Unit", "NWebsec.Mvc.Tests.Unit\NWebsec.Mvc.Tests.Unit.csproj", "{BEB101EF-8EB2-4857-84CB-F44118D41ACA}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "TestApps", "TestApps", "{7394CFC5-7F3C-4CA1-96D4-13FEEFADF821}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NWebsec.Annotations", "NWebsec.Annotations\NWebsec.Annotations.csproj", "{763D195B-55CC-47CB-BB6E-962B1118A5C7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -111,15 +113,19 @@ Global
 		{BEB101EF-8EB2-4857-84CB-F44118D41ACA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BEB101EF-8EB2-4857-84CB-F44118D41ACA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BEB101EF-8EB2-4857-84CB-F44118D41ACA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{763D195B-55CC-47CB-BB6E-962B1118A5C7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{763D195B-55CC-47CB-BB6E-962B1118A5C7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{763D195B-55CC-47CB-BB6E-962B1118A5C7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{763D195B-55CC-47CB-BB6E-962B1118A5C7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{D951B3A3-070E-47EE-956B-06C7196D9E52} = {7394CFC5-7F3C-4CA1-96D4-13FEEFADF821}
+		{2DB1DF32-DE3F-419E-A307-C02D4967230C} = {7394CFC5-7F3C-4CA1-96D4-13FEEFADF821}
 		{7E665EF9-D512-4D36-AFD6-E13BDBD8167F} = {7394CFC5-7F3C-4CA1-96D4-13FEEFADF821}
 		{E971E626-83F5-4AAE-8CFD-A9D37FBAD439} = {7394CFC5-7F3C-4CA1-96D4-13FEEFADF821}
-		{2DB1DF32-DE3F-419E-A307-C02D4967230C} = {7394CFC5-7F3C-4CA1-96D4-13FEEFADF821}
 	EndGlobalSection
 	GlobalSection(TestCaseManagementSettings) = postSolution
 		CategoryFile = nwebsec.vsmdi

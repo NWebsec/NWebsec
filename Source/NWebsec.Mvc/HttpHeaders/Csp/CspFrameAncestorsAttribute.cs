@@ -10,9 +10,9 @@ namespace NWebsec.Mvc.HttpHeaders.Csp
     /// </summary>
     public class CspFrameAncestorsAttribute : CspDirectiveAttributeBase
     {
-        protected override CspConfigurationOverrideHelper.CspDirectives Directive
+        protected override CspDirectives Directive
         {
-            get { return CspConfigurationOverrideHelper.CspDirectives.FrameAncestors; }
+            get { return CspDirectives.FrameAncestors; }
         }
 
         protected override bool ReportOnly

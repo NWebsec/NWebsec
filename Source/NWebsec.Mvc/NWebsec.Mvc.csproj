@@ -89,12 +89,18 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Csp\CspDirectiveOverride.cs" />
+    <Compile Include="Csp\CspOverrideConfiguration.cs" />
     <Compile Include="Helpers\ContextConfigurationHelper.cs" />
     <Compile Include="Helpers\CspConfigurationOverrideHelper.cs" />
+    <Compile Include="Helpers\CspDirectiveOverrideHelper.cs" />
+    <Compile Include="Helpers\CspDirectives.cs" />
+    <Compile Include="Helpers\CspConfigMapper.cs" />
     <Compile Include="Helpers\HeaderConfigurationOverrideHelper.cs" />
     <Compile Include="Helpers\HeaderOverrideHelper.cs" />
     <Compile Include="Helpers\IContextConfigurationHelper.cs" />
     <Compile Include="Helpers\ICspConfigurationOverrideHelper.cs" />
+    <Compile Include="Helpers\ICspConfigMapper.cs" />
+    <Compile Include="Helpers\ICspDirectiveOverrideHelper.cs" />
     <Compile Include="Helpers\IHeaderConfigurationOverrideHelper.cs" />
     <Compile Include="HttpHeaders\Csp\CspAttribute.cs" />
     <Compile Include="HttpHeaders\Csp\CspFrameAncestorsReportOnlyAttribute.cs" />
@@ -144,6 +150,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\NWebsec.Annotations\NWebsec.Annotations.csproj">
+      <Project>{763d195b-55cc-47cb-bb6e-962b1118a5c7}</Project>
+      <Name>NWebsec.Annotations</Name>
+    </ProjectReference>
     <ProjectReference Include="..\NWebsec.Core\NWebsec.Core.csproj">
       <Project>{e2d23d75-19d4-41a6-a57e-4b6d4f94941f}</Project>
       <Name>NWebsec.Core</Name>

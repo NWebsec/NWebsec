@@ -250,17 +250,16 @@ namespace NWebsec.Mvc.Tests.Unit.Helpers
         }
 
         [Test]
-        public void SetCspHeaders_NoOverride_DoesNothing()
+        public void SetCspHeaders_NoOverride_DoesNothing([Values(false, true)] bool reportOnly)
         {
             //Get ASP.NET stuff in order
             var request = new Mock<HttpRequestBase>();
             request.SetupAllProperties();
             Mock.Get(_mockContext).Setup(c => c.Request).Returns(request.Object);
 
-            const bool reportOnly = false;
             var contextConfig = new CspConfiguration();
-            _contextHelper.Setup(h => h.GetCspConfiguration(It.IsAny<HttpContextBase>())).Returns(contextConfig);
-            _cspConfigurationOverrideHelper.Setup(h => h.GetCspElementWithOverrides(It.IsAny<HttpContextBase>(), reportOnly)).Returns((CspConfiguration)null);
+            _contextHelper.Setup(h => h.GetCspConfiguration(It.IsAny<HttpContextBase>(), reportOnly)).Returns(contextConfig);
+            _cspConfigurationOverrideHelper.Setup(h => h.GetCspConfigWithOverrides(It.IsAny<HttpContextBase>(), reportOnly)).Returns((CspConfiguration)null);
 
             _overrideHelper.SetCspHeaders(_mockContext, reportOnly);
 
@@ -269,21 +268,20 @@ namespace NWebsec.Mvc.Tests.Unit.Helpers
         }
 
         [Test]
-        public void SetCspHeaders_Override_CreatesAndHandlesHeaderResult()
+        public void SetCspHeaders_Override_CreatesAndHandlesHeaderResult([Values(false, true)] bool reportOnly)
         {
             //Get ASP.NET stuff in order
             var request = new Mock<HttpRequestBase>();
             request.SetupAllProperties();
             Mock.Get(_mockContext).Setup(c => c.Request).Returns(request.Object);
             
-            const bool reportOnly = false;
             const string reportUri = "/cspreport";
             var expectedHeaders = new[] {_expectedHeaderResult};
 
             var contextConfig = new CspConfiguration();
             var overrideConfig = new CspConfiguration();
-            _contextHelper.Setup(h => h.GetCspConfiguration(It.IsAny<HttpContextBase>())).Returns(contextConfig);
-            _cspConfigurationOverrideHelper.Setup(h => h.GetCspElementWithOverrides(It.IsAny<HttpContextBase>(), reportOnly)).Returns(overrideConfig);
+            _contextHelper.Setup(h => h.GetCspConfiguration(It.IsAny<HttpContextBase>(), reportOnly)).Returns(contextConfig);
+            _cspConfigurationOverrideHelper.Setup(h => h.GetCspConfigWithOverrides(It.IsAny<HttpContextBase>(), reportOnly)).Returns(overrideConfig);
             _reportHelper.Setup(h => h.GetBuiltInCspReportHandlerRelativeUri()).Returns(reportUri);
             _headerGenerator.Setup(g => g.CreateCspResults(overrideConfig, reportOnly,reportUri, contextConfig)).Returns(expectedHeaders);
 
@@ -293,79 +291,16 @@ namespace NWebsec.Mvc.Tests.Unit.Helpers
         }
 
         [Test]
-        public void SetCspHeaders_OverrideAndSafari5_DoesNothing()
+        public void SetCspHeaders_OverrideAndSafari5_DoesNothing([Values(false, true)] bool reportOnly)
         {
             //Get ASP.NET stuff in order
             var request = new Mock<HttpRequestBase>();
             request.Setup(r => r.UserAgent).Returns("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_6_8) AppleWebKit/537.13+ (KHTML, like Gecko) Version/5.1.7 Safari/534.57.2");
             Mock.Get(_mockContext).Setup(c => c.Request).Returns(request.Object);
 
-            const bool reportOnly = false;
             var contextConfig = new CspConfiguration();
-            _contextHelper.Setup(h => h.GetCspConfiguration(It.IsAny<HttpContextBase>())).Returns(contextConfig);
-            _cspConfigurationOverrideHelper.Setup(h => h.GetCspElementWithOverrides(It.IsAny<HttpContextBase>(), reportOnly)).Returns((CspConfiguration)null);
-
-            _overrideHelper.SetCspHeaders(_mockContext, reportOnly);
-
-            _headerGenerator.Verify(g => g.CreateCspResults(It.IsAny<ICspConfiguration>(), reportOnly, It.IsAny<string>(), It.IsAny<ICspConfiguration>()), Times.Never);
-            _headerResultHandler.Verify(h => h.HandleHeaderResult(It.IsAny<HttpResponseBase>(), It.IsAny<HeaderResult>()), Times.Never);
-        }
-
-        [Test]
-        public void SetCspReportOnlyHeaders_NoOverride_DoesNothing()
-        {
-            //Get ASP.NET stuff in order
-            var request = new Mock<HttpRequestBase>();
-            request.SetupAllProperties();
-            Mock.Get(_mockContext).Setup(c => c.Request).Returns(request.Object);
-
-            const bool reportOnly = true;
-            var contextConfig = new CspConfiguration();
-            _contextHelper.Setup(h => h.GetCspReportonlyConfiguration(It.IsAny<HttpContextBase>())).Returns(contextConfig);
-            _cspConfigurationOverrideHelper.Setup(h => h.GetCspElementWithOverrides(It.IsAny<HttpContextBase>(), reportOnly)).Returns((CspConfiguration)null);
-
-            _overrideHelper.SetCspHeaders(_mockContext, reportOnly);
-
-            _headerGenerator.Verify(g => g.CreateCspResults(It.IsAny<ICspConfiguration>(), reportOnly, It.IsAny<string>(), It.IsAny<ICspConfiguration>()), Times.Never);
-            _headerResultHandler.Verify(h => h.HandleHeaderResult(It.IsAny<HttpResponseBase>(), It.IsAny<HeaderResult>()), Times.Never);
-        }
-
-        [Test]
-        public void SetCspReportOnlyHeaders_Override_CreatesAndHandlesHeaderResult()
-        {
-            //Get ASP.NET stuff in order
-            var request = new Mock<HttpRequestBase>();
-            request.SetupAllProperties();
-            Mock.Get(_mockContext).Setup(c => c.Request).Returns(request.Object);
-
-            const bool reportOnly = true;
-            const string reportUri = "/cspreport";
-            var expectedHeaders = new[] { _expectedHeaderResult };
-
-            var contextConfig = new CspConfiguration();
-            var overrideConfig = new CspConfiguration();
-            _contextHelper.Setup(h => h.GetCspReportonlyConfiguration(It.IsAny<HttpContextBase>())).Returns(contextConfig);
-            _cspConfigurationOverrideHelper.Setup(h => h.GetCspElementWithOverrides(It.IsAny<HttpContextBase>(), reportOnly)).Returns(overrideConfig);
-            _reportHelper.Setup(h => h.GetBuiltInCspReportHandlerRelativeUri()).Returns(reportUri);
-            _headerGenerator.Setup(g => g.CreateCspResults(overrideConfig, reportOnly, reportUri, contextConfig)).Returns(expectedHeaders);
-
-            _overrideHelper.SetCspHeaders(_mockContext, reportOnly);
-
-            _headerResultHandler.Verify(h => h.HandleHeaderResult(It.IsAny<HttpResponseBase>(), _expectedHeaderResult), Times.Once);
-        }
-
-        [Test]
-        public void SetCspReportOnlyHeaders_OverrideAndSafari5_DoesNothing()
-        {
-            //Get ASP.NET stuff in order
-            var request = new Mock<HttpRequestBase>();
-            request.Setup(r => r.UserAgent).Returns("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_6_8) AppleWebKit/537.13+ (KHTML, like Gecko) Version/5.1.7 Safari/534.57.2");
-            Mock.Get(_mockContext).Setup(c => c.Request).Returns(request.Object);
-
-            const bool reportOnly = true;
-            var contextConfig = new CspConfiguration();
-            _contextHelper.Setup(h => h.GetCspReportonlyConfiguration(It.IsAny<HttpContextBase>())).Returns(contextConfig);
-            _cspConfigurationOverrideHelper.Setup(h => h.GetCspElementWithOverrides(It.IsAny<HttpContextBase>(), reportOnly)).Returns((CspConfiguration)null);
+            _contextHelper.Setup(h => h.GetCspConfiguration(It.IsAny<HttpContextBase>(), reportOnly)).Returns(contextConfig);
+            _cspConfigurationOverrideHelper.Setup(h => h.GetCspConfigWithOverrides(It.IsAny<HttpContextBase>(), reportOnly)).Returns((CspConfiguration)null);
 
             _overrideHelper.SetCspHeaders(_mockContext, reportOnly);
 

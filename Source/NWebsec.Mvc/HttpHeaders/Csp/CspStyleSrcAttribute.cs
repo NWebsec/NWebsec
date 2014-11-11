@@ -17,9 +17,9 @@ namespace NWebsec.Mvc.HttpHeaders.Csp
         /// </summary>
         public Source UnsafeInline { get; set; }
 
-        protected override CspConfigurationOverrideHelper.CspDirectives Directive
+        protected override CspDirectives Directive
         {
-            get { return CspConfigurationOverrideHelper.CspDirectives.StyleSrc; }
+            get { return CspDirectives.StyleSrc; }
         }
 
         protected override bool ReportOnly

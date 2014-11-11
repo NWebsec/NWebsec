@@ -2,6 +2,7 @@
 
 using System.Web;
 using NWebsec.Core.HttpHeaders.Configuration;
+using NWebsec.Mvc.Csp;
 
 namespace NWebsec.Mvc.Helpers
 {
@@ -12,7 +13,7 @@ namespace NWebsec.Mvc.Helpers
         ISimpleBooleanConfiguration GetXContentTypeOptionsConfiguration(HttpContextBase context);
         ISimpleBooleanConfiguration GetXDownloadOptionsConfiguration(HttpContextBase context);
         IXXssProtectionConfiguration GetXXssProtectionConfiguration(HttpContextBase context);
-        ICspConfiguration GetCspConfiguration(HttpContextBase context);
-        ICspConfiguration GetCspReportonlyConfiguration(HttpContextBase context);
+        ICspConfiguration GetCspConfiguration(HttpContextBase context, bool reportOnly);
+        CspOverrideConfiguration GetCspConfigurationOverride(HttpContextBase httpContext, bool reportOnly, bool allowNull);
     }
 }
