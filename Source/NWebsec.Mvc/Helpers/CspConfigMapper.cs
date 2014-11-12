@@ -153,21 +153,32 @@ namespace NWebsec.Mvc.Helpers
             }
 
             MergeDirectives(source, destination);
+
+            if (!String.IsNullOrEmpty(source.ScriptNonce))
+            {
+                destination.ScriptSrcDirective.Nonce = source.ScriptNonce;
+            }
+
+            if (!String.IsNullOrEmpty(source.StyleNonce))
+            {
+                destination.StyleSrcDirective.Nonce = source.StyleNonce;
+            }
         }
 
         private void MergeDirectives([NotNull] ICspConfiguration source, [NotNull] ICspConfiguration destination)
         {
-            destination.DefaultSrcDirective = source.DefaultSrcDirective ?? new CspDirectiveConfiguration();
-            destination.ScriptSrcDirective = source.ScriptSrcDirective ?? new CspDirectiveConfiguration();
-            destination.ObjectSrcDirective = source.ObjectSrcDirective ?? new CspDirectiveConfiguration();
-            destination.StyleSrcDirective = source.StyleSrcDirective ?? new CspDirectiveConfiguration();
-            destination.ImgSrcDirective = source.ImgSrcDirective ?? new CspDirectiveConfiguration();
-            destination.MediaSrcDirective = source.MediaSrcDirective ?? new CspDirectiveConfiguration();
-            destination.FrameSrcDirective = source.FrameSrcDirective ?? new CspDirectiveConfiguration();
-            destination.FontSrcDirective = source.FontSrcDirective ?? new CspDirectiveConfiguration();
-            destination.ConnectSrcDirective = source.ConnectSrcDirective ?? new CspDirectiveConfiguration();
-            destination.FrameAncestorsDirective = source.FrameAncestorsDirective ?? new CspDirectiveConfiguration();
-            destination.ReportUriDirective = source.ReportUriDirective ?? new CspReportUriDirectiveConfiguration();
+            //Use source directive if set, else keep existing if not null, initalize directive if both are null.
+            destination.DefaultSrcDirective = source.DefaultSrcDirective ?? destination.DefaultSrcDirective ?? new CspDirectiveConfiguration();
+            destination.ScriptSrcDirective = source.ScriptSrcDirective ?? destination.ScriptSrcDirective ?? new CspDirectiveConfiguration();
+            destination.ObjectSrcDirective = source.ObjectSrcDirective ?? destination.ObjectSrcDirective ?? new CspDirectiveConfiguration();
+            destination.StyleSrcDirective = source.StyleSrcDirective ?? destination.StyleSrcDirective ?? new CspDirectiveConfiguration();
+            destination.ImgSrcDirective = source.ImgSrcDirective ?? destination.ImgSrcDirective ?? new CspDirectiveConfiguration();
+            destination.MediaSrcDirective = source.MediaSrcDirective ?? destination.MediaSrcDirective ?? new CspDirectiveConfiguration();
+            destination.FrameSrcDirective = source.FrameSrcDirective ?? destination.FrameSrcDirective ?? new CspDirectiveConfiguration();
+            destination.FontSrcDirective = source.FontSrcDirective ?? destination.FontSrcDirective ?? new CspDirectiveConfiguration();
+            destination.ConnectSrcDirective = source.ConnectSrcDirective ?? destination.ConnectSrcDirective ?? new CspDirectiveConfiguration();
+            destination.FrameAncestorsDirective = source.FrameAncestorsDirective ?? destination.FrameAncestorsDirective ?? new CspDirectiveConfiguration();
+            destination.ReportUriDirective = source.ReportUriDirective ?? destination.ReportUriDirective ?? new CspReportUriDirectiveConfiguration();
         }
     }
 }

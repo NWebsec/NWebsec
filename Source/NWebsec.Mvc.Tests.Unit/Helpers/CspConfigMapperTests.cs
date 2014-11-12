@@ -105,7 +105,7 @@ namespace NWebsec.Mvc.Tests.Unit.Helpers
         }
 
         [Test]
-        public void MergeConfiguration_DirectivesNotConfigured_MergesHeaderAttributesAndInitializesDirectives()
+        public void MergeConfiguration_SourceAndTargetDirectivesNotConfigured_MergesHeaderAttributesAndInitializesDirectives()
         {
             var sourceConfig = new CspConfiguration(false) { Enabled = false };
             var destinationConfig = new CspConfiguration(false) { Enabled = true };
@@ -125,10 +125,57 @@ namespace NWebsec.Mvc.Tests.Unit.Helpers
         }
 
         [Test]
-        public void MergeConfiguration_DirectivesConfigured_MergesHeaderAttributesAndDirectives()
+        public void MergeConfiguration_SourceDirectivesConfiguredAndTargetUninitialized_MergesHeaderAttributesAndSourceDirectives()
         {
             var sourceConfig = new CspConfiguration { Enabled = false };
             var destinationConfig = new CspConfiguration(false) { Enabled = true };
+
+            _mapper.MergeConfiguration(sourceConfig, destinationConfig);
+
+            var directives = CspCommonDirectives.Directives().ToArray();
+
+            Assert.IsFalse(destinationConfig.Enabled);
+
+            foreach (var directive in directives)
+            {
+                Assert.AreSame(_mapper.GetCspDirectiveConfig(sourceConfig, directive), _mapper.GetCspDirectiveConfig(destinationConfig, directive));
+            }
+
+            Assert.AreSame(sourceConfig.ReportUriDirective, destinationConfig.ReportUriDirective);
+        }
+
+        [Test]
+        public void MergeConfiguration_SourceDirectivesMissingAndTargetDirectivesConfigured_MergesHeaderAttributesAndKeepsTargetDirectives()
+        {
+            var directives = CspCommonDirectives.Directives().ToArray();
+
+            var sourceConfig = new CspConfiguration(false) { Enabled = false };
+            var destinationConfig = new CspConfiguration { Enabled = true };
+            var expectedConfig = new CspConfiguration {Enabled = destinationConfig.Enabled, ReportUriDirective = destinationConfig.ReportUriDirective};
+            //Poor man's clone
+            foreach (var directive in directives)
+            {
+                _mapper.SetCspDirectiveConfig(expectedConfig, directive, _mapper.GetCspDirectiveConfig(destinationConfig, directive));
+            }
+
+            _mapper.MergeConfiguration(sourceConfig, destinationConfig);
+
+
+            Assert.IsFalse(destinationConfig.Enabled);
+
+            foreach (var directive in directives)
+            {
+                Assert.AreSame(_mapper.GetCspDirectiveConfig(expectedConfig, directive), _mapper.GetCspDirectiveConfig(destinationConfig, directive));
+            }
+
+            Assert.AreSame(expectedConfig.ReportUriDirective, destinationConfig.ReportUriDirective);
+        }
+
+        [Test]
+        public void MergeConfiguration_SourceAndTargetDirectivesConfigured_MergesHeaderAttributesAndSourceDirectives()
+        {
+            var sourceConfig = new CspConfiguration { Enabled = false };
+            var destinationConfig = new CspConfiguration { Enabled = true };
 
             _mapper.MergeConfiguration(sourceConfig, destinationConfig);
 

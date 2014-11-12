@@ -151,7 +151,7 @@ namespace NWebsec.Mvc.Tests.Unit.Helpers
         }
 
         [Test]
-        public void GetCspScriptNonce_ScriptNonceRequested_SetsNonceOnBothConfigs()
+        public void GetCspScriptNonce_ScriptNonceRequested_SetsNonceOnOverrideConfigs()
         {
             var overrideConfig = new CspOverrideConfiguration();
             var overrideConfigReportOnly = new CspOverrideConfiguration();
@@ -160,10 +160,7 @@ namespace NWebsec.Mvc.Tests.Unit.Helpers
             
             var nonce = CspConfigurationOverrideHelper.GetCspScriptNonce(MockContext);
 
-            Assert.IsNotNull(overrideConfig.ScriptSrcDirective);
-            Assert.IsNotNull(overrideConfigReportOnly.ScriptSrcDirective);
-            Assert.AreEqual(nonce, overrideConfig.ScriptSrcDirective.Nonce);
-            Assert.AreEqual(nonce, overrideConfigReportOnly.ScriptSrcDirective.Nonce);
+            Assert.AreEqual(nonce, overrideConfig.ScriptNonce);
         }
 
         [Test]
@@ -176,10 +173,7 @@ namespace NWebsec.Mvc.Tests.Unit.Helpers
 
             var nonce = CspConfigurationOverrideHelper.GetCspStyleNonce(MockContext);
 
-            Assert.IsNotNull(overrideConfig.StyleSrcDirective);
-            Assert.IsNotNull(overrideConfigReportOnly.StyleSrcDirective);
-            Assert.AreEqual(nonce, overrideConfig.StyleSrcDirective.Nonce);
-            Assert.AreEqual(nonce, overrideConfigReportOnly.StyleSrcDirective.Nonce);
+            Assert.AreEqual(nonce, overrideConfig.StyleNonce);
         }
 
         

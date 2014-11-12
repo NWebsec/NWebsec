@@ -95,17 +95,17 @@ namespace NWebsec.Mvc.Helpers
         {
             var overrides = _contextConfigurationHelper.GetCspConfigurationOverride(context, false, false);
 
-            if (overrides.ScriptSrcDirective != null && overrides.ScriptSrcDirective.Nonce != null)
+            if (! String.IsNullOrEmpty(overrides.ScriptNonce))
             {
-                return overrides.ScriptSrcDirective.Nonce;
+                return overrides.ScriptNonce;
             }
 
             var overridesReportOnly = _contextConfigurationHelper.GetCspConfigurationOverride(context, true, false);
 
             var nonce = GenerateCspNonceValue();
 
-            SetCspScriptNonce(overrides, nonce);
-            SetCspScriptNonce(overridesReportOnly, nonce);
+            overrides.ScriptNonce = nonce;
+            overridesReportOnly.ScriptNonce = nonce;
 
             return nonce;
         }
@@ -114,43 +114,20 @@ namespace NWebsec.Mvc.Helpers
         {
             var overrides = _contextConfigurationHelper.GetCspConfigurationOverride(context, false, false);
 
-            if (overrides.StyleSrcDirective != null && overrides.StyleSrcDirective.Nonce != null)
+            if (!String.IsNullOrEmpty(overrides.StyleNonce))
             {
-                return overrides.StyleSrcDirective.Nonce;
+                return overrides.StyleNonce;
             }
 
             var overridesReportOnly = _contextConfigurationHelper.GetCspConfigurationOverride(context, true, false);
 
             var nonce = GenerateCspNonceValue();
 
-            SetCspStyleNonce(overrides, nonce);
-            SetCspStyleNonce(overridesReportOnly, nonce);
+            overrides.StyleNonce = nonce;
+            overridesReportOnly.StyleNonce = nonce;
 
             return nonce;
         }
-
-        private void SetCspScriptNonce(CspOverrideConfiguration config, string nonce)
-        {
-
-            if (config.ScriptSrcDirective == null)
-            {
-                config.ScriptSrcDirective = new CspDirectiveConfiguration();
-            }
-
-            config.ScriptSrcDirective.Nonce = nonce;
-        }
-
-        private void SetCspStyleNonce(CspOverrideConfiguration config, string nonce)
-        {
-
-            if (config.StyleSrcDirective == null)
-            {
-                config.StyleSrcDirective = new CspDirectiveConfiguration();
-            }
-
-            config.StyleSrcDirective.Nonce = nonce;
-        }
-
 
         private string GenerateCspNonceValue()
         {

@@ -7,7 +7,10 @@ namespace NWebsec.Mvc.Csp
     public class CspOverrideConfiguration: ICspConfiguration
     {
        public bool EnabledOverride { get; set; }
-        
+
+       public string ScriptNonce { get; set; }
+       public string StyleNonce { get; set; }
+
         //Interface members
         public bool Enabled { get; set; }
         public bool XContentSecurityPolicyHeader { get; set; }
