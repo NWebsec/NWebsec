@@ -151,64 +151,119 @@ namespace NWebsec.Mvc.Tests.Unit.Helpers
         }
 
         [Test]
-        public void GetCspScriptNonce_ScriptNonceRequested_SetsNonceOnOverrideConfigs()
+        public void GetCspScriptNonce_ScriptNonceRequestedNoOverrides_ClonesBaseConfigAndOverridesNonce()
         {
+            var cspConfig = new CspConfiguration();
+            var cspConfigReportOnly = new CspConfiguration();
             var overrideConfig = new CspOverrideConfiguration();
             var overrideConfigReportOnly = new CspOverrideConfiguration();
+            var clonedCspDirective = new CspDirectiveConfiguration();
+            var clonedCspReportOnlyDirective = new CspDirectiveConfiguration();
+            _contextHelper.Setup(h => h.GetCspConfiguration(It.IsAny<HttpContextBase>(), false)).Returns(cspConfig);
+            _contextHelper.Setup(h => h.GetCspConfiguration(It.IsAny<HttpContextBase>(), true)).Returns(cspConfigReportOnly);
             _contextHelper.Setup(h => h.GetCspConfigurationOverride(It.IsAny<HttpContextBase>(), false, false)).Returns(overrideConfig);
             _contextHelper.Setup(h => h.GetCspConfigurationOverride(It.IsAny<HttpContextBase>(), true, false)).Returns(overrideConfigReportOnly);
+            //No overrides
+            _directiveConfigMapper.Setup(m => m.GetCspDirectiveConfig(overrideConfig, CspDirectives.ScriptSrc)).Returns((ICspDirectiveConfiguration)null);
+            _directiveConfigMapper.Setup(m => m.GetCspDirectiveConfig(overrideConfigReportOnly, CspDirectives.ScriptSrc)).Returns((ICspDirectiveConfiguration)null);
+            _directiveConfigMapper.Setup(m => m.GetCspDirectiveConfigCloned(cspConfig, CspDirectives.ScriptSrc)).Returns(clonedCspDirective);
+            _directiveConfigMapper.Setup(m => m.GetCspDirectiveConfigCloned(cspConfigReportOnly, CspDirectives.ScriptSrc)).Returns(clonedCspReportOnlyDirective);
+            _directiveConfigMapper.Setup(m => m.SetCspDirectiveConfig(overrideConfig, CspDirectives.ScriptSrc, clonedCspDirective));
+            _directiveConfigMapper.Setup(m => m.SetCspDirectiveConfig(overrideConfigReportOnly, CspDirectives.ScriptSrc, clonedCspReportOnlyDirective));
             
             var nonce = CspConfigurationOverrideHelper.GetCspScriptNonce(MockContext);
 
-            Assert.AreEqual(nonce, overrideConfig.ScriptNonce);
+            Assert.AreEqual(nonce, clonedCspDirective.Nonce);
+            Assert.AreEqual(nonce, clonedCspReportOnlyDirective.Nonce);
+            _directiveConfigMapper.Verify(m => m.SetCspDirectiveConfig(overrideConfig, CspDirectives.ScriptSrc, clonedCspDirective), Times.Once);
+            _directiveConfigMapper.Verify(m => m.SetCspDirectiveConfig(overrideConfigReportOnly, CspDirectives.ScriptSrc, clonedCspReportOnlyDirective), Times.Once);
         }
 
         [Test]
-        public void GetCspStyleNonce_StyleNonceRequested_SetsNonceForBothConfigs()
+        public void GetCspScriptNonce_ScriptNonceRequestedAndOverrideWithoutNonce_SetsNonceOnOverride()
         {
             var overrideConfig = new CspOverrideConfiguration();
             var overrideConfigReportOnly = new CspOverrideConfiguration();
+            var overrideCspDirective = new CspDirectiveConfiguration();
+            var overrideCspReportOnlyDirective = new CspDirectiveConfiguration();
             _contextHelper.Setup(h => h.GetCspConfigurationOverride(It.IsAny<HttpContextBase>(), false, false)).Returns(overrideConfig);
             _contextHelper.Setup(h => h.GetCspConfigurationOverride(It.IsAny<HttpContextBase>(), true, false)).Returns(overrideConfigReportOnly);
-
-            var nonce = CspConfigurationOverrideHelper.GetCspStyleNonce(MockContext);
-
-            Assert.AreEqual(nonce, overrideConfig.StyleNonce);
-        }
-
-        
-        [Test]
-        public void GetCspScriptNonce_NonceRequested_ReturnsSameNonceMultipleTimes()
-        {
-            var overrideConfig = new CspOverrideConfiguration();
-            var overrideConfigReportOnly = new CspOverrideConfiguration();
-            _contextHelper.Setup(h => h.GetCspConfigurationOverride(It.IsAny<HttpContextBase>(), false, false)).Returns(overrideConfig);
-            _contextHelper.Setup(h => h.GetCspConfigurationOverride(It.IsAny<HttpContextBase>(), true, false)).Returns(overrideConfigReportOnly);
-
+            _directiveConfigMapper.Setup(m => m.GetCspDirectiveConfig(overrideConfig, CspDirectives.ScriptSrc)).Returns(overrideCspDirective);
+            _directiveConfigMapper.Setup(m => m.GetCspDirectiveConfig(overrideConfigReportOnly, CspDirectives.ScriptSrc)).Returns(overrideCspReportOnlyDirective);
+            
             var nonce = CspConfigurationOverrideHelper.GetCspScriptNonce(MockContext);
 
-            Assert.IsNotNullOrEmpty(nonce);
-
-            var secondNonce = CspConfigurationOverrideHelper.GetCspScriptNonce(MockContext);
-
-            Assert.AreEqual(nonce, secondNonce);
+            Assert.AreEqual(nonce, overrideCspDirective.Nonce);
+            Assert.AreEqual(nonce, overrideCspReportOnlyDirective.Nonce);
         }
 
         [Test]
-        public void GetCspStyleNonce_CspNonceRequested_ReturnsSameNonceMultipleTimes()
+        public void GetCspScriptNonce_NonceRequestedAndNonceExists_ReturnsSameNonce()
         {
+            var overrideConfig = new CspOverrideConfiguration{ScriptSrcDirective = new CspDirectiveConfiguration{Nonce = "heyhey"}};
+            _contextHelper.Setup(h => h.GetCspConfigurationOverride(It.IsAny<HttpContextBase>(), false, false)).Returns(overrideConfig);
+            
+            var nonce = CspConfigurationOverrideHelper.GetCspScriptNonce(MockContext);
+
+            Assert.AreEqual("heyhey", nonce);
+        }
+
+        [Test]
+        public void GetCspStyleNonce_StyleNonceRequestedNoOverrides_ClonesBaseConfigAndOverridesNonce()
+        {
+            var cspConfig = new CspConfiguration();
+            var cspConfigReportOnly = new CspConfiguration();
             var overrideConfig = new CspOverrideConfiguration();
             var overrideConfigReportOnly = new CspOverrideConfiguration();
+            var clonedCspDirective = new CspDirectiveConfiguration();
+            var clonedCspReportOnlyDirective = new CspDirectiveConfiguration();
+            _contextHelper.Setup(h => h.GetCspConfiguration(It.IsAny<HttpContextBase>(), false)).Returns(cspConfig);
+            _contextHelper.Setup(h => h.GetCspConfiguration(It.IsAny<HttpContextBase>(), true)).Returns(cspConfigReportOnly);
             _contextHelper.Setup(h => h.GetCspConfigurationOverride(It.IsAny<HttpContextBase>(), false, false)).Returns(overrideConfig);
             _contextHelper.Setup(h => h.GetCspConfigurationOverride(It.IsAny<HttpContextBase>(), true, false)).Returns(overrideConfigReportOnly);
+            //No overrides
+            _directiveConfigMapper.Setup(m => m.GetCspDirectiveConfig(overrideConfig, CspDirectives.StyleSrc)).Returns((ICspDirectiveConfiguration)null);
+            _directiveConfigMapper.Setup(m => m.GetCspDirectiveConfig(overrideConfigReportOnly, CspDirectives.StyleSrc)).Returns((ICspDirectiveConfiguration)null);
+            _directiveConfigMapper.Setup(m => m.GetCspDirectiveConfigCloned(cspConfig, CspDirectives.StyleSrc)).Returns(clonedCspDirective);
+            _directiveConfigMapper.Setup(m => m.GetCspDirectiveConfigCloned(cspConfigReportOnly, CspDirectives.StyleSrc)).Returns(clonedCspReportOnlyDirective);
+            _directiveConfigMapper.Setup(m => m.SetCspDirectiveConfig(overrideConfig, CspDirectives.StyleSrc, clonedCspDirective));
+            _directiveConfigMapper.Setup(m => m.SetCspDirectiveConfig(overrideConfigReportOnly, CspDirectives.StyleSrc, clonedCspReportOnlyDirective));
 
             var nonce = CspConfigurationOverrideHelper.GetCspStyleNonce(MockContext);
 
-            Assert.IsNotNullOrEmpty(nonce);
+            Assert.AreEqual(nonce, clonedCspDirective.Nonce);
+            Assert.AreEqual(nonce, clonedCspReportOnlyDirective.Nonce);
+            _directiveConfigMapper.Verify(m => m.SetCspDirectiveConfig(overrideConfig, CspDirectives.StyleSrc, clonedCspDirective), Times.Once);
+            _directiveConfigMapper.Verify(m => m.SetCspDirectiveConfig(overrideConfigReportOnly, CspDirectives.StyleSrc, clonedCspReportOnlyDirective), Times.Once);
+        }
 
-            var secondNonce = CspConfigurationOverrideHelper.GetCspStyleNonce(MockContext);
+        [Test]
+        public void GetCspStyleNonce_StyleNonceRequestedAndOverrideWithoutNonce_SetsNonceOnOverride()
+        {
+            var overrideConfig = new CspOverrideConfiguration();
+            var overrideConfigReportOnly = new CspOverrideConfiguration();
+            var overrideCspDirective = new CspDirectiveConfiguration();
+            var overrideCspReportOnlyDirective = new CspDirectiveConfiguration();
+            _contextHelper.Setup(h => h.GetCspConfigurationOverride(It.IsAny<HttpContextBase>(), false, false)).Returns(overrideConfig);
+            _contextHelper.Setup(h => h.GetCspConfigurationOverride(It.IsAny<HttpContextBase>(), true, false)).Returns(overrideConfigReportOnly);
+            _directiveConfigMapper.Setup(m => m.GetCspDirectiveConfig(overrideConfig, CspDirectives.StyleSrc)).Returns(overrideCspDirective);
+            _directiveConfigMapper.Setup(m => m.GetCspDirectiveConfig(overrideConfigReportOnly, CspDirectives.StyleSrc)).Returns(overrideCspReportOnlyDirective);
 
-            Assert.AreEqual(nonce, secondNonce);
+            var nonce = CspConfigurationOverrideHelper.GetCspStyleNonce(MockContext);
+
+            Assert.AreEqual(nonce, overrideCspDirective.Nonce);
+            Assert.AreEqual(nonce, overrideCspReportOnlyDirective.Nonce);
+        }
+
+        [Test]
+        public void GetCspStyleNonce_NonceRequestedAndNonceExists_ReturnsSameNonce()
+        {
+            var overrideConfig = new CspOverrideConfiguration { StyleSrcDirective = new CspDirectiveConfiguration { Nonce = "heyhey" } };
+            _contextHelper.Setup(h => h.GetCspConfigurationOverride(It.IsAny<HttpContextBase>(), false, false)).Returns(overrideConfig);
+
+            var nonce = CspConfigurationOverrideHelper.GetCspStyleNonce(MockContext);
+
+            Assert.AreEqual("heyhey", nonce);
         }
     }
 }

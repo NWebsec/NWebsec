@@ -153,16 +153,6 @@ namespace NWebsec.Mvc.Helpers
             }
 
             MergeDirectives(source, destination);
-
-            if (!String.IsNullOrEmpty(source.ScriptNonce))
-            {
-                destination.ScriptSrcDirective.Nonce = source.ScriptNonce;
-            }
-
-            if (!String.IsNullOrEmpty(source.StyleNonce))
-            {
-                destination.StyleSrcDirective.Nonce = source.StyleNonce;
-            }
         }
 
         private void MergeDirectives([NotNull] ICspConfiguration source, [NotNull] ICspConfiguration destination)

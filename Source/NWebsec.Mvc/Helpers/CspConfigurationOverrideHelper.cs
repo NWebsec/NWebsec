@@ -54,7 +54,7 @@ namespace NWebsec.Mvc.Helpers
             _configMapper.MergeOverrides(overrides, newConfig);
 
             return newConfig;
-            
+
         }
 
         internal void SetCspHeaderOverride(HttpContextBase context, ICspHeaderConfiguration cspConfig, bool reportOnly)
@@ -95,17 +95,15 @@ namespace NWebsec.Mvc.Helpers
         {
             var overrides = _contextConfigurationHelper.GetCspConfigurationOverride(context, false, false);
 
-            if (! String.IsNullOrEmpty(overrides.ScriptNonce))
+            if (overrides.ScriptSrcDirective != null && overrides.ScriptSrcDirective.Nonce != null)
             {
-                return overrides.ScriptNonce;
+                return overrides.ScriptSrcDirective.Nonce;
             }
-
-            var overridesReportOnly = _contextConfigurationHelper.GetCspConfigurationOverride(context, true, false);
 
             var nonce = GenerateCspNonceValue();
 
-            overrides.ScriptNonce = nonce;
-            overridesReportOnly.ScriptNonce = nonce;
+            SetCspDirectiveNonce(context, nonce, CspDirectives.ScriptSrc, false);
+            SetCspDirectiveNonce(context, nonce, CspDirectives.ScriptSrc, true);
 
             return nonce;
         }
@@ -114,19 +112,33 @@ namespace NWebsec.Mvc.Helpers
         {
             var overrides = _contextConfigurationHelper.GetCspConfigurationOverride(context, false, false);
 
-            if (!String.IsNullOrEmpty(overrides.StyleNonce))
+            if (overrides.StyleSrcDirective != null && overrides.StyleSrcDirective.Nonce != null)
             {
-                return overrides.StyleNonce;
+                return overrides.StyleSrcDirective.Nonce;
             }
-
-            var overridesReportOnly = _contextConfigurationHelper.GetCspConfigurationOverride(context, true, false);
 
             var nonce = GenerateCspNonceValue();
 
-            overrides.StyleNonce = nonce;
-            overridesReportOnly.StyleNonce = nonce;
+            SetCspDirectiveNonce(context, nonce, CspDirectives.StyleSrc, false);
+            SetCspDirectiveNonce(context, nonce, CspDirectives.StyleSrc, true);
 
             return nonce;
+        }
+
+        private void SetCspDirectiveNonce(HttpContextBase context, string nonce, CspDirectives directive, bool reportOnly)
+        {
+            var overrides = _contextConfigurationHelper.GetCspConfigurationOverride(context, reportOnly, false);
+
+            var directiveConfig = _configMapper.GetCspDirectiveConfig(overrides, directive);
+
+            if (directiveConfig == null)
+            {
+                var baseConfig = _contextConfigurationHelper.GetCspConfiguration(context, reportOnly);
+                directiveConfig = _configMapper.GetCspDirectiveConfigCloned(baseConfig, directive) ?? new CspDirectiveConfiguration();
+                _configMapper.SetCspDirectiveConfig(overrides, directive, directiveConfig);
+            }
+
+            directiveConfig.Nonce = nonce;
         }
 
         private string GenerateCspNonceValue()
