@@ -21,9 +21,12 @@ namespace NWebsec.Mvc.HttpHeaders.Csp
 
             var nonce = cspConfigurationOverrideHelper.GetCspScriptNonce(context);
 
-            //Now set headers with nonce
-            headerOverrideHelper.SetCspHeaders(context, false);
-            headerOverrideHelper.SetCspHeaders(context, true);
+            if (context.Items["NWebsecScriptNonceSet"] == null)
+            {
+                context.Items["NWebsecStyleNonceSet"] = "set";
+                headerOverrideHelper.SetCspHeaders(context, false);
+                headerOverrideHelper.SetCspHeaders(context, true);
+            }
 
             return CreateNonceAttribute(helper, nonce);
         }
@@ -40,9 +43,12 @@ namespace NWebsec.Mvc.HttpHeaders.Csp
 
             var nonce = cspConfigurationOverrideHelper.GetCspStyleNonce(context);
 
-            //Now set headers with nonce
-            headerOverrideHelper.SetCspHeaders(context, false);
-            headerOverrideHelper.SetCspHeaders(context, true);
+            if (context.Items["NWebsecStyleNonceSet"] == null)
+            {
+                context.Items["NWebsecStyleNonceSet"] = "set";
+                headerOverrideHelper.SetCspHeaders(context, false);
+                headerOverrideHelper.SetCspHeaders(context, true);
+            }
 
             return CreateNonceAttribute(helper, nonce);
         }
