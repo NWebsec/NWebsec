@@ -132,8 +132,6 @@
     <Compile Include="HttpHeaders\Csp\CspStyleSrcReportOnlyAttribute.cs" />
     <Compile Include="HttpHeaders\Internals\HttpHeaderAttributeBase.cs" />
     <Compile Include="HttpHeaders\SetNoCacheHttpHeadersAttribute.cs" />
-    <Compile Include="HttpHeaders\StrictTransportSecurityAttribute.cs" />
-    <Compile Include="HttpHeaders\SuppressVersionHttpHeadersAttribute.cs" />
     <Compile Include="HttpHeaders\XContentTypeOptionsAttribute.cs" />
     <Compile Include="HttpHeaders\XDownloadOptionsAttribute.cs" />
     <Compile Include="HttpHeaders\XFrameOptionsAttribute.cs" />
