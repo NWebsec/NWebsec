@@ -70,7 +70,7 @@
     <Compile Include="Core\HttpHeaders\Configuration\Validation\HstsConfigurationValidatorTests.cs" />
     <Compile Include="Core\HttpHeaders\Configuration\Validation\ReportUriValidatorTests.cs" />
     <Compile Include="Core\HttpHeaders\Configuration\Validation\XRobotsTagValidatorTests.cs" />
-    <Compile Include="Core\HttpHeaders\HeaderGeneratorCspTestsBase.cs" />
+    <Compile Include="Core\HttpHeaders\HeaderGeneratorCspTests.cs" />
     <Compile Include="Core\HttpHeaders\HeaderGeneratorTests.XRobots.cs" />
     <Compile Include="Core\HttpHeaders\HeaderGeneratorTests.Xfo.cs" />
     <Compile Include="Core\HttpHeaders\HeaderGeneratorTests.Hsts.cs" />
