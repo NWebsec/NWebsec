@@ -1,6 +1,5 @@
 ﻿// Copyright (c) André N. Klingsheim. See License.txt in the project root for license information.
 
-using System.Linq;
 using NUnit.Framework;
 using NWebsec.Core.HttpHeaders;
 using NWebsec.Core.HttpHeaders.Configuration;
@@ -12,8 +11,6 @@ namespace NWebsec.Core.Tests.Unit.Core.HttpHeaders
 
         abstract protected bool Reportonly { get; }
         abstract protected string CspHeaderName { get; }
-        abstract protected string XCspHeaderName { get; }
-        abstract protected string XWebKitCspHeaderName { get; }
 
         private HeaderGenerator _generator;
 
@@ -28,18 +25,18 @@ namespace NWebsec.Core.Tests.Unit.Core.HttpHeaders
         {
             var cspConfig = new CspConfiguration { Enabled = false, DefaultSrcDirective = { SelfSrc = true } };
 
-            var result = _generator.CreateCspResults(cspConfig, Reportonly);
+            var result = _generator.CreateCspResult(cspConfig, Reportonly);
 
-            Assert.IsEmpty(result);
+            Assert.IsNull(result);
         }
 
         public void AddCspHeaders_DisabledButNoncesPresent_ReturnsEmptyResults()
         {
             var cspConfig = new CspConfiguration { Enabled = false, ScriptSrcDirective = { Nonce = "Heyhey"} };
 
-            var result = _generator.CreateCspResults(cspConfig, Reportonly);
+            var result = _generator.CreateCspResult(cspConfig, Reportonly);
 
-            Assert.IsEmpty(result);
+            Assert.IsNull(result);
         }
 
         [Test]
@@ -47,9 +44,9 @@ namespace NWebsec.Core.Tests.Unit.Core.HttpHeaders
         {
             var cspConfig = new CspConfiguration { Enabled = true };
 
-            var result = _generator.CreateCspResults(cspConfig, Reportonly);
+            var result = _generator.CreateCspResult(cspConfig, Reportonly);
 
-            Assert.IsEmpty(result);
+            Assert.IsNull(result);
         }
 
         [Test]
@@ -59,9 +56,9 @@ namespace NWebsec.Core.Tests.Unit.Core.HttpHeaders
             cspConfig.ReportUriDirective.Enabled = true;
             cspConfig.ReportUriDirective.EnableBuiltinHandler = true;
 
-            var result = _generator.CreateCspResults(cspConfig, Reportonly);
+            var result = _generator.CreateCspResult(cspConfig, Reportonly);
 
-            Assert.IsEmpty(result);
+            Assert.IsNull(result);
         }
 
         [Test]
@@ -73,8 +70,9 @@ namespace NWebsec.Core.Tests.Unit.Core.HttpHeaders
                 DefaultSrcDirective = { SelfSrc = true }
             };
 
-            var result = _generator.CreateCspResults(cspConfig, Reportonly).Single();
+            var result = _generator.CreateCspResult(cspConfig, Reportonly);
 
+            Assert.IsNotNull(result);
             Assert.AreEqual(HeaderResult.ResponseAction.Set, result.Action);
             Assert.AreEqual(CspHeaderName, result.Name);
             Assert.AreEqual("default-src 'self'", result.Value);
@@ -89,8 +87,9 @@ namespace NWebsec.Core.Tests.Unit.Core.HttpHeaders
                 ScriptSrcDirective = { UnsafeEvalSrc = true }
             };
 
-            var result = _generator.CreateCspResults(cspConfig, Reportonly).Single();
+            var result = _generator.CreateCspResult(cspConfig, Reportonly);
 
+            Assert.IsNotNull(result);
             Assert.AreEqual(HeaderResult.ResponseAction.Set, result.Action);
             Assert.AreEqual(CspHeaderName, result.Name);
             Assert.AreEqual("script-src 'unsafe-eval'", result.Value);
@@ -106,8 +105,9 @@ namespace NWebsec.Core.Tests.Unit.Core.HttpHeaders
                 
             };
 
-            var result = _generator.CreateCspResults(cspConfig, Reportonly).Single();
+            var result = _generator.CreateCspResult(cspConfig, Reportonly);
 
+            Assert.IsNotNull(result);
             Assert.AreEqual(HeaderResult.ResponseAction.Set, result.Action);
             Assert.AreEqual(CspHeaderName, result.Name);
             Assert.AreEqual("script-src 'self' 'nonce-Nc3n83cnSAd3wc3Sasdfn939hc3'", result.Value);
@@ -122,8 +122,9 @@ namespace NWebsec.Core.Tests.Unit.Core.HttpHeaders
                 ObjectSrcDirective = { SelfSrc = true }
             };
 
-            var result = _generator.CreateCspResults(cspConfig, Reportonly).Single();
+            var result = _generator.CreateCspResult(cspConfig, Reportonly);
 
+            Assert.IsNotNull(result);
             Assert.AreEqual(HeaderResult.ResponseAction.Set, result.Action);
             Assert.AreEqual(CspHeaderName, result.Name);
             Assert.AreEqual("object-src 'self'", result.Value);
@@ -138,8 +139,9 @@ namespace NWebsec.Core.Tests.Unit.Core.HttpHeaders
                 StyleSrcDirective = { UnsafeInlineSrc = true }
             };
 
-            var result = _generator.CreateCspResults(cspConfig, Reportonly).Single();
+            var result = _generator.CreateCspResult(cspConfig, Reportonly);
 
+            Assert.IsNotNull(result);
             Assert.AreEqual(HeaderResult.ResponseAction.Set, result.Action);
             Assert.AreEqual(CspHeaderName, result.Name);
             Assert.AreEqual("style-src 'unsafe-inline'", result.Value);
@@ -154,8 +156,9 @@ namespace NWebsec.Core.Tests.Unit.Core.HttpHeaders
                 StyleSrcDirective = { UnsafeInlineSrc = true, Nonce = "Nc3n83cnSAd3wc3Sasdfn939hc3" }
             };
 
-            var result = _generator.CreateCspResults(cspConfig, Reportonly).Single();
+            var result = _generator.CreateCspResult(cspConfig, Reportonly);
 
+            Assert.IsNotNull(result);
             Assert.AreEqual(HeaderResult.ResponseAction.Set, result.Action);
             Assert.AreEqual(CspHeaderName, result.Name);
             Assert.AreEqual("style-src 'unsafe-inline' 'nonce-Nc3n83cnSAd3wc3Sasdfn939hc3'", result.Value);
@@ -170,8 +173,9 @@ namespace NWebsec.Core.Tests.Unit.Core.HttpHeaders
                 ImgSrcDirective = { SelfSrc = true }
             };
 
-            var result = _generator.CreateCspResults(cspConfig, Reportonly).Single();
+            var result = _generator.CreateCspResult(cspConfig, Reportonly);
 
+            Assert.IsNotNull(result);
             Assert.AreEqual(HeaderResult.ResponseAction.Set, result.Action);
             Assert.AreEqual(CspHeaderName, result.Name);
             Assert.AreEqual("img-src 'self'", result.Value);
@@ -186,8 +190,9 @@ namespace NWebsec.Core.Tests.Unit.Core.HttpHeaders
                 MediaSrcDirective = { SelfSrc = true }
             };
 
-            var result = _generator.CreateCspResults(cspConfig, Reportonly).Single();
+            var result = _generator.CreateCspResult(cspConfig, Reportonly);
 
+            Assert.IsNotNull(result);
             Assert.AreEqual(HeaderResult.ResponseAction.Set, result.Action);
             Assert.AreEqual(CspHeaderName, result.Name);
             Assert.AreEqual("media-src 'self'", result.Value);
@@ -202,8 +207,9 @@ namespace NWebsec.Core.Tests.Unit.Core.HttpHeaders
                 FrameSrcDirective = { SelfSrc = true }
             };
 
-            var result = _generator.CreateCspResults(cspConfig, Reportonly).Single();
+            var result = _generator.CreateCspResult(cspConfig, Reportonly);
 
+            Assert.IsNotNull(result);
             Assert.AreEqual(HeaderResult.ResponseAction.Set, result.Action);
             Assert.AreEqual(CspHeaderName, result.Name);
             Assert.AreEqual("frame-src 'self'", result.Value);
@@ -218,8 +224,9 @@ namespace NWebsec.Core.Tests.Unit.Core.HttpHeaders
                 FontSrcDirective = { SelfSrc = true }
             };
 
-            var result = _generator.CreateCspResults(cspConfig, Reportonly).Single();
+            var result = _generator.CreateCspResult(cspConfig, Reportonly);
 
+            Assert.IsNotNull(result);
             Assert.AreEqual(HeaderResult.ResponseAction.Set, result.Action);
             Assert.AreEqual(CspHeaderName, result.Name);
             Assert.AreEqual("font-src 'self'", result.Value);
@@ -234,8 +241,9 @@ namespace NWebsec.Core.Tests.Unit.Core.HttpHeaders
                 ConnectSrcDirective = { SelfSrc = true }
             };
 
-            var result = _generator.CreateCspResults(cspConfig, Reportonly).Single();
+            var result = _generator.CreateCspResult(cspConfig, Reportonly);
 
+            Assert.IsNotNull(result);
             Assert.AreEqual(HeaderResult.ResponseAction.Set, result.Action);
             Assert.AreEqual(CspHeaderName, result.Name);
             Assert.AreEqual("connect-src 'self'", result.Value);
@@ -250,8 +258,9 @@ namespace NWebsec.Core.Tests.Unit.Core.HttpHeaders
                 FrameAncestorsDirective = { SelfSrc = true }
             };
 
-            var result = _generator.CreateCspResults(cspConfig, Reportonly).Single();
+            var result = _generator.CreateCspResult(cspConfig, Reportonly);
 
+            Assert.IsNotNull(result);
             Assert.AreEqual(HeaderResult.ResponseAction.Set, result.Action);
             Assert.AreEqual(CspHeaderName, result.Name);
             Assert.AreEqual("frame-ancestors 'self'", result.Value);
@@ -267,8 +276,9 @@ namespace NWebsec.Core.Tests.Unit.Core.HttpHeaders
                 ScriptSrcDirective = { NoneSrc = true }
             };
 
-            var result = _generator.CreateCspResults(cspConfig, Reportonly).Single();
+            var result = _generator.CreateCspResult(cspConfig, Reportonly);
 
+            Assert.IsNotNull(result);
             Assert.AreEqual(HeaderResult.ResponseAction.Set, result.Action);
             Assert.AreEqual(CspHeaderName, result.Name);
             Assert.AreEqual("default-src 'self'; script-src 'none'", result.Value);
@@ -280,8 +290,9 @@ namespace NWebsec.Core.Tests.Unit.Core.HttpHeaders
             var cspConfig = new CspConfiguration { Enabled = true, DefaultSrcDirective = { SelfSrc = true } };
             cspConfig.DefaultSrcDirective.CustomSources = new[] { "nwebsec.codeplex.com" };
 
-            var result = _generator.CreateCspResults(cspConfig, Reportonly).Single();
+            var result = _generator.CreateCspResult(cspConfig, Reportonly);
 
+            Assert.IsNotNull(result);
             Assert.AreEqual(HeaderResult.ResponseAction.Set, result.Action);
             Assert.AreEqual(CspHeaderName, result.Name);
             Assert.AreEqual("default-src 'self' nwebsec.codeplex.com", result.Value);
@@ -298,8 +309,9 @@ namespace NWebsec.Core.Tests.Unit.Core.HttpHeaders
                 ReportUriDirective = { EnableBuiltinHandler = true }
             };
 
-            var result = _generator.CreateCspResults(cspConfig, Reportonly, builtinReportHandlerUri: builtinReportHandlerUri).Single();
+            var result = _generator.CreateCspResult(cspConfig, Reportonly, builtinReportHandlerUri: builtinReportHandlerUri);
 
+            Assert.IsNotNull(result);
             Assert.AreEqual(HeaderResult.ResponseAction.Set, result.Action);
             Assert.AreEqual(CspHeaderName, result.Name);
             Assert.AreEqual("default-src 'self'; report-uri " + builtinReportHandlerUri, result.Value);
@@ -315,8 +327,9 @@ namespace NWebsec.Core.Tests.Unit.Core.HttpHeaders
             };
             cspConfig.ReportUriDirective.ReportUris = new[] { "/CspViolationReported" };
 
-            var result = _generator.CreateCspResults(cspConfig, Reportonly).Single();
+            var result = _generator.CreateCspResult(cspConfig, Reportonly);
 
+            Assert.IsNotNull(result);
             Assert.AreEqual(HeaderResult.ResponseAction.Set, result.Action);
             Assert.AreEqual(CspHeaderName, result.Name);
             Assert.AreEqual("default-src 'self'; report-uri /CspViolationReported", result.Value);
@@ -334,8 +347,9 @@ namespace NWebsec.Core.Tests.Unit.Core.HttpHeaders
             };
             cspConfig.ReportUriDirective.ReportUris = new[] { "/CspViolationReported" };
 
-            var result = _generator.CreateCspResults(cspConfig, Reportonly,builtinReportHandlerUri:builtinReportHandlerUri).Single();
+            var result = _generator.CreateCspResult(cspConfig, Reportonly,builtinReportHandlerUri:builtinReportHandlerUri);
 
+            Assert.IsNotNull(result);
             Assert.AreEqual(HeaderResult.ResponseAction.Set, result.Action);
             Assert.AreEqual(CspHeaderName, result.Name);
 
@@ -344,108 +358,16 @@ namespace NWebsec.Core.Tests.Unit.Core.HttpHeaders
         }
 
         [Test]
-        public void AddCspHeaders_XCspEnabledInConfig_ReturnsSetCspAndXCspResults()
-        {
-            var cspConfig = new CspConfiguration
-            {
-                Enabled = true,
-                XContentSecurityPolicyHeader = true,
-                XWebKitCspHeader = false,
-                DefaultSrcDirective = { SelfSrc = true }
-            };
-
-            var results = _generator.CreateCspResults(cspConfig, Reportonly).ToArray();
-
-            Assert.IsTrue(results.Length == 2);
-
-            var cspResult = results.Single(r => r.Name.Equals(CspHeaderName));
-            var xCspResult = results.Single(r => r.Name.Equals(XCspHeaderName));
-
-            Assert.AreEqual(HeaderResult.ResponseAction.Set, cspResult.Action);
-            Assert.AreEqual(HeaderResult.ResponseAction.Set, xCspResult.Action);
-
-            Assert.AreEqual("default-src 'self'", cspResult.Value);
-            Assert.AreEqual("default-src 'self'", xCspResult.Value);
-        }
-
-        [Test]
-        public void AddCspHeaders_XWebkitCspEnabledInConfig_ReturnsSetCspAndXWebkitCspResults()
-        {
-            var cspConfig = new CspConfiguration
-            {
-                Enabled = true,
-                XContentSecurityPolicyHeader = false,
-                XWebKitCspHeader = true,
-                DefaultSrcDirective = { SelfSrc = true }
-            };
-
-            var results = _generator.CreateCspResults(cspConfig, Reportonly).ToArray();
-
-            Assert.IsTrue(results.Length == 2);
-
-            var cspResult = results.Single(r => r.Name.Equals(CspHeaderName));
-            var xWebKitCspResult = results.Single(r => r.Name.Equals(XWebKitCspHeaderName));
-
-            Assert.AreEqual(HeaderResult.ResponseAction.Set, cspResult.Action);
-            Assert.AreEqual(HeaderResult.ResponseAction.Set, xWebKitCspResult.Action);
-
-            Assert.AreEqual("default-src 'self'", cspResult.Value);
-            Assert.AreEqual("default-src 'self'", xWebKitCspResult.Value);
-        }
-
-        [Test]
-        public void AddCspHeaders_XCspAndXWebkitCspEnabledInConfig_ReturnsSetCspXcspAndXWebkitCspResults()
-        {
-            var cspConfig = new CspConfiguration
-            {
-                Enabled = true,
-                XContentSecurityPolicyHeader = true,
-                XWebKitCspHeader = true,
-                DefaultSrcDirective = { SelfSrc = true }
-            };
-
-            var results = _generator.CreateCspResults(cspConfig, Reportonly).ToArray();
-
-            Assert.IsTrue(results.Length == 3);
-
-            var cspResult = results.Single(r => r.Name.Equals(CspHeaderName));
-            var xCspResult = results.Single(r => r.Name.Equals(XCspHeaderName));
-            var xWebKitCspResult = results.Single(r => r.Name.Equals(XWebKitCspHeaderName));
-
-            Assert.AreEqual(HeaderResult.ResponseAction.Set, cspResult.Action);
-            Assert.AreEqual(HeaderResult.ResponseAction.Set, xCspResult.Action);
-            Assert.AreEqual(HeaderResult.ResponseAction.Set, xWebKitCspResult.Action);
-
-            Assert.AreEqual("default-src 'self'", cspResult.Value);
-            Assert.AreEqual("default-src 'self'", xCspResult.Value);
-            Assert.AreEqual("default-src 'self'", xWebKitCspResult.Value);
-        }
-
-        [Test]
         public void AddCspHeaders_DisabledWithCspEnabledInOldConfig_ReturnsRemoveResult()
         {
             var cspConfig = new CspConfiguration { Enabled = false, DefaultSrcDirective = { SelfSrc = true } };
             var oldCspConfig = new CspConfiguration { Enabled = true, DefaultSrcDirective = { SelfSrc = true } };
 
-            var result = _generator.CreateCspResults(cspConfig, Reportonly, oldCspConfig: oldCspConfig).Single();
+            var result = _generator.CreateCspResult(cspConfig, Reportonly, oldCspConfig: oldCspConfig);
 
+            Assert.IsNotNull(result);
             Assert.AreEqual(HeaderResult.ResponseAction.Remove, result.Action);
             Assert.AreEqual(CspHeaderName, result.Name);
-        }
-
-        [Test]
-        public void AddCspHeaders_DisabledWithCspXcspAndWebKitCspEnabledInOldConfig_ReturnsRemoveResults()
-        {
-            var cspConfig = new CspConfiguration { Enabled = false, DefaultSrcDirective = { SelfSrc = true } };
-            var oldCspConfig = new CspConfiguration { Enabled = true, XContentSecurityPolicyHeader = true, XWebKitCspHeader = true, DefaultSrcDirective = { SelfSrc = true } };
-
-            var results = _generator.CreateCspResults(cspConfig, Reportonly, oldCspConfig: oldCspConfig).ToArray();
-
-            Assert.IsTrue(results.Length == 3);
-            Assert.IsTrue(results.Any(r => r.Name.Equals(CspHeaderName)), "Expected CSP header in sequence.");
-            Assert.IsTrue(results.Any(r => r.Name.Equals(XCspHeaderName)), "Expected XCSP header in sequence.");
-            Assert.IsTrue(results.Any(r => r.Name.Equals(XWebKitCspHeaderName)), "Expected XWebKitCSP header in sequence.");
-            Assert.IsTrue(results.All(r => r.Action == HeaderResult.ResponseAction.Remove), "Expected all header results to have action remove.");
         }
     }
 
@@ -461,16 +383,6 @@ namespace NWebsec.Core.Tests.Unit.Core.HttpHeaders
         {
             get { return "Content-Security-Policy"; }
         }
-
-        protected override string XCspHeaderName
-        {
-            get { return "X-Content-Security-Policy"; }
-        }
-
-        protected override string XWebKitCspHeaderName
-        {
-            get { return "X-WebKit-CSP"; }
-        }
     }
 
     [TestFixture]
@@ -484,16 +396,6 @@ namespace NWebsec.Core.Tests.Unit.Core.HttpHeaders
         protected override string CspHeaderName
         {
             get { return "Content-Security-Policy-Report-Only"; }
-        }
-
-        protected override string XCspHeaderName
-        {
-            get { return "X-Content-Security-Policy-Report-Only"; }
-        }
-
-        protected override string XWebKitCspHeaderName
-        {
-            get { return "X-WebKit-CSP-Report-Only"; }
         }
     }
 }

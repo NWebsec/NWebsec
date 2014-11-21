@@ -63,8 +63,6 @@ namespace NWebsec.Mvc.Helpers
 
             overrides.EnabledOverride = true;
             overrides.Enabled = cspConfig.Enabled;
-            overrides.XContentSecurityPolicyHeader = cspConfig.XContentSecurityPolicyHeader;
-            overrides.XWebKitCspHeader = cspConfig.XWebKitCspHeader;
         }
 
         internal void SetCspReportUriOverride(HttpContextBase context, ICspReportUriDirectiveConfiguration reportUriConfig, bool reportOnly)

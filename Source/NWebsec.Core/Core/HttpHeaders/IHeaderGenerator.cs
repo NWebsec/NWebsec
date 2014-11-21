@@ -1,6 +1,5 @@
 // Copyright (c) André N. Klingsheim. See License.txt in the project root for license information.
 
-using System.Collections.Generic;
 using NWebsec.Core.HttpHeaders.Configuration;
 
 namespace NWebsec.Core.HttpHeaders
@@ -24,7 +23,7 @@ namespace NWebsec.Core.HttpHeaders
         HeaderResult CreateXfoResult(IXFrameOptionsConfiguration xfoConfig,
             IXFrameOptionsConfiguration oldXfoConfig = null);
 
-        IEnumerable<HeaderResult> CreateCspResults(ICspConfiguration cspConfig, bool reportOnly,
+        HeaderResult CreateCspResult(ICspConfiguration cspConfig, bool reportOnly,
             string builtinReportHandlerUri = null, ICspConfiguration oldCspConfig = null);
     }
 }

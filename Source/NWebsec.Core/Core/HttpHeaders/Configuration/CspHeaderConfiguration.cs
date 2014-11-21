@@ -5,7 +5,5 @@ namespace NWebsec.Core.HttpHeaders.Configuration
     public class CspHeaderConfiguration : ICspHeaderConfiguration
     {
         public bool Enabled { get; set; }
-        public bool XContentSecurityPolicyHeader { get; set; }
-        public bool XWebKitCspHeader { get; set; }
     }
 }

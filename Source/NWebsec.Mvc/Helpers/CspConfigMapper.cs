@@ -134,10 +134,7 @@ namespace NWebsec.Mvc.Helpers
 
         public void MergeConfiguration(ICspConfiguration source, ICspConfiguration destination)
         {
-
             destination.Enabled = source.Enabled;
-            destination.XContentSecurityPolicyHeader = source.XContentSecurityPolicyHeader;
-            destination.XWebKitCspHeader = source.XContentSecurityPolicyHeader;
 
             MergeDirectives(source, destination);
         }
@@ -148,8 +145,6 @@ namespace NWebsec.Mvc.Helpers
             if (source.EnabledOverride)
             {
                 destination.Enabled = source.Enabled;
-                destination.XContentSecurityPolicyHeader = source.XContentSecurityPolicyHeader;
-                destination.XWebKitCspHeader = source.XContentSecurityPolicyHeader;
             }
 
             MergeDirectives(source, destination);

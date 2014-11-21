@@ -55,7 +55,7 @@ namespace NWebsec.Mvc.Helpers
         internal void SetXFrameoptionsHeader(HttpContextBase context)
         {
             var config = _headerConfigurationOverrideHelper.GetXFrameoptionsWithOverride(context);
-            
+
             if (config == null)
             {
                 return;
@@ -147,13 +147,9 @@ namespace NWebsec.Mvc.Helpers
             }
 
             var oldConfig = _contextConfigurationHelper.GetCspConfiguration(context, reportOnly);
+            var header = _headerGenerator.CreateCspResult(cspConfig, reportOnly, _reportHelper.GetBuiltInCspReportHandlerRelativeUri(), oldConfig);
 
-            var headers = _headerGenerator.CreateCspResults(cspConfig, reportOnly, _reportHelper.GetBuiltInCspReportHandlerRelativeUri(), oldConfig);
-
-            foreach (var header in headers)
-            {
-                _headerResultHandler.HandleHeaderResult(context.Response, header);
-            }
+            _headerResultHandler.HandleHeaderResult(context.Response, header);
         }
     }
 }

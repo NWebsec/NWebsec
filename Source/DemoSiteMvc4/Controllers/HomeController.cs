@@ -9,6 +9,7 @@ using NWebsec.Mvc.HttpHeaders.Csp;
 namespace DemoSiteMvc4.Controllers
 {
     [AllowMultiple("Controller")]
+    [Csp]
     
     public class HomeController : Controller
     {
@@ -25,7 +26,6 @@ namespace DemoSiteMvc4.Controllers
 
         [AllowMultiple("Action")]
         [XFrameOptions(Policy = XFrameOptionsPolicy.Disabled)]
-        [CspReportOnly(XWebKitCspHeader = true)]
         [CspScriptSrcReportOnly(None = Source.Inherit)]
         public ActionResult Other()
         {

@@ -25,8 +25,6 @@ namespace NWebsec.Core.HttpHeaders.Configuration
         }
 
         public bool Enabled { get; set; }
-        public bool XContentSecurityPolicyHeader { get; set; }
-        public bool XWebKitCspHeader { get; set; }
         public ICspDirectiveConfiguration DefaultSrcDirective { get; set; }
         public ICspDirectiveConfiguration ScriptSrcDirective { get; set; }
         public ICspDirectiveConfiguration ObjectSrcDirective { get; set; }

@@ -260,9 +260,8 @@ namespace NWebsec.Tests.Unit.Helpers
         [Test]
         public void SetCspHeaders_CspUpdatesContextAndHandlesResult()
         {
-            var expectedResults = new[] { _expectedHeaderResult };
             _mockCspReportHelper.Setup(h => h.GetBuiltInCspReportHandlerRelativeUri()).Returns("/cspreport");
-            _mockHeaderGenerator.Setup(g => g.CreateCspResults(_config.SecurityHttpHeaders.Csp, false, "/cspreport", null)).Returns(expectedResults);
+            _mockHeaderGenerator.Setup(g => g.CreateCspResult(_config.SecurityHttpHeaders.Csp, false, "/cspreport", null)).Returns(_expectedHeaderResult);
 
             _configHeaderSetter.SetCspHeaders(_mockContext, _nwebsecContext, false);
 
@@ -273,9 +272,8 @@ namespace NWebsec.Tests.Unit.Helpers
         [Test]
         public void SetCspHeaders_CspReportOnlyUpdatesContextAndHandlesResult()
         {
-            var expectedResults = new[] { _expectedHeaderResult };
             _mockCspReportHelper.Setup(h => h.GetBuiltInCspReportHandlerRelativeUri()).Returns("/cspreport");
-            _mockHeaderGenerator.Setup(g => g.CreateCspResults(_config.SecurityHttpHeaders.CspReportOnly, true, "/cspreport", null)).Returns(expectedResults);
+            _mockHeaderGenerator.Setup(g => g.CreateCspResult(_config.SecurityHttpHeaders.CspReportOnly, true, "/cspreport", null)).Returns(_expectedHeaderResult);
 
             _configHeaderSetter.SetCspHeaders(_mockContext, _nwebsecContext, true);
 
@@ -286,7 +284,7 @@ namespace NWebsec.Tests.Unit.Helpers
         [Test]
         public void SetCspHeaders_CspEnabledInConfigAndStaticContentHandler_DoesNothing()
         {
-            _mockHeaderGenerator.Setup(g => g.CreateCspResults(It.IsAny<ICspConfiguration>(), It.IsAny<bool>(), It.IsAny<string>(), It.IsAny<ICspConfiguration>())).Throws(new Exception("This method should not be called"));
+            _mockHeaderGenerator.Setup(g => g.CreateCspResult(It.IsAny<ICspConfiguration>(), It.IsAny<bool>(), It.IsAny<string>(), It.IsAny<ICspConfiguration>())).Throws<Exception>();
 
             _config.SecurityHttpHeaders.Csp.Enabled = true;
             _config.SecurityHttpHeaders.Csp.DefaultSrc.SelfSrc = true;
@@ -301,7 +299,7 @@ namespace NWebsec.Tests.Unit.Helpers
         [Test]
         public void SetCspHeaders_CspReportOnlyEnabledInConfigAndStaticContentHandler_DoesNothing()
         {
-            _mockHeaderGenerator.Setup(g => g.CreateCspResults(It.IsAny<ICspConfiguration>(), It.IsAny<bool>(), It.IsAny<string>(), It.IsAny<ICspConfiguration>())).Throws(new Exception("This method should not be called"));
+            _mockHeaderGenerator.Setup(g => g.CreateCspResult(It.IsAny<ICspConfiguration>(), It.IsAny<bool>(), It.IsAny<string>(), It.IsAny<ICspConfiguration>())).Throws<Exception>();
 
             _config.SecurityHttpHeaders.CspReportOnly.Enabled = true;
             _config.SecurityHttpHeaders.CspReportOnly.DefaultSrc.SelfSrc = true;
@@ -316,7 +314,7 @@ namespace NWebsec.Tests.Unit.Helpers
         [Test]
         public void SetCspHeaders_CspEnabledInConfigAndUnmanagedHandler_DoesNotAddCspHeader()
         {
-            _mockHeaderGenerator.Setup(g => g.CreateCspResults(It.IsAny<ICspConfiguration>(), It.IsAny<bool>(), It.IsAny<string>(), It.IsAny<ICspConfiguration>())).Throws(new Exception("This method should not be called"));
+            _mockHeaderGenerator.Setup(g => g.CreateCspResult(It.IsAny<ICspConfiguration>(), It.IsAny<bool>(), It.IsAny<string>(), It.IsAny<ICspConfiguration>())).Throws<Exception>();
 
             _config.SecurityHttpHeaders.Csp.Enabled = true;
             _config.SecurityHttpHeaders.Csp.DefaultSrc.SelfSrc = true;
@@ -331,42 +329,11 @@ namespace NWebsec.Tests.Unit.Helpers
         [Test]
         public void SetCspHeaders_CspReportOnlyEnabledInConfigAndUnmanagedHandler_DoesNotAddCspHeader()
         {
-            _mockHeaderGenerator.Setup(g => g.CreateCspResults(It.IsAny<ICspConfiguration>(), It.IsAny<bool>(), It.IsAny<string>(), It.IsAny<ICspConfiguration>())).Throws(new Exception("This method should not be called"));
+            _mockHeaderGenerator.Setup(g => g.CreateCspResult(It.IsAny<ICspConfiguration>(), It.IsAny<bool>(), It.IsAny<string>(), It.IsAny<ICspConfiguration>())).Throws<Exception>();
 
             _config.SecurityHttpHeaders.CspReportOnly.Enabled = true;
             _config.SecurityHttpHeaders.CspReportOnly.DefaultSrc.SelfSrc = true;
             _mockHandlerHelper.Setup(h => h.IsUnmanagedHandler(It.IsAny<HttpContextBase>())).Returns(true);
-
-            _configHeaderSetter.SetCspHeaders(_mockContext, _nwebsecContext, true);
-
-            Assert.IsNull(_nwebsecContext.CspReportOnly);
-            _mockHeaderResultHandler.Verify(h => h.HandleHeaderResult(It.IsAny<HttpResponseBase>(), _expectedHeaderResult), Times.Never);
-        }
-        
-        [Test]
-        public void SetCspHeaders_CspEnabledInConfigSafari5_DoesNotNothing()
-        {
-            _mockHeaderGenerator.Setup(g => g.CreateCspResults(It.IsAny<ICspConfiguration>(), It.IsAny<bool>(), It.IsAny<string>(), It.IsAny<ICspConfiguration>())).Throws(new Exception("This method should not be called"));
-            _mockRequest.Setup(r => r.UserAgent).Returns("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_6_8) AppleWebKit/537.13+ (KHTML, like Gecko) Version/5.1.7 Safari/534.57.2");
-            _config.SecurityHttpHeaders.Csp.Enabled = true;
-            _config.SecurityHttpHeaders.Csp.XWebKitCspHeader = true;
-            _config.SecurityHttpHeaders.Csp.DefaultSrc.SelfSrc = true;
-
-            _configHeaderSetter.SetCspHeaders(_mockContext, _nwebsecContext, false);
-
-            Assert.IsNull(_nwebsecContext.Csp);
-            _mockHeaderResultHandler.Verify(h => h.HandleHeaderResult(It.IsAny<HttpResponseBase>(), _expectedHeaderResult), Times.Never);
-
-        }
-
-        [Test]
-        public void SetCspHeaders_CspReportOnlyEnabledInConfigSafari5_DoesNotNothing()
-        {
-            _mockHeaderGenerator.Setup(g => g.CreateCspResults(It.IsAny<ICspConfiguration>(), It.IsAny<bool>(), It.IsAny<string>(), It.IsAny<ICspConfiguration>())).Throws(new Exception("This method should not be called"));
-            _mockRequest.Setup(r => r.UserAgent).Returns("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_6_8) AppleWebKit/537.13+ (KHTML, like Gecko) Version/5.1.7 Safari/534.57.2");
-            _config.SecurityHttpHeaders.CspReportOnly.Enabled = true;
-            _config.SecurityHttpHeaders.CspReportOnly.XWebKitCspHeader = true;
-            _config.SecurityHttpHeaders.CspReportOnly.DefaultSrc.SelfSrc = true;
 
             _configHeaderSetter.SetCspHeaders(_mockContext, _nwebsecContext, true);
 

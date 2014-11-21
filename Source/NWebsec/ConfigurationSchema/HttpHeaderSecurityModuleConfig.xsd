@@ -246,16 +246,6 @@
                       <xs:documentation>This attribute is required.</xs:documentation>
                     </xs:annotation>
                   </xs:attribute>
-                  <xs:attribute name="x-Content-Security-Policy-Header" type="simple_boolean" use="optional">
-                    <xs:annotation>
-                      <xs:documentation>Optional. Specifies whether to also emit the X-Content-Security-Policy header. The default is false.</xs:documentation>
-                    </xs:annotation>
-                  </xs:attribute>
-                  <xs:attribute name="x-WebKit-CSP-Header" type="simple_boolean" use="optional">
-                    <xs:annotation>
-                      <xs:documentation>Optional. Specifies whether to also emit the X-WebKit-CSP header. The default is false.</xs:documentation>
-                    </xs:annotation>
-                  </xs:attribute>
                 </xs:complexType>
               </xs:element>
               <xs:element name="content-Security-Policy-Report-Only" minOccurs="0" maxOccurs="1">
@@ -267,16 +257,6 @@
                   <xs:attribute name="enabled" type="simple_boolean" use="required">
                     <xs:annotation>
                       <xs:documentation>This attribute is required.</xs:documentation>
-                    </xs:annotation>
-                  </xs:attribute>
-                  <xs:attribute name="x-Content-Security-Policy-Header" type="simple_boolean" use="optional">
-                    <xs:annotation>
-                      <xs:documentation>Optional. Specifies whether to also emit the X-Content-Security-Policy-Report-Only header. The default is false.</xs:documentation>
-                    </xs:annotation>
-                  </xs:attribute>
-                  <xs:attribute name="x-WebKit-CSP-Header" type="simple_boolean" use="optional">
-                    <xs:annotation>
-                      <xs:documentation>Optional. Specifies whether to also emit the X-WebKit-CSP-Report-Only header. The default is false.</xs:documentation>
                     </xs:annotation>
                   </xs:attribute>
                 </xs:complexType>

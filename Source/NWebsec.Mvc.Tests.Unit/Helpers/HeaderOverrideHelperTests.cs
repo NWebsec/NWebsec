@@ -263,7 +263,7 @@ namespace NWebsec.Mvc.Tests.Unit.Helpers
 
             _overrideHelper.SetCspHeaders(_mockContext, reportOnly);
 
-            _headerGenerator.Verify(g => g.CreateCspResults(It.IsAny<ICspConfiguration>(),reportOnly, It.IsAny<string>(), It.IsAny<ICspConfiguration>()), Times.Never);
+            _headerGenerator.Verify(g => g.CreateCspResult(It.IsAny<ICspConfiguration>(),reportOnly, It.IsAny<string>(), It.IsAny<ICspConfiguration>()), Times.Never);
             _headerResultHandler.Verify(h => h.HandleHeaderResult(It.IsAny<HttpResponseBase>(), It.IsAny<HeaderResult>()), Times.Never);
         }
 
@@ -276,14 +276,13 @@ namespace NWebsec.Mvc.Tests.Unit.Helpers
             Mock.Get(_mockContext).Setup(c => c.Request).Returns(request.Object);
             
             const string reportUri = "/cspreport";
-            var expectedHeaders = new[] {_expectedHeaderResult};
 
             var contextConfig = new CspConfiguration();
             var overrideConfig = new CspConfiguration();
             _contextHelper.Setup(h => h.GetCspConfiguration(It.IsAny<HttpContextBase>(), reportOnly)).Returns(contextConfig);
             _cspConfigurationOverrideHelper.Setup(h => h.GetCspConfigWithOverrides(It.IsAny<HttpContextBase>(), reportOnly)).Returns(overrideConfig);
             _reportHelper.Setup(h => h.GetBuiltInCspReportHandlerRelativeUri()).Returns(reportUri);
-            _headerGenerator.Setup(g => g.CreateCspResults(overrideConfig, reportOnly,reportUri, contextConfig)).Returns(expectedHeaders);
+            _headerGenerator.Setup(g => g.CreateCspResult(overrideConfig, reportOnly, reportUri, contextConfig)).Returns(_expectedHeaderResult);
 
             _overrideHelper.SetCspHeaders(_mockContext, reportOnly);
 
@@ -304,7 +303,7 @@ namespace NWebsec.Mvc.Tests.Unit.Helpers
 
             _overrideHelper.SetCspHeaders(_mockContext, reportOnly);
 
-            _headerGenerator.Verify(g => g.CreateCspResults(It.IsAny<ICspConfiguration>(), reportOnly, It.IsAny<string>(), It.IsAny<ICspConfiguration>()), Times.Never);
+            _headerGenerator.Verify(g => g.CreateCspResult(It.IsAny<ICspConfiguration>(), reportOnly, It.IsAny<string>(), It.IsAny<ICspConfiguration>()), Times.Never);
             _headerResultHandler.Verify(h => h.HandleHeaderResult(It.IsAny<HttpResponseBase>(), It.IsAny<HeaderResult>()), Times.Never);
         }
     }

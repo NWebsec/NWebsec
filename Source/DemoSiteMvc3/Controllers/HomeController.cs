@@ -23,7 +23,6 @@ namespace DemoSiteMvc3.Controllers
     public class HomeController : Controller
     {
 
-        [Csp(XWebKitCspHeader = true)]
         [CspScriptSrc(None = Source.Enable)]
         [CspDefaultSrc(Self = Source.Enable)]
         //[CspStyleSrc(UnsafeInline = true,Self = true)]

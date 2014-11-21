@@ -1,6 +1,5 @@
 ﻿// Copyright (c) André N. Klingsheim. See License.txt in the project root for license information.
 
-using System;
 using System.Web;
 using NWebsec.Core;
 using NWebsec.Core.HttpHeaders;
@@ -27,7 +26,7 @@ namespace NWebsec.Helpers
             _reportHelper = new CspReportHelper();
         }
 
-        internal ConfigurationHeaderSetter(HttpHeaderSecurityConfigurationSection config, IHeaderGenerator headerGenerator, IHeaderResultHandler headerResultHandler, IHandlerTypeHelper handlerTypeHelper, ICspReportHelper cspReportHelper )
+        internal ConfigurationHeaderSetter(HttpHeaderSecurityConfigurationSection config, IHeaderGenerator headerGenerator, IHeaderResultHandler headerResultHandler, IHandlerTypeHelper handlerTypeHelper, ICspReportHelper cspReportHelper)
         {
             _mockConfig = config;
             _headerGenerator = headerGenerator;
@@ -37,7 +36,7 @@ namespace NWebsec.Helpers
         }
 
         private HttpHeaderSecurityConfigurationSection WebConfig { get { return _mockConfig ?? ConfigHelper.GetConfig(); } }
-        
+
         internal void SetSitewideHeadersFromConfig(HttpContextBase context)
         {
             var nwebsecContext = context.GetNWebsecContext();
@@ -132,13 +131,7 @@ namespace NWebsec.Helpers
             if (_handlerHelper.IsStaticContentHandler(context) ||
                 _handlerHelper.IsUnmanagedHandler(context)) return;
 
-            var userAgent = context.Request.UserAgent;
-
-            if (!String.IsNullOrEmpty(userAgent) && userAgent.Contains(" Version/5") && userAgent.Contains(" Safari/"))
-            {
-                return;
-            }
-
+            
             ICspConfiguration cspConfig;
             if (reportOnly)
             {
@@ -149,12 +142,8 @@ namespace NWebsec.Helpers
                 cspConfig = nwebsecContext.Csp = WebConfig.SecurityHttpHeaders.Csp;
             }
 
-            var headerResults = _headerGenerator.CreateCspResults(cspConfig, reportOnly, _reportHelper.GetBuiltInCspReportHandlerRelativeUri());
-
-            foreach (var result in headerResults)
-            {
-                _headerResultHandler.HandleHeaderResult(context.Response, result);
-            }
+            var result = _headerGenerator.CreateCspResult(cspConfig, reportOnly, _reportHelper.GetBuiltInCspReportHandlerRelativeUri());
+            _headerResultHandler.HandleHeaderResult(context.Response, result);
         }
     }
 }

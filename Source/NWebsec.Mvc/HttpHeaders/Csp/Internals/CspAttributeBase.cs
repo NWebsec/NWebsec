@@ -36,16 +36,16 @@ namespace NWebsec.Mvc.HttpHeaders.Csp.Internals
         public bool Enabled { get { return _config.Enabled; } set { _config.Enabled = value; } }
 
         /// <summary>
-        /// Gets or sets whether the X-Content-Security-Policy counterpart header should also be set in the HTTP response. The default is false.
+        /// The X-Content-Security-Policy header is no longer supported as modern browsers now support the standardized CSP header.
         /// </summary>
-        [Obsolete("The X-Content-Security-Policy header is deprecated as modern browsers now support the standardized CSP header. This property will be removed in a future version. ", false)]
-        public bool XContentSecurityPolicyHeader { get { return _config.XContentSecurityPolicyHeader; } set { _config.XContentSecurityPolicyHeader = value; } }
+        [Obsolete("The X-Content-Security-Policy header is no longer supported as modern browsers now support the standardized CSP header. This property will vanish in a future version.", true)]
+        public bool XContentSecurityPolicyHeader { get; set; }
 
         /// <summary>
-        /// Gets or sets whether the X-WebKit-Csp counterpart header should also be set in the HTTP response. The default is false.
+        /// The X-WebKit-Csp header is no longer supported as modern browsers now support the standardized CSP header.
         /// </summary>
-        [Obsolete("The X-WebKitCsp header is deprecated as modern browsers now support the standardized CSP header. This property will be removed in a future version. ", false)]
-        public bool XWebKitCspHeader { get { return _config.XWebKitCspHeader; } set { _config.XWebKitCspHeader = value; } }
+        [Obsolete("The X-WebKitCsp header is no longer supported as modern browsers now support the standardized CSP header. This property will vanish in a future version. ", true)]
+        public bool XWebKitCspHeader { get; set; }
 
         protected abstract bool ReportOnly { get; }
 
