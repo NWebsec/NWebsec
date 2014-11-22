@@ -6,7 +6,7 @@ using NWebsec.Mvc.HttpHeaders.Csp.Internals;
 namespace NWebsec.Mvc.HttpHeaders.Csp
 {
     /// <summary>
-    /// When applied to a controller or action method, enables the frame-ancestors directive for the CSP header. 
+    /// When applied to a controller or action method, enables the frame-ancestors directive for the CSP header (CSP 2). 
     /// </summary>
     public class CspFrameAncestorsAttribute : CspDirectiveAttributeBase
     {

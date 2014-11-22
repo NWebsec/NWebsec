@@ -136,6 +136,48 @@ namespace NWebsec.Modules.Configuration.Csp
             }
         }
 
+        [ConfigurationProperty("base-uri", IsRequired = false)]
+        [CspDirectiveBaseConfigurationElementValidator]
+        public CspDirectiveBaseConfigurationElement BaseUri
+        {
+            get
+            {
+                return (CspDirectiveBaseConfigurationElement)this["base-uri"];
+            }
+            set
+            {
+                this["base-uri"] = value;
+            }
+        }
+
+        [ConfigurationProperty("child-src", IsRequired = false)]
+        [CspDirectiveBaseConfigurationElementValidator]
+        public CspDirectiveBaseConfigurationElement ChildSrc
+        {
+            get
+            {
+                return (CspDirectiveBaseConfigurationElement)this["child-src"];
+            }
+            set
+            {
+                this["child-src"] = value;
+            }
+        }
+
+        [ConfigurationProperty("form-action", IsRequired = false)]
+        [CspDirectiveBaseConfigurationElementValidator]
+        public CspDirectiveBaseConfigurationElement FormAction
+        {
+            get
+            {
+                return (CspDirectiveBaseConfigurationElement)this["form-action"];
+            }
+            set
+            {
+                this["form-action"] = value;
+            }
+        }
+
         [ConfigurationProperty("frame-ancestors", IsRequired = false)]
         [CspDirectiveBaseConfigurationElementValidator]
         public CspDirectiveBaseConfigurationElement FrameAncestors
@@ -206,6 +248,22 @@ namespace NWebsec.Modules.Configuration.Csp
         public ICspDirectiveConfiguration ConnectSrcDirective
         {
             get { return ConnectSrc; }
+            set { throw new NotImplementedException(); }
+        }
+
+        public ICspDirectiveConfiguration BaseUriDirective
+        {
+            get { return BaseUri; }
+            set { throw new NotImplementedException(); }
+        }
+        public ICspDirectiveConfiguration ChildSrcDirective
+        {
+            get { return ChildSrc; }
+            set { throw new NotImplementedException(); }
+        }
+        public ICspDirectiveConfiguration FormActionDirective
+        {
+            get { return FormAction; }
             set { throw new NotImplementedException(); }
         }
 

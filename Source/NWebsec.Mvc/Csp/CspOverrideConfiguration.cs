@@ -19,6 +19,9 @@ namespace NWebsec.Mvc.Csp
         public ICspDirectiveConfiguration FrameSrcDirective { get; set; }
         public ICspDirectiveConfiguration FontSrcDirective { get; set; }
         public ICspDirectiveConfiguration ConnectSrcDirective { get; set; }
+        public ICspDirectiveConfiguration BaseUriDirective { get; set; }
+        public ICspDirectiveConfiguration ChildSrcDirective { get; set; }
+        public ICspDirectiveConfiguration FormActionDirective { get; set; }
         public ICspDirectiveConfiguration FrameAncestorsDirective { get; set; }
         public ICspReportUriDirectiveConfiguration ReportUriDirective { get; set; }
     }

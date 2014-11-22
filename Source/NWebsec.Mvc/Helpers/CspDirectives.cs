@@ -14,6 +14,9 @@ namespace NWebsec.Mvc.Helpers
         FontSrc = 7,
         ConnectSrc = 8,
         ReportUri = 9,
-        FrameAncestors = 10
+        FrameAncestors = 10,
+        BaseUri = 11,
+        ChildSrc = 12,
+        FormAction = 13
     }
 }

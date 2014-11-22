@@ -3,7 +3,7 @@
 namespace NWebsec.Mvc.HttpHeaders.Csp
 {
     /// <summary>
-    /// When applied to a controller or action method, enables the style-src directive for the CSP Report Only header. 
+    /// When applied to a controller or action method, enables the style-src directive for the CSP Report Only header (CSP 1.0). 
     /// </summary>
     public class CspStyleSrcReportOnlyAttribute : CspStyleSrcAttribute
     {

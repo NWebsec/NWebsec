@@ -6,7 +6,8 @@ using NWebsec.Mvc.HttpHeaders.Csp.Internals;
 namespace NWebsec.Mvc.HttpHeaders.Csp
 {
     /// <summary>
-    /// When applied to a controller or action method, enables the report-uri directive for the CSP header. 
+    /// When applied to a controller or action method, enables the report-uri directive for the CSP header (CSP 1.0).
+    /// Support for absolute URIs was added in CSP 2. 
     /// </summary>
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, Inherited = false, AllowMultiple = false)]
     public class CspReportUriAttribute : CspReportUriAttributeBase

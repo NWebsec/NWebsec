@@ -34,12 +34,6 @@ namespace NWebsec.Owin.Tests.Unit
         }
 
         [Test]
-        public void FrameAncestors_ConfiguresFrameAncestors()
-        {
-            _options.FrameAncestors(config => Assert.AreSame(_options.FrameAncestorsDirective, config));
-        }
-
-        [Test]
         public void FrameSources_ConfiguresFrameSources()
         {
             _options.FrameSources(config => Assert.AreSame(_options.FrameSrcDirective, config));
@@ -80,6 +74,30 @@ namespace NWebsec.Owin.Tests.Unit
         public void StyleSources_ConfiguresStyleSources()
         {
             _options.StyleSources(config => Assert.AreSame(_options.StyleSrcDirective, config));
+        }
+
+        [Test]
+        public void BaseUris_ConfiguresBaseUris()
+        {
+            _options.BaseUris(config => Assert.AreSame(_options.BaseUriDirective, config));
+        }
+
+        [Test]
+        public void ChildSources_ConfiguresChildSources()
+        {
+            _options.ChildSources(config => Assert.AreSame(_options.ChildSrcDirective, config));
+        }
+
+        [Test]
+        public void FormActions_ConfiguresFormActions()
+        {
+            _options.FormActions(config => Assert.AreSame(_options.FormActionDirective, config));
+        }
+
+        [Test]
+        public void FrameAncestors_ConfiguresFrameAncestors()
+        {
+            _options.FrameAncestors(config => Assert.AreSame(_options.FrameAncestorsDirective, config));
         }
     }
 }

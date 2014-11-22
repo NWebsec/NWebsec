@@ -248,6 +248,57 @@ namespace NWebsec.Core.Tests.Unit.Core.HttpHeaders
         }
 
         [Test]
+        public void AddCspHeaders_CspEnabledWithBaseUri_ReturnsSetCspWithBaseUriResult([Values(false, true)]bool reportOnly)
+        {
+            var cspConfig = new CspConfiguration
+            {
+                Enabled = true,
+                BaseUriDirective = { SelfSrc = true }
+            };
+
+            var result = _generator.CreateCspResult(cspConfig, reportOnly);
+
+            Assert.IsNotNull(result);
+            Assert.AreEqual(HeaderResult.ResponseAction.Set, result.Action);
+            Assert.AreEqual(CspHeaderName(reportOnly), result.Name);
+            Assert.AreEqual("base-uri 'self'", result.Value);
+        }
+
+        [Test]
+        public void AddCspHeaders_CspEnabledWithChildSrc_ReturnsSetCspWithChildSrcResult([Values(false, true)]bool reportOnly)
+        {
+            var cspConfig = new CspConfiguration
+            {
+                Enabled = true,
+                ChildSrcDirective = { SelfSrc = true }
+            };
+
+            var result = _generator.CreateCspResult(cspConfig, reportOnly);
+
+            Assert.IsNotNull(result);
+            Assert.AreEqual(HeaderResult.ResponseAction.Set, result.Action);
+            Assert.AreEqual(CspHeaderName(reportOnly), result.Name);
+            Assert.AreEqual("child-src 'self'", result.Value);
+        }
+
+        [Test]
+        public void AddCspHeaders_CspEnabledWithFormAction_ReturnsSetCspWithFormActionResult([Values(false, true)]bool reportOnly)
+        {
+            var cspConfig = new CspConfiguration
+            {
+                Enabled = true,
+                FormActionDirective = { SelfSrc = true }
+            };
+
+            var result = _generator.CreateCspResult(cspConfig, reportOnly);
+
+            Assert.IsNotNull(result);
+            Assert.AreEqual(HeaderResult.ResponseAction.Set, result.Action);
+            Assert.AreEqual(CspHeaderName(reportOnly), result.Name);
+            Assert.AreEqual("form-action 'self'", result.Value);
+        }
+
+        [Test]
         public void AddCspHeaders_CspEnabledWithFrameAncestors_ReturnsSetCspWithFrameAncestorsResult([Values(false, true)]bool reportOnly)
         {
             var cspConfig = new CspConfiguration

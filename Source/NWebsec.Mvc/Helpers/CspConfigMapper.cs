@@ -50,6 +50,15 @@ namespace NWebsec.Mvc.Helpers
                 case CspDirectives.ConnectSrc:
                     return cspConfig.ConnectSrcDirective;
 
+                case CspDirectives.BaseUri:
+                    return cspConfig.BaseUriDirective;
+
+                case CspDirectives.ChildSrc:
+                    return cspConfig.ChildSrcDirective;
+
+                case CspDirectives.FormAction:
+                    return cspConfig.FormActionDirective;
+
                 case CspDirectives.FrameAncestors:
                     return cspConfig.FrameAncestorsDirective;
 
@@ -122,6 +131,15 @@ namespace NWebsec.Mvc.Helpers
                     cspConfig.ConnectSrcDirective = directiveConfig;
                     return;
 
+                case CspDirectives.BaseUri:
+                    cspConfig.BaseUriDirective = directiveConfig;
+                    return;
+                case CspDirectives.ChildSrc:
+                    cspConfig.ChildSrcDirective = directiveConfig;
+                    return;
+                case CspDirectives.FormAction:
+                    cspConfig.FormActionDirective = directiveConfig;
+                    return;
                 case CspDirectives.FrameAncestors:
                     cspConfig.FrameAncestorsDirective = directiveConfig;
                     return;
@@ -162,6 +180,9 @@ namespace NWebsec.Mvc.Helpers
             destination.FrameSrcDirective = source.FrameSrcDirective ?? destination.FrameSrcDirective ?? new CspDirectiveConfiguration();
             destination.FontSrcDirective = source.FontSrcDirective ?? destination.FontSrcDirective ?? new CspDirectiveConfiguration();
             destination.ConnectSrcDirective = source.ConnectSrcDirective ?? destination.ConnectSrcDirective ?? new CspDirectiveConfiguration();
+            destination.BaseUriDirective = source.BaseUriDirective ?? destination.BaseUriDirective ?? new CspDirectiveConfiguration();
+            destination.ChildSrcDirective = source.ChildSrcDirective ?? destination.ChildSrcDirective ?? new CspDirectiveConfiguration();
+            destination.FormActionDirective = source.FormActionDirective ?? destination.FormActionDirective ?? new CspDirectiveConfiguration();
             destination.FrameAncestorsDirective = source.FrameAncestorsDirective ?? destination.FrameAncestorsDirective ?? new CspDirectiveConfiguration();
             destination.ReportUriDirective = source.ReportUriDirective ?? destination.ReportUriDirective ?? new CspReportUriDirectiveConfiguration();
         }

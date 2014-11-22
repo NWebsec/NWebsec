@@ -19,6 +19,9 @@ namespace NWebsec.Owin
             FrameSrcDirective = new CspDirective();
             FontSrcDirective = new CspDirective();
             ConnectSrcDirective = new CspDirective();
+            BaseUriDirective = new CspDirective();
+            ChildSrcDirective = new CspDirective();
+            FormActionDirective = new CspDirective();
             FrameAncestorsDirective = new CspDirective();
             ReportUriDirective = new CspReportUriDirective();
         }
@@ -42,12 +45,19 @@ namespace NWebsec.Owin
         public ICspDirectiveConfiguration FontSrcDirective { get; set; }
 
         public ICspDirectiveConfiguration ConnectSrcDirective { get; set; }
+
+        public ICspDirectiveConfiguration BaseUriDirective { get; set; }
+
+        public ICspDirectiveConfiguration ChildSrcDirective { get; set; }
+
+        public ICspDirectiveConfiguration FormActionDirective { get; set; }
+
         public ICspDirectiveConfiguration FrameAncestorsDirective { get; set; }
 
         public ICspReportUriDirectiveConfiguration ReportUriDirective { get; set; }
 
         /// <summary>
-        /// Configures the default-src directive.
+        /// Configures the default-src directive (CSP 1.0).
         /// </summary>
         /// <param name="configurer">An <see cref="Action"/> that configures the sources for the directive.</param>
         /// <returns>The current <see cref="CspOptions" /> instance.</returns>
@@ -58,7 +68,7 @@ namespace NWebsec.Owin
         }
 
         /// <summary>
-        /// Configures the script-src directive.
+        /// Configures the script-src directive (CSP 1.0).
         /// </summary>
         /// <param name="configurer">An <see cref="Action"/> that configures the sources for the directive.</param>
         /// <returns>The current <see cref="CspOptions" /> instance.</returns>
@@ -69,7 +79,7 @@ namespace NWebsec.Owin
         }
 
         /// <summary>
-        /// Configures the object-src directive.
+        /// Configures the object-src directive (CSP 1.0).
         /// </summary>
         /// <param name="configurer">An <see cref="Action"/> that configures the sources for the directive.</param>
         /// <returns>The current <see cref="CspOptions" /> instance.</returns>
@@ -80,7 +90,7 @@ namespace NWebsec.Owin
         }
 
         /// <summary>
-        /// Configures the style-src directive.
+        /// Configures the style-src directive (CSP 1.0).
         /// </summary>
         /// <param name="configurer">An <see cref="Action"/> that configures the sources for the directive.</param>
         /// <returns>The current <see cref="CspOptions" /> instance.</returns>
@@ -91,7 +101,7 @@ namespace NWebsec.Owin
         }
 
         /// <summary>
-        /// Configures the image-src directive.
+        /// Configures the image-src directive (CSP 1.0).
         /// </summary>
         /// <param name="configurer">An <see cref="Action"/> that configures the sources for the directive.</param>
         /// <returns>The current <see cref="CspOptions" /> instance.</returns>
@@ -102,7 +112,7 @@ namespace NWebsec.Owin
         }
 
         /// <summary>
-        /// Configures the media-src directive.
+        /// Configures the media-src directive (CSP 1.0).
         /// </summary>
         /// <param name="configurer">An <see cref="Action"/> that configures the sources for the directive.</param>
         /// <returns>The current <see cref="CspOptions" /> instance.</returns>
@@ -113,8 +123,9 @@ namespace NWebsec.Owin
         }
 
         /// <summary>
-        /// Configures the frame-src directive.
+        /// Configures the frame-src directive (CSP 1.0).
         /// </summary>
+        /// <remarks>This directive has been deprecated in CSP 2, consider using child-src instead.</remarks>
         /// <param name="configurer">An <see cref="Action"/> that configures the sources for the directive.</param>
         /// <returns>The current <see cref="CspOptions" /> instance.</returns>
         public IFluentCspOptions FrameSources(Action<ICspDirectiveBasicConfiguration> configurer)
@@ -124,7 +135,7 @@ namespace NWebsec.Owin
         }
 
         /// <summary>
-        /// Configures the font-src directive.
+        /// Configures the font-src directive (CSP 1.0).
         /// </summary>
         /// <param name="configurer">An <see cref="Action"/> that configures the sources for the directive.</param>
         /// <returns>The current <see cref="CspOptions" /> instance.</returns>
@@ -135,7 +146,7 @@ namespace NWebsec.Owin
         }
 
         /// <summary>
-        /// Configures the connect-src directive.
+        /// Configures the connect-src directive (CSP 1.0).
         /// </summary>
         /// <param name="configurer">An <see cref="Action"/> that configures the sources for the directive.</param>
         /// <returns>The current <see cref="CspOptions" /> instance.</returns>
@@ -146,7 +157,40 @@ namespace NWebsec.Owin
         }
 
         /// <summary>
-        /// Configures the frame-ancestors directive.
+        /// Configures the base-uri directive (CSP 2).
+        /// </summary>
+        /// <param name="configurer">An <see cref="Action"/> that configures the sources for the directive.</param>
+        /// <returns>The current <see cref="CspOptions" /> instance.</returns>
+        public IFluentCspOptions BaseUris(Action<ICspDirectiveBasicConfiguration> configurer)
+        {
+            configurer(BaseUriDirective);
+            return this;
+        }
+
+        /// <summary>
+        /// Configures the child-src directive (CSP 2).
+        /// </summary>
+        /// <param name="configurer">An <see cref="Action"/> that configures the sources for the directive.</param>
+        /// <returns>The current <see cref="CspOptions" /> instance.</returns>
+        public IFluentCspOptions ChildSources(Action<ICspDirectiveBasicConfiguration> configurer)
+        {
+            configurer(ChildSrcDirective);
+            return this;
+        }
+
+        /// <summary>
+        /// Configures the form-action directive (CSP 2).
+        /// </summary>
+        /// <param name="configurer">An <see cref="Action"/> that configures the sources for the directive.</param>
+        /// <returns>The current <see cref="CspOptions" /> instance.</returns>
+        public IFluentCspOptions FormActions(Action<ICspDirectiveBasicConfiguration> configurer)
+        {
+            configurer(FormActionDirective);
+            return this;
+        }
+
+        /// <summary>
+        /// Configures the frame-ancestors directive (CSP 2).
         /// </summary>
         /// <param name="configurer">An <see cref="Action"/> that configures the sources for the directive.</param>
         /// <returns>The current <see cref="CspOptions" /> instance.</returns>
@@ -157,7 +201,7 @@ namespace NWebsec.Owin
         }
 
         /// <summary>
-        /// Configures the report-uri directive.
+        /// Configures the report-uri directive (CSP 1). Support for absolute URIs was introduced in CSP 2.
         /// </summary>
         /// <param name="configurer">An <see cref="Action"/> that configures the report URIs.</param>
         /// <returns>The current <see cref="CspOptions" /> instance.</returns>
