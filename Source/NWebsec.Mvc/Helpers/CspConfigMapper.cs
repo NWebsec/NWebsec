@@ -90,6 +90,27 @@ namespace NWebsec.Mvc.Helpers
             return newConfig;
         }
 
+        public ICspSandboxDirectiveConfiguration GetCspSandboxConfigCloned(ICspConfiguration cspConfig)
+        {
+            var oldDirective = cspConfig.SandboxDirective;
+
+            if ( oldDirective == null)
+            {
+                return null;
+            }
+
+            return new CspSandboxDirectiveConfiguration
+            {
+                Enabled = oldDirective.Enabled,
+                AllowForms = oldDirective.AllowForms,
+                AllowPointerLock = oldDirective.AllowPointerLock,
+                AllowPopups = oldDirective.AllowPopups,
+                AllowSameOrigin = oldDirective.AllowSameOrigin,
+                AllowScripts = oldDirective.AllowScripts,
+                AllowTopNavigation = oldDirective.AllowTopNavigation
+            };
+        }
+
         public void SetCspDirectiveConfig(ICspConfiguration cspConfig, CspDirectives directive,
             ICspDirectiveConfiguration directiveConfig)
         {
@@ -184,6 +205,7 @@ namespace NWebsec.Mvc.Helpers
             destination.ChildSrcDirective = source.ChildSrcDirective ?? destination.ChildSrcDirective ?? new CspDirectiveConfiguration();
             destination.FormActionDirective = source.FormActionDirective ?? destination.FormActionDirective ?? new CspDirectiveConfiguration();
             destination.FrameAncestorsDirective = source.FrameAncestorsDirective ?? destination.FrameAncestorsDirective ?? new CspDirectiveConfiguration();
+            destination.SandboxDirective = source.SandboxDirective ?? destination.SandboxDirective ?? new CspSandboxDirectiveConfiguration();
             destination.ReportUriDirective = source.ReportUriDirective ?? destination.ReportUriDirective ?? new CspReportUriDirectiveConfiguration();
         }
     }

@@ -43,7 +43,7 @@ namespace NWebsec.Owin.Tests.Unit
         }
 
         [Test]
-        public void MaxAge_IncludeSubdomains_SetsIncludeSubdomains()
+        public void IncludeSubdomains_SetsIncludeSubdomains()
         {
             _options.IncludeSubdomains();
 

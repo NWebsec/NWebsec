@@ -11,19 +11,20 @@ namespace NWebsec.Mvc.Tests.Unit.TestHelpers
     {
         public int Compare(ICspDirectiveConfiguration x, ICspDirectiveConfiguration y)
         {
-            int result;
-            var booleanResults =
-                ((result = x.Enabled.CompareTo(y.Enabled)) != 0
-                    ? result
-                    : ((result = x.NoneSrc.CompareTo(y.NoneSrc)) != 0
-                        ? result
-                        : ((result = x.SelfSrc.CompareTo(y.SelfSrc)) != 0
-                            ? result
-                            : ((result = x.UnsafeInlineSrc.CompareTo(y.UnsafeInlineSrc)) != 0
-                                ? result
-                                : ((result = x.UnsafeEvalSrc.CompareTo(y.UnsafeEvalSrc)) != 0 ? result : 0)))));
+            var result = x.Enabled.CompareTo(y.Enabled);
+            if (result != 0) return result;
 
-            if (booleanResults != 0) return booleanResults;
+            result = x.NoneSrc.CompareTo(y.NoneSrc);
+            if (result != 0) return result;
+
+            result = x.SelfSrc.CompareTo(y.SelfSrc);
+            if (result != 0) return result;
+
+            result = x.UnsafeInlineSrc.CompareTo(y.UnsafeInlineSrc);
+            if (result != 0) return result;
+
+            result = x.UnsafeEvalSrc.CompareTo(y.UnsafeEvalSrc);
+            if (result != 0) return result;
 
             if (x.Nonce == null)
             {

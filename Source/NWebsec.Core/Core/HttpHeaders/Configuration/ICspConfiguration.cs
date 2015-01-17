@@ -19,6 +19,7 @@ namespace NWebsec.Core.HttpHeaders.Configuration
         ICspDirectiveConfiguration ChildSrcDirective { get; set; }
         ICspDirectiveConfiguration FormActionDirective { get; set; }
         ICspDirectiveConfiguration FrameAncestorsDirective { get; set; }
+        ICspSandboxDirectiveConfiguration SandboxDirective { get; set; }
         ICspReportUriDirectiveConfiguration ReportUriDirective { get; set; }
     }
 }

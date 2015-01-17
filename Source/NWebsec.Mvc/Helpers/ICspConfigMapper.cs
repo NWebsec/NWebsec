@@ -13,13 +13,17 @@ namespace NWebsec.Mvc.Helpers
     {
         [CanBeNull]
         ICspDirectiveConfiguration GetCspDirectiveConfig(ICspConfiguration cspConfig, CspDirectives directive);
+
         [CanBeNull]
         ICspDirectiveConfiguration GetCspDirectiveConfigCloned(ICspConfiguration cspConfig, CspDirectives directive);
 
-        void SetCspDirectiveConfig(ICspConfiguration cspConfig, CspDirectives directive,
-            ICspDirectiveConfiguration directiveConfig);
+        [CanBeNull]
+        ICspSandboxDirectiveConfiguration GetCspSandboxConfigCloned(ICspConfiguration cspConfig);
+
+        void SetCspDirectiveConfig(ICspConfiguration cspConfig, CspDirectives directive, ICspDirectiveConfiguration directiveConfig);
 
         void MergeConfiguration([NotNull]ICspConfiguration source, [NotNull]ICspConfiguration destination);
+
         void MergeOverrides([NotNull]CspOverrideConfiguration source, [NotNull]ICspConfiguration destination);
     }
 }

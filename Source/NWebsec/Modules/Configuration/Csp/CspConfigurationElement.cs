@@ -192,6 +192,19 @@ namespace NWebsec.Modules.Configuration.Csp
             }
         }
 
+        [ConfigurationProperty("sandbox", IsRequired = false)]
+        public CspSandboxDirectiveConfigurationElement Sandbox
+        {
+            get
+            {
+                return (CspSandboxDirectiveConfigurationElement)this["sandbox"];
+            }
+            set
+            {
+                this["sandbox"] = value;
+            }
+        }
+
         [ConfigurationProperty("report-uri", IsRequired = false)]
         public CspReportUriDirectiveConfigurationElement ReportUri
         {
@@ -270,6 +283,12 @@ namespace NWebsec.Modules.Configuration.Csp
         public ICspDirectiveConfiguration FrameAncestorsDirective
         {
             get { return FrameAncestors; }
+            set { throw new NotImplementedException(); }
+        }
+
+        public ICspSandboxDirectiveConfiguration SandboxDirective
+        {
+            get { return Sandbox; }
             set { throw new NotImplementedException(); }
         }
 

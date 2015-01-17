@@ -23,6 +23,7 @@ namespace NWebsec.Mvc.Csp
         public ICspDirectiveConfiguration ChildSrcDirective { get; set; }
         public ICspDirectiveConfiguration FormActionDirective { get; set; }
         public ICspDirectiveConfiguration FrameAncestorsDirective { get; set; }
+        public ICspSandboxDirectiveConfiguration SandboxDirective { get; set; }
         public ICspReportUriDirectiveConfiguration ReportUriDirective { get; set; }
     }
 }

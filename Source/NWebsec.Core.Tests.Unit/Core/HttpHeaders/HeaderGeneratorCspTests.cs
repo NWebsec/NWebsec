@@ -316,6 +316,23 @@ namespace NWebsec.Core.Tests.Unit.Core.HttpHeaders
         }
 
         [Test]
+        public void AddCspHeaders_CspEnabledWithSandbox_ReturnsSetCspWithSandboxResult([Values(false, true)]bool reportOnly)
+        {
+            var cspConfig = new CspConfiguration
+            {
+                Enabled = true,
+                SandboxDirective = { AllowForms = true, AllowPointerLock = true, AllowPopups = true, AllowSameOrigin = true, AllowScripts = true, AllowTopNavigation = true}
+            };
+
+            var result = _generator.CreateCspResult(cspConfig, reportOnly);
+
+            Assert.IsNotNull(result);
+            Assert.AreEqual(HeaderResult.ResponseAction.Set, result.Action);
+            Assert.AreEqual(CspHeaderName(reportOnly), result.Name);
+            Assert.AreEqual("sandbox allow-forms allow-pointer-lock allow-popups allow-same-origin allow-scripts allow-top-navigation", result.Value);
+        }
+
+        [Test]
         public void AddCspHeaders_CspWithTwoDirectives_ReturnsSetSetCspWithBothDirectivesResult([Values(false, true)]bool reportOnly)
         {
             var cspConfig = new CspConfiguration
@@ -330,7 +347,7 @@ namespace NWebsec.Core.Tests.Unit.Core.HttpHeaders
             Assert.IsNotNull(result);
             Assert.AreEqual(HeaderResult.ResponseAction.Set, result.Action);
             Assert.AreEqual(CspHeaderName(reportOnly), result.Name);
-            Assert.AreEqual("default-src 'self'; script-src 'none'", result.Value);
+            Assert.AreEqual("default-src 'self';script-src 'none'", result.Value);
         }
 
         [Test]
@@ -363,7 +380,7 @@ namespace NWebsec.Core.Tests.Unit.Core.HttpHeaders
             Assert.IsNotNull(result);
             Assert.AreEqual(HeaderResult.ResponseAction.Set, result.Action);
             Assert.AreEqual(CspHeaderName(reportOnly), result.Name);
-            Assert.AreEqual("default-src 'self'; report-uri " + builtinReportHandlerUri, result.Value);
+            Assert.AreEqual("default-src 'self';report-uri " + builtinReportHandlerUri, result.Value);
         }
 
         [Test]
@@ -381,7 +398,7 @@ namespace NWebsec.Core.Tests.Unit.Core.HttpHeaders
             Assert.IsNotNull(result);
             Assert.AreEqual(HeaderResult.ResponseAction.Set, result.Action);
             Assert.AreEqual(CspHeaderName(reportOnly), result.Name);
-            Assert.AreEqual("default-src 'self'; report-uri /CspViolationReported", result.Value);
+            Assert.AreEqual("default-src 'self';report-uri /CspViolationReported", result.Value);
         }
 
         [Test]
@@ -403,7 +420,7 @@ namespace NWebsec.Core.Tests.Unit.Core.HttpHeaders
             Assert.AreEqual(CspHeaderName(reportOnly), result.Name);
 
             const string expectedReportUri = builtinReportHandlerUri + " /CspViolationReported";
-            Assert.AreEqual("default-src 'self'; report-uri " + expectedReportUri, result.Value);
+            Assert.AreEqual("default-src 'self';report-uri " + expectedReportUri, result.Value);
         }
 
         [Test]

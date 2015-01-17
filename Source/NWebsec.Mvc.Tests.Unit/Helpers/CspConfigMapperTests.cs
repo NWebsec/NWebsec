@@ -68,7 +68,7 @@ namespace NWebsec.Mvc.Tests.Unit.Helpers
         }
 
         [Test]
-        public void GetCspDirectiveConfigCloned_DefaultDirective_ClonesElement()
+        public void GetCspDirectiveConfigCloned_DefaultDirective_ClonesDirective()
         {
             var directive = new CspDirectiveConfiguration();
 
@@ -83,7 +83,7 @@ namespace NWebsec.Mvc.Tests.Unit.Helpers
         }
 
         [Test]
-        public void GetCspDirectiveConfigCloned_Configured_ClonesElement()
+        public void GetCspDirectiveConfigCloned_Configured_ClonesDirective()
         {
             var directive = new CspDirectiveConfiguration
             {
@@ -105,6 +105,44 @@ namespace NWebsec.Mvc.Tests.Unit.Helpers
         }
 
         [Test]
+        public void GetCspSandboxConfigCloned_NoDirective_ReturnsNull()
+        {
+            var config = new CspConfiguration(false);
+            var mapper = new CspConfigMapper();
+
+            var clone = mapper.GetCspSandboxConfigCloned(config);
+
+            Assert.IsNull(clone);   
+        }
+
+        [Test]
+        public void GetCspSandboxConfigCloned_Configured_ClonesDirective()
+        {
+            var firstDirective = new CspSandboxDirectiveConfiguration
+            {
+                AllowForms = true,
+                AllowPointerLock = true,
+                AllowPopups = true
+            };
+            var firstConfig = new CspConfiguration(false) {SandboxDirective = firstDirective};
+            var secondDirective = new CspSandboxDirectiveConfiguration()
+            {
+                AllowSameOrigin = true,
+                AllowScripts = true,
+                AllowTopNavigation = true,
+                Enabled = true
+            };
+            var secondConfig = new CspConfiguration(false) { SandboxDirective = secondDirective };
+            var mapper = new CspConfigMapper();
+
+            var firstResult = mapper.GetCspSandboxConfigCloned(firstConfig);
+            var secondResult = mapper.GetCspSandboxConfigCloned(secondConfig);
+
+            Assert.That(firstResult, Is.EqualTo(firstDirective).Using(new CspSandboxDirectiveComparer()));
+            Assert.That(secondResult, Is.EqualTo(secondDirective).Using(new CspSandboxDirectiveComparer()));
+        }
+
+        [Test]
         public void MergeConfiguration_SourceAndTargetDirectivesNotConfigured_MergesHeaderAttributesAndInitializesDirectives()
         {
             var sourceConfig = new CspConfiguration(false) { Enabled = false };
@@ -121,6 +159,7 @@ namespace NWebsec.Mvc.Tests.Unit.Helpers
                 Assert.IsNotNull(_mapper.GetCspDirectiveConfig(destinationConfig, directive));
             }
 
+            Assert.IsNotNull(destinationConfig.SandboxDirective);
             Assert.IsNotNull(destinationConfig.ReportUriDirective);
         }
 
@@ -141,6 +180,7 @@ namespace NWebsec.Mvc.Tests.Unit.Helpers
                 Assert.AreSame(_mapper.GetCspDirectiveConfig(sourceConfig, directive), _mapper.GetCspDirectiveConfig(destinationConfig, directive));
             }
 
+            Assert.AreSame(sourceConfig.SandboxDirective, destinationConfig.SandboxDirective);
             Assert.AreSame(sourceConfig.ReportUriDirective, destinationConfig.ReportUriDirective);
         }
 
@@ -151,7 +191,10 @@ namespace NWebsec.Mvc.Tests.Unit.Helpers
 
             var sourceConfig = new CspConfiguration(false) { Enabled = false };
             var destinationConfig = new CspConfiguration { Enabled = true };
-            var expectedConfig = new CspConfiguration {Enabled = destinationConfig.Enabled, ReportUriDirective = destinationConfig.ReportUriDirective};
+            var expectedConfig = new CspConfiguration {
+                Enabled = destinationConfig.Enabled,
+                SandboxDirective = destinationConfig.SandboxDirective,
+                ReportUriDirective = destinationConfig.ReportUriDirective};
             //Poor man's clone
             foreach (var directive in directives)
             {
@@ -168,6 +211,7 @@ namespace NWebsec.Mvc.Tests.Unit.Helpers
                 Assert.AreSame(_mapper.GetCspDirectiveConfig(expectedConfig, directive), _mapper.GetCspDirectiveConfig(destinationConfig, directive));
             }
 
+            Assert.AreSame(expectedConfig.SandboxDirective, destinationConfig.SandboxDirective);
             Assert.AreSame(expectedConfig.ReportUriDirective, destinationConfig.ReportUriDirective);
         }
 
@@ -188,6 +232,7 @@ namespace NWebsec.Mvc.Tests.Unit.Helpers
                 Assert.AreSame(_mapper.GetCspDirectiveConfig(sourceConfig, directive), _mapper.GetCspDirectiveConfig(destinationConfig, directive));
             }
 
+            Assert.AreSame(sourceConfig.SandboxDirective, destinationConfig.SandboxDirective);
             Assert.AreSame(sourceConfig.ReportUriDirective, destinationConfig.ReportUriDirective);
         }
 
@@ -208,6 +253,7 @@ namespace NWebsec.Mvc.Tests.Unit.Helpers
                 Assert.IsNotNull(_mapper.GetCspDirectiveConfig(destinationConfig, directive));
             }
 
+            Assert.IsNotNull(destinationConfig.SandboxDirective);
             Assert.IsNotNull(destinationConfig.ReportUriDirective);
         }
 
@@ -228,6 +274,7 @@ namespace NWebsec.Mvc.Tests.Unit.Helpers
                 Assert.IsNotNull(_mapper.GetCspDirectiveConfig(destinationConfig, directive));
             }
 
+            Assert.IsNotNull(destinationConfig.SandboxDirective);
             Assert.IsNotNull(destinationConfig.ReportUriDirective);
         }
 
@@ -240,8 +287,9 @@ namespace NWebsec.Mvc.Tests.Unit.Helpers
             {
                 _mapper.SetCspDirectiveConfig(sourceConfig, directive, new CspDirectiveConfiguration { Nonce = directive.ToString() });
             }
-            var reportUri = new CspReportUriDirectiveConfiguration();
-            sourceConfig.ReportUriDirective = reportUri;
+
+            sourceConfig.SandboxDirective = new CspSandboxDirectiveConfiguration();
+            sourceConfig.ReportUriDirective = new CspReportUriDirectiveConfiguration();
             var destinationConfig = new CspConfiguration(false) { Enabled = true };
 
             _mapper.MergeOverrides(sourceConfig, destinationConfig);
@@ -255,6 +303,7 @@ namespace NWebsec.Mvc.Tests.Unit.Helpers
                 Assert.AreEqual(directive.ToString(), directiveConfig.Nonce);
             }
 
+            Assert.AreSame(sourceConfig.SandboxDirective, destinationConfig.SandboxDirective);
             Assert.AreSame(sourceConfig.ReportUriDirective, destinationConfig.ReportUriDirective);
         }
 
@@ -267,8 +316,9 @@ namespace NWebsec.Mvc.Tests.Unit.Helpers
             {
                 _mapper.SetCspDirectiveConfig(sourceConfig, directive, new CspDirectiveConfiguration { Nonce = directive.ToString() });
             }
-            var reportUri = new CspReportUriDirectiveConfiguration();
-            sourceConfig.ReportUriDirective = reportUri;
+            sourceConfig.SandboxDirective = new CspSandboxDirectiveConfiguration();
+            sourceConfig.ReportUriDirective = new CspReportUriDirectiveConfiguration();
+
             var destinationConfig = new CspConfiguration(false) { Enabled = true };
 
             _mapper.MergeOverrides(sourceConfig, destinationConfig);
@@ -282,6 +332,7 @@ namespace NWebsec.Mvc.Tests.Unit.Helpers
                 Assert.AreEqual(directive.ToString(), directiveConfig.Nonce);
             }
 
+            Assert.AreSame(sourceConfig.SandboxDirective, destinationConfig.SandboxDirective);
             Assert.AreSame(sourceConfig.ReportUriDirective, destinationConfig.ReportUriDirective);
         }
     }

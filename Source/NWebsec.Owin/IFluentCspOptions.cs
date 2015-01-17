@@ -103,6 +103,14 @@ namespace NWebsec.Owin
         IFluentCspOptions FrameAncestors(Action<ICspDirectiveBasicConfiguration> configurer);
 
         /// <summary>
+        /// Configures the sandbox directive (CSP 2).
+        /// </summary>
+        /// <remarks>Support for this directive was optional in CSP 1.0, but is mandatory as of CSP 2.</remarks>
+        /// <param name="configurer">An <see cref="Action"/> that configures the sources for the directive.</param>
+        /// <returns>The current <see cref="CspOptions" /> instance.</returns>
+        IFluentCspOptions Sandbox(Action<IFluentCspSandboxDirective> configurer);
+
+        /// <summary>
         /// Configures the report-uri directive (CSP 1.0). Support for absolute URIs was introduced in CSP 2.
         /// </summary>
         /// <param name="configurer">An <see cref="Action"/> that configures the report URIs.</param>

@@ -40,6 +40,44 @@ namespace NWebsec.Mvc.Helpers
             return result;
         }
 
+        public ICspSandboxDirectiveConfiguration GetOverridenCspSandboxConfig(CspSandboxOverride directiveOverride,ICspSandboxDirectiveConfiguration directiveConfig)
+        {
+            var result = directiveConfig ?? new CspSandboxDirectiveConfiguration();
+
+            result.Enabled = directiveOverride.Enabled;
+
+            if (directiveOverride.AllowForms.HasValue)
+            {
+                result.AllowForms = (bool) directiveOverride.AllowForms;
+            }
+
+            if (directiveOverride.AllowPointerLock.HasValue)
+            {
+                result.AllowPointerLock = (bool)directiveOverride.AllowPointerLock;
+            }
+
+            if (directiveOverride.AllowPopups.HasValue)
+            {
+                result.AllowPopups = (bool)directiveOverride.AllowPopups;
+            }
+
+            if (directiveOverride.AllowSameOrigin.HasValue)
+            {
+                result.AllowSameOrigin = (bool)directiveOverride.AllowSameOrigin;
+            }
+
+            if (directiveOverride.AllowScripts.HasValue)
+            {
+                result.AllowScripts = (bool)directiveOverride.AllowScripts;
+            }
+
+            if (directiveOverride.AllowTopNavigation.HasValue)
+            {
+                result.AllowTopNavigation = (bool)directiveOverride.AllowTopNavigation;
+            }
+            return result;
+        }
+
         private void AddSources(ICspDirectiveConfiguration config, string sources)
         {
             if (String.IsNullOrEmpty(sources)) return;

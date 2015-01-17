@@ -62,6 +62,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Helpers\ContextConfigurationHelperTests.cs" />
+    <Compile Include="TestHelpers\CspSandboxDirectiveComparer.cs" />
     <Compile Include="TestHelpers\CspDirectiveComparerTests.cs" />
     <Compile Include="TestHelpers\CspDirectiveComparer.cs" />
     <Compile Include="Helpers\CspDirectiveOverrideHelperTests.cs" />

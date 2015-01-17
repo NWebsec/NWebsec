@@ -64,14 +64,7 @@ namespace NWebsec.Mvc.Helpers
             overrides.EnabledOverride = true;
             overrides.Enabled = cspConfig.Enabled;
         }
-
-        internal void SetCspReportUriOverride(HttpContextBase context, ICspReportUriDirectiveConfiguration reportUriConfig, bool reportOnly)
-        {
-            var overrides = _contextConfigurationHelper.GetCspConfigurationOverride(context, reportOnly, false);
-
-            overrides.ReportUriDirective = reportUriConfig;
-        }
-
+        
         internal void SetCspDirectiveOverride(HttpContextBase context, CspDirectives directive, CspDirectiveOverride config, bool reportOnly)
         {
             var overrides = _contextConfigurationHelper.GetCspConfigurationOverride(context, reportOnly, false);
@@ -87,6 +80,30 @@ namespace NWebsec.Mvc.Helpers
             var newConfig = _cspDirectiveOverrideHelper.GetOverridenCspDirectiveConfig(config, directiveToOverride);
 
             _configMapper.SetCspDirectiveConfig(overrides, directive, newConfig);
+        }
+
+        internal void SetCspSandboxOverride(HttpContextBase context, CspSandboxOverride config, bool reportOnly)
+        {
+            var overrides = _contextConfigurationHelper.GetCspConfigurationOverride(context, reportOnly, false);
+
+            var directiveToOverride = overrides.SandboxDirective;
+
+            if (directiveToOverride == null)
+            {
+                var baseConfig = _contextConfigurationHelper.GetCspConfiguration(context, reportOnly);
+                directiveToOverride = _configMapper.GetCspSandboxConfigCloned(baseConfig);
+            }
+
+            var newConfig = _cspDirectiveOverrideHelper.GetOverridenCspSandboxConfig(config, directiveToOverride);
+
+            overrides.SandboxDirective = newConfig;
+        }
+
+        internal void SetCspReportUriOverride(HttpContextBase context, ICspReportUriDirectiveConfiguration reportUriConfig, bool reportOnly)
+        {
+            var overrides = _contextConfigurationHelper.GetCspConfigurationOverride(context, reportOnly, false);
+
+            overrides.ReportUriDirective = reportUriConfig;
         }
 
         internal string GetCspScriptNonce(HttpContextBase context)

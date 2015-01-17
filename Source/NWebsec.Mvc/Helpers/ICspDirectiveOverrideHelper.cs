@@ -10,5 +10,7 @@ namespace NWebsec.Mvc.Helpers
     {
         [NotNull]
         ICspDirectiveConfiguration GetOverridenCspDirectiveConfig([NotNull]CspDirectiveOverride directiveOverride, [CanBeNull]ICspDirectiveConfiguration directiveConfig);
+
+        ICspSandboxDirectiveConfiguration GetOverridenCspSandboxConfig([NotNull]CspSandboxOverride directiveOverride, [CanBeNull]ICspSandboxDirectiveConfiguration directiveConfig);
     }
 }

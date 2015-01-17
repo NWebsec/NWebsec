@@ -143,10 +143,6 @@ namespace NWebsec.Core.HttpHeaders
                     return new HeaderResult(HeaderResult.ResponseAction.Set, HeaderConstants.XFrameOptionsHeader,
                         "SameOrigin");
 
-                //case HttpHeadersConstants.XFrameOptions.AllowFrom:
-                //    frameOptions = "ALLOW-FROM " + headerConfig.SecurityHttpHeaders.XFrameOptions.Origin.GetLeftPart(UriPartial.Authority);
-                //    break;
-
                 default:
                     throw new NotImplementedException("Apparently someone forgot to implement support for: " +
                                                       xfoConfig.Policy);
@@ -178,6 +174,7 @@ namespace NWebsec.Core.HttpHeaders
                 (reportOnly ? HeaderConstants.ContentSecurityPolicyReportOnlyHeader : HeaderConstants.ContentSecurityPolicyHeader), headerValue);
         }
 
+        [CanBeNull]
         private string CreateCspHeaderValue(ICspConfiguration config, string builtinReportHandlerUri = null)
         {
             var sb = new StringBuilder();
@@ -195,13 +192,16 @@ namespace NWebsec.Core.HttpHeaders
             sb.Append(CreateDirectiveValue("child-src", GetDirectiveList(config.ChildSrcDirective)));
             sb.Append(CreateDirectiveValue("form-action", GetDirectiveList(config.FormActionDirective)));
             sb.Append(CreateDirectiveValue("frame-ancestors", GetDirectiveList(config.FrameAncestorsDirective)));
+            sb.Append(CreateDirectiveValue("sandbox", GetSandboxDirectiveList(config.SandboxDirective)));
 
             if (sb.Length == 0) return null;
 
             sb.Append(CreateDirectiveValue("report-uri",
                 GetReportUriList(config.ReportUriDirective, builtinReportHandlerUri)));
 
-            return sb.ToString().TrimEnd(new[] { ' ', ';' });
+            //Get rid of trailing ;
+            sb.Length--;
+            return sb.ToString();
         }
 
         private string CreateDirectiveValue(string directiveName, List<string> sources)
@@ -210,14 +210,13 @@ namespace NWebsec.Core.HttpHeaders
 
             var sb = new StringBuilder();
             sb.Append(directiveName);
-            sb.Append(' ');
 
             foreach (var source in sources)
             {
-                sb.Append(source);
                 sb.Append(' ');
+                sb.Append(source);
             }
-            sb.Insert(sb.Length - 1, ';');
+            sb.Append(';');
             return sb.ToString();
         }
 
@@ -254,6 +253,46 @@ namespace NWebsec.Core.HttpHeaders
 
             return sources;
         }
+
+        private List<string> GetSandboxDirectiveList(ICspSandboxDirectiveConfiguration directive)
+        {
+            if (directive == null || !directive.Enabled)
+                return null;
+
+            var sources = new List<string>();
+
+            if (directive.AllowForms)
+            {
+                sources.Add("allow-forms");
+            }
+
+            if (directive.AllowPointerLock)
+            {
+                sources.Add("allow-pointer-lock");
+            }
+
+            if (directive.AllowPopups)
+            {
+                sources.Add("allow-popups");
+            }
+
+            if (directive.AllowSameOrigin)
+            {
+                sources.Add("allow-same-origin");
+            }
+
+            if (directive.AllowScripts)
+            {
+                sources.Add("allow-scripts");
+            }
+
+            if (directive.AllowTopNavigation)
+            {
+                sources.Add("allow-top-navigation");
+            }
+
+            return sources;
+        } 
 
         private List<string> GetReportUriList(ICspReportUriDirectiveConfiguration directive,
             string builtinReportHandlerUri = null)

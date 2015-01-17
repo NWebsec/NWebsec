@@ -69,6 +69,7 @@
     <Compile Include="Helpers\IHeaderResultHandler.cs" />
     <Compile Include="Helpers\RedirectValidationHelper.cs" />
     <Compile Include="Helpers\HandlerTypeHelper.cs" />
+    <Compile Include="Modules\Configuration\Csp\CspSandboxDirectiveConfigurationElement.cs" />
     <Compile Include="Modules\Configuration\Csp\CspDirectiveBaseConfigurationElement.cs" />
     <Compile Include="Modules\Configuration\Csp\CspDirectiveUnsafeInlineConfigurationElement.cs" />
     <Compile Include="Modules\Configuration\Csp\CspDirectiveUnsafeInlineUnsafeEvalConfigurationElement.cs" />
