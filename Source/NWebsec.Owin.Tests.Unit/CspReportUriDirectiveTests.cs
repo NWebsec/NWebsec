@@ -34,7 +34,7 @@ namespace NWebsec.Owin.Tests.Unit
         [Test]
         public void Uris_InvalidUris_ThrowsException()
         {
-            Assert.Throws<ArgumentException>(() => _directive.Uris("/report", "https://www.nwebsec.com/report"));
+            Assert.Throws<ArgumentException>(() => _directive.Uris("/report", "https://*.nwebsec.com/report"));
         }
     }
 }
