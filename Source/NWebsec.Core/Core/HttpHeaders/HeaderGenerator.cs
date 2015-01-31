@@ -204,7 +204,8 @@ namespace NWebsec.Core.HttpHeaders
             return sb.ToString();
         }
 
-        private string CreateDirectiveValue(string directiveName, List<string> sources)
+        //Internal for unit testing.
+        internal string CreateDirectiveValue(string directiveName, List<string> sources)
         {
             if (sources == null || sources.Count < 1) return String.Empty;
 
@@ -214,9 +215,26 @@ namespace NWebsec.Core.HttpHeaders
             foreach (var source in sources)
             {
                 sb.Append(' ');
-                sb.Append(source);
+                sb.Append(EscapeSource(source));
             }
+
             sb.Append(';');
+            return sb.ToString();
+        }
+
+        private string EscapeSource(string source)
+        {
+            var encodeChars = new[] { ';', ',' };
+
+            if (source.IndexOfAny(encodeChars) == -1)
+            {
+                return source;
+            }
+
+            var sb = new StringBuilder(source);
+            sb.Replace(";", "%3B");
+            sb.Replace(",", "%2C");
+
             return sb.ToString();
         }
 
@@ -292,7 +310,7 @@ namespace NWebsec.Core.HttpHeaders
             }
 
             return sources;
-        } 
+        }
 
         private List<string> GetReportUriList(ICspReportUriDirectiveConfiguration directive,
             string builtinReportHandlerUri = null)
