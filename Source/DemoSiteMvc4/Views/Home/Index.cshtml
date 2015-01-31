@@ -26,3 +26,8 @@
     ub.Path = "/DemositeMvc4/Home/Framed";
 }
 <iframe height="300" width="700" src="@ub.Uri.AbsoluteUri"></iframe>
+<style @Html.CspStyleNonce()>
+    h6 {
+        font-size: 5em; /* view */
+    }
+</style>

@@ -9,7 +9,8 @@ using NWebsec.Mvc.HttpHeaders.Csp;
 namespace DemoSiteMvc4.Controllers
 {
     [AllowMultiple("Controller")]
-    [Csp]
+    //[Csp]
+        [CspSandbox(AllowPointerLock = true)]
     
     public class HomeController : Controller
     {
@@ -18,15 +19,22 @@ namespace DemoSiteMvc4.Controllers
 
         //[CspScriptSrc(UnsafeInline = Source.Enable, CustomSources = "www.nwebsec.com")]
         //[CspStyleSrc(UnsafeInline = Source.Enable, CustomSources = "www.nwebsec.com")]
-        [CspFrameAncestors(Self = Source.Enable)]
+        //[CspFrameAncestors(Self = Source.Enable)]
+        //[CspBaseUri(CustomSources = "mvcbase.klings.org")]
+        //[CspChildSrc(CustomSources = "child.klings.org")]
+        //[CspFormAction(CustomSources = "forms.klings.org")]
+        //[CspFrameAncestors(CustomSources = "frames.klings.org")]
         public ActionResult Index()
         {
-            return View();
+            return new EmptyResult();
+            //return View();
         }
 
         [AllowMultiple("Action")]
         [XFrameOptions(Policy = XFrameOptionsPolicy.Disabled)]
         [CspScriptSrcReportOnly(None = Source.Inherit)]
+        [CspSandbox(AllowForms = true, AllowPointerLock = false, AllowPopups = true)]
+        [Csp]
         public ActionResult Other()
         {
             return View("Index");
