@@ -9,7 +9,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using NUnit.Framework;
 
-namespace NWebsec.Tests.Functional
+namespace NWebsec.Tests.Integration
 {
     public abstract class MvcTestsBase
     {

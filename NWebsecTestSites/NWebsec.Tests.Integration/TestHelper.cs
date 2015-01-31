@@ -2,7 +2,7 @@
 
 using System;
 
-namespace NWebsec.Tests.Functional
+namespace NWebsec.Tests.Integration
 {
     public class TestHelper
     {

@@ -3,7 +3,7 @@
 using System.Configuration;
 using NUnit.Framework;
 
-namespace NWebsec.Tests.Functional
+namespace NWebsec.Tests.Integration
 {
     [TestFixture]
     public class Mvc3Tests : MvcTestsBase

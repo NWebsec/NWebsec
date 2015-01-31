@@ -7,7 +7,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using NUnit.Framework;
 
-namespace NWebsec.Tests.Functional
+namespace NWebsec.Tests.Integration
 {
     class WebForms35Tests
     {
