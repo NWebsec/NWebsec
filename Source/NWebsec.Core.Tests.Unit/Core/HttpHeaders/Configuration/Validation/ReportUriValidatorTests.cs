@@ -1,6 +1,5 @@
 ﻿// Copyright (c) André N. Klingsheim. See License.txt in the project root for license information.
 
-using System;
 using NUnit.Framework;
 using NWebsec.Core.HttpHeaders.Configuration.Validation;
 
@@ -18,30 +17,21 @@ namespace NWebsec.Core.Tests.Unit.Core.HttpHeaders.Configuration.Validation
         }
 
         [Test]
-        public void ValidateUri_RelativeUri_NoException()
-        {
-            var relativeUri = new Uri("/Cspreport", UriKind.Relative);
-
-            Assert.DoesNotThrow(() => _validator.Validate(relativeUri));
-        }
-
         public void ValidateString_RelativeUri_NoException()
         {
             Assert.DoesNotThrow(() => _validator.Validate("/Cspreport"));
         }
 
         [Test]
-        public void ValidateUri_AbsoluteUri_ThrowsException()
+        public void ValidateString_AbsoluteUri_NoException()
         {
-            var relativeUri = new Uri("https://www.nwebsec.com/Cspreport");
-
-            Assert.Throws<InvalidCspReportUriException>(() => _validator.Validate(relativeUri));
+            Assert.DoesNotThrow(() => _validator.Validate("https://www.nwebsec.com/Cspreport"));
         }
 
         [Test]
-        public void ValidateString_AbsoluteUri_ThrowsException()
+        public void ValidateString_MalformedUri_ThrowsException()
         {
-            Assert.Throws<InvalidCspReportUriException>(() => _validator.Validate("https://www.nwebsec.com/Cspreport"));
+            Assert.Throws<InvalidCspReportUriException>(() => _validator.Validate("https://*.nwebsec.com/Cspreport"));
         }
     }
 }

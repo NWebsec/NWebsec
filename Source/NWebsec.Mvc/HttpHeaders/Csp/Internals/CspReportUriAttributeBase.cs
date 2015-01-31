@@ -3,6 +3,7 @@
 using System;
 using System.Web.Mvc;
 using NWebsec.Core.HttpHeaders.Configuration;
+using NWebsec.Core.HttpHeaders.Configuration.Validation;
 using NWebsec.Mvc.Helpers;
 using NWebsec.Mvc.HttpHeaders.Internals;
 
@@ -38,7 +39,7 @@ namespace NWebsec.Mvc.HttpHeaders.Csp.Internals
         /// </summary>
         public bool EnableBuiltinHandler { get { return _directive.EnableBuiltinHandler; } set { _directive.EnableBuiltinHandler = value; } }
         /// <summary>
-        /// Gets or sets custom report URIs for the directive. Report URIs are separated by exactly one whitespace, and they must be relative URIs.
+        /// Gets or sets custom report URIs for the directive. Report URIs are separated by exactly one whitespace.
         /// </summary>
         public string ReportUris
         {
@@ -51,8 +52,15 @@ namespace NWebsec.Mvc.HttpHeaders.Csp.Internals
                     throw new ArgumentException("ReportUris must not contain leading or trailing whitespace: " + value);
                 if (value.Contains("  "))
                     throw new ArgumentException("ReportUris must be separated by exactly one whitespace: " + value);
-
-                _directive.ReportUris = value.Split(' ');
+                
+                var uris = value.Split(' ');
+                var validator = new ReportUriValidator();
+                
+                foreach (var uri in uris)
+                {
+                    validator.Validate(uri);
+                }
+                _directive.ReportUris = uris;
             }
         }
 

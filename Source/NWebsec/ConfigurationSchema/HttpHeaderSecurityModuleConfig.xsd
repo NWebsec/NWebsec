@@ -292,7 +292,7 @@
   <xs:complexType name="cspReportUri">
     <xs:attribute name="report-uri" type="xs:string" use="required">
       <xs:annotation>
-        <xs:documentation>This attribute is required. Specifies a report Uri. Report Uri's must be relative.</xs:documentation>
+        <xs:documentation>This attribute is required. Specifies a report Uri.</xs:documentation>
       </xs:annotation>
     </xs:attribute>
   </xs:complexType>
