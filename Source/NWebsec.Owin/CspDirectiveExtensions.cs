@@ -3,7 +3,7 @@
 using System;
 using System.Linq;
 using NWebsec.Core.HttpHeaders.Configuration;
-using NWebsec.Core.HttpHeaders.Configuration.Validation;
+using NWebsec.Core.HttpHeaders.Csp;
 
 namespace NWebsec.Owin
 {
@@ -49,21 +49,15 @@ namespace NWebsec.Owin
             if (directive == null) throw new ArgumentNullException("directive");
             if (sources.Length == 0) throw new ArgumentException("You must supply at least one source.", "sources");
 
-            var validator = new CspSourceValidator();
-
-            foreach (var source in sources)
+            try
             {
-                try
-                {
-                    validator.Validate(source);
-                }
-                catch (InvalidCspSourceException e)
-                {
-                    throw new ArgumentException("Invalid source. Details: " + e.Message, "sources", e);
-                }
+                directive.CustomSources = sources.Select(s => CspUriSource.Parse(s).ToString()).ToArray();
+            }
+            catch (InvalidCspSourceException e)
+            {
+                throw new ArgumentException("Invalid source. Details: " + e.Message, "sources", e);
             }
 
-            directive.CustomSources = sources;
             return directive;
         }
 

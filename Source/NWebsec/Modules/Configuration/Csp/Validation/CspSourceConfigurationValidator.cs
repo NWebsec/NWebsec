@@ -2,18 +2,12 @@
 
 using System;
 using System.Configuration;
-using NWebsec.Core.HttpHeaders.Configuration.Validation;
+using NWebsec.Core.HttpHeaders.Csp;
 
 namespace NWebsec.Modules.Configuration.Csp.Validation
 {
     class CspSourceConfigurationValidator : ConfigurationValidatorBase
     {
-        private readonly CspSourceValidator _validator;
-
-        public CspSourceConfigurationValidator()
-        {
-            _validator = new CspSourceValidator();
-        }
 
         public override bool CanValidate(Type type)
         {
@@ -23,9 +17,11 @@ namespace NWebsec.Modules.Configuration.Csp.Validation
         public override void Validate(object value)
         {
             var source = (string)value;
+            if (String.IsNullOrEmpty(source)) return;
+
             try
             {
-                _validator.Validate(source);
+                CspUriSource.Parse(source);
             }
             catch (Exception e)
             {

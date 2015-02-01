@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
 using NWebsec.Core.HttpHeaders.Configuration;
+using NWebsec.Core.HttpHeaders.Csp;
 
 namespace NWebsec.Modules.Configuration.Csp
 {
@@ -60,7 +61,17 @@ namespace NWebsec.Modules.Configuration.Csp
             {
                 if (_customSources == null)
                 {
-                    _customSources = Sources.Cast<CspSourceConfigurationElement>().Select(s => s.Source).ToArray();
+                    try
+                    {
+                        _customSources =
+                            Sources.Cast<CspSourceConfigurationElement>()
+                                .Select(s => CspUriSource.Parse(s.Source).ToString())
+                                .ToArray();
+                    }
+                    catch (Exception e)
+                    {
+                        throw new ConfigurationErrorsException("Error parsing CSP sources from web.config.", e);
+                    }
                 }
                 return _customSources;
             }
