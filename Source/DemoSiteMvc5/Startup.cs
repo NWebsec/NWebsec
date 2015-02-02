@@ -25,13 +25,13 @@ namespace DemoSiteMvc5
 
             app.UseCsp(options => options
                 .DefaultSources(s => s.Self())
-                .ScriptSources(s => s.Self().CustomSources("scripts.nwebsec.com"))
+                .ScriptSources(s => s.Self().CustomSources("scripts.nwebsec.com", "*.üüüüüü.de/WithPath;/From,Owin"))
                 .BaseUris(s => s.CustomSources("baseuri.nwebsec.com"))
                 .ChildSources(s => s.CustomSources("childsrc.nwebsec.com"))
                 .FormActions(s => s.CustomSources("formaction.nwebsec.com"))
-                .FrameAncestors(s => s.CustomSources("ancestors.nwebsec.com"))
+                .FrameAncestors(s => s.CustomSources("ancestors.nwebsec.com/With/owinPath"))
                 .Sandbox(s => s.AllowForms().AllowPointerLock().AllowPopups().AllowSameOrigin().AllowScripts().AllowTopNavigation())
-                .ReportUris(r => r.Uris("/report")));
+                .ReportUris(r => r.Uris("https://www.nwebsec.com/report", "https://üüüüüü.de/WithPath;/From,Config")));
 
             app.UseCspReportOnly(options => options
                 .DefaultSources(s => s.Self())

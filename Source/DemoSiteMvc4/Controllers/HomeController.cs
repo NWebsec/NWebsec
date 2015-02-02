@@ -23,7 +23,8 @@ namespace DemoSiteMvc4.Controllers
         //[CspBaseUri(CustomSources = "mvcbase.klings.org")]
         //[CspChildSrc(CustomSources = "child.klings.org")]
         //[CspFormAction(CustomSources = "forms.klings.org")]
-        //[CspFrameAncestors(CustomSources = "frames.klings.org")]
+        [CspFrameAncestors(None = true, Self = true)]
+        [CspReportUri(ReportUris = "https://üüüüüü.de/WithPath;/From,Config https://report.klings.org/")]
         public ActionResult Index()
         {
             return new EmptyResult();
@@ -32,7 +33,6 @@ namespace DemoSiteMvc4.Controllers
 
         [AllowMultiple("Action")]
         [XFrameOptions(Policy = XFrameOptionsPolicy.Disabled)]
-        [CspScriptSrcReportOnly(None = Source.Inherit)]
         [CspSandbox(AllowForms = true, AllowPointerLock = false, AllowPopups = true)]
         [Csp]
         public ActionResult Other()
@@ -56,7 +56,7 @@ namespace DemoSiteMvc4.Controllers
             return Redirect("https://localhost:8443/DemoSiteMvc4");
         }
 
-        [CspFrameAncestors(None = Source.Enable)]
+        [CspFrameAncestors(None = true)]
         public ActionResult Framed()
         {
             return View();
