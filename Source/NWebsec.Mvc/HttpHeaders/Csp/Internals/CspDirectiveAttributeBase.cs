@@ -18,7 +18,6 @@ namespace NWebsec.Mvc.HttpHeaders.Csp.Internals
     {
         private readonly CspConfigurationOverrideHelper _headerConfigurationOverrideHelper;
         private readonly HeaderOverrideHelper _headerOverrideHelper;
-        private string[] _customSources;
         protected CspDirectiveOverride DirectiveConfig;
         private bool _paramsValidated;
 
@@ -29,7 +28,6 @@ namespace NWebsec.Mvc.HttpHeaders.Csp.Internals
                 Enabled = true,
                 InheritOtherSources = true
             };
-            InheritCustomSources = true;
             _headerConfigurationOverrideHelper = new CspConfigurationOverrideHelper();
             _headerOverrideHelper = new HeaderOverrideHelper();
         }
@@ -80,7 +78,7 @@ namespace NWebsec.Mvc.HttpHeaders.Csp.Internals
 
                 try
                 {
-                    _customSources = sources.Select(s => CspUriSource.Parse(s).ToString()).ToArray();
+                    DirectiveConfig.OtherSources = sources.Select(s => CspUriSource.Parse(s).ToString()).ToArray();
                 }
                 catch (Exception e)
                 {
@@ -107,7 +105,7 @@ namespace NWebsec.Mvc.HttpHeaders.Csp.Internals
             if (_paramsValidated) return;
 
             //TODO validate that the none source is not combined with other sources.
-            if (Enabled && KeywordSourcesNotConfigured() && _customSources == null)
+            if (Enabled && KeywordSourcesNotConfigured() && DirectiveConfig.OtherSources == null)
                 throw new ApplicationException("No sources enabled for attribute. Remove attribute, or set \"Enabled=false\"");
 
             _paramsValidated = true;
