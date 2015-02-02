@@ -74,7 +74,7 @@
     <Compile Include="Modules\Configuration\Csp\CspDirectiveUnsafeInlineConfigurationElement.cs" />
     <Compile Include="Modules\Configuration\Csp\CspDirectiveUnsafeInlineUnsafeEvalConfigurationElement.cs" />
     <Compile Include="Modules\Configuration\Csp\CspHeaderConfigurationElement.cs" />
-    <Compile Include="Modules\Configuration\Csp\ReportUriConfigurationElement.cs" />
+    <Compile Include="Modules\Configuration\Csp\CspReportUriConfigurationElement.cs" />
     <Compile Include="Modules\Configuration\Csp\CspReportUriDirectiveConfigurationElement.cs" />
     <Compile Include="Modules\Configuration\Csp\CspReportUriConfigurationElementCollection.cs" />
     <Compile Include="Modules\Configuration\Csp\Validation\CspDirectiveUnsafeInlineConfigurationElementValidator.cs" />
@@ -86,6 +86,8 @@
     <Compile Include="Modules\Configuration\Csp\CspSourceConfigurationElement.cs" />
     <Compile Include="Modules\Configuration\Csp\CspSourcesElementCollection.cs" />
     <Compile Include="Modules\Configuration\Csp\Validation\CspDirectiveBaseConfigurationElementValidatorAttribute.cs" />
+    <Compile Include="Modules\Configuration\Csp\Validation\ReportUriValidatorAttribute.cs" />
+    <Compile Include="Modules\Configuration\Csp\Validation\ReportUriConfigurationValidator.cs" />
     <Compile Include="Modules\Configuration\HstsConfigurationElement.cs" />
     <Compile Include="Modules\Configuration\HttpHeaderSecurityConfigurationSection.cs" />
     <Compile Include="Modules\Configuration\RedirectSameHostConfigurationElement.cs" />

@@ -1,9 +1,11 @@
 ﻿// Copyright (c) André N. Klingsheim. See License.txt in the project root for license information.
 
 using System;
+using System.Linq;
 using System.Web.Mvc;
 using NWebsec.Core.HttpHeaders.Configuration;
 using NWebsec.Core.HttpHeaders.Configuration.Validation;
+using NWebsec.Core.HttpHeaders.Csp;
 using NWebsec.Mvc.Helpers;
 using NWebsec.Mvc.HttpHeaders.Internals;
 
@@ -52,15 +54,22 @@ namespace NWebsec.Mvc.HttpHeaders.Csp.Internals
                     throw new ArgumentException("ReportUris must not contain leading or trailing whitespace: " + value);
                 if (value.Contains("  "))
                     throw new ArgumentException("ReportUris must be separated by exactly one whitespace: " + value);
-                
+
                 var uris = value.Split(' ');
                 var validator = new ReportUriValidator();
-                
-                foreach (var uri in uris)
+
+                try
                 {
-                    validator.Validate(uri);
+                    _directive.ReportUris = uris.Select(u =>
+                    {
+                        validator.Validate(u);
+                        return CspUriSource.EncodeUri(new Uri(u, UriKind.RelativeOrAbsolute));
+                    }).ToArray();
                 }
-                _directive.ReportUris = uris;
+                catch (Exception e)
+                {
+                    throw new ArgumentException("Invalid reportUri(s): " + value, e);
+                }
             }
         }
 

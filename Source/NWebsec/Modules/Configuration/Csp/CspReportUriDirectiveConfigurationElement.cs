@@ -5,11 +5,14 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
 using NWebsec.Core.HttpHeaders.Configuration;
+using NWebsec.Core.HttpHeaders.Csp;
 
 namespace NWebsec.Modules.Configuration.Csp
 {
     public class CspReportUriDirectiveConfigurationElement : ConfigurationElement, ICspReportUriDirectiveConfiguration
     {
+        private string[] _reportUris;
+
         [ConfigurationProperty("enabled", IsRequired = false, DefaultValue = true)]
         public bool Enabled
         {
@@ -36,9 +39,17 @@ namespace NWebsec.Modules.Configuration.Csp
             }
         }
 
-        public IEnumerable<string> ReportUris {
-            get { return ReportUriCollection.Cast<ReportUriConfigurationElement>().Select(e => e.ReportUri.ToString()); }
-            set { throw  new NotImplementedException(); }
+        public IEnumerable<string> ReportUris
+        {
+            get
+            {
+                if (_reportUris == null)
+                {
+                    _reportUris = ReportUriCollection.Cast<CspReportUriConfigurationElement>().Select(e => CspUriSource.EncodeUri(e.ReportUri)).ToArray();
+                }
+                return _reportUris;
+            }
+            set { throw new NotImplementedException(); }
         }
 
         [ConfigurationProperty("", IsRequired = false, IsDefaultCollection = true)]

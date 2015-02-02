@@ -8,9 +8,16 @@ namespace NWebsec.Core.HttpHeaders.Configuration.Validation
     {
         public void Validate(string uri)
         {
-            Uri result;
-            if (! Uri.TryCreate(uri, UriKind.RelativeOrAbsolute, out result))
-                throw new InvalidCspReportUriException("Could not parse Csp report-uri: " + uri);
+            if (!Uri.IsWellFormedUriString(uri, UriKind.RelativeOrAbsolute))
+                throw new InvalidCspReportUriException("Csp report-uri was not a well formed URI: " + uri);
+
+        }
+
+        public void Validate(Uri uri)
+        {
+            if (!uri.IsWellFormedOriginalString())
+                throw new InvalidCspReportUriException("Csp report-uri was not a well formed URI: " + uri);
+
         }
     }
 

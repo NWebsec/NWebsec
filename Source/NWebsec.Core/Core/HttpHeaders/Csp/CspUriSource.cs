@@ -100,13 +100,13 @@ namespace NWebsec.Core.HttpHeaders.Csp
             };
         }
 
-        private static string EncodeHostname(string hostname)
+        public static string EncodeHostname(string hostname)
         {
             var idn = new IdnMapping();
             return idn.GetAscii(hostname);
         }
 
-        private static string EncodePath(string pathAndQuery)
+        public static string EncodePath(string pathAndQuery)
         {
             char[] encodeChars = { ';', ',' };
 
@@ -122,6 +122,25 @@ namespace NWebsec.Core.HttpHeaders.Csp
             return sb.ToString();
         }
 
+        public static string EncodeUri(Uri uri)
+        {
+            if (!uri.IsWellFormedOriginalString())
+            {
+                throw new ArgumentException("Uri was not well formed.", "uri");
+            }
+
+            if (!uri.IsAbsoluteUri)
+            {
+                return EncodePath(uri.ToString());
+            }
+
+            var ub = new UriBuilder(uri);
+            ub.Host = EncodeHostname(ub.Host);
+            ub.Path = EncodePath(ub.Path);
+            ub.Query = EncodePath(ub.Query);
+            return ub.Uri.AbsoluteUri;
+        }
+        
         private static bool ValidatePort(string port)
         {
             if (port.Equals("*")) return true;

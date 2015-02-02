@@ -2,8 +2,10 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using NWebsec.Core.HttpHeaders.Configuration;
 using NWebsec.Core.HttpHeaders.Configuration.Validation;
+using NWebsec.Core.HttpHeaders.Csp;
 
 namespace NWebsec.Owin
 {
@@ -24,19 +26,18 @@ namespace NWebsec.Owin
 
             var validator = new ReportUriValidator();
 
-            foreach (var reportUri in reportUris)
+            try
             {
-                try
+                ReportUris = reportUris.Select(u =>
                 {
-                    validator.Validate(reportUri);
-                }
-                catch (InvalidCspReportUriException e)
-                {
-                    throw new ArgumentException("Invalid reportUri. Details: " + e.Message, e);
-                }
+                    validator.Validate(u);
+                    return CspUriSource.EncodeUri(new Uri(u, UriKind.RelativeOrAbsolute));
+                }).ToArray();
             }
-
-            ReportUris = reportUris;
+            catch (InvalidCspReportUriException e)
+            {
+                throw new ArgumentException("Invalid reportUri. Details: " + e.Message, e);
+            }
         }
     }
 }

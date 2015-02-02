@@ -61,17 +61,9 @@ namespace NWebsec.Modules.Configuration.Csp
             {
                 if (_customSources == null)
                 {
-                    try
-                    {
-                        _customSources =
-                            Sources.Cast<CspSourceConfigurationElement>()
-                                .Select(s => CspUriSource.Parse(s.Source).ToString())
-                                .ToArray();
-                    }
-                    catch (Exception e)
-                    {
-                        throw new ConfigurationErrorsException("Error parsing CSP sources from web.config.", e);
-                    }
+                    //Sources are already validated by configuration validation magic.
+                    _customSources = Sources.Cast<CspSourceConfigurationElement>().Select(s => CspUriSource.Parse(s.Source).ToString()).ToArray();
+
                 }
                 return _customSources;
             }
