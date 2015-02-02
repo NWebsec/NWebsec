@@ -61,7 +61,6 @@
     <Compile Include="Csp\CspReportHandlerUriHelper.cs" />
     <Compile Include="Csp\CspReportHelper.cs" />
     <Compile Include="Csp\ICspReportHelper.cs" />
-    <Compile Include="Csp\Source.cs" />
     <Compile Include="ExtensionMethods\HttpContextBaseExtensions.cs" />
     <Compile Include="Helpers\ConfigHelper.cs" />
     <Compile Include="Helpers\ConfigurationHeaderSetter.cs" />

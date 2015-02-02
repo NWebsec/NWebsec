@@ -1,7 +1,6 @@
 // Copyright (c) André N. Klingsheim. See License.txt in the project root for license information.
 
-using NWebsec.Csp;
-using NWebsec.Mvc.Csp;
+using System;
 using NWebsec.Mvc.Helpers;
 using NWebsec.Mvc.HttpHeaders.Csp.Internals;
 
@@ -13,13 +12,13 @@ namespace NWebsec.Mvc.HttpHeaders.Csp
     public class CspScriptSrcAttribute : CspDirectiveAttributeBase
     {
         /// <summary>
-        /// Gets or sets whether the 'unsafe-inline' source is included in the directive. Possible values are Inherit, Enabled or Disabled. The default is Inherit.
+        /// Gets or sets whether the 'unsafe-inline' source is included in the directive. Not setting it will inherit existing configuration.
         /// </summary>
-        public Source UnsafeInline { get; set; }
+        public bool UnsafeInline { get { throw new NotSupportedException(); } set { DirectiveConfig.UnsafeInline = value; } }
         /// <summary>
-        /// Gets or sets whether the 'unsafe-eval' source is included in the directive. Possible values are Inherit, Enabled or Disabled. The default is Inherit.
+        /// Gets or sets whether the 'unsafe-eval' source is included in the directive. Not setting it will inherit existing configuration.
         /// </summary>
-        public Source UnsafeEval { get; set; }
+        public bool UnsafeEval { get { throw new NotSupportedException(); } set { DirectiveConfig.UnsafeEval = value; } }
 
         protected override CspDirectives Directive
         {
@@ -29,19 +28,6 @@ namespace NWebsec.Mvc.HttpHeaders.Csp
         protected override bool ReportOnly
         {
             get { return false; }
-        }
-
-        protected override CspDirectiveOverride GetNewDirectiveConfigurationElement()
-        {
-            return new CspDirectiveOverride { UnsafeInline = UnsafeInline, UnsafeEval = UnsafeEval };
-        }
-
-        protected override void ValidateParams()
-        {
-            if (UnsafeInline != Source.Inherit || UnsafeEval != Source.Inherit)
-                return;
-
-            base.ValidateParams();
         }
     }
 }

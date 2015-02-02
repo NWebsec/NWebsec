@@ -1,16 +1,14 @@
 // Copyright (c) André N. Klingsheim. See License.txt in the project root for license information.
 
-using System;
 using System.Collections.Generic;
 using NWebsec.Core.HttpHeaders.Configuration;
-using NWebsec.Csp;
 using NWebsec.Mvc.Csp;
 
 namespace NWebsec.Mvc.Helpers
 {
     public class CspDirectiveOverrideHelper : ICspDirectiveOverrideHelper
     {
-        private static readonly string[] EmptySources = new string[0]; 
+        private static readonly string[] EmptySources = new string[0];
 
 
         public ICspDirectiveConfiguration GetOverridenCspDirectiveConfig(CspDirectiveOverride directiveOverride, ICspDirectiveConfiguration directiveConfig)
@@ -19,17 +17,25 @@ namespace NWebsec.Mvc.Helpers
 
             result.Enabled = directiveOverride.Enabled;
 
-            if (directiveOverride.None != Source.Inherit)
-                result.NoneSrc = directiveOverride.None == Source.Enable;
+            if (directiveOverride.None.HasValue)
+            {
+                result.NoneSrc = (bool)directiveOverride.None;
+            }
 
-            if (directiveOverride.Self != Source.Inherit)
-                result.SelfSrc = directiveOverride.Self == Source.Enable;
+            if (directiveOverride.Self.HasValue)
+            {
+                result.SelfSrc = (bool)directiveOverride.Self;
+            }
 
-            if (directiveOverride.UnsafeEval != Source.Inherit)
-                result.UnsafeEvalSrc = directiveOverride.UnsafeEval == Source.Enable;
+            if (directiveOverride.UnsafeEval.HasValue)
+            {
+                result.UnsafeEvalSrc = (bool)directiveOverride.UnsafeEval;
+            }
 
-            if (directiveOverride.UnsafeInline != Source.Inherit)
-                result.UnsafeInlineSrc = directiveOverride.UnsafeInline == Source.Enable;
+            if (directiveOverride.UnsafeInline.HasValue)
+            {
+                result.UnsafeInlineSrc = (bool)directiveOverride.UnsafeInline;
+            }
 
             if (!directiveOverride.InheritOtherSources)
             {
@@ -40,7 +46,7 @@ namespace NWebsec.Mvc.Helpers
             return result;
         }
 
-        public ICspSandboxDirectiveConfiguration GetOverridenCspSandboxConfig(CspSandboxOverride directiveOverride,ICspSandboxDirectiveConfiguration directiveConfig)
+        public ICspSandboxDirectiveConfiguration GetOverridenCspSandboxConfig(CspSandboxOverride directiveOverride, ICspSandboxDirectiveConfiguration directiveConfig)
         {
             var result = directiveConfig ?? new CspSandboxDirectiveConfiguration();
 
@@ -48,7 +54,7 @@ namespace NWebsec.Mvc.Helpers
 
             if (directiveOverride.AllowForms.HasValue)
             {
-                result.AllowForms = (bool) directiveOverride.AllowForms;
+                result.AllowForms = (bool)directiveOverride.AllowForms;
             }
 
             if (directiveOverride.AllowPointerLock.HasValue)
@@ -78,27 +84,14 @@ namespace NWebsec.Mvc.Helpers
             return result;
         }
 
-        private void AddSources(ICspDirectiveConfiguration config, string sources)
+        private void AddSources(ICspDirectiveConfiguration config, string[] sources)
         {
-            if (String.IsNullOrEmpty(sources)) return;
-
-            if (sources.StartsWith(" ") || sources.EndsWith(" "))
-                throw new ApplicationException("ReportUris must not contain leading or trailing whitespace: " + sources);
-
-            if (sources.Contains("  "))
-                throw new ApplicationException("ReportUris must be separated by exactly one whitespace: " + sources);
-
-            var sourceList = sources.Split(' ');
-
-            if (sourceList.Length == 0)
-            {
-                return;
-            }
-
+            if (sources == null || sources.Length == 0) return;
+            
             var newSources = new List<string>();
 
             newSources.AddRange(config.CustomSources);
-            newSources.AddRange(sourceList);
+            newSources.AddRange(sources);
             config.CustomSources = newSources;
         }
     }

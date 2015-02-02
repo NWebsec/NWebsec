@@ -1,11 +1,8 @@
 ﻿// Copyright (c) André N. Klingsheim. See License.txt in the project root for license information.
 
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using NUnit.Framework;
 using NWebsec.Core.HttpHeaders.Configuration;
-using NWebsec.Csp;
 using NWebsec.Mvc.Csp;
 using NWebsec.Mvc.Helpers;
 using NWebsec.Mvc.Tests.Unit.TestHelpers;
@@ -16,8 +13,6 @@ namespace NWebsec.Mvc.Tests.Unit.Helpers
     public class CspDirectiveOverrideHelperTests
     {
         private CspDirectiveOverrideHelper _overrideHelper;
-
-        public static IEnumerable<Tuple<bool, Source>> SourceCombos = new[] { new Tuple<bool, Source>(true, Source.Enable), new Tuple<bool, Source>(false, Source.Disable) };
 
         [SetUp]
         public void Setup()
@@ -51,12 +46,10 @@ namespace NWebsec.Mvc.Tests.Unit.Helpers
 
 
         [Test]
-        public void GetOverridenCspDirectiveConfig_NoneOverride_OverridesNone([ValueSource("SourceCombos")] Tuple<bool, Source> combination)
+        public void GetOverridenCspDirectiveConfig_NoneOverride_OverridesNone([Values(true, false)] bool expectedResult)
         {
-            var expectedResult = combination.Item1;
-            var src = combination.Item2;
             var directiveConfig = new CspDirectiveConfiguration { NoneSrc = !expectedResult };
-            var directiveOverride = new CspDirectiveOverride { None = src };
+            var directiveOverride = new CspDirectiveOverride { None = expectedResult };
 
             var newConfig = _overrideHelper.GetOverridenCspDirectiveConfig(directiveOverride, directiveConfig);
 
@@ -67,7 +60,7 @@ namespace NWebsec.Mvc.Tests.Unit.Helpers
         public void GetOverridenCspDirectiveConfig_NoneInherit_InheritsNone([Values(true, false)] bool expectedResult)
         {
             var directiveConfig = new CspDirectiveConfiguration { NoneSrc = expectedResult };
-            var directiveOverride = new CspDirectiveOverride { None = Source.Inherit };
+            var directiveOverride = new CspDirectiveOverride();
 
             var newConfig = _overrideHelper.GetOverridenCspDirectiveConfig(directiveOverride, directiveConfig);
 
@@ -75,12 +68,10 @@ namespace NWebsec.Mvc.Tests.Unit.Helpers
         }
 
         [Test]
-        public void GetOverridenCspDirectiveConfig_SelfOverride_OverridesSelf([ValueSource("SourceCombos")] Tuple<bool, Source> combination)
+        public void GetOverridenCspDirectiveConfig_SelfOverride_OverridesSelf([Values(true, false)] bool expectedResult)
         {
-            var expectedResult = combination.Item1;
-            var src = combination.Item2;
             var directiveConfig = new CspDirectiveConfiguration { SelfSrc = !expectedResult };
-            var directiveOverride = new CspDirectiveOverride { Self = src };
+            var directiveOverride = new CspDirectiveOverride { Self = expectedResult };
 
             var newConfig = _overrideHelper.GetOverridenCspDirectiveConfig(directiveOverride, directiveConfig);
 
@@ -91,7 +82,7 @@ namespace NWebsec.Mvc.Tests.Unit.Helpers
         public void GetOverridenCspDirectiveConfig_SelfInherit_InheritsSelf([Values(true, false)] bool expectedResult)
         {
             var directiveConfig = new CspDirectiveConfiguration { SelfSrc = expectedResult };
-            var directiveOverride = new CspDirectiveOverride { Self = Source.Inherit };
+            var directiveOverride = new CspDirectiveOverride();
 
             var newConfig = _overrideHelper.GetOverridenCspDirectiveConfig(directiveOverride, directiveConfig);
 
@@ -99,12 +90,10 @@ namespace NWebsec.Mvc.Tests.Unit.Helpers
         }
 
         [Test]
-        public void GetOverridenCspDirectiveConfig_UnsafeEvalOverride_OverridesUnsafeEval([ValueSource("SourceCombos")] Tuple<bool, Source> combination)
+        public void GetOverridenCspDirectiveConfig_UnsafeEvalOverride_OverridesUnsafeEval([Values(true, false)] bool expectedResult)
         {
-            var expectedResult = combination.Item1;
-            var src = combination.Item2;
             var directiveConfig = new CspDirectiveConfiguration { UnsafeEvalSrc = !expectedResult };
-            var directiveOverride = new CspDirectiveOverride { UnsafeEval = src };
+            var directiveOverride = new CspDirectiveOverride { UnsafeEval = expectedResult };
 
             var newConfig = _overrideHelper.GetOverridenCspDirectiveConfig(directiveOverride, directiveConfig);
 
@@ -115,7 +104,7 @@ namespace NWebsec.Mvc.Tests.Unit.Helpers
         public void GetOverridenCspDirectiveConfig_UnsafeEvalInherit_InheritsUnsafeEval([Values(true, false)] bool expectedResult)
         {
             var directiveConfig = new CspDirectiveConfiguration { UnsafeEvalSrc = expectedResult };
-            var directiveOverride = new CspDirectiveOverride { UnsafeEval = Source.Inherit };
+            var directiveOverride = new CspDirectiveOverride();
 
             var newConfig = _overrideHelper.GetOverridenCspDirectiveConfig(directiveOverride, directiveConfig);
 
@@ -123,12 +112,10 @@ namespace NWebsec.Mvc.Tests.Unit.Helpers
         }
 
         [Test]
-        public void GetOverridenCspDirectiveConfig_UnsafeInlineOverride_OverridesUnsafeInline([ValueSource("SourceCombos")] Tuple<bool, Source> combination)
+        public void GetOverridenCspDirectiveConfig_UnsafeInlineOverride_OverridesUnsafeInline([Values(true, false)] bool expectedResult)
         {
-            var expectedResult = combination.Item1;
-            var src = combination.Item2;
             var directiveConfig = new CspDirectiveConfiguration { UnsafeInlineSrc = !expectedResult };
-            var directiveOverride = new CspDirectiveOverride { UnsafeInline = src };
+            var directiveOverride = new CspDirectiveOverride { UnsafeInline = expectedResult };
 
             var newConfig = _overrideHelper.GetOverridenCspDirectiveConfig(directiveOverride, directiveConfig);
 
@@ -139,7 +126,7 @@ namespace NWebsec.Mvc.Tests.Unit.Helpers
         public void GetOverridenCspDirectiveConfig_UnsafeInlineInherit_InheritsUnsafeInline([Values(true, false)] bool expectedResult)
         {
             var directiveConfig = new CspDirectiveConfiguration { UnsafeInlineSrc = expectedResult };
-            var directiveOverride = new CspDirectiveOverride { UnsafeInline = Source.Inherit };
+            var directiveOverride = new CspDirectiveOverride();
 
             var newConfig = _overrideHelper.GetOverridenCspDirectiveConfig(directiveOverride, directiveConfig);
 
@@ -162,7 +149,7 @@ namespace NWebsec.Mvc.Tests.Unit.Helpers
         public void GetOverridenCspDirectiveConfig_CustomSourcesOverride_OverriddesCustomSources()
         {
             var directiveConfig = new CspDirectiveConfiguration { CustomSources = new[] { "www.nwebsec.com" } };
-            var directiveOverride = new CspDirectiveOverride { OtherSources = "*.nwebsec.com", InheritOtherSources = false };
+            var directiveOverride = new CspDirectiveOverride { OtherSources = new []{"*.nwebsec.com"}, InheritOtherSources = false };
 
             var newConfig = _overrideHelper.GetOverridenCspDirectiveConfig(directiveOverride, directiveConfig);
 
@@ -175,7 +162,7 @@ namespace NWebsec.Mvc.Tests.Unit.Helpers
         public void GetOverridenCspDirectiveConfig_CustomSourcesOverrideWithSourcesInherited_KeepsAllSources()
         {
             var directiveConfig = new CspDirectiveConfiguration { CustomSources = new[] { "transformtool.codeplex.com" } };
-            var directiveOverride = new CspDirectiveOverride { OtherSources = "nwebsec.codeplex.com", InheritOtherSources = true };
+            var directiveOverride = new CspDirectiveOverride { OtherSources = new []{"nwebsec.codeplex.com"}, InheritOtherSources = true };
 
             var newConfig = _overrideHelper.GetOverridenCspDirectiveConfig(directiveOverride, directiveConfig);
 

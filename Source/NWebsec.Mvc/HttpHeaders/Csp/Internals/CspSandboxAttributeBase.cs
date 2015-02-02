@@ -73,7 +73,7 @@ namespace NWebsec.Mvc.HttpHeaders.Csp.Internals
             //{
             //    throw new ApplicationException("You need to either set EnableBuiltinHandler to true, or supply at least one Reporturi to enable the reporturi directive.");
             //}
-
+            //TODO add config validation
             _configurationOverrideHelper.SetCspSandboxOverride(filterContext.HttpContext, _directive, ReportOnly);
             base.OnActionExecuting(filterContext);
         }
