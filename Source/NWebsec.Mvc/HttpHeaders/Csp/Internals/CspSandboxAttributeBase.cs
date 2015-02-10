@@ -17,6 +17,7 @@ namespace NWebsec.Mvc.HttpHeaders.Csp.Internals
         private readonly CspSandboxOverride _directive;
         private readonly CspConfigurationOverrideHelper _configurationOverrideHelper;
         private readonly HeaderOverrideHelper _headerOverrideHelper;
+        private bool _paramsValidated;
 
         protected CspSandboxAttributeBase()
         {
@@ -69,11 +70,8 @@ namespace NWebsec.Mvc.HttpHeaders.Csp.Internals
 
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
-            //if (_directive.Enabled && !_directive.EnableBuiltinHandler && _directive.ReportUris == null)
-            //{
-            //    throw new ApplicationException("You need to either set EnableBuiltinHandler to true, or supply at least one Reporturi to enable the reporturi directive.");
-            //}
-            //TODO add config validation
+            ValidateParams();
+
             _configurationOverrideHelper.SetCspSandboxOverride(filterContext.HttpContext, _directive, ReportOnly);
             base.OnActionExecuting(filterContext);
         }
@@ -81,6 +79,26 @@ namespace NWebsec.Mvc.HttpHeaders.Csp.Internals
         public sealed override void SetHttpHeadersOnActionExecuted(ActionExecutedContext filterContext)
         {
             _headerOverrideHelper.SetCspHeaders(filterContext.HttpContext, ReportOnly);
+        }
+
+        internal void ValidateParams()
+        {
+            if (_paramsValidated) return;
+
+            if (Enabled && SourcesNotConfigured())
+                throw new ApplicationException("No sources configured for Csp sandbox attribute. Remove attribute, or set \"Enabled=false\"");
+
+            _paramsValidated = true;
+        }
+
+        private bool SourcesNotConfigured()
+        {
+            return (_directive.AllowForms.HasValue ||
+                    _directive.AllowPointerLock.HasValue ||
+                    _directive.AllowPopups.HasValue ||
+                    _directive.AllowSameOrigin.HasValue ||
+                    _directive.AllowScripts.HasValue ||
+                    _directive.AllowTopNavigation.HasValue) == false;
         }
     }
 }

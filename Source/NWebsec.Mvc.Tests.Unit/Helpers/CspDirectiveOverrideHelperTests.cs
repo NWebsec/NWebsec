@@ -30,7 +30,7 @@ namespace NWebsec.Mvc.Tests.Unit.Helpers
             var newConfig = _overrideHelper.GetOverridenCspDirectiveConfig(directiveOverride, null);
 
             Assert.AreNotSame(directiveConfig, newConfig);
-            Assert.That(newConfig, Is.EqualTo(directiveConfig).Using(new CspDirectiveComparer()));
+            Assert.That(newConfig, Is.EqualTo(directiveConfig).Using(new CspDirectiveConfigurationComparer()));
         }
 
         [Test]
@@ -46,25 +46,66 @@ namespace NWebsec.Mvc.Tests.Unit.Helpers
 
 
         [Test]
-        public void GetOverridenCspDirectiveConfig_NoneOverride_OverridesNone([Values(true, false)] bool expectedResult)
+        public void GetOverridenCspDirectiveConfig_NoneEnabledOverride_OverridesNoneAndDropsOtherSources()
         {
-            var directiveConfig = new CspDirectiveConfiguration { NoneSrc = !expectedResult };
-            var directiveOverride = new CspDirectiveOverride { None = expectedResult };
+            //Overriding with 'none' should clear all other sources. 
+            var directiveConfig = new CspDirectiveConfiguration
+            {
+                NoneSrc = false,
+                SelfSrc = true,
+                Nonce = "hei",
+                UnsafeEvalSrc = true,
+                UnsafeInlineSrc = true,
+                CustomSources = new[] { "nwebsec.com" }
+            };
+            var directiveOverride = new CspDirectiveOverride { None = true };
+            var expectedConfig = new CspDirectiveConfiguration { NoneSrc = true };
 
             var newConfig = _overrideHelper.GetOverridenCspDirectiveConfig(directiveOverride, directiveConfig);
 
-            Assert.AreEqual(expectedResult, newConfig.NoneSrc);
+            Assert.That(newConfig, Is.EqualTo(expectedConfig).Using(new CspDirectiveConfigurationComparer()));
         }
 
         [Test]
-        public void GetOverridenCspDirectiveConfig_NoneInherit_InheritsNone([Values(true, false)] bool expectedResult)
+        public void GetOverridenCspDirectiveConfig_NoneDisabledOverride_OverridesNoneAndKeepsOtherSources()
         {
-            var directiveConfig = new CspDirectiveConfiguration { NoneSrc = expectedResult };
-            var directiveOverride = new CspDirectiveOverride();
+            var directiveConfig = new CspDirectiveConfiguration
+            {
+                NoneSrc = false,
+                SelfSrc = true,
+                Nonce = "hei",
+                UnsafeEvalSrc = true,
+                UnsafeInlineSrc = true,
+                CustomSources = new[] { "nwebsec.com" }
+            };
+            var directiveOverride = new CspDirectiveOverride { None = false };
+
 
             var newConfig = _overrideHelper.GetOverridenCspDirectiveConfig(directiveOverride, directiveConfig);
 
-            Assert.AreEqual(expectedResult, newConfig.NoneSrc);
+            Assert.That(newConfig, Is.EqualTo(directiveConfig).Using(new CspDirectiveConfigurationComparer()));
+        }
+
+        [Test]
+        public void GetOverridenCspDirectiveConfig_NoneInheritAndOtherSourcesOverride_OverridesNone()
+        {
+            //An inherited 'none' should be overriden when other sources are enabled.
+            var overrides = new[]
+            {
+                new CspDirectiveOverride {Self = true},
+                new CspDirectiveOverride {UnsafeEval = true},
+                new CspDirectiveOverride {UnsafeInline = true},
+                new CspDirectiveOverride {OtherSources = new []{"nwebsec.com"}},
+            
+            };
+
+            foreach (var directiveOverride in overrides)
+            {
+                var directiveConfig = new CspDirectiveConfiguration { NoneSrc = true };
+                var newConfig = _overrideHelper.GetOverridenCspDirectiveConfig(directiveOverride, directiveConfig);
+
+                Assert.IsFalse(newConfig.NoneSrc);
+            }
         }
 
         [Test]
@@ -149,7 +190,7 @@ namespace NWebsec.Mvc.Tests.Unit.Helpers
         public void GetOverridenCspDirectiveConfig_CustomSourcesOverride_OverriddesCustomSources()
         {
             var directiveConfig = new CspDirectiveConfiguration { CustomSources = new[] { "www.nwebsec.com" } };
-            var directiveOverride = new CspDirectiveOverride { OtherSources = new []{"*.nwebsec.com"}, InheritOtherSources = false };
+            var directiveOverride = new CspDirectiveOverride { OtherSources = new[] { "*.nwebsec.com" }, InheritOtherSources = false };
 
             var newConfig = _overrideHelper.GetOverridenCspDirectiveConfig(directiveOverride, directiveConfig);
 
@@ -162,7 +203,7 @@ namespace NWebsec.Mvc.Tests.Unit.Helpers
         public void GetOverridenCspDirectiveConfig_CustomSourcesOverrideWithSourcesInherited_KeepsAllSources()
         {
             var directiveConfig = new CspDirectiveConfiguration { CustomSources = new[] { "transformtool.codeplex.com" } };
-            var directiveOverride = new CspDirectiveOverride { OtherSources = new []{"nwebsec.codeplex.com"}, InheritOtherSources = true };
+            var directiveOverride = new CspDirectiveOverride { OtherSources = new[] { "nwebsec.codeplex.com" }, InheritOtherSources = true };
 
             var newConfig = _overrideHelper.GetOverridenCspDirectiveConfig(directiveOverride, directiveConfig);
 

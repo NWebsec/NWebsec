@@ -7,7 +7,7 @@ using NWebsec.Core.HttpHeaders.Configuration;
 
 namespace NWebsec.Mvc.Tests.Unit.TestHelpers
 {
-    public class CspDirectiveComparer : IComparer<ICspDirectiveConfiguration>
+    public class CspDirectiveConfigurationComparer : IComparer<ICspDirectiveConfiguration>
     {
         public int Compare(ICspDirectiveConfiguration x, ICspDirectiveConfiguration y)
         {

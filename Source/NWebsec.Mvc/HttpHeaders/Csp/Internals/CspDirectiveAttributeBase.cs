@@ -94,20 +94,25 @@ namespace NWebsec.Mvc.HttpHeaders.Csp.Internals
         {
             ValidateParams();
 
-            //TODO ensure that setting the 'none' source overrides all other sources. Also check other attributes.
             _headerConfigurationOverrideHelper.SetCspDirectiveOverride(filterContext.HttpContext, Directive, DirectiveConfig, ReportOnly);
 
             base.OnActionExecuting(filterContext);
         }
 
-        protected void ValidateParams()
+        internal void ValidateParams()
         {
             if (_paramsValidated) return;
 
-            //TODO validate that the none source is not combined with other sources.
             if (Enabled && KeywordSourcesNotConfigured() && DirectiveConfig.OtherSources == null)
-                throw new ApplicationException("No sources enabled for attribute. Remove attribute, or set \"Enabled=false\"");
+            {
+                throw new ApplicationException("No sources configured for attribute. Remove attribute, or set \"Enabled=false\"");
+            }
 
+            if (NoneCombinedWithOtherSources())
+            {
+                throw new ApplicationException("The 'none' source cannot be combined with other sources.");
+                
+            }
             _paramsValidated = true;
         }
 
@@ -117,6 +122,20 @@ namespace NWebsec.Mvc.HttpHeaders.Csp.Internals
                     DirectiveConfig.Self.HasValue ||
                     DirectiveConfig.UnsafeInline.HasValue ||
                     DirectiveConfig.UnsafeEval.HasValue) == false;
+        }
+
+        private bool NoneCombinedWithOtherSources()
+        {
+            if (!DirectiveConfig.None.HasValue || !(bool) DirectiveConfig.None)
+            {
+                //None not configured, or set to false
+                return false;
+            }
+
+            return ((DirectiveConfig.Self.HasValue && (bool)DirectiveConfig.Self) ||
+                    (DirectiveConfig.UnsafeInline.HasValue && (bool)DirectiveConfig.UnsafeInline) ||
+                    (DirectiveConfig.UnsafeEval.HasValue && (bool)DirectiveConfig.UnsafeEval) ||
+                    DirectiveConfig.OtherSources != null);
         }
         
         public sealed override void SetHttpHeadersOnActionExecuted(ActionExecutedContext filterContext)

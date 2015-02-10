@@ -79,7 +79,7 @@ namespace NWebsec.Mvc.Tests.Unit.Helpers
 
 
             Assert.AreNotSame(directive, clone);
-            Assert.That(clone, Is.EqualTo(directive).Using(new CspDirectiveComparer()));
+            Assert.That(clone, Is.EqualTo(directive).Using(new CspDirectiveConfigurationComparer()));
         }
 
         [Test]
@@ -101,7 +101,7 @@ namespace NWebsec.Mvc.Tests.Unit.Helpers
             var clone = mapper.GetCspDirectiveConfigCloned(config, CspDirectives.ScriptSrc);
 
             Assert.AreNotSame(directive, clone);
-            Assert.That(clone, Is.EqualTo(directive).Using(new CspDirectiveComparer()));
+            Assert.That(clone, Is.EqualTo(directive).Using(new CspDirectiveConfigurationComparer()));
         }
 
         [Test]

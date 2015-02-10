@@ -13,6 +13,12 @@ namespace NWebsec.Mvc.Helpers
 
         public ICspDirectiveConfiguration GetOverridenCspDirectiveConfig(CspDirectiveOverride directiveOverride, ICspDirectiveConfiguration directiveConfig)
         {
+            if (directiveOverride.None.HasValue && (bool)directiveOverride.None)
+            {
+                //When 'none' is true we don't want any other sources
+                return new CspDirectiveConfiguration { NoneSrc = true };
+            }
+
             var result = directiveConfig ?? new CspDirectiveConfiguration();
 
             result.Enabled = directiveOverride.Enabled;
@@ -22,19 +28,24 @@ namespace NWebsec.Mvc.Helpers
                 result.NoneSrc = (bool)directiveOverride.None;
             }
 
+            //Keep track if other sources have been enabled, so none must be disabled.
+            var disableNone = false;
             if (directiveOverride.Self.HasValue)
             {
                 result.SelfSrc = (bool)directiveOverride.Self;
+                disableNone = result.SelfSrc;
             }
 
             if (directiveOverride.UnsafeEval.HasValue)
             {
                 result.UnsafeEvalSrc = (bool)directiveOverride.UnsafeEval;
+                disableNone = disableNone || result.UnsafeEvalSrc;
             }
 
             if (directiveOverride.UnsafeInline.HasValue)
             {
                 result.UnsafeInlineSrc = (bool)directiveOverride.UnsafeInline;
+                disableNone = disableNone || result.UnsafeInlineSrc;
             }
 
             if (!directiveOverride.InheritOtherSources)
@@ -42,7 +53,19 @@ namespace NWebsec.Mvc.Helpers
                 result.CustomSources = EmptySources;
             }
 
-            AddSources(result, directiveOverride.OtherSources);
+            if (directiveOverride.OtherSources != null && directiveOverride.OtherSources.Length > 0)
+            {
+                var newSources = new List<string>(result.CustomSources);
+                newSources.AddRange(directiveOverride.OtherSources);
+                result.CustomSources = newSources;
+                disableNone = true;
+            }
+
+            if (disableNone)
+            {
+                result.NoneSrc = false;
+            }
+
             return result;
         }
 
@@ -82,17 +105,6 @@ namespace NWebsec.Mvc.Helpers
                 result.AllowTopNavigation = (bool)directiveOverride.AllowTopNavigation;
             }
             return result;
-        }
-
-        private void AddSources(ICspDirectiveConfiguration config, string[] sources)
-        {
-            if (sources == null || sources.Length == 0) return;
-            
-            var newSources = new List<string>();
-
-            newSources.AddRange(config.CustomSources);
-            newSources.AddRange(sources);
-            config.CustomSources = newSources;
         }
     }
 }

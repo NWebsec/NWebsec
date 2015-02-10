@@ -6,14 +6,14 @@ using NWebsec.Core.HttpHeaders.Configuration;
 namespace NWebsec.Mvc.Tests.Unit.TestHelpers
 {
     [TestFixture]
-    public class CspDirectiveComparerTests
+    public class CspDirectiveConfigurationComparerTests
     {
-        private CspDirectiveComparer _comparer;
+        private CspDirectiveConfigurationComparer _comparer;
 
         [SetUp]
         public void Setup()
         {
-            _comparer = new CspDirectiveComparer();
+            _comparer = new CspDirectiveConfigurationComparer();
         }
         [Test]
         public void Compare_IdenticalDefaultConfigs_ReturnsZero()
