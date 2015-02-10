@@ -21,7 +21,7 @@ namespace DemoSiteMvc4.Controllers
         //[CspBaseUri(CustomSources = "mvcbase.klings.org")]
         //[CspChildSrc(CustomSources = "child.klings.org")]
         //[CspFormAction(CustomSources = "forms.klings.org")]
-        [CspFrameAncestors(None = true, Self = true)]
+        //[CspFrameAncestors(None = true, Self = true)]
         [CspReportUri(ReportUris = "https://üüüüüü.de/WithPath;/From,Config https://report.klings.org/")]
         public ActionResult Index()
         {
