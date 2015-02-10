@@ -25,6 +25,7 @@ namespace NWebsec.Core.Tests.Unit.Core.HttpHeaders
 
             var result = _generator.CreateXRobotsTagResult(xRobotsTag);
 
+            Assert.IsNotNull(result);
             Assert.AreEqual(HeaderResult.ResponseAction.Set, result.Action);
             Assert.AreEqual("X-Robots-Tag", result.Name);
             Assert.AreEqual("noindex", result.Value);
@@ -37,6 +38,7 @@ namespace NWebsec.Core.Tests.Unit.Core.HttpHeaders
 
             var result = _generator.CreateXRobotsTagResult(xRobotsTag);
 
+            Assert.IsNotNull(result);
             Assert.AreEqual(HeaderResult.ResponseAction.Set, result.Action);
             Assert.AreEqual("X-Robots-Tag", result.Name);
             Assert.AreEqual("nofollow", result.Value);
@@ -49,6 +51,7 @@ namespace NWebsec.Core.Tests.Unit.Core.HttpHeaders
 
             var result = _generator.CreateXRobotsTagResult(xRobotsTag);
 
+            Assert.IsNotNull(result);
             Assert.AreEqual(HeaderResult.ResponseAction.Set, result.Action);
             Assert.AreEqual("X-Robots-Tag", result.Name);
             Assert.AreEqual("nosnippet", result.Value);
@@ -61,6 +64,7 @@ namespace NWebsec.Core.Tests.Unit.Core.HttpHeaders
 
             var result = _generator.CreateXRobotsTagResult(xRobotsTag);
 
+            Assert.IsNotNull(result);
             Assert.AreEqual(HeaderResult.ResponseAction.Set, result.Action);
             Assert.AreEqual("X-Robots-Tag", result.Name);
             Assert.AreEqual("noarchive", result.Value);
@@ -73,6 +77,7 @@ namespace NWebsec.Core.Tests.Unit.Core.HttpHeaders
 
             var result = _generator.CreateXRobotsTagResult(xRobotsTag);
 
+            Assert.IsNotNull(result);
             Assert.AreEqual(HeaderResult.ResponseAction.Set, result.Action);
             Assert.AreEqual("X-Robots-Tag", result.Name);
             Assert.AreEqual("noodp", result.Value);
@@ -85,6 +90,7 @@ namespace NWebsec.Core.Tests.Unit.Core.HttpHeaders
 
             var result = _generator.CreateXRobotsTagResult(xRobotsTag);
 
+            Assert.IsNotNull(result);
             Assert.AreEqual(HeaderResult.ResponseAction.Set, result.Action);
             Assert.AreEqual("X-Robots-Tag", result.Name);
             Assert.AreEqual("notranslate", result.Value);
@@ -97,6 +103,7 @@ namespace NWebsec.Core.Tests.Unit.Core.HttpHeaders
 
             var result = _generator.CreateXRobotsTagResult(xRobotsTag);
 
+            Assert.IsNotNull(result);
             Assert.AreEqual(HeaderResult.ResponseAction.Set, result.Action);
             Assert.AreEqual("X-Robots-Tag", result.Name);
             Assert.AreEqual("noimageindex", result.Value);
@@ -109,6 +116,7 @@ namespace NWebsec.Core.Tests.Unit.Core.HttpHeaders
 
             var result = _generator.CreateXRobotsTagResult(xRobotsTag);
 
+            Assert.IsNotNull(result);
             Assert.AreEqual(HeaderResult.ResponseAction.Set, result.Action);
             Assert.AreEqual("X-Robots-Tag", result.Name);
             Assert.AreEqual("noindex", result.Value);
@@ -121,6 +129,7 @@ namespace NWebsec.Core.Tests.Unit.Core.HttpHeaders
 
             var result = _generator.CreateXRobotsTagResult(xRobotsTag);
 
+            Assert.IsNotNull(result);
             Assert.AreEqual(HeaderResult.ResponseAction.Set, result.Action);
             Assert.AreEqual("X-Robots-Tag", result.Name);
             Assert.AreEqual("noindex", result.Value);
@@ -133,6 +142,7 @@ namespace NWebsec.Core.Tests.Unit.Core.HttpHeaders
 
             var result = _generator.CreateXRobotsTagResult(xRobotsTag);
 
+            Assert.IsNotNull(result);
             Assert.AreEqual(HeaderResult.ResponseAction.Set, result.Action);
             Assert.AreEqual("X-Robots-Tag", result.Name);
             Assert.AreEqual("noindex", result.Value);
@@ -145,6 +155,7 @@ namespace NWebsec.Core.Tests.Unit.Core.HttpHeaders
 
             var result = _generator.CreateXRobotsTagResult(xRobotsTag);
 
+            Assert.IsNotNull(result);
             Assert.AreEqual(HeaderResult.ResponseAction.Set, result.Action);
             Assert.AreEqual("X-Robots-Tag", result.Name);
             Assert.AreEqual("noindex", result.Value);
@@ -157,6 +168,7 @@ namespace NWebsec.Core.Tests.Unit.Core.HttpHeaders
 
             var result = _generator.CreateXRobotsTagResult(xRobotsTag);
 
+            Assert.IsNotNull(result);
             Assert.AreEqual(HeaderResult.ResponseAction.Set, result.Action);
             Assert.AreEqual("X-Robots-Tag", result.Name);
             Assert.AreEqual("noindex, nofollow", result.Value);
@@ -170,6 +182,7 @@ namespace NWebsec.Core.Tests.Unit.Core.HttpHeaders
 
             var result = _generator.CreateXRobotsTagResult(xRobotsTag, oldXRobotsTag);
 
+            Assert.IsNotNull(result);
             Assert.AreEqual(HeaderResult.ResponseAction.Remove, result.Action);
             Assert.AreEqual("X-Robots-Tag", result.Name);
         }
@@ -182,6 +195,7 @@ namespace NWebsec.Core.Tests.Unit.Core.HttpHeaders
 
             var result = _generator.CreateXRobotsTagResult(xRobotsTag, oldXRobotsTag);
 
+            Assert.IsNotNull(result);
             Assert.AreEqual(HeaderResult.ResponseAction.Set, result.Action);
             Assert.AreEqual("X-Robots-Tag", result.Name);
             Assert.AreEqual("noindex", result.Value);
@@ -195,6 +209,7 @@ namespace NWebsec.Core.Tests.Unit.Core.HttpHeaders
 
             var result = _generator.CreateXRobotsTagResult(xRobotsTag, oldXRobotsTag);
 
+            Assert.IsNotNull(result);
             Assert.AreEqual(HeaderResult.ResponseAction.Set, result.Action);
             Assert.AreEqual("X-Robots-Tag", result.Name);
             Assert.AreEqual("noarchive", result.Value);

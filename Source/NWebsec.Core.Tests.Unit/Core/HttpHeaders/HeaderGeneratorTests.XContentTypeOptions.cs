@@ -26,6 +26,7 @@ namespace NWebsec.Core.Tests.Unit.Core.HttpHeaders
 
             var result = _generator.CreateXContentTypeOptionsResult(contentTypeOptions);
 
+            Assert.IsNotNull(result);
             Assert.AreEqual(HeaderResult.ResponseAction.Set, result.Action);
             Assert.AreEqual("X-Content-Type-Options", result.Name);
             Assert.AreEqual("nosniff", result.Value);
@@ -39,6 +40,7 @@ namespace NWebsec.Core.Tests.Unit.Core.HttpHeaders
 
             var result = _generator.CreateXContentTypeOptionsResult(contentTypeOptions, oldcontentTypeOptions);
 
+            Assert.IsNotNull(result);
             Assert.AreEqual(HeaderResult.ResponseAction.Remove, result.Action);
             Assert.AreEqual("X-Content-Type-Options", result.Name);
 
@@ -52,6 +54,7 @@ namespace NWebsec.Core.Tests.Unit.Core.HttpHeaders
 
             var result = _generator.CreateXContentTypeOptionsResult(contentTypeOptions, oldcontentTypeOptions);
 
+            Assert.IsNotNull(result);
             Assert.AreEqual(HeaderResult.ResponseAction.Set, result.Action);
             Assert.AreEqual("X-Content-Type-Options", result.Name);
             Assert.AreEqual("nosniff", result.Value);
@@ -65,6 +68,7 @@ namespace NWebsec.Core.Tests.Unit.Core.HttpHeaders
 
             var result = _generator.CreateXContentTypeOptionsResult(contentTypeOptions, oldcontentTypeOptions);
 
+            Assert.IsNotNull(result);
             Assert.AreEqual(HeaderResult.ResponseAction.Set, result.Action);
             Assert.AreEqual("X-Content-Type-Options", result.Name);
             Assert.AreEqual("nosniff", result.Value);

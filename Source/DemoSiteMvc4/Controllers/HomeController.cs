@@ -1,8 +1,6 @@
 ﻿using System.Web.Mvc;
 using System.Web.Security;
 using DemoSiteMvc4.CustomAttribute;
-using NWebsec.Csp;
-using NWebsec.HttpHeaders;
 using NWebsec.Mvc.HttpHeaders;
 using NWebsec.Mvc.HttpHeaders.Csp;
 

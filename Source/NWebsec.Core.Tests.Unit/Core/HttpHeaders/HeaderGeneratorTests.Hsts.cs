@@ -26,6 +26,7 @@ namespace NWebsec.Core.Tests.Unit.Core.HttpHeaders
 
             var result = _generator.CreateHstsResult(hstsConfig);
 
+            Assert.IsNotNull(result);
             Assert.AreEqual(HeaderResult.ResponseAction.Set, result.Action);
             Assert.AreEqual("Strict-Transport-Security", result.Name);
             Assert.AreEqual("max-age=0", result.Value);
@@ -38,6 +39,7 @@ namespace NWebsec.Core.Tests.Unit.Core.HttpHeaders
 
             var result = _generator.CreateHstsResult(hstsConfig);
 
+            Assert.IsNotNull(result);
             Assert.AreEqual(HeaderResult.ResponseAction.Set, result.Action);
             Assert.AreEqual("Strict-Transport-Security", result.Name);
             Assert.AreEqual("max-age=86400", result.Value);
@@ -50,6 +52,7 @@ namespace NWebsec.Core.Tests.Unit.Core.HttpHeaders
 
             var result = _generator.CreateHstsResult(hstsConfig);
 
+            Assert.IsNotNull(result);
             Assert.AreEqual(HeaderResult.ResponseAction.Set, result.Action);
             Assert.AreEqual("Strict-Transport-Security", result.Name);
             Assert.AreEqual("max-age=86400; includeSubdomains", result.Value);
@@ -62,6 +65,7 @@ namespace NWebsec.Core.Tests.Unit.Core.HttpHeaders
 
             var result = _generator.CreateHstsResult(hstsConfig);
 
+            Assert.IsNotNull(result);
             Assert.AreEqual(HeaderResult.ResponseAction.Set, result.Action);
             Assert.AreEqual("Strict-Transport-Security", result.Name);
             Assert.AreEqual("max-age=10886400; includeSubdomains; preload", result.Value);

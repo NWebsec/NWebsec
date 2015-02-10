@@ -1,7 +1,7 @@
 ﻿// Copyright (c) André N. Klingsheim. See License.txt in the project root for license information.
 
 using NUnit.Framework;
-using NWebsec.HttpHeaders;
+using NWebsec.Core.HttpHeaders;
 
 namespace NWebsec.Owin.Tests.Unit
 {
@@ -21,7 +21,7 @@ namespace NWebsec.Owin.Tests.Unit
         {
             _options.Deny();
 
-            Assert.AreEqual(XFrameOptionsPolicy.Deny, _options.Policy);
+            Assert.AreEqual(XfoPolicy.Deny, _options.Policy);
         }
 
         [Test]
@@ -29,7 +29,7 @@ namespace NWebsec.Owin.Tests.Unit
         {
             _options.SameOrigin();
 
-            Assert.AreEqual(XFrameOptionsPolicy.SameOrigin, _options.Policy);
+            Assert.AreEqual(XfoPolicy.SameOrigin, _options.Policy);
         }
     }
 }

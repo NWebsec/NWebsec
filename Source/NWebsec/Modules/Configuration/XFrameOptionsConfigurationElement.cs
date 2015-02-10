@@ -1,20 +1,20 @@
 ﻿// Copyright (c) André N. Klingsheim. See License.txt in the project root for license information.
 
 using System.Configuration;
+using NWebsec.Core.HttpHeaders;
 using NWebsec.Core.HttpHeaders.Configuration;
-using NWebsec.HttpHeaders;
 
 namespace NWebsec.Modules.Configuration
 {
     public class XFrameOptionsConfigurationElement : ConfigurationElement, IXFrameOptionsConfiguration
     {
-        [ConfigurationProperty("policy", IsRequired = true, DefaultValue = XFrameOptionsPolicy.Disabled)]
-        public XFrameOptionsPolicy Policy
+        [ConfigurationProperty("policy", IsRequired = true, DefaultValue = XfoPolicy.Disabled)]
+        public XfoPolicy Policy
         {
 
             get
             {
-                return (XFrameOptionsPolicy)this["policy"];
+                return (XfoPolicy)this["policy"];
             }
             set
             {

@@ -26,6 +26,7 @@ namespace NWebsec.Core.Tests.Unit.Core.HttpHeaders
 
             var result = _generator.CreateXDownloadOptionsResult(downloadOptions);
 
+            Assert.IsNotNull(result);
             Assert.AreEqual(HeaderResult.ResponseAction.Set, result.Action);
             Assert.AreEqual("X-Download-Options", result.Name);
             Assert.AreEqual("noopen", result.Value);
@@ -39,6 +40,7 @@ namespace NWebsec.Core.Tests.Unit.Core.HttpHeaders
 
             var result = _generator.CreateXDownloadOptionsResult(downloadOptions, oldDownloadOptions);
 
+            Assert.IsNotNull(result);
             Assert.AreEqual(HeaderResult.ResponseAction.Remove, result.Action);
             Assert.AreEqual("X-Download-Options", result.Name);
 
@@ -52,6 +54,7 @@ namespace NWebsec.Core.Tests.Unit.Core.HttpHeaders
 
             var result = _generator.CreateXDownloadOptionsResult(downloadOptions, oldDownloadOptions);
 
+            Assert.IsNotNull(result);
             Assert.AreEqual(HeaderResult.ResponseAction.Set, result.Action);
             Assert.AreEqual("X-Download-Options", result.Name);
             Assert.AreEqual("noopen", result.Value);
@@ -65,6 +68,7 @@ namespace NWebsec.Core.Tests.Unit.Core.HttpHeaders
 
             var result = _generator.CreateXDownloadOptionsResult(downloadOptions, oldDownloadOptions);
 
+            Assert.IsNotNull(result);
             Assert.AreEqual(HeaderResult.ResponseAction.Set, result.Action);
             Assert.AreEqual("X-Download-Options", result.Name);
             Assert.AreEqual("noopen", result.Value);

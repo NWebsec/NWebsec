@@ -145,8 +145,10 @@
     <Compile Include="HttpHeaders\XContentTypeOptionsAttribute.cs" />
     <Compile Include="HttpHeaders\XDownloadOptionsAttribute.cs" />
     <Compile Include="HttpHeaders\XFrameOptionsAttribute.cs" />
+    <Compile Include="HttpHeaders\XFrameOptionsPolicy.cs" />
     <Compile Include="HttpHeaders\XRobotsTagAttribute.cs" />
     <Compile Include="HttpHeaders\XXssProtectionAttribute.cs" />
+    <Compile Include="HttpHeaders\XXssProtectionPolicy.cs" />
     <Compile Include="MvcStart.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

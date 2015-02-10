@@ -1,8 +1,8 @@
 ﻿// Copyright (c) André N. Klingsheim. See License.txt in the project root for license information.
 
 using System.ComponentModel;
+using NWebsec.Core.HttpHeaders;
 using NWebsec.Core.HttpHeaders.Configuration;
-using NWebsec.HttpHeaders;
 
 namespace NWebsec.Owin
 {
@@ -10,28 +10,28 @@ namespace NWebsec.Owin
     {
         internal XXssProtectionOptions()
         {
-            Policy = XXssProtectionPolicy.Disabled;
+            Policy = XXssPolicy.Disabled;
         }
 
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public XXssProtectionPolicy Policy { get; set; }
+        public XXssPolicy Policy { get; set; }
 
         [EditorBrowsable(EditorBrowsableState.Never)]
         public bool BlockMode { get; set; }
 
         public void Disabled()
         {
-            Policy = XXssProtectionPolicy.FilterDisabled;
+            Policy = XXssPolicy.FilterDisabled;
         }
 
         public void Enabled()
         {
-            Policy = XXssProtectionPolicy.FilterEnabled;
+            Policy = XXssPolicy.FilterEnabled;
         }
 
         public void EnabledWithBlockMode()
         {
-            Policy = XXssProtectionPolicy.FilterEnabled;
+            Policy = XXssPolicy.FilterEnabled;
             BlockMode = true;
         }
     }

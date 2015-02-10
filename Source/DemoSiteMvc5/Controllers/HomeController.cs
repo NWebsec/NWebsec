@@ -1,9 +1,6 @@
-﻿using System.Web.Http.Filters;
-using System.Web.Mvc;
-using NWebsec.HttpHeaders;
+﻿using System.Web.Mvc;
 using NWebsec.Mvc.HttpHeaders;
 using NWebsec.Mvc.HttpHeaders.Csp;
-using ActionFilterAttribute = System.Web.Mvc.ActionFilterAttribute;
 
 namespace DemoSiteMvc5.Controllers
 {

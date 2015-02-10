@@ -87,8 +87,8 @@
     <Compile Include="Core\RedirectValidator.cs" />
     <Compile Include="Core\Exceptions\RedirectValidationException.cs" />
     <Compile Include="Fluent\IFluentInterface.cs" />
-    <Compile Include="HttpHeaders\XFrameOptionsPolicy.cs" />
-    <Compile Include="HttpHeaders\XXssProtectionPolicy.cs" />
+    <Compile Include="Core\HttpHeaders\XfoPolicy.cs" />
+    <Compile Include="Core\HttpHeaders\XXssPolicy.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -102,6 +102,9 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="NWebsecDevKey.snk" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="HttpHeaders\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

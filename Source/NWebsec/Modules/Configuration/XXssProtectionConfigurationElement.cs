@@ -1,21 +1,21 @@
 ﻿// Copyright (c) André N. Klingsheim. See License.txt in the project root for license information.
 
 using System.Configuration;
+using NWebsec.Core.HttpHeaders;
 using NWebsec.Core.HttpHeaders.Configuration;
-using NWebsec.HttpHeaders;
 
 namespace NWebsec.Modules.Configuration
 {
     public class XXssProtectionConfigurationElement : ConfigurationElement, IXXssProtectionConfiguration
     {
 
-        [ConfigurationProperty("policy", IsRequired = true, DefaultValue = XXssProtectionPolicy.Disabled)]
-        public XXssProtectionPolicy Policy
+        [ConfigurationProperty("policy", IsRequired = true, DefaultValue = XXssPolicy.Disabled)]
+        public XXssPolicy Policy
         {
 
             get
             {
-                return (XXssProtectionPolicy)this["policy"];
+                return (XXssPolicy)this["policy"];
             }
             set
             {

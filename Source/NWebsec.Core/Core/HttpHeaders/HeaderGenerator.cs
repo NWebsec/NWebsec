@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using System.Text;
 using NWebsec.Annotations;
 using NWebsec.Core.HttpHeaders.Configuration;
-using NWebsec.HttpHeaders;
 
 namespace NWebsec.Core.HttpHeaders
 {
@@ -93,8 +92,8 @@ namespace NWebsec.Core.HttpHeaders
         public HeaderResult CreateXXssProtectionResult(IXXssProtectionConfiguration xXssProtectionConfig,
             IXXssProtectionConfiguration oldXXssProtectionConfig = null)
         {
-            if (oldXXssProtectionConfig != null && oldXXssProtectionConfig.Policy != XXssProtectionPolicy.Disabled &&
-                xXssProtectionConfig.Policy == XXssProtectionPolicy.Disabled)
+            if (oldXXssProtectionConfig != null && oldXXssProtectionConfig.Policy != XXssPolicy.Disabled &&
+                xXssProtectionConfig.Policy == XXssPolicy.Disabled)
             {
                 return new HeaderResult(HeaderResult.ResponseAction.Remove, HeaderConstants.XXssProtectionHeader);
             }
@@ -102,14 +101,14 @@ namespace NWebsec.Core.HttpHeaders
             string value;
             switch (xXssProtectionConfig.Policy)
             {
-                case XXssProtectionPolicy.Disabled:
+                case XXssPolicy.Disabled:
                     return null;
 
-                case XXssProtectionPolicy.FilterDisabled:
+                case XXssPolicy.FilterDisabled:
                     value = "0";
                     break;
 
-                case XXssProtectionPolicy.FilterEnabled:
+                case XXssPolicy.FilterEnabled:
                     value = (xXssProtectionConfig.BlockMode ? "1; mode=block" : "1");
                     break;
 
@@ -125,21 +124,21 @@ namespace NWebsec.Core.HttpHeaders
         public HeaderResult CreateXfoResult(IXFrameOptionsConfiguration xfoConfig,
             IXFrameOptionsConfiguration oldXfoConfig = null)
         {
-            if (oldXfoConfig != null && oldXfoConfig.Policy != XFrameOptionsPolicy.Disabled &&
-                xfoConfig.Policy == XFrameOptionsPolicy.Disabled)
+            if (oldXfoConfig != null && oldXfoConfig.Policy != XfoPolicy.Disabled &&
+                xfoConfig.Policy == XfoPolicy.Disabled)
             {
                 return new HeaderResult(HeaderResult.ResponseAction.Remove, HeaderConstants.XFrameOptionsHeader);
             }
 
             switch (xfoConfig.Policy)
             {
-                case XFrameOptionsPolicy.Disabled:
+                case XfoPolicy.Disabled:
                     return null;
 
-                case XFrameOptionsPolicy.Deny:
+                case XfoPolicy.Deny:
                     return new HeaderResult(HeaderResult.ResponseAction.Set, HeaderConstants.XFrameOptionsHeader, "Deny");
 
-                case XFrameOptionsPolicy.SameOrigin:
+                case XfoPolicy.SameOrigin:
                     return new HeaderResult(HeaderResult.ResponseAction.Set, HeaderConstants.XFrameOptionsHeader,
                         "SameOrigin");
 

@@ -2,8 +2,8 @@
 
 using System;
 using System.Web.Mvc;
+using NWebsec.Core.HttpHeaders;
 using NWebsec.Core.HttpHeaders.Configuration;
-using NWebsec.HttpHeaders;
 using NWebsec.Mvc.Helpers;
 using NWebsec.Mvc.HttpHeaders.Internals;
 
@@ -12,7 +12,7 @@ namespace NWebsec.Mvc.HttpHeaders
     /// <summary>
     /// Specifies whether the X-Xss-Protection security header should be set in the HTTP response.
     /// </summary>
-    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, Inherited = true, AllowMultiple = false)]
+    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]
     public class XXssProtectionAttribute : HttpHeaderAttributeBase
     {
         private readonly XXssProtectionConfiguration _config;
@@ -24,7 +24,7 @@ namespace NWebsec.Mvc.HttpHeaders
         /// </summary>
         public XXssProtectionAttribute()
         {
-            _config = new XXssProtectionConfiguration { Policy = XXssProtectionPolicy.FilterEnabled, BlockMode = true };
+            _config = new XXssProtectionConfiguration { Policy = XXssPolicy.FilterEnabled, BlockMode = true };
             _headerConfigurationOverrideHelper = new HeaderConfigurationOverrideHelper();
             _headerOverrideHelper = new HeaderOverrideHelper();
         }
@@ -35,8 +35,26 @@ namespace NWebsec.Mvc.HttpHeaders
         /// </summary>
         public XXssProtectionPolicy Policy
         {
-            get { return _config.Policy; }
-            set { _config.Policy = value; }
+            get { throw new NotSupportedException(); }
+            set
+            {
+                switch (value)
+                {
+                    case XXssProtectionPolicy.Disabled:
+                        _config.Policy = XXssPolicy.Disabled;
+                        break;
+
+                    case XXssProtectionPolicy.FilterDisabled:
+                        _config.Policy = XXssPolicy.FilterDisabled;
+                        break;
+
+                    case XXssProtectionPolicy.FilterEnabled:
+                        _config.Policy = XXssPolicy.FilterEnabled;
+                        break;
+                    default:
+                        throw  new ArgumentException("Unknown value: " + value);
+                }
+            }
         }
 
         /// <summary>

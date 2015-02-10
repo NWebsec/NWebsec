@@ -1,7 +1,7 @@
 ﻿// Copyright (c) André N. Klingsheim. See License.txt in the project root for license information.
 
 using NUnit.Framework;
-using NWebsec.HttpHeaders;
+using NWebsec.Core.HttpHeaders;
 
 namespace NWebsec.Owin.Tests.Unit
 {
@@ -21,7 +21,7 @@ namespace NWebsec.Owin.Tests.Unit
         {
             _options.Disabled();
 
-            Assert.AreEqual(XXssProtectionPolicy.FilterDisabled, _options.Policy);
+            Assert.AreEqual(XXssPolicy.FilterDisabled, _options.Policy);
             Assert.IsFalse(_options.BlockMode);
         }
 
@@ -30,7 +30,7 @@ namespace NWebsec.Owin.Tests.Unit
         {
             _options.Enabled();
 
-            Assert.AreEqual(XXssProtectionPolicy.FilterEnabled, _options.Policy);
+            Assert.AreEqual(XXssPolicy.FilterEnabled, _options.Policy);
             Assert.IsFalse(_options.BlockMode);
         }
 
@@ -39,7 +39,7 @@ namespace NWebsec.Owin.Tests.Unit
         {
             _options.EnabledWithBlockMode();
 
-            Assert.AreEqual(XXssProtectionPolicy.FilterEnabled, _options.Policy);
+            Assert.AreEqual(XXssPolicy.FilterEnabled, _options.Policy);
             Assert.IsTrue(_options.BlockMode);
         }
     }

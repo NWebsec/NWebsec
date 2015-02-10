@@ -5,8 +5,8 @@ using System.Collections.Generic;
 using System.Web;
 using Moq;
 using NUnit.Framework;
+using NWebsec.Core.HttpHeaders;
 using NWebsec.Core.HttpHeaders.Configuration;
-using NWebsec.HttpHeaders;
 using NWebsec.Mvc.Helpers;
 
 namespace NWebsec.Mvc.Tests.Unit.Helpers
@@ -52,7 +52,7 @@ namespace NWebsec.Mvc.Tests.Unit.Helpers
         [Test]
         public void GetXFrameoptionsWithOverride_ConfigOverriden_ReturnsOverrideElement()
         {
-            var configOverride = new XFrameOptionsConfiguration { Policy = XFrameOptionsPolicy.Deny };
+            var configOverride = new XFrameOptionsConfiguration { Policy = XfoPolicy.Deny };
 
             _headerConfigurationOverrideHelper.SetXFrameoptionsOverride(_mockContext, configOverride);
 
@@ -100,7 +100,7 @@ namespace NWebsec.Mvc.Tests.Unit.Helpers
         [Test]
         public void GetXXssProtectionWithOverride_ConfigOverriden_ReturnsOverrideElement()
         {
-            var configOverride = new XXssProtectionConfiguration { Policy = XXssProtectionPolicy.FilterEnabled };
+            var configOverride = new XXssProtectionConfiguration { Policy = XXssPolicy.FilterEnabled };
 
             _headerConfigurationOverrideHelper.SetXXssProtectionOverride(_mockContext, configOverride);
 

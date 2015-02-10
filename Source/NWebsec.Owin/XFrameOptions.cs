@@ -1,7 +1,7 @@
 ﻿// Copyright (c) André N. Klingsheim. See License.txt in the project root for license information.
 
+using NWebsec.Core.HttpHeaders;
 using NWebsec.Core.HttpHeaders.Configuration;
-using NWebsec.HttpHeaders;
 
 namespace NWebsec.Owin
 {
@@ -9,19 +9,19 @@ namespace NWebsec.Owin
     {
         internal XFrameOptions()
         {
-            Policy = XFrameOptionsPolicy.Disabled;
+            Policy = XfoPolicy.Disabled;
         }
 
-        public XFrameOptionsPolicy Policy { get; set; }
+        public XfoPolicy Policy { get; set; }
 
         public void Deny()
         {
-            Policy = XFrameOptionsPolicy.Deny;
+            Policy = XfoPolicy.Deny;
         }
 
         public void SameOrigin()
         {
-            Policy = XFrameOptionsPolicy.SameOrigin;
+            Policy = XfoPolicy.SameOrigin;
         }
     }
 }
