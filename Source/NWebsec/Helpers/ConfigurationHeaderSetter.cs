@@ -53,7 +53,7 @@ namespace NWebsec.Helpers
             SetXXssProtectionHeader(context, nwebsecContext);
             SetCspHeaders(context, nwebsecContext, false);
             SetCspHeaders(context, nwebsecContext, true);
-            SetNoCacheHeaders(context, nwebsecContext);
+            SetNoCacheHeadersFromConfig(context, nwebsecContext);
         }
 
         internal void SetHstsHeader(HttpResponseBase response, NWebsecContext nwebsecContext, bool isHttps)
@@ -109,7 +109,7 @@ namespace NWebsec.Helpers
             _headerResultHandler.HandleHeaderResult(context.Response, result);
         }
 
-        public void SetNoCacheHeaders(HttpContextBase context, NWebsecContext nwebsecContext)
+        internal void SetNoCacheHeadersFromConfig(HttpContextBase context, NWebsecContext nwebsecContext)
         {
             if (!WebConfig.NoCacheHttpHeaders.Enabled || _handlerHelper.IsUnmanagedHandler(context) || _handlerHelper.IsStaticContentHandler(context))
             {
@@ -118,12 +118,27 @@ namespace NWebsec.Helpers
 
             nwebsecContext.NoCacheHeaders = WebConfig.NoCacheHttpHeaders;
 
-            var response = context.Response;
+            SetNoCacheHeaders(context.Response);
+        }
 
+        internal void SetNoCacheHeadersForSignoutCleanup(HttpContextBase context)
+        {
+            if (!WebConfig.NoCacheHttpHeaders.Enabled) return;
+
+            const string signoutCleanup = "wsignoutcleanup1.0";
+            var queryParams = context.Request.QueryString;
+
+            if (signoutCleanup.Equals(queryParams["wa"]))
+            {
+                SetNoCacheHeaders(context.Response);
+            }
+        }
+
+        private void SetNoCacheHeaders(HttpResponseBase response)
+        {
             response.Cache.SetCacheability(HttpCacheability.NoCache);
             response.Cache.SetNoStore();
             response.Cache.SetRevalidation(HttpCacheRevalidation.AllCaches);
-            response.Headers.Set("Pragma", "no-cache");
         }
 
         internal void SetCspHeaders(HttpContextBase context, NWebsecContext nwebsecContext, bool reportOnly)
@@ -131,7 +146,7 @@ namespace NWebsec.Helpers
             if (_handlerHelper.IsStaticContentHandler(context) ||
                 _handlerHelper.IsUnmanagedHandler(context)) return;
 
-            
+
             ICspConfiguration cspConfig;
             if (reportOnly)
             {

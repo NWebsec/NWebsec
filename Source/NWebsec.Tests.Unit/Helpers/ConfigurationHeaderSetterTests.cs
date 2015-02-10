@@ -198,7 +198,7 @@ namespace NWebsec.Tests.Unit.Helpers
             var cachePolicy = new Mock<HttpCachePolicyBase>();
             _mockResponse.Setup(x => x.Cache).Returns(cachePolicy.Object);
 
-            _configHeaderSetter.SetNoCacheHeaders(_mockContext, _nwebsecContext);
+            _configHeaderSetter.SetNoCacheHeadersFromConfig(_mockContext, _nwebsecContext);
 
             Assert.IsNull(_nwebsecContext.NoCacheHeaders);
             cachePolicy.Verify(c => c.SetCacheability(It.IsAny<HttpCacheability>()), Times.Never());
@@ -214,13 +214,12 @@ namespace NWebsec.Tests.Unit.Helpers
             var cachePolicy = new Mock<HttpCachePolicyBase>();
             _mockResponse.Setup(x => x.Cache).Returns(cachePolicy.Object);
 
-            _configHeaderSetter.SetNoCacheHeaders(_mockContext, _nwebsecContext);
+            _configHeaderSetter.SetNoCacheHeadersFromConfig(_mockContext, _nwebsecContext);
 
             Assert.AreSame(_config.NoCacheHttpHeaders, _nwebsecContext.NoCacheHeaders);
             cachePolicy.Verify(c => c.SetCacheability(HttpCacheability.NoCache), Times.Once());
             cachePolicy.Verify(c => c.SetNoStore(), Times.Once());
             cachePolicy.Verify(c => c.SetRevalidation(HttpCacheRevalidation.AllCaches), Times.Once());
-            Assert.AreEqual("no-cache", _responseHeaders["Pragma"]);
         }
 
         [Test]
@@ -231,7 +230,7 @@ namespace NWebsec.Tests.Unit.Helpers
             _mockResponse.Setup(x => x.Cache).Returns(cachePolicy.Object);
             _mockHandlerHelper.Setup(h => h.IsStaticContentHandler(It.IsAny<HttpContextBase>())).Returns(true);
 
-            _configHeaderSetter.SetNoCacheHeaders(_mockContext, _nwebsecContext);
+            _configHeaderSetter.SetNoCacheHeadersFromConfig(_mockContext, _nwebsecContext);
 
             Assert.IsNull(_nwebsecContext.NoCacheHeaders);
             cachePolicy.Verify(c => c.SetCacheability(It.IsAny<HttpCacheability>()), Times.Never());
@@ -248,13 +247,61 @@ namespace NWebsec.Tests.Unit.Helpers
             _mockResponse.Setup(x => x.Cache).Returns(cachePolicy.Object);
             _mockHandlerHelper.Setup(h => h.IsUnmanagedHandler(It.IsAny<HttpContextBase>())).Returns(true);
 
-            _configHeaderSetter.SetNoCacheHeaders(_mockContext, _nwebsecContext);
+            _configHeaderSetter.SetNoCacheHeadersFromConfig(_mockContext, _nwebsecContext);
 
             Assert.IsNull(_nwebsecContext.NoCacheHeaders);
             cachePolicy.Verify(c => c.SetCacheability(It.IsAny<HttpCacheability>()), Times.Never());
             cachePolicy.Verify(c => c.SetNoStore(), Times.Never());
             cachePolicy.Verify(c => c.SetRevalidation(It.IsAny<HttpCacheRevalidation>()), Times.Never());
             Assert.IsEmpty(_responseHeaders);
+        }
+
+        [Test]
+        public void SetNoCacheHeadersForSignoutCleanup_DisabledInConfig_DoesNothing()
+        {
+            var cachePolicy = new Mock<HttpCachePolicyBase>();
+            _mockResponse.Setup(x => x.Cache).Returns(cachePolicy.Object);
+
+            _configHeaderSetter.SetNoCacheHeadersForSignoutCleanup(_mockContext);
+
+            Assert.IsNull(_nwebsecContext.NoCacheHeaders);
+            cachePolicy.Verify(c => c.SetCacheability(It.IsAny<HttpCacheability>()), Times.Never());
+            cachePolicy.Verify(c => c.SetNoStore(), Times.Never());
+            cachePolicy.Verify(c => c.SetRevalidation(It.IsAny<HttpCacheRevalidation>()), Times.Never());
+            Assert.IsEmpty(_responseHeaders);
+        }
+
+        [Test]
+        public void SetNoCacheHeadersForSignoutCleanup_EnabledInConfigAndNotSignoutRequest_DoesNotNothing()
+        {
+            _config.NoCacheHttpHeaders.Enabled = true;
+            var cachePolicy = new Mock<HttpCachePolicyBase>();
+            _mockRequest.Setup(x => x.QueryString).Returns(new NameValueCollection());
+            _mockResponse.Setup(x => x.Cache).Returns(cachePolicy.Object);
+
+            _configHeaderSetter.SetNoCacheHeadersForSignoutCleanup(_mockContext);
+
+            Assert.IsNull(_nwebsecContext.NoCacheHeaders);
+            cachePolicy.Verify(c => c.SetCacheability(It.IsAny<HttpCacheability>()), Times.Never());
+            cachePolicy.Verify(c => c.SetNoStore(), Times.Never());
+            cachePolicy.Verify(c => c.SetRevalidation(It.IsAny<HttpCacheRevalidation>()), Times.Never());
+            Assert.IsEmpty(_responseHeaders);
+        }
+
+        [Test]
+        public void SetNoCacheHeadersForSignoutCleanup_EnabledInConfigAndSignoutRequest_UpdatesContextSetsNoCacheHeaders()
+        {
+            _config.NoCacheHttpHeaders.Enabled = true;
+            var cachePolicy = new Mock<HttpCachePolicyBase>();
+            _mockRequest.Setup(x => x.QueryString).Returns(new NameValueCollection { { "wa", "wsignoutcleanup1.0" } });
+            _mockResponse.Setup(x => x.Cache).Returns(cachePolicy.Object);
+
+            _configHeaderSetter.SetNoCacheHeadersForSignoutCleanup(_mockContext);
+
+            Assert.IsNull(_nwebsecContext.NoCacheHeaders);
+            cachePolicy.Verify(c => c.SetCacheability(HttpCacheability.NoCache), Times.Once());
+            cachePolicy.Verify(c => c.SetNoStore(), Times.Once());
+            cachePolicy.Verify(c => c.SetRevalidation(HttpCacheRevalidation.AllCaches), Times.Once());
         }
 
         [Test]
@@ -310,7 +357,7 @@ namespace NWebsec.Tests.Unit.Helpers
             Assert.IsNull(_nwebsecContext.CspReportOnly);
             _mockHeaderResultHandler.Verify(h => h.HandleHeaderResult(It.IsAny<HttpResponseBase>(), _expectedHeaderResult), Times.Never);
         }
-        
+
         [Test]
         public void SetCspHeaders_CspEnabledInConfigAndUnmanagedHandler_DoesNotAddCspHeader()
         {

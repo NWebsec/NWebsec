@@ -66,7 +66,9 @@ namespace NWebsec.Modules
         {
             var app = (HttpApplication)sender;
             var context = new HttpContextWrapper(app.Context);
+
             _redirectValidationHelper.ValidateIfRedirect(context);
+            _configHeaderSetter.SetNoCacheHeadersForSignoutCleanup(context);
         }
 
         public delegate void CspViolationReportEventHandler(object sender, CspViolationReportEventArgs e);
