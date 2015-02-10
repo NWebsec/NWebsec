@@ -66,23 +66,23 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Core\HttpHeaders\Csp\ReportUriValidatorTests.cs" />
-    <Compile Include="Core\HttpHeaders\Csp\CspSourceValidatorTests.cs" />
-    <Compile Include="Core\HttpHeaders\Configuration\Validation\HstsConfigurationValidatorTests.cs" />
-    <Compile Include="Core\HttpHeaders\Configuration\Validation\ReportUriValidatorTests.cs" />
-    <Compile Include="Core\HttpHeaders\Configuration\Validation\XRobotsTagValidatorTests.cs" />
-    <Compile Include="Core\HttpHeaders\HeaderGeneratorCspTests.cs" />
-    <Compile Include="Core\HttpHeaders\HeaderGeneratorTests.XRobots.cs" />
-    <Compile Include="Core\HttpHeaders\HeaderGeneratorTests.Xfo.cs" />
-    <Compile Include="Core\HttpHeaders\HeaderGeneratorTests.Hsts.cs" />
-    <Compile Include="Core\HttpHeaders\HeaderGeneratorTests.XContentTypeOptions.cs" />
-    <Compile Include="Core\HttpHeaders\HeaderGeneratorTests.XDownloadOptions.cs" />
-    <Compile Include="Core\HttpHeaders\HeaderGeneratorTests.cs" />
-    <Compile Include="Core\HttpHeaders\RedirectValidatorTests.cs" />
+    <Compile Include="HttpHeaders\Csp\ReportUriValidatorTests.cs" />
+    <Compile Include="HttpHeaders\Csp\CspSourceValidatorTests.cs" />
+    <Compile Include="HttpHeaders\Configuration\Validation\HstsConfigurationValidatorTests.cs" />
+    <Compile Include="HttpHeaders\Configuration\Validation\ReportUriValidatorTests.cs" />
+    <Compile Include="HttpHeaders\Configuration\Validation\XRobotsTagValidatorTests.cs" />
+    <Compile Include="HttpHeaders\HeaderGeneratorCspTests.cs" />
+    <Compile Include="HttpHeaders\HeaderGeneratorTests.XRobots.cs" />
+    <Compile Include="HttpHeaders\HeaderGeneratorTests.Xfo.cs" />
+    <Compile Include="HttpHeaders\HeaderGeneratorTests.Hsts.cs" />
+    <Compile Include="HttpHeaders\HeaderGeneratorTests.XContentTypeOptions.cs" />
+    <Compile Include="HttpHeaders\HeaderGeneratorTests.XDownloadOptions.cs" />
+    <Compile Include="HttpHeaders\HeaderGeneratorTests.cs" />
+    <Compile Include="HttpHeaders\RedirectValidatorTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Core\HttpHeaders\HeaderGeneratorTests.Xss.cs" />
+    <Compile Include="HttpHeaders\HeaderGeneratorTests.Xss.cs" />
     <None Include="NWebsecDevKey.snk" />
     <None Include="packages.config" />
   </ItemGroup>

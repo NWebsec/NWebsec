@@ -1,7 +1,7 @@
 ﻿// Copyright (c) André N. Klingsheim. See License.txt in the project root for license information.
 
 using System;
-using NWebsec.Fluent;
+using NWebsec.Core.Fluent;
 
 namespace NWebsec.Owin
 {
