@@ -165,7 +165,5 @@ namespace NWebsec.Mvc.Helpers
                 return Convert.ToBase64String(nonceBytes);
             }
         }
-
-
     }
 }

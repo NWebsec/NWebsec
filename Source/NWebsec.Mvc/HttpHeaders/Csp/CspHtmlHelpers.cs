@@ -1,6 +1,5 @@
 ﻿// Copyright (c) André N. Klingsheim. See License.txt in the project root for license information.
 
-using System.Text;
 using System.Web;
 using System.Web.Mvc;
 using NWebsec.Mvc.Helpers;
@@ -23,7 +22,7 @@ namespace NWebsec.Mvc.HttpHeaders.Csp
 
             if (context.Items["NWebsecScriptNonceSet"] == null)
             {
-                context.Items["NWebsecStyleNonceSet"] = "set";
+                context.Items["NWebsecScriptNonceSet"] = "set";
                 headerOverrideHelper.SetCspHeaders(context, false);
                 headerOverrideHelper.SetCspHeaders(context, true);
             }
@@ -55,10 +54,8 @@ namespace NWebsec.Mvc.HttpHeaders.Csp
 
         private static HtmlString CreateNonceAttribute(HtmlHelper helper, string nonce)
         {
-            var sb = new StringBuilder("nonce=\"");
-            sb.Append(helper.AttributeEncode(nonce));
-            sb.Append("\"");
-            return new HtmlString(sb.ToString());
+            var sb = "nonce=\"" + helper.AttributeEncode(nonce) + "\"";
+            return new HtmlString(sb);
         }
     }
 }

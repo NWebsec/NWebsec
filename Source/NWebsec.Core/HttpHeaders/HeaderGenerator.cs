@@ -152,11 +152,11 @@ namespace NWebsec.Core.HttpHeaders
         public HeaderResult CreateCspResult(ICspConfiguration cspConfig, bool reportOnly,
             string builtinReportHandlerUri = null, ICspConfiguration oldCspConfig = null)
         {
-            var headerValue = CreateCspHeaderValue(cspConfig, builtinReportHandlerUri);
+            var headerValue = cspConfig.Enabled ? CreateCspHeaderValue(cspConfig, builtinReportHandlerUri) : null;
 
             if (oldCspConfig != null && oldCspConfig.Enabled)
             {
-                if (!cspConfig.Enabled || String.IsNullOrEmpty(headerValue))
+                if (!cspConfig.Enabled || headerValue == null)
                 {
                     return new HeaderResult(HeaderResult.ResponseAction.Remove,
                         (reportOnly ? HeaderConstants.ContentSecurityPolicyReportOnlyHeader : HeaderConstants.ContentSecurityPolicyHeader));
@@ -164,7 +164,7 @@ namespace NWebsec.Core.HttpHeaders
                 }
             }
 
-            if (!cspConfig.Enabled || String.IsNullOrEmpty(headerValue))
+            if (!cspConfig.Enabled || headerValue == null)
             {
                 return null;
             }
@@ -178,37 +178,35 @@ namespace NWebsec.Core.HttpHeaders
         {
             var sb = new StringBuilder();
 
-            sb.Append(CreateDirectiveValue("default-src", GetDirectiveList(config.DefaultSrcDirective)));
-            sb.Append(CreateDirectiveValue("script-src", GetDirectiveList(config.ScriptSrcDirective)));
-            sb.Append(CreateDirectiveValue("object-src", GetDirectiveList(config.ObjectSrcDirective)));
-            sb.Append(CreateDirectiveValue("style-src", GetDirectiveList(config.StyleSrcDirective)));
-            sb.Append(CreateDirectiveValue("img-src", GetDirectiveList(config.ImgSrcDirective)));
-            sb.Append(CreateDirectiveValue("media-src", GetDirectiveList(config.MediaSrcDirective)));
-            sb.Append(CreateDirectiveValue("frame-src", GetDirectiveList(config.FrameSrcDirective)));
-            sb.Append(CreateDirectiveValue("font-src", GetDirectiveList(config.FontSrcDirective)));
-            sb.Append(CreateDirectiveValue("connect-src", GetDirectiveList(config.ConnectSrcDirective)));
-            sb.Append(CreateDirectiveValue("base-uri", GetDirectiveList(config.BaseUriDirective)));
-            sb.Append(CreateDirectiveValue("child-src", GetDirectiveList(config.ChildSrcDirective)));
-            sb.Append(CreateDirectiveValue("form-action", GetDirectiveList(config.FormActionDirective)));
-            sb.Append(CreateDirectiveValue("frame-ancestors", GetDirectiveList(config.FrameAncestorsDirective)));
-            sb.Append(CreateDirectiveValue("sandbox", GetSandboxDirectiveList(config.SandboxDirective)));
+            AppendDirective(sb, "default-src", GetDirectiveList(config.DefaultSrcDirective));
+            AppendDirective(sb, "script-src", GetDirectiveList(config.ScriptSrcDirective));
+            AppendDirective(sb, "object-src", GetDirectiveList(config.ObjectSrcDirective));
+            AppendDirective(sb, "style-src", GetDirectiveList(config.StyleSrcDirective));
+            AppendDirective(sb, "img-src", GetDirectiveList(config.ImgSrcDirective));
+            AppendDirective(sb, "media-src", GetDirectiveList(config.MediaSrcDirective));
+            AppendDirective(sb, "frame-src", GetDirectiveList(config.FrameSrcDirective));
+            AppendDirective(sb, "font-src", GetDirectiveList(config.FontSrcDirective));
+            AppendDirective(sb, "connect-src", GetDirectiveList(config.ConnectSrcDirective));
+            AppendDirective(sb, "base-uri", GetDirectiveList(config.BaseUriDirective));
+            AppendDirective(sb, "child-src", GetDirectiveList(config.ChildSrcDirective));
+            AppendDirective(sb, "form-action", GetDirectiveList(config.FormActionDirective));
+            AppendDirective(sb, "frame-ancestors", GetDirectiveList(config.FrameAncestorsDirective));
+            AppendDirective(sb, "sandbox", GetSandboxDirectiveList(config.SandboxDirective));
 
             if (sb.Length == 0) return null;
 
-            sb.Append(CreateDirectiveValue("report-uri",
-                GetReportUriList(config.ReportUriDirective, builtinReportHandlerUri)));
+            AppendDirective(sb, "report-uri",
+                GetReportUriList(config.ReportUriDirective, builtinReportHandlerUri));
 
             //Get rid of trailing ;
             sb.Length--;
             return sb.ToString();
         }
 
-        //Internal for unit testing.
-        private string CreateDirectiveValue(string directiveName, List<string> sources)
+        private void AppendDirective(StringBuilder sb, string directiveName, List<string> sources)
         {
-            if (sources == null || sources.Count < 1) return String.Empty;
+            if (sources == null || sources.Count < 1) return;
 
-            var sb = new StringBuilder();
             sb.Append(directiveName);
 
             foreach (var source in sources)
@@ -217,7 +215,6 @@ namespace NWebsec.Core.HttpHeaders
             }
 
             sb.Append(';');
-            return sb.ToString();
         }
 
         private List<string> GetDirectiveList(ICspDirectiveConfiguration directive)
