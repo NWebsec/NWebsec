@@ -1,5 +1,6 @@
 ﻿// Copyright (c) André N. Klingsheim. See License.txt in the project root for license information.
 
+using System;
 using NUnit.Framework;
 using NWebsec.Core.HttpHeaders.Csp;
 
@@ -8,7 +9,60 @@ namespace NWebsec.Core.Tests.Unit.HttpHeaders.Csp
     [TestFixture]
     public class CspUriSourceTests
     {
-        
+
+        [Test]
+        public void EncodeUri_RelativePlainUri_ReturnsPlainUri()
+        {
+            const string expectedUri = "/CspReport";
+
+            var result = CspUriSource.EncodeUri(new Uri(expectedUri, UriKind.Relative));
+
+            Assert.AreEqual(expectedUri, result);
+        }
+
+        [Test]
+        public void EncodeUri_RelativeUriNeedsEncoding_ReturnsEncodedUri()
+        {
+            const string originalUri = "/CspReport,;";
+            const string expectedUri = "/CspReport%2C%3B";
+
+            var result = CspUriSource.EncodeUri(new Uri(originalUri, UriKind.Relative));
+
+            Assert.AreEqual(expectedUri, result);
+        }
+
+        [Test]
+        public void EncodeUri_RelativeUriWithNoneAsciiChars_ReturnsEncodedUri()
+        {
+            const string originalUri = "/CspReport/André?a=b";
+            const string expectedUri = "/CspReport/Andr%C3%A9?a=b";
+
+            var result = CspUriSource.EncodeUri(new Uri(originalUri, UriKind.Relative));
+
+            Assert.AreEqual(expectedUri, result);
+        }
+
+        [Test]
+        public void EncodeUri_AbsolutePlainUri_ReturnsPlainUri()
+        {
+            const string expectedUri = "https://report.nwebsec.com/CspReport";
+
+            var result = CspUriSource.EncodeUri(new Uri(expectedUri, UriKind.Absolute));
+
+            Assert.AreEqual(expectedUri, result);
+        }
+
+        [Test]
+        public void EncodeUri_AbsoluteUriNeedsEncoding_ReturnsEncodedUri()
+        {
+            const string originalUri = "https://üüüüüü.de/CspReport,;/andré?a=b";
+            const string expectedUri = "https://xn--tdaaaaaa.de/CspReport%2C%3B/andr%C3%A9?a=b";
+
+            var result = CspUriSource.EncodeUri(new Uri(originalUri, UriKind.Absolute));
+
+            Assert.AreEqual(expectedUri, result);
+        }
+
         [Test]
         public void Parse_Wildcard_ReturnsResult()
         {
@@ -62,7 +116,23 @@ namespace NWebsec.Core.Tests.Unit.HttpHeaders.Csp
         {
             var result = CspUriSource.Parse("https://www.nwebsec.com/hello;hello,");
 
-            Assert.AreEqual("https://www.nwebsec.com/hello%3Bhello%2C", result.ToString()); 
+            Assert.AreEqual("https://www.nwebsec.com/hello%3Bhello%2C", result.ToString());
+        }
+
+        [Test]
+        public void Parse_SchemeHostAndPathWithNonAsciiChars_ReturnsEncodedPathResult()
+        {
+            var result = CspUriSource.Parse("https://www.nwebsec.com/André");
+
+            Assert.AreEqual("https://www.nwebsec.com/Andr%C3%A9", result.ToString());
+        }
+
+        [Test]
+        public void Parse_SchemeHostPathAndQueryWithNonAsciiChars_ReturnsEncodedPathResult()
+        {
+            var result = CspUriSource.Parse("https://www.nwebsec.com/André?a=b");
+
+            Assert.AreEqual("https://www.nwebsec.com/Andr%C3%A9?a=b", result.ToString());
         }
 
         [Test]
@@ -440,7 +510,7 @@ namespace NWebsec.Core.Tests.Unit.HttpHeaders.Csp
 
             Assert.AreEqual("*.xn--tdaaaaaa.com:*/some/path", result.ToString());
         }
-        
+
         [Test]
         public void Parse_InvalidScheme_ThrowsException()
         {

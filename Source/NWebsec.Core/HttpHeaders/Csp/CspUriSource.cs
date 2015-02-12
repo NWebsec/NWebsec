@@ -25,6 +25,34 @@ namespace NWebsec.Core.HttpHeaders.Csp
 
         }
 
+        public static string EncodeUri(Uri uri)
+        {
+         
+            if (!uri.IsAbsoluteUri)
+            {
+                var uriString = uri.IsWellFormedOriginalString() ? uri.ToString() : Uri.EscapeUriString(uri.ToString());
+                return EscapeReservedCspChars(uriString);
+            }
+
+            if (!uri.IsWellFormedOriginalString())
+            {
+                throw new ArgumentException("Uri was not well formed.", "uri");
+            }
+
+            var host = uri.Host;
+            var encodedHost = EncodeHostname(host);
+
+            var needsReplacement = !host.Equals(encodedHost);
+
+            var authority = uri.GetLeftPart(UriPartial.Authority);
+
+            if (needsReplacement)
+            {
+                authority = authority.Replace(host, encodedHost);
+            }
+            return authority + EscapeReservedCspChars(uri.PathAndQuery);
+        }
+
         public static CspUriSource Parse(string source)
         {
             if (String.IsNullOrEmpty(source)) throw new ArgumentException("Value was null or empty", "source");
@@ -54,7 +82,7 @@ namespace NWebsec.Core.HttpHeaders.Csp
             if (!Regex.IsMatch(parseResult.Host, HostRegex))
             {
                 throw new InvalidCspSourceException("Invalid host in CSP source: " + source);
-                
+
             }
 
             sb.Append(EncodeHostname(parseResult.Host.ToLower()));
@@ -63,14 +91,14 @@ namespace NWebsec.Core.HttpHeaders.Csp
             {
                 if (!ValidatePort(parseResult.Port))
                 {
-                    throw new InvalidCspSourceException("Invalid port in CSP source: " + source);                    
+                    throw new InvalidCspSourceException("Invalid port in CSP source: " + source);
                 }
                 sb.Append(":").Append(parseResult.Port);
             }
 
             if (!String.IsNullOrEmpty(parseResult.PathAndQuery))
             {
-                sb.Append(EncodePath(parseResult.PathAndQuery));
+                sb.Append(EscapeReservedCspChars(Uri.EscapeUriString(parseResult.PathAndQuery)));
             }
 
             return new CspUriSource(sb.ToString());
@@ -100,13 +128,13 @@ namespace NWebsec.Core.HttpHeaders.Csp
             };
         }
 
-        public static string EncodeHostname(string hostname)
+        private static string EncodeHostname(string hostname)
         {
             var idn = new IdnMapping();
             return idn.GetAscii(hostname);
         }
 
-        public static string EncodePath(string pathAndQuery)
+        private static string EscapeReservedCspChars(string pathAndQuery)
         {
             char[] encodeChars = { ';', ',' };
 
@@ -116,31 +144,12 @@ namespace NWebsec.Core.HttpHeaders.Csp
             }
 
             var sb = new StringBuilder(pathAndQuery);
-            sb.Replace(";", "%3B");
-            sb.Replace(",", "%2C");
+            sb.Replace(";", Uri.HexEscape(';'));
+            sb.Replace(",", Uri.HexEscape(','));
 
             return sb.ToString();
         }
 
-        public static string EncodeUri(Uri uri)
-        {
-            if (!uri.IsWellFormedOriginalString())
-            {
-                throw new ArgumentException("Uri was not well formed.", "uri");
-            }
-
-            if (!uri.IsAbsoluteUri)
-            {
-                return EncodePath(uri.ToString());
-            }
-
-            var ub = new UriBuilder(uri);
-            ub.Host = EncodeHostname(ub.Host);
-            ub.Path = EncodePath(ub.Path);
-            ub.Query = EncodePath(ub.Query);
-            return ub.Uri.AbsoluteUri;
-        }
-        
         private static bool ValidatePort(string port)
         {
             if (port.Equals("*")) return true;
