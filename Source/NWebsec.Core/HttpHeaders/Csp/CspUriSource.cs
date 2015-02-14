@@ -9,7 +9,7 @@ namespace NWebsec.Core.HttpHeaders.Csp
 {
     public class CspUriSource
     {
-        private const string HostRegex = @"^(\*\.)?([\p{Ll}\p{Lu}0-9]+)(\.[\p{Ll}\p{Lu}0-9\-]+)*$";
+        private const string HostRegex = @"^(\*\.)?([\p{Ll}\p{Lu}0-9\-]+)(\.[\p{Ll}\p{Lu}0-9\-]+)*$";
         private static readonly string SchemeOnlyRegex = "^[a-zA-Z]*[a-zA-Z0-9" + Regex.Escape("+.-") + "]:$";
         private readonly string _source;
 
@@ -27,7 +27,7 @@ namespace NWebsec.Core.HttpHeaders.Csp
 
         public static string EncodeUri(Uri uri)
         {
-         
+
             if (!uri.IsAbsoluteUri)
             {
                 var uriString = uri.IsWellFormedOriginalString() ? uri.ToString() : Uri.EscapeUriString(uri.ToString());
@@ -50,6 +50,12 @@ namespace NWebsec.Core.HttpHeaders.Csp
             {
                 authority = authority.Replace(host, encodedHost);
             }
+
+            if (uri.PathAndQuery.Equals("/"))
+            {
+                return authority;
+            }
+
             return authority + EscapeReservedCspChars(uri.PathAndQuery);
         }
 
@@ -58,6 +64,12 @@ namespace NWebsec.Core.HttpHeaders.Csp
             if (String.IsNullOrEmpty(source)) throw new ArgumentException("Value was null or empty", "source");
 
             if (source.Equals("*")) return new CspUriSource(source);
+
+            Uri uriResult;
+            if (Uri.TryCreate(source, UriKind.Absolute, out uriResult) && UriParser.IsKnownScheme(uriResult.Scheme))
+            {
+                return new CspUriSource(EncodeUri(uriResult));
+            }
 
             //Scheme only source
             if (Regex.IsMatch(source, SchemeOnlyRegex)) return new CspUriSource(source.ToLower());

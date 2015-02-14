@@ -216,6 +216,22 @@ namespace NWebsec.Core.Tests.Unit.HttpHeaders.Csp
         }
 
         [Test]
+        public void Parse_SchemeAndWildcardHostWithDash_ReturnsResult()
+        {
+            var result = CspUriSource.Parse("https://*.www-nwebsec.com");
+
+            Assert.AreEqual("https://*.www-nwebsec.com", result.ToString());
+        }
+
+        [Test]
+        public void Parse_SchemeAndWildcardSubHostWithDash_ReturnsResult()
+        {
+            var result = CspUriSource.Parse("https://*.w-w.nwebsec.com");
+
+            Assert.AreEqual("https://*.w-w.nwebsec.com", result.ToString());
+        }
+
+        [Test]
         public void Parse_SchemeAndWildcardIdnHost_ReturnsResult()
         {
             var result = CspUriSource.Parse("https://*.üüüüüü.com");
