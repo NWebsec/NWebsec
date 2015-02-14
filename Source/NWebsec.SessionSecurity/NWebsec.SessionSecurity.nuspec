@@ -6,8 +6,8 @@
     <title>NWebsec.SessionSecurity</title>
     <authors>André N. Klingsheim</authors>
     <owners>André N. Klingsheim</owners>
-    <licenseUrl>https://nwebsec.codeplex.com/license</licenseUrl>
-    <projectUrl>https://nwebsec.codeplex.com</projectUrl>
+    <licenseUrl>https://github.com/NWebsec/NWebsec/blob/master/LICENSE</licenseUrl>
+    <projectUrl>https://github.com/NWebsec/NWebsec/wiki</projectUrl>
     <iconUrl>https://klings.blob.core.windows.net/nwebsecicon/nwebsec_nuget.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>NWebsec.SessionSecurity is an easy to use session security library for ASP.NET applications. See project website for documentation.</description>
