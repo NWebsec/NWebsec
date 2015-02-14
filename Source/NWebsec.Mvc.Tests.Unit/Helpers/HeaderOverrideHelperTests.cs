@@ -246,7 +246,6 @@ namespace NWebsec.Mvc.Tests.Unit.Helpers
             cachePolicy.Verify(c => c.SetCacheability(HttpCacheability.NoCache), Times.Once());
             cachePolicy.Verify(c => c.SetNoStore(), Times.Once());
             cachePolicy.Verify(c => c.SetRevalidation(HttpCacheRevalidation.AllCaches), Times.Once());
-            Assert.AreEqual("no-cache", responseHeaders["Pragma"]);
         }
 
         [Test]

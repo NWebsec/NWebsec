@@ -126,8 +126,6 @@ namespace NWebsec.Mvc.Helpers
             response.Cache.SetCacheability(HttpCacheability.NoCache);
             response.Cache.SetNoStore();
             response.Cache.SetRevalidation(HttpCacheRevalidation.AllCaches);
-
-            response.Headers.Set("Pragma", "no-cache");
         }
 
         internal void SetCspHeaders(HttpContextBase context, bool reportOnly)
