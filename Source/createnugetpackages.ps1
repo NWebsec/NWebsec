@@ -7,16 +7,16 @@ function RemoveDirIfExists($item){
 }
 
 function FatalError{
-    Write-Host -ForegroundColor Red "Fatal error. Exit code was $LASTEXITCODE. Exiting"
-    exit
+	Write-Host -ForegroundColor Red "Fatal error. Exit code was $LASTEXITCODE. Exiting"
+	exit
 }
 
 function CheckExitCode{
-    if ($LASTEXITCODE -ne 0){FatalError}
+	if ($LASTEXITCODE -ne 0){FatalError}
 }
 
 function CheckRobocopyExitCode{
-    if ($LASTEXITCODE -ne 1){FatalError}
+	if ($LASTEXITCODE -ne 1){FatalError}
 }
 
 # *************CORE**************
@@ -154,3 +154,7 @@ Write-Host "Renaming web.config.transform files."
 Get-ChildItem -Path D:\nuget\Release\Codeplex -Filter "web.config.transform" -Recurse | Rename-Item -NewName "web.config"
 #forfiles /p D:\nuget\Release\Codeplex\ /S /M "*.transform" /C "cmd /c rename @file @fname"
 Write-Host -ForegroundColor Green "Build finished. Well done."
+Write-Host ""
+
+$now=Get-Date -format "dd-MM-yyyy HH:mm"
+Write-Host -ForegroundColor Green $now
