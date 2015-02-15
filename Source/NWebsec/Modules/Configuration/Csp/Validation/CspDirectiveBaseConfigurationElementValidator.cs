@@ -28,8 +28,6 @@ namespace NWebsec.Modules.Configuration.Csp.Validation
             {
                 throw new ConfigurationErrorsException("Both \"None\" and \"Self\" are enabled. \"None\" cannot be combined with other sources");
             }
-
         }
-
     }
 }

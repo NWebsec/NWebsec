@@ -2,9 +2,7 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using NWebsec.Core.HttpHeaders.Configuration;
-using NWebsec.Core.HttpHeaders.Configuration.Validation;
 using NWebsec.Core.HttpHeaders.Csp;
 
 namespace NWebsec.Owin
@@ -24,20 +22,19 @@ namespace NWebsec.Owin
         {
             if (reportUris.Length == 0) throw new ArgumentException("You must supply at least one report URI.", "reportUris");
 
-            var validator = new ReportUriValidator();
+            var reportUriList = new List<string>();
 
-            try
+            foreach (var reportUri in reportUris)
             {
-                ReportUris = reportUris.Select(u =>
+                Uri uri;
+                if (!Uri.TryCreate(reportUri, UriKind.RelativeOrAbsolute, out uri))
                 {
-                    validator.Validate(u);
-                    return CspUriSource.EncodeUri(new Uri(u, UriKind.RelativeOrAbsolute));
-                }).ToArray();
+                    throw new ArgumentException("Could not parse reportUri: " + reportUri);
+                }
+
+                reportUriList.Add(CspUriSource.EncodeUri(uri));
             }
-            catch (InvalidCspReportUriException e)
-            {
-                throw new ArgumentException("Invalid reportUri. Details: " + e.Message, e);
-            }
+            ReportUris = reportUriList.ToArray();
         }
     }
 }

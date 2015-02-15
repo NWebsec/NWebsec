@@ -34,11 +34,6 @@ namespace NWebsec.Core.HttpHeaders.Csp
                 return EscapeReservedCspChars(uriString);
             }
 
-            if (!uri.IsWellFormedOriginalString())
-            {
-                throw new ArgumentException("Uri was not well formed.", "uri");
-            }
-
             var host = uri.Host;
             var encodedHost = EncodeHostname(host);
 
