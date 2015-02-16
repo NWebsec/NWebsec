@@ -15,7 +15,7 @@ namespace DemoSiteMvc5
             app.UseRedirectValidation(options => 
                 options.AllowedDestinations("http://www.nwebsec.com/", "https://www.google.com/accounts/").AllowSameHostRedirectsToHttps(8443,443));
 
-            app.UseHsts(options => options.MaxAge(days:18*7).IncludeSubdomains());
+            app.UseHsts(options => options.MaxAge(days:18*7).AllResponses());
             app.UseXContentTypeOptions();
             app.UseXDownloadOptions();
             app.UseXfo(options => options.SameOrigin());
@@ -31,7 +31,7 @@ namespace DemoSiteMvc5
                 .FormActions(s => s.CustomSources("formaction.nwebsec.com"))
                 .FrameAncestors(s => s.CustomSources("ancestors.nwebsec.com/With/owinPath"))
                 .Sandbox(s => s.AllowForms().AllowPointerLock().AllowPopups().AllowSameOrigin().AllowScripts().AllowTopNavigation())
-                .ReportUris(r => r.Uris("https://www.nwebsec.com/report", "https://üüüüüü.de/WithPath;/From,Config")));
+                .ReportUris(r => r.Uris("https://www.nwebsec.com/report", "https://w-w.üüüüüü.de/réport?p=a;b,")));
 
             app.UseCspReportOnly(options => options
                 .DefaultSources(s => s.Self())

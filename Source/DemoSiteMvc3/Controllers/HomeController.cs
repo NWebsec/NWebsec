@@ -30,8 +30,9 @@ namespace DemoSiteMvc3.Controllers
         //[CspFrameSrc(None = true)]
         //[CspImgSrc(None = true)]
         //[CspMediaSrc(None = true)]
-        //[CspObjectSrc(None = true)]
-        [CspReportUri(EnableBuiltinHandler = true)]
+        //[CspObjectSrc(None = true)]https://üüüüüü.de/report
+        //[CspReportUri(ReportUris = "https://üüüüüü.de/WithPath;/From,Config https://report.klings.org/")]
+        //[CspReportUri(ReportUris = "https://üüüüüü.de/report")]
         //[CspReportOnly]
         //[CspScriptSrcReportOnly(Self = true)]
         //[CspStyleSrcReportOnly(UnsafeInline = true, Self = true)]
