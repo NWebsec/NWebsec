@@ -66,6 +66,7 @@ namespace NWebsec.Tests.Unit.Helpers
         [Test]
         public void SetHstsHeader_HttpAndNoHttpsOnly_UpdatesContextAndHandlesResult()
         {
+            _config.SecurityHttpHeaders.Hsts.HttpsOnly = false;
             _mockHeaderGenerator.Setup(g => g.CreateHstsResult(_config.SecurityHttpHeaders.Hsts)).Returns(_expectedHeaderResult);
 
             _configHeaderSetter.SetHstsHeader(_mockResponse.Object, _nwebsecContext, false);
@@ -90,6 +91,7 @@ namespace NWebsec.Tests.Unit.Helpers
         [Test]
         public void SetHstsHeader_HttpsAndNoHttpsOnly_UpdatesContextAndHandlesResult()
         {
+            _config.SecurityHttpHeaders.Hsts.HttpsOnly = false;
             _mockHeaderGenerator.Setup(g => g.CreateHstsResult(_config.SecurityHttpHeaders.Hsts)).Returns(_expectedHeaderResult);
 
             _configHeaderSetter.SetHstsHeader(_mockResponse.Object, _nwebsecContext, true);
