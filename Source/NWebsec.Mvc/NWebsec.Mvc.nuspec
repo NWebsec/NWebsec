@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
   <metadata>
     <id>NWebsec.Mvc</id>
-    <version>4.0.0-alpha09</version>
+    <version>4.0.0</version>
     <title>NWebsec.Mvc</title>
     <authors>André N. Klingsheim</authors>
     <owners>André N. Klingsheim</owners>
@@ -15,8 +15,8 @@
     <copyright>Copyright © 2012 - 2015</copyright>
     <tags>NWebsec security asp.net mvc</tags>
     <dependencies>
-      <dependency id="NWebsec.Core" version="[1.3.0-alpha07]" />
-      <dependency id="NWebsec" version="[4.0.0-alpha07]" />
+      <dependency id="NWebsec.Core" version="[1.3.0]" />
+      <dependency id="NWebsec" version="[4.0.0]" />
       <dependency id="Microsoft.AspNet.Mvc" version="[3.0.20105.1,6)" />
       <dependency id="Microsoft.Web.Infrastructure" version="1.0.0.0"/>
     </dependencies>
