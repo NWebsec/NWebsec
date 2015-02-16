@@ -11,6 +11,7 @@ namespace NWebsec.Owin
         internal HstsOptionsConfiguration()
         {
             MaxAge = TimeSpan.Zero;
+            HttpsOnly = true;
         }
 
         [EditorBrowsable(EditorBrowsableState.Never)]

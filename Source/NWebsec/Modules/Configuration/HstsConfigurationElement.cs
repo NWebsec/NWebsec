@@ -54,7 +54,7 @@ namespace NWebsec.Modules.Configuration
 
         }
 
-        [ConfigurationProperty("httpsOnly", IsRequired = false, DefaultValue = false)]
+        [ConfigurationProperty("httpsOnly", IsRequired = false, DefaultValue = true)]
         public bool HttpsOnly
         {
 

@@ -189,7 +189,7 @@
                   </xs:attribute>
                   <xs:attribute name="httpsOnly" type="simple_boolean" use="optional">
                     <xs:annotation>
-                      <xs:documentation>Optional. Specifies that the HSTS header should be set for HTTPS requests only. The default is false.</xs:documentation>
+                      <xs:documentation>Optional. Specifies that the HSTS header should be set for HTTPS requests only. The default is true.</xs:documentation>
                     </xs:annotation>
                   </xs:attribute>
                 </xs:complexType>

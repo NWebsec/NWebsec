@@ -31,6 +31,12 @@ namespace NWebsec.Owin
             return this;
         }
 
+        public IFluentHstsOptions AllResponses()
+        {
+            base.HttpsOnly = false;
+            return this;
+        }
+
         public new IFluentHstsOptions HttpsOnly()
         {
             base.HttpsOnly = true;

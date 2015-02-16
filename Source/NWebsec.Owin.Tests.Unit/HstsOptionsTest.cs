@@ -18,6 +18,12 @@ namespace NWebsec.Owin.Tests.Unit
         }
 
         [Test]
+        public void Ctor_HttpsOnly_DefaultTrue()
+        {
+            Assert.IsTrue(((IHstsConfiguration)_options).HttpsOnly);
+        }
+
+        [Test]
         public void MaxAge_ValidMaxage_SetsMaxage()
         {
             _options.MaxAge(minutes: 30);
@@ -48,6 +54,22 @@ namespace NWebsec.Owin.Tests.Unit
             _options.IncludeSubdomains();
 
             Assert.IsTrue(((IHstsConfiguration)_options).IncludeSubdomains);
+        }
+
+        [Test]
+        public void AllResponses_DisablesHttpsOnly()
+        {
+            _options.AllResponses();
+
+            Assert.IsFalse(((IHstsConfiguration)_options).HttpsOnly);
+        }
+
+        [Test]
+        public void HttpsOnly_SetsHttpsOnly()
+        {
+            _options.HttpsOnly();
+
+            Assert.IsTrue(((IHstsConfiguration)_options).HttpsOnly);
         }
     }
 }

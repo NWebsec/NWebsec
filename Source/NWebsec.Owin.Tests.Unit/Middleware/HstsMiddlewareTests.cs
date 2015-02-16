@@ -13,7 +13,7 @@ namespace NWebsec.Owin.Tests.Unit.Middleware
     {
 
         [Test]
-        public async Task Hsts_HttpAndNoHttpsOnly_AddsHeader()
+        public async Task Hsts_HttpAndNoHttpsOnly_NoHeader()
         {
             using (var server = TestServer.Create(app =>
             {
@@ -28,7 +28,7 @@ namespace NWebsec.Owin.Tests.Unit.Middleware
                 var httpClient = new HttpClient(server.Handler);
                 var response = await httpClient.GetAsync("http://localhost/");
 
-                Assert.IsTrue(response.Headers.Contains("Strict-Transport-Security"));
+                Assert.IsFalse(response.Headers.Contains("Strict-Transport-Security"));
             }
         }
 

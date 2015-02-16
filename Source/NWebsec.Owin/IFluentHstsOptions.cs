@@ -20,7 +20,7 @@ namespace NWebsec.Owin
         /// <returns>The current instance.</returns>
         /// <exception cref="ArgumentOutOfRangeException">Thrown if a negative value was supplied in any of the parameters.</exception>
         IFluentHstsOptions MaxAge(int days = 0, int hours = 0, int minutes = 0, int seconds = 0);
-        
+
         /// <summary>
         /// Enables the IncludeSubdomains directive in the Hsts header.
         /// </summary>
@@ -35,9 +35,18 @@ namespace NWebsec.Owin
         IFluentHstsOptions Preload();
 
         /// <summary>
-        /// Specifies that the HSTS header should be set for HTTPS requests only.
+        /// Specifies that the HSTS header should also be set for HTTP responses. The header is always set for HTTPS responses.
+        /// </summary>
+        /// <remarks>The HSTS standard specifies that the header should only be set over secure connections, which is the default behavior.
+        /// This configuration option exists to accomodate websites running behind an SSL terminator.</remarks>
+        /// <returns>The current instance.</returns>
+        IFluentHstsOptions AllResponses();
+
+        /// <summary>
+        /// Specifies that the HSTS header should be set for HTTPS responses only.
         /// </summary>
         /// <returns>The current instance.</returns>
+        [Obsolete("This method is deprecated as the default has been changed to HTTPS only.", false)]
         IFluentHstsOptions HttpsOnly();
     }
 }
