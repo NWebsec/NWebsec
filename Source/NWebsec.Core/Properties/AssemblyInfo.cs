@@ -14,7 +14,7 @@ using System.Security;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Andre N. Klingsheim")]
 [assembly: AssemblyProduct("NWebsec.Core")]
-[assembly: AssemblyCopyright("Copyright ©  2013-2014")]
+[assembly: AssemblyCopyright("Copyright ©  2013 - 2015")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 [assembly: AllowPartiallyTrustedCallers]

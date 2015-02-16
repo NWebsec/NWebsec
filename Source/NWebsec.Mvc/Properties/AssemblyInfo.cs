@@ -12,7 +12,7 @@ using NWebsec.Mvc;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Andre N. Klingsheim")]
 [assembly: AssemblyProduct("NWebsec.Mvc")]
-[assembly: AssemblyCopyright("Copyright © 2012 - 2014")]
+[assembly: AssemblyCopyright("Copyright © 2012 - 2015")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
