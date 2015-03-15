@@ -66,10 +66,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="HttpHeaders\Csp\ReportUriValidatorTests.cs" />
     <Compile Include="HttpHeaders\Csp\CspUriSourceTests.cs" />
     <Compile Include="HttpHeaders\Configuration\Validation\HstsConfigurationValidatorTests.cs" />
-    <Compile Include="HttpHeaders\Configuration\Validation\ReportUriValidatorTests.cs" />
     <Compile Include="HttpHeaders\Configuration\Validation\XRobotsTagValidatorTests.cs" />
     <Compile Include="HttpHeaders\HeaderGeneratorCspTests.cs" />
     <Compile Include="HttpHeaders\HeaderGeneratorTests.XRobots.cs" />

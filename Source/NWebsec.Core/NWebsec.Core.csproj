@@ -76,7 +76,6 @@
     <Compile Include="HttpHeaders\Csp\InvalidCspSourceException.cs" />
     <Compile Include="HttpHeaders\Csp\CspUriSource.cs" />
     <Compile Include="HttpHeaders\Configuration\Validation\HstsConfigurationValidator.cs" />
-    <Compile Include="HttpHeaders\Configuration\Validation\ReportUriValidator.cs" />
     <Compile Include="HttpHeaders\Configuration\Validation\XRobotsTagConfigurationValidator.cs" />
     <Compile Include="HttpHeaders\Configuration\XFrameOptionsConfiguration.cs" />
     <Compile Include="HttpHeaders\Configuration\XRobotsTagConfiguration.cs" />
