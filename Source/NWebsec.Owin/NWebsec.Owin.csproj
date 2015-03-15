@@ -60,11 +60,13 @@
     <Compile Include="CspDirectiveExtensions.cs" />
     <Compile Include="CspOptions.cs" />
     <Compile Include="CspReportUriDirective.cs" />
+    <Compile Include="FluentCspPluginTypesDirective.cs" />
     <Compile Include="FluentCspSandboxDirective.cs" />
     <Compile Include="HstsOptions.cs" />
     <Compile Include="HstsOptionsConfiguration.cs" />
     <Compile Include="IFluentCspOptions.cs" />
     <Compile Include="IFluentCspReportUriDirective.cs" />
+    <Compile Include="IFluentCspPluginTypesDirective.cs" />
     <Compile Include="IFluentCspSandboxDirective.cs" />
     <Compile Include="IFluentHstsOptions.cs" />
     <Compile Include="IFluentRedirectValidationOptions.cs" />

@@ -23,6 +23,7 @@ namespace NWebsec.Owin
             ChildSrcDirective = new CspDirective();
             FormActionDirective = new CspDirective();
             FrameAncestorsDirective = new CspDirective();
+            PluginTypesDirective = new FluentCspPluginTypesDirective();
             SandboxDirective = new FluentCspSandboxDirective();
             ReportUriDirective = new CspReportUriDirective();
         }
@@ -54,6 +55,9 @@ namespace NWebsec.Owin
         public ICspDirectiveConfiguration FormActionDirective { get; set; }
 
         public ICspDirectiveConfiguration FrameAncestorsDirective { get; set; }
+
+        public ICspPluginTypesDirectiveConfiguration PluginTypesDirective { get; set; }
+        
         public ICspSandboxDirectiveConfiguration SandboxDirective { get; set; }
 
         public ICspReportUriDirectiveConfiguration ReportUriDirective { get; set; }
@@ -133,6 +137,12 @@ namespace NWebsec.Owin
         public IFluentCspOptions FrameAncestors(Action<ICspDirectiveBasicConfiguration> configurer)
         {
             configurer(FrameAncestorsDirective);
+            return this;
+        }
+
+        public IFluentCspOptions PluginTypes(Action<IFluentCspPluginTypesDirective> configurer)
+        {
+            configurer((IFluentCspPluginTypesDirective)PluginTypesDirective);
             return this;
         }
 

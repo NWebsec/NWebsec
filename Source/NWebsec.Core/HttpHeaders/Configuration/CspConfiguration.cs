@@ -24,6 +24,7 @@ namespace NWebsec.Core.HttpHeaders.Configuration
             ChildSrcDirective = new CspDirectiveConfiguration();
             FormActionDirective = new CspDirectiveConfiguration();
             FrameAncestorsDirective = new CspDirectiveConfiguration();
+            PluginTypesDirective = new CspPluginTypesDirectiveConfiguration();
             SandboxDirective = new CspSandboxDirectiveConfiguration();
             ReportUriDirective = new CspReportUriDirectiveConfiguration();
         }
@@ -42,6 +43,7 @@ namespace NWebsec.Core.HttpHeaders.Configuration
         public ICspDirectiveConfiguration ChildSrcDirective { get; set; }
         public ICspDirectiveConfiguration FormActionDirective { get; set; }
         public ICspDirectiveConfiguration FrameAncestorsDirective { get; set; }
+        public ICspPluginTypesDirectiveConfiguration PluginTypesDirective { get; set; }
         public ICspSandboxDirectiveConfiguration SandboxDirective { get; set; }
         public ICspReportUriDirectiveConfiguration ReportUriDirective { get; set; }
     }

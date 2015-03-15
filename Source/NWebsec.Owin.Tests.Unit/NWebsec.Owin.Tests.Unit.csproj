@@ -70,6 +70,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CspOptionsTest.cs" />
+    <Compile Include="FluentCspPluginTypesDirectiveTests.cs" />
     <Compile Include="FluentCspSandboxDirectiveTests.cs" />
     <Compile Include="Middleware\HstsMiddlewareTests.cs" />
     <Compile Include="Core\OwinEnvironmentTests.cs" />

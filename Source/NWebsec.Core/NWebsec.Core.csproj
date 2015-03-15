@@ -50,11 +50,13 @@
     <Compile Include="HttpHeaders\Configuration\CspConfiguration.cs" />
     <Compile Include="HttpHeaders\Configuration\CspDirectiveConfiguration.cs" />
     <Compile Include="HttpHeaders\Configuration\CspHeaderConfiguration.cs" />
+    <Compile Include="HttpHeaders\Configuration\CspPluginTypesDirectiveConfiguration.cs" />
     <Compile Include="HttpHeaders\Configuration\CspReportUriDirectiveConfiguration.cs" />
     <Compile Include="HttpHeaders\Configuration\CspSandboxDirectiveConfiguration.cs" />
     <Compile Include="HttpHeaders\Configuration\HstsConfiguration.cs" />
     <Compile Include="HttpHeaders\Configuration\ICspConfiguration.cs" />
     <Compile Include="HttpHeaders\Configuration\ICspDirectiveBasicConfiguration.cs" />
+    <Compile Include="HttpHeaders\Configuration\ICspPluginTypesDirectiveConfiguration.cs" />
     <Compile Include="HttpHeaders\Configuration\ICspSandboxDirectiveConfiguration.cs" />
     <Compile Include="HttpHeaders\Configuration\ICspDirectiveConfiguration.cs" />
     <Compile Include="HttpHeaders\Configuration\ICspDirectiveUnsafeInlineConfiguration.cs" />

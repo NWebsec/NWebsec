@@ -68,6 +68,7 @@
     <Compile Include="Helpers\IHeaderResultHandler.cs" />
     <Compile Include="Helpers\RedirectValidationHelper.cs" />
     <Compile Include="Helpers\HandlerTypeHelper.cs" />
+    <Compile Include="Modules\Configuration\Csp\CspPluginTypesDirectiveConfigurationElement.cs" />
     <Compile Include="Modules\Configuration\Csp\CspSandboxDirectiveConfigurationElement.cs" />
     <Compile Include="Modules\Configuration\Csp\CspDirectiveBaseConfigurationElement.cs" />
     <Compile Include="Modules\Configuration\Csp\CspDirectiveUnsafeInlineConfigurationElement.cs" />
@@ -76,11 +77,14 @@
     <Compile Include="Modules\Configuration\Csp\CspReportUriConfigurationElement.cs" />
     <Compile Include="Modules\Configuration\Csp\CspReportUriDirectiveConfigurationElement.cs" />
     <Compile Include="Modules\Configuration\Csp\CspReportUriConfigurationElementCollection.cs" />
+    <Compile Include="Modules\Configuration\Csp\CspMediaTypeConfigurationElement.cs" />
+    <Compile Include="Modules\Configuration\Csp\CspMediaTypeElementCollection.cs" />
     <Compile Include="Modules\Configuration\Csp\Validation\CspDirectiveUnsafeInlineConfigurationElementValidator.cs" />
     <Compile Include="Modules\Configuration\Csp\Validation\CspDirectiveUnsafeInlineConfigurationElementValidatorAttribute.cs" />
     <Compile Include="Modules\Configuration\Csp\Validation\CspDirectiveUnsafeInlineUnsafeEvalConfigurationElementValidator.cs" />
     <Compile Include="Modules\Configuration\Csp\Validation\CspDirectiveUnsafeInlineUnsafeEvalConfigurationElementValidatorAttribute.cs" />
     <Compile Include="Modules\Configuration\Csp\Validation\CspSourceConfigurationValidator.cs" />
+    <Compile Include="Modules\Configuration\Csp\Validation\CspPluginTypesMediaTypeValidatorAttribute.cs" />
     <Compile Include="Modules\Configuration\Csp\Validation\CspSourceValidatorAttribute.cs" />
     <Compile Include="Modules\Configuration\Csp\CspSourceConfigurationElement.cs" />
     <Compile Include="Modules\Configuration\Csp\CspSourcesElementCollection.cs" />

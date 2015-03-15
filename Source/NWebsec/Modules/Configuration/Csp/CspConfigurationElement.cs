@@ -205,6 +205,19 @@ namespace NWebsec.Modules.Configuration.Csp
             }
         }
 
+        [ConfigurationProperty("plugin-types", IsRequired = false)]
+        public CspPluginTypesDirectiveConfiguration PluginTypes
+        {
+            get
+            {
+                return (CspPluginTypesDirectiveConfiguration)this["plugin-types"];
+            }
+            set
+            {
+                this["plugin-types"] = value;
+            }
+        }
+
         [ConfigurationProperty("report-uri", IsRequired = false)]
         public CspReportUriDirectiveConfigurationElement ReportUri
         {
@@ -283,6 +296,12 @@ namespace NWebsec.Modules.Configuration.Csp
         public ICspDirectiveConfiguration FrameAncestorsDirective
         {
             get { return FrameAncestors; }
+            set { throw new NotImplementedException(); }
+        }
+
+        public ICspPluginTypesDirectiveConfiguration PluginTypesDirective
+        {
+            get { return PluginTypes; }
             set { throw new NotImplementedException(); }
         }
 

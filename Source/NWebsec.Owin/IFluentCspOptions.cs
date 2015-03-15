@@ -103,6 +103,13 @@ namespace NWebsec.Owin
         IFluentCspOptions FrameAncestors(Action<ICspDirectiveBasicConfiguration> configurer);
 
         /// <summary>
+        /// Configures the plugin-types directive (CSP 2).
+        /// </summary>
+        /// <param name="configurer">An <see cref="Action"/> that configures the media types for the directive.</param>
+        /// <returns>The current <see cref="CspOptions" /> instance.</returns>
+        IFluentCspOptions PluginTypes(Action<IFluentCspPluginTypesDirective> configurer);
+
+        /// <summary>
         /// Configures the sandbox directive (CSP 2).
         /// </summary>
         /// <remarks>Support for this directive was optional in CSP 1.0, but is mandatory as of CSP 2.</remarks>
