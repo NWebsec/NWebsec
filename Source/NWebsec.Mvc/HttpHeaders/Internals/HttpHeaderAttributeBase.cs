@@ -49,7 +49,11 @@ namespace NWebsec.Mvc.HttpHeaders.Internals
         protected Exception CreateAttributeException(string message, Exception e = null)
         {
             var errorMessage = string.Format("{0}: {1}", GetType().Name, message);
-            return new ApplicationException(errorMessage, e);
+            if (e != null)
+            {
+                errorMessage += "\nDetails: " + e.Message;
+            }
+            return new ApplicationException(errorMessage);
         }
     }
 }

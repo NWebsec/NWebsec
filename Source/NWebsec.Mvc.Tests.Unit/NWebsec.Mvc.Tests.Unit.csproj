@@ -62,6 +62,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Helpers\ContextConfigurationHelperTests.cs" />
+    <Compile Include="HttpHeaders\Csp\Internals\CspPluginTypesAttributeBaseTests.cs" />
     <Compile Include="HttpHeaders\Csp\Internals\CspDirectiveAttributeBaseTests.cs" />
     <Compile Include="HttpHeaders\Csp\Internals\CspSandboxAttributeBaseTests.cs" />
     <Compile Include="TestHelpers\CspPluginTypesDirectiveConfigurationComparerTests.cs" />

@@ -88,6 +88,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Csp\CspPluginTypesOverride.cs" />
     <Compile Include="Csp\CspDirectiveOverride.cs" />
     <Compile Include="Csp\CspOverrideConfiguration.cs" />
     <Compile Include="Csp\CspSandboxOverride.cs" />
@@ -113,6 +114,8 @@
     <Compile Include="HttpHeaders\Csp\CspFrameAncestorsReportOnlyAttribute.cs" />
     <Compile Include="HttpHeaders\Csp\CspFrameAncestorsAttribute.cs" />
     <Compile Include="HttpHeaders\Csp\CspHtmlHelpers.cs" />
+    <Compile Include="HttpHeaders\Csp\CspPluginTypesReportOnlyAttribute.cs" />
+    <Compile Include="HttpHeaders\Csp\CspPluginTypesAttribute.cs" />
     <Compile Include="HttpHeaders\Csp\CspSandboxReportOnlyAttribute.cs" />
     <Compile Include="HttpHeaders\Csp\CspSandboxAttribute.cs" />
     <Compile Include="HttpHeaders\Csp\Internals\CspAttributeBase.cs" />
@@ -133,6 +136,7 @@
     <Compile Include="HttpHeaders\Csp\CspObjectSrcReportOnlyAttribute.cs" />
     <Compile Include="HttpHeaders\Csp\CspReportOnlyAttribute.cs" />
     <Compile Include="HttpHeaders\Csp\CspReportUriAttribute.cs" />
+    <Compile Include="HttpHeaders\Csp\Internals\CspPluginTypesAttributeBase.cs" />
     <Compile Include="HttpHeaders\Csp\Internals\CspSandboxAttributeBase.cs" />
     <Compile Include="HttpHeaders\Csp\Internals\CspReportUriAttributeBase.cs" />
     <Compile Include="HttpHeaders\Csp\CspReportUriReportOnlyAttribute.cs" />
