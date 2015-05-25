@@ -18,6 +18,9 @@ namespace NWebsec.Mvc.Helpers
         ICspDirectiveConfiguration GetCspDirectiveConfigCloned(ICspConfiguration cspConfig, CspDirectives directive);
 
         [CanBeNull]
+        ICspPluginTypesDirectiveConfiguration GetCspPluginTypesConfigCloned(ICspConfiguration cspConfig);
+
+        [CanBeNull]
         ICspSandboxDirectiveConfiguration GetCspSandboxConfigCloned(ICspConfiguration cspConfig);
 
         void SetCspDirectiveConfig(ICspConfiguration cspConfig, CspDirectives directive, ICspDirectiveConfiguration directiveConfig);

@@ -82,6 +82,23 @@ namespace NWebsec.Mvc.Helpers
             _configMapper.SetCspDirectiveConfig(overrides, directive, newConfig);
         }
 
+        internal void SetCspPluginTypesOverride(HttpContextBase context, CspPluginTypesOverride config, bool reportOnly)
+        {
+            var overrides = _contextConfigurationHelper.GetCspConfigurationOverride(context, reportOnly, false);
+
+            var directiveToOverride = overrides.PluginTypesDirective;
+
+            if (directiveToOverride == null)
+            {
+                var baseConfig = _contextConfigurationHelper.GetCspConfiguration(context, reportOnly);
+                directiveToOverride = _configMapper.GetCspPluginTypesConfigCloned(baseConfig);
+            }
+
+            var newConfig = _cspDirectiveOverrideHelper.GetOverridenCspPluginTypesConfig(config, directiveToOverride);
+
+            overrides.PluginTypesDirective = newConfig;
+        }
+
         internal void SetCspSandboxOverride(HttpContextBase context, CspSandboxOverride config, bool reportOnly)
         {
             var overrides = _contextConfigurationHelper.GetCspConfigurationOverride(context, reportOnly, false);

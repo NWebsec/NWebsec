@@ -106,5 +106,29 @@ namespace NWebsec.Mvc.Helpers
             }
             return result;
         }
+
+        public ICspPluginTypesDirectiveConfiguration GetOverridenCspPluginTypesConfig(CspPluginTypesOverride directiveOverride,
+            ICspPluginTypesDirectiveConfiguration directiveConfig)
+        {
+            var result = directiveConfig ?? new CspPluginTypesDirectiveConfiguration();
+
+            result.Enabled = directiveOverride.Enabled;
+
+            
+            if (!directiveOverride.InheritMediaTypes)
+            {
+                result.MediaTypes = EmptySources;
+            }
+
+            if (directiveOverride.MediaTypes != null && directiveOverride.MediaTypes.Length > 0)
+            {
+                var newSources = new List<string>(result.MediaTypes);
+                newSources.AddRange(directiveOverride.MediaTypes);
+                result.MediaTypes = newSources;
+            }
+
+
+            return result;
+        }
     }
 }

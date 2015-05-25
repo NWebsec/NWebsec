@@ -151,6 +151,48 @@ namespace NWebsec.Mvc.Tests.Unit.Helpers
         }
 
         [Test]
+        public void SetCspPluginTypesOverride_NoCurrentOverride_ClonesConfigFromContextAndOverrides([Values(false, true)]bool reportOnly)
+        {
+
+            var contextConfig = new CspConfiguration();
+            var overrideConfig = new CspOverrideConfiguration();
+            //Returns CSP config from context
+            _contextHelper.Setup(h => h.GetCspConfiguration(It.IsAny<HttpContextBase>(), reportOnly)).Returns(contextConfig);
+            _contextHelper.Setup(h => h.GetCspConfigurationOverride(It.IsAny<HttpContextBase>(), reportOnly, false)).Returns(overrideConfig);
+            //Returns cloned directive config from context config
+            var clonedContextDirective = new CspPluginTypesDirectiveConfiguration();
+            _directiveConfigMapper.Setup(m => m.GetCspPluginTypesConfigCloned(contextConfig)).Returns(clonedContextDirective);
+            //We need an override and a result.
+            var directiveOverride = new CspPluginTypesOverride();
+            var directiveOverrideResult = new CspPluginTypesDirectiveConfiguration();
+            _directiveOverrideHelper.Setup(h => h.GetOverridenCspPluginTypesConfig(directiveOverride, clonedContextDirective)).Returns(directiveOverrideResult);
+
+            CspConfigurationOverrideHelper.SetCspPluginTypesOverride(MockContext, directiveOverride, reportOnly);
+
+            //Verify that the override result was set on the override config.
+            Assert.AreSame(directiveOverrideResult, overrideConfig.PluginTypesDirective);
+        }
+
+        [Test]
+        public void SetCspPluginTypesOverride_HasOverride_OverridesExistingOverride([Values(false, true)]bool reportOnly)
+        {
+
+            //There's an override for directive
+            var currentDirectiveOverride = new CspPluginTypesDirectiveConfiguration();
+            var overrideConfig = new CspOverrideConfiguration { PluginTypesDirective = currentDirectiveOverride };
+            _contextHelper.Setup(h => h.GetCspConfigurationOverride(It.IsAny<HttpContextBase>(), reportOnly, false)).Returns(overrideConfig);
+            //We need an override and a result.
+            var directiveOverride = new CspPluginTypesOverride();
+            var directiveOverrideResult = new CspPluginTypesDirectiveConfiguration();
+            _directiveOverrideHelper.Setup(h => h.GetOverridenCspPluginTypesConfig(directiveOverride, currentDirectiveOverride)).Returns(directiveOverrideResult);
+
+            CspConfigurationOverrideHelper.SetCspPluginTypesOverride(MockContext, directiveOverride, reportOnly);
+
+            //Verify that the override result was set on the override config.
+            Assert.AreSame(directiveOverrideResult, overrideConfig.PluginTypesDirective);
+        }
+
+        [Test]
         public void SetCspSandboxOverride_NoCurrentOverride_ClonesConfigFromContextAndOverrides([Values(false, true)]bool reportOnly)
         {
 
@@ -159,8 +201,6 @@ namespace NWebsec.Mvc.Tests.Unit.Helpers
             //Returns CSP config from context
             _contextHelper.Setup(h => h.GetCspConfiguration(It.IsAny<HttpContextBase>(), reportOnly)).Returns(contextConfig);
             _contextHelper.Setup(h => h.GetCspConfigurationOverride(It.IsAny<HttpContextBase>(), reportOnly, false)).Returns(overrideConfig);
-            //There's no override for directive
-            //_directiveConfigMapper.Setup(m => m.GetCspDirectiveConfig(overrideConfig, directive)).Returns((ICspDirectiveConfiguration)null);
             //Returns cloned directive config from context config
             var clonedContextDirective = new CspSandboxDirectiveConfiguration();
             _directiveConfigMapper.Setup(m => m.GetCspSandboxConfigCloned(contextConfig)).Returns(clonedContextDirective);
@@ -168,14 +208,11 @@ namespace NWebsec.Mvc.Tests.Unit.Helpers
             var directiveOverride = new CspSandboxOverride();
             var directiveOverrideResult = new CspSandboxDirectiveConfiguration();
             _directiveOverrideHelper.Setup(h => h.GetOverridenCspSandboxConfig(directiveOverride, clonedContextDirective)).Returns(directiveOverrideResult);
-            //This should be called at the very end
-            //_directiveConfigMapper.Setup(m => m.SetCspDirectiveConfig(overrideConfig, directive, directiveOverrideResult));
 
             CspConfigurationOverrideHelper.SetCspSandboxOverride(MockContext, directiveOverride, reportOnly);
 
             //Verify that the override result was set on the override config.
             Assert.AreSame(directiveOverrideResult, overrideConfig.SandboxDirective);
-            //_directiveConfigMapper.Verify(m => m.SetCspDirectiveConfig(overrideConfig, directiveOverrideResult), Times.Once);
         }
 
         [Test]
@@ -185,19 +222,15 @@ namespace NWebsec.Mvc.Tests.Unit.Helpers
             var currentDirectiveOverride = new CspSandboxDirectiveConfiguration();
             var overrideConfig = new CspOverrideConfiguration {SandboxDirective = currentDirectiveOverride};
             _contextHelper.Setup(h => h.GetCspConfigurationOverride(It.IsAny<HttpContextBase>(), reportOnly, false)).Returns(overrideConfig);
-            //_directiveConfigMapper.Setup(m => m.GetCspDirectiveConfig(overrideConfig, directive)).Returns(currentDirectiveOverride);
             //We need an override and a result.
             var directiveOverride = new CspSandboxOverride();
             var directiveOverrideResult = new CspSandboxDirectiveConfiguration();
             _directiveOverrideHelper.Setup(h => h.GetOverridenCspSandboxConfig(directiveOverride, currentDirectiveOverride)).Returns(directiveOverrideResult);
-            //This should be called at the very end
-            //_directiveConfigMapper.Setup(m => m.SetCspDirectiveConfig(overrideConfig, directive, directiveOverrideResult));
 
             CspConfigurationOverrideHelper.SetCspSandboxOverride(MockContext, directiveOverride, reportOnly);
 
             //Verify that the override result was set on the override config.
             Assert.AreSame(directiveOverrideResult, overrideConfig.SandboxDirective);
-            //_directiveConfigMapper.Verify(m => m.SetCspDirectiveConfig(overrideConfig, directive, directiveOverrideResult), Times.Once);
         }
 
         [Test]

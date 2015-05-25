@@ -213,6 +213,66 @@ namespace NWebsec.Mvc.Tests.Unit.Helpers
         }
 
         [Test]
+        public void GetOverridenCspPluginTypesConfig_NullConfig_ReturnsNewDefaultConfig()
+        {
+            var directiveConfig = new CspPluginTypesDirectiveConfiguration();
+            var directiveOverride = new CspPluginTypesOverride { Enabled = directiveConfig.Enabled };
+
+            var newConfig = _overrideHelper.GetOverridenCspPluginTypesConfig(directiveOverride, null);
+
+            Assert.AreNotSame(directiveConfig, newConfig);
+            Assert.That(newConfig, Is.EqualTo(directiveConfig).Using(new CspPluginTypesDirectiveConfigurationComparer()));
+        }
+
+        [Test]
+        public void GetOverridenCspPluginTypesConfig_EnabledOverride_EnabledOverriden([Values(true, false)] bool expectedResult)
+        {
+            var directiveConfig = new CspPluginTypesDirectiveConfiguration { Enabled = !expectedResult };
+            var directiveOverride = new CspPluginTypesOverride { Enabled = expectedResult };
+
+            var newConfig = _overrideHelper.GetOverridenCspPluginTypesConfig(directiveOverride, directiveConfig);
+
+            Assert.AreEqual(expectedResult, newConfig.Enabled);
+        }
+
+        [Test]
+        public void GetOverridenCspPluginTypesConfig_NoMediaTypesOverride_KeepsMediaTypes()
+        {
+            var expectedMediaTypes = new[] { "application/pdf" };
+            var directiveConfig = new CspPluginTypesDirectiveConfiguration { MediaTypes = expectedMediaTypes };
+            var directiveOverride = new CspPluginTypesOverride { InheritMediaTypes = true };
+
+            var newConfig = _overrideHelper.GetOverridenCspPluginTypesConfig(directiveOverride, directiveConfig);
+
+            Assert.IsTrue(expectedMediaTypes.SequenceEqual(newConfig.MediaTypes), "MediaTypes differed.");
+        }
+
+        [Test]
+        public void GetOverridenCspPluginTypesConfig_MediaTypesOverride_OverriddesMediaTypes()
+        {
+            var directiveConfig = new CspPluginTypesDirectiveConfiguration { MediaTypes = new[] { "application/pdf" } };
+            var directiveOverride = new CspPluginTypesOverride { MediaTypes = new[] { "image/png" }, InheritMediaTypes = false };
+
+            var newConfig = _overrideHelper.GetOverridenCspPluginTypesConfig(directiveOverride, directiveConfig);
+
+            Assert.IsTrue(newConfig.MediaTypes.Count() == 1);
+            Assert.IsTrue(newConfig.MediaTypes.First().Equals("image/png"));
+        }
+
+        [Test]
+        public void GetOverridenCspPluginTypesConfig_MediaTypesOverrideWithMediaTypesInherited_KeepsAllMediaTypes()
+        {
+            var directiveConfig = new CspPluginTypesDirectiveConfiguration { MediaTypes = new[] { "application/pdf" } };
+            var directiveOverride = new CspPluginTypesOverride { MediaTypes = new[] { "image/png" }, InheritMediaTypes = true };
+
+            var newConfig = _overrideHelper.GetOverridenCspPluginTypesConfig(directiveOverride, directiveConfig);
+
+            Assert.AreEqual(2, newConfig.MediaTypes.Count());
+            Assert.Contains("application/pdf", newConfig.MediaTypes.ToList());
+            Assert.Contains("image/png", newConfig.MediaTypes.ToList());
+        }
+
+        [Test]
         public void GetOverridenCspSandboxConfig_EnableOverride_OverridesEnabled([Values(true, false)] bool expectedResult)
         {
             var directiveConfig = new CspSandboxDirectiveConfiguration { Enabled = !expectedResult };

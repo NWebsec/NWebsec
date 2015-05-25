@@ -80,8 +80,7 @@ namespace NWebsec.Mvc.HttpHeaders.Csp.Internals
         {
             ValidateParams();
 
-            //TODO fix overridehelper
-            //_configurationOverrideHelper.SetCspSandboxOverride(filterContext.HttpContext, _directive, ReportOnly);
+            _configurationOverrideHelper.SetCspPluginTypesOverride(filterContext.HttpContext, _directive, ReportOnly);
             base.OnActionExecuting(filterContext);
         }
 

@@ -11,6 +11,10 @@ namespace NWebsec.Mvc.Helpers
         [NotNull]
         ICspDirectiveConfiguration GetOverridenCspDirectiveConfig([NotNull]CspDirectiveOverride directiveOverride, [CanBeNull]ICspDirectiveConfiguration directiveConfig);
 
+        [NotNull]
         ICspSandboxDirectiveConfiguration GetOverridenCspSandboxConfig([NotNull]CspSandboxOverride directiveOverride, [CanBeNull]ICspSandboxDirectiveConfiguration directiveConfig);
+
+        [NotNull]
+        ICspPluginTypesDirectiveConfiguration GetOverridenCspPluginTypesConfig([NotNull]CspPluginTypesOverride directiveOverride, [CanBeNull]ICspPluginTypesDirectiveConfiguration directiveConfig);
     }
 }
