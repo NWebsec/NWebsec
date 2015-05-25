@@ -33,5 +33,12 @@ namespace NWebsec.Owin.Tests.Unit
 
             Assert.IsTrue(expectedSequence.SequenceEqual(((ICspPluginTypesDirectiveConfiguration)_options).MediaTypes), "Sequences did not match.");
         }
+
+        [Test]
+        public void MediaTypes_InvalidMediaTypes_ThrowsException()
+        {
+            Assert.Throws<ArgumentException>(()=> _options.MediaTypes("application /pdf", "applicazion/vnd.ms-excel"));
+
+        }
     }
 }

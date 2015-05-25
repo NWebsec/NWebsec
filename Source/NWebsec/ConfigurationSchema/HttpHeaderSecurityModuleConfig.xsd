@@ -296,6 +296,13 @@
       </xs:annotation>
     </xs:attribute>
   </xs:complexType>
+  <xs:complexType name="cspMediaType">
+    <xs:attribute name="media-type" type="xs:string" use="required">
+      <xs:annotation>
+        <xs:documentation>This attribute is required. Specifies a media type.</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+  </xs:complexType>
   <xs:complexType name="BaseCspElement">
     <xs:choice minOccurs="0" maxOccurs="unbounded">
       <xs:element name="add" type="cspSource" />
@@ -392,6 +399,23 @@
         <xs:annotation>
           <xs:documentation>Configures the frame-ancestors CSP directive (CSP 2).</xs:documentation>
         </xs:annotation>
+      </xs:element>
+      <xs:element name="plugin-types" minOccurs="0" maxOccurs="1">
+        <xs:annotation>
+          <xs:documentation>Configures the plugin-types CSP directive (CSP 2).</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+          <xs:choice minOccurs="0" maxOccurs="unbounded">
+            <xs:element name="add" type="cspMediaType" />
+            <xs:element name="remove" type="cspMediaType" />
+            <xs:element name="clear"/>
+          </xs:choice>
+          <xs:attribute name="enabled" type="simple_boolean" use="optional">
+            <xs:annotation>
+              <xs:documentation>Optional. Specifies whether to enable the source directive. The default is true.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+        </xs:complexType>
       </xs:element>
       <xs:element name="sandbox" minOccurs="0" maxOccurs="1">
         <xs:annotation>

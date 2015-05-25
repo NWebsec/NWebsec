@@ -7,7 +7,7 @@ namespace NWebsec.Modules.Configuration.Csp
 {
     public class CspMediaTypeConfigurationElement : ConfigurationElement
     {
-        [ConfigurationProperty("media-type", IsKey = true, IsRequired = true)]
+        [ConfigurationProperty("media-type", IsKey = true, IsRequired = true, DefaultValue = "ConfigDefault")]
         [CspPluginTypesMediaTypeValidatorAttribute]
         public string MediaType
         {

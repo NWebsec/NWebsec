@@ -83,6 +83,7 @@
     <Compile Include="Modules\Configuration\Csp\Validation\CspDirectiveUnsafeInlineConfigurationElementValidatorAttribute.cs" />
     <Compile Include="Modules\Configuration\Csp\Validation\CspDirectiveUnsafeInlineUnsafeEvalConfigurationElementValidator.cs" />
     <Compile Include="Modules\Configuration\Csp\Validation\CspDirectiveUnsafeInlineUnsafeEvalConfigurationElementValidatorAttribute.cs" />
+    <Compile Include="Modules\Configuration\Csp\Validation\CspPluginTypesMediaTypeValidator.cs" />
     <Compile Include="Modules\Configuration\Csp\Validation\CspSourceConfigurationValidator.cs" />
     <Compile Include="Modules\Configuration\Csp\Validation\CspPluginTypesMediaTypeValidatorAttribute.cs" />
     <Compile Include="Modules\Configuration\Csp\Validation\CspSourceValidatorAttribute.cs" />

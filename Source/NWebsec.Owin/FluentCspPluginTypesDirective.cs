@@ -2,6 +2,7 @@
 
 using System;
 using NWebsec.Core.HttpHeaders.Configuration;
+using NWebsec.Core.HttpHeaders.Configuration.Validation;
 
 namespace NWebsec.Owin
 {
@@ -17,7 +18,6 @@ namespace NWebsec.Owin
 
         public void MediaTypes(params string[] mediaTypes)
         {
-            //TODO Unit tests and validation.
             if (mediaTypes == null)
             {
                 throw new ArgumentNullException("mediaTypes");
@@ -27,8 +27,21 @@ namespace NWebsec.Owin
             {
                 throw new ArgumentException("One or more parameter values expected.","mediaTypes");
             }
+            var validator = new Rfc2045MediaTypeValidator();
 
-            base.MediaTypes = mediaTypes ?? EmptyDirective;
+            foreach (var mediaType in mediaTypes)
+            {
+                try
+                {
+                    validator.Validate(mediaType);
+                }
+                catch (Exception e)
+                {
+                    throw new ArgumentException("Invalid argument. Details: " + e.Message, e);
+                }
+            }
+
+            base.MediaTypes = mediaTypes;
         }
     }
 }

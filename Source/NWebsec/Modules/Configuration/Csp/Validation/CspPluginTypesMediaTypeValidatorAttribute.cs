@@ -10,8 +10,7 @@ namespace NWebsec.Modules.Configuration.Csp.Validation
         {
             get
             {
-                //TODO implement proper validator
-                return new CspSourceConfigurationValidator();
+                return new CspPluginTypesMediaTypeValidator();
             }
         }
     }

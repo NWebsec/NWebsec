@@ -206,11 +206,11 @@ namespace NWebsec.Modules.Configuration.Csp
         }
 
         [ConfigurationProperty("plugin-types", IsRequired = false)]
-        public CspPluginTypesDirectiveConfiguration PluginTypes
+        public CspPluginTypesDirectiveConfigurationElement PluginTypes
         {
             get
             {
-                return (CspPluginTypesDirectiveConfiguration)this["plugin-types"];
+                return (CspPluginTypesDirectiveConfigurationElement)this["plugin-types"];
             }
             set
             {
