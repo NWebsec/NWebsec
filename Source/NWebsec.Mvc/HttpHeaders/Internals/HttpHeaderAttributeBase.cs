@@ -39,5 +39,17 @@ namespace NWebsec.Mvc.HttpHeaders.Internals
         }
 
         public abstract void SetHttpHeadersOnActionExecuted(ActionExecutedContext filterContext);
+
+        /// <summary>
+        /// Creates an exception with message prefixed with the current type name, to give a hint about the current attribute.
+        /// </summary>
+        /// <param name="message"></param>
+        /// <param name="e"></param>
+        /// <returns></returns>
+        protected Exception CreateAttributeException(string message, Exception e = null)
+        {
+            var errorMessage = string.Format("{0}: {1}", GetType().Name, message);
+            return new ApplicationException(errorMessage, e);
+        }
     }
 }

@@ -48,11 +48,11 @@ namespace NWebsec.Mvc.HttpHeaders.Csp.Internals
             set
             {
                 if (String.IsNullOrEmpty(value))
-                    throw new ArgumentException("ReportUris cannot be set to null or an empty string.");
+                    throw CreateAttributeException("ReportUris cannot be set to null or an empty string.");
                 if (value.StartsWith(" ") || value.EndsWith(" "))
-                    throw new ArgumentException("ReportUris must not contain leading or trailing whitespace: " + value);
+                    throw CreateAttributeException("ReportUris must not contain leading or trailing whitespace: " + value);
                 if (value.Contains("  "))
-                    throw new ArgumentException("ReportUris must be separated by exactly one whitespace: " + value);
+                    throw CreateAttributeException("ReportUris must be separated by exactly one whitespace: " + value);
 
                 var uris = value.Split(' ');
 
@@ -62,7 +62,7 @@ namespace NWebsec.Mvc.HttpHeaders.Csp.Internals
                     Uri uri;
                     if (!Uri.TryCreate(reportUri, UriKind.RelativeOrAbsolute, out uri))
                     {
-                        throw new ArgumentException("Could not parse reportUri: " + reportUri);
+                        throw CreateAttributeException("Could not parse reportUri: " + reportUri);
                     }
 
                     reportUriList.Add(CspUriSource.EncodeUri(uri));
@@ -78,7 +78,7 @@ namespace NWebsec.Mvc.HttpHeaders.Csp.Internals
         {
             if (_directive.Enabled && !_directive.EnableBuiltinHandler && _directive.ReportUris == null)
             {
-                throw new ApplicationException("You need to either set EnableBuiltinHandler to true, or supply at least one Reporturi to enable the reporturi directive.");
+                throw CreateAttributeException("You need to either set EnableBuiltinHandler to true, or supply at least one Reporturi to enable the reporturi directive.");
             }
 
             _configurationOverrideHelper.SetCspReportUriOverride(filterContext.HttpContext, _directive, ReportOnly);

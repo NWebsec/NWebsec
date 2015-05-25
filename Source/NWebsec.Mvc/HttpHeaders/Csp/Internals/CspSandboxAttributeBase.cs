@@ -86,7 +86,7 @@ namespace NWebsec.Mvc.HttpHeaders.Csp.Internals
             if (_paramsValidated) return;
 
             if (Enabled && SourcesNotConfigured())
-                throw new ApplicationException("No sources configured for Csp sandbox attribute. Remove attribute, or set \"Enabled=false\"");
+                throw CreateAttributeException("No sources configured for Csp sandbox attribute. Remove attribute, or set \"Enabled=false\"");
 
             _paramsValidated = true;
         }

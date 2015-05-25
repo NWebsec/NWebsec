@@ -57,7 +57,7 @@ namespace NWebsec.Mvc.HttpHeaders.Csp.Internals
         /// <summary>
         /// Gets or sets other sources for the directive. Sources are separated by exactly one whitespace. Source examples are scheme only ("https:"), any host ("*"),
         /// a host ("*.nwebsec.com", "www.nwebsec.com", "https://www.nwebsec.com", "www.nwebsec.com:443", "https://www.nwebsec.com:*").
-        /// See the Content Security Policy 1.0 standard for details.
+        /// See the Content Security Policy Level 2 standard for details.
         /// </summary>
         public string CustomSources
         {
@@ -67,12 +67,14 @@ namespace NWebsec.Mvc.HttpHeaders.Csp.Internals
             }
             set
             {
-                if (String.IsNullOrEmpty(value))
-                    throw new ArgumentException("Sources cannot be set to null or an empty string.");
+                if (string.IsNullOrEmpty(value))
+                    throw CreateAttributeException("Sources cannot be set to null or an empty string.");
+
                 if (value.StartsWith(" ") || value.EndsWith(" "))
-                    throw new ArgumentException("Sources must not contain leading or trailing whitespace: " + value);
+                    throw CreateAttributeException("Sources must not contain leading or trailing whitespace: " + value);
+
                 if (value.Contains("  "))
-                    throw new ArgumentException("Sources must be separated by exactly one whitespace: " + value);
+                    throw CreateAttributeException("Sources must be separated by exactly one whitespace: " + value);
 
                 var sources = value.Split(' ');
 
@@ -82,7 +84,7 @@ namespace NWebsec.Mvc.HttpHeaders.Csp.Internals
                 }
                 catch (Exception e)
                 {
-                    throw new ArgumentException("Invalid source(s): " + value, e);
+                    throw CreateAttributeException("Invalid source(s): " + value, e);
                 }
             }
         }
@@ -105,12 +107,12 @@ namespace NWebsec.Mvc.HttpHeaders.Csp.Internals
 
             if (Enabled && KeywordSourcesNotConfigured() && DirectiveConfig.OtherSources == null)
             {
-                throw new ApplicationException("No sources configured for attribute. Remove attribute, or set \"Enabled=false\"");
+                throw CreateAttributeException("No sources configured for attribute. Remove attribute, or set \"Enabled=false\".");
             }
 
             if (NoneCombinedWithOtherSources())
             {
-                throw new ApplicationException("The 'none' source cannot be combined with other sources.");
+                throw CreateAttributeException("The 'none' source cannot be combined with other sources.");
                 
             }
             _paramsValidated = true;
