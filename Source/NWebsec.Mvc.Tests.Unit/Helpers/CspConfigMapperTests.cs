@@ -105,6 +105,42 @@ namespace NWebsec.Mvc.Tests.Unit.Helpers
         }
 
         [Test]
+        public void GetCspPluginTypesConfigCloned_NoDirective_ReturnsNull()
+        {
+            var config = new CspConfiguration(false);
+            var mapper = new CspConfigMapper();
+
+            var clone = mapper.GetCspPluginTypesConfigCloned(config);
+
+            Assert.IsNull(clone);
+        }
+
+        [Test]
+        public void GetCspPluginTypesConfigCloned_Configured_ClonesDirective()
+        {
+            var firstDirective = new CspPluginTypesDirectiveConfiguration()
+            {
+                Enabled = false,
+                MediaTypes = new[] { "application/pdf" }
+            };
+            var firstConfig = new CspConfiguration(false) { PluginTypesDirective = firstDirective };
+
+            var secondDirective = new CspPluginTypesDirectiveConfiguration()
+            {
+                Enabled = true,
+                MediaTypes = new[] { "image/png", "application/pdf" }
+            };
+            var secondConfig = new CspConfiguration(false) { PluginTypesDirective = secondDirective };
+            var mapper = new CspConfigMapper();
+
+            var firstResult = mapper.GetCspPluginTypesConfigCloned(firstConfig);
+            var secondResult = mapper.GetCspPluginTypesConfigCloned(secondConfig);
+
+            Assert.That(firstResult, Is.EqualTo(firstDirective).Using(new CspPluginTypesDirectiveConfigurationComparer()));
+            Assert.That(secondResult, Is.EqualTo(secondDirective).Using(new CspPluginTypesDirectiveConfigurationComparer()));
+        }
+
+        [Test]
         public void GetCspSandboxConfigCloned_NoDirective_ReturnsNull()
         {
             var config = new CspConfiguration(false);
@@ -112,7 +148,7 @@ namespace NWebsec.Mvc.Tests.Unit.Helpers
 
             var clone = mapper.GetCspSandboxConfigCloned(config);
 
-            Assert.IsNull(clone);   
+            Assert.IsNull(clone);
         }
 
         [Test]
@@ -124,7 +160,7 @@ namespace NWebsec.Mvc.Tests.Unit.Helpers
                 AllowPointerLock = true,
                 AllowPopups = true
             };
-            var firstConfig = new CspConfiguration(false) {SandboxDirective = firstDirective};
+            var firstConfig = new CspConfiguration(false) { SandboxDirective = firstDirective };
             var secondDirective = new CspSandboxDirectiveConfiguration()
             {
                 AllowSameOrigin = true,
@@ -138,8 +174,8 @@ namespace NWebsec.Mvc.Tests.Unit.Helpers
             var firstResult = mapper.GetCspSandboxConfigCloned(firstConfig);
             var secondResult = mapper.GetCspSandboxConfigCloned(secondConfig);
 
-            Assert.That(firstResult, Is.EqualTo(firstDirective).Using(new CspSandboxDirectiveComparer()));
-            Assert.That(secondResult, Is.EqualTo(secondDirective).Using(new CspSandboxDirectiveComparer()));
+            Assert.That(firstResult, Is.EqualTo(firstDirective).Using(new CspSandboxDirectiveConfigurationComparer()));
+            Assert.That(secondResult, Is.EqualTo(secondDirective).Using(new CspSandboxDirectiveConfigurationComparer()));
         }
 
         [Test]
@@ -159,6 +195,7 @@ namespace NWebsec.Mvc.Tests.Unit.Helpers
                 Assert.IsNotNull(_mapper.GetCspDirectiveConfig(destinationConfig, directive));
             }
 
+            Assert.IsNotNull(destinationConfig.PluginTypesDirective);
             Assert.IsNotNull(destinationConfig.SandboxDirective);
             Assert.IsNotNull(destinationConfig.ReportUriDirective);
         }
@@ -180,6 +217,7 @@ namespace NWebsec.Mvc.Tests.Unit.Helpers
                 Assert.AreSame(_mapper.GetCspDirectiveConfig(sourceConfig, directive), _mapper.GetCspDirectiveConfig(destinationConfig, directive));
             }
 
+            Assert.AreSame(sourceConfig.PluginTypesDirective, destinationConfig.PluginTypesDirective);
             Assert.AreSame(sourceConfig.SandboxDirective, destinationConfig.SandboxDirective);
             Assert.AreSame(sourceConfig.ReportUriDirective, destinationConfig.ReportUriDirective);
         }
@@ -191,11 +229,14 @@ namespace NWebsec.Mvc.Tests.Unit.Helpers
 
             var sourceConfig = new CspConfiguration(false) { Enabled = false };
             var destinationConfig = new CspConfiguration { Enabled = true };
-            var expectedConfig = new CspConfiguration {
+            var expectedConfig = new CspConfiguration
+            {
                 Enabled = destinationConfig.Enabled,
+                PluginTypesDirective = destinationConfig.PluginTypesDirective,
                 SandboxDirective = destinationConfig.SandboxDirective,
-                ReportUriDirective = destinationConfig.ReportUriDirective};
-            //Poor man's clone
+                ReportUriDirective = destinationConfig.ReportUriDirective
+            };
+            //Poor man's clone, to get directives from destinationconfig to expected config.
             foreach (var directive in directives)
             {
                 _mapper.SetCspDirectiveConfig(expectedConfig, directive, _mapper.GetCspDirectiveConfig(destinationConfig, directive));
@@ -211,6 +252,7 @@ namespace NWebsec.Mvc.Tests.Unit.Helpers
                 Assert.AreSame(_mapper.GetCspDirectiveConfig(expectedConfig, directive), _mapper.GetCspDirectiveConfig(destinationConfig, directive));
             }
 
+            Assert.AreSame(expectedConfig.PluginTypesDirective, destinationConfig.PluginTypesDirective);
             Assert.AreSame(expectedConfig.SandboxDirective, destinationConfig.SandboxDirective);
             Assert.AreSame(expectedConfig.ReportUriDirective, destinationConfig.ReportUriDirective);
         }
@@ -232,6 +274,7 @@ namespace NWebsec.Mvc.Tests.Unit.Helpers
                 Assert.AreSame(_mapper.GetCspDirectiveConfig(sourceConfig, directive), _mapper.GetCspDirectiveConfig(destinationConfig, directive));
             }
 
+            Assert.AreSame(sourceConfig.PluginTypesDirective, destinationConfig.PluginTypesDirective);
             Assert.AreSame(sourceConfig.SandboxDirective, destinationConfig.SandboxDirective);
             Assert.AreSame(sourceConfig.ReportUriDirective, destinationConfig.ReportUriDirective);
         }
@@ -253,6 +296,7 @@ namespace NWebsec.Mvc.Tests.Unit.Helpers
                 Assert.IsNotNull(_mapper.GetCspDirectiveConfig(destinationConfig, directive));
             }
 
+            Assert.IsNotNull(destinationConfig.PluginTypesDirective);
             Assert.IsNotNull(destinationConfig.SandboxDirective);
             Assert.IsNotNull(destinationConfig.ReportUriDirective);
         }
@@ -274,6 +318,7 @@ namespace NWebsec.Mvc.Tests.Unit.Helpers
                 Assert.IsNotNull(_mapper.GetCspDirectiveConfig(destinationConfig, directive));
             }
 
+            Assert.IsNotNull(destinationConfig.PluginTypesDirective);
             Assert.IsNotNull(destinationConfig.SandboxDirective);
             Assert.IsNotNull(destinationConfig.ReportUriDirective);
         }
@@ -288,12 +333,13 @@ namespace NWebsec.Mvc.Tests.Unit.Helpers
                 _mapper.SetCspDirectiveConfig(sourceConfig, directive, new CspDirectiveConfiguration { Nonce = directive.ToString() });
             }
 
+            sourceConfig.PluginTypesDirective = new CspPluginTypesDirectiveConfiguration();
             sourceConfig.SandboxDirective = new CspSandboxDirectiveConfiguration();
             sourceConfig.ReportUriDirective = new CspReportUriDirectiveConfiguration();
             var destinationConfig = new CspConfiguration(false) { Enabled = true };
 
             _mapper.MergeOverrides(sourceConfig, destinationConfig);
-            
+
             Assert.IsTrue(destinationConfig.Enabled);
 
             foreach (var directive in directives)
@@ -303,6 +349,7 @@ namespace NWebsec.Mvc.Tests.Unit.Helpers
                 Assert.AreEqual(directive.ToString(), directiveConfig.Nonce);
             }
 
+            Assert.AreSame(sourceConfig.PluginTypesDirective, destinationConfig.PluginTypesDirective);
             Assert.AreSame(sourceConfig.SandboxDirective, destinationConfig.SandboxDirective);
             Assert.AreSame(sourceConfig.ReportUriDirective, destinationConfig.ReportUriDirective);
         }
@@ -316,6 +363,7 @@ namespace NWebsec.Mvc.Tests.Unit.Helpers
             {
                 _mapper.SetCspDirectiveConfig(sourceConfig, directive, new CspDirectiveConfiguration { Nonce = directive.ToString() });
             }
+            sourceConfig.PluginTypesDirective = new CspPluginTypesDirectiveConfiguration();
             sourceConfig.SandboxDirective = new CspSandboxDirectiveConfiguration();
             sourceConfig.ReportUriDirective = new CspReportUriDirectiveConfiguration();
 
@@ -332,6 +380,7 @@ namespace NWebsec.Mvc.Tests.Unit.Helpers
                 Assert.AreEqual(directive.ToString(), directiveConfig.Nonce);
             }
 
+            Assert.AreSame(sourceConfig.PluginTypesDirective, destinationConfig.PluginTypesDirective);
             Assert.AreSame(sourceConfig.SandboxDirective, destinationConfig.SandboxDirective);
             Assert.AreSame(sourceConfig.ReportUriDirective, destinationConfig.ReportUriDirective);
         }

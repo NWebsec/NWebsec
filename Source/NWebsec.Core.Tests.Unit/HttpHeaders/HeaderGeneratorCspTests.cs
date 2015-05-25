@@ -333,6 +333,23 @@ namespace NWebsec.Core.Tests.Unit.HttpHeaders
         }
 
         [Test]
+        public void AddCspHeaders_CspEnabledWithPluginTypes_ReturnsSetCspWithPluginTypesResult([Values(false, true)]bool reportOnly)
+        {
+            var cspConfig = new CspConfiguration
+            {
+                Enabled = true,
+                PluginTypesDirective = { MediaTypes = new[] { "application/pdf", "image/png"} }
+            };
+
+            var result = _generator.CreateCspResult(cspConfig, reportOnly);
+
+            Assert.IsNotNull(result);
+            Assert.AreEqual(HeaderResult.ResponseAction.Set, result.Action);
+            Assert.AreEqual(CspHeaderName(reportOnly), result.Name);
+            Assert.AreEqual("plugin-types application/pdf image/png", result.Value);
+        }
+
+        [Test]
         public void AddCspHeaders_CspWithTwoDirectives_ReturnsSetSetCspWithBothDirectivesResult([Values(false, true)]bool reportOnly)
         {
             var cspConfig = new CspConfiguration

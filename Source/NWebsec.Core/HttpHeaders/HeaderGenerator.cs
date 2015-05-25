@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using NWebsec.Annotations;
 using NWebsec.Core.HttpHeaders.Configuration;
@@ -191,6 +192,7 @@ namespace NWebsec.Core.HttpHeaders
             AppendDirective(sb, "child-src", GetDirectiveList(config.ChildSrcDirective));
             AppendDirective(sb, "form-action", GetDirectiveList(config.FormActionDirective));
             AppendDirective(sb, "frame-ancestors", GetDirectiveList(config.FrameAncestorsDirective));
+            AppendDirective(sb, "plugin-types", GetPluginTypesDirectiveList(config.PluginTypesDirective));
             AppendDirective(sb, "sandbox", GetSandboxDirectiveList(config.SandboxDirective));
 
             if (sb.Length == 0) return null;
@@ -248,6 +250,17 @@ namespace NWebsec.Core.HttpHeaders
             if (directive.CustomSources != null)
                 sources.AddRange(directive.CustomSources);
 
+            return sources;
+        }
+
+        private List<string> GetPluginTypesDirectiveList(ICspPluginTypesDirectiveConfiguration directive)
+        {
+            if (directive == null || !directive.Enabled || !directive.MediaTypes.Any())
+                return null;
+
+            var sources = new List<string>();
+            sources.AddRange(directive.MediaTypes);
+            
             return sources;
         }
 

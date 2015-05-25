@@ -6,8 +6,15 @@ namespace NWebsec.Core.HttpHeaders.Configuration
 {
     public class CspPluginTypesDirectiveConfiguration : ICspPluginTypesDirectiveConfiguration
     {
-        public bool Enabled { get; set; }
+        private static readonly string[] EmptySources = new string[0];
 
+        public bool Enabled { get; set; }
         public IEnumerable<string> MediaTypes { get; set; }
+
+        public CspPluginTypesDirectiveConfiguration()
+        {
+            Enabled = true;
+            MediaTypes = EmptySources;
+        }
     }
 }

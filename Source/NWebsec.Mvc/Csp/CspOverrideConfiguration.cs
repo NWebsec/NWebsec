@@ -26,6 +26,5 @@ namespace NWebsec.Mvc.Csp
         public ICspPluginTypesDirectiveConfiguration PluginTypesDirective { get; set; }
         public ICspSandboxDirectiveConfiguration SandboxDirective { get; set; }
         public ICspReportUriDirectiveConfiguration ReportUriDirective { get; set; }
-        //TODO Do something useful with plugin types override
     }
 }

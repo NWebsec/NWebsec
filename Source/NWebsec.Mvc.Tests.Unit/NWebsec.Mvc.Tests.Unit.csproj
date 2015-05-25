@@ -64,8 +64,10 @@
     <Compile Include="Helpers\ContextConfigurationHelperTests.cs" />
     <Compile Include="HttpHeaders\Csp\Internals\CspDirectiveAttributeBaseTests.cs" />
     <Compile Include="HttpHeaders\Csp\Internals\CspSandboxAttributeBaseTests.cs" />
-    <Compile Include="TestHelpers\CspSandboxDirectiveComparer.cs" />
-    <Compile Include="TestHelpers\CspDirectiveComparerTests.cs" />
+    <Compile Include="TestHelpers\CspPluginTypesDirectiveConfigurationComparerTests.cs" />
+    <Compile Include="TestHelpers\CspPluginTypesDirectiveConfigurationComparer.cs" />
+    <Compile Include="TestHelpers\CspSandboxDirectiveConfigurationComparer.cs" />
+    <Compile Include="TestHelpers\CspDirectiveConfigurationComparerTests.cs" />
     <Compile Include="TestHelpers\CspDirectiveConfigurationComparer.cs" />
     <Compile Include="Helpers\CspDirectiveOverrideHelperTests.cs" />
     <Compile Include="Helpers\HeaderOverrideHelperTests.cs" />
