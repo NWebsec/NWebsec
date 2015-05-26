@@ -30,6 +30,7 @@ namespace DemoSiteMvc5
                 .ChildSources(s => s.CustomSources("childsrc.nwebsec.com"))
                 .FormActions(s => s.CustomSources("formaction.nwebsec.com"))
                 .FrameAncestors(s => s.CustomSources("ancestors.nwebsec.com/With/owinPath"))
+                .PluginTypes(s => s.MediaTypes("application/pdf"))
                 .Sandbox(s => s.AllowForms().AllowPointerLock().AllowPopups().AllowSameOrigin().AllowScripts().AllowTopNavigation())
                 .ReportUris(r => r.Uris("https://www.nwebsec.com/report", "https://w-w.üüüüüü.de/réport?p=a;b,")));
 
