@@ -1,6 +1,7 @@
 // Copyright (c) André N. Klingsheim. See License.txt in the project root for license information.
 
 using System.Collections.Generic;
+using System.Linq;
 using NWebsec.Core.HttpHeaders.Configuration;
 using NWebsec.Mvc.Csp;
 
@@ -57,7 +58,7 @@ namespace NWebsec.Mvc.Helpers
             {
                 var newSources = new List<string>(result.CustomSources);
                 newSources.AddRange(directiveOverride.OtherSources);
-                result.CustomSources = newSources;
+                result.CustomSources = newSources.Distinct();
                 disableNone = true;
             }
 
@@ -124,7 +125,7 @@ namespace NWebsec.Mvc.Helpers
             {
                 var newSources = new List<string>(result.MediaTypes);
                 newSources.AddRange(directiveOverride.MediaTypes);
-                result.MediaTypes = newSources;
+                result.MediaTypes = newSources.Distinct();
             }
 
 

@@ -202,7 +202,7 @@ namespace NWebsec.Mvc.Tests.Unit.Helpers
         [Test]
         public void GetOverridenCspDirectiveConfig_CustomSourcesOverrideWithSourcesInherited_KeepsAllSources()
         {
-            var directiveConfig = new CspDirectiveConfiguration { CustomSources = new[] { "transformtool.codeplex.com" } };
+            var directiveConfig = new CspDirectiveConfiguration { CustomSources = new[] { "transformtool.codeplex.com", "nwebsec.codeplex.com" } };
             var directiveOverride = new CspDirectiveOverride { OtherSources = new[] { "nwebsec.codeplex.com" }, InheritOtherSources = true };
 
             var newConfig = _overrideHelper.GetOverridenCspDirectiveConfig(directiveOverride, directiveConfig);
@@ -262,7 +262,7 @@ namespace NWebsec.Mvc.Tests.Unit.Helpers
         [Test]
         public void GetOverridenCspPluginTypesConfig_MediaTypesOverrideWithMediaTypesInherited_KeepsAllMediaTypes()
         {
-            var directiveConfig = new CspPluginTypesDirectiveConfiguration { MediaTypes = new[] { "application/pdf" } };
+            var directiveConfig = new CspPluginTypesDirectiveConfiguration { MediaTypes = new[] { "application/pdf", "image/png" } };
             var directiveOverride = new CspPluginTypesOverride { MediaTypes = new[] { "image/png" }, InheritMediaTypes = true };
 
             var newConfig = _overrideHelper.GetOverridenCspPluginTypesConfig(directiveOverride, directiveConfig);

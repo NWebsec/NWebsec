@@ -1,6 +1,7 @@
 ﻿// Copyright (c) André N. Klingsheim. See License.txt in the project root for license information.
 
 using System;
+using System.Linq;
 using NWebsec.Core.HttpHeaders.Configuration;
 using NWebsec.Core.HttpHeaders.Configuration.Validation;
 
@@ -8,8 +9,6 @@ namespace NWebsec.Owin
 {
     public class FluentCspPluginTypesDirective : CspPluginTypesDirectiveConfiguration, IFluentCspPluginTypesDirective
     {
-        private static readonly string[] EmptyDirective = new string[0];
-        
         public FluentCspPluginTypesDirective()
         {
             Enabled = true;
@@ -28,8 +27,9 @@ namespace NWebsec.Owin
                 throw new ArgumentException("One or more parameter values expected.","mediaTypes");
             }
             var validator = new Rfc2045MediaTypeValidator();
-
-            foreach (var mediaType in mediaTypes)
+            var types = mediaTypes.Distinct().ToArray();
+            
+            foreach (var mediaType in types)
             {
                 try
                 {
@@ -41,7 +41,7 @@ namespace NWebsec.Owin
                 }
             }
 
-            base.MediaTypes = mediaTypes;
+            base.MediaTypes = types;
         }
     }
 }
