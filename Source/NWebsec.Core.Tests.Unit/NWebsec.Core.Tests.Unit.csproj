@@ -71,6 +71,7 @@
     <Compile Include="HttpHeaders\Configuration\Validation\HstsConfigurationValidatorTests.cs" />
     <Compile Include="HttpHeaders\Configuration\Validation\XRobotsTagValidatorTests.cs" />
     <Compile Include="HttpHeaders\HeaderGeneratorCspTests.cs" />
+    <Compile Include="HttpHeaders\HeaderGeneratorTests.Hpkp.cs" />
     <Compile Include="HttpHeaders\HeaderGeneratorTests.XRobots.cs" />
     <Compile Include="HttpHeaders\HeaderGeneratorTests.Xfo.cs" />
     <Compile Include="HttpHeaders\HeaderGeneratorTests.Hsts.cs" />

@@ -12,6 +12,8 @@ namespace NWebsec.Core.HttpHeaders
         public static readonly string XXssProtectionHeader = "X-XSS-Protection";
         public static readonly string ContentSecurityPolicyHeader = "Content-Security-Policy";
         public static readonly string ContentSecurityPolicyReportOnlyHeader = "Content-Security-Policy-Report-Only";
+        public static readonly string HpkpHeader = "Public-Key-Pins";
+        public static readonly string HpkpReportOnlyHeader = "Public-Key-Pins-Report-Only";
 
         public static readonly string[] CspSourceList =
         {

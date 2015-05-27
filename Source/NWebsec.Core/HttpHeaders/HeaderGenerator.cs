@@ -33,7 +33,7 @@ namespace NWebsec.Core.HttpHeaders
             sb.Append(xRobotsTagConfig.NoOdp && !xRobotsTagConfig.NoIndex ? "noodp, " : String.Empty);
             sb.Append(xRobotsTagConfig.NoTranslate && !xRobotsTagConfig.NoIndex ? "notranslate, " : String.Empty);
             sb.Append(xRobotsTagConfig.NoImageIndex ? "noimageindex" : String.Empty);
-            var value = sb.ToString().TrimEnd(new[] { ' ', ',' });
+            var value = sb.ToString().TrimEnd(' ', ',');
 
             if (value.Length == 0) return null;
 
@@ -54,7 +54,7 @@ namespace NWebsec.Core.HttpHeaders
 
             var includeSubdomains = (hstsConfig.IncludeSubdomains ? "; includeSubdomains" : "");
             var preload = (hstsConfig.Preload ? "; preload" : "");
-            var value = String.Format("max-age={0}{1}{2}", seconds, includeSubdomains, preload);
+            var value = string.Format("max-age={0}{1}{2}", seconds, includeSubdomains, preload);
 
             return new HeaderResult(HeaderResult.ResponseAction.Set, HeaderConstants.StrictTransportSecurityHeader,
                 value);
@@ -147,6 +147,41 @@ namespace NWebsec.Core.HttpHeaders
                     throw new NotImplementedException("Apparently someone forgot to implement support for: " +
                                                       xfoConfig.Policy);
             }
+        }
+
+        [CanBeNull]
+        public HeaderResult CreateHpkpResult(IHpkpConfiguration hpkpConfig, bool reportOnly)
+        {
+            if (hpkpConfig.MaxAge < TimeSpan.Zero || hpkpConfig.Pins == null || !hpkpConfig.Pins.Any()) return null;
+
+            var sb = new StringBuilder();
+
+            var seconds = (int)hpkpConfig.MaxAge.TotalSeconds;
+            sb.Append("max-age=").Append(seconds).Append(";");
+
+            if (hpkpConfig.IncludeSubdomains)
+            {
+                sb.Append("includeSubdomains;");
+            }
+
+            foreach (var pin in hpkpConfig.Pins)
+            {
+                sb.Append("pin-").Append(pin).Append(";");
+            }
+
+            if (string.IsNullOrEmpty(hpkpConfig.ReportUri))
+            {
+                sb.Remove(sb.Length - 1, 1);
+            }
+            else
+            {
+                sb.Append("report-uri=\"").Append(hpkpConfig.ReportUri).Append("\"");
+            }
+
+            var value = sb.ToString();
+            var headerName = reportOnly ? HeaderConstants.HpkpReportOnlyHeader : HeaderConstants.HpkpHeader;
+
+            return new HeaderResult(HeaderResult.ResponseAction.Set, headerName, value);
         }
 
         [CanBeNull]
@@ -260,7 +295,7 @@ namespace NWebsec.Core.HttpHeaders
 
             var sources = new List<string>();
             sources.AddRange(directive.MediaTypes);
-            
+
             return sources;
         }
 
