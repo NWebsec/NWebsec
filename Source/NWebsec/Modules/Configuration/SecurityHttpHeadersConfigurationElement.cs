@@ -35,6 +35,20 @@ namespace NWebsec.Modules.Configuration
             }
         }
 
+        //TODO validation.
+        [ConfigurationProperty("public-Key-Pins", IsRequired = false)]
+        public HpkpConfigurationElement Hpkp
+        {
+            get
+            {
+                return (HpkpConfigurationElement)this["public-Key-Pins"];
+            }
+            set
+            {
+                this["public-Key-Pins"] = value;
+            }
+        }
+
         [ConfigurationProperty("x-Content-Type-Options", IsRequired = false)]
         public SimpleBooleanConfigurationElement XContentTypeOptions
         {

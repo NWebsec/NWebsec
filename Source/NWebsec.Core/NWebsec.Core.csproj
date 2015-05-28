@@ -47,6 +47,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Helpers\X509\TlvTripletHeader.cs" />
+    <Compile Include="Helpers\X509\X509Helper.cs" />
     <Compile Include="HttpHeaders\Configuration\CspConfiguration.cs" />
     <Compile Include="HttpHeaders\Configuration\CspDirectiveConfiguration.cs" />
     <Compile Include="HttpHeaders\Configuration\CspHeaderConfiguration.cs" />
@@ -63,6 +65,8 @@
     <Compile Include="HttpHeaders\Configuration\ICspDirectiveUnsafeInlineConfiguration.cs" />
     <Compile Include="HttpHeaders\Configuration\ICspHeaderConfiguration.cs" />
     <Compile Include="HttpHeaders\Configuration\ICspReportUriDirectiveConfiguration.cs" />
+    <Compile Include="HttpHeaders\Configuration\IHpkpPinConfiguration.cs" />
+    <Compile Include="HttpHeaders\Configuration\IHpkpCertConfiguration.cs" />
     <Compile Include="HttpHeaders\Configuration\IHpkpConfiguration.cs" />
     <Compile Include="HttpHeaders\Configuration\IHstsConfiguration.cs" />
     <Compile Include="HttpHeaders\Configuration\IRedirectValidationConfiguration.cs" />

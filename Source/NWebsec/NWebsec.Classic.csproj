@@ -90,9 +90,15 @@
     <Compile Include="Modules\Configuration\Csp\CspSourceConfigurationElement.cs" />
     <Compile Include="Modules\Configuration\Csp\CspSourcesElementCollection.cs" />
     <Compile Include="Modules\Configuration\Csp\Validation\CspDirectiveBaseConfigurationElementValidatorAttribute.cs" />
+    <Compile Include="Modules\Configuration\HpkpPinConfigurationElementCollection.cs" />
+    <Compile Include="Modules\Configuration\HpkpPinConfigurationElement.cs" />
+    <Compile Include="Modules\Configuration\HpkpCertConfigurationElement.cs" />
+    <Compile Include="Modules\Configuration\HpkpConfigurationElement.cs" />
+    <Compile Include="Modules\Configuration\HpkpReportOnlyConfigurationElement.cs" />
     <Compile Include="Modules\Configuration\HstsConfigurationElement.cs" />
     <Compile Include="Modules\Configuration\HttpHeaderSecurityConfigurationSection.cs" />
     <Compile Include="Modules\Configuration\RedirectSameHostConfigurationElement.cs" />
+    <Compile Include="Modules\Configuration\HpkpCertConfigurationElementCollection.cs" />
     <Compile Include="Modules\Configuration\Validation\RedirectSameHostConfigurationElementValidator.cs" />
     <Compile Include="Modules\Configuration\Validation\RedirectSameHostConfigurationElementValidatorAttribute.cs" />
     <Compile Include="Modules\Configuration\RedirectUriConfigurationElement.cs" />
