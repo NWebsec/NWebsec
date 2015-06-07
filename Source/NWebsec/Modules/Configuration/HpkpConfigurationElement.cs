@@ -3,12 +3,14 @@
 using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Linq;
 using NWebsec.Core.HttpHeaders.Configuration;
 
 namespace NWebsec.Modules.Configuration
 {
     public class HpkpConfigurationElement : ConfigurationElement, IHpkpConfiguration
     {
+        private string[] _pins;
         //TODO Config validation. Needs at least two pins.
 
         [ConfigurationProperty("max-age", IsRequired = true, DefaultValue = "-0:0:1")]
@@ -59,7 +61,7 @@ namespace NWebsec.Modules.Configuration
         }
 
         [ConfigurationProperty("certificates", IsRequired = false, IsDefaultCollection = true)]
-        [ConfigurationCollection(typeof(RedirectUriElementCollection), CollectionType = ConfigurationElementCollectionType.AddRemoveClearMap)]
+        [ConfigurationCollection(typeof(HpkpCertConfigurationElementCollection), CollectionType = ConfigurationElementCollectionType.AddRemoveClearMap)]
         public HpkpCertConfigurationElementCollection Certificates
         {
             get
@@ -73,7 +75,7 @@ namespace NWebsec.Modules.Configuration
         }
 
         [ConfigurationProperty("pins", IsRequired = false, IsDefaultCollection = true)]
-        [ConfigurationCollection(typeof(RedirectUriElementCollection), CollectionType = ConfigurationElementCollectionType.AddRemoveClearMap)]
+        [ConfigurationCollection(typeof(HpkpPinConfigurationElementCollection), CollectionType = ConfigurationElementCollectionType.AddRemoveClearMap)]
         public HpkpPinConfigurationElementCollection ManualPins
         {
             get
@@ -86,9 +88,28 @@ namespace NWebsec.Modules.Configuration
             }
         }
 
-        public IEnumerable<string> Pins { get; set; }
+        public IEnumerable<string> Pins {
+            get
+            {
+                if (_pins == null)
+                {
+                    _pins = Certificates.Cast<HpkpCertConfigurationElement>().Select(c => c.SpkiPinValue)
+                        .Concat(ManualPins.Cast<HpkpPinConfigurationElement>().Select(p => p.PinValue)).Distinct().ToArray();
 
-        public string ReportUri { get { return ReportUriValue.AbsoluteUri; } set { throw new NotImplementedException(); } }
+                }
+                return _pins;
+            } set { throw new NotImplementedException(); } }
 
+        public string ReportUri
+        {
+            get
+            {
+                return ReportUriValue == null ? null : ReportUriValue.AbsoluteUri;
+            }
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
     }
 }

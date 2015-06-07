@@ -52,6 +52,8 @@ namespace NWebsec.Modules.Configuration
             }
         }
 
+        //TODO have another look at this
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Security", "CA2122:DoNotIndirectlyExposeMethodsWithLinkDemands")]
         public string SpkiPinValue {
             get
             {

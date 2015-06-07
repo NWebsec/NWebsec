@@ -21,5 +21,10 @@ namespace NWebsec.Modules.Configuration
                 this["pin"] = value;
             }
         }
+
+        public string PinValue
+        {
+            get { return string.Format("sha256=\"{0}\"", Pin); }
+        }
     }
 }

@@ -49,6 +49,20 @@ namespace NWebsec.Modules.Configuration
             }
         }
 
+        //TODO validation.
+        [ConfigurationProperty("public-Key-Pins-Report-Only", IsRequired = false)]
+        public HpkpReportOnlyConfigurationElement HpkpReportOnly
+        {
+            get
+            {
+                return (HpkpReportOnlyConfigurationElement)this["public-Key-Pins-Report-Only"];
+            }
+            set
+            {
+                this["public-Key-Pins-Report-Only"] = value;
+            }
+        }
+
         [ConfigurationProperty("x-Content-Type-Options", IsRequired = false)]
         public SimpleBooleanConfigurationElement XContentTypeOptions
         {
