@@ -28,7 +28,6 @@ namespace NWebsec.Owin.Middleware
 
         internal override void PreInvokeNext(OwinEnvironment owinEnvironment)
         {
-            owinEnvironment.NWebsecContext.Hsts = _config;
 
             if (_config.HttpsOnly && !Https.Equals(owinEnvironment.RequestScheme, StringComparison.OrdinalIgnoreCase))
             {

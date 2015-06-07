@@ -40,7 +40,9 @@ namespace NWebsec.Helpers
         internal void SetSitewideHeadersFromConfig(HttpContextBase context)
         {
             var nwebsecContext = context.GetNWebsecContext();
-            SetHstsHeader(context.Response, nwebsecContext, context.Request.IsSecureConnection);
+            SetHstsHeader(context.Response, context.Request.IsSecureConnection);
+            SetHpkpHeader(context.Response, context.Request.IsSecureConnection, false);
+            SetHpkpHeader(context.Response, context.Request.IsSecureConnection, true);
             SetXRobotsTagHeader(context.Response, nwebsecContext);
             SetXFrameoptionsHeader(context.Response, nwebsecContext);
             SetXContentTypeOptionsHeader(context.Response, nwebsecContext);
@@ -56,15 +58,26 @@ namespace NWebsec.Helpers
             SetNoCacheHeadersFromConfig(context, nwebsecContext);
         }
 
-        internal void SetHstsHeader(HttpResponseBase response, NWebsecContext nwebsecContext, bool isHttps)
+        internal void SetHstsHeader(HttpResponseBase response, bool isHttps)
         {
             if (!isHttps && WebConfig.SecurityHttpHeaders.Hsts.HttpsOnly)
             {
                 return;
             }
 
-            nwebsecContext.Hsts = WebConfig.SecurityHttpHeaders.Hsts;
             var result = _headerGenerator.CreateHstsResult(WebConfig.SecurityHttpHeaders.Hsts);
+            _headerResultHandler.HandleHeaderResult(response, result);
+        }
+
+        internal void SetHpkpHeader(HttpResponseBase response, bool isHttps, bool reportOnly)
+        {
+            var hpkpConfig = reportOnly ? WebConfig.SecurityHttpHeaders.HpkpReportOnly : WebConfig.SecurityHttpHeaders.Hpkp;
+            if (!isHttps && hpkpConfig.HttpsOnly)
+            {
+                return;
+            }
+
+            var result = _headerGenerator.CreateHpkpResult(hpkpConfig, reportOnly);
             _headerResultHandler.HandleHeaderResult(response, result);
         }
 

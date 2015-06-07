@@ -9,7 +9,6 @@ namespace NWebsec.Core
         public static readonly string ContextKey = "nwebsec.Context";
 
         public ISimpleBooleanConfiguration NoCacheHeaders { get; set; }
-        public IHstsConfiguration Hsts { get; set; }
         public ISimpleBooleanConfiguration XContentTypeOptions { get; set; }
         public ISimpleBooleanConfiguration XDownloadOptions { get; set; }
         public IXFrameOptionsConfiguration XFrameOptions { get; set; }

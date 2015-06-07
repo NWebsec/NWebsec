@@ -5,8 +5,6 @@ using System.Collections.Specialized;
 using System.Web;
 using Moq;
 using NUnit.Framework;
-// Copyright (c) André N. Klingsheim. See License.txt in the project root for license information.
-
 using NWebsec.Core;
 using NWebsec.Core.HttpHeaders;
 using NWebsec.Core.HttpHeaders.Configuration;
@@ -64,51 +62,76 @@ namespace NWebsec.Tests.Unit.Helpers
         }
 
         [Test]
-        public void SetHstsHeader_HttpAndNoHttpsOnly_UpdatesContextAndHandlesResult()
+        public void SetHstsHeader_HttpAndNoHttpsOnly_HandlesResult()
         {
             _config.SecurityHttpHeaders.Hsts.HttpsOnly = false;
             _mockHeaderGenerator.Setup(g => g.CreateHstsResult(_config.SecurityHttpHeaders.Hsts)).Returns(_expectedHeaderResult);
 
-            _configHeaderSetter.SetHstsHeader(_mockResponse.Object, _nwebsecContext, false);
+            _configHeaderSetter.SetHstsHeader(_mockResponse.Object, false);
 
-            Assert.AreSame(_config.SecurityHttpHeaders.Hsts, _nwebsecContext.Hsts);
             _mockHeaderResultHandler.Verify(h => h.HandleHeaderResult(It.IsAny<HttpResponseBase>(), _expectedHeaderResult), Times.Once);
         }
 
         [Test]
-        public void SetHstsHeader_HttpAndHttpsOnly_DoesNotUpdateContextAndHandleResult()
+        public void SetHstsHeader_HttpAndHttpsOnly_DoesNotHandleResult()
         {
             _config.SecurityHttpHeaders.Hsts.HttpsOnly = true;
             _mockHeaderGenerator.Setup(g => g.CreateHstsResult(_config.SecurityHttpHeaders.Hsts)).Returns(_expectedHeaderResult);
 
-            _configHeaderSetter.SetHstsHeader(_mockResponse.Object, _nwebsecContext, false);
+            _configHeaderSetter.SetHstsHeader(_mockResponse.Object, false);
 
-            Assert.IsNull(_nwebsecContext.Hsts);
             _mockHeaderGenerator.Verify(g => g.CreateHstsResult(It.IsAny<IHstsConfiguration>()), Times.Never);
             _mockHeaderResultHandler.Verify(h => h.HandleHeaderResult(It.IsAny<HttpResponseBase>(), _expectedHeaderResult), Times.Never);
         }
 
         [Test]
-        public void SetHstsHeader_HttpsAndNoHttpsOnly_UpdatesContextAndHandlesResult()
+        public void SetHstsHeader_HttpsAndAnyHttpsOnly_HandlesResult([Values(true, false)] bool httpsOnly)
         {
-            _config.SecurityHttpHeaders.Hsts.HttpsOnly = false;
+            _config.SecurityHttpHeaders.Hsts.HttpsOnly = httpsOnly;
             _mockHeaderGenerator.Setup(g => g.CreateHstsResult(_config.SecurityHttpHeaders.Hsts)).Returns(_expectedHeaderResult);
 
-            _configHeaderSetter.SetHstsHeader(_mockResponse.Object, _nwebsecContext, true);
+            _configHeaderSetter.SetHstsHeader(_mockResponse.Object, true);
 
-            Assert.AreSame(_config.SecurityHttpHeaders.Hsts, _nwebsecContext.Hsts);
             _mockHeaderResultHandler.Verify(h => h.HandleHeaderResult(It.IsAny<HttpResponseBase>(), _expectedHeaderResult), Times.Once);
         }
 
         [Test]
-        public void SetHstsHeader_HttpsAndHttpsOnly_UpdatesContextAndHandlesResult()
+        public void SetHpkpHeader_HttpAndNoHttpsOnly_HandlesResult([Values(true, false)] bool reportOnly)
         {
-            _config.SecurityHttpHeaders.Hsts.HttpsOnly = true;
-            _mockHeaderGenerator.Setup(g => g.CreateHstsResult(_config.SecurityHttpHeaders.Hsts)).Returns(_expectedHeaderResult);
+            var hpkpConfig = reportOnly ? _config.SecurityHttpHeaders.HpkpReportOnly : _config.SecurityHttpHeaders.Hpkp;
 
-            _configHeaderSetter.SetHstsHeader(_mockResponse.Object, _nwebsecContext, true);
+            hpkpConfig.HttpsOnly = false;
+            _mockHeaderGenerator.Setup(g => g.CreateHpkpResult(hpkpConfig, reportOnly)).Returns(_expectedHeaderResult);
 
-            Assert.AreSame(_config.SecurityHttpHeaders.Hsts, _nwebsecContext.Hsts);
+            _configHeaderSetter.SetHpkpHeader(_mockResponse.Object, false, reportOnly);
+
+            _mockHeaderResultHandler.Verify(h => h.HandleHeaderResult(It.IsAny<HttpResponseBase>(), _expectedHeaderResult), Times.Once);
+        }
+
+        [Test]
+        public void SetHpkpHeader_HttpAndHttpsOnly_DoesNotHandleResult([Values(true, false)] bool reportOnly)
+        {
+            var hpkpConfig = reportOnly ? _config.SecurityHttpHeaders.HpkpReportOnly : _config.SecurityHttpHeaders.Hpkp;
+
+            hpkpConfig.HttpsOnly = true;
+            _mockHeaderGenerator.Setup(g => g.CreateHpkpResult(hpkpConfig, reportOnly)).Returns(_expectedHeaderResult);
+
+            _configHeaderSetter.SetHpkpHeader(_mockResponse.Object, false, reportOnly);
+
+            _mockHeaderGenerator.Verify(g => g.CreateHstsResult(It.IsAny<IHstsConfiguration>()), Times.Never);
+            _mockHeaderResultHandler.Verify(h => h.HandleHeaderResult(It.IsAny<HttpResponseBase>(), _expectedHeaderResult), Times.Never);
+        }
+
+        [Test]
+        public void SetHpkpHeader_HttpsAndAnyHttpsOnly_HandlesResult([Values(true, false)] bool reportOnly, [Values(true, false)] bool httpsOnly)
+        {
+            var hpkpConfig = reportOnly ? _config.SecurityHttpHeaders.HpkpReportOnly : _config.SecurityHttpHeaders.Hpkp;
+
+            hpkpConfig.HttpsOnly = httpsOnly;
+            _mockHeaderGenerator.Setup(g => g.CreateHpkpResult(hpkpConfig, reportOnly)).Returns(_expectedHeaderResult);
+
+            _configHeaderSetter.SetHpkpHeader(_mockResponse.Object, true, reportOnly);
+
             _mockHeaderResultHandler.Verify(h => h.HandleHeaderResult(It.IsAny<HttpResponseBase>(), _expectedHeaderResult), Times.Once);
         }
 
