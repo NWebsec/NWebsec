@@ -56,7 +56,8 @@ namespace NWebsec.Core.Helpers.X509
                 }
             }
         }
-        
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Security", "CA2122:DoNotIndirectlyExposeMethodsWithLinkDemands")]
         private void ResetCerts(X509Certificate2Collection certs)
         {
             if (certs == null) return;
@@ -67,6 +68,11 @@ namespace NWebsec.Core.Helpers.X509
             }
         }
 
+        /// <summary>
+        /// Returns a string suitable for inclusion in an HPKP header, including hash algoritm.
+        /// </summary>
+        /// <param name="cert"></param>
+        /// <returns></returns>
         public string GetSubjectPublicKeyInfoPinValue(X509Certificate2 cert)
         {
             var spki = GetRawSubjectPublicKeyInfo(cert);

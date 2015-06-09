@@ -56,6 +56,42 @@ namespace NWebsec.Owin
         }
 
         /// <summary>
+        ///     Adds a middleware to the OWIN pipeline that sets the Public-Key-Pins header.
+        /// </summary>
+        /// <param name="app">The <see cref="IAppBuilder" /> to which the middleware is added.</param>
+        /// <param name="configurer">An <see cref="Action" /> that configures the options for the middleware.</param>
+        /// <returns>The <see cref="IAppBuilder" /> supplied in the app parameter.</returns>
+        public static IAppBuilder UseHpkp(this IAppBuilder app, Action<IFluentHpkpOptions> configurer)
+        {
+            if (app == null) throw new ArgumentNullException("app");
+            if (configurer == null) throw new ArgumentNullException("configurer");
+
+            var options = new HpkpOptions();
+            configurer(options);
+            //TODO validation
+            //new HstsConfigurationValidator().Validate(options);
+            return app.Use(typeof(HpkpMiddleware), options, false);
+        }
+
+        /// <summary>
+        ///     Adds a middleware to the OWIN pipeline that sets the Public-Key-Pins-Report-Only header.
+        /// </summary>
+        /// <param name="app">The <see cref="IAppBuilder" /> to which the middleware is added.</param>
+        /// <param name="configurer">An <see cref="Action" /> that configures the options for the middleware.</param>
+        /// <returns>The <see cref="IAppBuilder" /> supplied in the app parameter.</returns>
+        public static IAppBuilder UseHpkpReportOnly(this IAppBuilder app, Action<IFluentHpkpOptions> configurer)
+        {
+            if (app == null) throw new ArgumentNullException("app");
+            if (configurer == null) throw new ArgumentNullException("configurer");
+
+            var options = new HpkpOptions();
+            configurer(options);
+            //TODO validation
+            //new HstsConfigurationValidator().Validate(options);
+            return app.Use(typeof(HpkpMiddleware), options, true);
+        }
+
+        /// <summary>
         ///     Adds a middleware to the OWIN pipeline that sets the X-Content-Type-Options header.
         /// </summary>
         /// <param name="app">The <see cref="IAppBuilder" /> to which the middleware is added.</param>
