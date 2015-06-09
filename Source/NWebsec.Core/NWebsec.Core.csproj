@@ -78,6 +78,7 @@
     <Compile Include="HttpHeaders\Configuration\RedirectValidationConfiguration.cs" />
     <Compile Include="HttpHeaders\Configuration\SameHostHttpsRedirectConfiguration.cs" />
     <Compile Include="HttpHeaders\Configuration\SimpleBooleanConfiguration.cs" />
+    <Compile Include="HttpHeaders\Configuration\Validation\HpkpConfigurationValidator.cs" />
     <Compile Include="HttpHeaders\Configuration\Validation\Rfc2045MediaTypeValidator.cs" />
     <Compile Include="HttpHeaders\Csp\CspSourceParseResult.cs" />
     <Compile Include="HttpHeaders\Csp\InvalidCspSourceException.cs" />

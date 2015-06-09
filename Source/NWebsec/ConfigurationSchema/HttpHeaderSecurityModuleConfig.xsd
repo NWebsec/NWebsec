@@ -288,83 +288,15 @@
                   </xs:attribute>
                 </xs:complexType>
               </xs:element>
-              <xs:element name="public-Key-Pins" minOccurs="0" maxOccurs="1">
+              <xs:element name="public-Key-Pins" minOccurs="0" maxOccurs="1" type="hpkpConfigElement">
                 <xs:annotation>
                   <xs:documentation>Specifies whether the Public-Key-Pins (HPKP) security header should be set in the HTTP responses.</xs:documentation>
                 </xs:annotation>
-                <xs:complexType>
-                  <xs:all>
-                    <xs:element name="certificates" minOccurs="0" maxOccurs="1" type="hpkpCertsElement">
-                      <xs:annotation>
-                        <xs:documentation>Specifies one or more certs that should be pinned.</xs:documentation>
-                      </xs:annotation>
-                    </xs:element>
-                    <xs:element name="pins" minOccurs="0" maxOccurs="1" type="hpkpPinsElement">
-                      <xs:annotation>
-                        <xs:documentation>Specifies one or more pins.</xs:documentation>
-                      </xs:annotation>
-                    </xs:element>
-                  </xs:all>
-                  <xs:attribute name="max-age" type="xs:string" use="required">
-                    <xs:annotation>
-                      <xs:documentation>This attribute is required. Specifies for how long the browser should enforce HPKP. Expects a TimeSpan string.</xs:documentation>
-                    </xs:annotation>
-                  </xs:attribute>
-                  <xs:attribute name="includeSubdomains" type="simple_boolean" use="optional">
-                    <xs:annotation>
-                      <xs:documentation>Optional. Specifies whether HPKP also applies to subdomains. The default is false.</xs:documentation>
-                    </xs:annotation>
-                  </xs:attribute>
-                  <xs:attribute name="httpsOnly" type="simple_boolean" use="optional">
-                    <xs:annotation>
-                      <xs:documentation>Optional. Specifies that the HPKP header should be set for HTTPS requests only. The default is true.</xs:documentation>
-                    </xs:annotation>
-                  </xs:attribute>
-                  <xs:attribute name="report-uri" type="xs:string" use="optional">
-                    <xs:annotation>
-                      <xs:documentation>This attribute is optional. Specifies a report URI where pin validation failures should be reported.</xs:documentation>
-                    </xs:annotation>
-                  </xs:attribute>
-                </xs:complexType>
               </xs:element>
-              <xs:element name="public-Key-Pins-Report-Only" minOccurs="0" maxOccurs="1">
+              <xs:element name="public-Key-Pins-Report-Only" minOccurs="0" maxOccurs="1" type="hpkpConfigElement">
                 <xs:annotation>
                   <xs:documentation>Specifies whether the Public-Key-Pins-Report-Only (HPKP-RO) security header should be set in the HTTP responses.</xs:documentation>
                 </xs:annotation>
-                <xs:complexType>
-                  <xs:all>
-                    <xs:element name="certificates" minOccurs="0" maxOccurs="1" type="hpkpCertsElement">
-                      <xs:annotation>
-                        <xs:documentation>Specifies one or more certs that should be pinned.</xs:documentation>
-                      </xs:annotation>
-                    </xs:element>
-                    <xs:element name="pins" minOccurs="0" maxOccurs="1" type="hpkpPinsElement">
-                      <xs:annotation>
-                        <xs:documentation>Specifies one or more pins.</xs:documentation>
-                      </xs:annotation>
-                    </xs:element>
-                  </xs:all>
-                  <xs:attribute name="max-age" type="xs:string" use="required">
-                    <xs:annotation>
-                      <xs:documentation>This attribute is required. Specifies for how long the browser should enforce HPKP. Expects a TimeSpan string.</xs:documentation>
-                    </xs:annotation>
-                  </xs:attribute>
-                  <xs:attribute name="includeSubdomains" type="simple_boolean" use="optional">
-                    <xs:annotation>
-                      <xs:documentation>Optional. Specifies whether HPKP also applies to subdomains. The default is false.</xs:documentation>
-                    </xs:annotation>
-                  </xs:attribute>
-                  <xs:attribute name="httpsOnly" type="simple_boolean" use="optional">
-                    <xs:annotation>
-                      <xs:documentation>Optional. Specifies that the HPKP header should be set for HTTPS requests only. The default is true.</xs:documentation>
-                    </xs:annotation>
-                  </xs:attribute>
-                  <xs:attribute name="report-uri" type="xs:string" use="required">
-                    <xs:annotation>
-                      <xs:documentation>This attribute is required. Specifies a report URI where pin validation failures should be reported.</xs:documentation>
-                    </xs:annotation>
-                  </xs:attribute>
-                </xs:complexType>
               </xs:element>
               <xs:element name="content-Security-Policy" minOccurs="0" maxOccurs="1">
                 <xs:annotation>
@@ -398,6 +330,40 @@
       </xs:all>
     </xs:complexType>
   </xs:element>
+    <xs:complexType name="hpkpConfigElement">
+      <xs:all>
+        <xs:element name="certificates" minOccurs="0" maxOccurs="1" type="hpkpCertsElement">
+          <xs:annotation>
+            <xs:documentation>Specifies one or more certs that should be pinned.</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="pins" minOccurs="0" maxOccurs="1" type="hpkpPinsElement">
+          <xs:annotation>
+            <xs:documentation>Specifies one or more pins.</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+      </xs:all>
+      <xs:attribute name="max-age" type="xs:string" use="required">
+        <xs:annotation>
+          <xs:documentation>This attribute is required. Specifies for how long the browser should enforce HPKP. Expects a TimeSpan string.</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="includeSubdomains" type="simple_boolean" use="optional">
+        <xs:annotation>
+          <xs:documentation>Optional. Specifies whether HPKP also applies to subdomains. The default is false.</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="httpsOnly" type="simple_boolean" use="optional">
+        <xs:annotation>
+          <xs:documentation>Optional. Specifies that the HPKP header should be set for HTTPS requests only. The default is true.</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="report-uri" type="xs:string" use="optional">
+        <xs:annotation>
+          <xs:documentation>This attribute is optional. Specifies a report URI where pin validation failures should be reported.</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+    </xs:complexType>
   <xs:complexType name="hpkpCertsElement">
     <xs:choice minOccurs="0" maxOccurs="unbounded">
       <xs:element name="add" type="hpkpCert" />

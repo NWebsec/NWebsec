@@ -2,14 +2,15 @@
 
 using System.Configuration;
 using NWebsec.Core.HttpHeaders.Configuration;
+using NWebsec.Modules.Configuration.Validation;
 
 namespace NWebsec.Modules.Configuration
 {
     public class HpkpPinConfigurationElement : ConfigurationElement, IHpkpPinConfiguration
     {
 
-        //TODO pin config validation
         [ConfigurationProperty("pin", IsKey = true, IsRequired = true, DefaultValue = null)]
+        [HpkpPinValidator]
         public string Pin
         {
             get

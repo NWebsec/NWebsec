@@ -5,13 +5,14 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
 using NWebsec.Core.HttpHeaders.Configuration;
+using NWebsec.Modules.Configuration.Validation;
 
 namespace NWebsec.Modules.Configuration
 {
     public class HpkpConfigurationElement : ConfigurationElement, IHpkpConfiguration
     {
         private string[] _pins;
-        //TODO Config validation. Needs at least two pins.
+        private string _parsedReportUri;
 
         [ConfigurationProperty("max-age", IsRequired = true, DefaultValue = "-0:0:1")]
         [TimeSpanValidator(MinValueString = "-0:0:1")]
@@ -41,9 +42,10 @@ namespace NWebsec.Modules.Configuration
         }
 
         [ConfigurationProperty("report-uri", IsKey = true, IsRequired = false)]
-        public virtual Uri ReportUriValue
+        [HpkpReportUriValidator]
+        public virtual string ReportUriValue
         {
-            get { return (Uri)this["report-uri"]; }
+            get { return (string)this["report-uri"]; }
             set { this["report-uri"] = value; }
         }
 
@@ -88,7 +90,8 @@ namespace NWebsec.Modules.Configuration
             }
         }
 
-        public IEnumerable<string> Pins {
+        public IEnumerable<string> Pins
+        {
             get
             {
                 if (_pins == null)
@@ -98,13 +101,19 @@ namespace NWebsec.Modules.Configuration
 
                 }
                 return _pins;
-            } set { throw new NotImplementedException(); } }
+            }
+            set { throw new NotImplementedException(); }
+        }
 
         public string ReportUri
         {
             get
             {
-                return ReportUriValue == null ? null : ReportUriValue.AbsoluteUri;
+                if (_parsedReportUri == null && !string.IsNullOrEmpty(ReportUriValue))
+                {
+                    _parsedReportUri = new Uri(ReportUriValue).AbsoluteUri;
+                }
+                return _parsedReportUri;
             }
             set
             {

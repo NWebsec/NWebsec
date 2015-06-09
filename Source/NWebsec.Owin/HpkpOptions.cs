@@ -4,12 +4,14 @@ using System;
 using System.Collections.Generic;
 using System.Security.Cryptography.X509Certificates;
 using NWebsec.Core.Helpers.X509;
+using NWebsec.Core.HttpHeaders.Configuration.Validation;
 
 namespace NWebsec.Owin
 {
     public class HpkpOptions : IFluentHpkpOptions
     {
         private readonly List<string> _pins;
+        private readonly HpkpConfigurationValidator _validator;
 
         internal HpkpOptionsConfiguration Config { get; set; }
 
@@ -17,6 +19,7 @@ namespace NWebsec.Owin
         {
             _pins = new List<string>();
             Config = new HpkpOptionsConfiguration { Pins = _pins };
+            _validator = new HpkpConfigurationValidator();
         }
 
         // ReSharper disable once CSharpWarnings::CS0109
@@ -39,7 +42,15 @@ namespace NWebsec.Owin
 
         public IFluentHpkpOptions ReportUri(string reportUri)
         {
-            //Todo validation
+            try
+            {
+                _validator.ValidateReportUri(reportUri);
+            }
+            catch (Exception e)
+            {
+                throw new ArgumentException(e.Message, "reportUri");
+            }
+
             Config.ReportUri = reportUri;
             return this;
         }
@@ -52,9 +63,17 @@ namespace NWebsec.Owin
 
         public IFluentHpkpOptions Sha256Pins(params string[] pins)
         {
-            //TODO validate pins
             foreach (var pin in pins)
             {
+                try
+                {
+                    _validator.ValidateRawPin(pin);
+                }
+                catch (Exception e)
+                {
+                    throw new ArgumentException(e.Message, "pins");
+                }
+
                 var formattedPin = "sha256=\"" + pin + "\"";
                 if (!_pins.Contains(formattedPin))
                 {
@@ -67,7 +86,16 @@ namespace NWebsec.Owin
         public IFluentHpkpOptions PinCertificate(string thumbprint, StoreLocation storeLocation = StoreLocation.LocalMachine,
             StoreName storeName = StoreName.My)
         {
-            //TODO validate args
+
+            try
+            {
+                _validator.ValidateThumbprint(thumbprint);
+            }
+            catch (Exception e)
+            {
+                throw new ArgumentException(e.Message, thumbprint);
+            }
+
             var helper = new X509Helper();
             var cert = helper.GetCertByThumbprint(thumbprint, storeLocation, storeName);
             var pin = helper.GetSubjectPublicKeyInfoPinValue(cert);

@@ -5,6 +5,7 @@ using System.Configuration;
 using System.Security.Cryptography.X509Certificates;
 using NWebsec.Core.Helpers.X509;
 using NWebsec.Core.HttpHeaders.Configuration;
+using NWebsec.Modules.Configuration.Validation;
 
 namespace NWebsec.Modules.Configuration
 {
@@ -12,8 +13,8 @@ namespace NWebsec.Modules.Configuration
     {
         private string _spkiPin;
 
-        //TODO CertConfig validation
         [ConfigurationProperty("thumbprint", IsKey = true, IsRequired = true, DefaultValue = null)]
+        [HpkpCertThumbprintValidator]
         public string ThumbPrint
         {
             get

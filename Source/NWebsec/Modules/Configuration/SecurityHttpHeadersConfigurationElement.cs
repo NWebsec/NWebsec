@@ -35,8 +35,8 @@ namespace NWebsec.Modules.Configuration
             }
         }
 
-        //TODO validation.
         [ConfigurationProperty("public-Key-Pins", IsRequired = false)]
+        [HpkpValidator]
         public HpkpConfigurationElement Hpkp
         {
             get
@@ -49,13 +49,13 @@ namespace NWebsec.Modules.Configuration
             }
         }
 
-        //TODO validation.
         [ConfigurationProperty("public-Key-Pins-Report-Only", IsRequired = false)]
-        public HpkpReportOnlyConfigurationElement HpkpReportOnly
+        [HpkpValidator]
+        public HpkpConfigurationElement HpkpReportOnly
         {
             get
             {
-                return (HpkpReportOnlyConfigurationElement)this["public-Key-Pins-Report-Only"];
+                return (HpkpConfigurationElement)this["public-Key-Pins-Report-Only"];
             }
             set
             {
