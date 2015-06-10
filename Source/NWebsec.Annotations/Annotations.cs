@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 
 #pragma warning disable 1591
 // ReSharper disable UnusedMember.Global
@@ -22,7 +23,7 @@ namespace NWebsec.Annotations
     ///   var s = p.ToString(); // Warning: Possible 'System.NullReferenceException'
     /// }
     /// </code></example>
-    [AttributeUsage(
+    [Conditional("DEBUG"), AttributeUsage(
       AttributeTargets.Method | AttributeTargets.Parameter |
       AttributeTargets.Property | AttributeTargets.Delegate |
       AttributeTargets.Field, AllowMultiple = false, Inherited = true)]
@@ -36,7 +37,7 @@ namespace NWebsec.Annotations
     ///   return null; // Warning: Possible 'null' assignment
     /// }
     /// </code></example>
-    [AttributeUsage(
+    [Conditional("DEBUG"), AttributeUsage(
       AttributeTargets.Method | AttributeTargets.Parameter |
       AttributeTargets.Property | AttributeTargets.Delegate |
       AttributeTargets.Field, AllowMultiple = false, Inherited = true)]
@@ -54,7 +55,7 @@ namespace NWebsec.Annotations
     ///   ShowError("Failed: {0}"); // Warning: Non-existing argument in format string
     /// }
     /// </code></example>
-    [AttributeUsage(
+    [Conditional("DEBUG"), AttributeUsage(
       AttributeTargets.Constructor | AttributeTargets.Method,
       AllowMultiple = false, Inherited = true)]
     internal sealed class StringFormatMethodAttribute : Attribute
@@ -81,7 +82,7 @@ namespace NWebsec.Annotations
     ///     throw new ArgumentNullException("par"); // Warning: Cannot resolve symbol
     /// }
     /// </code></example>
-    [AttributeUsage(AttributeTargets.Parameter, AllowMultiple = false, Inherited = true)]
+    [Conditional("DEBUG"), AttributeUsage(AttributeTargets.Parameter, AllowMultiple = false, Inherited = true)]
     internal sealed class InvokerParameterNameAttribute : Attribute { }
 
     /// <summary>
@@ -120,7 +121,7 @@ namespace NWebsec.Annotations
     /// <item><c>SetProperty(ref myField, value, "Property")</c></item>
     /// </list>
     /// </example>
-    [AttributeUsage(AttributeTargets.Method, AllowMultiple = false, Inherited = true)]
+    [Conditional("DEBUG"), AttributeUsage(AttributeTargets.Method, AllowMultiple = false, Inherited = true)]
     internal sealed class NotifyPropertyChangedInvocatorAttribute : Attribute
     {
         public NotifyPropertyChangedInvocatorAttribute() { }
@@ -174,7 +175,7 @@ namespace NWebsec.Annotations
     /// public bool TryParse(string s, out Person result)
     /// </code></item>
     /// </list></examples>
-    [AttributeUsage(AttributeTargets.Method, AllowMultiple = true, Inherited = true)]
+    [Conditional("DEBUG"), AttributeUsage(AttributeTargets.Method, AllowMultiple = true, Inherited = true)]
     internal sealed class ContractAnnotationAttribute : Attribute
     {
         public ContractAnnotationAttribute([NotNull] string contract)
@@ -199,7 +200,7 @@ namespace NWebsec.Annotations
     ///   private string str = "my string"; // Warning: Localizable string
     /// }
     /// </code></example>
-    [AttributeUsage(AttributeTargets.All, AllowMultiple = false, Inherited = true)]
+    [Conditional("DEBUG"), AttributeUsage(AttributeTargets.All, AllowMultiple = false, Inherited = true)]
     internal sealed class LocalizationRequiredAttribute : Attribute
     {
         public LocalizationRequiredAttribute() : this(true) { }
@@ -230,7 +231,7 @@ namespace NWebsec.Annotations
     ///   }
     /// }
     /// </code></example>
-    [AttributeUsage(
+    [Conditional("DEBUG"), AttributeUsage(
       AttributeTargets.Interface | AttributeTargets.Class |
       AttributeTargets.Struct, AllowMultiple = false, Inherited = true)]
     internal sealed class CannotApplyEqualityOperatorAttribute : Attribute { }
@@ -245,7 +246,7 @@ namespace NWebsec.Annotations
     /// [Component] // ComponentAttribute requires implementing IComponent interface
     /// public class MyComponent : IComponent { }
     /// </code></example>
-    [AttributeUsage(AttributeTargets.Class, AllowMultiple = true, Inherited = true)]
+    [Conditional("DEBUG"), AttributeUsage(AttributeTargets.Class, AllowMultiple = true, Inherited = true)]
     [BaseTypeRequired(typeof(Attribute))]
     internal sealed class BaseTypeRequiredAttribute : Attribute
     {
@@ -263,7 +264,7 @@ namespace NWebsec.Annotations
     /// (e.g. via reflection, in external library), so this symbol
     /// will not be marked as unused (as well as by other usage inspections)
     /// </summary>
-    [AttributeUsage(AttributeTargets.All, AllowMultiple = false, Inherited = true)]
+    [Conditional("DEBUG"), AttributeUsage(AttributeTargets.All, AllowMultiple = false, Inherited = true)]
     internal sealed class UsedImplicitlyAttribute : Attribute
     {
         public UsedImplicitlyAttribute()
@@ -291,7 +292,7 @@ namespace NWebsec.Annotations
     /// to not mark symbols marked with such attributes as unused
     /// (as well as by other usage inspections)
     /// </summary>
-    [AttributeUsage(AttributeTargets.Class, AllowMultiple = false, Inherited = true)]
+    [Conditional("DEBUG"), AttributeUsage(AttributeTargets.Class, AllowMultiple = false, Inherited = true)]
     internal sealed class MeansImplicitUseAttribute : Attribute
     {
         public MeansImplicitUseAttribute()
@@ -353,7 +354,7 @@ namespace NWebsec.Annotations
     /// This attribute is intended to mark publicly available API
     /// which should not be removed and so is treated as used
     /// </summary>
-    [MeansImplicitUse]
+    [Conditional("DEBUG"), MeansImplicitUse]
     internal sealed class PublicAPIAttribute : Attribute
     {
         public PublicAPIAttribute() { }
@@ -373,7 +374,7 @@ namespace NWebsec.Annotations
     /// If the parameter is an enumerable, indicates that it is enumerated
     /// while the method is executed
     /// </summary>
-    [AttributeUsage(AttributeTargets.Parameter, Inherited = true)]
+    [Conditional("DEBUG"), AttributeUsage(AttributeTargets.Parameter, Inherited = true)]
     internal sealed class InstantHandleAttribute : Attribute { }
 
     /// <summary>
@@ -387,7 +388,7 @@ namespace NWebsec.Annotations
     ///   Multiply(a, b); // Waring: Return value of pure method is not used
     /// }
     /// </code></example>
-    [AttributeUsage(AttributeTargets.Method, Inherited = true)]
+    [Conditional("DEBUG"), AttributeUsage(AttributeTargets.Method, Inherited = true)]
     internal sealed class PureAttribute : Attribute { }
 
     /// <summary>
@@ -395,7 +396,7 @@ namespace NWebsec.Annotations
     /// within a web project. Path can be relative or absolute,
     /// starting from web root (~)
     /// </summary>
-    [AttributeUsage(AttributeTargets.Parameter)]
+    [Conditional("DEBUG"), AttributeUsage(AttributeTargets.Parameter)]
     internal class PathReferenceAttribute : Attribute
     {
         public PathReferenceAttribute() { }
@@ -410,37 +411,37 @@ namespace NWebsec.Annotations
 
     // ASP.NET MVC attributes
 
-    [AttributeUsage(AttributeTargets.Assembly, AllowMultiple = true)]
+    [Conditional("DEBUG"), AttributeUsage(AttributeTargets.Assembly, AllowMultiple = true)]
     internal sealed class AspMvcAreaMasterLocationFormatAttribute : Attribute
     {
         public AspMvcAreaMasterLocationFormatAttribute(string format) { }
     }
 
-    [AttributeUsage(AttributeTargets.Assembly, AllowMultiple = true)]
+    [Conditional("DEBUG"), AttributeUsage(AttributeTargets.Assembly, AllowMultiple = true)]
     internal sealed class AspMvcAreaPartialViewLocationFormatAttribute : Attribute
     {
         public AspMvcAreaPartialViewLocationFormatAttribute(string format) { }
     }
 
-    [AttributeUsage(AttributeTargets.Assembly, AllowMultiple = true)]
+    [Conditional("DEBUG"), AttributeUsage(AttributeTargets.Assembly, AllowMultiple = true)]
     internal sealed class AspMvcAreaViewLocationFormatAttribute : Attribute
     {
         public AspMvcAreaViewLocationFormatAttribute(string format) { }
     }
 
-    [AttributeUsage(AttributeTargets.Assembly, AllowMultiple = true)]
+    [Conditional("DEBUG"), AttributeUsage(AttributeTargets.Assembly, AllowMultiple = true)]
     internal sealed class AspMvcMasterLocationFormatAttribute : Attribute
     {
         public AspMvcMasterLocationFormatAttribute(string format) { }
     }
 
-    [AttributeUsage(AttributeTargets.Assembly, AllowMultiple = true)]
+    [Conditional("DEBUG"), AttributeUsage(AttributeTargets.Assembly, AllowMultiple = true)]
     internal sealed class AspMvcPartialViewLocationFormatAttribute : Attribute
     {
         public AspMvcPartialViewLocationFormatAttribute(string format) { }
     }
 
-    [AttributeUsage(AttributeTargets.Assembly, AllowMultiple = true)]
+    [Conditional("DEBUG"), AttributeUsage(AttributeTargets.Assembly, AllowMultiple = true)]
     internal sealed class AspMvcViewLocationFormatAttribute : Attribute
     {
         public AspMvcViewLocationFormatAttribute(string format) { }
@@ -452,7 +453,7 @@ namespace NWebsec.Annotations
     /// implicitly from the context. Use this attribute for custom wrappers similar to
     /// <c>System.Web.Mvc.Html.ChildActionExtensions.RenderAction(HtmlHelper, String)</c>
     /// </summary>
-    [AttributeUsage(AttributeTargets.Parameter | AttributeTargets.Method)]
+    [Conditional("DEBUG"), AttributeUsage(AttributeTargets.Parameter | AttributeTargets.Method)]
     internal sealed class AspMvcActionAttribute : Attribute
     {
         public AspMvcActionAttribute() { }
@@ -470,7 +471,7 @@ namespace NWebsec.Annotations
     /// Use this attribute for custom wrappers similar to
     /// <c>System.Web.Mvc.Html.ChildActionExtensions.RenderAction(HtmlHelper, String)</c>
     /// </summary>
-    [AttributeUsage(AttributeTargets.Parameter)]
+    [Conditional("DEBUG"), AttributeUsage(AttributeTargets.Parameter)]
     internal sealed class AspMvcAreaAttribute : PathReferenceAttribute
     {
         public AspMvcAreaAttribute() { }
@@ -490,7 +491,7 @@ namespace NWebsec.Annotations
     /// Use this attribute for custom wrappers similar to 
     /// <c>System.Web.Mvc.Html.ChildActionExtensions.RenderAction(HtmlHelper, String, String)</c>
     /// </summary>
-    [AttributeUsage(AttributeTargets.Parameter | AttributeTargets.Method)]
+    [Conditional("DEBUG"), AttributeUsage(AttributeTargets.Parameter | AttributeTargets.Method)]
     internal sealed class AspMvcControllerAttribute : Attribute
     {
         public AspMvcControllerAttribute() { }
@@ -508,7 +509,7 @@ namespace NWebsec.Annotations
     /// Use this attribute for custom wrappers similar to
     /// <c>System.Web.Mvc.Controller.View(String, String)</c>
     /// </summary>
-    [AttributeUsage(AttributeTargets.Parameter)]
+    [Conditional("DEBUG"), AttributeUsage(AttributeTargets.Parameter)]
     internal sealed class AspMvcMasterAttribute : Attribute { }
 
     /// <summary>
@@ -516,7 +517,7 @@ namespace NWebsec.Annotations
     /// Use this attribute for custom wrappers similar to
     /// <c>System.Web.Mvc.Controller.View(String, Object)</c>
     /// </summary>
-    [AttributeUsage(AttributeTargets.Parameter)]
+    [Conditional("DEBUG"), AttributeUsage(AttributeTargets.Parameter)]
     internal sealed class AspMvcModelTypeAttribute : Attribute { }
 
     /// <summary>
@@ -526,14 +527,14 @@ namespace NWebsec.Annotations
     /// Use this attribute for custom wrappers similar to
     /// <c>System.Web.Mvc.Html.RenderPartialExtensions.RenderPartial(HtmlHelper, String)</c>
     /// </summary>
-    [AttributeUsage(AttributeTargets.Parameter | AttributeTargets.Method)]
+    [Conditional("DEBUG"), AttributeUsage(AttributeTargets.Parameter | AttributeTargets.Method)]
     internal sealed class AspMvcPartialViewAttribute : PathReferenceAttribute { }
 
     /// <summary>
     /// ASP.NET MVC attribute. Allows disabling all inspections
     /// for MVC views within a class or a method.
     /// </summary>
-    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]
+    [Conditional("DEBUG"), AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]
     internal sealed class AspMvcSupressViewErrorAttribute : Attribute { }
 
     /// <summary>
@@ -541,7 +542,7 @@ namespace NWebsec.Annotations
     /// Use this attribute for custom wrappers similar to 
     /// <c>System.Web.Mvc.Html.DisplayExtensions.DisplayForModel(HtmlHelper, String)</c>
     /// </summary>
-    [AttributeUsage(AttributeTargets.Parameter)]
+    [Conditional("DEBUG"), AttributeUsage(AttributeTargets.Parameter)]
     internal sealed class AspMvcDisplayTemplateAttribute : Attribute { }
 
     /// <summary>
@@ -549,7 +550,7 @@ namespace NWebsec.Annotations
     /// Use this attribute for custom wrappers similar to
     /// <c>System.Web.Mvc.Html.EditorExtensions.EditorForModel(HtmlHelper, String)</c>
     /// </summary>
-    [AttributeUsage(AttributeTargets.Parameter)]
+    [Conditional("DEBUG"), AttributeUsage(AttributeTargets.Parameter)]
     internal sealed class AspMvcEditorTemplateAttribute : Attribute { }
 
     /// <summary>
@@ -557,7 +558,7 @@ namespace NWebsec.Annotations
     /// Use this attribute for custom wrappers similar to
     /// <c>System.ComponentModel.DataAnnotations.UIHintAttribute(System.String)</c>
     /// </summary>
-    [AttributeUsage(AttributeTargets.Parameter)]
+    [Conditional("DEBUG"), AttributeUsage(AttributeTargets.Parameter)]
     internal sealed class AspMvcTemplateAttribute : Attribute { }
 
     /// <summary>
@@ -566,7 +567,7 @@ namespace NWebsec.Annotations
     /// from the context. Use this attribute for custom wrappers similar to
     /// <c>System.Web.Mvc.Controller.View(Object)</c>
     /// </summary>
-    [AttributeUsage(AttributeTargets.Parameter | AttributeTargets.Method)]
+    [Conditional("DEBUG"), AttributeUsage(AttributeTargets.Parameter | AttributeTargets.Method)]
     internal sealed class AspMvcViewAttribute : PathReferenceAttribute { }
 
     /// <summary>
@@ -580,10 +581,10 @@ namespace NWebsec.Annotations
     ///   return RedirectToAction("Bar"); // Error: Cannot resolve action
     /// }
     /// </code></example>
-    [AttributeUsage(AttributeTargets.Parameter | AttributeTargets.Property)]
+    [Conditional("DEBUG"), AttributeUsage(AttributeTargets.Parameter | AttributeTargets.Property)]
     internal sealed class AspMvcActionSelectorAttribute : Attribute { }
 
-    [AttributeUsage(
+    [Conditional("DEBUG"), AttributeUsage(
       AttributeTargets.Parameter | AttributeTargets.Property |
       AttributeTargets.Field, Inherited = true)]
     internal sealed class HtmlElementAttributesAttribute : Attribute
@@ -598,7 +599,7 @@ namespace NWebsec.Annotations
         public string Name { get; private set; }
     }
 
-    [AttributeUsage(
+    [Conditional("DEBUG"), AttributeUsage(
       AttributeTargets.Parameter | AttributeTargets.Field |
       AttributeTargets.Property, Inherited = true)]
     internal sealed class HtmlAttributeValueAttribute : Attribute
@@ -619,6 +620,6 @@ namespace NWebsec.Annotations
     /// Use this attribute for custom wrappers similar to 
     /// <c>System.Web.WebPages.WebPageBase.RenderSection(String)</c>
     /// </summary>
-    [AttributeUsage(AttributeTargets.Parameter | AttributeTargets.Method, Inherited = true)]
+    [Conditional("DEBUG"), AttributeUsage(AttributeTargets.Parameter | AttributeTargets.Method, Inherited = true)]
     internal sealed class RazorSectionAttribute : Attribute { }
 }
