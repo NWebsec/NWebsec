@@ -321,7 +321,24 @@ namespace NWebsec.Core.Tests.Unit.HttpHeaders
             var cspConfig = new CspConfiguration
             {
                 Enabled = true,
-                SandboxDirective = { AllowForms = true, AllowPointerLock = true, AllowPopups = true, AllowSameOrigin = true, AllowScripts = true, AllowTopNavigation = true}
+                SandboxDirective = { Enabled = true }
+            };
+
+            var result = _generator.CreateCspResult(cspConfig, reportOnly);
+
+            Assert.IsNotNull(result);
+            Assert.AreEqual(HeaderResult.ResponseAction.Set, result.Action);
+            Assert.AreEqual(CspHeaderName(reportOnly), result.Name);
+            Assert.AreEqual("sandbox", result.Value);
+        }
+
+        [Test]
+        public void AddCspHeaders_CspEnabledWithSandboxSources_ReturnsSetCspWithSandboxResult([Values(false, true)]bool reportOnly)
+        {
+            var cspConfig = new CspConfiguration
+            {
+                Enabled = true,
+                SandboxDirective = { Enabled = true, AllowForms = true, AllowPointerLock = true, AllowPopups = true, AllowSameOrigin = true, AllowScripts = true, AllowTopNavigation = true }
             };
 
             var result = _generator.CreateCspResult(cspConfig, reportOnly);
@@ -338,7 +355,7 @@ namespace NWebsec.Core.Tests.Unit.HttpHeaders
             var cspConfig = new CspConfiguration
             {
                 Enabled = true,
-                PluginTypesDirective = { MediaTypes = new[] { "application/pdf", "image/png"} }
+                PluginTypesDirective = { MediaTypes = new[] { "application/pdf", "image/png" } }
             };
 
             var result = _generator.CreateCspResult(cspConfig, reportOnly);
@@ -389,7 +406,7 @@ namespace NWebsec.Core.Tests.Unit.HttpHeaders
             {
                 Enabled = true,
                 DefaultSrcDirective = { SelfSrc = true },
-                ReportUriDirective = { EnableBuiltinHandler = true }
+                ReportUriDirective = { Enabled = true, EnableBuiltinHandler = true }
             };
 
             var result = _generator.CreateCspResult(cspConfig, reportOnly, builtinReportHandlerUri: builtinReportHandlerUri);
@@ -406,9 +423,9 @@ namespace NWebsec.Core.Tests.Unit.HttpHeaders
             var cspConfig = new CspConfiguration
             {
                 Enabled = true,
-                DefaultSrcDirective = { SelfSrc = true }
+                DefaultSrcDirective = { SelfSrc = true },
+                ReportUriDirective = { Enabled = true, ReportUris = new[] { "/CspViolationReported" } }
             };
-            cspConfig.ReportUriDirective.ReportUris = new[] { "/CspViolationReported" };
 
             var result = _generator.CreateCspResult(cspConfig, reportOnly);
 
@@ -426,7 +443,7 @@ namespace NWebsec.Core.Tests.Unit.HttpHeaders
             {
                 Enabled = true,
                 DefaultSrcDirective = { SelfSrc = true },
-                ReportUriDirective = { EnableBuiltinHandler = true }
+                ReportUriDirective = { Enabled = true, EnableBuiltinHandler = true }
             };
             cspConfig.ReportUriDirective.ReportUris = new[] { "/CspViolationReported" };
 
@@ -453,7 +470,7 @@ namespace NWebsec.Core.Tests.Unit.HttpHeaders
             Assert.AreEqual(CspHeaderName(reportOnly), result.Name);
         }
 
-        
+
 
         private string CspHeaderName(bool reportOnly)
         {

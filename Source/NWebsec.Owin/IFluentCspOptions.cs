@@ -110,7 +110,14 @@ namespace NWebsec.Owin
         IFluentCspOptions PluginTypes(Action<IFluentCspPluginTypesDirective> configurer);
 
         /// <summary>
-        /// Configures the sandbox directive (CSP 2).
+        /// Enables the sandbox directive (CSP 2) without further ado.
+        /// </summary>
+        /// <remarks>Support for this directive was optional in CSP 1.0, but is mandatory as of CSP 2.</remarks>
+        /// <returns>The current <see cref="CspOptions" /> instance.</returns>
+        IFluentCspOptions Sandbox();
+
+        /// <summary>
+        /// Configures the sandbox directive (CSP 2) with one or more sources.
         /// </summary>
         /// <remarks>Support for this directive was optional in CSP 1.0, but is mandatory as of CSP 2.</remarks>
         /// <param name="configurer">An <see cref="Action"/> that configures the sources for the directive.</param>

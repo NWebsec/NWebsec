@@ -8,7 +8,7 @@ namespace NWebsec.Modules.Configuration.Csp
     public class CspSandboxDirectiveConfigurationElement : ConfigurationElement, ICspSandboxDirectiveConfiguration
     {
 
-        [ConfigurationProperty("enabled", IsRequired = false, DefaultValue = true)]
+        [ConfigurationProperty("enabled", IsRequired = false, DefaultValue = false)]
         public bool Enabled
         {
             get { return (bool)this["enabled"]; }

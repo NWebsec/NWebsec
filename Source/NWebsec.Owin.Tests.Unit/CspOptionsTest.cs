@@ -95,9 +95,29 @@ namespace NWebsec.Owin.Tests.Unit
         }
 
         [Test]
-        public void FrameAncestors_ConfiguresFrameAncestors()
+        public void PluginTypes_ConfiguresPluginTypes()
         {
-            _options.FrameAncestors(config => Assert.AreSame(_options.FrameAncestorsDirective, config));
+            _options.PluginTypes(config => Assert.AreSame(_options.PluginTypesDirective, config));
+        }
+
+        [Test]
+        public void Sandbox_EnablesSandbox()
+        {
+            Assert.IsFalse(_options.SandboxDirective.Enabled);
+            
+            _options.Sandbox();
+            
+            Assert.IsTrue(_options.SandboxDirective.Enabled);
+        }
+
+        [Test]
+        public void Sandbox_EnablesAndConfiguresSandbox()
+        {
+            Assert.IsFalse(_options.SandboxDirective.Enabled);
+
+            _options.Sandbox(config => Assert.AreSame(_options.SandboxDirective, config));
+
+            Assert.IsTrue(_options.SandboxDirective.Enabled);
         }
     }
 }

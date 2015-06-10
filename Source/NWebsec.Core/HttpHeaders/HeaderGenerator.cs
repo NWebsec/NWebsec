@@ -242,7 +242,7 @@ namespace NWebsec.Core.HttpHeaders
 
         private void AppendDirective(StringBuilder sb, string directiveName, List<string> sources)
         {
-            if (sources == null || sources.Count < 1) return;
+            if (sources == null) return;
 
             sb.Append(directiveName);
 
@@ -262,30 +262,37 @@ namespace NWebsec.Core.HttpHeaders
             var sources = new List<string>();
 
             if (directive.NoneSrc)
+            {
                 sources.Add("'none'");
+            }
 
             if (directive.SelfSrc)
+            {
                 sources.Add("'self'");
-
+            }
 
             if (directive.UnsafeInlineSrc)
             {
                 sources.Add("'unsafe-inline'");
             }
 
-            if (!String.IsNullOrEmpty(directive.Nonce))
+            if (!string.IsNullOrEmpty(directive.Nonce))
             {
                 var nonce = "'nonce-" + directive.Nonce + "'";
                 sources.Add(nonce);
             }
 
             if (directive.UnsafeEvalSrc)
+            {
                 sources.Add("'unsafe-eval'");
+            }
 
             if (directive.CustomSources != null)
+            {
                 sources.AddRange(directive.CustomSources);
+            }
 
-            return sources;
+            return sources.Count > 0 ? sources : null;
         }
 
         private List<string> GetPluginTypesDirectiveList(ICspPluginTypesDirectiveConfiguration directive)
@@ -293,10 +300,8 @@ namespace NWebsec.Core.HttpHeaders
             if (directive == null || !directive.Enabled || !directive.MediaTypes.Any())
                 return null;
 
-            var sources = new List<string>();
-            sources.AddRange(directive.MediaTypes);
-
-            return sources;
+            //We know there are MediaTypes, so not null.
+            return new List<string>(directive.MediaTypes);
         }
 
         private List<string> GetSandboxDirectiveList(ICspSandboxDirectiveConfiguration directive)
@@ -336,7 +341,7 @@ namespace NWebsec.Core.HttpHeaders
                 sources.Add("allow-top-navigation");
             }
 
-            return sources;
+            return sources; //We want to return empty list and not null
         }
 
         private List<string> GetReportUriList(ICspReportUriDirectiveConfiguration directive,
@@ -353,9 +358,11 @@ namespace NWebsec.Core.HttpHeaders
             }
 
             if (directive.ReportUris != null)
+            {
                 reportUris.AddRange(directive.ReportUris);
+            }
 
-            return reportUris;
+            return reportUris.Count > 0 ? reportUris : null;
         }
     }
 }

@@ -146,8 +146,15 @@ namespace NWebsec.Owin
             return this;
         }
 
+        public IFluentCspOptions Sandbox()
+        {
+            SandboxDirective.Enabled = true;
+            return this;
+        }
+
         public IFluentCspOptions Sandbox(Action<IFluentCspSandboxDirective> configurer)
         {
+            SandboxDirective.Enabled = true;
             configurer((IFluentCspSandboxDirective)SandboxDirective);
             return this;
         }

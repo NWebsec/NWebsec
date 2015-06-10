@@ -6,11 +6,6 @@ namespace NWebsec.Owin
 {
     class FluentCspSandboxDirective : CspSandboxDirectiveConfiguration, IFluentCspSandboxDirective
     {
-        public FluentCspSandboxDirective()
-        {
-            Enabled = true;
-        }
-
         public new IFluentCspSandboxDirective AllowForms()
         {
             base.AllowForms = true;

@@ -4,11 +4,6 @@ namespace NWebsec.Core.HttpHeaders.Configuration
 {
     public class CspSandboxDirectiveConfiguration : ICspSandboxDirectiveConfiguration
     {
-        public CspSandboxDirectiveConfiguration()
-        {
-            Enabled = true;
-        }
-
         public bool Enabled { get; set; }
         public bool AllowForms { get; set; }
         public bool AllowPointerLock { get; set; }
