@@ -1,9 +1,12 @@
-﻿@using NWebsec.Mvc.HttpHeaders.Csp
+﻿@using NWebsec.Mvc.Extensions
+@using NWebsec.Mvc.HttpHeaders.Csp
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width" />
+    <meta name="viewport" content="width=device-width"/>
+    @Html.ReferrerPolicyMetaTag().None()
+
     <title>@ViewBag.Title</title>
     @*@Styles.Render("~/Content/css")*@
     @*@Scripts.Render("~/bundles/modernizr")*@

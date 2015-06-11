@@ -92,6 +92,9 @@
     <Compile Include="Csp\CspDirectiveOverride.cs" />
     <Compile Include="Csp\CspOverrideConfiguration.cs" />
     <Compile Include="Csp\CspSandboxOverride.cs" />
+    <Compile Include="Extensions\HtmlHelperExtensions.cs" />
+    <Compile Include="Html\IReferrerPolicy.cs" />
+    <Compile Include="Html\ReferrerPolicyGenerator.cs" />
     <Compile Include="Helpers\ContextConfigurationHelper.cs" />
     <Compile Include="Helpers\CspConfigurationOverrideHelper.cs" />
     <Compile Include="Helpers\CspDirectiveOverrideHelper.cs" />
