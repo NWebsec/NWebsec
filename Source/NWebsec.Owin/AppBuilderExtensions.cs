@@ -52,7 +52,7 @@ namespace NWebsec.Owin
             var options = new HstsOptions();
             configurer(options);
             new HstsConfigurationValidator().Validate(options);
-            return app.Use(typeof (HstsMiddleware), options);
+            return app.Use(typeof(HstsMiddleware), options);
         }
 
         /// <summary>
@@ -68,8 +68,7 @@ namespace NWebsec.Owin
 
             var options = new HpkpOptions();
             configurer(options);
-            //TODO validation
-            //new HstsConfigurationValidator().Validate(options);
+            new HpkpConfigurationValidator().ValidateNumberOfPins(options.Config);
             return app.Use(typeof(HpkpMiddleware), options, false);
         }
 
@@ -86,8 +85,7 @@ namespace NWebsec.Owin
 
             var options = new HpkpOptions();
             configurer(options);
-            //TODO validation
-            //new HstsConfigurationValidator().Validate(options);
+            new HpkpConfigurationValidator().ValidateNumberOfPins(options.Config);
             return app.Use(typeof(HpkpMiddleware), options, true);
         }
 
@@ -100,7 +98,7 @@ namespace NWebsec.Owin
         {
             if (app == null) throw new ArgumentNullException("app");
 
-            return app.Use(typeof (XContentTypeOptionsMiddleware));
+            return app.Use(typeof(XContentTypeOptionsMiddleware));
         }
 
         /// <summary>
@@ -112,7 +110,7 @@ namespace NWebsec.Owin
         {
             if (app == null) throw new ArgumentNullException("app");
 
-            return app.Use(typeof (XDownloadOptionsMiddleware));
+            return app.Use(typeof(XDownloadOptionsMiddleware));
         }
 
         /// <summary>
@@ -128,7 +126,7 @@ namespace NWebsec.Owin
 
             var options = new XFrameOptions();
             configurer(options);
-            return app.Use(typeof (XfoMiddleware), options);
+            return app.Use(typeof(XfoMiddleware), options);
         }
 
         /// <summary>
@@ -144,7 +142,7 @@ namespace NWebsec.Owin
 
             var options = new XRobotsTagOptions();
             configurer(options);
-            return app.Use(typeof (XRobotsTagMiddleware), options);
+            return app.Use(typeof(XRobotsTagMiddleware), options);
         }
 
         /// <summary>
@@ -160,7 +158,7 @@ namespace NWebsec.Owin
 
             var options = new XXssProtectionOptions();
             configurer(options);
-            return app.Use(typeof (XXssMiddleware), options);
+            return app.Use(typeof(XXssMiddleware), options);
         }
 
         /// <summary>
@@ -176,7 +174,7 @@ namespace NWebsec.Owin
 
             var options = new CspOptions();
             configurer(options);
-            return app.Use(typeof (CspMiddleware), options, false); //Last param indicates it's not reportOnly.
+            return app.Use(typeof(CspMiddleware), options, false); //Last param indicates it's not reportOnly.
         }
 
         /// <summary>
@@ -192,7 +190,7 @@ namespace NWebsec.Owin
 
             var options = new CspOptions();
             configurer(options);
-            return app.Use(typeof (CspMiddleware), options, true); //Last param indicates it's reportOnly.
+            return app.Use(typeof(CspMiddleware), options, true); //Last param indicates it's reportOnly.
         }
     }
 }
