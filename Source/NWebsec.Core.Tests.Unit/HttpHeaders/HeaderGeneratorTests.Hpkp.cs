@@ -22,16 +22,16 @@ namespace NWebsec.Core.Tests.Unit.HttpHeaders
         }
 
         [Test]
-        public void CreateHpkpResult_ZeroTimespanInConfig_ReturnsSetHpkpResult([Values(false, true)]bool reportOnly)
+        public void CreateHpkpResult_ZeroTimespanInConfig_ReturnsSetHpkpResultWithMaxAgeOnly([Values(false, true)]bool reportOnly)
         {
-            var hpkpConfig = new HpkpConfiguration { MaxAge = new TimeSpan(0), Pins = _dummyPins };
+            var hpkpConfig = new HpkpConfiguration { MaxAge = TimeSpan.Zero, IncludeSubdomains = true ,Pins = _dummyPins, ReportUri = "https://nwebsec.com/report"};
 
             var result = _generator.CreateHpkpResult(hpkpConfig, reportOnly);
 
             Assert.IsNotNull(result);
             Assert.AreEqual(HeaderResult.ResponseAction.Set, result.Action);
             Assert.AreEqual(HpkpHeaderName(reportOnly), result.Name);
-            Assert.AreEqual("max-age=0;pin-sha256=\"firstpin\";pin-sha256=\"secondpin\"", result.Value);
+            Assert.AreEqual("max-age=0", result.Value);
         }
 
         [Test]

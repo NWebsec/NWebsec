@@ -12,7 +12,7 @@ namespace NWebsec.Core.HttpHeaders.Configuration.Validation
 
         public void ValidateNumberOfPins(IHpkpConfiguration hpkpConfig)
         {
-            if (hpkpConfig.Pins.Count() < 2)
+            if (hpkpConfig.MaxAge > TimeSpan.Zero && hpkpConfig.Pins.Count() < 2)
             {
                 throw new Exception("You must supply two or more HPKP pins. One should represent a certificate currently in use, you should also include a backup pin for a cert/key not (yet) in use.");
             }

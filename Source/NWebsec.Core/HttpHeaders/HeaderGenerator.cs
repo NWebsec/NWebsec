@@ -154,9 +154,16 @@ namespace NWebsec.Core.HttpHeaders
         {
             if (hpkpConfig.MaxAge < TimeSpan.Zero || hpkpConfig.Pins == null || !hpkpConfig.Pins.Any()) return null;
 
-            var sb = new StringBuilder();
+            var headerName = reportOnly ? HeaderConstants.HpkpReportOnlyHeader : HeaderConstants.HpkpHeader;
 
             var seconds = (int)hpkpConfig.MaxAge.TotalSeconds;
+            //Unpinning. Save a few bytes by ignoring other directives.
+            if (seconds == 0)
+            {
+                return new HeaderResult(HeaderResult.ResponseAction.Set, headerName, "max-age=" + seconds);
+            }
+
+            var sb = new StringBuilder();
             sb.Append("max-age=").Append(seconds).Append(";");
 
             if (hpkpConfig.IncludeSubdomains)
@@ -179,7 +186,6 @@ namespace NWebsec.Core.HttpHeaders
             }
 
             var value = sb.ToString();
-            var headerName = reportOnly ? HeaderConstants.HpkpReportOnlyHeader : HeaderConstants.HpkpHeader;
 
             return new HeaderResult(HeaderResult.ResponseAction.Set, headerName, value);
         }
