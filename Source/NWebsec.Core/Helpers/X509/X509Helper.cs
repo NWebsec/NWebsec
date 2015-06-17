@@ -3,6 +3,7 @@
 using System;
 using System.IO;
 using System.Linq;
+using System.Security;
 using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
 
@@ -18,6 +19,7 @@ namespace NWebsec.Core.Helpers.X509
         private static readonly byte[] AsnTags = { AsnInteger, AsnBitString, AsnSequence, AsnOptional };
 
         //TODO cleanup. Perhaps a test or two.
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Security", "CA2122:DoNotIndirectlyExposeMethodsWithLinkDemands"), SecuritySafeCritical]
         public X509Certificate2 GetCertByThumbprint(string thumbprint, StoreLocation storeLocation, StoreName storeName)
         {
             X509Store certStore = null;
@@ -47,24 +49,19 @@ namespace NWebsec.Core.Helpers.X509
             {
                 if (certs != null)
                 {
-                    ResetCerts(certs);                    
+                    foreach (var cert in certs)
+                    {
+                        cert.Reset();
+                    }
                 }
                 if (certStore != null)
                 {
-                    ResetCerts(certStore.Certificates);
+                    foreach (var cert in certStore.Certificates)
+                    {
+                        cert.Reset();
+                    }
                     certStore.Close();
                 }
-            }
-        }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Security", "CA2122:DoNotIndirectlyExposeMethodsWithLinkDemands")]
-        private void ResetCerts(X509Certificate2Collection certs)
-        {
-            if (certs == null) return;
-
-            foreach (var cert in certs)
-            {
-                cert.Reset();
             }
         }
 
