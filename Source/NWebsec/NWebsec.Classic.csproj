@@ -57,6 +57,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Csp\CspReportDetails.cs" />
+    <Compile Include="Csp\CspViolationReport.cs" />
     <Compile Include="Csp\CspViolationReportEventArgs.cs" />
     <Compile Include="Csp\CspReportHandlerUriHelper.cs" />
     <Compile Include="Csp\CspReportHelper.cs" />

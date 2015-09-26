@@ -74,6 +74,7 @@
     </CodeAnalysisDependentAssemblyPaths>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Csp\CspViolationReportTests.cs" />
     <Compile Include="Csp\CspReportHelperTests.cs" />
     <Compile Include="ExtensionMethods\HttpContextBaseExtensionsTests.cs" />
     <Compile Include="Helpers\HeaderResultHandlerTests.cs" />
