@@ -37,6 +37,16 @@ namespace DemoSiteMvc4.Controllers
         public ActionResult Other()
         {
             return View("Index");
+
+            var s = $"hheyhey" +
+            "duddelidei";
+        }
+
+        [Csp(Enabled = false)]
+        public ActionResult Referrer()
+        {
+            Response.AppendHeader("Content-Security-Policy","referrer none");
+            return View();
         }
 
         public ActionResult Authenticated(string user ="klings")

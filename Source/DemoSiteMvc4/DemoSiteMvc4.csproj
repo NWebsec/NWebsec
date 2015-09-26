@@ -28,6 +28,7 @@
     <UpgradeBackupLocation>
     </UpgradeBackupLocation>
     <OldToolsVersion>4.0</OldToolsVersion>
+    <UseGlobalApplicationHostFile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -228,6 +229,7 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Home\PartialIndex.cshtml" />
     <Content Include="Views\Home\Framed.cshtml" />
+    <Content Include="Views\Home\Referrer.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

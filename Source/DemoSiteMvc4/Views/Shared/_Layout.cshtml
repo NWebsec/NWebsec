@@ -5,7 +5,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width"/>
-    @Html.ReferrerPolicyMetaTag().None()
+    @RenderSection("metatags", required: false)
 
     <title>@ViewBag.Title</title>
     @*@Styles.Render("~/Content/css")*@
