@@ -21,6 +21,30 @@ namespace NWebsec.Csp
         /// Gets the User Agent that reported the Content Security Policy violation. The default is the empty string.
         /// </summary>
         public string UserAgent { get; set; }
+        
+        /// <summary>
+        /// Returns a <see cref="System.String" /> that represents this instance.
+        /// </summary>
+        /// <returns>
+        /// A <see cref="System.String" /> that represents this instance.
+        /// </returns>
+        public override string ToString()
+        {
+            return string.Format(
+                "UserAgent:<{0}>\r\nBlockedUri:<{1}>\r\nColumnNumber:<{2}>\r\nDocumentUri:<{3}>\r\nEffectiveDirective:<{4}>\r\nLineNumber:<{5}>\r\nOriginalPolicy:<{6}>\r\nReferrer:<{7}>\r\nScriptSample:<{8}>\r\nSourceFile:<{9}>\r\nStatusCode:<{10}>\r\nViolatedDirective:<{11}>",
+                this.UserAgent,
+                this.Details.BlockedUri,
+                this.Details.ColumnNumber,
+                this.Details.DocumentUri,
+                this.Details.EffectiveDirective,
+                this.Details.LineNumber,
+                this.Details.OriginalPolicy,
+                this.Details.Referrer,
+                this.Details.ScriptSample,
+                this.Details.SourceFile,
+                this.Details.StatusCode,
+                this.Details.ViolatedDirective);   
+        }
     }
 
     /// <summary>
