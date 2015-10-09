@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.30110.0
+# Visual Studio 14
+VisualStudioVersion = 14.0.23107.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{07D0ADD6-1502-453F-8F21-F69748F0D188}"
 	ProjectSection(SolutionItems) = preProject
@@ -18,10 +18,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{F37533
 		.nuget\NuGet.exe = .nuget\NuGet.exe
 		.nuget\NuGet.targets = .nuget\NuGet.targets
 	EndProjectSection
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NWebsec.SessionSecurity", "NWebsec.SessionSecurity\NWebsec.SessionSecurity.csproj", "{678B7F4E-2F0C-45B9-8236-4F178BE7C301}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NWebsec.SessionSecurity.Tests.Unit", "NWebsec.SessionSecurity.Tests.Unit\NWebsec.SessionSecurity.Tests.Unit.csproj", "{49675522-AD79-4544-B4D6-AC42C6560922}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NWebsec.Core", "NWebsec.Core\NWebsec.Core.csproj", "{E2D23D75-19D4-41A6-A57E-4B6D4F94941F}"
 EndProject
@@ -47,14 +43,6 @@ Global
 		{78FF86A6-C148-4D03-96CF-B429C1A36DA9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{78FF86A6-C148-4D03-96CF-B429C1A36DA9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{78FF86A6-C148-4D03-96CF-B429C1A36DA9}.Release|Any CPU.Build.0 = Release|Any CPU
-		{678B7F4E-2F0C-45B9-8236-4F178BE7C301}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{678B7F4E-2F0C-45B9-8236-4F178BE7C301}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{678B7F4E-2F0C-45B9-8236-4F178BE7C301}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{678B7F4E-2F0C-45B9-8236-4F178BE7C301}.Release|Any CPU.Build.0 = Release|Any CPU
-		{49675522-AD79-4544-B4D6-AC42C6560922}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{49675522-AD79-4544-B4D6-AC42C6560922}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{49675522-AD79-4544-B4D6-AC42C6560922}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{49675522-AD79-4544-B4D6-AC42C6560922}.Release|Any CPU.Build.0 = Release|Any CPU
 		{E2D23D75-19D4-41A6-A57E-4B6D4F94941F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{E2D23D75-19D4-41A6-A57E-4B6D4F94941F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E2D23D75-19D4-41A6-A57E-4B6D4F94941F}.Release|Any CPU.ActiveCfg = Release|Any CPU
