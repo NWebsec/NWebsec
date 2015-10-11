@@ -218,6 +218,19 @@ namespace NWebsec.Modules.Configuration.Csp
             }
         }
 
+        [ConfigurationProperty("upgrade-insecure-requests", IsRequired = false)]
+        public CspSimpleDirectiveConfigurationElement UpgradeInsecureRequests
+        {
+            get
+            {
+                return (CspSimpleDirectiveConfigurationElement)this["upgrade-insecure-requests"];
+            }
+            set
+            {
+                this["upgrade-insecure-requests"] = value;
+            }
+        }
+
         [ConfigurationProperty("report-uri", IsRequired = false)]
         public CspReportUriDirectiveConfigurationElement ReportUri
         {
@@ -308,6 +321,12 @@ namespace NWebsec.Modules.Configuration.Csp
         public ICspSandboxDirectiveConfiguration SandboxDirective
         {
             get { return Sandbox; }
+            set { throw new NotImplementedException(); }
+        }
+
+        public ICspSimpleDirectiveConfiguration UpgradeInsecureRequestsDirective
+        {
+            get { return UpgradeInsecureRequests; }
             set { throw new NotImplementedException(); }
         }
 

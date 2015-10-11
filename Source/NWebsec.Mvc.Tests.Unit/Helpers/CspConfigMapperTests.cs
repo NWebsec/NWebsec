@@ -197,6 +197,7 @@ namespace NWebsec.Mvc.Tests.Unit.Helpers
 
             Assert.IsNotNull(destinationConfig.PluginTypesDirective);
             Assert.IsNotNull(destinationConfig.SandboxDirective);
+            Assert.IsNotNull(destinationConfig.UpgradeInsecureRequestsDirective);
             Assert.IsNotNull(destinationConfig.ReportUriDirective);
         }
 
@@ -219,6 +220,7 @@ namespace NWebsec.Mvc.Tests.Unit.Helpers
 
             Assert.AreSame(sourceConfig.PluginTypesDirective, destinationConfig.PluginTypesDirective);
             Assert.AreSame(sourceConfig.SandboxDirective, destinationConfig.SandboxDirective);
+            Assert.AreSame(sourceConfig.UpgradeInsecureRequestsDirective, destinationConfig.UpgradeInsecureRequestsDirective);
             Assert.AreSame(sourceConfig.ReportUriDirective, destinationConfig.ReportUriDirective);
         }
 
@@ -234,6 +236,7 @@ namespace NWebsec.Mvc.Tests.Unit.Helpers
                 Enabled = destinationConfig.Enabled,
                 PluginTypesDirective = destinationConfig.PluginTypesDirective,
                 SandboxDirective = destinationConfig.SandboxDirective,
+                UpgradeInsecureRequestsDirective = destinationConfig.UpgradeInsecureRequestsDirective,
                 ReportUriDirective = destinationConfig.ReportUriDirective
             };
             //Poor man's clone, to get directives from destinationconfig to expected config.
@@ -254,6 +257,7 @@ namespace NWebsec.Mvc.Tests.Unit.Helpers
 
             Assert.AreSame(expectedConfig.PluginTypesDirective, destinationConfig.PluginTypesDirective);
             Assert.AreSame(expectedConfig.SandboxDirective, destinationConfig.SandboxDirective);
+            Assert.AreSame(expectedConfig.UpgradeInsecureRequestsDirective, destinationConfig.UpgradeInsecureRequestsDirective);
             Assert.AreSame(expectedConfig.ReportUriDirective, destinationConfig.ReportUriDirective);
         }
 
@@ -276,6 +280,7 @@ namespace NWebsec.Mvc.Tests.Unit.Helpers
 
             Assert.AreSame(sourceConfig.PluginTypesDirective, destinationConfig.PluginTypesDirective);
             Assert.AreSame(sourceConfig.SandboxDirective, destinationConfig.SandboxDirective);
+            Assert.AreSame(sourceConfig.UpgradeInsecureRequestsDirective, destinationConfig.UpgradeInsecureRequestsDirective);
             Assert.AreSame(sourceConfig.ReportUriDirective, destinationConfig.ReportUriDirective);
         }
 
@@ -298,6 +303,7 @@ namespace NWebsec.Mvc.Tests.Unit.Helpers
 
             Assert.IsNotNull(destinationConfig.PluginTypesDirective);
             Assert.IsNotNull(destinationConfig.SandboxDirective);
+            Assert.IsNotNull(destinationConfig.UpgradeInsecureRequestsDirective);
             Assert.IsNotNull(destinationConfig.ReportUriDirective);
         }
 
@@ -320,6 +326,7 @@ namespace NWebsec.Mvc.Tests.Unit.Helpers
 
             Assert.IsNotNull(destinationConfig.PluginTypesDirective);
             Assert.IsNotNull(destinationConfig.SandboxDirective);
+            Assert.IsNotNull(destinationConfig.UpgradeInsecureRequestsDirective);
             Assert.IsNotNull(destinationConfig.ReportUriDirective);
         }
 
@@ -335,6 +342,7 @@ namespace NWebsec.Mvc.Tests.Unit.Helpers
 
             sourceConfig.PluginTypesDirective = new CspPluginTypesDirectiveConfiguration();
             sourceConfig.SandboxDirective = new CspSandboxDirectiveConfiguration();
+            sourceConfig.UpgradeInsecureRequestsDirective = new CspSimpleDirectiveConfiguration();
             sourceConfig.ReportUriDirective = new CspReportUriDirectiveConfiguration();
             var destinationConfig = new CspConfiguration(false) { Enabled = true };
 
@@ -351,6 +359,7 @@ namespace NWebsec.Mvc.Tests.Unit.Helpers
 
             Assert.AreSame(sourceConfig.PluginTypesDirective, destinationConfig.PluginTypesDirective);
             Assert.AreSame(sourceConfig.SandboxDirective, destinationConfig.SandboxDirective);
+            Assert.AreSame(sourceConfig.UpgradeInsecureRequestsDirective, destinationConfig.UpgradeInsecureRequestsDirective);
             Assert.AreSame(sourceConfig.ReportUriDirective, destinationConfig.ReportUriDirective);
         }
 
@@ -365,6 +374,7 @@ namespace NWebsec.Mvc.Tests.Unit.Helpers
             }
             sourceConfig.PluginTypesDirective = new CspPluginTypesDirectiveConfiguration();
             sourceConfig.SandboxDirective = new CspSandboxDirectiveConfiguration();
+            sourceConfig.UpgradeInsecureRequestsDirective = new CspSimpleDirectiveConfiguration();
             sourceConfig.ReportUriDirective = new CspReportUriDirectiveConfiguration();
 
             var destinationConfig = new CspConfiguration(false) { Enabled = true };
@@ -382,6 +392,7 @@ namespace NWebsec.Mvc.Tests.Unit.Helpers
 
             Assert.AreSame(sourceConfig.PluginTypesDirective, destinationConfig.PluginTypesDirective);
             Assert.AreSame(sourceConfig.SandboxDirective, destinationConfig.SandboxDirective);
+            Assert.AreSame(sourceConfig.UpgradeInsecureRequestsDirective, destinationConfig.UpgradeInsecureRequestsDirective);
             Assert.AreSame(sourceConfig.ReportUriDirective, destinationConfig.ReportUriDirective);
         }
     }

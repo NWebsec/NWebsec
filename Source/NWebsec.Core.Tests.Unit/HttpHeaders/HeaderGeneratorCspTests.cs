@@ -367,6 +367,23 @@ namespace NWebsec.Core.Tests.Unit.HttpHeaders
         }
 
         [Test]
+        public void AddCspHeaders_CspEnabledWithUpgradeInsecureRequests_ReturnsSetCspWithUpgradeInsecureRequestsResult([Values(false, true)]bool reportOnly)
+        {
+            var cspConfig = new CspConfiguration
+            {
+                Enabled = true,
+                UpgradeInsecureRequestsDirective = { Enabled = true}
+            };
+
+            var result = _generator.CreateCspResult(cspConfig, reportOnly);
+
+            Assert.IsNotNull(result);
+            Assert.AreEqual(HeaderResult.ResponseAction.Set, result.Action);
+            Assert.AreEqual(CspHeaderName(reportOnly), result.Name);
+            Assert.AreEqual("upgrade-insecure-requests", result.Value);
+        }
+
+        [Test]
         public void AddCspHeaders_CspWithTwoDirectives_ReturnsSetSetCspWithBothDirectivesResult([Values(false, true)]bool reportOnly)
         {
             var cspConfig = new CspConfiguration

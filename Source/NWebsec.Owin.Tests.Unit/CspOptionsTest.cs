@@ -119,5 +119,15 @@ namespace NWebsec.Owin.Tests.Unit
 
             Assert.IsTrue(_options.SandboxDirective.Enabled);
         }
+
+        [Test]
+        public void UpgradeInsecureRequests_EnablesDirective()
+        {
+            Assert.IsFalse(_options.UpgradeInsecureRequestsDirective.Enabled);
+
+            _options.UpgradeInsecureRequests();
+
+            Assert.IsTrue(_options.UpgradeInsecureRequestsDirective.Enabled);
+        }
     }
 }

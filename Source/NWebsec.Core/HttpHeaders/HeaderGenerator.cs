@@ -235,6 +235,7 @@ namespace NWebsec.Core.HttpHeaders
             AppendDirective(sb, "frame-ancestors", GetDirectiveList(config.FrameAncestorsDirective));
             AppendDirective(sb, "plugin-types", GetPluginTypesDirectiveList(config.PluginTypesDirective));
             AppendDirective(sb, "sandbox", GetSandboxDirectiveList(config.SandboxDirective));
+            AppendSimpleDirective(sb, "upgrade-insecure-requests", config.UpgradeInsecureRequestsDirective);
 
             if (sb.Length == 0) return null;
 
@@ -257,6 +258,14 @@ namespace NWebsec.Core.HttpHeaders
                 sb.Append(' ').Append(source);
             }
 
+            sb.Append(';');
+        }
+
+        private void AppendSimpleDirective(StringBuilder sb, string directiveName, ICspSimpleDirectiveConfiguration config)
+        {
+            if (!config.Enabled) return;
+
+            sb.Append(directiveName);
             sb.Append(';');
         }
 

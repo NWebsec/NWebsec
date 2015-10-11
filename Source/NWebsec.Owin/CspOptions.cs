@@ -7,60 +7,41 @@ namespace NWebsec.Owin
 {
     public class CspOptions : ICspConfiguration, IFluentCspOptions
     {
-        internal CspOptions()
-        {
-            Enabled = true;
-            DefaultSrcDirective = new CspDirective();
-            ScriptSrcDirective = new CspDirective();
-            ObjectSrcDirective = new CspDirective();
-            StyleSrcDirective = new CspDirective();
-            ImgSrcDirective = new CspDirective();
-            MediaSrcDirective = new CspDirective();
-            FrameSrcDirective = new CspDirective();
-            FontSrcDirective = new CspDirective();
-            ConnectSrcDirective = new CspDirective();
-            BaseUriDirective = new CspDirective();
-            ChildSrcDirective = new CspDirective();
-            FormActionDirective = new CspDirective();
-            FrameAncestorsDirective = new CspDirective();
-            PluginTypesDirective = new FluentCspPluginTypesDirective();
-            SandboxDirective = new FluentCspSandboxDirective();
-            ReportUriDirective = new CspReportUriDirective();
-        }
+        public bool Enabled { get; set; } = true;
 
-        public bool Enabled { get; set; }
+        public ICspDirectiveConfiguration DefaultSrcDirective { get; set; } = new CspDirective();
 
-        public ICspDirectiveConfiguration DefaultSrcDirective { get; set; }
+        public ICspDirectiveConfiguration ScriptSrcDirective { get; set; } = new CspDirective();
 
-        public ICspDirectiveConfiguration ScriptSrcDirective { get; set; }
+        public ICspDirectiveConfiguration ObjectSrcDirective { get; set; } = new CspDirective();
 
-        public ICspDirectiveConfiguration ObjectSrcDirective { get; set; }
+        public ICspDirectiveConfiguration StyleSrcDirective { get; set; } = new CspDirective();
 
-        public ICspDirectiveConfiguration StyleSrcDirective { get; set; }
+        public ICspDirectiveConfiguration ImgSrcDirective { get; set; } = new CspDirective();
 
-        public ICspDirectiveConfiguration ImgSrcDirective { get; set; }
+        public ICspDirectiveConfiguration MediaSrcDirective { get; set; } = new CspDirective();
 
-        public ICspDirectiveConfiguration MediaSrcDirective { get; set; }
+        public ICspDirectiveConfiguration FrameSrcDirective { get; set; } = new CspDirective();
 
-        public ICspDirectiveConfiguration FrameSrcDirective { get; set; }
+        public ICspDirectiveConfiguration FontSrcDirective { get; set; } = new CspDirective();
 
-        public ICspDirectiveConfiguration FontSrcDirective { get; set; }
+        public ICspDirectiveConfiguration ConnectSrcDirective { get; set; } = new CspDirective();
 
-        public ICspDirectiveConfiguration ConnectSrcDirective { get; set; }
+        public ICspDirectiveConfiguration BaseUriDirective { get; set; } = new CspDirective();
 
-        public ICspDirectiveConfiguration BaseUriDirective { get; set; }
+        public ICspDirectiveConfiguration ChildSrcDirective { get; set; } = new CspDirective();
 
-        public ICspDirectiveConfiguration ChildSrcDirective { get; set; }
+        public ICspDirectiveConfiguration FormActionDirective { get; set; } = new CspDirective();
 
-        public ICspDirectiveConfiguration FormActionDirective { get; set; }
+        public ICspDirectiveConfiguration FrameAncestorsDirective { get; set; } = new CspDirective();
 
-        public ICspDirectiveConfiguration FrameAncestorsDirective { get; set; }
+        public ICspPluginTypesDirectiveConfiguration PluginTypesDirective { get; set; } = new FluentCspPluginTypesDirective();
 
-        public ICspPluginTypesDirectiveConfiguration PluginTypesDirective { get; set; }
-        
-        public ICspSandboxDirectiveConfiguration SandboxDirective { get; set; }
+        public ICspSandboxDirectiveConfiguration SandboxDirective { get; set; } = new FluentCspSandboxDirective();
 
-        public ICspReportUriDirectiveConfiguration ReportUriDirective { get; set; }
+        public ICspSimpleDirectiveConfiguration UpgradeInsecureRequestsDirective { get; set; } = new CspSimpleDirectiveConfiguration();
+
+        public ICspReportUriDirectiveConfiguration ReportUriDirective { get; set; } = new CspReportUriDirective();
 
         public IFluentCspOptions DefaultSources(Action<ICspDirectiveBasicConfiguration> configurer)
         {
@@ -156,6 +137,12 @@ namespace NWebsec.Owin
         {
             SandboxDirective.Enabled = true;
             configurer((IFluentCspSandboxDirective)SandboxDirective);
+            return this;
+        }
+
+        public IFluentCspOptions UpgradeInsecureRequests()
+        {
+            UpgradeInsecureRequestsDirective.Enabled = true;
             return this;
         }
 

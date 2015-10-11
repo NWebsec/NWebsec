@@ -438,7 +438,7 @@
       </xs:annotation>
     </xs:attribute>
   </xs:complexType>
-  <xs:complexType name="BaseCspElement">
+ <xs:complexType name="BaseCspElement">
     <xs:choice minOccurs="0" maxOccurs="unbounded">
       <xs:element name="add" type="cspSource" />
       <xs:element name="remove" type="cspSource" />
@@ -590,6 +590,18 @@
           <xs:attribute name="allow-top-navigation" type="simple_boolean" use="optional">
             <xs:annotation>
               <xs:documentation>Optional. Specifies whether to include the allow-top-navigation source. The default is false.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="upgrade-insecure-requests" minOccurs="0" maxOccurs="1">
+        <xs:annotation>
+          <xs:documentation>Configures the upgrade-insecure-requests CSP directive.</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+          <xs:attribute name="enabled" type="simple_boolean" use="required">
+            <xs:annotation>
+              <xs:documentation>This attribute is required. Specifies whether to include the upgrade-insecure-requests CSP directive and redirect conformant UAs to HTTPS.</xs:documentation>
             </xs:annotation>
           </xs:attribute>
         </xs:complexType>

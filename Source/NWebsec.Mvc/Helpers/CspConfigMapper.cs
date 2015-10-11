@@ -223,6 +223,7 @@ namespace NWebsec.Mvc.Helpers
             destination.FrameAncestorsDirective = source.FrameAncestorsDirective ?? destination.FrameAncestorsDirective ?? new CspDirectiveConfiguration();
             destination.PluginTypesDirective = source.PluginTypesDirective ?? destination.PluginTypesDirective ?? new CspPluginTypesDirectiveConfiguration();
             destination.SandboxDirective = source.SandboxDirective ?? destination.SandboxDirective ?? new CspSandboxDirectiveConfiguration();
+            destination.UpgradeInsecureRequestsDirective = source.UpgradeInsecureRequestsDirective ?? destination.UpgradeInsecureRequestsDirective ?? new CspSimpleDirectiveConfiguration();
             destination.ReportUriDirective = source.ReportUriDirective ?? destination.ReportUriDirective ?? new CspReportUriDirectiveConfiguration();
         }
     }

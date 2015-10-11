@@ -125,6 +125,13 @@ namespace NWebsec.Owin
         IFluentCspOptions Sandbox(Action<IFluentCspSandboxDirective> configurer);
 
         /// <summary>
+        /// Enables the upgrade-insecure-requests directive and redirects conformant UAs to HTTPS.
+        /// </summary>
+        /// <remarks>This directive is not part of CSP 1.0 or CSP 2, but is described in a separate specification.</remarks>
+        /// <returns>The current <see cref="CspOptions" /> instance.</returns>
+        IFluentCspOptions UpgradeInsecureRequests();
+
+        /// <summary>
         /// Configures the report-uri directive (CSP 1.0). Support for absolute URIs was introduced in CSP 2.
         /// </summary>
         /// <param name="configurer">An <see cref="Action"/> that configures the report URIs.</param>

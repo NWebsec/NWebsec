@@ -14,6 +14,8 @@ namespace NWebsec.Core.HttpHeaders.Configuration
         ICspDirectiveConfiguration FrameSrcDirective { get; set; }
         ICspDirectiveConfiguration FontSrcDirective { get; set; }
         ICspDirectiveConfiguration ConnectSrcDirective { get; set; }
+        ICspReportUriDirectiveConfiguration ReportUriDirective { get; set; }
+
         //CSP 2
         ICspDirectiveConfiguration BaseUriDirective { get; set; }
         ICspDirectiveConfiguration ChildSrcDirective { get; set; }
@@ -21,6 +23,8 @@ namespace NWebsec.Core.HttpHeaders.Configuration
         ICspDirectiveConfiguration FrameAncestorsDirective { get; set; }
         ICspPluginTypesDirectiveConfiguration PluginTypesDirective { get; set; }
         ICspSandboxDirectiveConfiguration SandboxDirective { get; set; }
-        ICspReportUriDirectiveConfiguration ReportUriDirective { get; set; }
+
+        //Upgrade insecure requests
+        ICspSimpleDirectiveConfiguration UpgradeInsecureRequestsDirective { get; set; }
     }
 }
