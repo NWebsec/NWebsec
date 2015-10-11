@@ -247,10 +247,6 @@
       <Project>{78ff86a6-c148-4d03-96cf-b429c1a36da9}</Project>
       <Name>NWebsec.Mvc</Name>
     </ProjectReference>
-    <ProjectReference Include="..\NWebsec.SessionSecurity\NWebsec.SessionSecurity.csproj">
-      <Project>{678b7f4e-2f0c-45b9-8236-4f178be7c301}</Project>
-      <Name>NWebsec.SessionSecurity</Name>
-    </ProjectReference>
     <ProjectReference Include="..\NWebsec\NWebsec.Classic.csproj">
       <Project>{a011d84b-b731-4404-8bc1-fe94d2b37599}</Project>
       <Name>NWebsec.Classic</Name>

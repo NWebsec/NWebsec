@@ -1,5 +1,4 @@
-﻿using System.Security.Cryptography.X509Certificates;
-using Microsoft.Owin;
+﻿using Microsoft.Owin;
 using Owin;
 using NWebsec.Owin;
 
@@ -34,6 +33,7 @@ namespace DemoSiteMvc5
                 .PluginTypes(s => s.MediaTypes("application/pdf"))
                 //.Sandbox()
                 .Sandbox(s => s.AllowForms().AllowPointerLock().AllowPopups().AllowSameOrigin().AllowScripts().AllowTopNavigation())
+                .UpgradeInsecureRequests(8443)
                 .ReportUris(r => r.Uris("https://www.nwebsec.com/report", "https://w-w.üüüüüü.de/réport?p=a;b,")));
 
             app.UseCspReportOnly(options => options

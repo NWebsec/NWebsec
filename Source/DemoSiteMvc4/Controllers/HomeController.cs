@@ -8,7 +8,7 @@ namespace DemoSiteMvc4.Controllers
 {
     [AllowMultiple("Controller")]
     //[Csp]
-        [CspSandbox(AllowPointerLock = true)]
+        //[CspSandbox(AllowPointerLock = true)]
     
     public class HomeController : Controller
     {
@@ -21,9 +21,9 @@ namespace DemoSiteMvc4.Controllers
         //[CspBaseUri(CustomSources = "mvcbase.klings.org")]
         //[CspChildSrc(CustomSources = "child.klings.org")]
         //[CspFormAction(CustomSources = "forms.klings.org")]
-        
+
         [CspPluginTypes(MediaTypes = "application/klings", InheritMediaSources = true)]
-        [CspReportOnly]
+        //[CspReportOnly]
         public ActionResult Index()
         {
             //return new EmptyResult();
@@ -38,8 +38,6 @@ namespace DemoSiteMvc4.Controllers
         {
             return View("Index");
 
-            var s = $"hheyhey" +
-            "duddelidei";
         }
 
         [Csp(Enabled = false)]
