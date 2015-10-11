@@ -1,5 +1,6 @@
 ﻿// Copyright (c) André N. Klingsheim. See License.txt in the project root for license information.
 
+using System;
 using NUnit.Framework;
 
 namespace NWebsec.Owin.Tests.Unit
@@ -121,13 +122,31 @@ namespace NWebsec.Owin.Tests.Unit
         }
 
         [Test]
-        public void UpgradeInsecureRequests_EnablesDirective()
+        public void UpgradeInsecureRequests_EnablesDirectiveWithPort443()
         {
             Assert.IsFalse(_options.UpgradeInsecureRequestsDirective.Enabled);
 
             _options.UpgradeInsecureRequests();
 
             Assert.IsTrue(_options.UpgradeInsecureRequestsDirective.Enabled);
+            Assert.AreEqual(443, _options.UpgradeInsecureRequestsDirective.HttpsPort);
+        }
+
+        [Test]
+        public void UpgradeInsecureRequestsWithCustomPort_EnablesDirectiveWithCustomPort()
+        {
+            Assert.IsFalse(_options.UpgradeInsecureRequestsDirective.Enabled);
+
+            _options.UpgradeInsecureRequests(8443);
+
+            Assert.IsTrue(_options.UpgradeInsecureRequestsDirective.Enabled);
+            Assert.AreEqual(8443, _options.UpgradeInsecureRequestsDirective.HttpsPort);
+        }
+
+        [Test]
+        public void UpgradeInsecureRequestsWithInvalidPort_Throws([Values(0,65536)] int invalidPort)
+        {
+            Assert.Throws<ArgumentOutOfRangeException>(() => _options.UpgradeInsecureRequests(invalidPort));
         }
     }
 }

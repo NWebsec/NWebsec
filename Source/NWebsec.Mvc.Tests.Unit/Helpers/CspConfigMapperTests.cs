@@ -342,7 +342,7 @@ namespace NWebsec.Mvc.Tests.Unit.Helpers
 
             sourceConfig.PluginTypesDirective = new CspPluginTypesDirectiveConfiguration();
             sourceConfig.SandboxDirective = new CspSandboxDirectiveConfiguration();
-            sourceConfig.UpgradeInsecureRequestsDirective = new CspSimpleDirectiveConfiguration();
+            sourceConfig.UpgradeInsecureRequestsDirective = new CspUpgradeDirectiveConfiguration();
             sourceConfig.ReportUriDirective = new CspReportUriDirectiveConfiguration();
             var destinationConfig = new CspConfiguration(false) { Enabled = true };
 
@@ -374,7 +374,7 @@ namespace NWebsec.Mvc.Tests.Unit.Helpers
             }
             sourceConfig.PluginTypesDirective = new CspPluginTypesDirectiveConfiguration();
             sourceConfig.SandboxDirective = new CspSandboxDirectiveConfiguration();
-            sourceConfig.UpgradeInsecureRequestsDirective = new CspSimpleDirectiveConfiguration();
+            sourceConfig.UpgradeInsecureRequestsDirective = new CspUpgradeDirectiveConfiguration();
             sourceConfig.ReportUriDirective = new CspReportUriDirectiveConfiguration();
 
             var destinationConfig = new CspConfiguration(false) { Enabled = true };

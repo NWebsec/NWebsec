@@ -5,7 +5,7 @@ using NWebsec.Core.HttpHeaders.Configuration;
 
 namespace NWebsec.Modules.Configuration.Csp
 {
-    public class CspSimpleDirectiveConfigurationElement : ConfigurationElement, ICspSimpleDirectiveConfiguration
+    public class CspUpgradeDirectiveConfigurationElement : ConfigurationElement, ICspUpgradeDirectiveConfiguration
     {
 
         [ConfigurationProperty("enabled", IsRequired = true, DefaultValue = false)]
@@ -13,6 +13,14 @@ namespace NWebsec.Modules.Configuration.Csp
         {
             get { return (bool)this["enabled"]; }
             set { this["enabled"] = value; }
+        }
+
+        [ConfigurationProperty("httpsPort", IsRequired = false, DefaultValue = 443)]
+        [IntegerValidator(MinValue = 1, MaxValue = 65535)]
+        public int HttpsPort
+        {
+            get { return (int)this["httpsPort"]; }
+            set { this["httpsPort"] = value; }
         }
     }
 }

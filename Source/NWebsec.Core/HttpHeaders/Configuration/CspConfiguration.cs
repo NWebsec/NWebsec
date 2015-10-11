@@ -26,7 +26,7 @@ namespace NWebsec.Core.HttpHeaders.Configuration
             FrameAncestorsDirective = new CspDirectiveConfiguration();
             PluginTypesDirective = new CspPluginTypesDirectiveConfiguration();
             SandboxDirective = new CspSandboxDirectiveConfiguration();
-            UpgradeInsecureRequestsDirective = new CspSimpleDirectiveConfiguration();
+            UpgradeInsecureRequestsDirective = new CspUpgradeDirectiveConfiguration();
             ReportUriDirective = new CspReportUriDirectiveConfiguration();
         }
 
@@ -46,7 +46,7 @@ namespace NWebsec.Core.HttpHeaders.Configuration
         public ICspDirectiveConfiguration FrameAncestorsDirective { get; set; }
         public ICspPluginTypesDirectiveConfiguration PluginTypesDirective { get; set; }
         public ICspSandboxDirectiveConfiguration SandboxDirective { get; set; }
-        public ICspSimpleDirectiveConfiguration UpgradeInsecureRequestsDirective { get; set; }
+        public ICspUpgradeDirectiveConfiguration UpgradeInsecureRequestsDirective { get; set; }
         public ICspReportUriDirectiveConfiguration ReportUriDirective { get; set; }
     }
 }

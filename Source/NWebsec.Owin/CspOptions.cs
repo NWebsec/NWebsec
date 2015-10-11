@@ -39,7 +39,7 @@ namespace NWebsec.Owin
 
         public ICspSandboxDirectiveConfiguration SandboxDirective { get; set; } = new FluentCspSandboxDirective();
 
-        public ICspSimpleDirectiveConfiguration UpgradeInsecureRequestsDirective { get; set; } = new CspSimpleDirectiveConfiguration();
+        public ICspUpgradeDirectiveConfiguration UpgradeInsecureRequestsDirective { get; set; } = new CspUpgradeDirectiveConfiguration();
 
         public ICspReportUriDirectiveConfiguration ReportUriDirective { get; set; } = new CspReportUriDirective();
 
@@ -140,9 +140,15 @@ namespace NWebsec.Owin
             return this;
         }
 
-        public IFluentCspOptions UpgradeInsecureRequests()
+        public IFluentCspOptions UpgradeInsecureRequests(int httpsPort = 443)
         {
+            if (httpsPort < 1 || httpsPort > 65535)
+            {
+                throw new ArgumentOutOfRangeException(nameof(httpsPort),"The port number must be in the range 1-65535.");
+            }
+
             UpgradeInsecureRequestsDirective.Enabled = true;
+            UpgradeInsecureRequestsDirective.HttpsPort = httpsPort;
             return this;
         }
 

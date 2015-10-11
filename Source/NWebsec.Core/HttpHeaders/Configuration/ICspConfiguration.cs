@@ -25,6 +25,6 @@ namespace NWebsec.Core.HttpHeaders.Configuration
         ICspSandboxDirectiveConfiguration SandboxDirective { get; set; }
 
         //Upgrade insecure requests
-        ICspSimpleDirectiveConfiguration UpgradeInsecureRequestsDirective { get; set; }
+        ICspUpgradeDirectiveConfiguration UpgradeInsecureRequestsDirective { get; set; }
     }
 }

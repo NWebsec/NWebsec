@@ -19,16 +19,16 @@ namespace NWebsec.Owin
         {
             if (mediaTypes == null)
             {
-                throw new ArgumentNullException("mediaTypes");
+                throw new ArgumentNullException(nameof(mediaTypes));
             }
 
             if (mediaTypes.Length == 0)
             {
-                throw new ArgumentException("One or more parameter values expected.","mediaTypes");
+                throw new ArgumentException("One or more parameter values expected.", nameof(mediaTypes));
             }
             var validator = new Rfc2045MediaTypeValidator();
             var types = mediaTypes.Distinct().ToArray();
-            
+
             foreach (var mediaType in types)
             {
                 try

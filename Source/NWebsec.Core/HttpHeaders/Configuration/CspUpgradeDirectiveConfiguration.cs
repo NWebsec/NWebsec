@@ -2,9 +2,10 @@
 
 namespace NWebsec.Core.HttpHeaders.Configuration
 {
-    public class CspSimpleDirectiveConfiguration : ICspSimpleDirectiveConfiguration
+    public class CspUpgradeDirectiveConfiguration : ICspUpgradeDirectiveConfiguration
     {
 
         public bool Enabled { get; set; }
+        public int HttpsPort { get; set; } = 443;
     }
 }

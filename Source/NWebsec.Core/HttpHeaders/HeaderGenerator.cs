@@ -235,7 +235,7 @@ namespace NWebsec.Core.HttpHeaders
             AppendDirective(sb, "frame-ancestors", GetDirectiveList(config.FrameAncestorsDirective));
             AppendDirective(sb, "plugin-types", GetPluginTypesDirectiveList(config.PluginTypesDirective));
             AppendDirective(sb, "sandbox", GetSandboxDirectiveList(config.SandboxDirective));
-            AppendSimpleDirective(sb, "upgrade-insecure-requests", config.UpgradeInsecureRequestsDirective);
+            AppendUpgradeDirective(sb, "upgrade-insecure-requests", config.UpgradeInsecureRequestsDirective);
 
             if (sb.Length == 0) return null;
 
@@ -261,7 +261,7 @@ namespace NWebsec.Core.HttpHeaders
             sb.Append(';');
         }
 
-        private void AppendSimpleDirective(StringBuilder sb, string directiveName, ICspSimpleDirectiveConfiguration config)
+        private void AppendUpgradeDirective(StringBuilder sb, string directiveName, ICspUpgradeDirectiveConfiguration config)
         {
             if (!config.Enabled) return;
 
@@ -291,9 +291,9 @@ namespace NWebsec.Core.HttpHeaders
                 sources.Add("'unsafe-inline'");
             }
 
-            if (!string.IsNullOrEmpty(directive.Nonce))
+            if (!String.IsNullOrEmpty(directive.Nonce))
             {
-                var nonce = "'nonce-" + directive.Nonce + "'";
+                var nonce = $"'nonce-{directive.Nonce}'";
                 sources.Add(nonce);
             }
 

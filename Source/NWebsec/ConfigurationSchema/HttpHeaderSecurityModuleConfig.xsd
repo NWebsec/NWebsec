@@ -604,6 +604,11 @@
               <xs:documentation>This attribute is required. Specifies whether to include the upgrade-insecure-requests CSP directive and redirect conformant UAs to HTTPS.</xs:documentation>
             </xs:annotation>
           </xs:attribute>
+          <xs:attribute name="httpsPort" type="xs:integer" use="optional">
+            <xs:annotation>
+              <xs:documentation>Optional. Specifies the HTTPS port. The default is 443.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
         </xs:complexType>
       </xs:element>
       <xs:element name="report-uri" minOccurs="0" maxOccurs="1">

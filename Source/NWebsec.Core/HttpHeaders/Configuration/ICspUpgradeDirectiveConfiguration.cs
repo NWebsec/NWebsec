@@ -5,12 +5,10 @@ namespace NWebsec.Core.HttpHeaders.Configuration
     /// <summary>
     ///     Defines the properties required for CSP sandbox directive configuration.
     /// </summary>
-    public interface ICspSimpleDirectiveConfiguration
+    public interface ICspUpgradeDirectiveConfiguration
     {
-        /// <summary>
-        ///     Infrastructure. Not intended to be used by your code directly. An attempt to hide this from Intellisense has been
-        ///     made.
-        /// </summary>
         bool Enabled { get; set; }
+
+        int HttpsPort { get; set; }
     }
 }

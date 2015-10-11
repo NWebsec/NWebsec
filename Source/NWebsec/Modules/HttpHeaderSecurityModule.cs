@@ -13,10 +13,12 @@ namespace NWebsec.Modules
         private readonly ConfigurationHeaderSetter _configHeaderSetter;
         private readonly HandlerTypeHelper _handlerTypeHelper;
         private readonly RedirectValidationHelper _redirectValidationHelper;
+        private readonly CspUpgradeInsecureRequestHelper _cspUpgradeRequestHelper;
         public event CspViolationReportEventHandler CspViolationReported;
 
         public HttpHeaderSecurityModule()
         {
+            _cspUpgradeRequestHelper = new CspUpgradeInsecureRequestHelper();
             _cspReportHelper = new CspReportHelper();
             _configHeaderSetter = new ConfigurationHeaderSetter();
             _handlerTypeHelper = new HandlerTypeHelper();
@@ -29,10 +31,16 @@ namespace NWebsec.Modules
             app.PostMapRequestHandler += AppPostMapRequestHandler;
             app.EndRequest += app_EndRequest;
         }
+
         void AppBeginRequest(object sender, EventArgs e)
         {
             var app = (HttpApplication)sender;
             var context = new HttpContextWrapper(app.Context);
+
+            if (_cspUpgradeRequestHelper.IsUpgradedInsecureRequest(context))
+            {
+                return;
+            }
 
             _configHeaderSetter.SetSitewideHeadersFromConfig(context);
 

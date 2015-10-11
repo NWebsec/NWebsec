@@ -128,8 +128,9 @@ namespace NWebsec.Owin
         /// Enables the upgrade-insecure-requests directive and redirects conformant UAs to HTTPS.
         /// </summary>
         /// <remarks>This directive is not part of CSP 1.0 or CSP 2, but is described in a separate specification.</remarks>
+        /// <param name="httpsPort">The HTTPS port. Defaults to 443.</param>
         /// <returns>The current <see cref="CspOptions" /> instance.</returns>
-        IFluentCspOptions UpgradeInsecureRequests();
+        IFluentCspOptions UpgradeInsecureRequests(int httpsPort = 443);
 
         /// <summary>
         /// Configures the report-uri directive (CSP 1.0). Support for absolute URIs was introduced in CSP 2.

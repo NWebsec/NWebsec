@@ -219,11 +219,11 @@ namespace NWebsec.Modules.Configuration.Csp
         }
 
         [ConfigurationProperty("upgrade-insecure-requests", IsRequired = false)]
-        public CspSimpleDirectiveConfigurationElement UpgradeInsecureRequests
+        public CspUpgradeDirectiveConfigurationElement UpgradeInsecureRequests
         {
             get
             {
-                return (CspSimpleDirectiveConfigurationElement)this["upgrade-insecure-requests"];
+                return (CspUpgradeDirectiveConfigurationElement)this["upgrade-insecure-requests"];
             }
             set
             {
@@ -324,7 +324,7 @@ namespace NWebsec.Modules.Configuration.Csp
             set { throw new NotImplementedException(); }
         }
 
-        public ICspSimpleDirectiveConfiguration UpgradeInsecureRequestsDirective
+        public ICspUpgradeDirectiveConfiguration UpgradeInsecureRequestsDirective
         {
             get { return UpgradeInsecureRequests; }
             set { throw new NotImplementedException(); }
