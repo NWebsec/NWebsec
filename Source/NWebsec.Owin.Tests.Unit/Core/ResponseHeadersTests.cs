@@ -22,19 +22,44 @@ namespace NWebsec.Owin.Tests.Unit.Core
         }
 
         [Test]
+        public void Location_HeaderExists_ReturnsValue()
+        {
+            _headerDictionary.Add("Location", new[] { "somelocation" });
+
+            var location = _responseHeaders.Location;
+
+            Assert.AreEqual("somelocation", location);
+        }
+
+        [Test]
+        public void Location_HeaderMissing_ReturnsNull()
+        {
+            Assert.IsNull(_responseHeaders.Location);
+        }
+
+        [Test]
+        public void Location_SetHeader_SetsHeader()
+        {
+            _responseHeaders.Location = "somelocation";
+
+            Assert.AreEqual("somelocation", _headerDictionary["Location"].Single());
+
+        }
+
+        [Test]
         public void SetHeader_NoExistingHeader_SetsHeader()
         {
-            _responseHeaders.SetHeader("X-test-header","value");
+            _responseHeaders.SetHeader("X-test-header", "value");
 
             Assert.IsTrue(_headerDictionary.ContainsKey("X-test-header"));
             var headerValues = _headerDictionary["X-test-header"];
-            Assert.AreEqual("value",headerValues.Single());
+            Assert.AreEqual("value", headerValues.Single());
         }
 
         [Test]
         public void SetHeader_ExistingHeader_SetsNewHeader()
         {
-            var oldHeaderValues = new[] {"oldvalue"};
+            var oldHeaderValues = new[] { "oldvalue" };
             _headerDictionary["X-test-header"] = oldHeaderValues;
 
             _responseHeaders.SetHeader("X-test-header", "value");
@@ -48,7 +73,7 @@ namespace NWebsec.Owin.Tests.Unit.Core
         [Test]
         public void RemoveHeader_HeaderExists_RemovesHeader()
         {
-            _headerDictionary["X-test-header"] = new []{"somevalue"};
+            _headerDictionary["X-test-header"] = new[] { "somevalue" };
 
             _responseHeaders.RemoveHeader("X-test-header");
 

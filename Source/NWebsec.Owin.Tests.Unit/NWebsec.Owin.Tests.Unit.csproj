@@ -38,20 +38,17 @@
     <AssemblyOriginatorKeyFile>NWebsecDevKey.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Microsoft.Owin, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Microsoft.Owin.3.0.0\lib\net45\Microsoft.Owin.dll</HintPath>
+    <Reference Include="Microsoft.Owin, Version=3.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.3.0.1\lib\net45\Microsoft.Owin.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="Microsoft.Owin.Diagnostics, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Microsoft.Owin.Diagnostics.3.0.0\lib\net45\Microsoft.Owin.Diagnostics.dll</HintPath>
+    <Reference Include="Microsoft.Owin.Hosting, Version=3.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Hosting.3.0.1\lib\net45\Microsoft.Owin.Hosting.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="Microsoft.Owin.Hosting, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Microsoft.Owin.Hosting.3.0.0\lib\net45\Microsoft.Owin.Hosting.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Owin.Testing">
-      <HintPath>..\packages\Microsoft.Owin.Testing.3.0.0\lib\net45\Microsoft.Owin.Testing.dll</HintPath>
+    <Reference Include="Microsoft.Owin.Testing, Version=3.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Testing.3.0.1\lib\net45\Microsoft.Owin.Testing.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="nunit.framework">
       <HintPath>..\packages\NUnit.2.6.3\lib\nunit.framework.dll</HintPath>
@@ -69,9 +66,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Core\RequestHeadersTests.cs" />
     <Compile Include="CspOptionsTest.cs" />
     <Compile Include="FluentCspPluginTypesDirectiveTests.cs" />
     <Compile Include="FluentCspSandboxDirectiveTests.cs" />
+    <Compile Include="Middleware\CspMiddlewareTests.cs" />
     <Compile Include="Middleware\HstsMiddlewareTests.cs" />
     <Compile Include="Core\OwinEnvironmentTests.cs" />
     <Compile Include="Core\ResponseHeadersTests.cs" />
@@ -89,7 +88,9 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="NWebsecDevKey.snk" />
-    <None Include="packages.config" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\NWebsec.Core\NWebsec.Core.csproj">

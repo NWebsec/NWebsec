@@ -13,13 +13,24 @@ namespace NWebsec.Owin.Core
         {
             _environment = env;
             RequestHeaders = new RequestHeaders((IDictionary<string, string[]>)_environment[OwinKeys.RequestHeaders]);
-            ResponseHeaders = new ResponseHeaders((IDictionary<string, string[]>) _environment[OwinKeys.ResponseHeaders]);
+            ResponseHeaders = new ResponseHeaders((IDictionary<string, string[]>)_environment[OwinKeys.ResponseHeaders]);
         }
 
-        internal string RequestScheme { get { return (string) _environment[OwinKeys.RequestScheme]; }}
+        internal string RequestScheme => (string)_environment[OwinKeys.RequestScheme];
+
+        internal string RequestPathBase => (string)_environment[OwinKeys.RequestPathBase];
+
+        internal string RequestPath => (string)_environment[OwinKeys.RequestPath];
+
+        internal int ResponseStatusCode
+        {
+            get { return (int)_environment[OwinKeys.ResponseStatusCode]; }
+            set { _environment[OwinKeys.ResponseStatusCode] = value; }
+        }
+
         internal RequestHeaders RequestHeaders { get; private set; }
+
         internal ResponseHeaders ResponseHeaders { get; private set; }
-        internal int ResponseStatusCode { get { return (int) _environment[OwinKeys.ResponseStatusCode]; } }
 
         internal NWebsecContext NWebsecContext
         {

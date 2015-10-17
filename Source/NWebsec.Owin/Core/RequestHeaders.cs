@@ -29,5 +29,16 @@ namespace NWebsec.Owin.Core
                 }
             }
         }
+
+        /// <summary>
+        /// Gets the value of a header
+        /// </summary>
+        /// <param name="headername"></param>
+        /// <returns>The header's values as a comma separated list, null if the header is not set.</returns>
+        public string GetHeaderValue(string headername)
+        {
+            string[] values;
+            return _headers.TryGetValue(headername, out values) ? String.Join(",", values) : null;
+        }
     }
 }

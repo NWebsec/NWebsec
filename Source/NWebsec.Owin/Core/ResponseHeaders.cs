@@ -31,11 +31,12 @@ namespace NWebsec.Owin.Core
                     throw new Exception("Multiple Location headers detected: " + String.Join(" ", _headers["Location"]));
                 }
             }
+            set { _headers["Location"] = new[] { value }; }
         }
 
         internal void SetHeader(string name, string value)
         {
-            _headers[name] = new[] {value};
+            _headers[name] = new[] { value };
         }
 
         internal void RemoveHeader(string name)

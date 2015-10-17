@@ -96,6 +96,20 @@ namespace NWebsec.Tests.Unit.Helpers
         }
 
         [Test]
+        public void IsUpgradedInsecureRequest_UpgradeEnabledAndHttpRequestOldUA_ReturnsFalse()
+        {
+            var cspConfig = new CspConfiguration
+            {
+                Enabled = true,
+                UpgradeInsecureRequestsDirective = { Enabled = true }
+            };
+            var helper = new CspUpgradeInsecureRequestHelper(cspConfig);
+
+            Assert.IsFalse(helper.IsUpgradedInsecureRequest(_context.Object));
+            Assert.AreEqual(200, _response.Object.StatusCode);
+        }
+
+        [Test]
         public void IsUpgradedInsecureRequest_UpgradeDisabledAndHttpRequest_ReturnsFalse()
         {
             SetSecureConnection(false);
