@@ -240,6 +240,11 @@
                       <xs:documentation>Optional. Enables the Preload directive in the HSTS header. MaxAge must be at least 18 weeks, and IncludeSubdomains must be enabled. The default is false.</xs:documentation>
                     </xs:annotation>
                   </xs:attribute>
+                  <xs:attribute name="upgradeInsecureRequests" type="simple_boolean" use="optional">
+                    <xs:annotation>
+                      <xs:documentation>Optional. Sets the HSTS header only when the browser signals that it supports the upgrade-insecure-requests CSP directive. The default is false.</xs:documentation>
+                    </xs:annotation>
+                  </xs:attribute>
                   <xs:attribute name="httpsOnly" type="simple_boolean" use="optional">
                     <xs:annotation>
                       <xs:documentation>Optional. Specifies that the HSTS header should be set for HTTPS requests only. The default is true.</xs:documentation>

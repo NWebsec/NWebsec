@@ -62,37 +62,59 @@ namespace NWebsec.Tests.Unit.Helpers
         }
 
         [Test]
-        public void SetHstsHeader_HttpAndNoHttpsOnly_HandlesResult()
+        public void SetHstsHeader_HttpAndNoHttpsOnly_HandlesResult([Values(true, false)] bool uaSupportsUpgrade)
         {
             _config.SecurityHttpHeaders.Hsts.HttpsOnly = false;
             _mockHeaderGenerator.Setup(g => g.CreateHstsResult(_config.SecurityHttpHeaders.Hsts)).Returns(_expectedHeaderResult);
 
-            _configHeaderSetter.SetHstsHeader(_mockResponse.Object, false);
+            _configHeaderSetter.SetHstsHeader(_mockResponse.Object, false, uaSupportsUpgrade);
 
             _mockHeaderResultHandler.Verify(h => h.HandleHeaderResult(It.IsAny<HttpResponseBase>(), _expectedHeaderResult), Times.Once);
         }
 
         [Test]
-        public void SetHstsHeader_HttpAndHttpsOnly_DoesNotHandleResult()
+        public void SetHstsHeader_HttpAndHttpsOnly_DoesNotHandleResult([Values(true, false)] bool uaSupportsUpgrade)
         {
             _config.SecurityHttpHeaders.Hsts.HttpsOnly = true;
             _mockHeaderGenerator.Setup(g => g.CreateHstsResult(_config.SecurityHttpHeaders.Hsts)).Returns(_expectedHeaderResult);
 
-            _configHeaderSetter.SetHstsHeader(_mockResponse.Object, false);
+            _configHeaderSetter.SetHstsHeader(_mockResponse.Object, false, uaSupportsUpgrade);
 
             _mockHeaderGenerator.Verify(g => g.CreateHstsResult(It.IsAny<IHstsConfiguration>()), Times.Never);
             _mockHeaderResultHandler.Verify(h => h.HandleHeaderResult(It.IsAny<HttpResponseBase>(), _expectedHeaderResult), Times.Never);
         }
 
         [Test]
-        public void SetHstsHeader_HttpsAndAnyHttpsOnly_HandlesResult([Values(true, false)] bool httpsOnly)
+        public void SetHstsHeader_HttpsAndAnyHttpsOnly_HandlesResult([Values(true, false)] bool httpsOnly, [Values(true, false)] bool uaSupportsUpgrade)
         {
             _config.SecurityHttpHeaders.Hsts.HttpsOnly = httpsOnly;
             _mockHeaderGenerator.Setup(g => g.CreateHstsResult(_config.SecurityHttpHeaders.Hsts)).Returns(_expectedHeaderResult);
 
-            _configHeaderSetter.SetHstsHeader(_mockResponse.Object, true);
+            _configHeaderSetter.SetHstsHeader(_mockResponse.Object, true, uaSupportsUpgrade);
 
             _mockHeaderResultHandler.Verify(h => h.HandleHeaderResult(It.IsAny<HttpResponseBase>(), _expectedHeaderResult), Times.Once);
+        }
+
+        [Test]
+        public void SetHstsHeader_HttpsAndUpgradeRequestsWithUaSupport_HandlesResult()
+        {
+            _config.SecurityHttpHeaders.Hsts.UpgradeInsecureRequests = true;
+            _mockHeaderGenerator.Setup(g => g.CreateHstsResult(_config.SecurityHttpHeaders.Hsts)).Returns(_expectedHeaderResult);
+
+            _configHeaderSetter.SetHstsHeader(_mockResponse.Object, true, true);
+
+            _mockHeaderResultHandler.Verify(h => h.HandleHeaderResult(It.IsAny<HttpResponseBase>(), _expectedHeaderResult), Times.Once);
+        }
+
+        [Test]
+        public void SetHstsHeader_HttpsAndUpgradeRequestsWithoutUaSupport_DoesNotHandleResult()
+        {
+            _config.SecurityHttpHeaders.Hsts.UpgradeInsecureRequests = true;
+            _mockHeaderGenerator.Setup(g => g.CreateHstsResult(_config.SecurityHttpHeaders.Hsts)).Returns(_expectedHeaderResult);
+
+            _configHeaderSetter.SetHstsHeader(_mockResponse.Object, true, false);
+
+            _mockHeaderResultHandler.Verify(h => h.HandleHeaderResult(It.IsAny<HttpResponseBase>(), _expectedHeaderResult), Times.Never);
         }
 
         [Test]

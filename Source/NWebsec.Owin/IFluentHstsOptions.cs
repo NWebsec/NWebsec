@@ -30,9 +30,16 @@ namespace NWebsec.Owin
         /// <summary>
         /// Enables the Preload directive in the HSTS header. MaxAge must be at least 18 weeks, and IncludeSubdomains must be enabled.
         /// </summary>
-        /// <remarks>Read more about preloaded HSTS sites at <a href="http://www.chromium.org/sts">www.chromium.org/sts</a></remarks>
+        /// <remarks>Read more about preloaded HSTS sites at <a href="https://www.chromium.org/hsts">www.chromium.org/sts</a></remarks>
         /// <returns>The current instance.</returns>
         IFluentHstsOptions Preload();
+
+        /// <summary>
+        /// Sets the HSTS header only when the user agent signals that it supports the upgrade-insecure-requests CSP directive.
+        /// </summary>
+        /// <remarks>This setting is intended to be used in combination with the upgrade-insecure-requests CSP directive.</remarks>
+        /// <returns>The current instance.</returns>
+        IFluentHstsOptions WhenUpgradeInsecureRequests();
 
         /// <summary>
         /// Specifies that the HSTS header should also be set for HTTP responses. The header is always set for HTTPS responses.

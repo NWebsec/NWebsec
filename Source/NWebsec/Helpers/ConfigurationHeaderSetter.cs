@@ -16,6 +16,7 @@ namespace NWebsec.Helpers
         private readonly IHeaderResultHandler _headerResultHandler;
         private readonly IHandlerTypeHelper _handlerHelper;
         private readonly ICspReportHelper _reportHelper;
+        private readonly CspUpgradeInsecureRequestHelper _cspUpgradeRequestHelper;
         private readonly HttpHeaderSecurityConfigurationSection _mockConfig;
 
         public ConfigurationHeaderSetter()
@@ -23,6 +24,7 @@ namespace NWebsec.Helpers
             _headerGenerator = new HeaderGenerator();
             _headerResultHandler = new HeaderResultHandler();
             _handlerHelper = new HandlerTypeHelper();
+            _cspUpgradeRequestHelper = new CspUpgradeInsecureRequestHelper();
             _reportHelper = new CspReportHelper();
         }
 
@@ -35,12 +37,12 @@ namespace NWebsec.Helpers
             _reportHelper = cspReportHelper;
         }
 
-        private HttpHeaderSecurityConfigurationSection WebConfig { get { return _mockConfig ?? ConfigHelper.GetConfig(); } }
+        private HttpHeaderSecurityConfigurationSection WebConfig => _mockConfig ?? ConfigHelper.GetConfig();
 
         internal void SetSitewideHeadersFromConfig(HttpContextBase context)
         {
             var nwebsecContext = context.GetNWebsecContext();
-            SetHstsHeader(context.Response, context.Request.IsSecureConnection);
+            SetHstsHeader(context.Response, context.Request.IsSecureConnection, _cspUpgradeRequestHelper.UaSupportsUpgradeInsecureRequests(context.Request));
             SetHpkpHeader(context.Response, context.Request.IsSecureConnection, false);
             SetHpkpHeader(context.Response, context.Request.IsSecureConnection, true);
             SetXRobotsTagHeader(context.Response, nwebsecContext);
@@ -58,9 +60,14 @@ namespace NWebsec.Helpers
             SetNoCacheHeadersFromConfig(context, nwebsecContext);
         }
 
-        internal void SetHstsHeader(HttpResponseBase response, bool isHttps)
+        internal void SetHstsHeader(HttpResponseBase response, bool isHttps, bool upgradeSupported)
         {
             if (!isHttps && WebConfig.SecurityHttpHeaders.Hsts.HttpsOnly)
+            {
+                return;
+            }
+
+            if (!upgradeSupported && WebConfig.SecurityHttpHeaders.Hsts.UpgradeInsecureRequests)
             {
                 return;
             }

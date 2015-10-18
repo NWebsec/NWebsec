@@ -55,5 +55,12 @@ namespace NWebsec.Core.Tests.Unit.HttpHeaders.Configuration.Validation
 
             Assert.Throws<Exception>(() => _validator.Validate(config));
         }
+
+        public void Validate_InvalidPreloadUpgradeInsecureRequests_ThrowsException()
+        {
+            var config = new HstsConfiguration { MaxAge = new TimeSpan(18 * 7, 0, 0, 0), IncludeSubdomains = true, Preload = true, UpgradeInsecureRequests = true };
+
+            Assert.Throws<Exception>(() => _validator.Validate(config));
+        }
     }
 }

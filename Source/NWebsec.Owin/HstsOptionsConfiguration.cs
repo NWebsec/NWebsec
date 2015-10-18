@@ -25,5 +25,8 @@ namespace NWebsec.Owin
 
         [EditorBrowsable(EditorBrowsableState.Never)]
         public bool HttpsOnly { get; set; }
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public bool UpgradeInsecureRequests { get; set; }
     }
 }

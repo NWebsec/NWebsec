@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using NWebsec.Core.HttpHeaders;
 using NWebsec.Core.HttpHeaders.Configuration;
 using NWebsec.Owin.Core;
+using NWebsec.Owin.Helpers;
 
 namespace NWebsec.Owin.Middleware
 {
@@ -30,6 +31,11 @@ namespace NWebsec.Owin.Middleware
         {
 
             if (_config.HttpsOnly && !Https.Equals(owinEnvironment.RequestScheme, StringComparison.OrdinalIgnoreCase))
+            {
+                return;
+            }
+
+            if (_config.UpgradeInsecureRequests && !CspUpgradeHelper.UaSupportsUpgradeInsecureRequests(owinEnvironment))
             {
                 return;
             }

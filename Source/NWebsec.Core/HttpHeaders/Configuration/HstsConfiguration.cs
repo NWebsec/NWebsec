@@ -10,5 +10,6 @@ namespace NWebsec.Core.HttpHeaders.Configuration
         public bool IncludeSubdomains { get; set; }
         public bool Preload { get; set; }
         public bool HttpsOnly { get; set; }
+        public bool UpgradeInsecureRequests { get; set; }
     }
 }

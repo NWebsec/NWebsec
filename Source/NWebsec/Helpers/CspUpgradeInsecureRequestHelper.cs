@@ -23,7 +23,14 @@ namespace NWebsec.Helpers
             _mockConfig = cspConfig;
         }
 
-        internal bool IsUpgradedInsecureRequest(HttpContextBase context)
+        internal bool UaSupportsUpgradeInsecureRequests(HttpRequestBase request)
+        {
+            var upgradeHeader = request.Headers.Get("Upgrade-Insecure-Requests");
+
+            return upgradeHeader != null && upgradeHeader.Equals("1", StringComparison.Ordinal);
+        }
+
+        internal bool TryUpgradeInsecureRequest(HttpContextBase context)
         {
             var request = context.Request;
 
@@ -34,15 +41,7 @@ namespace NWebsec.Helpers
             //CSP upgrade-insecure-requests is disabled
             if (!cspConfig.Enabled || !cspConfig.UpgradeInsecureRequestsDirective.Enabled) return false;
 
-            var upgradeHeader = request.Headers.Get("Upgrade-Insecure-Requests");
-
-            //Old browser
-            if (upgradeHeader == null) return false;
-
-            //Wrong header value
-            if (!upgradeHeader.Equals("1", StringComparison.Ordinal)) return false;
-
-            //Nothing we can do here...
+           //Nothing we can do here...
             if (request.Url == null) return false;
 
             var upgradeUri = new UriBuilder(request.Url)

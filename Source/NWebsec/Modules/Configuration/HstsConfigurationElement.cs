@@ -13,14 +13,8 @@ namespace NWebsec.Modules.Configuration
         public TimeSpan MaxAge
         {
 
-            get
-            {
-                return (TimeSpan)this["max-age"];
-            }
-            set
-            {
-                this["max-age"] = value;
-            }
+            get { return (TimeSpan)this["max-age"]; }
+            set { this["max-age"] = value; }
 
         }
 
@@ -28,14 +22,8 @@ namespace NWebsec.Modules.Configuration
         public bool IncludeSubdomains
         {
 
-            get
-            {
-                return (bool)this["includeSubdomains"];
-            }
-            set
-            {
-                this["includeSubdomains"] = value;
-            }
+            get { return (bool)this["includeSubdomains"]; }
+            set { this["includeSubdomains"] = value; }
 
         }
 
@@ -43,30 +31,24 @@ namespace NWebsec.Modules.Configuration
         public bool Preload
         {
 
-            get
-            {
-                return (bool)this["preload"];
-            }
-            set
-            {
-                this["preload"] = value;
-            }
-
+            get { return (bool)this["preload"]; }
+            set { this["preload"] = value; }
         }
 
         [ConfigurationProperty("httpsOnly", IsRequired = false, DefaultValue = true)]
         public bool HttpsOnly
         {
 
-            get
-            {
-                return (bool)this["httpsOnly"];
-            }
-            set
-            {
-                this["httpsOnly"] = value;
-            }
+            get { return (bool)this["httpsOnly"]; }
+            set { this["httpsOnly"] = value; }
+        }
 
+        [ConfigurationProperty("upgradeInsecureRequests", IsRequired = false, DefaultValue = false)]
+        public bool UpgradeInsecureRequests
+        {
+
+            get { return (bool)this["upgradeInsecureRequests"]; }
+            set { this["upgradeInsecureRequests"] = value; }
         }
     }
 }

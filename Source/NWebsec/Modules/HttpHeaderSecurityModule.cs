@@ -37,7 +37,7 @@ namespace NWebsec.Modules
             var app = (HttpApplication)sender;
             var context = new HttpContextWrapper(app.Context);
 
-            if (_cspUpgradeRequestHelper.IsUpgradedInsecureRequest(context))
+            if (_cspUpgradeRequestHelper.UaSupportsUpgradeInsecureRequests(context.Request) && _cspUpgradeRequestHelper.TryUpgradeInsecureRequest(context))
             {
                 return;
             }

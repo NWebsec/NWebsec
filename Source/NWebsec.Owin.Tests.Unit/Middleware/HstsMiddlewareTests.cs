@@ -91,5 +91,46 @@ namespace NWebsec.Owin.Tests.Unit.Middleware
                 Assert.IsTrue(response.Headers.Contains("Strict-Transport-Security"));
             }
         }
+
+        [Test]
+        public async Task Hsts_HttpsAndUpgradeRequestWithUaSupport_AddsHeader()
+        {
+            using (var server = TestServer.Create(app =>
+            {
+                app.UseHsts(config => config.MaxAge(1).WhenUpgradeInsecureRequests());
+                app.Run(async ctx =>
+                {
+
+                    await ctx.Response.WriteAsync("Hello world using OWIN TestServer");
+                });
+            }))
+            {
+                var httpClient = new HttpClient(server.Handler);
+                httpClient.DefaultRequestHeaders.Add("Upgrade-Insecure-Requests", "1");
+                var response = await httpClient.GetAsync("https://localhost/");
+
+                Assert.IsTrue(response.Headers.Contains("Strict-Transport-Security"));
+            }
+        }
+
+        [Test]
+        public async Task Hsts_HttpsAndUpgradeRequestWithoutUaSupport_NoHeader()
+        {
+            using (var server = TestServer.Create(app =>
+            {
+                app.UseHsts(config => config.MaxAge(1).WhenUpgradeInsecureRequests());
+                app.Run(async ctx =>
+                {
+
+                    await ctx.Response.WriteAsync("Hello world using OWIN TestServer");
+                });
+            }))
+            {
+                var httpClient = new HttpClient(server.Handler);
+                var response = await httpClient.GetAsync("https://localhost/");
+
+                Assert.IsFalse(response.Headers.Contains("Strict-Transport-Security"));
+            }
+        }
     }
 }

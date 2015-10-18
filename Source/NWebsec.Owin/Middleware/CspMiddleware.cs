@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using NWebsec.Core.HttpHeaders;
 using NWebsec.Core.HttpHeaders.Configuration;
 using NWebsec.Owin.Core;
+using NWebsec.Owin.Helpers;
 
 namespace NWebsec.Owin.Middleware
 {
@@ -32,7 +33,7 @@ namespace NWebsec.Owin.Middleware
         {
             var env = new OwinEnvironment(environment);
 
-            if (IsUpgradedInsecureRequest(env))
+            if (HandleUpgradeInsecureRequest(env))
             {
                 return;
             }
@@ -46,7 +47,7 @@ namespace NWebsec.Owin.Middleware
 
         }
 
-        internal bool IsUpgradedInsecureRequest(OwinEnvironment env)
+        internal bool HandleUpgradeInsecureRequest(OwinEnvironment env)
         {
             const string https = "https";
             //Already on https.
@@ -55,13 +56,7 @@ namespace NWebsec.Owin.Middleware
             //CSP upgrade-insecure-requests is disabled
             if (!_config.Enabled || !_config.UpgradeInsecureRequestsDirective.Enabled) return false;
 
-            var upgradeHeader = env.RequestHeaders.GetHeaderValue("Upgrade-Insecure-Requests");
-
-            //Old browser
-            if (upgradeHeader == null) return false;
-
-            //Wrong header value
-            if (!upgradeHeader.Equals("1", StringComparison.Ordinal)) return false;
+            if (!CspUpgradeHelper.UaSupportsUpgradeInsecureRequests(env)) return false;
 
             var upgradeUri = new UriBuilder($"https://{env.RequestHeaders.Host}")
             {

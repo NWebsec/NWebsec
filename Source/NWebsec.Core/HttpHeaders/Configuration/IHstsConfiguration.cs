@@ -13,5 +13,7 @@ namespace NWebsec.Core.HttpHeaders.Configuration
         bool Preload { get; set; }
 
         bool HttpsOnly { get; set; }
+
+        bool UpgradeInsecureRequests { get; set; }
     }
 }

@@ -71,5 +71,21 @@ namespace NWebsec.Owin.Tests.Unit
 
             Assert.IsTrue(((IHstsConfiguration)_options).HttpsOnly);
         }
+
+        [Test]
+        public void Preload_SetsPreload()
+        {
+            _options.Preload();
+
+            Assert.IsTrue(((IHstsConfiguration)_options).Preload);
+        }
+
+        [Test]
+        public void UpgradeInsecureRequests_SetsUpgradeInsecureRequests()
+        {
+            _options.WhenUpgradeInsecureRequests();
+
+            Assert.IsTrue(((IHstsConfiguration)_options).UpgradeInsecureRequests);
+        }
     }
 }

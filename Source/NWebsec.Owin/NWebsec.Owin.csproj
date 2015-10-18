@@ -62,6 +62,7 @@
     <Compile Include="CspReportUriDirective.cs" />
     <Compile Include="FluentCspPluginTypesDirective.cs" />
     <Compile Include="FluentCspSandboxDirective.cs" />
+    <Compile Include="Helpers\CspUpgradeHelper.cs" />
     <Compile Include="HpkpOptions.cs" />
     <Compile Include="HstsOptions.cs" />
     <Compile Include="HpkpOptionsConfiguration.cs" />
@@ -105,9 +106,7 @@
     <None Include="NWebsecDevKey.snk" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Helpers\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

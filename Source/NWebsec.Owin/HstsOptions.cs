@@ -31,6 +31,12 @@ namespace NWebsec.Owin
             return this;
         }
 
+        public new IFluentHstsOptions WhenUpgradeInsecureRequests()
+        {
+            base.UpgradeInsecureRequests = true;
+            return this;
+        }
+
         public IFluentHstsOptions AllResponses()
         {
             base.HttpsOnly = false;
