@@ -36,7 +36,7 @@
     <SignAssembly>true</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
-    <AssemblyOriginatorKeyFile>NWebsecDevKey.snk</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>nwebsec.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Owin">
@@ -103,7 +103,7 @@
     <None Include="NWebsec.Owin.nuspec">
       <SubType>Designer</SubType>
     </None>
-    <None Include="NWebsecDevKey.snk" />
+    <None Include="nwebsec.snk" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup />

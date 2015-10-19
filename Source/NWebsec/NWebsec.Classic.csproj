@@ -38,7 +38,7 @@
     <SignAssembly>true</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
-    <AssemblyOriginatorKeyFile>NWebsecDevKey.snk</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>nwebsec.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -139,7 +139,7 @@
     <None Include="NWebsec.nuspec">
       <SubType>Designer</SubType>
     </None>
-    <None Include="NWebsecDevKey.snk" />
+    <None Include="nwebsec.snk" />
     <None Include="web.config.transform">
       <SubType>Designer</SubType>
     </None>
