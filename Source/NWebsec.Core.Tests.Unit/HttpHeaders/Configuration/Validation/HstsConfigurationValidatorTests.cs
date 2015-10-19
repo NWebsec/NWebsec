@@ -42,6 +42,7 @@ namespace NWebsec.Core.Tests.Unit.HttpHeaders.Configuration.Validation
             Assert.DoesNotThrow(() => _validator.Validate(config));
         }
 
+        [Test]
         public void Validate_InvalidPreloadMaxAge_ThrowsException()
         {
             var config = new HstsConfiguration { MaxAge = new TimeSpan(18 * 7 - 1, 23, 59, 59), IncludeSubdomains = true, Preload = true };
@@ -49,6 +50,7 @@ namespace NWebsec.Core.Tests.Unit.HttpHeaders.Configuration.Validation
             Assert.Throws<Exception>(() => _validator.Validate(config));
         }
 
+        [Test]
         public void Validate_InvalidPreloadSubdomains_ThrowsException()
         {
             var config = new HstsConfiguration { MaxAge = new TimeSpan(18 * 7, 0, 0, 0), IncludeSubdomains = false, Preload = true };
@@ -56,6 +58,7 @@ namespace NWebsec.Core.Tests.Unit.HttpHeaders.Configuration.Validation
             Assert.Throws<Exception>(() => _validator.Validate(config));
         }
 
+        [Test]
         public void Validate_InvalidPreloadUpgradeInsecureRequests_ThrowsException()
         {
             var config = new HstsConfiguration { MaxAge = new TimeSpan(18 * 7, 0, 0, 0), IncludeSubdomains = true, Preload = true, UpgradeInsecureRequests = true };
