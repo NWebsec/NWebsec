@@ -83,7 +83,7 @@ namespace NWebsec.Owin.Tests.Unit
         [Test]
         public void UpgradeInsecureRequests_SetsUpgradeInsecureRequests()
         {
-            _options.WhenUpgradeInsecureRequests();
+            _options.UpgradeInsecureRequests();
 
             Assert.IsTrue(((IHstsConfiguration)_options).UpgradeInsecureRequests);
         }

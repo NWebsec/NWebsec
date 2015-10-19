@@ -97,7 +97,7 @@ namespace NWebsec.Owin.Tests.Unit.Middleware
         {
             using (var server = TestServer.Create(app =>
             {
-                app.UseHsts(config => config.MaxAge(1).WhenUpgradeInsecureRequests());
+                app.UseHsts(config => config.MaxAge(1).UpgradeInsecureRequests());
                 app.Run(async ctx =>
                 {
 
@@ -118,7 +118,7 @@ namespace NWebsec.Owin.Tests.Unit.Middleware
         {
             using (var server = TestServer.Create(app =>
             {
-                app.UseHsts(config => config.MaxAge(1).WhenUpgradeInsecureRequests());
+                app.UseHsts(config => config.MaxAge(1).UpgradeInsecureRequests());
                 app.Run(async ctx =>
                 {
 

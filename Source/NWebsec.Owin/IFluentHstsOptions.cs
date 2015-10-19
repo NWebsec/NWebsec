@@ -39,7 +39,7 @@ namespace NWebsec.Owin
         /// </summary>
         /// <remarks>This setting is intended to be used in combination with the upgrade-insecure-requests CSP directive.</remarks>
         /// <returns>The current instance.</returns>
-        IFluentHstsOptions WhenUpgradeInsecureRequests();
+        IFluentHstsOptions UpgradeInsecureRequests();
 
         /// <summary>
         /// Specifies that the HSTS header should also be set for HTTP responses. The header is always set for HTTPS responses.

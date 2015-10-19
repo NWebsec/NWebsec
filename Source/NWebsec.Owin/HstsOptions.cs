@@ -10,10 +10,10 @@ namespace NWebsec.Owin
         // ReSharper disable once CSharpWarnings::CS0109
         public new IFluentHstsOptions MaxAge(int days = 0, int hours = 0, int minutes = 0, int seconds = 0)
         {
-            if (days < 0) throw new ArgumentOutOfRangeException("days", "Value must be equal to or larger than 0.");
-            if (hours < 0) throw new ArgumentOutOfRangeException("hours", "Value must be equal to or larger than 0.");
-            if (minutes < 0) throw new ArgumentOutOfRangeException("minutes", "Value must be equal to or larger than 0.");
-            if (seconds < 0) throw new ArgumentOutOfRangeException("seconds", "Value must be equal to or larger than 0.");
+            if (days < 0) throw new ArgumentOutOfRangeException(nameof(days), "Value must be equal to or larger than 0.");
+            if (hours < 0) throw new ArgumentOutOfRangeException(nameof(hours), "Value must be equal to or larger than 0.");
+            if (minutes < 0) throw new ArgumentOutOfRangeException(nameof(minutes), "Value must be equal to or larger than 0.");
+            if (seconds < 0) throw new ArgumentOutOfRangeException(nameof(seconds), "Value must be equal to or larger than 0.");
 
             base.MaxAge = new TimeSpan(days, hours, minutes, seconds);
             return this;
@@ -31,7 +31,7 @@ namespace NWebsec.Owin
             return this;
         }
 
-        public new IFluentHstsOptions WhenUpgradeInsecureRequests()
+        public new IFluentHstsOptions UpgradeInsecureRequests()
         {
             base.UpgradeInsecureRequests = true;
             return this;
