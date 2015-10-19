@@ -15,7 +15,7 @@ namespace DemoSiteMvc5
             app.UseRedirectValidation(options =>
                 options.AllowedDestinations("http://www.nwebsec.com/", "https://www.google.com/accounts/").AllowSameHostRedirectsToHttps(8443, 443));
 
-            app.UseHsts(options => options.MaxAge(days: 18 * 7).AllResponses());
+            //app.UseHsts(options => options.MaxAge().AllResponses().UpgradeInsecureRequests().IncludeSubdomains());
             app.UseXContentTypeOptions();
             app.UseXDownloadOptions();
             app.UseXfo(options => options.SameOrigin());
@@ -25,6 +25,7 @@ namespace DemoSiteMvc5
 
             app.UseCsp(options => options
                 .DefaultSources(s => s.Self())
+                .ImageSources( s => s.CustomSources("klings.blob.core.windows.net"))
                 .ScriptSources(s => s.Self().CustomSources("scripts.nwebsec.com", "*.üüüüüü.de/WithPath;/From,Owin"))
                 .BaseUris(s => s.CustomSources("baseuri.nwebsec.com"))
                 .ChildSources(s => s.CustomSources("childsrc.nwebsec.com"))
