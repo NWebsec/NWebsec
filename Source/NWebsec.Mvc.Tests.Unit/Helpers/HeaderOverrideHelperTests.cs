@@ -287,23 +287,5 @@ namespace NWebsec.Mvc.Tests.Unit.Helpers
 
             _headerResultHandler.Verify(h => h.HandleHeaderResult(It.IsAny<HttpResponseBase>(), _expectedHeaderResult), Times.Once);
         }
-
-        [Test]
-        public void SetCspHeaders_OverrideAndSafari5_DoesNothing([Values(false, true)] bool reportOnly)
-        {
-            //Get ASP.NET stuff in order
-            var request = new Mock<HttpRequestBase>();
-            request.Setup(r => r.UserAgent).Returns("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_6_8) AppleWebKit/537.13+ (KHTML, like Gecko) Version/5.1.7 Safari/534.57.2");
-            Mock.Get(_mockContext).Setup(c => c.Request).Returns(request.Object);
-
-            var contextConfig = new CspConfiguration();
-            _contextHelper.Setup(h => h.GetCspConfiguration(It.IsAny<HttpContextBase>(), reportOnly)).Returns(contextConfig);
-            _cspConfigurationOverrideHelper.Setup(h => h.GetCspConfigWithOverrides(It.IsAny<HttpContextBase>(), reportOnly)).Returns((CspConfiguration)null);
-
-            _overrideHelper.SetCspHeaders(_mockContext, reportOnly);
-
-            _headerGenerator.Verify(g => g.CreateCspResult(It.IsAny<ICspConfiguration>(), reportOnly, It.IsAny<string>(), It.IsAny<ICspConfiguration>()), Times.Never);
-            _headerResultHandler.Verify(h => h.HandleHeaderResult(It.IsAny<HttpResponseBase>(), It.IsAny<HeaderResult>()), Times.Never);
-        }
     }
 }

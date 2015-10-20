@@ -137,13 +137,6 @@ namespace NWebsec.Mvc.Helpers
                 return;
             }
 
-            var userAgent = context.Request.UserAgent;
-
-            if (!String.IsNullOrEmpty(userAgent) && userAgent.Contains(" Version/5") && userAgent.Contains(" Safari/"))
-            {
-                return;
-            }
-
             var oldConfig = _contextConfigurationHelper.GetCspConfiguration(context, reportOnly);
             var header = _headerGenerator.CreateCspResult(cspConfig, reportOnly, _reportHelper.GetBuiltInCspReportHandlerRelativeUri(), oldConfig);
 

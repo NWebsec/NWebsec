@@ -24,11 +24,11 @@ pushd NWebsec.Core
 
 Write-Host -ForegroundColor Green "Building NWebsec.Core"
 RemoveDirIfExists("d:\nuget\build\nwebsec.core")
-msbuild NWebsec.Core.csproj /p:Configuration=Release /p:TargetFrameworkVersion=v3.5 /p:OutputPath="d:\nuget\build\nwebsec.core\lib\35" /t:Rebuild /v:q /p:DocumentationFile="NWebsec.Core.xml" /p:NoWarn=1591 /p:SignAssembly=true /p:AssemblyOriginatorKeyFile=C:\NWebsecKey\NWebsec.pfx
+msbuild NWebsec.Core.csproj /p:Configuration=Release /p:TargetFrameworkVersion=v3.5 /p:OutputPath="d:\nuget\build\nwebsec.core\lib\35" /t:Rebuild /v:q /p:DocumentationFile="NWebsec.Core.xml" /p:NoWarn=1591 /p:SignAssembly=true /p:AssemblyOriginatorKeyFile=nwebsec.snk
 CheckExitCode
-msbuild NWebsec.Core.csproj /p:Configuration=Release /p:TargetFrameworkVersion=v4.0 /p:OutputPath="d:\nuget\build\nwebsec.core\lib\40" /t:Rebuild /v:q /p:DocumentationFile="NWebsec.Core.xml" /p:NoWarn=1591 /p:SignAssembly=true /p:AssemblyOriginatorKeyFile=C:\NWebsecKey\NWebsec.pfx
+msbuild NWebsec.Core.csproj /p:Configuration=Release /p:TargetFrameworkVersion=v4.0 /p:OutputPath="d:\nuget\build\nwebsec.core\lib\40" /t:Rebuild /v:q /p:DocumentationFile="NWebsec.Core.xml" /p:NoWarn=1591 /p:SignAssembly=true /p:AssemblyOriginatorKeyFile=nwebsec.snk
 CheckExitCode
-msbuild NWebsec.Core.csproj /p:Configuration=Release /p:TargetFrameworkVersion=v4.5 /p:OutputPath="d:\nuget\build\nwebsec.core\lib\45" /t:Rebuild /v:q /p:DocumentationFile="NWebsec.Core.xml" /p:NoWarn=1591 /p:SignAssembly=true /p:AssemblyOriginatorKeyFile=C:\NWebsecKey\NWebsec.pfx
+msbuild NWebsec.Core.csproj /p:Configuration=Release /p:TargetFrameworkVersion=v4.5 /p:OutputPath="d:\nuget\build\nwebsec.core\lib\45" /t:Rebuild /v:q /p:DocumentationFile="NWebsec.Core.xml" /p:NoWarn=1591 /p:SignAssembly=true /p:AssemblyOriginatorKeyFile=nwebsec.snk
 CheckExitCode
 
 Write-Host -ForegroundColor Green "Copying NWebsec.Core"
@@ -56,7 +56,7 @@ pushd NWebsec.Owin
 
 Write-Host -ForegroundColor Green "Building NWebsec.Owin"
 RemoveDirIfExists("d:\nuget\build\nwebsec.owin")
-msbuild NWebsec.Owin.csproj /p:Configuration=Release /p:TargetFrameworkVersion=v4.5 /p:OutputPath="d:\nuget\build\nwebsec.owin\lib\45" /t:Rebuild /v:q /p:DocumentationFile="NWebsec.Owin.xml" /p:NoWarn=1591 /p:SignAssembly=true /p:AssemblyOriginatorKeyFile=C:\NWebsecKey\NWebsec.pfx
+msbuild NWebsec.Owin.csproj /p:Configuration=Release /p:TargetFrameworkVersion=v4.5 /p:OutputPath="d:\nuget\build\nwebsec.owin\lib\45" /t:Rebuild /v:q /p:DocumentationFile="NWebsec.Owin.xml" /p:NoWarn=1591 /p:SignAssembly=true /p:AssemblyOriginatorKeyFile=nwebsec.snk
 CheckExitCode
 
 Write-Host -ForegroundColor Green "Copying NWebsec.Owin"
@@ -80,11 +80,11 @@ popd
 Write-Host -ForegroundColor Green "Building NWebsec"
 pushd NWebsec
 RemoveDirIfExists("d:\nuget\build\nwebsec")
-msbuild NWebsec.Classic.csproj /p:Configuration=Release /p:TargetFrameworkVersion=v3.5 /p:OutputPath="d:\nuget\build\nwebsec\lib\35" /t:Rebuild /v:q /p:DocumentationFile="NWebsec.xml" /p:NoWarn=1591 /p:SignAssembly=true /p:AssemblyOriginatorKeyFile=C:\NWebsecKey\NWebsec.pfx
+msbuild NWebsec.Classic.csproj /p:Configuration=Release /p:TargetFrameworkVersion=v3.5 /p:OutputPath="d:\nuget\build\nwebsec\lib\35" /t:Rebuild /v:q /p:DocumentationFile="NWebsec.xml" /p:NoWarn=1591 /p:SignAssembly=true /p:AssemblyOriginatorKeyFile=nwebsec.snk
 CheckExitCode
-msbuild NWebsec.Classic.csproj /p:Configuration=Release /p:TargetFrameworkVersion=v4.0 /p:OutputPath="d:\nuget\build\nwebsec\lib\40" /t:Rebuild /v:q /p:DocumentationFile="NWebsec.xml" /p:NoWarn=1591 /p:SignAssembly=true /p:AssemblyOriginatorKeyFile=C:\NWebsecKey\NWebsec.pfx
+msbuild NWebsec.Classic.csproj /p:Configuration=Release /p:TargetFrameworkVersion=v4.0 /p:OutputPath="d:\nuget\build\nwebsec\lib\40" /t:Rebuild /v:q /p:DocumentationFile="NWebsec.xml" /p:NoWarn=1591 /p:SignAssembly=true /p:AssemblyOriginatorKeyFile=nwebsec.snk
 CheckExitCode
-msbuild NWebsec.Classic.csproj /p:Configuration=Release /p:TargetFrameworkVersion=v4.5 /p:OutputPath="d:\nuget\build\nwebsec\lib\45" /t:Rebuild /v:q /p:DocumentationFile="NWebsec.xml" /p:NoWarn=1591 /p:SignAssembly=true /p:AssemblyOriginatorKeyFile=C:\NWebsecKey\NWebsec.pfx
+msbuild NWebsec.Classic.csproj /p:Configuration=Release /p:TargetFrameworkVersion=v4.5 /p:OutputPath="d:\nuget\build\nwebsec\lib\45" /t:Rebuild /v:q /p:DocumentationFile="NWebsec.xml" /p:NoWarn=1591 /p:SignAssembly=true /p:AssemblyOriginatorKeyFile=nwebsec.snk
 CheckExitCode
 
 Write-Host -ForegroundColor Green "Copying NWebsec"
@@ -112,9 +112,9 @@ popd
 pushd NWebsec.Mvc
 Write-Host -ForegroundColor Green "Building NWebsec.Mvc"
 RemoveDirIfExists("d:\nuget\build\nwebsec.mvc")
-msbuild NWebsec.Mvc.csproj /p:Configuration=Release /p:TargetFrameworkVersion=v4.0 /p:OutputPath="d:\nuget\build\nwebsec.mvc\lib\40" /t:Rebuild /v:q /p:DocumentationFile="NWebsec.Mvc.xml" /p:NoWarn=1591 /p:SignAssembly=true /p:AssemblyOriginatorKeyFile=C:\NWebsecKey\NWebsec.pfx
+msbuild NWebsec.Mvc.csproj /p:Configuration=Release /p:TargetFrameworkVersion=v4.0 /p:OutputPath="d:\nuget\build\nwebsec.mvc\lib\40" /t:Rebuild /v:q /p:DocumentationFile="NWebsec.Mvc.xml" /p:NoWarn=1591 /p:SignAssembly=true /p:AssemblyOriginatorKeyFile=nwebsec.snk
 CheckExitCode
-msbuild NWebsec.Mvc.csproj /p:Configuration=Release /p:TargetFrameworkVersion=v4.5 /p:OutputPath="d:\nuget\build\nwebsec.mvc\lib\45" /t:Rebuild /v:q /p:DocumentationFile="NWebsec.Mvc.xml" /p:NoWarn=1591 /p:SignAssembly=true /p:AssemblyOriginatorKeyFile=C:\NWebsecKey\NWebsec.pfx
+msbuild NWebsec.Mvc.csproj /p:Configuration=Release /p:TargetFrameworkVersion=v4.5 /p:OutputPath="d:\nuget\build\nwebsec.mvc\lib\45" /t:Rebuild /v:q /p:DocumentationFile="NWebsec.Mvc.xml" /p:NoWarn=1591 /p:SignAssembly=true /p:AssemblyOriginatorKeyFile=nwebsec.snk
 CheckExitCode
 
 Write-Host -ForegroundColor Green "Copying NWebsec.Mvc"
