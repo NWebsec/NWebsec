@@ -64,6 +64,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Helpers\ContextConfigurationHelperTests.cs" />
+    <Compile Include="Html\ReferrerPolicyGeneratorTests.cs" />
     <Compile Include="HttpHeaders\Csp\Internals\CspPluginTypesAttributeBaseTests.cs" />
     <Compile Include="HttpHeaders\Csp\Internals\CspDirectiveAttributeBaseTests.cs" />
     <Compile Include="TestHelpers\CspPluginTypesDirectiveConfigurationComparerTests.cs" />

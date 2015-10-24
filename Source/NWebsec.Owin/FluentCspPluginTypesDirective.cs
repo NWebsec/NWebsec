@@ -15,7 +15,9 @@ namespace NWebsec.Owin
         }
 
 
+#pragma warning disable CS0108 // Member hides inherited member; missing new keyword
         public void MediaTypes(params string[] mediaTypes)
+#pragma warning restore CS0108 // Member hides inherited member; missing new keyword
         {
             if (mediaTypes == null)
             {
