@@ -3,17 +3,18 @@
 
 @{
     ViewBag.Title = "Referrer";
+    Layout = "~/Views/Shared/_Layout.cshtml";
     //Layout = "_Layout";
 }
 
 <h2>Referrer policy test.</h2>
 <p>
     <a href="http://www.nwebsec.com">External http</a><br/>
-    <a href="https://www.nwebsec.com">External httpa</a><br/>
+    <a href="https://www.nwebsec.com">External https</a><br/>
     @Html.ActionLink("Origin","Other")
 </p>
 
 @section metatags
 {
-    @*@Html.ReferrerPolicyMetaTag().None();*@
+    @Html.ReferrerPolicyMetaTag(policy => policy.None)
 }
