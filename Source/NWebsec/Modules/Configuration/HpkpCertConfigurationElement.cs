@@ -2,6 +2,7 @@
 
 using System;
 using System.Configuration;
+using System.Security;
 using System.Security.Cryptography.X509Certificates;
 using NWebsec.Core.Helpers.X509;
 using NWebsec.Core.HttpHeaders.Configuration;
@@ -53,9 +54,9 @@ namespace NWebsec.Modules.Configuration
             }
         }
 
-        //TODO have another look at this
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Security", "CA2122:DoNotIndirectlyExposeMethodsWithLinkDemands")]
-        public string SpkiPinValue {
+        public string SpkiPinValue
+        {
+            [SecuritySafeCritical, System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Security", "CA2122:DoNotIndirectlyExposeMethodsWithLinkDemands")]
             get
             {
                 if (_spkiPin == null)
@@ -67,7 +68,7 @@ namespace NWebsec.Modules.Configuration
                 }
                 return _spkiPin;
             }
-            set { throw new NotImplementedException();}
+            set { throw new NotImplementedException(); }
         }
     }
 }
