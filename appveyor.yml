@@ -8,3 +8,5 @@ install:
 build:
   project: NWebsec-CI.sln
   verbosity: minimal
+test: off
+
