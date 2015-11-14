@@ -1,5 +1,7 @@
 version: 1.0.{build}
 os: Visual Studio 2015
+install:
+- cmd: dnvm install 1.0.0-beta8
 build:
   project: NWebsec-CI.sln
   verbosity: minimal
