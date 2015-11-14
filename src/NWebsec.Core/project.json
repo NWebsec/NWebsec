@@ -1,0 +1,15 @@
+﻿{
+  "version": "1.0.0-*",
+  "description": "NWebsec.Core Class Library",
+  "authors": [ "klings" ],
+  "tags": [ "" ],
+  "projectUrl": "",
+  "licenseUrl": "",
+  "frameworks": {
+    "dnx451": { }
+
+  },
+  "dependencies": {
+    "NWebsec.Annotations": "1.0.0-*"
+  }
+}

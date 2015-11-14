@@ -1,0 +1,49 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.23107.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{1733BF96-BCF6-43DD-B145-EBCB11B57C55}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{4BDA1FB5-B55E-4904-A185-1BF954D654C0}"
+	ProjectSection(SolutionItems) = preProject
+		global.json = global.json
+		NuGet.Config = NuGet.Config
+	EndProjectSection
+EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "NWebsec.Core", "src\NWebsec.Core\NWebsec.Core.xproj", "{E9575361-5C4B-425A-BCA5-0E8249C6C5FB}"
+EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "NWebsec.Annotations", "src\NWebsec.Annotations\NWebsec.Annotations.xproj", "{144226E7-3EB3-459D-89C8-4D8720E1EF1E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{1E120316-DAE8-4FF7-81C2-053A914C258D}"
+EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "NWebsec.Core.Tests", "test\NWebsec.Core.Tests\NWebsec.Core.Tests.xproj", "{01043286-5CE4-4669-99B4-67E205AAE25E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E9575361-5C4B-425A-BCA5-0E8249C6C5FB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E9575361-5C4B-425A-BCA5-0E8249C6C5FB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E9575361-5C4B-425A-BCA5-0E8249C6C5FB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E9575361-5C4B-425A-BCA5-0E8249C6C5FB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{144226E7-3EB3-459D-89C8-4D8720E1EF1E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{144226E7-3EB3-459D-89C8-4D8720E1EF1E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{144226E7-3EB3-459D-89C8-4D8720E1EF1E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{144226E7-3EB3-459D-89C8-4D8720E1EF1E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{01043286-5CE4-4669-99B4-67E205AAE25E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{01043286-5CE4-4669-99B4-67E205AAE25E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{01043286-5CE4-4669-99B4-67E205AAE25E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{01043286-5CE4-4669-99B4-67E205AAE25E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{E9575361-5C4B-425A-BCA5-0E8249C6C5FB} = {1733BF96-BCF6-43DD-B145-EBCB11B57C55}
+		{144226E7-3EB3-459D-89C8-4D8720E1EF1E} = {1733BF96-BCF6-43DD-B145-EBCB11B57C55}
+		{01043286-5CE4-4669-99B4-67E205AAE25E} = {1E120316-DAE8-4FF7-81C2-053A914C258D}
+	EndGlobalSection
+EndGlobal

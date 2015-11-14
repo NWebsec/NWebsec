@@ -1,0 +1,22 @@
+﻿{
+  "version": "1.0.0-*",
+  "description": "NWebsec.Core.Tests Console Application",
+  "authors": [ "klings" ],
+  "tags": [ "" ],
+  "projectUrl": "",
+  "licenseUrl": "",
+
+  "dependencies": {
+    "NUnitLite": "3.0.0-rc-3",
+    "NWebsec.Core": "1.0.0-*"
+  },
+
+  "commands": {
+    "NWebsec.Core.Tests": "NWebsec.Core.Tests"
+  },
+
+  "frameworks": {
+    "dnx451": { },
+    
+  }
+}
