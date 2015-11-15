@@ -4,7 +4,7 @@ using System;
 using System.Linq;
 using NUnit.Framework;
 
-namespace NWebsec.Owin.Tests.Unit
+namespace NWebsec.Middleware.Tests
 {
     [TestFixture]
     public class RedirectValidationOptionsTests

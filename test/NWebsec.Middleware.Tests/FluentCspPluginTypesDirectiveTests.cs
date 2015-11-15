@@ -5,7 +5,7 @@ using System.Linq;
 using NUnit.Framework;
 using NWebsec.Core.HttpHeaders.Configuration;
 
-namespace NWebsec.Owin.Tests.Unit
+namespace NWebsec.Middleware.Tests
 {
     [TestFixture]
     public class FluentCspPluginTypesDirectiveTests

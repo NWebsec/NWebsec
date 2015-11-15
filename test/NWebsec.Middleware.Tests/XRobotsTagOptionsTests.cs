@@ -2,7 +2,7 @@
 
 using NUnit.Framework;
 
-namespace NWebsec.Owin.Tests.Unit
+namespace NWebsec.Middleware.Tests
 {
     [TestFixture]
     public class XRobotsTagOptionsTests

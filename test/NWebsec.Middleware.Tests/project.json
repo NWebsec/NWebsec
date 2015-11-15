@@ -1,0 +1,22 @@
+﻿{
+  "version": "1.0.0-*",
+  "description": "NWebsec.Middleware.Tests Console Application",
+  "authors": [ "klings" ],
+  "tags": [ "" ],
+  "projectUrl": "",
+  "licenseUrl": "",
+
+  "commands": {
+    "NWebsec.Middleware.Tests": "NWebsec.Middleware.Tests"
+  },
+
+  "frameworks": {
+    "dnx451": { }
+
+  },
+  "dependencies": {
+    "Microsoft.AspNet.TestHost": "1.0.0-beta8",
+    "NUnitLite": "3.0.0-rc-3",
+    "NWebsec.Middleware": "1.0.0-*"
+  }
+}

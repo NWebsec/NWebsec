@@ -6,17 +6,16 @@
   "projectUrl": "",
   "licenseUrl": "",
 
-  "dependencies": {
-    "NUnitLite": "3.0.0-rc-3",
-    "NWebsec.Core": "1.0.0-*"
-  },
-
   "commands": {
     "NWebsec.Core.Tests": "NWebsec.Core.Tests"
   },
 
   "frameworks": {
     "dnx451": { },
-    
+
+  },
+  "dependencies": {
+    "NUnitLite": "3.0.0-rc-3",
+    "NWebsec.Core": "1.0.0-*"
   }
 }
