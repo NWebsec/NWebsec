@@ -6,7 +6,7 @@ namespace NWebsec.Core.Extensions
 {
     public static class HttpContextExtensions
     {
-        public static NWebsecContext NWebsecCtx(this HttpContext context)
+        public static NWebsecContext GetNWebsecContext(this HttpContext context)
         {
             if (!context.Items.ContainsKey(NWebsecContext.ContextKey))
             {

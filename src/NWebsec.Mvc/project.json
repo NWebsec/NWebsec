@@ -1,0 +1,16 @@
+{
+  "version": "1.0.0-*",
+  "description": "NWebsec.Mvc Class Library",
+  "authors": [ "klings" ],
+  "tags": [ "" ],
+  "projectUrl": "",
+  "licenseUrl": "",
+  "frameworks": {
+    "dnx451": { }
+  },
+  "dependencies": {
+    "Microsoft.AspNet.Mvc": "6.0.0-beta8",
+    "NWebsec.Annotations": "1.0.0-*",
+    "NWebsec.Core": "1.0.0-*"
+  }
+}

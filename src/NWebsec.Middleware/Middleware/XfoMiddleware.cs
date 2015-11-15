@@ -23,7 +23,7 @@ namespace NWebsec.Middleware.Middleware
 
         internal override void PreInvokeNext(HttpContext owinEnvironment)
         {
-            owinEnvironment.NWebsecCtx().XFrameOptions = _config;
+            owinEnvironment.GetNWebsecContext().XFrameOptions = _config;
             if (_headerResult.Action == HeaderResult.ResponseAction.Set)
             {
                 owinEnvironment.Response.Headers[_headerResult.Name] = _headerResult.Value;

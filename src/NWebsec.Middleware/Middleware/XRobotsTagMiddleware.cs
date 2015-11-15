@@ -25,7 +25,7 @@ namespace NWebsec.Middleware.Middleware
 
         internal override void PreInvokeNext(HttpContext owinEnvironment)
         {
-            owinEnvironment.NWebsecCtx().XRobotsTag = _config;
+            owinEnvironment.GetNWebsecContext().XRobotsTag = _config;
 
             if (_headerResult.Action == HeaderResult.ResponseAction.Set)
             {

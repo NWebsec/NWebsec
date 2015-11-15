@@ -72,11 +72,11 @@ namespace NWebsec.Middleware.Middleware
         {
             if (_reportOnly)
             {
-                context.NWebsecCtx().CspReportOnly = _config;
+                context.GetNWebsecContext().CspReportOnly = _config;
             }
             else
             {
-                context.NWebsecCtx().Csp = _config;
+                context.GetNWebsecContext().Csp = _config;
             }
 
             if (_headerResult.Action == HeaderResult.ResponseAction.Set)

@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("NWebsec.Annotations")]
+[assembly: AssemblyTitle("NWebsec.Mvc")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("NWebsec.Annotations")]
+[assembly: AssemblyProduct("NWebsec.Mvc")]
 [assembly: AssemblyCopyright("Copyright ©  2015")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,6 +20,4 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("144226e7-3eb3-459d-89c8-4d8720e1ef1e")]
-[assembly: InternalsVisibleTo("NWebsec.Core")]
-[assembly: InternalsVisibleTo("NWebsec.Mvc")]
+[assembly: Guid("dcc33193-8f31-4633-b33e-bd1598a6c44b")]

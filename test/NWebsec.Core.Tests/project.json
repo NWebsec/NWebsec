@@ -11,10 +11,12 @@
   },
 
   "frameworks": {
-    "dnx451": { },
+    "dnx451": { }
 
   },
   "dependencies": {
+    "Microsoft.AspNet.Http": "1.0.0-beta8",
+    "Moq": "4.2.1510.2205",
     "NUnitLite": "3.0.0-rc-3",
     "NWebsec.Core": "1.0.0-*"
   }

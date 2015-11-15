@@ -23,7 +23,7 @@ namespace NWebsec.Middleware.Middleware
 
         internal override void PreInvokeNext(HttpContext owinEnvironment)
         {
-            owinEnvironment.NWebsecCtx().XDownloadOptions = _config;
+            owinEnvironment.GetNWebsecContext().XDownloadOptions = _config;
 
             if (_headerResult.Action == HeaderResult.ResponseAction.Set)
             {
