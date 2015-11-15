@@ -1,18 +1,18 @@
 ﻿// Copyright (c) André N. Klingsheim. See License.txt in the project root for license information.
 
-using System.Web;
+using Microsoft.AspNet.Http;
 using Moq;
 using NUnit.Framework;
 using NWebsec.Core.HttpHeaders.Configuration;
 using NWebsec.Mvc.Csp;
 using NWebsec.Mvc.Helpers;
-using NWebsec.Mvc.Tests.Unit.TestHelpers;
+using NWebsec.Mvc.Tests.TestHelpers;
 
-namespace NWebsec.Mvc.Tests.Unit.Helpers
+namespace NWebsec.Mvc.Tests.Helpers
 {
     public class CspConfigurationOverrideHelperTests
     {
-        protected HttpContextBase MockContext;
+        protected HttpContext MockContext;
         protected CspConfigurationOverrideHelper CspConfigurationOverrideHelper;
         private Mock<IContextConfigurationHelper> _contextHelper;
         private Mock<ICspConfigMapper> _directiveConfigMapper;
@@ -21,7 +21,7 @@ namespace NWebsec.Mvc.Tests.Unit.Helpers
         [SetUp]
         public void Setup()
         {
-            MockContext = new Mock<HttpContextBase>().Object;
+            MockContext = new Mock<HttpContext>().Object;
 
             _contextHelper = new Mock<IContextConfigurationHelper>(MockBehavior.Strict);
             _directiveConfigMapper = new Mock<ICspConfigMapper>(MockBehavior.Strict);
@@ -33,7 +33,7 @@ namespace NWebsec.Mvc.Tests.Unit.Helpers
         [Test]
         public void GetCspElementWithOverrides_NoOverride_ReturnsNull([Values(false, true)]bool reportOnly)
         {
-            _contextHelper.Setup(h => h.GetCspConfigurationOverride(It.IsAny<HttpContextBase>(), reportOnly, true)).Returns((CspOverrideConfiguration)null);
+            _contextHelper.Setup(h => h.GetCspConfigurationOverride(It.IsAny<HttpContext>(), reportOnly, true)).Returns((CspOverrideConfiguration)null);
 
             var overrideConfig = CspConfigurationOverrideHelper.GetCspConfigWithOverrides(MockContext, reportOnly);
 
@@ -45,8 +45,8 @@ namespace NWebsec.Mvc.Tests.Unit.Helpers
         {
             var cspConfig = new CspConfiguration();
             var overrideConfig = new CspOverrideConfiguration();
-            _contextHelper.Setup(h => h.GetCspConfiguration(It.IsAny<HttpContextBase>(), reportOnly)).Returns(cspConfig);
-            _contextHelper.Setup(h => h.GetCspConfigurationOverride(It.IsAny<HttpContextBase>(), reportOnly, true)).Returns(overrideConfig);
+            _contextHelper.Setup(h => h.GetCspConfiguration(It.IsAny<HttpContext>(), reportOnly)).Returns(cspConfig);
+            _contextHelper.Setup(h => h.GetCspConfigurationOverride(It.IsAny<HttpContext>(), reportOnly, true)).Returns(overrideConfig);
             _directiveConfigMapper.Setup(m => m.MergeConfiguration(cspConfig, It.IsAny<ICspConfiguration>()));
             _directiveConfigMapper.Setup(m => m.MergeOverrides(overrideConfig, It.IsAny<ICspConfiguration>()));
 
@@ -62,8 +62,8 @@ namespace NWebsec.Mvc.Tests.Unit.Helpers
         public void GetCspElementWithOverrides_OverrideAndNoConfigFromContext_MergesOverrides([Values(false, true)]bool reportOnly)
         {
             var overrideConfig = new CspOverrideConfiguration();
-            _contextHelper.Setup(h => h.GetCspConfiguration(It.IsAny<HttpContextBase>(), reportOnly)).Returns((ICspConfiguration)null);
-            _contextHelper.Setup(h => h.GetCspConfigurationOverride(It.IsAny<HttpContextBase>(), reportOnly, true)).Returns(overrideConfig);
+            _contextHelper.Setup(h => h.GetCspConfiguration(It.IsAny<HttpContext>(), reportOnly)).Returns((ICspConfiguration)null);
+            _contextHelper.Setup(h => h.GetCspConfigurationOverride(It.IsAny<HttpContext>(), reportOnly, true)).Returns(overrideConfig);
             _directiveConfigMapper.Setup(m => m.MergeOverrides(overrideConfig, It.IsAny<ICspConfiguration>()));
 
             var overrideElement = CspConfigurationOverrideHelper.GetCspConfigWithOverrides(MockContext, reportOnly);
@@ -76,7 +76,7 @@ namespace NWebsec.Mvc.Tests.Unit.Helpers
         public void SetCspHeaderOverride_OverridesWithHeaderEnabled_HeaderEnabled([Values(false, true)]bool reportOnly)
         {
             var overrideConfig = new CspOverrideConfiguration();
-            _contextHelper.Setup(h => h.GetCspConfigurationOverride(It.IsAny<HttpContextBase>(), reportOnly, false)).Returns(overrideConfig);
+            _contextHelper.Setup(h => h.GetCspConfigurationOverride(It.IsAny<HttpContext>(), reportOnly, false)).Returns(overrideConfig);
             var cspOverride = new CspHeaderConfiguration { Enabled = true };
 
             CspConfigurationOverrideHelper.SetCspHeaderOverride(MockContext, cspOverride, reportOnly);
@@ -90,7 +90,7 @@ namespace NWebsec.Mvc.Tests.Unit.Helpers
         public void SetCspReportUriOverride_ReportUriDisabledAndOverridden_ReturnsOverridenReportUri([Values(false, true)]bool reportOnly)
         {
             var overrideConfig = new CspOverrideConfiguration();
-            _contextHelper.Setup(h => h.GetCspConfigurationOverride(It.IsAny<HttpContextBase>(), reportOnly, false)).Returns(overrideConfig);
+            _contextHelper.Setup(h => h.GetCspConfigurationOverride(It.IsAny<HttpContext>(), reportOnly, false)).Returns(overrideConfig);
             var reportUri = new CspReportUriDirectiveConfiguration { Enabled = true, EnableBuiltinHandler = true };
 
             CspConfigurationOverrideHelper.SetCspReportUriOverride(MockContext, reportUri, reportOnly);
@@ -107,8 +107,8 @@ namespace NWebsec.Mvc.Tests.Unit.Helpers
             var contextConfig = new CspConfiguration();
             var overrideConfig = new CspOverrideConfiguration();
             //Returns CSP config from context
-            _contextHelper.Setup(h => h.GetCspConfiguration(It.IsAny<HttpContextBase>(), reportOnly)).Returns(contextConfig);
-            _contextHelper.Setup(h => h.GetCspConfigurationOverride(It.IsAny<HttpContextBase>(), reportOnly, false)).Returns(overrideConfig);
+            _contextHelper.Setup(h => h.GetCspConfiguration(It.IsAny<HttpContext>(), reportOnly)).Returns(contextConfig);
+            _contextHelper.Setup(h => h.GetCspConfigurationOverride(It.IsAny<HttpContext>(), reportOnly, false)).Returns(overrideConfig);
             //There's no override for directive
             _directiveConfigMapper.Setup(m => m.GetCspDirectiveConfig(overrideConfig, directive)).Returns((ICspDirectiveConfiguration)null);
             //Returns cloned directive config from context config
@@ -133,7 +133,7 @@ namespace NWebsec.Mvc.Tests.Unit.Helpers
         {
 
             var overrideConfig = new CspOverrideConfiguration();
-            _contextHelper.Setup(h => h.GetCspConfigurationOverride(It.IsAny<HttpContextBase>(), reportOnly, false)).Returns(overrideConfig);
+            _contextHelper.Setup(h => h.GetCspConfigurationOverride(It.IsAny<HttpContext>(), reportOnly, false)).Returns(overrideConfig);
             //There's an override for directive
             var currentDirectiveOverride = new CspDirectiveConfiguration();
             _directiveConfigMapper.Setup(m => m.GetCspDirectiveConfig(overrideConfig, directive)).Returns(currentDirectiveOverride);
@@ -157,8 +157,8 @@ namespace NWebsec.Mvc.Tests.Unit.Helpers
             var contextConfig = new CspConfiguration();
             var overrideConfig = new CspOverrideConfiguration();
             //Returns CSP config from context
-            _contextHelper.Setup(h => h.GetCspConfiguration(It.IsAny<HttpContextBase>(), reportOnly)).Returns(contextConfig);
-            _contextHelper.Setup(h => h.GetCspConfigurationOverride(It.IsAny<HttpContextBase>(), reportOnly, false)).Returns(overrideConfig);
+            _contextHelper.Setup(h => h.GetCspConfiguration(It.IsAny<HttpContext>(), reportOnly)).Returns(contextConfig);
+            _contextHelper.Setup(h => h.GetCspConfigurationOverride(It.IsAny<HttpContext>(), reportOnly, false)).Returns(overrideConfig);
             //Returns cloned directive config from context config
             var clonedContextDirective = new CspPluginTypesDirectiveConfiguration();
             _directiveConfigMapper.Setup(m => m.GetCspPluginTypesConfigCloned(contextConfig)).Returns(clonedContextDirective);
@@ -180,7 +180,7 @@ namespace NWebsec.Mvc.Tests.Unit.Helpers
             //There's an override for directive
             var currentDirectiveOverride = new CspPluginTypesDirectiveConfiguration();
             var overrideConfig = new CspOverrideConfiguration { PluginTypesDirective = currentDirectiveOverride };
-            _contextHelper.Setup(h => h.GetCspConfigurationOverride(It.IsAny<HttpContextBase>(), reportOnly, false)).Returns(overrideConfig);
+            _contextHelper.Setup(h => h.GetCspConfigurationOverride(It.IsAny<HttpContext>(), reportOnly, false)).Returns(overrideConfig);
             //We need an override and a result.
             var directiveOverride = new CspPluginTypesOverride();
             var directiveOverrideResult = new CspPluginTypesDirectiveConfiguration();
@@ -199,8 +199,8 @@ namespace NWebsec.Mvc.Tests.Unit.Helpers
             var contextConfig = new CspConfiguration();
             var overrideConfig = new CspOverrideConfiguration();
             //Returns CSP config from context
-            _contextHelper.Setup(h => h.GetCspConfiguration(It.IsAny<HttpContextBase>(), reportOnly)).Returns(contextConfig);
-            _contextHelper.Setup(h => h.GetCspConfigurationOverride(It.IsAny<HttpContextBase>(), reportOnly, false)).Returns(overrideConfig);
+            _contextHelper.Setup(h => h.GetCspConfiguration(It.IsAny<HttpContext>(), reportOnly)).Returns(contextConfig);
+            _contextHelper.Setup(h => h.GetCspConfigurationOverride(It.IsAny<HttpContext>(), reportOnly, false)).Returns(overrideConfig);
             //Returns cloned directive config from context config
             var clonedContextDirective = new CspSandboxDirectiveConfiguration();
             _directiveConfigMapper.Setup(m => m.GetCspSandboxConfigCloned(contextConfig)).Returns(clonedContextDirective);
@@ -221,7 +221,7 @@ namespace NWebsec.Mvc.Tests.Unit.Helpers
             //There's an override for directive
             var currentDirectiveOverride = new CspSandboxDirectiveConfiguration();
             var overrideConfig = new CspOverrideConfiguration {SandboxDirective = currentDirectiveOverride};
-            _contextHelper.Setup(h => h.GetCspConfigurationOverride(It.IsAny<HttpContextBase>(), reportOnly, false)).Returns(overrideConfig);
+            _contextHelper.Setup(h => h.GetCspConfigurationOverride(It.IsAny<HttpContext>(), reportOnly, false)).Returns(overrideConfig);
             //We need an override and a result.
             var directiveOverride = new CspSandboxOverride();
             var directiveOverrideResult = new CspSandboxDirectiveConfiguration();
@@ -242,10 +242,10 @@ namespace NWebsec.Mvc.Tests.Unit.Helpers
             var overrideConfigReportOnly = new CspOverrideConfiguration();
             var clonedCspDirective = new CspDirectiveConfiguration();
             var clonedCspReportOnlyDirective = new CspDirectiveConfiguration();
-            _contextHelper.Setup(h => h.GetCspConfiguration(It.IsAny<HttpContextBase>(), false)).Returns(cspConfig);
-            _contextHelper.Setup(h => h.GetCspConfiguration(It.IsAny<HttpContextBase>(), true)).Returns(cspConfigReportOnly);
-            _contextHelper.Setup(h => h.GetCspConfigurationOverride(It.IsAny<HttpContextBase>(), false, false)).Returns(overrideConfig);
-            _contextHelper.Setup(h => h.GetCspConfigurationOverride(It.IsAny<HttpContextBase>(), true, false)).Returns(overrideConfigReportOnly);
+            _contextHelper.Setup(h => h.GetCspConfiguration(It.IsAny<HttpContext>(), false)).Returns(cspConfig);
+            _contextHelper.Setup(h => h.GetCspConfiguration(It.IsAny<HttpContext>(), true)).Returns(cspConfigReportOnly);
+            _contextHelper.Setup(h => h.GetCspConfigurationOverride(It.IsAny<HttpContext>(), false, false)).Returns(overrideConfig);
+            _contextHelper.Setup(h => h.GetCspConfigurationOverride(It.IsAny<HttpContext>(), true, false)).Returns(overrideConfigReportOnly);
             //No overrides
             _directiveConfigMapper.Setup(m => m.GetCspDirectiveConfig(overrideConfig, CspDirectives.ScriptSrc)).Returns((ICspDirectiveConfiguration)null);
             _directiveConfigMapper.Setup(m => m.GetCspDirectiveConfig(overrideConfigReportOnly, CspDirectives.ScriptSrc)).Returns((ICspDirectiveConfiguration)null);
@@ -269,8 +269,8 @@ namespace NWebsec.Mvc.Tests.Unit.Helpers
             var overrideConfigReportOnly = new CspOverrideConfiguration();
             var overrideCspDirective = new CspDirectiveConfiguration();
             var overrideCspReportOnlyDirective = new CspDirectiveConfiguration();
-            _contextHelper.Setup(h => h.GetCspConfigurationOverride(It.IsAny<HttpContextBase>(), false, false)).Returns(overrideConfig);
-            _contextHelper.Setup(h => h.GetCspConfigurationOverride(It.IsAny<HttpContextBase>(), true, false)).Returns(overrideConfigReportOnly);
+            _contextHelper.Setup(h => h.GetCspConfigurationOverride(It.IsAny<HttpContext>(), false, false)).Returns(overrideConfig);
+            _contextHelper.Setup(h => h.GetCspConfigurationOverride(It.IsAny<HttpContext>(), true, false)).Returns(overrideConfigReportOnly);
             _directiveConfigMapper.Setup(m => m.GetCspDirectiveConfig(overrideConfig, CspDirectives.ScriptSrc)).Returns(overrideCspDirective);
             _directiveConfigMapper.Setup(m => m.GetCspDirectiveConfig(overrideConfigReportOnly, CspDirectives.ScriptSrc)).Returns(overrideCspReportOnlyDirective);
 
@@ -284,7 +284,7 @@ namespace NWebsec.Mvc.Tests.Unit.Helpers
         public void GetCspScriptNonce_NonceRequestedAndNonceExists_ReturnsSameNonce()
         {
             var overrideConfig = new CspOverrideConfiguration { ScriptSrcDirective = new CspDirectiveConfiguration { Nonce = "heyhey" } };
-            _contextHelper.Setup(h => h.GetCspConfigurationOverride(It.IsAny<HttpContextBase>(), false, false)).Returns(overrideConfig);
+            _contextHelper.Setup(h => h.GetCspConfigurationOverride(It.IsAny<HttpContext>(), false, false)).Returns(overrideConfig);
 
             var nonce = CspConfigurationOverrideHelper.GetCspScriptNonce(MockContext);
 
@@ -300,10 +300,10 @@ namespace NWebsec.Mvc.Tests.Unit.Helpers
             var overrideConfigReportOnly = new CspOverrideConfiguration();
             var clonedCspDirective = new CspDirectiveConfiguration();
             var clonedCspReportOnlyDirective = new CspDirectiveConfiguration();
-            _contextHelper.Setup(h => h.GetCspConfiguration(It.IsAny<HttpContextBase>(), false)).Returns(cspConfig);
-            _contextHelper.Setup(h => h.GetCspConfiguration(It.IsAny<HttpContextBase>(), true)).Returns(cspConfigReportOnly);
-            _contextHelper.Setup(h => h.GetCspConfigurationOverride(It.IsAny<HttpContextBase>(), false, false)).Returns(overrideConfig);
-            _contextHelper.Setup(h => h.GetCspConfigurationOverride(It.IsAny<HttpContextBase>(), true, false)).Returns(overrideConfigReportOnly);
+            _contextHelper.Setup(h => h.GetCspConfiguration(It.IsAny<HttpContext>(), false)).Returns(cspConfig);
+            _contextHelper.Setup(h => h.GetCspConfiguration(It.IsAny<HttpContext>(), true)).Returns(cspConfigReportOnly);
+            _contextHelper.Setup(h => h.GetCspConfigurationOverride(It.IsAny<HttpContext>(), false, false)).Returns(overrideConfig);
+            _contextHelper.Setup(h => h.GetCspConfigurationOverride(It.IsAny<HttpContext>(), true, false)).Returns(overrideConfigReportOnly);
             //No overrides
             _directiveConfigMapper.Setup(m => m.GetCspDirectiveConfig(overrideConfig, CspDirectives.StyleSrc)).Returns((ICspDirectiveConfiguration)null);
             _directiveConfigMapper.Setup(m => m.GetCspDirectiveConfig(overrideConfigReportOnly, CspDirectives.StyleSrc)).Returns((ICspDirectiveConfiguration)null);
@@ -327,8 +327,8 @@ namespace NWebsec.Mvc.Tests.Unit.Helpers
             var overrideConfigReportOnly = new CspOverrideConfiguration();
             var overrideCspDirective = new CspDirectiveConfiguration();
             var overrideCspReportOnlyDirective = new CspDirectiveConfiguration();
-            _contextHelper.Setup(h => h.GetCspConfigurationOverride(It.IsAny<HttpContextBase>(), false, false)).Returns(overrideConfig);
-            _contextHelper.Setup(h => h.GetCspConfigurationOverride(It.IsAny<HttpContextBase>(), true, false)).Returns(overrideConfigReportOnly);
+            _contextHelper.Setup(h => h.GetCspConfigurationOverride(It.IsAny<HttpContext>(), false, false)).Returns(overrideConfig);
+            _contextHelper.Setup(h => h.GetCspConfigurationOverride(It.IsAny<HttpContext>(), true, false)).Returns(overrideConfigReportOnly);
             _directiveConfigMapper.Setup(m => m.GetCspDirectiveConfig(overrideConfig, CspDirectives.StyleSrc)).Returns(overrideCspDirective);
             _directiveConfigMapper.Setup(m => m.GetCspDirectiveConfig(overrideConfigReportOnly, CspDirectives.StyleSrc)).Returns(overrideCspReportOnlyDirective);
 
@@ -342,7 +342,7 @@ namespace NWebsec.Mvc.Tests.Unit.Helpers
         public void GetCspStyleNonce_NonceRequestedAndNonceExists_ReturnsSameNonce()
         {
             var overrideConfig = new CspOverrideConfiguration { StyleSrcDirective = new CspDirectiveConfiguration { Nonce = "heyhey" } };
-            _contextHelper.Setup(h => h.GetCspConfigurationOverride(It.IsAny<HttpContextBase>(), false, false)).Returns(overrideConfig);
+            _contextHelper.Setup(h => h.GetCspConfigurationOverride(It.IsAny<HttpContext>(), false, false)).Returns(overrideConfig);
 
             var nonce = CspConfigurationOverrideHelper.GetCspStyleNonce(MockContext);
 

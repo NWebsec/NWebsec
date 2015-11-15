@@ -25,6 +25,8 @@ Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "NWebsec.Middleware.Tests", 
 EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "NWebsec.Mvc", "src\NWebsec.Mvc\NWebsec.Mvc.xproj", "{DCC33193-8F31-4633-B33E-BD1598A6C44B}"
 EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "NWebsec.Mvc.Tests", "test\NWebsec.Mvc.Tests\NWebsec.Mvc.Tests.xproj", "{048B6154-63BF-4F69-BFD7-5C58616A4556}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -55,6 +57,10 @@ Global
 		{DCC33193-8F31-4633-B33E-BD1598A6C44B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DCC33193-8F31-4633-B33E-BD1598A6C44B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DCC33193-8F31-4633-B33E-BD1598A6C44B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{048B6154-63BF-4F69-BFD7-5C58616A4556}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{048B6154-63BF-4F69-BFD7-5C58616A4556}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{048B6154-63BF-4F69-BFD7-5C58616A4556}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{048B6154-63BF-4F69-BFD7-5C58616A4556}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -66,5 +72,6 @@ Global
 		{38C8E88F-1D01-466F-B47D-6D67F13C1594} = {1733BF96-BCF6-43DD-B145-EBCB11B57C55}
 		{6EC890E0-87B7-4DA5-9443-B003BEF598C8} = {1E120316-DAE8-4FF7-81C2-053A914C258D}
 		{DCC33193-8F31-4633-B33E-BD1598A6C44B} = {1733BF96-BCF6-43DD-B145-EBCB11B57C55}
+		{048B6154-63BF-4F69-BFD7-5C58616A4556} = {1E120316-DAE8-4FF7-81C2-053A914C258D}
 	EndGlobalSection
 EndGlobal

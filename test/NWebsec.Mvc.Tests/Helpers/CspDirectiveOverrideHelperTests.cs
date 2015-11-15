@@ -5,9 +5,9 @@ using NUnit.Framework;
 using NWebsec.Core.HttpHeaders.Configuration;
 using NWebsec.Mvc.Csp;
 using NWebsec.Mvc.Helpers;
-using NWebsec.Mvc.Tests.Unit.TestHelpers;
+using NWebsec.Mvc.Tests.TestHelpers;
 
-namespace NWebsec.Mvc.Tests.Unit.Helpers
+namespace NWebsec.Mvc.Tests.Helpers
 {
     [TestFixture]
     public class CspDirectiveOverrideHelperTests

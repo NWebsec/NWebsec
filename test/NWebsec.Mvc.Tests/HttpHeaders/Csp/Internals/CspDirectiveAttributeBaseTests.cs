@@ -7,7 +7,7 @@ using NUnit.Framework;
 using NWebsec.Mvc.HttpHeaders.Csp;
 using NWebsec.Mvc.HttpHeaders.Csp.Internals;
 
-namespace NWebsec.Mvc.Tests.Unit.HttpHeaders.Csp.Internals
+namespace NWebsec.Mvc.Tests.HttpHeaders.Csp.Internals
 {
     [TestFixture]
     public class CspDirectiveAttributeBaseTests

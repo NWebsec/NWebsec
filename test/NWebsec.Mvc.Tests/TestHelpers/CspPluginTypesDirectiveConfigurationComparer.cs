@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using NWebsec.Core.HttpHeaders.Configuration;
 
-namespace NWebsec.Mvc.Tests.Unit.TestHelpers
+namespace NWebsec.Mvc.Tests.TestHelpers
 {
     public class CspPluginTypesDirectiveConfigurationComparer : IComparer<ICspPluginTypesDirectiveConfiguration>
     {
