@@ -2,7 +2,7 @@
 
 using Microsoft.AspNet.Mvc.Rendering;
 using Microsoft.AspNet.Mvc.ViewFeatures;
-using Microsoft.Framework.WebEncoders;
+using Microsoft.Extensions.WebEncoders;
 using NWebsec.Core.HttpHeaders.Configuration.Validation;
 using NWebsec.Mvc.Csp;
 using NWebsec.Mvc.Helpers;

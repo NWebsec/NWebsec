@@ -11,11 +11,11 @@
   },
 
   "frameworks": {
-    "dnx451": { }
+    "net451": { }
 
   },
   "dependencies": {
-    "Microsoft.AspNet.TestHost": "1.0.0-beta8",
+    "Microsoft.AspNet.TestHost": "1.0.0-rc1-final",
     "NUnitLite": "3.0.0-rc-3",
     "NWebsec.Middleware": "1.0.0-*"
   }

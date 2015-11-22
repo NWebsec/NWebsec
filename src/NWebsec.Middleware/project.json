@@ -6,13 +6,13 @@
   "projectUrl": "",
   "licenseUrl": "",
   "frameworks": {
-    "dnx451": {
+    "net451": {
       "dependencies": {
       }
     }
   },
   "dependencies": {
-    "Microsoft.AspNet.Http.Abstractions": "1.0.0-beta8",
+    "Microsoft.AspNet.Http.Abstractions": "1.0.0-rc1-final",
     "NWebsec.Core": "1.0.0-*"
   }
 }

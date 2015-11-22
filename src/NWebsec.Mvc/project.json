@@ -6,10 +6,10 @@
   "projectUrl": "",
   "licenseUrl": "",
   "frameworks": {
-    "dnx451": { }
+    "net451": { }
   },
   "dependencies": {
-    "Microsoft.AspNet.Mvc": "6.0.0-beta8",
+    "Microsoft.AspNet.Mvc":"6.0.0-rc1-final",
     "NWebsec.Annotations": "1.0.0-*",
     "NWebsec.Core": "1.0.0-*"
   }
