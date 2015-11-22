@@ -3,10 +3,11 @@ os: Visual Studio 2015
 init: 
   - git config --global core.autocrlf true 
 install:
-- cmd: dnvm install 1.0.0-beta8
-- cmd: dnu restore
+- cmd: dnvm install 1.0.0-rc1-final
+- cmd: dnu restore --quiet
 build:
   project: NWebsec-CI.sln
   verbosity: minimal
 test: off
+
 
