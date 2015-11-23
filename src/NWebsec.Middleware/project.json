@@ -6,10 +6,9 @@
   "projectUrl": "",
   "licenseUrl": "",
   "frameworks": {
-    "net451": {
-      "dependencies": {
-      }
-    }
+    "dnx451": { },
+    "net451": { }
+
   },
   "dependencies": {
     "Microsoft.AspNet.Http.Abstractions": "1.0.0-rc1-final",
