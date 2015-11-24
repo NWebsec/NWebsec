@@ -12,6 +12,7 @@ namespace NWebsec.Core.HttpHeaders.Configuration
         }
 
         public bool Enabled { get; set; }
+        //TODO figure out what to do with this property
         public bool EnableBuiltinHandler { get; set; }
         public IEnumerable<string> ReportUris { get; set; }
     }

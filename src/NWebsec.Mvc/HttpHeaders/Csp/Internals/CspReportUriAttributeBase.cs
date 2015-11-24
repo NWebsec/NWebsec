@@ -35,10 +35,13 @@ namespace NWebsec.Mvc.HttpHeaders.Csp.Internals
         /// Gets or sets whether the report-uri directive is enabled in the CSP header. The default is true.
         /// </summary>
         public bool Enabled { get { return _directive.Enabled; } set { _directive.Enabled = value; } }
+        
         /// <summary>
         /// Gets or sets whether the URI for the built in CSP report handler should be included in the directive. The default is false.
         /// </summary>
+        [Obsolete("This attribute is no longer supported. Csp report handling will be handled by middleware in a future release.", true)]
         public bool EnableBuiltinHandler { get { return _directive.EnableBuiltinHandler; } set { _directive.EnableBuiltinHandler = value; } }
+
         /// <summary>
         /// Gets or sets custom report URIs for the directive. Report URIs are separated by exactly one whitespace.
         /// </summary>
@@ -74,11 +77,13 @@ namespace NWebsec.Mvc.HttpHeaders.Csp.Internals
 
         protected abstract bool ReportOnly { get; }
 
+        //TODO It might make sense to allow reporting to be enabled without reportUri's, they might be defined in middleware
+        //TODO Add unit tests for this?
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
-            if (_directive.Enabled && !_directive.EnableBuiltinHandler && _directive.ReportUris == null)
+            if (_directive.Enabled && _directive.ReportUris == null)
             {
-                throw CreateAttributeException("You need to either set EnableBuiltinHandler to true, or supply at least one Reporturi to enable the reporturi directive.");
+                throw CreateAttributeException("You need to supply at least one Reporturi to enable the reporturi directive.");
             }
 
             _configurationOverrideHelper.SetCspReportUriOverride(filterContext.HttpContext, _directive, ReportOnly);
