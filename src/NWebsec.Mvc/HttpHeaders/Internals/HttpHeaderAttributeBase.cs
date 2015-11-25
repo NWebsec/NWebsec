@@ -27,7 +27,7 @@ namespace NWebsec.Mvc.HttpHeaders.Internals
         public override void OnActionExecuted(ActionExecutedContext filterContext)
         {
             var context = filterContext.HttpContext;
-            if (context.Items[ContextKey] != null)
+            if (context.Items.ContainsKey(ContextKey))
             {
                 base.OnActionExecuted(filterContext);
                 return;
@@ -53,6 +53,7 @@ namespace NWebsec.Mvc.HttpHeaders.Internals
             {
                 errorMessage += "\nDetails: " + e.Message;
             }
+            //TODO replace with a CspSourceValidationException
             return new ApplicationException(errorMessage);
         }
     }

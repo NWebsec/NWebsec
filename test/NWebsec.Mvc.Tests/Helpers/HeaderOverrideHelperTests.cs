@@ -1,7 +1,6 @@
 ﻿// Copyright (c) André N. Klingsheim. See License.txt in the project root for license information.
 
-using System.Collections.Specialized;
-using System.Web;
+using System.Linq;
 using Microsoft.AspNet.Http;
 using Microsoft.AspNet.Http.Internal;
 using Moq;
@@ -48,7 +47,7 @@ namespace NWebsec.Mvc.Tests.Helpers
                 _headerGenerator.Object,
                 _headerResultHandler.Object,
                 _cspConfigurationOverrideHelper.Object);
-                //_reportHelper.Object);
+            //_reportHelper.Object);
 
             _mockContext = new Mock<HttpContext>().Object;
         }
@@ -188,65 +187,79 @@ namespace NWebsec.Mvc.Tests.Helpers
             _headerResultHandler.Verify(h => h.HandleHeaderResult(It.IsAny<HttpResponse>(), _expectedHeaderResult), Times.Once);
         }
 
-        [Test, Ignore("Needs rewrite")]
+        [Test]
         public void SetNoCacheHeaders_NoOverride_DoesNothing()
         {
             //Get ASP.NET stuff in order
             //var cachePolicy = new Mock<HttpCachePolicyBase>();
-            //var responseHeaders = new HeaderDictionary();
-            //var response = new Mock<HttpResponse>();
+            var responseHeaders = new HeaderDictionary();
+            var response = new Mock<HttpResponse>();
             //response.Setup(r => r.Cache).Returns(cachePolicy.Object);
-            //response.Setup(r => r.Headers).Returns(responseHeaders);
-            //Mock.Get(_mockContext).Setup(c => c.Response).Returns(response.Object);
+            response.Setup(r => r.Headers).Returns(responseHeaders);
+            Mock.Get(_mockContext).Setup(c => c.Response).Returns(response.Object);
 
-            //_configurationOverrideHelper.Setup(h => h.GetNoCacheHeadersWithOverride(It.IsAny<HttpContext>())).Returns((SimpleBooleanConfiguration)null);
+            _configurationOverrideHelper.Setup(h => h.GetNoCacheHeadersWithOverride(It.IsAny<HttpContext>())).Returns((SimpleBooleanConfiguration)null);
 
-            //_overrideHelper.SetNoCacheHeaders(_mockContext);
+            _overrideHelper.SetNoCacheHeaders(_mockContext);
 
+            Assert.IsEmpty(responseHeaders);
+            
+            //headers.CacheControl.
             //cachePolicy.Verify(c => c.SetCacheability(It.IsAny<HttpCacheability>()), Times.Never());
             //cachePolicy.Verify(c => c.SetNoStore(), Times.Never());
             //cachePolicy.Verify(c => c.SetRevalidation(It.IsAny<HttpCacheRevalidation>()), Times.Never());
             //Assert.IsEmpty(responseHeaders);
         }
 
-        [Test, Ignore("Needs rewrite")]
+        [Test]
         public void SetNoCacheHeaders_OverrideAndDisabled_DoesNothing()
         {
             //Get ASP.NET stuff in order
             //var cachePolicy = new Mock<HttpCachePolicyBase>();
-            //var responseHeaders = new NameValueCollection();
-            //var response = new Mock<HttpResponse>();
+            var responseHeaders = new HeaderDictionary();
+            var response = new Mock<HttpResponse>();
             //response.Setup(r => r.Cache).Returns(cachePolicy.Object);
-            //response.Setup(r => r.Headers).Returns(responseHeaders);
-            //Mock.Get(_mockContext).Setup(c => c.Response).Returns(response.Object);
+            response.Setup(r => r.Headers).Returns(responseHeaders);
+            Mock.Get(_mockContext).Setup(c => c.Response).Returns(response.Object);
 
-            //var overrideConfig = new SimpleBooleanConfiguration { Enabled = false };
-            //_configurationOverrideHelper.Setup(h => h.GetNoCacheHeadersWithOverride(It.IsAny<HttpContext>())).Returns(overrideConfig);
+            var overrideConfig = new SimpleBooleanConfiguration { Enabled = false };
+            _configurationOverrideHelper.Setup(h => h.GetNoCacheHeadersWithOverride(It.IsAny<HttpContext>())).Returns(overrideConfig);
 
-            //_overrideHelper.SetNoCacheHeaders(_mockContext);
+            _overrideHelper.SetNoCacheHeaders(_mockContext);
 
+            //TODO cleanup
             //cachePolicy.Verify(c => c.SetCacheability(It.IsAny<HttpCacheability>()), Times.Never());
             //cachePolicy.Verify(c => c.SetNoStore(), Times.Never());
             //cachePolicy.Verify(c => c.SetRevalidation(It.IsAny<HttpCacheRevalidation>()), Times.Never());
-            //Assert.IsEmpty(responseHeaders);
+            Assert.IsEmpty(responseHeaders);
         }
 
-        [Test, Ignore("Needs rewrite")]
+        [Test]
         public void SetNoCacheHeaders_OverrideAndEnabled_SetsCacheHeaders()
         {
             //Get ASP.NET stuff in order
             //var cachePolicy = new Mock<HttpCachePolicyBase>();
-            //var responseHeaders = new NameValueCollection();
-            //var response = new Mock<HttpResponse>();
+            var responseHeaders = new HeaderDictionary();
+            var response = new Mock<HttpResponse>();
             //response.Setup(r => r.Cache).Returns(cachePolicy.Object);
-            //response.Setup(r => r.Headers).Returns(responseHeaders);
-            //Mock.Get(_mockContext).Setup(c => c.Response).Returns(response.Object);
+            response.Setup(r => r.Headers).Returns(responseHeaders);
+            Mock.Get(_mockContext).Setup(c => c.Response).Returns(response.Object);
 
-            //var overrideConfig = new SimpleBooleanConfiguration { Enabled = true };
-            //_configurationOverrideHelper.Setup(h => h.GetNoCacheHeadersWithOverride(It.IsAny<HttpContext>())).Returns(overrideConfig);
+            var overrideConfig = new SimpleBooleanConfiguration { Enabled = true };
+            _configurationOverrideHelper.Setup(h => h.GetNoCacheHeadersWithOverride(It.IsAny<HttpContext>())).Returns(overrideConfig);
 
-            //_overrideHelper.SetNoCacheHeaders(_mockContext);
+            _overrideHelper.SetNoCacheHeaders(_mockContext);
 
+            var headers = response.Object.GetTypedHeaders();
+            var cachePolicy = headers.CacheControl;
+            var expiresHeader = responseHeaders["Expires"].Single();
+            var pragmaHeader = responseHeaders["Pragma"].Single();
+
+            Assert.IsTrue(cachePolicy.NoCache);
+            Assert.IsTrue(cachePolicy.NoStore);
+            Assert.IsTrue(cachePolicy.MustRevalidate);
+            Assert.AreEqual("-1", expiresHeader);
+            Assert.AreEqual("no-cache", pragmaHeader);
             //cachePolicy.Verify(c => c.SetCacheability(HttpCacheability.NoCache), Times.Once());
             //cachePolicy.Verify(c => c.SetNoStore(), Times.Once());
             //cachePolicy.Verify(c => c.SetRevalidation(HttpCacheRevalidation.AllCaches), Times.Once());
@@ -266,7 +279,7 @@ namespace NWebsec.Mvc.Tests.Helpers
 
             _overrideHelper.SetCspHeaders(_mockContext, reportOnly);
 
-            _headerGenerator.Verify(g => g.CreateCspResult(It.IsAny<ICspConfiguration>(),reportOnly, It.IsAny<string>(), It.IsAny<ICspConfiguration>()), Times.Never);
+            _headerGenerator.Verify(g => g.CreateCspResult(It.IsAny<ICspConfiguration>(), reportOnly, It.IsAny<string>(), It.IsAny<ICspConfiguration>()), Times.Never);
             _headerResultHandler.Verify(h => h.HandleHeaderResult(It.IsAny<HttpResponse>(), It.IsAny<HeaderResult>()), Times.Never);
         }
 
@@ -277,8 +290,8 @@ namespace NWebsec.Mvc.Tests.Helpers
             var request = new Mock<HttpRequest>();
             request.SetupAllProperties();
             Mock.Get(_mockContext).Setup(c => c.Request).Returns(request.Object);
-            
-            const string reportUri = "/cspreport";
+
+            //const string reportUri = "/cspreport";
 
             var contextConfig = new CspConfiguration();
             var overrideConfig = new CspConfiguration();
@@ -286,7 +299,7 @@ namespace NWebsec.Mvc.Tests.Helpers
             _cspConfigurationOverrideHelper.Setup(h => h.GetCspConfigWithOverrides(It.IsAny<HttpContext>(), reportOnly)).Returns(overrideConfig);
             //_reportHelper.Setup(h => h.GetBuiltInCspReportHandlerRelativeUri()).Returns(reportUri);
             //TODO reporthelper
-            _headerGenerator.Setup(g => g.CreateCspResult(overrideConfig, reportOnly, reportUri, contextConfig)).Returns(_expectedHeaderResult);
+            _headerGenerator.Setup(g => g.CreateCspResult(overrideConfig, reportOnly, null, contextConfig)).Returns(_expectedHeaderResult);
 
             _overrideHelper.SetCspHeaders(_mockContext, reportOnly);
 

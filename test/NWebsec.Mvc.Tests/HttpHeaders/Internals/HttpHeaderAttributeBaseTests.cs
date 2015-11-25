@@ -1,17 +1,18 @@
 ﻿// Copyright (c) André N. Klingsheim. See License.txt in the project root for license information.
 
-using System.Collections;
 using System.Collections.Generic;
 using Microsoft.AspNet.Http;
 using Microsoft.AspNet.Mvc;
+using Microsoft.AspNet.Mvc.Abstractions;
 using Microsoft.AspNet.Mvc.Filters;
+using Microsoft.AspNet.Routing;
 using Moq;
 using NUnit.Framework;
 using NWebsec.Mvc.HttpHeaders.Internals;
 
 namespace NWebsec.Mvc.Tests.HttpHeaders.Internals
 {
-    [TestFixture, Ignore("needs rewrite")]
+    [TestFixture]
     public class HttpHeaderAttributeBaseTests
     {
         private Mock<HttpHeaderAttributeBase> _httpHeaderAttributeBaseMock;
@@ -22,11 +23,16 @@ namespace NWebsec.Mvc.Tests.HttpHeaders.Internals
         {
             _httpHeaderAttributeBaseMock = new Mock<HttpHeaderAttributeBase> { CallBase = true };
             var mockContext = new Mock<HttpContext>();
-            mockContext.Setup(c => c.Items).Returns(new Dictionary<object,object>());
-            //var act
-            //_actionExecutedContext = new ActionExecutedContext(new ActionContext()  { HttpContext = mockContext.Object });
+            mockContext.Setup(c => c.Items).Returns(new Dictionary<object, object>());
+            _actionExecutedContext = new ActionExecutedContext(new ActionContext
+            {
+                HttpContext = mockContext.Object,
+                RouteData = new RouteData(),
+                ActionDescriptor = new ActionDescriptor()
+            },
+                new List<IFilterMetadata>(), null);
         }
-        //TODO should probably also test onactionexecuting.
+
         [Test]
         public void OnActionExecuted_CallsSetHttpHeadersOnActionExecuted()
         {
