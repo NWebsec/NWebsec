@@ -22,4 +22,5 @@ using System.Runtime.InteropServices;
 // The following GUID is for the ID of the typelib if this project is exposed to COM
 [assembly: Guid("144226e7-3eb3-459d-89c8-4d8720e1ef1e")]
 [assembly: InternalsVisibleTo("NWebsec.Core")]
+[assembly: InternalsVisibleTo("NWebsec.Middleware")]
 [assembly: InternalsVisibleTo("NWebsec.Mvc")]
