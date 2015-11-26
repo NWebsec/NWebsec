@@ -2,6 +2,7 @@
 
 using System;
 using System.Globalization;
+using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 
@@ -11,6 +12,7 @@ namespace NWebsec.Core.HttpHeaders.Csp
     {
         private const string HostRegex = @"^(\*\.)?([\p{Ll}\p{Lu}0-9\-]+)(\.[\p{Ll}\p{Lu}0-9\-]+)*$";
         private static readonly string SchemeOnlyRegex = "^[a-zA-Z]*[a-zA-Z0-9" + Regex.Escape("+.-") + "]:$";
+        private static readonly string[] KnownSchemes = { "http", "https", "data", "ws", "wss" };
         private readonly string _source;
 
         private CspUriSource(string source)
@@ -39,7 +41,7 @@ namespace NWebsec.Core.HttpHeaders.Csp
 
             var needsReplacement = !host.Equals(encodedHost);
 
-            var authority = uri.GetLeftPart(UriPartial.Authority);
+            var authority = uri.GetComponents(UriComponents.SchemeAndServer, UriFormat.SafeUnescaped);
 
             if (needsReplacement)
             {
@@ -60,8 +62,8 @@ namespace NWebsec.Core.HttpHeaders.Csp
 
             if (source.Equals("*")) return new CspUriSource(source);
 
-            Uri uriResult;
-            if (Uri.TryCreate(source, UriKind.Absolute, out uriResult) && UriParser.IsKnownScheme(uriResult.Scheme))
+            Uri uriResult; //TODO figure out what happened to known schemes.
+            if (Uri.TryCreate(source, UriKind.Absolute, out uriResult) && KnownSchemes.Contains(uriResult.Scheme))
             {
                 return new CspUriSource(EncodeUri(uriResult));
             }
@@ -138,6 +140,7 @@ namespace NWebsec.Core.HttpHeaders.Csp
         private static string EncodeHostname(string hostname)
         {
             var idn = new IdnMapping();
+
             return idn.GetAscii(hostname);
         }
 
@@ -151,8 +154,8 @@ namespace NWebsec.Core.HttpHeaders.Csp
             }
 
             var sb = new StringBuilder(pathAndQuery);
-            sb.Replace(";", Uri.HexEscape(';'));
-            sb.Replace(",", Uri.HexEscape(','));
+            sb.Replace(";", "%3B");
+            sb.Replace(",", "%2C");
 
             return sb.ToString();
         }

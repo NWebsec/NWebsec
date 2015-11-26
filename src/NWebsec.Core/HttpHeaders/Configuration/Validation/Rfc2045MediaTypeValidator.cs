@@ -17,7 +17,7 @@ namespace NWebsec.Core.HttpHeaders.Configuration.Validation
             var components = mediaType.Split(new[] { '/' }, 2);
             var type = components[0];
 
-            if (!ValidTypes.Any(t => t.Equals(type, StringComparison.InvariantCultureIgnoreCase)))
+            if (!ValidTypes.Any(t => t.Equals(type, StringComparison.OrdinalIgnoreCase)))
             {
                 var message = String.Format("Media type \"{0}\" did not match any of the expected types: {1}", mediaType, String.Join(", ", ValidTypes));
                 throw new Exception(message);

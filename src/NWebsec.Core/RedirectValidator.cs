@@ -41,8 +41,8 @@ namespace NWebsec.Core
                 return;
             }
 
-            // Same origin
-            if (locationUri.GetLeftPart(UriPartial.Authority).Equals(requestAuthority.GetLeftPart(UriPartial.Authority)))
+            // Same origin TODO look into URL encoding
+            if (locationUri.GetComponents(UriComponents.SchemeAndServer, UriFormat.SafeUnescaped).Equals(requestAuthority.GetComponents(UriComponents.SchemeAndServer,UriFormat.SafeUnescaped)))
             {
                 return;
             }

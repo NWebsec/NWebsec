@@ -3,7 +3,6 @@
 using System;
 using System.IO;
 using System.Linq;
-using System.Security;
 using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
 
@@ -43,25 +42,32 @@ namespace NWebsec.Core.Helpers.X509
                 }
 
                 //Returns new cert, all existing certs will be cleaned up
-                return new X509Certificate2(certs[0]);
+                return certs[0];
             }
-            finally
+            catch
             {
                 if (certs != null)
                 {
                     foreach (var cert in certs)
                     {
-                        cert.Reset();
+                        CleanupCert(cert);
                     }
                 }
                 if (certStore != null)
                 {
                     foreach (var cert in certStore.Certificates)
                     {
-                        cert.Reset();
+                        CleanupCert(cert);
                     }
+#if DNX451
                     certStore.Close();
+#elif NET451
+                    certStore.Close();
+#else
+                    certStore.Dispose();
+#endif
                 }
+                throw;
             }
         }
 
@@ -73,12 +79,11 @@ namespace NWebsec.Core.Helpers.X509
         public string GetSubjectPublicKeyInfoPinValue(X509Certificate2 cert)
         {
             var spki = GetRawSubjectPublicKeyInfo(cert);
-
-            using (var sha256 = new SHA256CryptoServiceProvider())
+            using (var sha256 = SHA256.Create())
             {
                 var hash = Convert.ToBase64String(sha256.ComputeHash(spki));
-                    return string.Format("sha256=\"" + hash + "\"");
-                }
+                return string.Format("sha256=\"" + hash + "\"");
+            }
         }
 
         private static byte[] GetRawSubjectPublicKeyInfo(X509Certificate2 cert)
@@ -88,8 +93,8 @@ namespace NWebsec.Core.Helpers.X509
                 throw new ArgumentException("Only X.509 certificate version 3 is supported. This cert was version " + cert.Version);
             }
 
-             var rawCert=cert.RawData;
-            
+            var rawCert = cert.RawData;
+
             using (var ms = new MemoryStream(rawCert))
             {
                 //Get outer cert sequence header
@@ -171,7 +176,7 @@ namespace NWebsec.Core.Helpers.X509
                 read = ms.Read(spkiChunk, tlv.RawData.Length, tlv.Length);
 
                 if (read > tlv.Length) throw new Exception("Got " + read + " SPKI bytes, expected " + spkiChunk.Length);
-                
+
                 return spkiChunk;
             }
         }
@@ -233,6 +238,15 @@ namespace NWebsec.Core.Helpers.X509
             return new TlvTripletHeader { Tag = firstBytes[0], Length = length, RawData = rawbytes };
         }
 
-
+        private void CleanupCert(X509Certificate2 cert)
+        {
+#if NET451
+            cert.Reset();
+#elif DNX451
+            cert.Reset();
+#else
+            cert.Dispose();
+#endif
+        }
     }
 }
