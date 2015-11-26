@@ -1,10 +1,16 @@
 ﻿{
-  "version": "1.0.0-*",
-  "description": "NWebsec.Core Class Library",
-  "authors": [ "klings" ],
-  "tags": [ "" ],
-  "projectUrl": "",
-  "licenseUrl": "",
+
+  "version": "2.0.0-beta1",
+  "title": "NWebsec.Core (ASP.NET 5)",
+  "description": "This library provides core functionality for the NWebsec security libraries.",
+  "releaseNotes": "This release includes core functions for the NWebsec security libaries.",
+  "authors": [ "André N. Klingsheim" ],
+  "owners": [ "André N. Klingsheim" ],
+  "copyright": "Copyright © 2014 - 2015",
+  "tags": [ "NWebsec Security AspNet AppSec" ],
+  "projectUrl": "https://docs.nwebsec.com/en/latest/",
+  "licenseUrl": "https://github.com/NWebsec/NWebsec/blob/master/LICENSE",
+  "iconUrl": "https://klings.blob.core.windows.net/nwebsecicon/nwebsec_nuget.png",
   "frameworks": {
     "dnx451": { },
     "net451": { },

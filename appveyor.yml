@@ -1,5 +1,6 @@
 version: 1.0.{build}
 os: Visual Studio 2015
+configuration: Release
 init: 
   - git config --global core.autocrlf true 
 install:
@@ -9,5 +10,7 @@ build:
   project: NWebsec-CI.sln
   verbosity: minimal
 test: off
+artifacts:
+- path: '**/*.nupkg'
 
 
