@@ -99,8 +99,14 @@ namespace NWebsec.Middleware
             var helper = new X509Helper();
             var cert = helper.GetCertByThumbprint(thumbprint, storeLocation, storeName);
             var pin = helper.GetSubjectPublicKeyInfoPinValue(cert);
-            cert.Reset();
 
+#if DNX451
+            cert.Reset();
+#elif NET451
+            cert.Reset();
+#else
+            cert.Dispose();
+#endif
             if (!_pins.Contains(pin))
             {
                 _pins.Add(pin);

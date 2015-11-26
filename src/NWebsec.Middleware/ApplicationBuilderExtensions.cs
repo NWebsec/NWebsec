@@ -1,11 +1,12 @@
 ﻿// Copyright (c) André N. Klingsheim. See License.txt in the project root for license information.
 
 using System;
-using Microsoft.AspNet.Builder;
 using NWebsec.Core.HttpHeaders.Configuration.Validation;
+using NWebsec.Middleware;
 using NWebsec.Middleware.Middleware;
 
-namespace NWebsec.Middleware
+// ReSharper disable once CheckNamespace
+namespace Microsoft.AspNet.Builder
 {
     public static class ApplicationBuilderExtensions
     {
