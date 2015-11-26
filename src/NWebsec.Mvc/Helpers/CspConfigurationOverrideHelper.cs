@@ -175,7 +175,7 @@ namespace NWebsec.Mvc.Helpers
 
         private string GenerateCspNonceValue()
         {
-            using (var rng = new RNGCryptoServiceProvider())
+            using (var rng = RandomNumberGenerator.Create())
             {
                 var nonceBytes = new byte[15];
                 rng.GetBytes(nonceBytes);

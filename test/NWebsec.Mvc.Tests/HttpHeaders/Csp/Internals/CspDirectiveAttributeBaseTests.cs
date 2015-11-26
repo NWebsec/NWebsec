@@ -17,7 +17,7 @@ namespace NWebsec.Mvc.Tests.HttpHeaders.Csp.Internals
         public void ValidateParams_EnabledAndNoDirectives_ThrowsException()
         {
             var cspSandboxAttributeBaseMock = new Mock<CspDirectiveAttributeBase>(MockBehavior.Strict).Object;
-            Assert.Throws<ApplicationException>(() => cspSandboxAttributeBaseMock.ValidateParams());
+            Assert.Throws<ArgumentException>(() => cspSandboxAttributeBaseMock.ValidateParams());
         }
 
         [Test]
@@ -43,7 +43,7 @@ namespace NWebsec.Mvc.Tests.HttpHeaders.Csp.Internals
         {
             foreach (var cspSandboxAttributeBase in MalconfiguredAttributes())
             {
-                Assert.Throws<ApplicationException>(() => cspSandboxAttributeBase.ValidateParams());
+                Assert.Throws<ArgumentException>(() => cspSandboxAttributeBase.ValidateParams());
             }
         }
 

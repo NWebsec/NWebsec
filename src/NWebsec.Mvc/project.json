@@ -6,11 +6,18 @@
   "projectUrl": "",
   "licenseUrl": "",
   "frameworks": {
-    "dnx451" : { },
-    "net451": { }
+    "dnx451": { },
+    "net451": { },
+    "dotnet5.4": {
+      "dependencies": {
+        "Microsoft.CSharp": "4.0.1-beta-23516",
+        "System.Runtime": "4.0.21-beta-23516",
+        "System.Security.Cryptography.Algorithms": "4.0.0-beta-23516"
+      }
+    }
   },
   "dependencies": {
-    "Microsoft.AspNet.Mvc":"6.0.0-rc1-final",
+    "Microsoft.AspNet.Mvc": "6.0.0-rc1-final",
     "NWebsec.Annotations": "1.0.0-*",
     "NWebsec.Core": "1.0.0-*"
   }

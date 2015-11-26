@@ -53,8 +53,7 @@ namespace NWebsec.Mvc.HttpHeaders.Internals
             {
                 errorMessage += "\nDetails: " + e.Message;
             }
-            //TODO replace with a CspSourceValidationException
-            return new ApplicationException(errorMessage);
+            return new ArgumentException(errorMessage);
         }
     }
 }
