@@ -1,13 +1,12 @@
 version: 1.0.{build}
 os: Visual Studio 2015
 configuration: Release
-environment:
-  DNX_BUILD_VERSION : %APPVEYOR_BUILD_NUMBER%
 init: 
   - git config --global core.autocrlf true 
 install:
 - cmd: dnvm install 1.0.0-rc1-final
 - cmd: dnu restore --quiet
+- cmd: set DNX_BUILD_VERSION=%APPVEYOR_BUILD_NUMBER%
 build:
   project: NWebsec-CI.sln
   verbosity: minimal
