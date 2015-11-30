@@ -19,7 +19,7 @@
     "Microsoft.AspNet.Http.Extensions": "1.0.0-rc1-final",
     "Moq": "4.2.1510.2205",
     "NUnitLite":"3.0.0",
-    "NWebsec.Core": "1.0.0-*",
-    "NWebsec.Mvc": "1.0.0-*"
+    "NWebsec.Core": "2.0.0-beta-*",
+    "NWebsec.Mvc": "5.0.0-beta-*"
   }
 }

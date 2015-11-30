@@ -1,5 +1,5 @@
 {
-  "version": "5.0.0-beta1",
+  "version": "5.0.0-beta-*",
   "title": "NWebsec.Mvc (ASP.NET 5)",
   "description": "NWebsec attributes for ASP.NET MVC 6 applications. NWebsec helps you set important security headers, detect potentially dangerous redirects, control cache headers, and remove version headers. See project website for documentation.",
   "releaseNotes": "This release includes support for ASP.NET 5 and MVC 6. See release notes on GitHub for details.",
@@ -24,7 +24,7 @@
   "dependencies": {
     "Microsoft.AspNet.Mvc": "6.0.0-rc1-final",
     "NWebsec.Annotations": "1.0.0-*",
-    "NWebsec.Core": "2.0.0-beta1",
-    "NWebsec.Middleware": "1.0.0-beta1"
+    "NWebsec.Core": "2.0.0-beta",
+    "NWebsec.Middleware": "1.0.0-beta-*"
   }
 }
