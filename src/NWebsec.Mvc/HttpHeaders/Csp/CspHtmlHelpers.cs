@@ -1,8 +1,6 @@
 ﻿// Copyright (c) André N. Klingsheim. See License.txt in the project root for license information.
 
 using Microsoft.AspNet.Mvc.Rendering;
-using Microsoft.AspNet.Mvc.ViewFeatures;
-using Microsoft.Extensions.WebEncoders;
 using NWebsec.Core.HttpHeaders.Configuration.Validation;
 using NWebsec.Mvc.Csp;
 using NWebsec.Mvc.Helpers;
@@ -15,7 +13,7 @@ namespace NWebsec.Mvc.HttpHeaders.Csp
         /// Generates a CSP nonce HTML attribute. The 120-bit random nonce will be included in the CSP script-src directive.
         /// </summary>
         /// <param name="helper"></param>
-        public static HtmlString CspScriptNonce(this HtmlHelper helper)
+        public static HtmlString CspScriptNonce(this IHtmlHelper<dynamic> helper)
         {
             var context = helper.ViewContext.HttpContext;
             var cspConfigurationOverrideHelper = new CspConfigurationOverrideHelper();
@@ -37,7 +35,7 @@ namespace NWebsec.Mvc.HttpHeaders.Csp
         /// Generates a CSP nonce HTML attribute. The 120-bit random nonce will be included in the CSP style-src directive.
         /// </summary>
         /// <param name="helper"></param>
-        public static HtmlString CspStyleNonce(this HtmlHelper helper)
+        public static HtmlString CspStyleNonce(this IHtmlHelper<dynamic> helper)
         {
             var context = helper.ViewContext.HttpContext;
             var cspConfigurationOverrideHelper = new CspConfigurationOverrideHelper();
@@ -60,7 +58,7 @@ namespace NWebsec.Mvc.HttpHeaders.Csp
         /// </summary>
         /// <param name="helper"></param>
         /// <param name="mediaType">The media type.</param>
-        public static HtmlString CspMediaType(this HtmlHelper helper, string mediaType)
+        public static HtmlString CspMediaType(this IHtmlHelper<dynamic> helper, string mediaType)
         {
             new Rfc2045MediaTypeValidator().Validate(mediaType);
 
@@ -76,16 +74,14 @@ namespace NWebsec.Mvc.HttpHeaders.Csp
             headerOverrideHelper.SetCspHeaders(context, true);
 
             //TODO have a look at the encoder.
-            var htmlEncoder = new HtmlEncoder();
-            var attribute = string.Format("type=\"{0}\"", htmlEncoder.HtmlEncode(mediaType));
+            var attribute = string.Format("type=\"{0}\"", helper.Encode(mediaType));
             return new HtmlString(attribute);
         }
 
-        private static HtmlString CreateNonceAttribute(HtmlHelper helper, string nonce)
+        private static HtmlString CreateNonceAttribute(IHtmlHelper<dynamic> helper, string nonce)
         {
             //TODO have a look at the encoder.
-            var htmlEncoder = new HtmlEncoder();
-            var sb = "nonce=\"" + htmlEncoder.HtmlEncode(nonce) + "\"";
+            var sb = "nonce=\"" + helper.Encode(nonce) + "\"";
             return new HtmlString(sb);
         }
     }

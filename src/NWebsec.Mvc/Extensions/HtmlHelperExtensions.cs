@@ -2,7 +2,6 @@
 
 using System;
 using Microsoft.AspNet.Mvc.Rendering;
-using Microsoft.AspNet.Mvc.ViewFeatures;
 using NWebsec.Mvc.Html;
 
 namespace NWebsec.Mvc.Extensions
@@ -17,7 +16,7 @@ namespace NWebsec.Mvc.Extensions
         /// <param name="helper"></param>
         /// <param name="configurer">A configurer that selects a policy from the <see cref="IReferrerPolicy"/>.</param>
         /// <returns></returns>
-        public static HtmlString ReferrerPolicyMetaTag(this HtmlHelper helper, Func<IReferrerPolicy, ReferrerPolicyTag> configurer )
+        public static HtmlString ReferrerPolicyMetaTag(this IHtmlHelper<dynamic> helper, Func<IReferrerPolicy, ReferrerPolicyTag> configurer )
         {
             if (configurer == null)
             {
