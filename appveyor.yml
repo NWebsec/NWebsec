@@ -12,6 +12,8 @@ build:
   verbosity: minimal
 test: off
 artifacts:
-- path: '**/*.nupkg'
+- path: '**/NWebsec.Core.*.nupkg'
+- path: '**/NWebsec.Middleware.*.nupkg'
+- path: '**/NWebsec.Mvc.*.nupkg'
 
 
