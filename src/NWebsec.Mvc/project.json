@@ -27,7 +27,7 @@
       "version": "1.0.0-*",
       "type": "build"
     },
-    "NWebsec.Core": "2.0.0-beta",
+    "NWebsec.Core": "2.0.0-beta-*",
     "NWebsec.Middleware": "1.0.0-beta-*"
   }
 }
