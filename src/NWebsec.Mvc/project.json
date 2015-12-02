@@ -23,7 +23,10 @@
   },
   "dependencies": {
     "Microsoft.AspNet.Mvc": "6.0.0-rc1-final",
-    "NWebsec.Annotations": "1.0.0-*",
+    "NWebsec.Annotations": {
+      "version": "1.0.0-*",
+      "type": "build"
+    },
     "NWebsec.Core": "2.0.0-beta",
     "NWebsec.Middleware": "1.0.0-beta-*"
   }
