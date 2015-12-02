@@ -26,6 +26,6 @@
   },
   "dependencies": {
     "Microsoft.AspNet.Http.Abstractions": "1.0.0-rc1-final",
-    "NWebsec.Annotations": { "version": "1.0.0-*", "options": "Bago" }
+    "NWebsec.Annotations": { "version": "1.0.0-*", "options": "dev" }
   }
 }
