@@ -57,6 +57,16 @@ namespace NWebsec.Mvc.Tests.Helpers
         }
 
         [Test]
+        public void GetCspDirectiveConfigCloned_NoConfig_ReturnsNull()
+        {
+            var mapper = new CspConfigMapper();
+
+            var clone = mapper.GetCspDirectiveConfigCloned(null, CspDirectives.ScriptSrc);
+
+            Assert.IsNull(clone);
+        }
+
+        [Test]
         public void GetCspDirectiveConfigCloned_NoDirective_ReturnsNull()
         {
             var config = new CspConfiguration(false);
@@ -105,6 +115,16 @@ namespace NWebsec.Mvc.Tests.Helpers
         }
 
         [Test]
+        public void GetCspPluginTypesConfigCloned_NoConfig_ReturnsNull()
+        {
+            var mapper = new CspConfigMapper();
+
+            var clone = mapper.GetCspPluginTypesConfigCloned(null);
+
+            Assert.IsNull(clone);
+        }
+
+        [Test]
         public void GetCspPluginTypesConfigCloned_NoDirective_ReturnsNull()
         {
             var config = new CspConfiguration(false);
@@ -138,6 +158,16 @@ namespace NWebsec.Mvc.Tests.Helpers
 
             Assert.That(firstResult, Is.EqualTo(firstDirective).Using(new CspPluginTypesDirectiveConfigurationComparer()));
             Assert.That(secondResult, Is.EqualTo(secondDirective).Using(new CspPluginTypesDirectiveConfigurationComparer()));
+        }
+
+        [Test]
+        public void GetCspSandboxConfigCloned_NoConfig_ReturnsNull()
+        {
+            var mapper = new CspConfigMapper();
+
+            var clone = mapper.GetCspSandboxConfigCloned(null);
+
+            Assert.IsNull(clone);
         }
 
         [Test]

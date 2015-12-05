@@ -92,7 +92,7 @@ namespace NWebsec.Mvc.Helpers
 
         public ICspPluginTypesDirectiveConfiguration GetCspPluginTypesConfigCloned(ICspConfiguration cspConfig)
         {
-            var oldDirective = cspConfig.PluginTypesDirective;
+            var oldDirective = cspConfig?.PluginTypesDirective;
 
             if (oldDirective == null)
             {
@@ -108,7 +108,7 @@ namespace NWebsec.Mvc.Helpers
 
         public ICspSandboxDirectiveConfiguration GetCspSandboxConfigCloned(ICspConfiguration cspConfig)
         {
-            var oldDirective = cspConfig.SandboxDirective;
+            var oldDirective = cspConfig?.SandboxDirective;
 
             if ( oldDirective == null)
             {
