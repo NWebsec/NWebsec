@@ -7,6 +7,7 @@ using Microsoft.AspNet.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using NWebsec.Middleware;
 
 namespace Mvc6
 {
@@ -38,7 +39,7 @@ namespace Mvc6
 
             if (env.IsDevelopment())
             {
-                app.UseBrowserLink();
+                //app.UseBrowserLink();
                 app.UseDeveloperExceptionPage();
             }
             else
@@ -49,6 +50,18 @@ namespace Mvc6
             app.UseIISPlatformHandler();
 
             app.UseStaticFiles();
+            app.UseHsts(options => options.MaxAge(minutes: 5).AllResponses());
+            //app.UseCsp(opts =>
+            //{
+            //    opts.DefaultSources(s => s.Self());
+            //});
+
+            app.UseCsp(opts =>
+            {
+                opts.DefaultSources(o => o.Self());
+                opts.ScriptSources(o => o.CustomSources("configscripthost"));
+                opts.MediaSources(o => o.CustomSources("fromconfig"));
+            });
 
             app.UseMvc(routes =>
             {
