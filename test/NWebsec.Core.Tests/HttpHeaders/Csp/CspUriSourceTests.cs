@@ -72,11 +72,11 @@ namespace NWebsec.Core.Tests.HttpHeaders.Csp
         }
 
         [Test]
-        public void Parse_SchemeOnly_ReturnsResult()
+        public void Parse_SchemeOnly_ReturnsResult([Values("https:","data:")] string scheme)
         {
-            var result = CspUriSource.Parse("https:");
+            var result = CspUriSource.Parse(scheme);
 
-            Assert.AreEqual("https:", result.ToString());
+            Assert.AreEqual(scheme, result.ToString());
         }
 
         [Test]
