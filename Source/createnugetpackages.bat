@@ -1,1 +1,0 @@
-@powershell ./createnugetpackages.ps1
