@@ -7,7 +7,7 @@
   "licenseUrl": "",
 
   "commands": {
-    "NWebsec.Mvc.Tests": "NWebsec.Mvc.Tests"
+    "test": "NWebsec.Mvc.Tests"
   },
 
   "frameworks": {
@@ -19,7 +19,7 @@
     "Microsoft.AspNet.Http.Extensions": "1.0.0-rc1-final",
     "Moq": "4.2.1510.2205",
     "NUnitLite":"3.0.0",
-    "NWebsec.Core": "2.0.0-beta-*",
-    "NWebsec.Mvc": "5.0.0-beta-*"
+    "NWebsec.Core": "2.0.0-gamma-*",
+    "NWebsec.Mvc": "5.0.0-gamma-*"
   }
 }

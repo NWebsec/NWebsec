@@ -7,7 +7,7 @@
   "licenseUrl": "",
 
   "commands": {
-    "NWebsec.Middleware.Tests": "NWebsec.Middleware.Tests"
+    "test": "NWebsec.Middleware.Tests"
   },
 
   "frameworks": {
@@ -17,6 +17,6 @@
   "dependencies": {
     "Microsoft.AspNet.TestHost": "1.0.0-rc1-final",
     "NUnitLite": "3.0.0",
-    "NWebsec.Middleware": "1.0.0-beta-*"
+    "NWebsec.Middleware": "1.0.0-gamma-*"
   }
 }

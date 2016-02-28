@@ -10,10 +10,34 @@ install:
 build:
   project: NWebsec-CI.sln
   verbosity: minimal
-test: off
+test_script:
+- ps: >-
+    $wc = New-Object 'System.Net.WebClient'
+
+    pushd .\test\NWebsec.Core.Tests\
+
+    dnx test
+
+    $wc.UploadFile("https://ci.appveyor.com/api/testresults/nunit3/$($env:APPVEYOR_JOB_ID)", (Resolve-Path .\TestResult.xml))
+
+    popd
+
+    pushd .\test\NWebsec.Middleware.Tests\
+
+    dnx test
+
+    $wc.UploadFile("https://ci.appveyor.com/api/testresults/nunit3/$($env:APPVEYOR_JOB_ID)", (Resolve-Path .\TestResult.xml))
+
+    popd
+
+    pushd .\test\NWebsec.Mvc.Tests\
+
+    dnx test
+
+    $wc.UploadFile("https://ci.appveyor.com/api/testresults/nunit3/$($env:APPVEYOR_JOB_ID)", (Resolve-Path .\TestResult.xml))
+
+    popd
 artifacts:
 - path: '**/NWebsec.Core/Release/*.nupkg'
 - path: '**/NWebsec.Middleware/Release/*.nupkg'
 - path: '**/NWebsec.Mvc/Release/*.nupkg'
-
-
