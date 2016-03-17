@@ -1,0 +1,17 @@
+﻿@using NWebsec.Mvc.HttpHeaders.Csp
+@model dynamic
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>title</title>
+</head>
+<body>
+    <embed @Html.CspMediaType("application/htmlhelper") />
+</body>
+</html>

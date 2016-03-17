@@ -1,4 +1,6 @@
-﻿using NUnitLite;
+﻿// Copyright (c) André N. Klingsheim. See License.txt in the project root for license information.
+
+using NUnitLite;
 
 namespace NWebsec.Middleware.Tests
 {

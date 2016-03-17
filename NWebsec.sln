@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.23107.0
+VisualStudioVersion = 14.0.24720.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{1733BF96-BCF6-43DD-B145-EBCB11B57C55}"
 EndProject
@@ -28,6 +28,12 @@ EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "NWebsec.Mvc.Tests", "test\NWebsec.Mvc.Tests\NWebsec.Mvc.Tests.xproj", "{048B6154-63BF-4F69-BFD7-5C58616A4556}"
 EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Mvc6", "src\Mvc6\Mvc6.xproj", "{5AA0E72C-5859-4E19-B8A4-F0861E0EDD8E}"
+EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "NWebsec.Mvc.FunctionalTests", "test\NWebsec.Mvc.FunctionalTests\NWebsec.Mvc.FunctionalTests.xproj", "{A90ADBB1-308D-4579-8F5C-039AB2DE5435}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "websites", "websites", "{03BD4D9A-CEDA-47F3-B3A9-12D970E6C267}"
+EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "MvcAttributeWebsite", "test\websites\MvcAttributeWebsite\MvcAttributeWebsite.xproj", "{0DCD732F-8071-4A72-A039-58D9FA7B202F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -67,6 +73,14 @@ Global
 		{5AA0E72C-5859-4E19-B8A4-F0861E0EDD8E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5AA0E72C-5859-4E19-B8A4-F0861E0EDD8E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5AA0E72C-5859-4E19-B8A4-F0861E0EDD8E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A90ADBB1-308D-4579-8F5C-039AB2DE5435}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A90ADBB1-308D-4579-8F5C-039AB2DE5435}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A90ADBB1-308D-4579-8F5C-039AB2DE5435}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A90ADBB1-308D-4579-8F5C-039AB2DE5435}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0DCD732F-8071-4A72-A039-58D9FA7B202F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0DCD732F-8071-4A72-A039-58D9FA7B202F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0DCD732F-8071-4A72-A039-58D9FA7B202F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0DCD732F-8071-4A72-A039-58D9FA7B202F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -80,5 +94,8 @@ Global
 		{6EC890E0-87B7-4DA5-9443-B003BEF598C8} = {1E120316-DAE8-4FF7-81C2-053A914C258D}
 		{048B6154-63BF-4F69-BFD7-5C58616A4556} = {1E120316-DAE8-4FF7-81C2-053A914C258D}
 		{5AA0E72C-5859-4E19-B8A4-F0861E0EDD8E} = {1733BF96-BCF6-43DD-B145-EBCB11B57C55}
+		{A90ADBB1-308D-4579-8F5C-039AB2DE5435} = {1E120316-DAE8-4FF7-81C2-053A914C258D}
+		{03BD4D9A-CEDA-47F3-B3A9-12D970E6C267} = {1E120316-DAE8-4FF7-81C2-053A914C258D}
+		{0DCD732F-8071-4A72-A039-58D9FA7B202F} = {03BD4D9A-CEDA-47F3-B3A9-12D970E6C267}
 	EndGlobalSection
 EndGlobal

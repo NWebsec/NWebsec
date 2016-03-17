@@ -2,11 +2,11 @@
 
 using NUnitLite;
 
-namespace NWebsec.Core.Tests
+namespace NWebsec.Mvc.FunctionalTests
 {
     public class Program
     {
-        public int Main(string[] args)
+        public static int Main(string[] args)
         {
 #if DNX451
             return new AutoRun().Execute(args);
