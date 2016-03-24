@@ -3,6 +3,10 @@
     "NWebsec.Mvc.FunctionalTests": {
       "commandName": "NWebsec.Mvc.FunctionalTests",
       "commandLineArgs": "-wait"
+    },
+    "test": {
+      "commandName": "test",
+      "commandLineArgs": "-wait"
     }
   }
 }
