@@ -16,7 +16,8 @@
     "MvcAttributeWebsite": "1.0.0-*",
     "NUnitLite": "3.0.0",
     "NWebsec.Core": "2.0.0-gamma-*",
-    "NWebsec.Mvc": "5.0.0-gamma-*"
+    "NWebsec.Mvc": "5.0.0-gamma-*",
+    "System.Runtime.Extensions" :  "4.0.11-beta-23516"
   },
 
   "commands": {

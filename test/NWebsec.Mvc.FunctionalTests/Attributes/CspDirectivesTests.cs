@@ -1,6 +1,7 @@
 // Copyright (c) André N. Klingsheim. See License.txt in the project root for license information.
 
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -290,11 +291,11 @@ namespace NWebsec.Mvc.FunctionalTests.Attributes
 
             var scriptCaptures = Regex.Match(body, @"<script nonce=""(.+)"">").Groups;
             Assert.AreEqual(2, scriptCaptures.Count, "Expected 2 script captures, captured " + scriptCaptures.Count);
-            var bodyScriptNonce = scriptCaptures[1].Value;
+            var bodyScriptNonce = WebUtility.HtmlDecode(scriptCaptures[1].Value);
 
             var styleCaptures = Regex.Match(body, @"<style nonce=""(.+)"">").Groups;
             Assert.AreEqual(2, styleCaptures.Count, "Expected 2 style captures, captured " + styleCaptures.Count);
-            var bodyStyleNonce = styleCaptures[1].Value;
+            var bodyStyleNonce = WebUtility.HtmlDecode(styleCaptures[1].Value);
 
             var cspHeader = response.Headers.GetValues("Content-Security-Policy").Single();
             var expectedDirective = $"script-src 'nonce-{bodyScriptNonce}';style-src 'nonce-{bodyStyleNonce}'";
