@@ -1,7 +1,8 @@
+// Copyright (c) André N. Klingsheim. See License.txt in the project root for license information.
+
 using System.Net.Http;
 using System.Threading.Tasks;
 using Microsoft.AspNet.TestHost;
-// Copyright (c) André N. Klingsheim. See License.txt in the project root for license information.
 
 using NUnit.Framework;
 using NWebsec.Mvc.FunctionalTests.Plumbing;
