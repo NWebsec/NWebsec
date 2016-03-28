@@ -1,12 +1,12 @@
 ﻿// Copyright (c) André N. Klingsheim. See License.txt in the project root for license information.
 
 using Microsoft.AspNet.Builder;
-using Microsoft.AspNet.Hosting;
 using Microsoft.Extensions.DependencyInjection;
+using NWebsec.Middleware;
 
 namespace MvcAttributeWebsite
 {
-    public class Startup
+    public class StartupCspConfig
     {
         // This method gets called by the runtime. Use this method to add services to the container.
         // For more information on how to configure your application, visit http://go.microsoft.com/fwlink/?LinkID=398940
@@ -19,6 +19,11 @@ namespace MvcAttributeWebsite
         public void Configure(IApplicationBuilder app)
         {
             //app.UseIISPlatformHandler();
+            app.UseCsp(options => options
+                .DefaultSources(s => s.Self())
+                .ScriptSources(s => s.CustomSources("configscripthost"))
+                .MediaSources(s => s.CustomSources("fromconfig"))
+                );
 
             app.UseMvc(routes =>
             {
@@ -27,6 +32,6 @@ namespace MvcAttributeWebsite
         }
 
         // Entry point for the application.
-        public static void Main(string[] args) => WebApplication.Run<Startup>(args);
+        //public static void Main(string[] args) => WebApplication.Run<StartupCspConfig>(args);
     }
 }

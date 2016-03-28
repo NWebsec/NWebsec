@@ -17,9 +17,8 @@
     "Microsoft.Extensions.Logging": "1.0.0-rc1-final",
     "Microsoft.Extensions.Logging.Console": "1.0.0-rc1-final",
     "Microsoft.Extensions.Logging.Debug": "1.0.0-rc1-final",
-    "Microsoft.VisualStudio.Web.BrowserLink.Loader": "14.0.0-rc1-final",
-    "NWebsec.Middleware": "1.0.0-beta-*",
-    "NWebsec.Mvc": "5.0.0-beta-*"
+    "NWebsec.Middleware": "1.0.0-gamma-*",
+    "NWebsec.Mvc": "5.0.0-gamma-*"
   },
 
   "commands": {
@@ -28,7 +27,7 @@
 
   "frameworks": {
     "dnx451": { },
-    "dnxcore50": { }
+    "dotnet5.4": { }
   },
 
   "exclude": [
