@@ -5,7 +5,7 @@ using System.Net;
 using System.Net.Http;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using Microsoft.AspNet.TestHost;
+using Microsoft.AspNetCore.TestHost;
 using NUnit.Framework;
 using NWebsec.Mvc.FunctionalTests.Plumbing;
 

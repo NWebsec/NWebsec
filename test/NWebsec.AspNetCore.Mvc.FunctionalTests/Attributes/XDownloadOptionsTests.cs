@@ -1,15 +1,15 @@
-// Copyright (c) Andr� N. Klingsheim. See License.txt in the project root for license information.
+﻿// Copyright (c) André N. Klingsheim. See License.txt in the project root for license information.
 
 using System.Net.Http;
 using System.Threading.Tasks;
-using Microsoft.AspNet.TestHost;
+using Microsoft.AspNetCore.TestHost;
 using NUnit.Framework;
 using NWebsec.Mvc.FunctionalTests.Plumbing;
 
 namespace NWebsec.Mvc.FunctionalTests.Attributes
 {
     [TestFixture]
-    public class XXssProtectionTests
+    public class XDownloadOptionsTests
     {
         private TestServer _server;
         private HttpClient _httpClient;
@@ -28,25 +28,25 @@ namespace NWebsec.Mvc.FunctionalTests.Attributes
         }
 
         [Test]
-        public async Task XXssProtection_Enabled_SetsHeaders()
+        public async Task XDownloadOptions_Enabled_SetsHeaders()
         {
-            const string path = "/XXssProtection";
+            const string path = "/XDownloadOptions";
 
             var response = await _httpClient.GetAsync(path);
 
             Assert.IsTrue(response.IsSuccessStatusCode, $"Request failed: {path}");
-            Assert.IsTrue(response.Headers.Contains("X-Xss-Protection"), path);
+            Assert.IsTrue(response.Headers.Contains("X-Download-Options"), path);
         }
 
         [Test]
-        public async Task XXssProtection_Disabled_NoHeaders()
+        public async Task XDownloadOptions_Disabled_NoHeaders()
         {
-            const string path = "/XXssProtection/Disabled";
+            const string path = "/XDownloadOptions/Disabled";
 
             var response = await _httpClient.GetAsync(path);
 
             Assert.IsTrue(response.IsSuccessStatusCode, $"Request failed: {path}");
-            Assert.IsFalse(response.Headers.Contains("X-Xss-Protection"), path);
+            Assert.IsFalse(response.Headers.Contains("X-Download-Options"), path);
         }
     }
 }

@@ -2,7 +2,7 @@
 
 using System.Net.Http;
 using System.Threading.Tasks;
-using Microsoft.AspNet.TestHost;
+using Microsoft.AspNetCore.TestHost;
 using NUnit.Framework;
 using NWebsec.Mvc.FunctionalTests.Plumbing;
 

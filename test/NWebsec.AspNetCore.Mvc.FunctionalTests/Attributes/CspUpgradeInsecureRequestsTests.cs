@@ -4,9 +4,9 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
-using Microsoft.AspNet.Http;
-using Microsoft.AspNet.Http.Extensions;
-using Microsoft.AspNet.TestHost;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.Extensions;
+using Microsoft.AspNetCore.TestHost;
 using NUnit.Framework;
 using NWebsec.Mvc.FunctionalTests.Plumbing;
 

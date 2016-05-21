@@ -1,16 +1,16 @@
 // Copyright (c) André N. Klingsheim. See License.txt in the project root for license information.
 
+using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
-using Microsoft.AspNet.TestHost;
-
+using Microsoft.AspNetCore.TestHost;
 using NUnit.Framework;
 using NWebsec.Mvc.FunctionalTests.Plumbing;
 
 namespace NWebsec.Mvc.FunctionalTests.Attributes
 {
     [TestFixture]
-    public class XContentTypeOptionsTests
+    public class CspTests
     {
         private TestServer _server;
         private HttpClient _httpClient;
@@ -29,25 +29,25 @@ namespace NWebsec.Mvc.FunctionalTests.Attributes
         }
 
         [Test]
-        public async Task XContentTypeOptions_Enabled_SetsHeaders()
+        public async Task Csp_Enabled_SetsHeaders()
         {
-            const string path = "/XContentTypeOptions";
+            const string path = "/Csp";
 
             var response = await _httpClient.GetAsync(path);
 
             Assert.IsTrue(response.IsSuccessStatusCode, $"Request failed: {path}");
-            Assert.IsTrue(response.Headers.Contains("X-Content-Type-Options"), path);
+            var value = response.Headers.Single(h => h.Key.Equals("Content-Security-Policy")).Value.Single();
+            Assert.AreEqual("default-src 'self'", value, path);
         }
-
         [Test]
-        public async Task XContentTypeOptions_Disabled_NoHeaders()
+        public async Task Csp_Disabled_NoHeaders()
         {
-            const string path = "/XContentTypeOptions/Disabled";
+            const string path = "/Csp/Disabled";
 
             var response = await _httpClient.GetAsync(path);
 
             Assert.IsTrue(response.IsSuccessStatusCode, $"Request failed: {path}");
-            Assert.IsFalse(response.Headers.Contains("X-Content-Type-Options"), path);
+            Assert.IsFalse(response.Headers.Contains("Content-Security-Policy"), path);
         }
     }
 }

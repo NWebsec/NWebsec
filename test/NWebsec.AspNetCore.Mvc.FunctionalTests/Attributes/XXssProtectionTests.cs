@@ -2,14 +2,14 @@
 
 using System.Net.Http;
 using System.Threading.Tasks;
-using Microsoft.AspNet.TestHost;
+using Microsoft.AspNetCore.TestHost;
 using NUnit.Framework;
 using NWebsec.Mvc.FunctionalTests.Plumbing;
 
 namespace NWebsec.Mvc.FunctionalTests.Attributes
 {
     [TestFixture]
-    public class XFrameOptionsTests
+    public class XXssProtectionTests
     {
         private TestServer _server;
         private HttpClient _httpClient;
@@ -28,25 +28,25 @@ namespace NWebsec.Mvc.FunctionalTests.Attributes
         }
 
         [Test]
-        public async Task XFrameOptions_Enabled_SetsHeaders()
+        public async Task XXssProtection_Enabled_SetsHeaders()
         {
-            const string path = "/XFrameOptions";
+            const string path = "/XXssProtection";
 
             var response = await _httpClient.GetAsync(path);
 
             Assert.IsTrue(response.IsSuccessStatusCode, $"Request failed: {path}");
-            Assert.IsTrue(response.Headers.Contains("X-Frame-Options"), path);
+            Assert.IsTrue(response.Headers.Contains("X-Xss-Protection"), path);
         }
 
         [Test]
-        public async Task XFrameOptions_Disabled_NoHeaders()
+        public async Task XXssProtection_Disabled_NoHeaders()
         {
-            const string path = "/XFrameOptions/Disabled";
+            const string path = "/XXssProtection/Disabled";
 
             var response = await _httpClient.GetAsync(path);
 
             Assert.IsTrue(response.IsSuccessStatusCode, $"Request failed: {path}");
-            Assert.IsFalse(response.Headers.Contains("X-Frame-Options"), path);
+            Assert.IsFalse(response.Headers.Contains("X-Xss-Protection"), path);
         }
     }
 }
