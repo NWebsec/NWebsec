@@ -1,38 +1,30 @@
 ﻿// Copyright (c) André N. Klingsheim. See License.txt in the project root for license information.
 
-using Microsoft.AspNet.Builder;
-using Microsoft.AspNet.Http;
+using Microsoft.AspNetCore.Http;
 using NWebsec.Core.HttpHeaders;
 using NWebsec.Core.HttpHeaders.Configuration;
-using NWebsec.Middleware.Helpers;
 
 namespace NWebsec.Middleware.Middleware
 {
 
-    public class HstsMiddleware : MiddlewareBase
+    public class HpkpMiddleware : MiddlewareBase
     {
-        private readonly IHstsConfiguration _config;
+        private readonly IHpkpConfiguration _config;
         private readonly HeaderResult _headerResult;
-        private const string Https = "https";
 
-        public HstsMiddleware(RequestDelegate next, HstsOptions options)
+        public HpkpMiddleware(RequestDelegate next, HpkpOptions options, bool reportOnly)
             : base(next)
         {
-            _config = options;
+            _config = options.Config;
 
             var headerGenerator = new HeaderGenerator();
-            _headerResult = headerGenerator.CreateHstsResult(_config);
+            _headerResult = headerGenerator.CreateHpkpResult(_config, reportOnly);
         }
 
         internal override void PreInvokeNext(HttpContext context)
         {
 
             if (_config.HttpsOnly && !context.Request.IsHttps)
-            {
-                return;
-            }
-
-            if (_config.UpgradeInsecureRequests && !CspUpgradeHelper.UaSupportsUpgradeInsecureRequests(context))
             {
                 return;
             }

@@ -1,8 +1,7 @@
 ﻿// Copyright (c) André N. Klingsheim. See License.txt in the project root for license information.
 
 using System;
-using Microsoft.AspNet.Builder;
-using Microsoft.AspNet.Http;
+using Microsoft.AspNetCore.Http;
 using NWebsec.Core;
 
 namespace NWebsec.Middleware.Middleware

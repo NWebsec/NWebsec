@@ -6,7 +6,7 @@ using NWebsec.Middleware;
 using NWebsec.Middleware.Middleware;
 
 // ReSharper disable once CheckNamespace
-namespace Microsoft.AspNet.Builder
+namespace Microsoft.AspNetCore.Builder //TODO check whether this namespace makes sense.
 {
     public static class ApplicationBuilderExtensions
     {
