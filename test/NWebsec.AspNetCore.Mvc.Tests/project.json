@@ -1,0 +1,16 @@
+{
+  "version": "1.0.0-*",
+  "buildOptions": {
+    "emitEntryPoint": true
+  },
+
+  "dependencies": {
+    "Moq": "4.2.1510.2205",
+    "NUnitLite": "3.2.1",
+    "NWebsec.AspNetCore.Mvc": "1.0.0-*"
+  },
+
+  "frameworks": {
+    "net451": { }
+  }
+}
