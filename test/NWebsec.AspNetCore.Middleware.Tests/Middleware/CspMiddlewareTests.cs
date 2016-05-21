@@ -4,9 +4,10 @@ using System;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
-using Microsoft.AspNet.Builder;
-using Microsoft.AspNet.Http;
-using Microsoft.AspNet.TestHost;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.TestHost;
 using NUnit.Framework;
 
 namespace NWebsec.Middleware.Tests.Middleware
@@ -18,7 +19,7 @@ namespace NWebsec.Middleware.Tests.Middleware
         [Test]
         public async Task Csp_UpgradeEnabledAndUpgradableRequest_Redirects([Values("http://localhost/", "http://localhost/BasePath/")] string basePath)
         {
-            using (var server = TestServer.Create(app =>
+            using (var server = new TestServer(new WebHostBuilder().Configure(app =>
             {
                 app.UseCsp(config => config.UpgradeInsecureRequests());
                 app.Run(async context =>
@@ -26,7 +27,7 @@ namespace NWebsec.Middleware.Tests.Middleware
                     context.Response.ContentType = "text/plain";
                     await context.Response.WriteAsync("Hello world");
                 });
-            }))
+            })))
             {
                 server.BaseAddress = new Uri(basePath);
 
@@ -43,14 +44,14 @@ namespace NWebsec.Middleware.Tests.Middleware
         [Test]
         public async Task Csp_UpgradeEnabledWithPortAndUpgradableRequest_Redirects()
         {
-            using (var server = TestServer.Create(app =>
+            using (var server = new TestServer(new WebHostBuilder().Configure(app =>
             {
                 app.UseCsp(config => config.UpgradeInsecureRequests(4321));
                 app.Run(async ctx =>
                 {
                     await ctx.Response.WriteAsync("YOLO");
                 });
-            }))
+            })))
             {
                 var httpClient = server.CreateClient();
                 httpClient.DefaultRequestHeaders.Add("Upgrade-Insecure-Requests", "1");
@@ -65,14 +66,14 @@ namespace NWebsec.Middleware.Tests.Middleware
         [Test]
         public async Task Csp_UpgradeEnabledAndHttpsRequest_ReturnsHeader()
         {
-            using (var server = TestServer.Create(app =>
+            using (var server = new TestServer(new WebHostBuilder().Configure(app =>
             {
                 app.UseCsp(config => config.UpgradeInsecureRequests());
                 app.Run(async ctx =>
                 {
                     await ctx.Response.WriteAsync("YOLO");
                 });
-            }))
+            })))
             {
                 var httpClient = server.CreateClient();
                 httpClient.DefaultRequestHeaders.Add("Upgrade-Insecure-Requests", "1");
@@ -88,14 +89,14 @@ namespace NWebsec.Middleware.Tests.Middleware
         [Test]
         public async Task Csp_UpgradeEnabledAndOldUA_ReturnsHeader()
         {
-            using (var server = TestServer.Create(app =>
+            using (var server = new TestServer(new WebHostBuilder().Configure(app =>
             {
                 app.UseCsp(config => config.UpgradeInsecureRequests());
                 app.Run(async ctx =>
                 {
                     await ctx.Response.WriteAsync("YOLO");
                 });
-            }))
+            })))
             {
                 var httpClient = server.CreateClient();
                 //No upgrade header from client
@@ -111,14 +112,14 @@ namespace NWebsec.Middleware.Tests.Middleware
         [Test]
         public async Task Csp_UpgradeDisabledAndHttpRequest_ReturnsHeader()
         {
-            using (var server = TestServer.Create(app =>
+            using (var server = new TestServer(new WebHostBuilder().Configure(app =>
             {
                 app.UseCsp(config => config.DefaultSources(s => s.Self()));
                 app.Run(async ctx =>
                 {
                     await ctx.Response.WriteAsync("YOLO");
                 });
-            }))
+            })))
             {
                 var httpClient = server.CreateClient();
                 httpClient.DefaultRequestHeaders.Add("Upgrade-Insecure-Requests", "1");
@@ -135,14 +136,14 @@ namespace NWebsec.Middleware.Tests.Middleware
         [Test]
         public async Task Csp_UpgradeEnabledAndHttpRequestWithInvalidHeader_ReturnsHeader()
         {
-            using (var server = TestServer.Create(app =>
+            using (var server = new TestServer(new WebHostBuilder().Configure(app =>
             {
                 app.UseCsp(config => config.UpgradeInsecureRequests());
                 app.Run(async ctx =>
                 {
                     await ctx.Response.WriteAsync("YOLO");
                 });
-            }))
+            })))
             {
                 var httpClient = server.CreateClient();
                 httpClient.DefaultRequestHeaders.Add("Upgrade-Insecure-Requests", "2");

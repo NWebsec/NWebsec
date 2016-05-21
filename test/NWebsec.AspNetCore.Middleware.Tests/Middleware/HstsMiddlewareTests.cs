@@ -1,9 +1,10 @@
 ﻿// Copyright (c) André N. Klingsheim. See License.txt in the project root for license information.
 
 using System.Threading.Tasks;
-using Microsoft.AspNet.Builder;
-using Microsoft.AspNet.Http;
-using Microsoft.AspNet.TestHost;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.TestHost;
 using NUnit.Framework;
 
 namespace NWebsec.Middleware.Tests.Middleware
@@ -15,15 +16,15 @@ namespace NWebsec.Middleware.Tests.Middleware
         [Test]
         public async Task Hsts_HttpAndNoHttpsOnly_NoHeader()
         {
-            using (var server = TestServer.Create(app =>
-            {
-                app.UseHsts(config => config.MaxAge(1));
-                app.Run(async ctx =>
-                {
+            using (var server = new TestServer(new WebHostBuilder().Configure(app =>
+           {
+               app.UseHsts(config => config.MaxAge(1));
+               app.Run(async ctx =>
+               {
 
-                    await ctx.Response.WriteAsync("Hello world using OWIN TestServer");
-                });
-            }))
+                   await ctx.Response.WriteAsync("Hello world using OWIN TestServer");
+               });
+           })))
             {
                 var httpClient = server.CreateClient();
                 var response = await httpClient.GetAsync("http://localhost/");
@@ -35,7 +36,7 @@ namespace NWebsec.Middleware.Tests.Middleware
         [Test]
         public async Task Hsts_HttpsAndNoHttpsOnly_AddsHeader()
         {
-            using (var server = TestServer.Create(app =>
+            using (var server = new TestServer(new WebHostBuilder().Configure(app =>
             {
                 app.UseHsts(config => config.MaxAge(1));
                 app.Run(async ctx =>
@@ -43,7 +44,7 @@ namespace NWebsec.Middleware.Tests.Middleware
 
                     await ctx.Response.WriteAsync("Hello world using OWIN TestServer");
                 });
-            }))
+            })))
             {
                 var httpClient = server.CreateClient();
                 var response = await httpClient.GetAsync("https://localhost/");
@@ -55,7 +56,7 @@ namespace NWebsec.Middleware.Tests.Middleware
         [Test]
         public async Task Hsts_HttpAndHttpsOnly_NoHeader()
         {
-            using (var server = TestServer.Create(app =>
+            using (var server = new TestServer(new WebHostBuilder().Configure(app =>
             {
                 app.UseHsts(config => config.MaxAge(1));
                 app.Run(async ctx =>
@@ -63,7 +64,7 @@ namespace NWebsec.Middleware.Tests.Middleware
 
                     await ctx.Response.WriteAsync("Hello world using OWIN TestServer");
                 });
-            }))
+            })))
             {
                 var httpClient = server.CreateClient();
                 var response = await httpClient.GetAsync("http://localhost/");
@@ -75,7 +76,7 @@ namespace NWebsec.Middleware.Tests.Middleware
         [Test]
         public async Task Hsts_HttpsAndHttpsOnly_AddsHeader()
         {
-            using (var server = TestServer.Create(app =>
+            using (var server = new TestServer(new WebHostBuilder().Configure(app =>
             {
                 app.UseHsts(config => config.MaxAge(1));
                 app.Run(async ctx =>
@@ -83,7 +84,7 @@ namespace NWebsec.Middleware.Tests.Middleware
 
                     await ctx.Response.WriteAsync("Hello world using OWIN TestServer");
                 });
-            }))
+            })))
             {
                 var httpClient = server.CreateClient();
                 var response = await httpClient.GetAsync("https://localhost/");
@@ -95,7 +96,7 @@ namespace NWebsec.Middleware.Tests.Middleware
         [Test]
         public async Task Hsts_HttpsAndUpgradeRequestWithUaSupport_AddsHeader()
         {
-            using (var server = TestServer.Create(app =>
+            using (var server = new TestServer(new WebHostBuilder().Configure(app =>
             {
                 app.UseHsts(config => config.MaxAge(1).UpgradeInsecureRequests());
                 app.Run(async ctx =>
@@ -103,7 +104,7 @@ namespace NWebsec.Middleware.Tests.Middleware
 
                     await ctx.Response.WriteAsync("Hello world using OWIN TestServer");
                 });
-            }))
+            })))
             {
                 var httpClient = server.CreateClient();
                 httpClient.DefaultRequestHeaders.Add("Upgrade-Insecure-Requests", "1");
@@ -116,7 +117,7 @@ namespace NWebsec.Middleware.Tests.Middleware
         [Test]
         public async Task Hsts_HttpsAndUpgradeRequestWithoutUaSupport_NoHeader()
         {
-            using (var server = TestServer.Create(app =>
+           using (var server = new TestServer(new WebHostBuilder().Configure(app =>
             {
                 app.UseHsts(config => config.MaxAge(1).UpgradeInsecureRequests());
                 app.Run(async ctx =>
@@ -124,7 +125,7 @@ namespace NWebsec.Middleware.Tests.Middleware
 
                     await ctx.Response.WriteAsync("Hello world using OWIN TestServer");
                 });
-            }))
+            })))
             {
                 var httpClient = server.CreateClient();
                 var response = await httpClient.GetAsync("https://localhost/");
