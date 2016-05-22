@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.TestHost;
 using NUnit.Framework;
 using NWebsec.AspNetCore.Middleware;
 
-namespace NWebsec.Middleware.Tests.Middleware
+namespace NWebsec.AspNetCore.Middleware.Tests.Middleware
 {
     [TestFixture]
     public class CspMiddlewareTests

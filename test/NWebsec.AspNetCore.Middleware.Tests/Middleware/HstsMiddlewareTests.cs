@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.TestHost;
 using NUnit.Framework;
 
-namespace NWebsec.Middleware.Tests.Middleware
+namespace NWebsec.AspNetCore.Middleware.Tests.Middleware
 {
     [TestFixture]
     public class HstsMiddlewareTests

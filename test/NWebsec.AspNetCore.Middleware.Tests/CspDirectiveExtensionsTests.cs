@@ -3,9 +3,8 @@
 using System;
 using System.Linq;
 using NUnit.Framework;
-using NWebsec.AspNetCore.Middleware;
 
-namespace NWebsec.Middleware.Tests
+namespace NWebsec.AspNetCore.Middleware.Tests
 {
     [TestFixture]
     public class CspDirectiveExtensionsTests

@@ -6,7 +6,7 @@ using System.Linq;
 using NUnit.Framework;
 using NWebsec.AspNetCore.Middleware.Core;
 
-namespace NWebsec.Middleware.Tests.Core
+namespace NWebsec.AspNetCore.Middleware.Tests.Core
 {
     [TestFixture]
     public class ResponseHeadersTests
