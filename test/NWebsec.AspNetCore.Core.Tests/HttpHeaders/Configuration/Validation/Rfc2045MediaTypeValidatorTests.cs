@@ -4,7 +4,7 @@ using System;
 using NUnit.Framework;
 using NWebsec.AspNetCore.Core.HttpHeaders.Configuration.Validation;
 
-namespace NWebsec.Core.Tests.HttpHeaders.Configuration.Validation
+namespace NWebsec.AspNetCore.Core.Tests.HttpHeaders.Configuration.Validation
 {
     [TestFixture]
     public class Rfc2045MediaTypeValidatorTests

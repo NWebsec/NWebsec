@@ -4,7 +4,7 @@ using System;
 using NUnit.Framework;
 using NWebsec.AspNetCore.Core.HttpHeaders.Csp;
 
-namespace NWebsec.Core.Tests.HttpHeaders.Csp
+namespace NWebsec.AspNetCore.Core.Tests.HttpHeaders.Csp
 {
     [TestFixture]
     public class CspUriSourceTests

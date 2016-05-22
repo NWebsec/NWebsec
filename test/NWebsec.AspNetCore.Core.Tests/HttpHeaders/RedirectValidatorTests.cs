@@ -7,7 +7,7 @@ using NWebsec.AspNetCore.Core;
 using NWebsec.AspNetCore.Core.Exceptions;
 using NWebsec.AspNetCore.Core.HttpHeaders.Configuration;
 
-namespace NWebsec.Core.Tests.HttpHeaders
+namespace NWebsec.AspNetCore.Core.Tests.HttpHeaders
 {
     [TestFixture]
     public class RedirectValidatorTests

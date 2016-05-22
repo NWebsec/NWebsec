@@ -4,7 +4,7 @@ using NUnit.Framework;
 using NWebsec.AspNetCore.Core.HttpHeaders;
 using NWebsec.AspNetCore.Core.HttpHeaders.Configuration;
 
-namespace NWebsec.Core.Tests.HttpHeaders
+namespace NWebsec.AspNetCore.Core.Tests.HttpHeaders
 {
     [TestFixture]
     public class HeaderGeneratorCspTests

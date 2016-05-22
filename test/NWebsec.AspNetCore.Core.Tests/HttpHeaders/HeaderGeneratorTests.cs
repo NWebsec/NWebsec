@@ -3,7 +3,7 @@
 using NUnit.Framework;
 using NWebsec.AspNetCore.Core.HttpHeaders;
 
-namespace NWebsec.Core.Tests.HttpHeaders
+namespace NWebsec.AspNetCore.Core.Tests.HttpHeaders
 {
     [TestFixture]
     public partial class HeaderGeneratorTests

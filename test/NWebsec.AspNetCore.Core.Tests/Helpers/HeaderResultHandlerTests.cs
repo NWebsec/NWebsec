@@ -7,7 +7,7 @@ using NUnit.Framework;
 using NWebsec.AspNetCore.Core.Helpers;
 using NWebsec.AspNetCore.Core.HttpHeaders;
 
-namespace NWebsec.Core.Tests.Helpers
+namespace NWebsec.AspNetCore.Core.Tests.Helpers
 {
     [TestFixture]
     public class HeaderResultHandlerTests
