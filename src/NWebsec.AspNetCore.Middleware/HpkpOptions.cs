@@ -25,10 +25,10 @@ namespace NWebsec.AspNetCore.Middleware
         // ReSharper disable once CSharpWarnings::CS0109
         public IFluentHpkpOptions MaxAge(int days = 0, int hours = 0, int minutes = 0, int seconds = 0)
         {
-            if (days < 0) throw new ArgumentOutOfRangeException("days", "Value must be equal to or larger than 0.");
-            if (hours < 0) throw new ArgumentOutOfRangeException("hours", "Value must be equal to or larger than 0.");
-            if (minutes < 0) throw new ArgumentOutOfRangeException("minutes", "Value must be equal to or larger than 0.");
-            if (seconds < 0) throw new ArgumentOutOfRangeException("seconds", "Value must be equal to or larger than 0.");
+            if (days < 0) throw new ArgumentOutOfRangeException(nameof(days), "Value must be equal to or larger than 0.");
+            if (hours < 0) throw new ArgumentOutOfRangeException(nameof(hours), "Value must be equal to or larger than 0.");
+            if (minutes < 0) throw new ArgumentOutOfRangeException(nameof(minutes), "Value must be equal to or larger than 0.");
+            if (seconds < 0) throw new ArgumentOutOfRangeException(nameof(seconds), "Value must be equal to or larger than 0.");
 
             Config.MaxAge = new TimeSpan(days, hours, minutes, seconds);
             return this;
@@ -48,7 +48,7 @@ namespace NWebsec.AspNetCore.Middleware
             }
             catch (Exception e)
             {
-                throw new ArgumentException(e.Message, "reportUri");
+                throw new ArgumentException(e.Message, nameof(reportUri));
             }
 
             Config.ReportUri = reportUri;
@@ -71,7 +71,7 @@ namespace NWebsec.AspNetCore.Middleware
                 }
                 catch (Exception e)
                 {
-                    throw new ArgumentException(e.Message, "pins");
+                    throw new ArgumentException(e.Message, nameof(pins));
                 }
 
                 var formattedPin = "sha256=\"" + pin + "\"";

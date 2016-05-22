@@ -9,9 +9,6 @@ namespace NWebsec.AspNetCore.Mvc.HttpHeaders.Csp
     /// </summary>
     public class CspSandboxAttribute : CspSandboxAttributeBase
     {
-        protected override bool ReportOnly
-        {
-            get { return false; }
-        }
+        protected override bool ReportOnly => false;
     }
 }

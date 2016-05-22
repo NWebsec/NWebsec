@@ -11,7 +11,7 @@ namespace NWebsec.AspNetCore.Mvc.HttpHeaders
     /// <summary>
     /// Specifies whether the X-Download-Options security header should be set in the HTTP response.
     /// </summary>
-    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, Inherited = true, AllowMultiple = false)]
+    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]
     public class XDownloadOptionsAttribute : HttpHeaderAttributeBase
     {
         private readonly HeaderConfigurationOverrideHelper _headerConfigurationOverrideHelper;

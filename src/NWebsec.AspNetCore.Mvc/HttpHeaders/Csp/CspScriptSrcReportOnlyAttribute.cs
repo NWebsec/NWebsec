@@ -7,9 +7,6 @@ namespace NWebsec.AspNetCore.Mvc.HttpHeaders.Csp
     /// </summary>
     public class CspScriptSrcReportOnlyAttribute : CspScriptSrcAttribute
     {
-        protected override bool ReportOnly
-        {
-            get { return true; }
-        }
+        protected override bool ReportOnly => true;
     }
 }

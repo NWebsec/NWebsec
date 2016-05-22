@@ -10,14 +10,8 @@ namespace NWebsec.AspNetCore.Mvc.HttpHeaders.Csp
     /// </summary>
     public class CspFormActionAttribute : CspDirectiveAttributeBase
     {
-        protected override CspDirectives Directive
-        {
-            get { return CspDirectives.FormAction; }
-        }
+        protected override CspDirectives Directive => CspDirectives.FormAction;
 
-        protected override bool ReportOnly
-        {
-            get { return false; }
-        }
+        protected override bool ReportOnly => false;
     }
 }

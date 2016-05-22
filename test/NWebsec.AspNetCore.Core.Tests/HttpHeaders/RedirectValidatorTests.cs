@@ -3,7 +3,6 @@
 using System;
 using System.Linq;
 using NUnit.Framework;
-using NWebsec.AspNetCore.Core;
 using NWebsec.AspNetCore.Core.Exceptions;
 using NWebsec.AspNetCore.Core.HttpHeaders.Configuration;
 

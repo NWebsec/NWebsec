@@ -16,14 +16,8 @@ namespace NWebsec.AspNetCore.Mvc.HttpHeaders.Csp
         /// </summary>
         public bool UnsafeInline { get { throw new NotSupportedException(); } set { DirectiveConfig.UnsafeInline = value; } }
 
-        protected override CspDirectives Directive
-        {
-            get { return CspDirectives.StyleSrc; }
-        }
+        protected override CspDirectives Directive => CspDirectives.StyleSrc;
 
-        protected override bool ReportOnly
-        {
-            get { return false; }
-        }
+        protected override bool ReportOnly => false;
     }
 }

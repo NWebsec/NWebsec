@@ -10,14 +10,8 @@ namespace NWebsec.AspNetCore.Mvc.HttpHeaders.Csp
     /// </summary>
     public class CspFontSrcAttribute : CspDirectiveAttributeBase
     {
-        protected override CspDirectives Directive
-        {
-            get { return CspDirectives.FontSrc; }
-        }
+        protected override CspDirectives Directive => CspDirectives.FontSrc;
 
-        protected override bool ReportOnly
-        {
-            get { return false; }
-        }
+        protected override bool ReportOnly => false;
     }
 }

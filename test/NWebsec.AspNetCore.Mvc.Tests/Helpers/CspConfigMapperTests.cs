@@ -21,7 +21,7 @@ namespace NWebsec.AspNetCore.Mvc.Tests.Helpers
         }
 
         [Test]
-        public void GetCspDirectiveConfig_CommonCspDirectives_NoException([ValueSource(typeof(CspCommonDirectives), "Directives")] CspDirectives directive)
+        public void GetCspDirectiveConfig_CommonCspDirectives_NoException([ValueSource(typeof(CspCommonDirectives), nameof(CspCommonDirectives.Directives))] CspDirectives directive)
         {
             var config = new CspConfiguration();
 
@@ -29,7 +29,7 @@ namespace NWebsec.AspNetCore.Mvc.Tests.Helpers
         }
 
         [Test]
-        public void SetCspDirectiveConfig_CommonCspDirectives_NoException([ValueSource(typeof(CspCommonDirectives), "Directives")] CspDirectives directive)
+        public void SetCspDirectiveConfig_CommonCspDirectives_NoException([ValueSource(typeof(CspCommonDirectives), nameof(CspCommonDirectives.Directives))] CspDirectives directive)
         {
             var config = new CspConfiguration();
             var directiveConfig = new CspDirectiveConfiguration();

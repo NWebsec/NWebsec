@@ -9,9 +9,6 @@ namespace NWebsec.AspNetCore.Mvc.HttpHeaders.Csp
     /// </summary>
     public class CspPluginTypesAttribute : CspPluginTypesAttributeBase
     {
-        protected override bool ReportOnly
-        {
-            get { return false; }
-        }
+        protected override bool ReportOnly => false;
     }
 }

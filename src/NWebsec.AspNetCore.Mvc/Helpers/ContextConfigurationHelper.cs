@@ -68,11 +68,7 @@ namespace NWebsec.AspNetCore.Mvc.Helpers
 
         private ConfigurationOverrides GetConfigOverrides(NWebsecContext context)
         {
-            if (context.ConfigOverrides == null)
-            {
-                context.ConfigOverrides = new ConfigurationOverrides();
-            }
-            return context.ConfigOverrides;
+            return context.ConfigOverrides ?? (context.ConfigOverrides = new ConfigurationOverrides());
         }
     }
 }

@@ -127,7 +127,7 @@ namespace NWebsec.AspNetCore.Mvc.Helpers
         {
             var overrides = _contextConfigurationHelper.GetCspConfigurationOverride(context, false, false);
 
-            if (overrides.ScriptSrcDirective != null && overrides.ScriptSrcDirective.Nonce != null)
+            if (overrides.ScriptSrcDirective?.Nonce != null)
             {
                 return overrides.ScriptSrcDirective.Nonce;
             }
@@ -144,7 +144,7 @@ namespace NWebsec.AspNetCore.Mvc.Helpers
         {
             var overrides = _contextConfigurationHelper.GetCspConfigurationOverride(context, false, false);
 
-            if (overrides.StyleSrcDirective != null && overrides.StyleSrcDirective.Nonce != null)
+            if (overrides.StyleSrcDirective?.Nonce != null)
             {
                 return overrides.StyleSrcDirective.Nonce;
             }

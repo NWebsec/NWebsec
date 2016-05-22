@@ -17,7 +17,7 @@ namespace NWebsec.AspNetCore.Middleware
         /// <exception cref="InvalidOperationException">Thrown when sources have already been configured for the directive.</exception>
         public static void None<T>(this T directive) where T : class, ICspDirectiveBasicConfiguration
         {
-            if (directive == null) throw new ArgumentNullException("directive");
+            if (directive == null) throw new ArgumentNullException(nameof(directive));
 
             ValidateBeforeSettingNoneSource(directive);
             directive.NoneSrc = true;
@@ -31,7 +31,7 @@ namespace NWebsec.AspNetCore.Middleware
         /// <returns>The CSP directive configuration object.</returns>
         public static T Self<T>(this T directive) where T : class, ICspDirectiveBasicConfiguration
         {
-            if (directive == null) throw new ArgumentNullException("directive");
+            if (directive == null) throw new ArgumentNullException(nameof(directive));
 
             directive.SelfSrc = true;
             return directive;
@@ -46,8 +46,8 @@ namespace NWebsec.AspNetCore.Middleware
         /// <returns>The CSP directive configuration object.</returns>
         public static T CustomSources<T>(this T directive, params string[] sources) where T : class, ICspDirectiveBasicConfiguration
         {
-            if (directive == null) throw new ArgumentNullException("directive");
-            if (sources.Length == 0) throw new ArgumentException("You must supply at least one source.", "sources");
+            if (directive == null) throw new ArgumentNullException(nameof(directive));
+            if (sources.Length == 0) throw new ArgumentException("You must supply at least one source.", nameof(sources));
 
             try
             {
@@ -55,7 +55,7 @@ namespace NWebsec.AspNetCore.Middleware
             }
             catch (InvalidCspSourceException e)
             {
-                throw new ArgumentException("Invalid source. Details: " + e.Message, "sources", e);
+                throw new ArgumentException("Invalid source. Details: " + e.Message, nameof(sources), e);
             }
 
             return directive;
@@ -69,7 +69,7 @@ namespace NWebsec.AspNetCore.Middleware
         /// <returns>The CSP directive configuration object.</returns>
         public static T UnsafeInline<T>(this T directive) where T : class, ICspDirectiveUnsafeInlineConfiguration
         {
-            if (directive == null) throw new ArgumentNullException("directive");
+            if (directive == null) throw new ArgumentNullException(nameof(directive));
 
             directive.UnsafeInlineSrc = true;
             return directive;
@@ -83,7 +83,7 @@ namespace NWebsec.AspNetCore.Middleware
         /// <returns>The CSP directive configuration object.</returns>
         public static T UnsafeEval<T>(this T directive) where T : class, ICspDirectiveConfiguration
         {
-            if (directive == null) throw new ArgumentNullException("directive");
+            if (directive == null) throw new ArgumentNullException(nameof(directive));
 
             directive.UnsafeEvalSrc = true;
             return directive;

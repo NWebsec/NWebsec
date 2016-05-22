@@ -10,18 +10,9 @@ namespace NWebsec.AspNetCore.Mvc.HttpHeaders.Internals
         private static readonly Object MarkerObject = new Object();
         private string _contextKey;
 
-        private string ContextKey
-        {
-            get
-            {
-                if (_contextKey == null)
-                {
-                    _contextKey = "NWebsecHeaderSet" + ContextKeyIdentifier;
-                }
-                return _contextKey;
-            }
-        }
-        internal virtual string ContextKeyIdentifier { get { return GetType().Name; } }
+        private string ContextKey => _contextKey ?? (_contextKey = "NWebsecHeaderSet" + ContextKeyIdentifier);
+
+        internal virtual string ContextKeyIdentifier => GetType().Name;
 
 
         public override void OnActionExecuted(ActionExecutedContext filterContext)

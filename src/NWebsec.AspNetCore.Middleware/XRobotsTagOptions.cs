@@ -11,7 +11,7 @@ namespace NWebsec.AspNetCore.Middleware
             Config = new XRobotsTagConfiguration();
         }
 
-        internal XRobotsTagConfiguration Config { get; private set; }
+        internal XRobotsTagConfiguration Config { get; }
 
         public IFluentXRobotsTagOptions NoIndex()
         {

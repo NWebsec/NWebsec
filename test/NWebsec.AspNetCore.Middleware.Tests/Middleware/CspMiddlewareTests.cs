@@ -9,7 +9,6 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.TestHost;
 using NUnit.Framework;
-using NWebsec.AspNetCore.Middleware;
 
 namespace NWebsec.AspNetCore.Middleware.Tests.Middleware
 {

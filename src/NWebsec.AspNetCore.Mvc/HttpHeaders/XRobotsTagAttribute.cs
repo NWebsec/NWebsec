@@ -12,7 +12,7 @@ namespace NWebsec.AspNetCore.Mvc.HttpHeaders
     /// <summary>
     /// Specifies whether the X-Robots-Tag header should be set in the HTTP response.
     /// </summary>
-    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, Inherited = true, AllowMultiple = false)]
+    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]
     public class XRobotsTagAttribute : HttpHeaderAttributeBase
     {
         private readonly XRobotsTagConfiguration _config;

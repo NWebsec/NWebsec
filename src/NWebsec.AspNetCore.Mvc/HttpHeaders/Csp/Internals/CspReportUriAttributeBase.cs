@@ -26,10 +26,7 @@ namespace NWebsec.AspNetCore.Mvc.HttpHeaders.Csp.Internals
             _headerOverrideHelper = new HeaderOverrideHelper();
         }
 
-        internal sealed override string ContextKeyIdentifier
-        {
-            get { return ReportOnly ? "CspReportOnly" : "Csp"; }
-        }
+        internal sealed override string ContextKeyIdentifier => ReportOnly ? "CspReportOnly" : "Csp";
 
         /// <summary>
         /// Gets or sets whether the report-uri directive is enabled in the CSP header. The default is true.

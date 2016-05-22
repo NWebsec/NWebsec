@@ -20,7 +20,7 @@ namespace NWebsec.AspNetCore.Middleware
 
         public void Uris(params string[] reportUris)
         {
-            if (reportUris.Length == 0) throw new ArgumentException("You must supply at least one report URI.", "reportUris");
+            if (reportUris.Length == 0) throw new ArgumentException("You must supply at least one report URI.", nameof(reportUris));
 
             var reportUriList = new List<string>();
 

@@ -7,9 +7,6 @@ namespace NWebsec.AspNetCore.Mvc.HttpHeaders.Csp
     /// </summary>
     public class CspDefaultSrcReportOnlyAttribute : CspDefaultSrcAttribute
     {
-        protected override bool ReportOnly
-        {
-            get { return true; }
-        }
+        protected override bool ReportOnly => true;
     }
 }

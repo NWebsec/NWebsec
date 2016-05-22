@@ -8,12 +8,9 @@ namespace NWebsec.AspNetCore.Mvc.HttpHeaders.Csp
     /// <summary>
     /// When applied to a controller or action method, enables the Content-Security-Policy header (assuming there are directives enabled). 
     /// </summary>
-    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, Inherited = false, AllowMultiple = false)]
+    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, Inherited = false)]
     public class CspAttribute : CspAttributeBase
     {
-        protected override bool ReportOnly
-        {
-            get { return false; }
-        }
+        protected override bool ReportOnly => false;
     }
 }

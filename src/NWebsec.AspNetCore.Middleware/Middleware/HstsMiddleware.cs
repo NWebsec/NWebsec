@@ -12,7 +12,6 @@ namespace NWebsec.AspNetCore.Middleware.Middleware
     {
         private readonly IHstsConfiguration _config;
         private readonly HeaderResult _headerResult;
-        private const string Https = "https";
 
         public HstsMiddleware(RequestDelegate next, HstsOptions options)
             : base(next)

@@ -11,7 +11,7 @@ namespace NWebsec.AspNetCore.Mvc.HttpHeaders.Csp.Internals
     /// <summary>
     /// This is an abstract class which cannot be used directly.
     /// </summary>
-    [AttributeUsage(AttributeTargets.Assembly, Inherited = false)]
+    [AttributeUsage(AttributeTargets.Assembly)]
     public abstract class CspAttributeBase : HttpHeaderAttributeBase
     {
         private readonly CspHeaderConfiguration _config;
@@ -25,10 +25,7 @@ namespace NWebsec.AspNetCore.Mvc.HttpHeaders.Csp.Internals
             _headerOverrideHelper = new HeaderOverrideHelper();
         }
 
-        internal sealed override string ContextKeyIdentifier
-        {
-            get { return ReportOnly ? "CspReportOnly" : "Csp"; }
-        }
+        internal sealed override string ContextKeyIdentifier => ReportOnly ? "CspReportOnly" : "Csp";
 
         /// <summary>
         /// Gets or sets whether the header is set in the HTTP response. The default is true.

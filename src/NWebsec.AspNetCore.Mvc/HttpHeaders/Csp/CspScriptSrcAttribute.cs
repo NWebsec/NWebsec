@@ -20,14 +20,8 @@ namespace NWebsec.AspNetCore.Mvc.HttpHeaders.Csp
         /// </summary>
         public bool UnsafeEval { get { throw new NotSupportedException(); } set { DirectiveConfig.UnsafeEval = value; } }
 
-        protected override CspDirectives Directive
-        {
-            get { return CspDirectives.ScriptSrc; }
-        }
+        protected override CspDirectives Directive => CspDirectives.ScriptSrc;
 
-        protected override bool ReportOnly
-        {
-            get { return false; }
-        }
+        protected override bool ReportOnly => false;
     }
 }

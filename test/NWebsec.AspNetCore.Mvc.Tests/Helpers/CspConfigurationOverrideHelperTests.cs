@@ -101,7 +101,7 @@ namespace NWebsec.AspNetCore.Mvc.Tests.Helpers
 
         [Test]
         public void SetCspDirectiveOverride_NoCurrentOverride_ClonesConfigFromContextAndOverrides([Values(false, true)]bool reportOnly,
-            [ValueSource(typeof(CspCommonDirectives), "Directives")] CspDirectives directive)
+            [ValueSource(typeof(CspCommonDirectives), nameof(CspCommonDirectives.Directives))] CspDirectives directive)
         {
 
             var contextConfig = new CspConfiguration();
@@ -129,7 +129,7 @@ namespace NWebsec.AspNetCore.Mvc.Tests.Helpers
 
         [Test]
         public void SetCspDirectiveOverride_HasOverride_OverridesExistingOverride([Values(false, true)]bool reportOnly,
-            [ValueSource(typeof(CspCommonDirectives), "Directives")] CspDirectives directive)
+            [ValueSource(typeof(CspCommonDirectives), nameof(CspCommonDirectives.Directives))] CspDirectives directive)
         {
 
             var overrideConfig = new CspOverrideConfiguration();

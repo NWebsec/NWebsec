@@ -2,7 +2,6 @@
 
 using NUnit.Framework;
 using NWebsec.AspNetCore.Core.HttpHeaders;
-using NWebsec.AspNetCore.Middleware;
 
 namespace NWebsec.AspNetCore.Middleware.Tests
 {
