@@ -3,7 +3,7 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 
-namespace NWebsec.Middleware.Middleware
+namespace NWebsec.AspNetCore.Middleware.Middleware
 {
     public class MiddlewareBase
     {

@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace NWebsec.Middleware.Core
+namespace NWebsec.AspNetCore.Middleware.Core
 {
     internal class ResponseHeaders
     {

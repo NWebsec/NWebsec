@@ -1,6 +1,7 @@
 ﻿// Copyright (c) André N. Klingsheim. See License.txt in the project root for license information.
 
 using NUnit.Framework;
+using NWebsec.AspNetCore.Middleware;
 
 namespace NWebsec.Middleware.Tests
 {

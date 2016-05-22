@@ -4,7 +4,7 @@ using System;
 using Microsoft.AspNetCore.Http;
 using NWebsec.AspNetCore.Core;
 
-namespace NWebsec.Middleware.Middleware
+namespace NWebsec.AspNetCore.Middleware.Middleware
 {
 
     public class RedirectValidationMiddleware : MiddlewareBase

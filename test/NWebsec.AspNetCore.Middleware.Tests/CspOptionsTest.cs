@@ -2,6 +2,7 @@
 
 using System;
 using NUnit.Framework;
+using NWebsec.AspNetCore.Middleware;
 
 namespace NWebsec.Middleware.Tests
 {

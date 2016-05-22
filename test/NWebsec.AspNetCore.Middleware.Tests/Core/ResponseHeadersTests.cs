@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using NUnit.Framework;
-using NWebsec.Middleware.Core;
+using NWebsec.AspNetCore.Middleware.Core;
 
 namespace NWebsec.Middleware.Tests.Core
 {

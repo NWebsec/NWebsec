@@ -3,9 +3,9 @@
 using Microsoft.AspNetCore.Http;
 using NWebsec.AspNetCore.Core.HttpHeaders;
 using NWebsec.AspNetCore.Core.HttpHeaders.Configuration;
-using NWebsec.Middleware.Helpers;
+using NWebsec.AspNetCore.Middleware.Helpers;
 
-namespace NWebsec.Middleware.Middleware
+namespace NWebsec.AspNetCore.Middleware.Middleware
 {
 
     public class HstsMiddleware : MiddlewareBase

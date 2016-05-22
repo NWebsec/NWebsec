@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using NWebsec.AspNetCore.Core.HttpHeaders.Configuration;
 using NWebsec.AspNetCore.Core.HttpHeaders.Csp;
 
-namespace NWebsec.Middleware
+namespace NWebsec.AspNetCore.Middleware
 {
     public class CspReportUriDirective : ICspReportUriDirectiveConfiguration, IFluentCspReportUriDirective
     {

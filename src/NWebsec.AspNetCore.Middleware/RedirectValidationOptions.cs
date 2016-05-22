@@ -6,7 +6,7 @@ using System.Globalization;
 using System.Linq;
 using NWebsec.AspNetCore.Core.HttpHeaders.Configuration;
 
-namespace NWebsec.Middleware
+namespace NWebsec.AspNetCore.Middleware
 {
     public class RedirectValidationOptions : IRedirectValidationConfiguration, IFluentRedirectValidationOptions
     {

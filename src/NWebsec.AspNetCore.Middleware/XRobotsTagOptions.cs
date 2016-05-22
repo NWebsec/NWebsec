@@ -2,7 +2,7 @@
 
 using NWebsec.AspNetCore.Core.HttpHeaders.Configuration;
 
-namespace NWebsec.Middleware
+namespace NWebsec.AspNetCore.Middleware
 {
     public class XRobotsTagOptions : IFluentXRobotsTagOptions
     {

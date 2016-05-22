@@ -4,7 +4,7 @@ using System;
 using System.Linq;
 using Microsoft.AspNetCore.Http;
 
-namespace NWebsec.Middleware.Helpers
+namespace NWebsec.AspNetCore.Middleware.Helpers
 {
     //Tested indirectly by CSP Middleware
     internal class CspUpgradeHelper

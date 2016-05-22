@@ -1,6 +1,6 @@
 ﻿// Copyright (c) André N. Klingsheim. See License.txt in the project root for license information.
 
-namespace NWebsec.Middleware.Core
+namespace NWebsec.AspNetCore.Middleware.Core
 {
     internal static class OwinKeys
     {

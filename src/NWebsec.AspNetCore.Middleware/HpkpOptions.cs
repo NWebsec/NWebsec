@@ -6,7 +6,7 @@ using System.Security.Cryptography.X509Certificates;
 using NWebsec.AspNetCore.Core.Helpers.X509;
 using NWebsec.AspNetCore.Core.HttpHeaders.Configuration.Validation;
 
-namespace NWebsec.Middleware
+namespace NWebsec.AspNetCore.Middleware
 {
     public class HpkpOptions : IFluentHpkpOptions
     {

@@ -3,7 +3,7 @@
 using System;
 using System.Collections.Generic;
 using NUnit.Framework;
-using NWebsec.Middleware.Core;
+using NWebsec.AspNetCore.Middleware.Core;
 
 namespace NWebsec.Middleware.Tests.Core
 {

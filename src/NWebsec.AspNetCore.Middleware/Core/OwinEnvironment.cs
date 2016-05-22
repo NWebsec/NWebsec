@@ -3,7 +3,7 @@
 using System.Collections.Generic;
 using NWebsec.AspNetCore.Core;
 
-namespace NWebsec.Middleware.Core
+namespace NWebsec.AspNetCore.Middleware.Core
 {
     //TODO Get rid of these?
     internal class OwinEnvironment

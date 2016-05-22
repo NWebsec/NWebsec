@@ -4,7 +4,7 @@ using System.ComponentModel;
 using NWebsec.AspNetCore.Core.HttpHeaders;
 using NWebsec.AspNetCore.Core.HttpHeaders.Configuration;
 
-namespace NWebsec.Middleware
+namespace NWebsec.AspNetCore.Middleware
 {
     public class XXssProtectionOptions : IXXssProtectionConfiguration, IFluentXXssProtectionOptions
     {

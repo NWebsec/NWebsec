@@ -3,7 +3,7 @@
 using System;
 using NWebsec.AspNetCore.Core.HttpHeaders.Configuration;
 
-namespace NWebsec.Middleware
+namespace NWebsec.AspNetCore.Middleware
 {
     public class CspOptions : ICspConfiguration, IFluentCspOptions
     {

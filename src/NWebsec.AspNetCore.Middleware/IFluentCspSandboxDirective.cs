@@ -2,7 +2,7 @@
 
 using NWebsec.AspNetCore.Core.Fluent;
 
-namespace NWebsec.Middleware
+namespace NWebsec.AspNetCore.Middleware
 {
     public interface IFluentCspSandboxDirective : IFluentInterface
     {

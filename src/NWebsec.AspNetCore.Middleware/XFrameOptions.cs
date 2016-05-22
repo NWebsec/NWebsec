@@ -3,7 +3,7 @@
 using NWebsec.AspNetCore.Core.HttpHeaders;
 using NWebsec.AspNetCore.Core.HttpHeaders.Configuration;
 
-namespace NWebsec.Middleware
+namespace NWebsec.AspNetCore.Middleware
 {
     public class XFrameOptions : IXFrameOptionsConfiguration, IFluentXFrameOptions
     {

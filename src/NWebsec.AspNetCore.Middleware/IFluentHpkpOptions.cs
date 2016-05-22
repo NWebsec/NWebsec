@@ -4,7 +4,7 @@ using System;
 using System.Security.Cryptography.X509Certificates;
 using NWebsec.AspNetCore.Core.Fluent;
 
-namespace NWebsec.Middleware
+namespace NWebsec.AspNetCore.Middleware
 {
     /// <summary>
     /// Fluent interface to configure options for Http Strict Transport Security.

@@ -2,8 +2,8 @@
 
 using System;
 using NWebsec.AspNetCore.Core.HttpHeaders.Configuration.Validation;
-using NWebsec.Middleware;
-using NWebsec.Middleware.Middleware;
+using NWebsec.AspNetCore.Middleware;
+using NWebsec.AspNetCore.Middleware.Middleware;
 
 // ReSharper disable once CheckNamespace
 namespace Microsoft.AspNetCore.Builder //TODO check whether this namespace makes sense.
