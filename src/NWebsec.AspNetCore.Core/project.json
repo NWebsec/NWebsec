@@ -1,11 +1,11 @@
-{
+ï»¿{
   "version": "1.0.0-gamma-*",
   "title": "NWebsec.AspNetCore.Core",
   "description": "This library provides shared functionality for the NWebsec ASP.NET Core security libraries.",
-  "authors": [ "André N. Klingsheim" ],
-  "copyright": "Copyright © 2016",
+  "authors": [ "AndrÃ© N. Klingsheim" ],
+  "copyright": "Copyright Â© 2016",
   "packOptions": {
-    "owners": [ "André N. Klingsheim" ],
+    "owners": [ "AndrÃ© N. Klingsheim" ],
     "releaseNotes": "This release includes core functions for the NWebsec security libaries.",
     "projectUrl": "https://docs.nwebsec.com/en/latest/",
     "licenseUrl": "https://github.com/NWebsec/NWebsec/blob/master/LICENSE",

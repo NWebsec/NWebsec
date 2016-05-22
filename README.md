@@ -3,7 +3,7 @@ NWebsec consists of several security libraries for ASP.NET applications. Consult
 
 You'll find the NWebsec packages on NuGet:
 
-ASP.NET Core:
+ASP.NET Core RC2:
 
 * <https://nuget.org/packages/NWebsec.AspNetCore.Middleware/>
 * <https://nuget.org/packages/NWebsec.AspNetCore.Mvc/>
