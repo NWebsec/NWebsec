@@ -8,9 +8,9 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.TestHost;
 using NUnit.Framework;
-using NWebsec.Mvc.FunctionalTests.Plumbing;
+using NWebsec.AspNetCore.Mvc.FunctionalTests.Plumbing;
 
-namespace NWebsec.Mvc.FunctionalTests.Attributes
+namespace NWebsec.AspNetCore.Mvc.FunctionalTests.Attributes
 {
     [TestFixture]
     public class CspUpgradeInsecureRequestsTests

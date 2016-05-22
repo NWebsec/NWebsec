@@ -1,6 +1,6 @@
 // Copyright (c) André N. Klingsheim. See License.txt in the project root for license information.
 
-namespace NWebsec.Mvc.HttpHeaders
+namespace NWebsec.AspNetCore.Mvc.HttpHeaders
 {
     public enum XXssProtectionPolicy
     {

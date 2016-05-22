@@ -2,7 +2,7 @@
 
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.AspNetCore.Mvc;
-using NWebsec.Mvc.HttpHeaders.Csp;
+using NWebsec.AspNetCore.Mvc.HttpHeaders.Csp;
 
 namespace MvcAttributeWebsite.Controllers
 {

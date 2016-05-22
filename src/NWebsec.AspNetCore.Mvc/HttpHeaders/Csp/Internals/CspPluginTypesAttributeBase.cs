@@ -3,11 +3,11 @@
 using System;
 using Microsoft.AspNetCore.Mvc.Filters;
 using NWebsec.AspNetCore.Core.HttpHeaders.Configuration.Validation;
-using NWebsec.Mvc.Csp;
-using NWebsec.Mvc.Helpers;
-using NWebsec.Mvc.HttpHeaders.Internals;
+using NWebsec.AspNetCore.Mvc.Csp;
+using NWebsec.AspNetCore.Mvc.Helpers;
+using NWebsec.AspNetCore.Mvc.HttpHeaders.Internals;
 
-namespace NWebsec.Mvc.HttpHeaders.Csp.Internals
+namespace NWebsec.AspNetCore.Mvc.HttpHeaders.Csp.Internals
 {
     /// <summary>
     /// This class is abstract and cannot be used directly.

@@ -5,9 +5,9 @@ using System.Collections.Generic;
 using System.Linq;
 using NWebsec.Annotations;
 using NWebsec.AspNetCore.Core.HttpHeaders.Configuration;
-using NWebsec.Mvc.Csp;
+using NWebsec.AspNetCore.Mvc.Csp;
 
-namespace NWebsec.Mvc.Helpers
+namespace NWebsec.AspNetCore.Mvc.Helpers
 {
     /// <summary>
     /// Infrastructure. Not intended to be called by your code directly.

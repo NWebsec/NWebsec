@@ -1,6 +1,6 @@
 // Copyright (c) André N. Klingsheim. See License.txt in the project root for license information.
 
-namespace NWebsec.Mvc.Helpers
+namespace NWebsec.AspNetCore.Mvc.Helpers
 {
     public enum CspDirectives
     {

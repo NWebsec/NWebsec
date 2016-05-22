@@ -2,10 +2,10 @@
 
 using Microsoft.AspNetCore.Mvc.Rendering;
 using NWebsec.AspNetCore.Core.HttpHeaders.Configuration.Validation;
-using NWebsec.Mvc.Csp;
-using NWebsec.Mvc.Helpers;
+using NWebsec.AspNetCore.Mvc.Csp;
+using NWebsec.AspNetCore.Mvc.Helpers;
 
-namespace NWebsec.Mvc.HttpHeaders.Csp
+namespace NWebsec.AspNetCore.Mvc.HttpHeaders.Csp
 {
     public static class CspHtmlHelpers
     {

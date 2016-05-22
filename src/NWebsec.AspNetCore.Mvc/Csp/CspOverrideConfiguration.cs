@@ -2,7 +2,7 @@
 
 using NWebsec.AspNetCore.Core.HttpHeaders.Configuration;
 
-namespace NWebsec.Mvc.Csp
+namespace NWebsec.AspNetCore.Mvc.Csp
 {
     public class CspOverrideConfiguration: ICspConfiguration
     {

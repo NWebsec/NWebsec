@@ -3,9 +3,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using NWebsec.Mvc.Helpers;
+using NWebsec.AspNetCore.Mvc.Helpers;
 
-namespace NWebsec.Mvc.Tests.TestHelpers
+namespace NWebsec.AspNetCore.Mvc.Tests.TestHelpers
 {
     public static class CspCommonDirectives
     {

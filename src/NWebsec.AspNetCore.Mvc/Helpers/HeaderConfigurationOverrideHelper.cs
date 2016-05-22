@@ -6,7 +6,7 @@ using NWebsec.AspNetCore.Core.HttpHeaders;
 using NWebsec.AspNetCore.Core.HttpHeaders.Configuration;
 using NWebsec.AspNetCore.Core.HttpHeaders.Configuration.Validation;
 
-namespace NWebsec.Mvc.Helpers
+namespace NWebsec.AspNetCore.Mvc.Helpers
 {
     public class HeaderConfigurationOverrideHelper : IHeaderConfigurationOverrideHelper
     {

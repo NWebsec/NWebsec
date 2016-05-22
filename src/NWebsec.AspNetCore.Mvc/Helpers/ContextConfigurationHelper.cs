@@ -4,9 +4,9 @@ using Microsoft.AspNetCore.Http;
 using NWebsec.AspNetCore.Core;
 using NWebsec.AspNetCore.Core.Extensions;
 using NWebsec.AspNetCore.Core.HttpHeaders.Configuration;
-using NWebsec.Mvc.Csp;
+using NWebsec.AspNetCore.Mvc.Csp;
 
-namespace NWebsec.Mvc.Helpers
+namespace NWebsec.AspNetCore.Mvc.Helpers
 {
     internal class ContextConfigurationHelper : IContextConfigurationHelper
     {

@@ -3,9 +3,9 @@
 using System;
 using Moq;
 using NUnit.Framework;
-using NWebsec.Mvc.HttpHeaders.Csp.Internals;
+using NWebsec.AspNetCore.Mvc.HttpHeaders.Csp.Internals;
 
-namespace NWebsec.Mvc.Tests.HttpHeaders.Csp.Internals
+namespace NWebsec.AspNetCore.Mvc.Tests.HttpHeaders.Csp.Internals
 {
     [TestFixture]
     public class CspPluginTypesAttributeBaseTests

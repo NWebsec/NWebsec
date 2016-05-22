@@ -3,7 +3,7 @@
 using Microsoft.AspNetCore.Http;
 using NWebsec.AspNetCore.Core.HttpHeaders.Configuration;
 
-namespace NWebsec.Mvc.Helpers
+namespace NWebsec.AspNetCore.Mvc.Helpers
 {
     public interface ICspConfigurationOverrideHelper
     {

@@ -3,9 +3,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using NWebsec.AspNetCore.Core.HttpHeaders.Configuration;
-using NWebsec.Mvc.Csp;
+using NWebsec.AspNetCore.Mvc.Csp;
 
-namespace NWebsec.Mvc.Helpers
+namespace NWebsec.AspNetCore.Mvc.Helpers
 {
     public class CspDirectiveOverrideHelper : ICspDirectiveOverrideHelper
     {

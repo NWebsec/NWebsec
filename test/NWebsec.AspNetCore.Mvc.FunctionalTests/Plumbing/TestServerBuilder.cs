@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.TestHost;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.PlatformAbstractions;
 
-namespace NWebsec.Mvc.FunctionalTests.Plumbing
+namespace NWebsec.AspNetCore.Mvc.FunctionalTests.Plumbing
 {
     public static class TestServerBuilder<T> where T : class
     {

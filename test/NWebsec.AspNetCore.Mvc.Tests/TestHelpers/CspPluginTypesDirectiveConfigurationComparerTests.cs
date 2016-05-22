@@ -3,7 +3,7 @@
 using NUnit.Framework;
 using NWebsec.AspNetCore.Core.HttpHeaders.Configuration;
 
-namespace NWebsec.Mvc.Tests.TestHelpers
+namespace NWebsec.AspNetCore.Mvc.Tests.TestHelpers
 {
     [TestFixture]
     public class CspPluginTypesDirectiveConfigurationComparerTests

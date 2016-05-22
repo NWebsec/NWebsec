@@ -3,7 +3,7 @@
 using System;
 using Microsoft.AspNetCore.Mvc.Filters;
 
-namespace NWebsec.Mvc.HttpHeaders.Internals
+namespace NWebsec.AspNetCore.Mvc.HttpHeaders.Internals
 {
     public abstract class HttpHeaderAttributeBase : ActionFilterAttribute
     {

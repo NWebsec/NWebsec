@@ -8,9 +8,9 @@ using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.AspNetCore.Routing;
 using Moq;
 using NUnit.Framework;
-using NWebsec.Mvc.HttpHeaders.Internals;
+using NWebsec.AspNetCore.Mvc.HttpHeaders.Internals;
 
-namespace NWebsec.Mvc.Tests.HttpHeaders.Internals
+namespace NWebsec.AspNetCore.Mvc.Tests.HttpHeaders.Internals
 {
     [TestFixture]
     public class HttpHeaderAttributeBaseTests

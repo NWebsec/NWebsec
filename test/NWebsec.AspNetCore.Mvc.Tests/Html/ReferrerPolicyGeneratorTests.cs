@@ -1,9 +1,9 @@
 ﻿// Copyright (c) André N. Klingsheim. See License.txt in the project root for license information.
 
 using NUnit.Framework;
-using NWebsec.Mvc.Html;
+using NWebsec.AspNetCore.Mvc.Html;
 
-namespace NWebsec.Mvc.Tests.Html
+namespace NWebsec.AspNetCore.Mvc.Tests.Html
 {
     [TestFixture]
     public class ReferrerPolicyGeneratorTests

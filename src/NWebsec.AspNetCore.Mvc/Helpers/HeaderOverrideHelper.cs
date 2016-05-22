@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Http;
 using NWebsec.AspNetCore.Core.Helpers;
 using NWebsec.AspNetCore.Core.HttpHeaders;
 
-namespace NWebsec.Mvc.Helpers
+namespace NWebsec.AspNetCore.Mvc.Helpers
 {
     public class HeaderOverrideHelper
     {

@@ -3,7 +3,7 @@
 using System.Collections.Generic;
 using NWebsec.AspNetCore.Core.HttpHeaders.Configuration;
 
-namespace NWebsec.Mvc.Tests.TestHelpers
+namespace NWebsec.AspNetCore.Mvc.Tests.TestHelpers
 {
     public class CspSandboxDirectiveConfigurationComparer : IComparer<ICspSandboxDirectiveConfiguration>
     {

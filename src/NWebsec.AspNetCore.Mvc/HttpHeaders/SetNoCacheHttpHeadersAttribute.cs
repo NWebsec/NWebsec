@@ -3,10 +3,10 @@
 using System;
 using Microsoft.AspNetCore.Mvc.Filters;
 using NWebsec.AspNetCore.Core.HttpHeaders.Configuration;
-using NWebsec.Mvc.Helpers;
-using NWebsec.Mvc.HttpHeaders.Internals;
+using NWebsec.AspNetCore.Mvc.Helpers;
+using NWebsec.AspNetCore.Mvc.HttpHeaders.Internals;
 
-namespace NWebsec.Mvc.HttpHeaders
+namespace NWebsec.AspNetCore.Mvc.HttpHeaders
 {
     /// <summary>
     /// Specifies whether appropriate headers to prevent browser caching should be set in the HTTP response.

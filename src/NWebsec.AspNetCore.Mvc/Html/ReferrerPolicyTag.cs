@@ -2,7 +2,7 @@
 
 using Microsoft.AspNetCore.Mvc.Rendering;
 
-namespace NWebsec.Mvc.Html
+namespace NWebsec.AspNetCore.Mvc.Html
 {
     /// <summary>
     /// Interface to generate a Referrer policy meta tag.

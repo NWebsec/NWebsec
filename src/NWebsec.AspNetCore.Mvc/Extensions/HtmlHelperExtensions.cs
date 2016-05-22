@@ -2,9 +2,9 @@
 
 using System;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using NWebsec.Mvc.Html;
+using NWebsec.AspNetCore.Mvc.Html;
 
-namespace NWebsec.Mvc.Extensions
+namespace NWebsec.AspNetCore.Mvc.Extensions
 {
     public static class HtmlHelperExtensions
     {

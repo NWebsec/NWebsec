@@ -5,10 +5,10 @@ using Moq;
 using NUnit.Framework;
 using NWebsec.AspNetCore.Core;
 using NWebsec.AspNetCore.Core.HttpHeaders.Configuration;
-using NWebsec.Mvc.Csp;
-using NWebsec.Mvc.Helpers;
+using NWebsec.AspNetCore.Mvc.Csp;
+using NWebsec.AspNetCore.Mvc.Helpers;
 
-namespace NWebsec.Mvc.Tests.Helpers
+namespace NWebsec.AspNetCore.Mvc.Tests.Helpers
 {
     [TestFixture]
     public class ContextConfigurationHelperTests
