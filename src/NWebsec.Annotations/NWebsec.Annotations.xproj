@@ -6,7 +6,7 @@
   </PropertyGroup>
   <Import Project="$(VSToolsPath)\DotNet\Microsoft.DotNet.Props" Condition="'$(VSToolsPath)' != ''" />
   <PropertyGroup Label="Globals">
-    <ProjectGuid>144226e7-3eb3-459d-89c8-4d8720e1ef1e</ProjectGuid>
+    <ProjectGuid>d6357c78-1f5c-4e97-91ec-9822782b4c38</ProjectGuid>
     <RootNamespace>NWebsec.Annotations</RootNamespace>
     <BaseIntermediateOutputPath Condition="'$(BaseIntermediateOutputPath)'=='' ">.\obj</BaseIntermediateOutputPath>
     <OutputPath Condition="'$(OutputPath)'=='' ">.\bin\</OutputPath>
