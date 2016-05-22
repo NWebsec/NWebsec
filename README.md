@@ -3,15 +3,15 @@ NWebsec consists of several security libraries for ASP.NET applications. Consult
 
 You'll find the NWebsec packages on NuGet:
 
-ASP.NET 5:
+ASP.NET Core:
 
-* <https://nuget.org/packages/NWebsec.Middleware/>
-* <https://nuget.org/packages/NWebsec.Mvc/> - version 5.x or newer.
+* <https://nuget.org/packages/NWebsec.AspNetCore.Middleware/>
+* <https://nuget.org/packages/NWebsec.AspNetCore.Mvc/>
 
 ASP.NET 4:
 
 * <https://nuget.org/packages/NWebsec/>
-* <https://nuget.org/packages/NWebsec.Mvc/> - version 4.x
+* <https://nuget.org/packages/NWebsec.Mvc/>
 * <https://nuget.org/packages/NWebsec.Owin/>
 * <https://nuget.org/packages/NWebsec.SessionSecurity/>
 
