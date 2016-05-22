@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using NWebsec.Core.HttpHeaders.Configuration;
+using NWebsec.AspNetCore.Core.HttpHeaders.Configuration;
 
 namespace NWebsec.Middleware
 {

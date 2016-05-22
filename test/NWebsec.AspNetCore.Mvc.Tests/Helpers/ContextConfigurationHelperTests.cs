@@ -3,8 +3,8 @@
 using Microsoft.AspNetCore.Http;
 using Moq;
 using NUnit.Framework;
-using NWebsec.Core;
-using NWebsec.Core.HttpHeaders.Configuration;
+using NWebsec.AspNetCore.Core;
+using NWebsec.AspNetCore.Core.HttpHeaders.Configuration;
 using NWebsec.Mvc.Csp;
 using NWebsec.Mvc.Helpers;
 

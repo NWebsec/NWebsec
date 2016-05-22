@@ -4,8 +4,8 @@ using System.Collections.Generic;
 using Microsoft.AspNetCore.Http;
 using Moq;
 using NUnit.Framework;
-using NWebsec.Core.HttpHeaders;
-using NWebsec.Core.HttpHeaders.Configuration;
+using NWebsec.AspNetCore.Core.HttpHeaders;
+using NWebsec.AspNetCore.Core.HttpHeaders.Configuration;
 using NWebsec.Mvc.Helpers;
 
 namespace NWebsec.Mvc.Tests.Helpers

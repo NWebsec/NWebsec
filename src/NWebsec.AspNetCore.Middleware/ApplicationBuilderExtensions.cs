@@ -1,7 +1,7 @@
 ﻿// Copyright (c) André N. Klingsheim. See License.txt in the project root for license information.
 
 using System;
-using NWebsec.Core.HttpHeaders.Configuration.Validation;
+using NWebsec.AspNetCore.Core.HttpHeaders.Configuration.Validation;
 using NWebsec.Middleware;
 using NWebsec.Middleware.Middleware;
 

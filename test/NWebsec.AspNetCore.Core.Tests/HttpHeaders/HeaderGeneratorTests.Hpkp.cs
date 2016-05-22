@@ -2,8 +2,8 @@
 
 using System;
 using NUnit.Framework;
-using NWebsec.Core.HttpHeaders;
-using NWebsec.Core.HttpHeaders.Configuration;
+using NWebsec.AspNetCore.Core.HttpHeaders;
+using NWebsec.AspNetCore.Core.HttpHeaders.Configuration;
 
 namespace NWebsec.Core.Tests.HttpHeaders
 {

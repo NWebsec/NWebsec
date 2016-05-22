@@ -3,7 +3,7 @@
 using System;
 using System.Linq;
 using NUnit.Framework;
-using NWebsec.Core.HttpHeaders.Configuration;
+using NWebsec.AspNetCore.Core.HttpHeaders.Configuration;
 
 namespace NWebsec.Middleware.Tests
 {

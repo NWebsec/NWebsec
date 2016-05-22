@@ -2,7 +2,7 @@
 
 using System;
 using NUnit.Framework;
-using NWebsec.Core.HttpHeaders.Csp;
+using NWebsec.AspNetCore.Core.HttpHeaders.Csp;
 
 namespace NWebsec.Core.Tests.HttpHeaders.Csp
 {

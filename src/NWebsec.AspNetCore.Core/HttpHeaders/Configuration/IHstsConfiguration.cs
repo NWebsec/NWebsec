@@ -2,7 +2,7 @@
 
 using System;
 
-namespace NWebsec.Core.HttpHeaders.Configuration
+namespace NWebsec.AspNetCore.Core.HttpHeaders.Configuration
 {
     public interface IHstsConfiguration
     {

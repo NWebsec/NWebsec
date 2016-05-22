@@ -2,10 +2,10 @@
 
 using System;
 using System.Linq;
-using NWebsec.Core.Exceptions;
-using NWebsec.Core.HttpHeaders.Configuration;
+using NWebsec.AspNetCore.Core.Exceptions;
+using NWebsec.AspNetCore.Core.HttpHeaders.Configuration;
 
-namespace NWebsec.Core
+namespace NWebsec.AspNetCore.Core
 {
     public class RedirectValidator
     {

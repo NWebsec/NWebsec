@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 
-namespace NWebsec.Core.HttpHeaders.Csp
+namespace NWebsec.AspNetCore.Core.HttpHeaders.Csp
 {
     public class CspUriSource
     {

@@ -1,6 +1,6 @@
 // Copyright (c) André N. Klingsheim. See License.txt in the project root for license information.
 
-namespace NWebsec.Core.HttpHeaders.Configuration
+namespace NWebsec.AspNetCore.Core.HttpHeaders.Configuration
 {
     /// <summary>
     ///     Defines the properties required for CSP sandbox directive configuration.

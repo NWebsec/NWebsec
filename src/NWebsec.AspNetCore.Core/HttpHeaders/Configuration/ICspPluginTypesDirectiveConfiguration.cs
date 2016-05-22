@@ -2,7 +2,7 @@
 
 using System.Collections.Generic;
 
-namespace NWebsec.Core.HttpHeaders.Configuration
+namespace NWebsec.AspNetCore.Core.HttpHeaders.Configuration
 {
     /// <summary>
     ///     Defines the properties required for CSP sandbox directive configuration.

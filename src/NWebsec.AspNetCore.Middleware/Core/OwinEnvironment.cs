@@ -1,7 +1,7 @@
 ﻿// Copyright (c) André N. Klingsheim. See License.txt in the project root for license information.
 
 using System.Collections.Generic;
-using NWebsec.Core;
+using NWebsec.AspNetCore.Core;
 
 namespace NWebsec.Middleware.Core
 {

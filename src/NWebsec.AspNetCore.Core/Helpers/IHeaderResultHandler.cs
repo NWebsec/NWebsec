@@ -1,9 +1,9 @@
 // Copyright (c) André N. Klingsheim. See License.txt in the project root for license information.
 
 using Microsoft.AspNetCore.Http;
-using NWebsec.Core.HttpHeaders;
+using NWebsec.AspNetCore.Core.HttpHeaders;
 
-namespace NWebsec.Core.Helpers
+namespace NWebsec.AspNetCore.Core.Helpers
 {
     public interface IHeaderResultHandler
     {

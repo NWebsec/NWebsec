@@ -2,7 +2,7 @@
 
 using System;
 using Microsoft.AspNetCore.Mvc.Filters;
-using NWebsec.Core.HttpHeaders.Configuration.Validation;
+using NWebsec.AspNetCore.Core.HttpHeaders.Configuration.Validation;
 using NWebsec.Mvc.Csp;
 using NWebsec.Mvc.Helpers;
 using NWebsec.Mvc.HttpHeaders.Internals;

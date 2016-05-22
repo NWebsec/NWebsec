@@ -2,7 +2,7 @@
 
 using System;
 
-namespace NWebsec.Core.Exceptions
+namespace NWebsec.AspNetCore.Core.Exceptions
 {
     public class RedirectValidationException : Exception
     {

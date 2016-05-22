@@ -5,9 +5,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using NWebsec.Annotations;
-using NWebsec.Core.HttpHeaders.Configuration;
+using NWebsec.AspNetCore.Core.HttpHeaders.Configuration;
 
-namespace NWebsec.Core.HttpHeaders
+namespace NWebsec.AspNetCore.Core.HttpHeaders
 {
     public class HeaderGenerator : IHeaderGenerator
     {

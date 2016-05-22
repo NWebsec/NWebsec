@@ -2,8 +2,8 @@
 
 using System;
 using System.Collections.Generic;
-using NWebsec.Core.HttpHeaders.Configuration;
-using NWebsec.Core.HttpHeaders.Csp;
+using NWebsec.AspNetCore.Core.HttpHeaders.Configuration;
+using NWebsec.AspNetCore.Core.HttpHeaders.Csp;
 
 namespace NWebsec.Middleware
 {

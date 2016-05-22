@@ -4,7 +4,7 @@ using System;
 using System.Linq;
 using System.Text.RegularExpressions;
 
-namespace NWebsec.Core.HttpHeaders.Configuration.Validation
+namespace NWebsec.AspNetCore.Core.HttpHeaders.Configuration.Validation
 {
     public class HpkpConfigurationValidator
     {

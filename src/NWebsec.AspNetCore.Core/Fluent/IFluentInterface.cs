@@ -3,7 +3,7 @@
 using System;
 using System.ComponentModel;
 
-namespace NWebsec.Core.Fluent
+namespace NWebsec.AspNetCore.Core.Fluent
 {
     /// <summary>
     ///     Interface that is used to build fluent interfaces and hides methods declared by <see cref="object" /> from

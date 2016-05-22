@@ -1,8 +1,8 @@
 ﻿// Copyright (c) André N. Klingsheim. See License.txt in the project root for license information.
 
 using System.ComponentModel;
-using NWebsec.Core.HttpHeaders;
-using NWebsec.Core.HttpHeaders.Configuration;
+using NWebsec.AspNetCore.Core.HttpHeaders;
+using NWebsec.AspNetCore.Core.HttpHeaders.Configuration;
 
 namespace NWebsec.Middleware
 {

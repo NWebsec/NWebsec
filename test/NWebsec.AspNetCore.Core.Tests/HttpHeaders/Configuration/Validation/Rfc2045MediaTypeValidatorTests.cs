@@ -2,7 +2,7 @@
 
 using System;
 using NUnit.Framework;
-using NWebsec.Core.HttpHeaders.Configuration.Validation;
+using NWebsec.AspNetCore.Core.HttpHeaders.Configuration.Validation;
 
 namespace NWebsec.Core.Tests.HttpHeaders.Configuration.Validation
 {

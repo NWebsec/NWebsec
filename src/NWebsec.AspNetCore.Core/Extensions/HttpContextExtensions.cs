@@ -3,7 +3,7 @@
 using Microsoft.AspNetCore.Http;
 using NWebsec.Annotations;
 
-namespace NWebsec.Core.Extensions
+namespace NWebsec.AspNetCore.Core.Extensions
 {
     public static class HttpContextExtensions
     {

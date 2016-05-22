@@ -1,8 +1,8 @@
 ﻿// Copyright (c) André N. Klingsheim. See License.txt in the project root for license information.
 
 using Microsoft.AspNetCore.Http;
-using NWebsec.Core.Helpers;
-using NWebsec.Core.HttpHeaders;
+using NWebsec.AspNetCore.Core.Helpers;
+using NWebsec.AspNetCore.Core.HttpHeaders;
 
 namespace NWebsec.Mvc.Helpers
 {

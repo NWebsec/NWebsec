@@ -1,7 +1,7 @@
 // Copyright (c) André N. Klingsheim. See License.txt in the project root for license information.
 
 using NWebsec.Annotations;
-using NWebsec.Core.HttpHeaders.Configuration;
+using NWebsec.AspNetCore.Core.HttpHeaders.Configuration;
 using NWebsec.Mvc.Csp;
 
 namespace NWebsec.Mvc.Helpers

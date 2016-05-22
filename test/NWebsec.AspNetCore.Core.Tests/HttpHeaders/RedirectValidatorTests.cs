@@ -3,8 +3,9 @@
 using System;
 using System.Linq;
 using NUnit.Framework;
-using NWebsec.Core.Exceptions;
-using NWebsec.Core.HttpHeaders.Configuration;
+using NWebsec.AspNetCore.Core;
+using NWebsec.AspNetCore.Core.Exceptions;
+using NWebsec.AspNetCore.Core.HttpHeaders.Configuration;
 
 namespace NWebsec.Core.Tests.HttpHeaders
 {

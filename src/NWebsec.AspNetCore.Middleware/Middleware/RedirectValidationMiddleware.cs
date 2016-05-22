@@ -2,7 +2,7 @@
 
 using System;
 using Microsoft.AspNetCore.Http;
-using NWebsec.Core;
+using NWebsec.AspNetCore.Core;
 
 namespace NWebsec.Middleware.Middleware
 {

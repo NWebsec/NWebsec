@@ -4,8 +4,8 @@ using System.Linq;
 using Microsoft.AspNetCore.Http;
 using Moq;
 using NUnit.Framework;
-using NWebsec.Core.Helpers;
-using NWebsec.Core.HttpHeaders;
+using NWebsec.AspNetCore.Core.Helpers;
+using NWebsec.AspNetCore.Core.HttpHeaders;
 
 namespace NWebsec.Core.Tests.Helpers
 {

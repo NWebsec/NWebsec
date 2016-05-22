@@ -3,8 +3,8 @@
 using System;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc.Filters;
-using NWebsec.Core.HttpHeaders.Configuration;
-using NWebsec.Core.HttpHeaders.Csp;
+using NWebsec.AspNetCore.Core.HttpHeaders.Configuration;
+using NWebsec.AspNetCore.Core.HttpHeaders.Csp;
 using NWebsec.Mvc.Helpers;
 using NWebsec.Mvc.HttpHeaders.Internals;
 

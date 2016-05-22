@@ -2,7 +2,7 @@
 
 using System.Collections.Generic;
 using System.ComponentModel;
-using NWebsec.Core.HttpHeaders.Configuration;
+using NWebsec.AspNetCore.Core.HttpHeaders.Configuration;
 
 namespace NWebsec.Middleware
 {
