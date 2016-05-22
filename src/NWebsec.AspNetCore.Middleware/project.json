@@ -1,4 +1,4 @@
-﻿{
+{
   "version": "1.0.0-gamma-*",
   "title": "NWebsec.AspNetCore.Middleware",
   "description": "NWebsec middleware for ASP.NET Core applications. NWebsec helps you set important security headers and detect potentially dangerous redirects. See project website for documentation.",
@@ -13,7 +13,10 @@
     "tags": [ "nwebsec aspnetcore security" ]
   },
 
-  "buildOptions": { "xmlDoc": "true" },
+  "buildOptions": {
+    "xmlDoc": "true",
+    "nowarn": [ "CS1591" ]
+  },
 
   "dependencies": {
     "Microsoft.AspNetCore.Http.Abstractions": "1.0.0-rc2-final",
