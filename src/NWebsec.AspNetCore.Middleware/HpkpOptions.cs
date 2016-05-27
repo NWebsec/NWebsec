@@ -100,13 +100,12 @@ namespace NWebsec.AspNetCore.Middleware
             var cert = helper.GetCertByThumbprint(thumbprint, storeLocation, storeName);
             var pin = helper.GetSubjectPublicKeyInfoPinValue(cert);
 
-#if DNX451
-            cert.Reset();
-#elif NET451
+#if NET451
             cert.Reset();
 #else
             cert.Dispose();
 #endif
+
             if (!_pins.Contains(pin))
             {
                 _pins.Add(pin);
