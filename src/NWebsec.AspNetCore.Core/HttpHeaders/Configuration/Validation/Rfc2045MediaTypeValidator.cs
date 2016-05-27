@@ -8,18 +8,18 @@ namespace NWebsec.AspNetCore.Core.HttpHeaders.Configuration.Validation
 {
     public class Rfc2045MediaTypeValidator
     {
-        private static readonly string[] ValidTypes = { "application", "audio", "image","model", "text", "video" };
+        private static readonly string[] ValidTypes = { "application", "audio", "image", "model", "text", "video" };
 
         public void Validate(string mediaType)
         {
-            if (String.IsNullOrEmpty(mediaType)) throw new ArgumentException("String was null or empty", "mediaType");
+            if (String.IsNullOrEmpty(mediaType)) throw new ArgumentException("String was null or empty", nameof(mediaType));
 
             var components = mediaType.Split(new[] { '/' }, 2);
             var type = components[0];
 
             if (!ValidTypes.Any(t => t.Equals(type, StringComparison.OrdinalIgnoreCase)))
             {
-                var message = String.Format("Media type \"{0}\" did not match any of the expected types: {1}", mediaType, String.Join(", ", ValidTypes));
+                var message = $"Media type \"{mediaType}\" did not match any of the expected types: {String.Join(", ", ValidTypes)}";
                 throw new Exception(message);
             }
 

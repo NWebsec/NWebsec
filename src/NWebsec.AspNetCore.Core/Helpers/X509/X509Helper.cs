@@ -31,13 +31,13 @@ namespace NWebsec.AspNetCore.Core.Helpers.X509
 
                 if (certs.Count > 1)
                 {
-                    var message = string.Format("Something went horribly wrong, found more than one cert with thumbprint {0} in store location {1}, storename {2}", thumbprint, storeLocation, storeName);
+                    var message = $"Something went horribly wrong, found more than one cert with thumbprint {thumbprint} in store location {storeLocation}, storename {storeName}";
                     throw new Exception(message);
                 }
 
                 if (certs.Count == 0)
                 {
-                    var message = string.Format("No certificate with thumbprint {0} in store location {1}, storename {2}", thumbprint, storeLocation, storeName);
+                    var message = $"No certificate with thumbprint {thumbprint} in store location {storeLocation}, storename {storeName}";
                     throw new ArgumentException(message);
                 }
 
@@ -80,7 +80,7 @@ namespace NWebsec.AspNetCore.Core.Helpers.X509
             using (var sha256 = SHA256.Create())
             {
                 var hash = Convert.ToBase64String(sha256.ComputeHash(spki));
-                return string.Format("sha256=\"" + hash + "\"");
+                return $"sha256=\"{hash}\"";
             }
         }
 
@@ -211,7 +211,7 @@ namespace NWebsec.AspNetCore.Core.Helpers.X509
             var lengthBytes = new byte[numberOfLengthBytes];
             var bytesRead = ms.Read(lengthBytes, 0, lengthBytes.Length);
 
-            if (bytesRead != lengthBytes.Length) throw new Exception(string.Format("Expected {0} length bytes, got {1}", lengthBytes.Length, bytesRead));
+            if (bytesRead != lengthBytes.Length) throw new Exception($"Expected {lengthBytes.Length} length bytes, got {bytesRead}");
 
             //Got the bytes, make an int.
             var length = 0;

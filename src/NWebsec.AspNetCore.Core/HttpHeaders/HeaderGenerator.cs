@@ -54,7 +54,7 @@ namespace NWebsec.AspNetCore.Core.HttpHeaders
 
             var includeSubdomains = (hstsConfig.IncludeSubdomains ? "; includeSubdomains" : "");
             var preload = (hstsConfig.Preload ? "; preload" : "");
-            var value = string.Format("max-age={0}{1}{2}", seconds, includeSubdomains, preload);
+            var value = $"max-age={seconds}{includeSubdomains}{preload}";
 
             return new HeaderResult(HeaderResult.ResponseAction.Set, HeaderConstants.StrictTransportSecurityHeader,
                 value);

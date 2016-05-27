@@ -74,14 +74,14 @@ namespace NWebsec.AspNetCore.Mvc.HttpHeaders.Csp
             headerOverrideHelper.SetCspHeaders(context, true);
 
             //TODO have a look at the encoder.
-            var attribute = string.Format("type=\"{0}\"", helper.Encode(mediaType));
+            var attribute = $"type=\"{helper.Encode(mediaType)}\"";
             return new HtmlString(attribute);
         }
 
         private static HtmlString CreateNonceAttribute(IHtmlHelper<dynamic> helper, string nonce)
         {
             //TODO have a look at the encoder.
-            var sb = "nonce=\"" + helper.Encode(nonce) + "\"";
+            var sb = $"nonce=\"{helper.Encode(nonce)}\"";
             return new HtmlString(sb);
         }
     }
