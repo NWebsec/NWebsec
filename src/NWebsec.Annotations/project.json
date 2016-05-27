@@ -2,11 +2,13 @@
   "version": "1.0.0-*",
 
   "dependencies": {
-    "NETStandard.Library": "1.5.0-rc2-24027"
   },
 
   "frameworks": {
     "netstandard1.5": {
+      "dependencies": {
+        "System.Runtime": "4.1.0-rc2-24027"
+      },
       "imports": "dnxcore50"
     },
     "net451": { }
