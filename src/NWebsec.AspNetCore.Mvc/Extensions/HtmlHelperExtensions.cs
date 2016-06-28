@@ -3,6 +3,7 @@
 using System;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using NWebsec.AspNetCore.Mvc.Html;
+using Microsoft.AspNetCore.Html;
 
 namespace NWebsec.AspNetCore.Mvc.Extensions
 {

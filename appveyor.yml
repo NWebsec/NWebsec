@@ -9,7 +9,34 @@ before_build:
 build:
   project: NWebsec-CI.sln
   verbosity: minimal
-after_build:
+test_script:
+- ps: >-
+    $wc = New-Object 'System.Net.WebClient'
+
+    pushd .\test\NWebsec.AspNetCore.Core.Tests\
+
+    dotnet test -c release
+
+    $wc.UploadFile("https://ci.appveyor.com/api/testresults/nunit3/$($env:APPVEYOR_JOB_ID)", (Resolve-Path .\TestResult.xml))
+
+    popd
+
+    pushd .\test\NWebsec.AspNetCore.Middleware.Tests\
+
+    dotnet test -c release
+
+    $wc.UploadFile("https://ci.appveyor.com/api/testresults/nunit3/$($env:APPVEYOR_JOB_ID)", (Resolve-Path .\TestResult.xml))
+
+    popd
+
+    pushd .\test\NWebsec.AspNetCore.Mvc.Tests\
+
+    dotnet test -c release
+
+    $wc.UploadFile("https://ci.appveyor.com/api/testresults/nunit3/$($env:APPVEYOR_JOB_ID)", (Resolve-Path .\TestResult.xml))
+
+    popd
+after_test:
 - ps: >-
     pushd .\src\NWebsec.AspNetCore.Core\
 
@@ -26,41 +53,6 @@ after_build:
     pushd .\src\NWebsec.AspNetCore.Mvc\
 
     dotnet pack -c release
-
-    popd
-test_script:
-- ps: >-
-    $wc = New-Object 'System.Net.WebClient'
-
-    pushd .\test\NWebsec.AspNetCore.Core.Tests\
-
-    dotnet run -c release
-
-    $wc.UploadFile("https://ci.appveyor.com/api/testresults/nunit3/$($env:APPVEYOR_JOB_ID)", (Resolve-Path .\TestResult.xml))
-
-    popd
-
-    pushd .\test\NWebsec.AspNetCore.Middleware.Tests\
-
-    dotnet run -c release
-
-    $wc.UploadFile("https://ci.appveyor.com/api/testresults/nunit3/$($env:APPVEYOR_JOB_ID)", (Resolve-Path .\TestResult.xml))
-
-    popd
-
-    pushd .\test\NWebsec.AspNetCore.Mvc.Tests\
-
-    dotnet run -c release
-
-    $wc.UploadFile("https://ci.appveyor.com/api/testresults/nunit3/$($env:APPVEYOR_JOB_ID)", (Resolve-Path .\TestResult.xml))
-
-    popd
-    
-    pushd .\test\NWebsec.AspNetCore.Mvc.FunctionalTests\
-
-    dotnet run -c release
-
-    $wc.UploadFile("https://ci.appveyor.com/api/testresults/nunit3/$($env:APPVEYOR_JOB_ID)", (Resolve-Path .\TestResult.xml))
 
     popd
 artifacts:

@@ -1,5 +1,6 @@
 ﻿// Copyright (c) André N. Klingsheim. See License.txt in the project root for license information.
 
+using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using NWebsec.AspNetCore.Core.HttpHeaders.Configuration.Validation;
 using NWebsec.AspNetCore.Mvc.Csp;

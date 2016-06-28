@@ -5,9 +5,9 @@
   },
 
   "frameworks": {
-    "netstandard1.5": {
+    "netstandard1.3": {
       "dependencies": {
-        "System.Runtime": "4.1.0-rc2-24027"
+        "System.Runtime": "4.1.0"
       },
       "imports": "dnxcore50"
     },

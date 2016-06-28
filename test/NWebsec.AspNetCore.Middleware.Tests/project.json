@@ -1,16 +1,16 @@
 {
   "version": "1.0.0-*",
   "buildOptions": {
-    "emitEntryPoint": true
   },
 
   "dependencies": {
-    "Microsoft.AspNetCore.TestHost": "1.0.0-rc2-final",
-    "NUnitLite": "3.2.1",
+    "Microsoft.AspNetCore.TestHost": "1.0.0",
+    "NUnit": "3.4.0",
+    "dotnet-test-nunit": "3.4.0-alpha-2",
     "NWebsec.AspNetCore.Middleware": "1.0.0-*"
   },
-
+  "testRunner": "nunit",
   "frameworks": {
-   "net451": {}  
+    "net451": {}
   }
 }
