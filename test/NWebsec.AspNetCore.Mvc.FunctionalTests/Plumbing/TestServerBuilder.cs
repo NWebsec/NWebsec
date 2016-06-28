@@ -16,7 +16,7 @@ namespace NWebsec.AspNetCore.Mvc.FunctionalTests.Plumbing
 
             var applicationRoot = Path.GetFullPath(Path.Combine(
                             basePath,
-                            "..", "..", "..", "..", "websites", appName));
+                            "..", "..", "..", "..", "..", "websites", appName));
 
             var builder = new WebHostBuilder()
                 .UseContentRoot(applicationRoot)
