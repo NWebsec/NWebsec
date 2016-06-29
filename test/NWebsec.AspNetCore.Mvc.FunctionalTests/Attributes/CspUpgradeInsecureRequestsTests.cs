@@ -47,7 +47,7 @@ namespace NWebsec.AspNetCore.Mvc.FunctionalTests.Attributes
         public async Task Csp_UpgradeInsecureRequestsConformantUa_RedirectsToHttps()
         {
             const string path = "/CspUpgradeInsecureRequests";
-            var expectedLocationUri = UriHelper.Encode("https", HostString.FromUriComponent("localhost"), PathString.FromUriComponent(path));
+            var expectedLocationUri = UriHelper.BuildAbsolute("https", HostString.FromUriComponent("localhost"), PathString.FromUriComponent(path));
             _httpClient.DefaultRequestHeaders.Add("Upgrade-Insecure-Requests", "1");
 
             var response = await _httpClient.GetAsync(path);
