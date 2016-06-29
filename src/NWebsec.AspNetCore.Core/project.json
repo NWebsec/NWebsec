@@ -10,7 +10,11 @@
     "projectUrl": "https://docs.nwebsec.com/en/latest/",
     "licenseUrl": "https://github.com/NWebsec/NWebsec/blob/master/LICENSE",
     "iconUrl": "https://klings.blob.core.windows.net/nwebsecicon/nwebsec_nuget.png",
-    "tags": [ "nwebsec aspnetcore security" ]
+    "tags": [ "nwebsec aspnetcore security" ],
+    "repository": {
+      "type": "git",
+      "url": "git://github.com/NWebsec/NWebsec"
+    }
   },
 
   "buildOptions": {
