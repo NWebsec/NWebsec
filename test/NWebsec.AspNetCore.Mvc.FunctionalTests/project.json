@@ -14,8 +14,6 @@
   "testRunner": "nunit",
 
   "frameworks": {
-    "net451": {
-      "imports": "dnxcore50"
-    }
+    "net451": {}
   }
 }

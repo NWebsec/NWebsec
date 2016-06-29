@@ -5,12 +5,11 @@
   },
 
   "frameworks": {
+    "net451": {},
     "netstandard1.3": {
       "dependencies": {
         "System.Runtime": "4.1.0"
-      },
-      "imports": "dnxcore50"
-    },
-    "net451": { }
+      }
+    }
   }
 }
