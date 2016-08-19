@@ -14,7 +14,7 @@ namespace NWebsec.AspNetCore.Mvc.HttpHeaders.Csp
         /// Generates a CSP nonce HTML attribute. The 120-bit random nonce will be included in the CSP script-src directive.
         /// </summary>
         /// <param name="helper"></param>
-        public static HtmlString CspScriptNonce(this IHtmlHelper<dynamic> helper)
+        public static HtmlString CspScriptNonce(this IHtmlHelper helper)
         {
             var context = helper.ViewContext.HttpContext;
             var cspConfigurationOverrideHelper = new CspConfigurationOverrideHelper();
@@ -36,7 +36,7 @@ namespace NWebsec.AspNetCore.Mvc.HttpHeaders.Csp
         /// Generates a CSP nonce HTML attribute. The 120-bit random nonce will be included in the CSP style-src directive.
         /// </summary>
         /// <param name="helper"></param>
-        public static HtmlString CspStyleNonce(this IHtmlHelper<dynamic> helper)
+        public static HtmlString CspStyleNonce(this IHtmlHelper helper)
         {
             var context = helper.ViewContext.HttpContext;
             var cspConfigurationOverrideHelper = new CspConfigurationOverrideHelper();
@@ -59,7 +59,7 @@ namespace NWebsec.AspNetCore.Mvc.HttpHeaders.Csp
         /// </summary>
         /// <param name="helper"></param>
         /// <param name="mediaType">The media type.</param>
-        public static HtmlString CspMediaType(this IHtmlHelper<dynamic> helper, string mediaType)
+        public static HtmlString CspMediaType(this IHtmlHelper helper, string mediaType)
         {
             new Rfc2045MediaTypeValidator().Validate(mediaType);
 
@@ -79,7 +79,7 @@ namespace NWebsec.AspNetCore.Mvc.HttpHeaders.Csp
             return new HtmlString(attribute);
         }
 
-        private static HtmlString CreateNonceAttribute(IHtmlHelper<dynamic> helper, string nonce)
+        private static HtmlString CreateNonceAttribute(IHtmlHelper helper, string nonce)
         {
             //TODO have a look at the encoder.
             var sb = $"nonce=\"{helper.Encode(nonce)}\"";
