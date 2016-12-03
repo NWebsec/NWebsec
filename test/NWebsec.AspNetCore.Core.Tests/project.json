@@ -7,7 +7,7 @@
     "Microsoft.AspNetCore.Http": "1.0.0",
     "Microsoft.AspNetCore.Http.Abstractions": "1.0.0",
     "Moq": "4.5.10",
-    "NUnit": "3.4.0",
+    "NUnit": "3.4.1",
     "dotnet-test-nunit": "3.4.0-alpha-2",
     "NWebsec.AspNetCore.Core": "1.0.0-*"
   },

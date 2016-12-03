@@ -8,7 +8,7 @@
     "Microsoft.AspNetCore.TestHost": "1.0.0",
     "Microsoft.Extensions.PlatformAbstractions": "1.0.0",
     "MvcAttributeWebsite": "1.0.0-*",
-    "NUnit": "3.4.0",
+    "NUnit": "3.4.1",
     "dotnet-test-nunit": "3.4.0-beta-2"
   },
   "testRunner": "nunit",
