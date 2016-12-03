@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using NWebsec.AspNetCore.Mvc.HttpHeaders.Csp;
 
 namespace Mvc.Controllers
 {
+    [Csp,CspDefaultSrc(Self = true) ]
     public class HomeController : Controller
     {
         public IActionResult Index()
