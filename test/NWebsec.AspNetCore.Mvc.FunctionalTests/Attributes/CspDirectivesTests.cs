@@ -289,13 +289,24 @@ namespace NWebsec.AspNetCore.Mvc.FunctionalTests.Attributes
             Assert.IsTrue(response.IsSuccessStatusCode, $"Request failed: {path}");
             var body = await response.Content.ReadAsStringAsync();
 
-            var scriptCaptures = Regex.Match(body, @"<script nonce=""(.+)"">").Groups;
+            var scriptCaptures = Regex.Match(body, @"<script id=""script1"" nonce=""(.+)"">").Groups;
             Assert.AreEqual(2, scriptCaptures.Count, "Expected 2 script captures, captured " + scriptCaptures.Count);
             var bodyScriptNonce = WebUtility.HtmlDecode(scriptCaptures[1].Value);
 
-            var styleCaptures = Regex.Match(body, @"<style nonce=""(.+)"">").Groups;
+            scriptCaptures = Regex.Match(body, @"<script id=""script2"" nonce=""(.+)"">").Groups;
+            Assert.AreEqual(2, scriptCaptures.Count, "Expected 2 script captures, captured " + scriptCaptures.Count);
+            var bodyScriptNonce2 = WebUtility.HtmlDecode(scriptCaptures[1].Value);
+
+            var styleCaptures = Regex.Match(body, @"<style id=""style1"" nonce=""(.+)"">").Groups;
             Assert.AreEqual(2, styleCaptures.Count, "Expected 2 style captures, captured " + styleCaptures.Count);
             var bodyStyleNonce = WebUtility.HtmlDecode(styleCaptures[1].Value);
+
+            styleCaptures = Regex.Match(body, @"<style id=""style2"" nonce=""(.+)"">").Groups;
+            Assert.AreEqual(2, styleCaptures.Count, "Expected 2 style captures, captured " + styleCaptures.Count);
+            var bodyStyleNonce2 = WebUtility.HtmlDecode(styleCaptures[1].Value);
+
+            Assert.AreEqual(bodyScriptNonce, bodyScriptNonce2, "Multiple different script nonces were generated.");
+            Assert.AreEqual(bodyStyleNonce, bodyStyleNonce2, "Multiple different style nonces were generated.");
 
             var cspHeader = response.Headers.GetValues("Content-Security-Policy").Single();
             var expectedDirective = $"script-src 'nonce-{bodyScriptNonce}';style-src 'nonce-{bodyStyleNonce}'";
