@@ -5,8 +5,10 @@ using NWebsec.AspNetCore.Core.HttpHeaders.Configuration;
 
 namespace NWebsec.AspNetCore.Mvc.Helpers
 {
-    public interface ICspConfigurationOverrideHelper
+    internal interface ICspConfigurationOverrideHelper
     {
         ICspConfiguration GetCspConfigWithOverrides(HttpContext context, bool reportOnly);
+        string GetCspScriptNonce(HttpContext context);
+        string GetCspStyleNonce(HttpContext context);
     }
 }

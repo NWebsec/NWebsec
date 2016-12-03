@@ -8,6 +8,7 @@ using NWebsec.AspNetCore.Mvc.Helpers;
 
 namespace NWebsec.AspNetCore.Mvc.HttpHeaders.Csp
 {
+    //TODO Rewrite to tag helpers
     public static class CspHtmlHelpers
     {
         /// <summary>

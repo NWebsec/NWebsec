@@ -9,7 +9,7 @@ using NWebsec.AspNetCore.Mvc.Csp;
 
 namespace NWebsec.AspNetCore.Mvc.Helpers
 {
-    public class CspConfigurationOverrideHelper : ICspConfigurationOverrideHelper
+    internal class CspConfigurationOverrideHelper : ICspConfigurationOverrideHelper
     {
         private readonly IContextConfigurationHelper _contextConfigurationHelper;
         private readonly ICspConfigMapper _configMapper;
@@ -123,7 +123,7 @@ namespace NWebsec.AspNetCore.Mvc.Helpers
             overrides.ReportUriDirective = reportUriConfig;
         }
 
-        internal string GetCspScriptNonce(HttpContext context)
+        public string GetCspScriptNonce(HttpContext context)
         {
             var overrides = _contextConfigurationHelper.GetCspConfigurationOverride(context, false, false);
 
@@ -140,7 +140,7 @@ namespace NWebsec.AspNetCore.Mvc.Helpers
             return nonce;
         }
 
-        internal string GetCspStyleNonce(HttpContext context)
+        public string GetCspStyleNonce(HttpContext context)
         {
             var overrides = _contextConfigurationHelper.GetCspConfigurationOverride(context, false, false);
 

@@ -6,7 +6,7 @@ using NWebsec.AspNetCore.Core.HttpHeaders;
 
 namespace NWebsec.AspNetCore.Mvc.Helpers
 {
-    public class HeaderOverrideHelper
+    internal class HeaderOverrideHelper : IHeaderOverrideHelper
     {
         private readonly IContextConfigurationHelper _contextConfigurationHelper;
         private readonly IHeaderConfigurationOverrideHelper _headerConfigurationOverrideHelper;
@@ -35,7 +35,7 @@ namespace NWebsec.AspNetCore.Mvc.Helpers
             //_reportHelper = reportHelper;
         }
 
-        internal void SetXRobotsTagHeader(HttpContext context)
+        public void SetXRobotsTagHeader(HttpContext context)
         {
             var config = _headerConfigurationOverrideHelper.GetXRobotsTagWithOverride(context);
 
@@ -50,7 +50,7 @@ namespace NWebsec.AspNetCore.Mvc.Helpers
             _headerResultHandler.HandleHeaderResult(context.Response, result);
         }
 
-        internal void SetXFrameoptionsHeader(HttpContext context)
+        public void SetXFrameoptionsHeader(HttpContext context)
         {
             var config = _headerConfigurationOverrideHelper.GetXFrameoptionsWithOverride(context);
 
@@ -65,7 +65,7 @@ namespace NWebsec.AspNetCore.Mvc.Helpers
             _headerResultHandler.HandleHeaderResult(context.Response, result);
         }
 
-        internal void SetXContentTypeOptionsHeader(HttpContext context)
+        public void SetXContentTypeOptionsHeader(HttpContext context)
         {
             var config = _headerConfigurationOverrideHelper.GetXContentTypeOptionsWithOverride(context);
 
@@ -80,7 +80,7 @@ namespace NWebsec.AspNetCore.Mvc.Helpers
             _headerResultHandler.HandleHeaderResult(context.Response, result);
         }
 
-        internal void SetXDownloadOptionsHeader(HttpContext context)
+        public void SetXDownloadOptionsHeader(HttpContext context)
         {
             var config = _headerConfigurationOverrideHelper.GetXDownloadOptionsWithOverride(context);
 
@@ -95,7 +95,7 @@ namespace NWebsec.AspNetCore.Mvc.Helpers
             _headerResultHandler.HandleHeaderResult(context.Response, result);
         }
 
-        internal void SetXXssProtectionHeader(HttpContext context)
+        public void SetXXssProtectionHeader(HttpContext context)
         {
             var config = _headerConfigurationOverrideHelper.GetXXssProtectionWithOverride(context);
 
@@ -126,7 +126,7 @@ namespace NWebsec.AspNetCore.Mvc.Helpers
             response.Headers["Pragma"] = "no-cache";
         }
 
-        internal void SetCspHeaders(HttpContext context, bool reportOnly)
+        public void SetCspHeaders(HttpContext context, bool reportOnly)
         {
             var cspConfig = _cspConfigurationOverrideHelper.GetCspConfigWithOverrides(context, reportOnly);
 

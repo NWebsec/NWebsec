@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Html;
 
 namespace NWebsec.AspNetCore.Mvc.Extensions
 {
+    //TODO rewrite as tag helper
     public static class HtmlHelperExtensions
     {
         private static readonly IReferrerPolicy RefPolicy = new ReferrerPolicyGenerator();
