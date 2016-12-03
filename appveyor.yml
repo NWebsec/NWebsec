@@ -48,22 +48,22 @@ after_test:
 - ps: >-
     pushd .\src\NWebsec.AspNetCore.Core\
 
-    dotnet pack -c release
+    dotnet pack -c release --no-build -o nupkgs
 
     popd
 
     pushd .\src\NWebsec.AspNetCore.Middleware\
 
-    dotnet pack -c release
+    dotnet pack -c release --no-build -o nupkgs
 
     popd
 
     pushd .\src\NWebsec.AspNetCore.Mvc\
 
-    dotnet pack -c release
+    dotnet pack -c release --no-build -o nupkgs
 
     popd
 artifacts:
-- path: '**/NWebsec.AspNetCore.Core/bin/release/*.nupkg'
-- path: '**/NWebsec.AspNetCore.Middleware/bin/release/*.nupkg'
-- path: '**/NWebsec.AspNetCore.Mvc/bin/release/*.nupkg'
+- path: '**/NWebsec.AspNetCore.Core/nupkgs/*.nupkg'
+- path: '**/NWebsec.AspNetCore.Middleware/nupkgs/*.nupkg'
+- path: '**/NWebsec.AspNetCore.Mvc/nupkgs/*.nupkg'
