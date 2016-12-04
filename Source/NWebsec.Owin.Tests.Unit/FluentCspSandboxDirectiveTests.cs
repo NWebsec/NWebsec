@@ -16,13 +16,28 @@ namespace NWebsec.Owin.Tests.Unit
             _options = new FluentCspSandboxDirective();
         }
 
-        
         [Test]
         public void AllowForms_SetsAllowForms()
         {
             _options.AllowForms();
 
             Assert.IsTrue(((CspSandboxDirectiveConfiguration)_options).AllowForms);
+        }
+
+        [Test]
+        public void AllowModals_SetsAllowModals()
+        {
+            _options.AllowModals();
+
+            Assert.IsTrue(((CspSandboxDirectiveConfiguration)_options).AllowModals);
+        }
+
+        [Test]
+        public void AllowOrientationLock_SetsAllowOrientationLock()
+        {
+            _options.AllowOrientationLock();
+
+            Assert.IsTrue(((CspSandboxDirectiveConfiguration)_options).AllowOrientationLock);
         }
 
         [Test]
@@ -39,6 +54,22 @@ namespace NWebsec.Owin.Tests.Unit
             _options.AllowPopups();
 
             Assert.IsTrue(((CspSandboxDirectiveConfiguration)_options).AllowPopups);
+        }
+
+        [Test]
+        public void AllowPopupsToEscapeSandbox_SetsAllowPopupsToEscapeSandbox()
+        {
+            _options.AllowPopupsToEscapeSandbox();
+
+            Assert.IsTrue(((CspSandboxDirectiveConfiguration)_options).AllowPopupsToEscapeSandbox);
+        }
+
+        [Test]
+        public void AllowPresentation_SetsAllowPresentation()
+        {
+            _options.AllowPresentation();
+
+            Assert.IsTrue(((CspSandboxDirectiveConfiguration)_options).AllowPresentation);
         }
 
         [Test]
