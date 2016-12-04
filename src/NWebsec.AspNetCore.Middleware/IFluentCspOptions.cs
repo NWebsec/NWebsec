@@ -96,11 +96,18 @@ namespace NWebsec.AspNetCore.Middleware
         IFluentCspOptions FormActions(Action<ICspDirectiveBasicConfiguration> configurer);
 
         /// <summary>
-        /// Configures the fram-ancestors directive (CSP 2).
+        /// Configures the frame-ancestors directive (CSP 2).
         /// </summary>
         /// <param name="configurer">An <see cref="Action"/> that configures the sources for the directive.</param>
         /// <returns>The current <see cref="CspOptions" /> instance.</returns>
         IFluentCspOptions FrameAncestors(Action<ICspDirectiveBasicConfiguration> configurer);
+
+        /// <summary>
+        /// Configures the manifest-src directive (CSP 3).
+        /// </summary>
+        /// <param name="configurer">An <see cref="Action"/> that configures the sources for the directive.</param>
+        /// <returns>The current <see cref="CspOptions" /> instance.</returns>
+        IFluentCspOptions ManifestSources(Action<ICspDirectiveBasicConfiguration> configurer);
 
         /// <summary>
         /// Configures the plugin-types directive (CSP 2).

@@ -316,6 +316,23 @@ namespace NWebsec.AspNetCore.Core.Tests.HttpHeaders
         }
 
         [Test]
+        public void AddCspHeaders_CspEnabledWithManifestSrc_ReturnsSetCspWithhManifestSrcResult([Values(false, true)]bool reportOnly)
+        {
+            var cspConfig = new CspConfiguration
+            {
+                Enabled = true,
+                ManifestSrcDirective = { SelfSrc = true }
+            };
+
+            var result = _generator.CreateCspResult(cspConfig, reportOnly);
+
+            Assert.IsNotNull(result);
+            Assert.AreEqual(HeaderResult.ResponseAction.Set, result.Action);
+            Assert.AreEqual(CspHeaderName(reportOnly), result.Name);
+            Assert.AreEqual("manifest-src 'self'", result.Value);
+        }
+
+        [Test]
         public void AddCspHeaders_CspEnabledWithSandbox_ReturnsSetCspWithSandboxResult([Values(false, true)]bool reportOnly)
         {
             var cspConfig = new CspConfiguration

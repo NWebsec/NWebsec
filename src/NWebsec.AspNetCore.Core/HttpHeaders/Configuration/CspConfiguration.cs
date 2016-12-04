@@ -24,6 +24,7 @@ namespace NWebsec.AspNetCore.Core.HttpHeaders.Configuration
             ChildSrcDirective = new CspDirectiveConfiguration();
             FormActionDirective = new CspDirectiveConfiguration();
             FrameAncestorsDirective = new CspDirectiveConfiguration();
+            ManifestSrcDirective = new CspDirectiveConfiguration();
             PluginTypesDirective = new CspPluginTypesDirectiveConfiguration();
             SandboxDirective = new CspSandboxDirectiveConfiguration();
             UpgradeInsecureRequestsDirective = new CspUpgradeDirectiveConfiguration();
@@ -44,6 +45,7 @@ namespace NWebsec.AspNetCore.Core.HttpHeaders.Configuration
         public ICspDirectiveConfiguration ChildSrcDirective { get; set; }
         public ICspDirectiveConfiguration FormActionDirective { get; set; }
         public ICspDirectiveConfiguration FrameAncestorsDirective { get; set; }
+        public ICspDirectiveConfiguration ManifestSrcDirective { get; set; }
         public ICspPluginTypesDirectiveConfiguration PluginTypesDirective { get; set; }
         public ICspSandboxDirectiveConfiguration SandboxDirective { get; set; }
         public ICspUpgradeDirectiveConfiguration UpgradeInsecureRequestsDirective { get; set; }
