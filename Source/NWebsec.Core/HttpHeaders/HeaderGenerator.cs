@@ -52,7 +52,7 @@ namespace NWebsec.Core.HttpHeaders
 
             var seconds = (int)hstsConfig.MaxAge.TotalSeconds;
 
-            var includeSubdomains = (hstsConfig.IncludeSubdomains ? "; includeSubdomains" : "");
+            var includeSubdomains = (hstsConfig.IncludeSubdomains ? "; includeSubDomains" : "");
             var preload = (hstsConfig.Preload ? "; preload" : "");
             var value = string.Format("max-age={0}{1}{2}", seconds, includeSubdomains, preload);
 
@@ -168,7 +168,7 @@ namespace NWebsec.Core.HttpHeaders
 
             if (hpkpConfig.IncludeSubdomains)
             {
-                sb.Append("includeSubdomains;");
+                sb.Append("includeSubDomains;");
             }
 
             foreach (var pin in hpkpConfig.Pins)
