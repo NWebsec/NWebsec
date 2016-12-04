@@ -331,6 +331,16 @@ namespace NWebsec.AspNetCore.Core.HttpHeaders
                 sources.Add("allow-forms");
             }
 
+            if (directive.AllowModals)
+            {
+                sources.Add("allow-modals");
+            }
+
+            if (directive.AllowOrientationLock)
+            {
+                sources.Add("allow-orientation-lock");
+            }
+
             if (directive.AllowPointerLock)
             {
                 sources.Add("allow-pointer-lock");
@@ -339,6 +349,16 @@ namespace NWebsec.AspNetCore.Core.HttpHeaders
             if (directive.AllowPopups)
             {
                 sources.Add("allow-popups");
+            }
+
+            if (directive.AllowPopupsToEscapeSandbox)
+            {
+                sources.Add("allow-popups-to-escape-sandbox");
+            }
+
+            if (directive.AllowPresentation)
+            {
+                sources.Add("allow-presentation");
             }
 
             if (directive.AllowSameOrigin)

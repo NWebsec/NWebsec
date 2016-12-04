@@ -338,7 +338,19 @@ namespace NWebsec.AspNetCore.Core.Tests.HttpHeaders
             var cspConfig = new CspConfiguration
             {
                 Enabled = true,
-                SandboxDirective = { Enabled = true, AllowForms = true, AllowPointerLock = true, AllowPopups = true, AllowSameOrigin = true, AllowScripts = true, AllowTopNavigation = true }
+                SandboxDirective = {
+                    Enabled = true,
+                    AllowForms = true,
+                    AllowModals = true,
+                    AllowOrientationLock = true,
+                    AllowPointerLock = true,
+                    AllowPopups = true,
+                    AllowPopupsToEscapeSandbox = true,
+                    AllowPresentation = true,
+                    AllowSameOrigin = true,
+                    AllowScripts = true,
+                    AllowTopNavigation = true
+                }
             };
 
             var result = _generator.CreateCspResult(cspConfig, reportOnly);
@@ -346,7 +358,7 @@ namespace NWebsec.AspNetCore.Core.Tests.HttpHeaders
             Assert.IsNotNull(result);
             Assert.AreEqual(HeaderResult.ResponseAction.Set, result.Action);
             Assert.AreEqual(CspHeaderName(reportOnly), result.Name);
-            Assert.AreEqual("sandbox allow-forms allow-pointer-lock allow-popups allow-same-origin allow-scripts allow-top-navigation", result.Value);
+            Assert.AreEqual("sandbox allow-forms allow-modals allow-orientation-lock allow-pointer-lock allow-popups allow-popups-to-escape-sandbox allow-presentation allow-same-origin allow-scripts allow-top-navigation", result.Value);
         }
 
         [Test]
