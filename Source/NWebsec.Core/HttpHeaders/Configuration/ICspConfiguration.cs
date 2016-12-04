@@ -24,6 +24,9 @@ namespace NWebsec.Core.HttpHeaders.Configuration
         ICspPluginTypesDirectiveConfiguration PluginTypesDirective { get; set; }
         ICspSandboxDirectiveConfiguration SandboxDirective { get; set; }
 
+        //CSP 3
+        ICspDirectiveConfiguration ManifestSrcDirective { get; set; }
+
         //Upgrade insecure requests
         ICspUpgradeDirectiveConfiguration UpgradeInsecureRequestsDirective { get; set; }
     }

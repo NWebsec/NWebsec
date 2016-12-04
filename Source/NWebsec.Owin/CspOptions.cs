@@ -10,37 +10,22 @@ namespace NWebsec.Owin
         public bool Enabled { get; set; } = true;
 
         public ICspDirectiveConfiguration DefaultSrcDirective { get; set; } = new CspDirective();
-
         public ICspDirectiveConfiguration ScriptSrcDirective { get; set; } = new CspDirective();
-
         public ICspDirectiveConfiguration ObjectSrcDirective { get; set; } = new CspDirective();
-
         public ICspDirectiveConfiguration StyleSrcDirective { get; set; } = new CspDirective();
-
         public ICspDirectiveConfiguration ImgSrcDirective { get; set; } = new CspDirective();
-
         public ICspDirectiveConfiguration MediaSrcDirective { get; set; } = new CspDirective();
-
         public ICspDirectiveConfiguration FrameSrcDirective { get; set; } = new CspDirective();
-
         public ICspDirectiveConfiguration FontSrcDirective { get; set; } = new CspDirective();
-
         public ICspDirectiveConfiguration ConnectSrcDirective { get; set; } = new CspDirective();
-
         public ICspDirectiveConfiguration BaseUriDirective { get; set; } = new CspDirective();
-
         public ICspDirectiveConfiguration ChildSrcDirective { get; set; } = new CspDirective();
-
         public ICspDirectiveConfiguration FormActionDirective { get; set; } = new CspDirective();
-
         public ICspDirectiveConfiguration FrameAncestorsDirective { get; set; } = new CspDirective();
-
+        public ICspDirectiveConfiguration ManifestSrcDirective { get; set; } = new CspDirective();
         public ICspPluginTypesDirectiveConfiguration PluginTypesDirective { get; set; } = new FluentCspPluginTypesDirective();
-
         public ICspSandboxDirectiveConfiguration SandboxDirective { get; set; } = new FluentCspSandboxDirective();
-
         public ICspUpgradeDirectiveConfiguration UpgradeInsecureRequestsDirective { get; set; } = new CspUpgradeDirectiveConfiguration();
-
         public ICspReportUriDirectiveConfiguration ReportUriDirective { get; set; } = new CspReportUriDirective();
 
         public IFluentCspOptions DefaultSources(Action<ICspDirectiveBasicConfiguration> configurer)
@@ -118,6 +103,12 @@ namespace NWebsec.Owin
         public IFluentCspOptions FrameAncestors(Action<ICspDirectiveBasicConfiguration> configurer)
         {
             configurer(FrameAncestorsDirective);
+            return this;
+        }
+
+        public IFluentCspOptions ManifestSources(Action<ICspDirectiveBasicConfiguration> configurer)
+        {
+            configurer(ManifestSrcDirective);
             return this;
         }
 

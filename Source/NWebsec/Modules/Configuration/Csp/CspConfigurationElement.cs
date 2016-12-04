@@ -192,6 +192,20 @@ namespace NWebsec.Modules.Configuration.Csp
             }
         }
 
+        [ConfigurationProperty("manifest-src", IsRequired = false)]
+        [CspDirectiveBaseConfigurationElementValidator]
+        public CspDirectiveBaseConfigurationElement ManifestSrc
+        {
+            get
+            {
+                return (CspDirectiveBaseConfigurationElement)this["manifest-src"];
+            }
+            set
+            {
+                this["manifest-src"] = value;
+            }
+        }
+
         [ConfigurationProperty("sandbox", IsRequired = false)]
         public CspSandboxDirectiveConfigurationElement Sandbox
         {
@@ -309,6 +323,12 @@ namespace NWebsec.Modules.Configuration.Csp
         public ICspDirectiveConfiguration FrameAncestorsDirective
         {
             get { return FrameAncestors; }
+            set { throw new NotImplementedException(); }
+        }
+
+        public ICspDirectiveConfiguration ManifestSrcDirective
+        {
+            get { return ManifestSrc; }
             set { throw new NotImplementedException(); }
         }
 

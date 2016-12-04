@@ -17,27 +17,27 @@ namespace NWebsec.Owin.Tests.Unit
         }
 
         [Test]
-        public void ConnectSources_ConfiguresConnectSources()
-        {
-            _options.ConnectSources(config => Assert.AreSame(_options.ConnectSrcDirective, config));
-        }
-
-        [Test]
         public void DefaultSources_ConfiguresDefaultSources()
         {
             _options.DefaultSources(config => Assert.AreSame(_options.DefaultSrcDirective, config));
         }
 
         [Test]
-        public void FontSources_ConfiguresFontSources()
+        public void ScriptSources_ConfiguresScriptSources()
         {
-            _options.FontSources(config => Assert.AreSame(_options.FontSrcDirective, config));
+            _options.ScriptSources(config => Assert.AreSame(_options.ScriptSrcDirective, config));
         }
 
         [Test]
-        public void FrameSources_ConfiguresFrameSources()
+        public void ObjectSources_ConfiguresObjectSources()
         {
-            _options.FrameSources(config => Assert.AreSame(_options.FrameSrcDirective, config));
+            _options.ObjectSources(config => Assert.AreSame(_options.ObjectSrcDirective, config));
+        }
+
+        [Test]
+        public void StyleSources_ConfiguresStyleSources()
+        {
+            _options.StyleSources(config => Assert.AreSame(_options.StyleSrcDirective, config));
         }
 
         [Test]
@@ -54,27 +54,21 @@ namespace NWebsec.Owin.Tests.Unit
         }
 
         [Test]
-        public void ObjectSources_ConfiguresObjectSources()
+        public void FrameSources_ConfiguresFrameSources()
         {
-            _options.ObjectSources(config => Assert.AreSame(_options.ObjectSrcDirective, config));
+            _options.FrameSources(config => Assert.AreSame(_options.FrameSrcDirective, config));
         }
 
         [Test]
-        public void ReportUris_ConfiguresReportUris()
+        public void FontSources_ConfiguresFontSources()
         {
-            _options.ReportUris(config => Assert.AreSame(_options.ReportUriDirective, config));
+            _options.FontSources(config => Assert.AreSame(_options.FontSrcDirective, config));
         }
 
         [Test]
-        public void ScriptSources_ConfiguresScriptSources()
+        public void ConnectSources_ConfiguresConnectSources()
         {
-            _options.ScriptSources(config => Assert.AreSame(_options.ScriptSrcDirective, config));
-        }
-
-        [Test]
-        public void StyleSources_ConfiguresStyleSources()
-        {
-            _options.StyleSources(config => Assert.AreSame(_options.StyleSrcDirective, config));
+            _options.ConnectSources(config => Assert.AreSame(_options.ConnectSrcDirective, config));
         }
 
         [Test]
@@ -96,6 +90,18 @@ namespace NWebsec.Owin.Tests.Unit
         }
 
         [Test]
+        public void FrameAncestors_ConfiguresFrameAncestors()
+        {
+            _options.FrameAncestors(config => Assert.AreSame(_options.FrameAncestorsDirective, config));
+        }
+
+        [Test]
+        public void ManifestSources_ConfiguresManifestSources()
+        {
+            _options.ManifestSources(config => Assert.AreSame(_options.ManifestSrcDirective, config));
+        }
+
+        [Test]
         public void PluginTypes_ConfiguresPluginTypes()
         {
             _options.PluginTypes(config => Assert.AreSame(_options.PluginTypesDirective, config));
@@ -105,9 +111,9 @@ namespace NWebsec.Owin.Tests.Unit
         public void Sandbox_EnablesSandbox()
         {
             Assert.IsFalse(_options.SandboxDirective.Enabled);
-            
+
             _options.Sandbox();
-            
+
             Assert.IsTrue(_options.SandboxDirective.Enabled);
         }
 
@@ -144,9 +150,15 @@ namespace NWebsec.Owin.Tests.Unit
         }
 
         [Test]
-        public void UpgradeInsecureRequestsWithInvalidPort_Throws([Values(0,65536)] int invalidPort)
+        public void UpgradeInsecureRequestsWithInvalidPort_Throws([Values(0, 65536)] int invalidPort)
         {
             Assert.Throws<ArgumentOutOfRangeException>(() => _options.UpgradeInsecureRequests(invalidPort));
+        }
+
+        [Test]
+        public void ReportUris_ConfiguresReportUris()
+        {
+            _options.ReportUris(config => Assert.AreSame(_options.ReportUriDirective, config));
         }
     }
 }

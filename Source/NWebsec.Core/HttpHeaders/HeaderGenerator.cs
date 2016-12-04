@@ -233,6 +233,7 @@ namespace NWebsec.Core.HttpHeaders
             AppendDirective(sb, "child-src", GetDirectiveList(config.ChildSrcDirective));
             AppendDirective(sb, "form-action", GetDirectiveList(config.FormActionDirective));
             AppendDirective(sb, "frame-ancestors", GetDirectiveList(config.FrameAncestorsDirective));
+            AppendDirective(sb, "manifest-src", GetDirectiveList(config.ManifestSrcDirective));
             AppendDirective(sb, "plugin-types", GetPluginTypesDirectiveList(config.PluginTypesDirective));
             AppendDirective(sb, "sandbox", GetSandboxDirectiveList(config.SandboxDirective));
             AppendUpgradeDirective(sb, "upgrade-insecure-requests", config.UpgradeInsecureRequestsDirective);
