@@ -17,7 +17,16 @@ namespace NWebsec.AspNetCore.Core.HttpHeaders.Configuration
         ///     made.
         /// </summary>
         bool AllowForms { get; set; }
-
+        /// <summary>
+        ///     Infrastructure. Not intended to be used by your code directly. An attempt to hide this from Intellisense has been
+        ///     made.
+        /// </summary>
+        bool AllowModals { get; set; }
+        /// <summary>
+        ///     Infrastructure. Not intended to be used by your code directly. An attempt to hide this from Intellisense has been
+        ///     made.
+        /// </summary>
+        bool AllowOrientationLock { get; set; }
         /// <summary>
         ///     Infrastructure. Not intended to be used by your code directly. An attempt to hide this from Intellisense has been
         ///     made.
@@ -28,6 +37,16 @@ namespace NWebsec.AspNetCore.Core.HttpHeaders.Configuration
         ///     made.
         /// </summary>
         bool AllowPopups { get; set; }
+        /// <summary>
+        ///     Infrastructure. Not intended to be used by your code directly. An attempt to hide this from Intellisense has been
+        ///     made.
+        /// </summary>
+        bool AllowPopupsToEscapeSandbox { get; set; }
+        /// <summary>
+        ///     Infrastructure. Not intended to be used by your code directly. An attempt to hide this from Intellisense has been
+        ///     made.
+        /// </summary>
+        bool AllowPresentation { get; set; }
         /// <summary>
         ///     Infrastructure. Not intended to be used by your code directly. An attempt to hide this from Intellisense has been
         ///     made.
@@ -43,7 +62,5 @@ namespace NWebsec.AspNetCore.Core.HttpHeaders.Configuration
         ///     made.
         /// </summary>
         bool AllowTopNavigation { get; set; }
-
-
     }
 }
