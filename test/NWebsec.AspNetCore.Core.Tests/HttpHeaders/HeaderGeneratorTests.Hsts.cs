@@ -55,7 +55,7 @@ namespace NWebsec.AspNetCore.Core.Tests.HttpHeaders
             Assert.IsNotNull(result);
             Assert.AreEqual(HeaderResult.ResponseAction.Set, result.Action);
             Assert.AreEqual("Strict-Transport-Security", result.Name);
-            Assert.AreEqual("max-age=86400; includeSubdomains", result.Value);
+            Assert.AreEqual("max-age=86400; includeSubDomains", result.Value);
         }
 
         [Test]
@@ -68,7 +68,7 @@ namespace NWebsec.AspNetCore.Core.Tests.HttpHeaders
             Assert.IsNotNull(result);
             Assert.AreEqual(HeaderResult.ResponseAction.Set, result.Action);
             Assert.AreEqual("Strict-Transport-Security", result.Name);
-            Assert.AreEqual("max-age=10886400; includeSubdomains; preload", result.Value);
+            Assert.AreEqual("max-age=10886400; includeSubDomains; preload", result.Value);
         }
 
         [Test]

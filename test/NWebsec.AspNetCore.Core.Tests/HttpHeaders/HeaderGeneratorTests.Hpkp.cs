@@ -57,7 +57,7 @@ namespace NWebsec.AspNetCore.Core.Tests.HttpHeaders
             Assert.IsNotNull(result);
             Assert.AreEqual(HeaderResult.ResponseAction.Set, result.Action);
             Assert.AreEqual(HpkpHeaderName(reportOnly), result.Name);
-            Assert.AreEqual("max-age=86400;includeSubdomains;pin-sha256=\"firstpin\";pin-sha256=\"secondpin\"", result.Value);
+            Assert.AreEqual("max-age=86400;includeSubDomains;pin-sha256=\"firstpin\";pin-sha256=\"secondpin\"", result.Value);
         }
 
         [Test]
@@ -83,7 +83,7 @@ namespace NWebsec.AspNetCore.Core.Tests.HttpHeaders
             Assert.IsNotNull(result);
             Assert.AreEqual(HeaderResult.ResponseAction.Set, result.Action);
             Assert.AreEqual(HpkpHeaderName(reportOnly), result.Name);
-            Assert.AreEqual("max-age=86400;includeSubdomains;pin-sha256=\"firstpin\";pin-sha256=\"secondpin\";report-uri=\"https://nwebsec.com/report\"", result.Value);
+            Assert.AreEqual("max-age=86400;includeSubDomains;pin-sha256=\"firstpin\";pin-sha256=\"secondpin\";report-uri=\"https://nwebsec.com/report\"", result.Value);
         }
 
         private static string HpkpHeaderName(bool reportOnly)
