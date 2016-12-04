@@ -1,6 +1,8 @@
 version: 1.0.{build}
 os: Visual Studio 2015
 configuration: Release
+before_build:
+  - nuget restore Source/NWebsecCodeBetter.sln
 build:
   project: Source/NWebsecCodeBetter.sln
   verbosity: minimal
