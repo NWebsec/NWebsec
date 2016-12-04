@@ -119,8 +119,12 @@ namespace NWebsec.Mvc.Helpers
             {
                 Enabled = oldDirective.Enabled,
                 AllowForms = oldDirective.AllowForms,
+                AllowModals = oldDirective.AllowModals,
+                AllowOrientationLock = oldDirective.AllowOrientationLock,
                 AllowPointerLock = oldDirective.AllowPointerLock,
                 AllowPopups = oldDirective.AllowPopups,
+                AllowPopupsToEscapeSandbox = oldDirective.AllowPopupsToEscapeSandbox,
+                AllowPresentation = oldDirective.AllowPresentation,
                 AllowSameOrigin = oldDirective.AllowSameOrigin,
                 AllowScripts = oldDirective.AllowScripts,
                 AllowTopNavigation = oldDirective.AllowTopNavigation

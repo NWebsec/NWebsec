@@ -25,10 +25,7 @@ namespace NWebsec.Mvc.HttpHeaders.Csp.Internals
             _headerOverrideHelper = new HeaderOverrideHelper();
         }
 
-        internal sealed override string ContextKeyIdentifier
-        {
-            get { return ReportOnly ? "CspReportOnly" : "Csp"; }
-        }
+        internal sealed override string ContextKeyIdentifier => ReportOnly ? "CspReportOnly" : "Csp";
 
         /// <summary>
         /// Sets whether the sandbox directive is enabled in the CSP header. The default is true.
@@ -41,6 +38,16 @@ namespace NWebsec.Mvc.HttpHeaders.Csp.Internals
         public bool AllowForms { get { throw new NotSupportedException(); } set { _directive.AllowForms = value; } }
 
         /// <summary>
+        /// Sets whether the allow-modals flag is included in the sandbox directive. The default is false.
+        /// </summary>
+        public bool AllowModals { get { throw new NotSupportedException(); } set { _directive.AllowModals = value; } }
+
+        /// <summary>
+        /// Sets whether the allow-orientation-lock flag is included in the sandbox directive. The default is false.
+        /// </summary>
+        public bool AllowOrientationLock { get { throw new NotSupportedException(); } set { _directive.AllowOrientationLock = value; } }
+
+        /// <summary>
         /// Sets whether the allow-pointer-lock flag is included in the sandbox directive. The default is false.
         /// </summary>
         public bool AllowPointerLock { get { throw new NotSupportedException(); } set { _directive.AllowPointerLock = value; } }
@@ -49,6 +56,16 @@ namespace NWebsec.Mvc.HttpHeaders.Csp.Internals
         /// Sets whether the allow-popups flag is included in the sandbox directive. The default is false.
         /// </summary>
         public bool AllowPopups { get { throw new NotSupportedException(); } set { _directive.AllowPopups = value; } }
+
+        /// <summary>
+        /// Sets whether the allow-popups-to-escape-sandbox flag is included in the sandbox directive. The default is false.
+        /// </summary>
+        public bool AllowPopupsToEscapeSandbox { get { throw new NotSupportedException(); } set { _directive.AllowPopupsToEscapeSandbox = value; } }
+
+        /// <summary>
+        /// Sets whether the allow-presentation flag is included in the sandbox directive. The default is false.
+        /// </summary>
+        public bool AllowPresentation { get { throw new NotSupportedException(); } set { _directive.AllowPresentation = value; } }
 
         /// <summary>
         /// Sets whether the allow-same-origin flag is included in the sandbox directive. The default is false.

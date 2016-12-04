@@ -157,12 +157,16 @@ namespace NWebsec.Mvc.Tests.Unit.Helpers
             var firstDirective = new CspSandboxDirectiveConfiguration
             {
                 AllowForms = true,
+                AllowModals = true,
+                AllowOrientationLock = true,
                 AllowPointerLock = true,
                 AllowPopups = true
             };
             var firstConfig = new CspConfiguration(false) { SandboxDirective = firstDirective };
             var secondDirective = new CspSandboxDirectiveConfiguration()
             {
+                AllowPopupsToEscapeSandbox = true,
+                AllowPresentation = true,
                 AllowSameOrigin = true,
                 AllowScripts = true,
                 AllowTopNavigation = true,
