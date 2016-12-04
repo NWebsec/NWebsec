@@ -306,6 +306,50 @@ namespace NWebsec.AspNetCore.Mvc.Tests.Helpers
         }
 
         [Test]
+        public void GetOverridenCspSandboxConfig_AllowModalsOverride_OverridesAllowModals([Values(true, false)] bool expectedResult)
+        {
+            var directiveConfig = new CspSandboxDirectiveConfiguration { AllowModals = !expectedResult };
+            var directiveOverride = new CspSandboxOverride { AllowModals = expectedResult };
+
+            var newConfig = _overrideHelper.GetOverridenCspSandboxConfig(directiveOverride, directiveConfig);
+
+            Assert.AreEqual(expectedResult, newConfig.AllowModals);
+        }
+
+        [Test]
+        public void GetOverridenCspSandboxConfig_AllowModalsNotSet_InheritsAllowModals([Values(true, false)] bool expectedResult)
+        {
+            var directiveConfig = new CspSandboxDirectiveConfiguration { AllowModals = expectedResult };
+            var directiveOverride = new CspSandboxOverride();
+
+            var newConfig = _overrideHelper.GetOverridenCspSandboxConfig(directiveOverride, directiveConfig);
+
+            Assert.AreEqual(expectedResult, newConfig.AllowModals);
+        }
+
+        [Test]
+        public void GetOverridenCspSandboxConfig_AllowOrientationLockOverride_OverridesAllowOrientationLock([Values(true, false)] bool expectedResult)
+        {
+            var directiveConfig = new CspSandboxDirectiveConfiguration { AllowOrientationLock = !expectedResult };
+            var directiveOverride = new CspSandboxOverride { AllowOrientationLock = expectedResult };
+
+            var newConfig = _overrideHelper.GetOverridenCspSandboxConfig(directiveOverride, directiveConfig);
+
+            Assert.AreEqual(expectedResult, newConfig.AllowOrientationLock);
+        }
+
+        [Test]
+        public void GetOverridenCspSandboxConfig_AllowOrientationLockNotSet_InheritsAllowOrientationLock([Values(true, false)] bool expectedResult)
+        {
+            var directiveConfig = new CspSandboxDirectiveConfiguration { AllowOrientationLock = expectedResult };
+            var directiveOverride = new CspSandboxOverride();
+
+            var newConfig = _overrideHelper.GetOverridenCspSandboxConfig(directiveOverride, directiveConfig);
+
+            Assert.AreEqual(expectedResult, newConfig.AllowOrientationLock);
+        }
+
+        [Test]
         public void GetOverridenCspSandboxConfig_AllowPointerLockOverride_OverridesAllowPointerLock([Values(true, false)] bool expectedResult)
         {
             var directiveConfig = new CspSandboxDirectiveConfiguration { AllowPointerLock = !expectedResult };
@@ -347,6 +391,50 @@ namespace NWebsec.AspNetCore.Mvc.Tests.Helpers
             var newConfig = _overrideHelper.GetOverridenCspSandboxConfig(directiveOverride, directiveConfig);
 
             Assert.AreEqual(expectedResult, newConfig.AllowPopups);
+        }
+
+        [Test]
+        public void GetOverridenCspSandboxConfig_AllowPopupsToEscapeSandboxOverride_OverridesAllowPopupsToEscapeSandbox([Values(true, false)] bool expectedResult)
+        {
+            var directiveConfig = new CspSandboxDirectiveConfiguration { AllowPopupsToEscapeSandbox = !expectedResult };
+            var directiveOverride = new CspSandboxOverride { AllowPopupsToEscapeSandbox = expectedResult };
+
+            var newConfig = _overrideHelper.GetOverridenCspSandboxConfig(directiveOverride, directiveConfig);
+
+            Assert.AreEqual(expectedResult, newConfig.AllowPopupsToEscapeSandbox);
+        }
+
+        [Test]
+        public void GetOverridenCspSandboxConfig_AllowPopupsToEscapeSandboxNotSet_InheritsAllowPopupsToEscapeSandbox([Values(true, false)] bool expectedResult)
+        {
+            var directiveConfig = new CspSandboxDirectiveConfiguration { AllowPopupsToEscapeSandbox = expectedResult };
+            var directiveOverride = new CspSandboxOverride();
+
+            var newConfig = _overrideHelper.GetOverridenCspSandboxConfig(directiveOverride, directiveConfig);
+
+            Assert.AreEqual(expectedResult, newConfig.AllowPopupsToEscapeSandbox);
+        }
+
+        [Test]
+        public void GetOverridenCspSandboxConfig_AllowPresentationOverride_OverridesAllowPresentation([Values(true, false)] bool expectedResult)
+        {
+            var directiveConfig = new CspSandboxDirectiveConfiguration { AllowPresentation = !expectedResult };
+            var directiveOverride = new CspSandboxOverride { AllowPresentation = expectedResult };
+
+            var newConfig = _overrideHelper.GetOverridenCspSandboxConfig(directiveOverride, directiveConfig);
+
+            Assert.AreEqual(expectedResult, newConfig.AllowPresentation);
+        }
+
+        [Test]
+        public void GetOverridenCspSandboxConfig_AllowPresentationNotSet_InheritsAllowPresentation([Values(true, false)] bool expectedResult)
+        {
+            var directiveConfig = new CspSandboxDirectiveConfiguration { AllowPresentation = expectedResult };
+            var directiveOverride = new CspSandboxOverride();
+
+            var newConfig = _overrideHelper.GetOverridenCspSandboxConfig(directiveOverride, directiveConfig);
+
+            Assert.AreEqual(expectedResult, newConfig.AllowPresentation);
         }
 
         [Test]

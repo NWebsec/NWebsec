@@ -81,6 +81,16 @@ namespace NWebsec.AspNetCore.Mvc.Helpers
                 result.AllowForms = (bool)directiveOverride.AllowForms;
             }
 
+            if (directiveOverride.AllowModals.HasValue)
+            {
+                result.AllowModals = (bool)directiveOverride.AllowModals;
+            }
+
+            if (directiveOverride.AllowOrientationLock.HasValue)
+            {
+                result.AllowOrientationLock = (bool)directiveOverride.AllowOrientationLock;
+            }
+
             if (directiveOverride.AllowPointerLock.HasValue)
             {
                 result.AllowPointerLock = (bool)directiveOverride.AllowPointerLock;
@@ -89,6 +99,16 @@ namespace NWebsec.AspNetCore.Mvc.Helpers
             if (directiveOverride.AllowPopups.HasValue)
             {
                 result.AllowPopups = (bool)directiveOverride.AllowPopups;
+            }
+
+            if (directiveOverride.AllowPopupsToEscapeSandbox.HasValue)
+            {
+                result.AllowPopupsToEscapeSandbox = (bool)directiveOverride.AllowPopupsToEscapeSandbox;
+            }
+
+            if (directiveOverride.AllowPresentation.HasValue)
+            {
+                result.AllowPresentation = (bool)directiveOverride.AllowPresentation;
             }
 
             if (directiveOverride.AllowSameOrigin.HasValue)
