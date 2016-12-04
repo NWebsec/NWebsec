@@ -12,6 +12,18 @@ namespace NWebsec.AspNetCore.Middleware
             return this;
         }
 
+        public new IFluentCspSandboxDirective AllowModals()
+        {
+            base.AllowModals = true;
+            return this;
+        }
+
+        public new IFluentCspSandboxDirective AllowOrientationLock()
+        {
+            base.AllowOrientationLock = true;
+            return this;
+        }
+
         public new IFluentCspSandboxDirective AllowPointerLock()
         {
             base.AllowPointerLock = true;
@@ -21,6 +33,18 @@ namespace NWebsec.AspNetCore.Middleware
         public new IFluentCspSandboxDirective AllowPopups()
         {
             base.AllowPopups = true;
+            return this;
+        }
+
+        public new IFluentCspSandboxDirective AllowPopupsToEscapeSandbox()
+        {
+            base.AllowPopupsToEscapeSandbox = true;
+            return this;
+        }
+
+        public new IFluentCspSandboxDirective AllowPresentation()
+        {
+            base.AllowPresentation = true;
             return this;
         }
 
