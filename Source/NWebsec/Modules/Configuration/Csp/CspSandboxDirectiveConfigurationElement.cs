@@ -22,6 +22,20 @@ namespace NWebsec.Modules.Configuration.Csp
             set { this["allow-forms"] = value; }
         }
 
+        [ConfigurationProperty("allow-modals", IsRequired = false, DefaultValue = false)]
+        public bool AllowModals
+        {
+            get { return (bool)this["allow-modals"]; }
+            set { this["allow-modals"] = value; }
+        }
+
+        [ConfigurationProperty("allow-orientation-lock", IsRequired = false, DefaultValue = false)]
+        public bool AllowOrientationLock
+        {
+            get { return (bool)this["allow-orientation-lock"]; }
+            set { this["allow-orientation-lock"] = value; }
+        }
+
         [ConfigurationProperty("allow-pointer-lock", IsRequired = false, DefaultValue = false)]
         public bool AllowPointerLock
         {
@@ -34,6 +48,20 @@ namespace NWebsec.Modules.Configuration.Csp
         {
             get { return (bool)this["allow-popups"]; }
             set { this["allow-popups"] = value; }
+        }
+
+        [ConfigurationProperty("allow-popups-to-escape-sandbox", IsRequired = false, DefaultValue = false)]
+        public bool AllowPopupsToEscapeSandbox
+        {
+            get { return (bool)this["allow-popups-to-escape-sandbox"]; }
+            set { this["allow-popups-to-escape-sandbox"] = value; }
+        }
+
+        [ConfigurationProperty("allow-presentation", IsRequired = false, DefaultValue = false)]
+        public bool AllowPresentation
+        {
+            get { return (bool)this["allow-presentation"]; }
+            set { this["allow-presentation"] = value; }
         }
 
         [ConfigurationProperty("allow-same-origin", IsRequired = false, DefaultValue = false)]

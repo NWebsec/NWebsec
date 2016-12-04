@@ -572,6 +572,16 @@
               <xs:documentation>Optional. Specifies whether to include the allow-forms source. The default is false.</xs:documentation>
             </xs:annotation>
           </xs:attribute>
+          <xs:attribute name="allow-modals" type="simple_boolean" use="optional">
+            <xs:annotation>
+              <xs:documentation>Optional. Specifies whether to include the allow-modals source. The default is false.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="allow-orientation-lock" type="simple_boolean" use="optional">
+            <xs:annotation>
+              <xs:documentation>Optional. Specifies whether to include the allow-orientation-lock source. The default is false.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
           <xs:attribute name="allow-pointer-lock" type="simple_boolean" use="optional">
             <xs:annotation>
               <xs:documentation>Optional. Specifies whether to include the allow-pointer-lock source. The default is false.</xs:documentation>
@@ -580,6 +590,16 @@
           <xs:attribute name="allow-popups" type="simple_boolean" use="optional">
             <xs:annotation>
               <xs:documentation>Optional. Specifies whether to include the allow-popups source. The default is false.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="allow-popups-to-escape-sandbox" type="simple_boolean" use="optional">
+            <xs:annotation>
+              <xs:documentation>Optional. Specifies whether to include the allow-popups-to-escape-sandbox source. The default is false.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="allow-presentation" type="simple_boolean" use="optional">
+            <xs:annotation>
+              <xs:documentation>Optional. Specifies whether to include the allow-presentation source. The default is false.</xs:documentation>
             </xs:annotation>
           </xs:attribute>
           <xs:attribute name="allow-same-origin" type="simple_boolean" use="optional">
