@@ -102,7 +102,7 @@ namespace NWebsec.Mvc.Helpers
                 return null;
             }
 
-            return new CspPluginTypesDirectiveConfiguration()
+            return new CspPluginTypesDirectiveConfiguration
             {
                 Enabled = oldDirective.Enabled,
                 MediaTypes = oldDirective.MediaTypes.ToArray()
@@ -113,7 +113,7 @@ namespace NWebsec.Mvc.Helpers
         {
             var oldDirective = cspConfig.SandboxDirective;
 
-            if ( oldDirective == null)
+            if (oldDirective == null)
             {
                 return null;
             }
@@ -132,6 +132,18 @@ namespace NWebsec.Mvc.Helpers
                 AllowScripts = oldDirective.AllowScripts,
                 AllowTopNavigation = oldDirective.AllowTopNavigation
             };
+        }
+
+        public ICspMixedContentDirectiveConfiguration GetCspMixedContentConfigCloned(ICspConfiguration cspConfig)
+        {
+            var oldDirective = cspConfig.MixedContentDirective;
+            //TODO tests
+            if (oldDirective == null)
+            {
+                return null;
+            }
+
+            return new CspMixedContentDirectiveConfiguration { Enabled = oldDirective.Enabled };
         }
 
         public void SetCspDirectiveConfig(ICspConfiguration cspConfig, CspDirectives directive,
@@ -235,6 +247,7 @@ namespace NWebsec.Mvc.Helpers
             destination.PluginTypesDirective = source.PluginTypesDirective ?? destination.PluginTypesDirective ?? new CspPluginTypesDirectiveConfiguration();
             destination.SandboxDirective = source.SandboxDirective ?? destination.SandboxDirective ?? new CspSandboxDirectiveConfiguration();
             destination.UpgradeInsecureRequestsDirective = source.UpgradeInsecureRequestsDirective ?? destination.UpgradeInsecureRequestsDirective ?? new CspUpgradeDirectiveConfiguration();
+            destination.MixedContentDirective = source.MixedContentDirective ?? destination.MixedContentDirective ?? new CspMixedContentDirectiveConfiguration();
             destination.ReportUriDirective = source.ReportUriDirective ?? destination.ReportUriDirective ?? new CspReportUriDirectiveConfiguration();
         }
     }

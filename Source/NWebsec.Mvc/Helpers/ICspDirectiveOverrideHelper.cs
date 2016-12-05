@@ -16,5 +16,8 @@ namespace NWebsec.Mvc.Helpers
 
         [NotNull]
         ICspPluginTypesDirectiveConfiguration GetOverridenCspPluginTypesConfig([NotNull]CspPluginTypesOverride directiveOverride, [CanBeNull]ICspPluginTypesDirectiveConfiguration directiveConfig);
+
+        [NotNull]
+        ICspMixedContentDirectiveConfiguration GetOverridenCspMixedContentConfig([NotNull]CspMixedContentOverride config, [CanBeNull]ICspMixedContentDirectiveConfiguration directiveToOverride);
     }
 }

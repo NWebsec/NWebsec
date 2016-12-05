@@ -135,7 +135,7 @@ namespace NWebsec.Mvc.Helpers
 
             result.Enabled = directiveOverride.Enabled;
 
-            
+
             if (!directiveOverride.InheritMediaTypes)
             {
                 result.MediaTypes = EmptySources;
@@ -148,6 +148,14 @@ namespace NWebsec.Mvc.Helpers
                 result.MediaTypes = newSources.Distinct();
             }
 
+            return result;
+        }
+
+        public ICspMixedContentDirectiveConfiguration GetOverridenCspMixedContentConfig(CspMixedContentOverride directiveOverride,
+            ICspMixedContentDirectiveConfiguration directiveConfig)
+        {
+            var result = directiveConfig ?? new CspMixedContentDirectiveConfiguration();
+            result.Enabled = directiveOverride.Enabled;
 
             return result;
         }

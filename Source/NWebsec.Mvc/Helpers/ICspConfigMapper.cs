@@ -23,6 +23,9 @@ namespace NWebsec.Mvc.Helpers
         [CanBeNull]
         ICspSandboxDirectiveConfiguration GetCspSandboxConfigCloned(ICspConfiguration cspConfig);
 
+        [CanBeNull]
+        ICspMixedContentDirectiveConfiguration GetCspMixedContentConfigCloned(ICspConfiguration baseConfig);
+
         void SetCspDirectiveConfig(ICspConfiguration cspConfig, CspDirectives directive, ICspDirectiveConfiguration directiveConfig);
 
         void MergeConfiguration([NotNull]ICspConfiguration source, [NotNull]ICspConfiguration destination);

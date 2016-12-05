@@ -90,6 +90,7 @@
     <Compile Include="Csp\CspPluginTypesOverride.cs" />
     <Compile Include="Csp\CspDirectiveOverride.cs" />
     <Compile Include="Csp\CspOverrideConfiguration.cs" />
+    <Compile Include="Csp\CspMixedContentOverride.cs" />
     <Compile Include="Csp\CspSandboxOverride.cs" />
     <Compile Include="Extensions\HtmlHelperExtensions.cs" />
     <Compile Include="Html\ReferrerPolicyTag.cs" />
@@ -121,6 +122,8 @@
     <Compile Include="HttpHeaders\Csp\CspHtmlHelpers.cs" />
     <Compile Include="HttpHeaders\Csp\CspPluginTypesReportOnlyAttribute.cs" />
     <Compile Include="HttpHeaders\Csp\CspPluginTypesAttribute.cs" />
+    <Compile Include="HttpHeaders\Csp\CspBlockAllMixedContentAttribute.cs" />
+    <Compile Include="HttpHeaders\Csp\CspBlockAllMixedContentReportOnlyAttribute.cs" />
     <Compile Include="HttpHeaders\Csp\CspSandboxReportOnlyAttribute.cs" />
     <Compile Include="HttpHeaders\Csp\CspSandboxAttribute.cs" />
     <Compile Include="HttpHeaders\Csp\Internals\CspAttributeBase.cs" />
@@ -142,6 +145,7 @@
     <Compile Include="HttpHeaders\Csp\CspReportOnlyAttribute.cs" />
     <Compile Include="HttpHeaders\Csp\CspReportUriAttribute.cs" />
     <Compile Include="HttpHeaders\Csp\Internals\CspPluginTypesAttributeBase.cs" />
+    <Compile Include="HttpHeaders\Csp\Internals\CspBlockAllMixedContentAttributeBase.cs" />
     <Compile Include="HttpHeaders\Csp\Internals\CspSandboxAttributeBase.cs" />
     <Compile Include="HttpHeaders\Csp\Internals\CspReportUriAttributeBase.cs" />
     <Compile Include="HttpHeaders\Csp\CspReportUriReportOnlyAttribute.cs" />
