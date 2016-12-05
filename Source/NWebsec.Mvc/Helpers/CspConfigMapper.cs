@@ -62,6 +62,9 @@ namespace NWebsec.Mvc.Helpers
                 case CspDirectives.FrameAncestors:
                     return cspConfig.FrameAncestorsDirective;
 
+                case CspDirectives.ManifestSrc:
+                    return cspConfig.ManifestSrcDirective;
+
                 default:
                     throw new NotImplementedException("The mapping for " + directive + " was not implemented.");
             }
@@ -184,6 +187,9 @@ namespace NWebsec.Mvc.Helpers
                 case CspDirectives.FrameAncestors:
                     cspConfig.FrameAncestorsDirective = directiveConfig;
                     return;
+                case CspDirectives.ManifestSrc:
+                    cspConfig.ManifestSrcDirective = directiveConfig;
+                    return;
 
                 default:
                     throw new NotImplementedException("The mapping for " + directive + " was not implemented.");
@@ -225,6 +231,7 @@ namespace NWebsec.Mvc.Helpers
             destination.ChildSrcDirective = source.ChildSrcDirective ?? destination.ChildSrcDirective ?? new CspDirectiveConfiguration();
             destination.FormActionDirective = source.FormActionDirective ?? destination.FormActionDirective ?? new CspDirectiveConfiguration();
             destination.FrameAncestorsDirective = source.FrameAncestorsDirective ?? destination.FrameAncestorsDirective ?? new CspDirectiveConfiguration();
+            destination.ManifestSrcDirective = source.ManifestSrcDirective ?? destination.ManifestSrcDirective ?? new CspDirectiveConfiguration();
             destination.PluginTypesDirective = source.PluginTypesDirective ?? destination.PluginTypesDirective ?? new CspPluginTypesDirectiveConfiguration();
             destination.SandboxDirective = source.SandboxDirective ?? destination.SandboxDirective ?? new CspSandboxDirectiveConfiguration();
             destination.UpgradeInsecureRequestsDirective = source.UpgradeInsecureRequestsDirective ?? destination.UpgradeInsecureRequestsDirective ?? new CspUpgradeDirectiveConfiguration();

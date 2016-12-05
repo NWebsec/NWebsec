@@ -108,11 +108,13 @@
     <Compile Include="Helpers\ICspDirectiveOverrideHelper.cs" />
     <Compile Include="Helpers\IHeaderConfigurationOverrideHelper.cs" />
     <Compile Include="HttpHeaders\Csp\CspAttribute.cs" />
+    <Compile Include="HttpHeaders\Csp\CspManifestSrcAttribute.cs" />
+    <Compile Include="HttpHeaders\Csp\CspChildSrcReportOnlyAttribute.cs" />
     <Compile Include="HttpHeaders\Csp\CspFormActionAttribute.cs" />
     <Compile Include="HttpHeaders\Csp\CspChildSrcAttribute.cs" />
     <Compile Include="HttpHeaders\Csp\CspBaseUriAttribute.cs" />
     <Compile Include="HttpHeaders\Csp\CspFormActionReportOnlyAttribute.cs" />
-    <Compile Include="HttpHeaders\Csp\CspChildSrcReportOnlyAttribute.cs" />
+    <Compile Include="HttpHeaders\Csp\CspManifestSrcReportOnlyAttribute.cs" />
     <Compile Include="HttpHeaders\Csp\CspBaseUriReportOnlyAttribute.cs" />
     <Compile Include="HttpHeaders\Csp\CspFrameAncestorsReportOnlyAttribute.cs" />
     <Compile Include="HttpHeaders\Csp\CspFrameAncestorsAttribute.cs" />
