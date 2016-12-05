@@ -502,5 +502,16 @@ namespace NWebsec.AspNetCore.Mvc.Tests.Helpers
 
             Assert.AreEqual(expectedResult, newConfig.AllowTopNavigation);
         }
+
+        [Test]
+        public void GetOverridenCspMixedContentConfig_EnableOverride_OverridesEnabled([Values(true, false)] bool expectedResult)
+        {
+            var directiveConfig = new CspMixedContentDirectiveConfiguration { Enabled = !expectedResult };
+            var directiveOverride = new CspMixedContentOverride { Enabled = expectedResult };
+
+            var newConfig = _overrideHelper.GetOverridenCspMixedContentConfig(directiveOverride, directiveConfig);
+
+            Assert.AreEqual(expectedResult, newConfig.Enabled);
+        }
     }
 }

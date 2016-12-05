@@ -234,6 +234,47 @@ namespace NWebsec.AspNetCore.Mvc.Tests.Helpers
         }
 
         [Test]
+        public void SetCspMixedContentOverride_NoCurrentOverride_ClonesConfigFromContextAndOverrides([Values(false, true)]bool reportOnly)
+        {
+
+            var contextConfig = new CspConfiguration();
+            var overrideConfig = new CspOverrideConfiguration();
+            //Returns CSP config from context
+            _contextHelper.Setup(h => h.GetCspConfiguration(It.IsAny<HttpContextBase>(), reportOnly)).Returns(contextConfig);
+            _contextHelper.Setup(h => h.GetCspConfigurationOverride(It.IsAny<HttpContextBase>(), reportOnly, false)).Returns(overrideConfig);
+            //Returns cloned directive config from context config
+            var clonedContextDirective = new CspMixedContentDirectiveConfiguration();
+            _directiveConfigMapper.Setup(m => m.GetCspMixedContentConfigCloned(contextConfig)).Returns(clonedContextDirective);
+            //We need an override and a result.
+            var directiveOverride = new CspMixedContentOverride();
+            var directiveOverrideResult = new CspMixedContentDirectiveConfiguration();
+            _directiveOverrideHelper.Setup(h => h.GetOverridenCspMixedContentConfig(directiveOverride, clonedContextDirective)).Returns(directiveOverrideResult);
+
+            CspConfigurationOverrideHelper.SetCspMixedContentOverride(MockContext, directiveOverride, reportOnly);
+
+            //Verify that the override result was set on the override config.
+            Assert.AreSame(directiveOverrideResult, overrideConfig.MixedContentDirective);
+        }
+
+        [Test]
+        public void SetCspMixedContentOverride_HasOverride_OverridesExistingOverride([Values(false, true)]bool reportOnly)
+        {
+            //There's an override for directive
+            var currentDirectiveOverride = new CspMixedContentDirectiveConfiguration();
+            var overrideConfig = new CspOverrideConfiguration { MixedContentDirective = currentDirectiveOverride };
+            _contextHelper.Setup(h => h.GetCspConfigurationOverride(It.IsAny<HttpContextBase>(), reportOnly, false)).Returns(overrideConfig);
+            //We need an override and a result.
+            var directiveOverride = new CspMixedContentOverride();
+            var directiveOverrideResult = new CspMixedContentDirectiveConfiguration();
+            _directiveOverrideHelper.Setup(h => h.GetOverridenCspMixedContentConfig(directiveOverride, currentDirectiveOverride)).Returns(directiveOverrideResult);
+
+            CspConfigurationOverrideHelper.SetCspMixedContentOverride(MockContext, directiveOverride, reportOnly);
+
+            //Verify that the override result was set on the override config.
+            Assert.AreSame(directiveOverrideResult, overrideConfig.MixedContentDirective);
+        }
+
+        [Test]
         public void GetCspScriptNonce_ScriptNonceRequestedNoOverrides_ClonesBaseConfigAndOverridesNonce()
         {
             var cspConfig = new CspConfiguration();

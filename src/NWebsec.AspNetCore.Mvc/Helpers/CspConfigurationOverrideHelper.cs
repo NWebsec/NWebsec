@@ -116,6 +116,23 @@ namespace NWebsec.AspNetCore.Mvc.Helpers
             overrides.SandboxDirective = newConfig;
         }
 
+        public void SetCspMixedContentOverride(HttpContext context, CspMixedContentOverride config, Boolean reportOnly)
+        {
+            var overrides = _contextConfigurationHelper.GetCspConfigurationOverride(context, reportOnly, false);
+
+            var directiveToOverride = overrides.MixedContentDirective;
+
+            if (directiveToOverride == null)
+            {
+                var baseConfig = _contextConfigurationHelper.GetCspConfiguration(context, reportOnly);
+                directiveToOverride = _configMapper.GetCspMixedContentConfigCloned(baseConfig);
+            }
+
+            var newConfig = _cspDirectiveOverrideHelper.GetOverridenCspMixedContentConfig(config, directiveToOverride);
+
+            overrides.MixedContentDirective = newConfig;
+        }
+
         internal void SetCspReportUriOverride(HttpContext context, ICspReportUriDirectiveConfiguration reportUriConfig, bool reportOnly)
         {
             var overrides = _contextConfigurationHelper.GetCspConfigurationOverride(context, reportOnly, false);

@@ -151,5 +151,14 @@ namespace NWebsec.AspNetCore.Mvc.Helpers
 
             return result;
         }
+
+        public ICspMixedContentDirectiveConfiguration GetOverridenCspMixedContentConfig(CspMixedContentOverride directiveOverride,
+            ICspMixedContentDirectiveConfiguration directiveConfig)
+        {
+            var result = directiveConfig ?? new CspMixedContentDirectiveConfiguration();
+            result.Enabled = directiveOverride.Enabled;
+
+            return result;
+        }
     }
 }
