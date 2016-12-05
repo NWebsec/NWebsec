@@ -17,6 +17,7 @@ namespace NWebsec.AspNetCore.Mvc.Helpers
         FrameAncestors = 10,
         BaseUri = 11,
         ChildSrc = 12,
-        FormAction = 13
+        FormAction = 13,
+        ManifestSrc = 14
     }
 }
