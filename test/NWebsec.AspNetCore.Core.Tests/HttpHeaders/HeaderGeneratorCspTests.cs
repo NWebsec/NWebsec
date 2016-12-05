@@ -413,6 +413,23 @@ namespace NWebsec.AspNetCore.Core.Tests.HttpHeaders
         }
 
         [Test]
+        public void AddCspHeaders_CspEnabledWithMixedContent_ReturnsSetCspWithMixedContentResult([Values(false, true)]bool reportOnly)
+        {
+            var cspConfig = new CspConfiguration
+            {
+                Enabled = true,
+                MixedContentDirective = { Enabled = true }
+            };
+
+            var result = _generator.CreateCspResult(cspConfig, reportOnly);
+
+            Assert.IsNotNull(result);
+            Assert.AreEqual(HeaderResult.ResponseAction.Set, result.Action);
+            Assert.AreEqual(CspHeaderName(reportOnly), result.Name);
+            Assert.AreEqual("block-all-mixed-content", result.Value);
+        }
+
+        [Test]
         public void AddCspHeaders_CspWithTwoDirectives_ReturnsSetSetCspWithBothDirectivesResult([Values(false, true)]bool reportOnly)
         {
             var cspConfig = new CspConfiguration

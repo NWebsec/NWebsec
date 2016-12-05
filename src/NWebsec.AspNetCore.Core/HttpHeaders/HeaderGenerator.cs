@@ -237,6 +237,7 @@ namespace NWebsec.AspNetCore.Core.HttpHeaders
             AppendDirective(sb, "plugin-types", GetPluginTypesDirectiveList(config.PluginTypesDirective));
             AppendDirective(sb, "sandbox", GetSandboxDirectiveList(config.SandboxDirective));
             AppendUpgradeDirective(sb, "upgrade-insecure-requests", config.UpgradeInsecureRequestsDirective);
+            AppendMixedContentDirective(sb, "block-all-mixed-content", config.MixedContentDirective);
 
             if (sb.Length == 0) return null;
 
@@ -263,6 +264,14 @@ namespace NWebsec.AspNetCore.Core.HttpHeaders
         }
 
         private void AppendUpgradeDirective(StringBuilder sb, string directiveName, ICspUpgradeDirectiveConfiguration config)
+        {
+            if (!config.Enabled) return;
+
+            sb.Append(directiveName);
+            sb.Append(';');
+        }
+
+        private void AppendMixedContentDirective(StringBuilder sb, string directiveName, ICspMixedContentDirectiveConfiguration config)
         {
             if (!config.Enabled) return;
 

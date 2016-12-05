@@ -26,6 +26,7 @@ namespace NWebsec.AspNetCore.Middleware
         public ICspPluginTypesDirectiveConfiguration PluginTypesDirective { get; set; } = new FluentCspPluginTypesDirective();
         public ICspSandboxDirectiveConfiguration SandboxDirective { get; set; } = new FluentCspSandboxDirective();
         public ICspUpgradeDirectiveConfiguration UpgradeInsecureRequestsDirective { get; set; } = new CspUpgradeDirectiveConfiguration();
+        public ICspMixedContentDirectiveConfiguration MixedContentDirective { get; set; } = new CspMixedContentDirectiveConfiguration();
         public ICspReportUriDirectiveConfiguration ReportUriDirective { get; set; } = new CspReportUriDirective();
 
         public IFluentCspOptions DefaultSources(Action<ICspDirectiveBasicConfiguration> configurer)
@@ -140,6 +141,12 @@ namespace NWebsec.AspNetCore.Middleware
 
             UpgradeInsecureRequestsDirective.Enabled = true;
             UpgradeInsecureRequestsDirective.HttpsPort = httpsPort;
+            return this;
+        }
+
+        public IFluentCspOptions BlockAllMixedContent()
+        {
+            MixedContentDirective.Enabled = true;
             return this;
         }
 
