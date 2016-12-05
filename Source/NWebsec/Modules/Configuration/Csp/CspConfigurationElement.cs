@@ -245,6 +245,19 @@ namespace NWebsec.Modules.Configuration.Csp
             }
         }
 
+        [ConfigurationProperty("block-all-mixed-content", IsRequired = false)]
+        public CspMixedContentConfigurationElement MixedContent
+        {
+            get
+            {
+                return (CspMixedContentConfigurationElement)this["block-all-mixed-content"];
+            }
+            set
+            {
+                this["block-all-mixed-content"] = value;
+            }
+        }
+
         [ConfigurationProperty("report-uri", IsRequired = false)]
         public CspReportUriDirectiveConfigurationElement ReportUri
         {
@@ -347,6 +360,12 @@ namespace NWebsec.Modules.Configuration.Csp
         public ICspUpgradeDirectiveConfiguration UpgradeInsecureRequestsDirective
         {
             get { return UpgradeInsecureRequests; }
+            set { throw new NotImplementedException(); }
+        }
+
+        public ICspMixedContentDirectiveConfiguration MixedContentDirective
+        {
+            get { return MixedContent; }
             set { throw new NotImplementedException(); }
         }
 

@@ -29,5 +29,8 @@ namespace NWebsec.Core.HttpHeaders.Configuration
 
         //Upgrade insecure requests
         ICspUpgradeDirectiveConfiguration UpgradeInsecureRequestsDirective { get; set; }
+
+        //Mixed Content
+        ICspMixedContentDirectiveConfiguration MixedContentDirective { get; set; }
     }
 }

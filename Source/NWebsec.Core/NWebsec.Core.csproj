@@ -52,12 +52,14 @@
     <Compile Include="HttpHeaders\Configuration\CspConfiguration.cs" />
     <Compile Include="HttpHeaders\Configuration\CspDirectiveConfiguration.cs" />
     <Compile Include="HttpHeaders\Configuration\CspHeaderConfiguration.cs" />
+    <Compile Include="HttpHeaders\Configuration\CspMixedContentDirectiveConfiguration.cs" />
     <Compile Include="HttpHeaders\Configuration\CspUpgradeDirectiveConfiguration.cs" />
     <Compile Include="HttpHeaders\Configuration\CspPluginTypesDirectiveConfiguration.cs" />
     <Compile Include="HttpHeaders\Configuration\CspReportUriDirectiveConfiguration.cs" />
     <Compile Include="HttpHeaders\Configuration\CspSandboxDirectiveConfiguration.cs" />
     <Compile Include="HttpHeaders\Configuration\HpkpConfiguration.cs" />
     <Compile Include="HttpHeaders\Configuration\HstsConfiguration.cs" />
+    <Compile Include="HttpHeaders\Configuration\ICspMixedContentDirectiveConfiguration.cs" />
     <Compile Include="HttpHeaders\Configuration\ICspConfiguration.cs" />
     <Compile Include="HttpHeaders\Configuration\ICspDirectiveBasicConfiguration.cs" />
     <Compile Include="HttpHeaders\Configuration\ICspUpgradeDirectiveConfiguration.cs" />

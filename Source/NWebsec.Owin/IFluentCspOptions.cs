@@ -140,6 +140,12 @@ namespace NWebsec.Owin
         IFluentCspOptions UpgradeInsecureRequests(int httpsPort = 443);
 
         /// <summary>
+        /// Enables the block-all-mixed-content directive.
+        /// </summary>
+        /// <returns>The current <see cref="CspOptions" /> instance.</returns>
+        IFluentCspOptions BlockAllMixedContent();
+
+        /// <summary>
         /// Configures the report-uri directive (CSP 1.0). Support for absolute URIs was introduced in CSP 2.
         /// </summary>
         /// <param name="configurer">An <see cref="Action"/> that configures the report URIs.</param>

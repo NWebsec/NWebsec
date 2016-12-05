@@ -6,7 +6,7 @@ using NWebsec.Mvc.HttpHeaders.Csp.Internals;
 namespace NWebsec.Mvc.HttpHeaders.Csp
 {
     /// <summary>
-    /// When applied to a controller or action method, enables the manifest-src directive for the CSP header (CSP 2). 
+    /// When applied to a controller or action method, enables the manifest-src directive for the CSP header (CSP 3). 
     /// </summary>
     public class CspManifestSrcAttribute : CspDirectiveAttributeBase
     {

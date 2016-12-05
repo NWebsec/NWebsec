@@ -156,6 +156,16 @@ namespace NWebsec.Owin.Tests.Unit
         }
 
         [Test]
+        public void BlockAllMixedContent_EnablesDirective()
+        {
+            Assert.IsFalse(_options.MixedContentDirective.Enabled);
+
+            _options.BlockAllMixedContent();
+
+            Assert.IsTrue(_options.MixedContentDirective.Enabled);
+        }
+
+        [Test]
         public void ReportUris_ConfiguresReportUris()
         {
             _options.ReportUris(config => Assert.AreSame(_options.ReportUriDirective, config));
