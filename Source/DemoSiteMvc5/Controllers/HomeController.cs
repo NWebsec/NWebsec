@@ -4,27 +4,22 @@ using NWebsec.Mvc.HttpHeaders.Csp;
 
 namespace DemoSiteMvc5.Controllers
 {
+        [Csp]
     //[XFrameOptions(Policy = XFrameOptionsPolicy.Disabled)]
     public class HomeController : Controller
     {
         //[CspScriptSrc(UnsafeInline = Source.Enable, UnsafeEval = Source.Enable)]
-        //[Csp]
         //[CspDefaultSrc(Self = Source.Enable)]
         //[XFrameOptions(Policy = XFrameOptionsPolicy.SameOrigin)]
+        //[CspSandbox(AllowModals = false, AllowOrientationLock = false, AllowPopupsToEscapeSandbox = false, AllowPresentation = false)]
+        //[CspManifestSrc(None = true)]
         public ActionResult Index()
         {
             return View();
         }
 
-        //[XFrameOptions(Policy = XFrameOptionsPolicy.SameOrigin)]
-        [CspScriptSrc(CustomSources = "mvcsource", InheritCustomSources = false)]
-        [CspScriptSrcReportOnly(CustomSources = "mvcsource")]
-        [CspReportUri(EnableBuiltinHandler = true)]
-        [CspReportUriReportOnly(EnableBuiltinHandler = true)]
-        [XContentTypeOptions(Enabled = false)]
-        [XDownloadOptions(Enabled = false)]
-        [XFrameOptions(Policy = XFrameOptionsPolicy.Disabled)]
-        [XXssProtection(Policy = XXssProtectionPolicy.FilterDisabled)]
+        [CspBlockAllMixedContent]
+
         public ActionResult About()
         {
             ViewBag.Message = "Your application description page.";
@@ -61,7 +56,7 @@ namespace DemoSiteMvc5.Controllers
             return new RedirectResult("http://www.nwebsec.com");
         }
 
-    
+
         public ActionResult RequireHttps()
         {
             return Redirect("https://localhost:8443/DemoSiteMvc5");

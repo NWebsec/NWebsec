@@ -137,7 +137,7 @@ namespace NWebsec.Mvc.Helpers
         public ICspMixedContentDirectiveConfiguration GetCspMixedContentConfigCloned(ICspConfiguration cspConfig)
         {
             var oldDirective = cspConfig.MixedContentDirective;
-            //TODO tests
+
             if (oldDirective == null)
             {
                 return null;

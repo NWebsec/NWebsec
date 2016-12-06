@@ -23,23 +23,26 @@ namespace DemoSiteMvc5
             app.UseXRobotsTag(options => options.NoIndex().NoFollow());
             app.UseXXssProtection(options => options.EnabledWithBlockMode());
 
-            app.UseCsp(options => options
-                .DefaultSources(s => s.Self())
-                .ImageSources( s => s.CustomSources("klings.blob.core.windows.net"))
-                .ScriptSources(s => s.Self().CustomSources("scripts.nwebsec.com", "*.üüüüüü.de/WithPath;/From,Owin"))
-                .BaseUris(s => s.CustomSources("baseuri.nwebsec.com"))
-                .ChildSources(s => s.CustomSources("childsrc.nwebsec.com"))
-                .FormActions(s => s.CustomSources("formaction.nwebsec.com"))
-                .FrameAncestors(s => s.CustomSources("ancestors.nwebsec.com/With/owinPath"))
-                .PluginTypes(s => s.MediaTypes("application/pdf"))
-                //.Sandbox()
-                .Sandbox(s => s.AllowForms().AllowPointerLock().AllowPopups().AllowSameOrigin().AllowScripts().AllowTopNavigation())
-                .UpgradeInsecureRequests(8443)
-                .ReportUris(r => r.Uris("https://www.nwebsec.com/report", "https://w-w.üüüüüü.de/réport?p=a;b,")));
+            //app.UseCsp(options => options
+            //    .DefaultSources(s => s.Self())
+            //////    //.ImageSources(s => s.CustomSources("klings.blob.core.windows.net"))
+            //////    //.ScriptSources(s => s.Self().CustomSources("scripts.nwebsec.com", "*.üüüüüü.de/WithPath;/From,Owin"))
+            //////    //.BaseUris(s => s.CustomSources("baseuri.nwebsec.com"))
+            //////    //.ChildSources(s => s.CustomSources("childsrc.nwebsec.com"))
+            //////    //.FormActions(s => s.CustomSources("formaction.nwebsec.com"))
+            //////    //.FrameAncestors(s => s.CustomSources("ancestors.nwebsec.com/With/owinPath"))
+            //////    //.PluginTypes(s => s.MediaTypes("application/pdf"))
+            //////    //.Sandbox()
+            //.BlockAllMixedContent()
+            ////.ManifestSources(s => s.Self().CustomSources("https://manifest.nwebsec.com"))
+            ////    .Sandbox(s => s.AllowScripts().AllowOrientationLock().AllowModals().AllowPointerLock().AllowPopupsToEscapeSandbox().AllowPresentation())
+            //////    //.UpgradeInsecureRequests(8443)
+            //////    .ReportUris(r => r.Uris("https://www.nwebsec.com/report", "https://w-w.üüüüüü.de/réport?p=a;b,"))
+            //);
 
-            app.UseCspReportOnly(options => options
-                .DefaultSources(s => s.Self())
-                .ImageSources(s => s.None()));
+            //app.UseCspReportOnly(options => options
+            //    .DefaultSources(s => s.Self())
+            //    .ImageSources(s => s.None()));
 
             //app.UseHpkpReportOnly(options => options
             //    .MaxAge(seconds: 20)
