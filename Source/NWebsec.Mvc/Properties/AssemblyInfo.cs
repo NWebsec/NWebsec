@@ -12,7 +12,7 @@ using NWebsec.Mvc;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Andre N. Klingsheim")]
 [assembly: AssemblyProduct("NWebsec.Mvc")]
-[assembly: AssemblyCopyright("Copyright © 2012 - 2015")]
+[assembly: AssemblyCopyright("Copyright © 2012 - 2016")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -36,7 +36,7 @@ using NWebsec.Mvc;
 // You can specify all the values or you can default the Build and Revision Numbers 
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("4.2.0.0")]
-[assembly: AssemblyFileVersion("4.2.0.0")]
+[assembly: AssemblyVersion("4.3.0.0")]
+[assembly: AssemblyFileVersion("4.3.0.0")]
 
 [assembly: PreApplicationStartMethod(typeof(MvcStart), "DisableMvcVersionHeader")]

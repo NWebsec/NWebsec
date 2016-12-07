@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
   <metadata>
     <id>NWebsec.Owin</id>
-    <version>2.2.0</version>
+    <version>2.3.1</version>
     <title>NWebsec.Owin</title>
     <authors>André N. Klingsheim</authors>
     <owners>André N. Klingsheim</owners>
@@ -11,11 +11,11 @@
     <iconUrl>https://klings.blob.core.windows.net/nwebsecicon/nwebsec_nuget.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>NWebsec middleware for OWIN applications. NWebsec helps you set important security headers and detect potentially dangerous redirects. See project website for documentation.</description>
-    <releaseNotes>This release adds support for the CSP upgrade-insecure-requests directive. See release notes on GitHub for details.</releaseNotes>
-    <copyright>Copyright © 2014 - 2015</copyright>
+    <releaseNotes>This release adds support for new CSP directives. See release notes on GitHub for details.</releaseNotes>
+    <copyright>Copyright © 2014 - 2016</copyright>
     <tags>NWebsec security asp.net mvc owin</tags>
     <dependencies>
-      <dependency id="NWebsec.Core" version="[1.5.0]" />
+      <dependency id="NWebsec.Core" version="[1.6.0]" />
       <dependency id="Owin" version="1.0" />
     </dependencies>
   </metadata>
