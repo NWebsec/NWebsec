@@ -37,6 +37,14 @@ test_script:
 
     popd
 
+    pushd .\test\NWebsec.AspNetCore.Mvc.TagHelpers.Tests\
+
+    dotnet test -c release
+
+    $wc.UploadFile("https://ci.appveyor.com/api/testresults/nunit3/$($env:APPVEYOR_JOB_ID)", (Resolve-Path .\TestResult.xml))
+
+    popd
+    
     pushd .\test\NWebsec.AspNetCore.Mvc.FunctionalTests\
 
     dotnet test -c release
@@ -63,7 +71,14 @@ after_test:
     dotnet pack -c release --no-build -o nupkgs
 
     popd
+
+    pushd .\src\NWebsec.AspNetCore.Mvc.TagHelpers\
+
+    dotnet pack -c release --no-build -o nupkgs
+
+    popd
 artifacts:
 - path: '**/NWebsec.AspNetCore.Core/nupkgs/*.nupkg'
 - path: '**/NWebsec.AspNetCore.Middleware/nupkgs/*.nupkg'
 - path: '**/NWebsec.AspNetCore.Mvc/nupkgs/*.nupkg'
+- path: '**/NWebsec.AspNetCore.Mvc.TagHelpers/nupkgs/*.nupkg'
