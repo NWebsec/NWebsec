@@ -18,7 +18,7 @@ namespace NWebsec.AspNetCore.Mvc.Extensions
         /// <param name="helper"></param>
         /// <param name="configurer">A configurer that selects a policy from the <see cref="IReferrerPolicy"/>.</param>
         /// <returns></returns>
-        public static HtmlString ReferrerPolicyMetaTag(this IHtmlHelper<dynamic> helper, Func<IReferrerPolicy, ReferrerPolicyTag> configurer )
+        public static HtmlString ReferrerPolicyMetaTag(this IHtmlHelper helper, Func<IReferrerPolicy, ReferrerPolicyTag> configurer )
         {
             if (configurer == null)
             {

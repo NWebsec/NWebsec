@@ -24,6 +24,7 @@
 
   "dependencies": {
     "Microsoft.AspNetCore.Mvc.ViewFeatures": "1.0.0",
+    "Microsoft.AspNetCore.Razor.Runtime": "1.0.0",
     "NWebsec.Annotations": {
       "version": "1.0.0-*",
       "type": "build"
