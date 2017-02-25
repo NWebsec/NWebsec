@@ -1,5 +1,6 @@
 // Copyright (c) André N. Klingsheim. See License.txt in the project root for license information.
 
+using System;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -7,43 +8,40 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.TestHost;
-using NUnit.Framework;
+using Xunit;
 using NWebsec.AspNetCore.Mvc.FunctionalTests.Plumbing;
 
 namespace NWebsec.AspNetCore.Mvc.FunctionalTests.Attributes
 {
-    [TestFixture]
-    public class CspUpgradeInsecureRequestsTests
+    public class CspUpgradeInsecureRequestsTests : IDisposable
     {
-        private TestServer _server;
-        private HttpClient _httpClient;
+        private readonly TestServer _server;
+        private readonly HttpClient _httpClient;
 
-        [SetUp]
-        public void Setup()
+        public CspUpgradeInsecureRequestsTests()
         {
             _server = TestServerBuilder<MvcAttributeWebsite.StartupCspConfigUpgradeInsecureRequests>.CreateTestServer();
             _httpClient = _server.CreateClient();
         }
 
-        [TearDown]
-        public void Cleanup()
+        public void Dispose()
         {
             _server.Dispose();
         }
 
-        [Test]
+        [Fact]
         public async Task Csp_UpgradeInsecureRequestsOldUa_NoRedirect()
         {
             const string path = "/CspUpgradeInsecureRequests";
 
             var response = await _httpClient.GetAsync(path);
 
-            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode, path);
+            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
             var headerValue = response.Headers.Single(h => h.Key.Equals("Content-Security-Policy")).Value.Single();
-            Assert.AreEqual("upgrade-insecure-requests", headerValue, path);
+            Assert.Equal("upgrade-insecure-requests", headerValue);
         }
 
-        [Test]
+        [Fact]
         public async Task Csp_UpgradeInsecureRequestsConformantUa_RedirectsToHttps()
         {
             const string path = "/CspUpgradeInsecureRequests";
@@ -52,9 +50,9 @@ namespace NWebsec.AspNetCore.Mvc.FunctionalTests.Attributes
 
             var response = await _httpClient.GetAsync(path);
 
-            Assert.AreEqual(HttpStatusCode.RedirectKeepVerb, response.StatusCode, path);
-            Assert.AreEqual("Upgrade-Insecure-Requests", response.Headers.Vary.Single(), path);
-            Assert.AreEqual(expectedLocationUri, response.Headers.Location.AbsoluteUri, path);
+            Assert.Equal(HttpStatusCode.RedirectKeepVerb, response.StatusCode);
+            Assert.Equal("Upgrade-Insecure-Requests", response.Headers.Vary.Single());
+            Assert.Equal(expectedLocationUri, response.Headers.Location.AbsoluteUri);
         }
     }
 }

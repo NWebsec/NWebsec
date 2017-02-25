@@ -1,92 +1,89 @@
 // Copyright (c) André N. Klingsheim. See License.txt in the project root for license information.
 
+using System;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.TestHost;
-using NUnit.Framework;
+using Xunit;
 using NWebsec.AspNetCore.Mvc.FunctionalTests.Plumbing;
 
 namespace NWebsec.AspNetCore.Mvc.FunctionalTests.Attributes
 {
-    [TestFixture]
-    public class CspConfigTests
+    public class CspConfigTests : IDisposable
     {
-        private TestServer _server;
-        private HttpClient _httpClient;
+        private readonly TestServer _server;
+        private readonly HttpClient _httpClient;
 
-        [SetUp]
-        public void Setup()
+        public CspConfigTests()
         {
             _server = TestServerBuilder<MvcAttributeWebsite.StartupCspConfig>.CreateTestServer();
             _httpClient = _server.CreateClient();
         }
 
-        [TearDown]
-        public void Cleanup()
+        public void Dispose()
         {
             _server.Dispose();
         }
 
-        [Test]
+        [Fact]
         public async Task CspConfig_EnabledInConfig_SetsHeaders()
         {
             const string path = "/CspConfig";
 
             var response = await _httpClient.GetAsync(path);
 
-            Assert.IsTrue(response.IsSuccessStatusCode, $"Request failed: {path}");
+            Assert.True(response.IsSuccessStatusCode, $"Request failed: {path}");
             var cspHeader = response.Headers.GetValues("Content-Security-Policy").Single();
-            Assert.IsTrue(cspHeader.Contains("media-src fromconfig"), path);
+            Assert.True(cspHeader.Contains("media-src fromconfig"), path);
         }
 
-        [Test]
+        [Fact]
         public async Task CspConfig_SourcesInConfigAndInAttributeWithInheritSources_CombinesSources()
         {
             const string path = "/CspConfig/AddSource";
 
             var response = await _httpClient.GetAsync(path);
 
-            Assert.IsTrue(response.IsSuccessStatusCode, $"Request failed: {path}");
+            Assert.True(response.IsSuccessStatusCode, $"Request failed: {path}");
             var cspHeader = response.Headers.GetValues("Content-Security-Policy").Single();
-            Assert.IsTrue(cspHeader.Contains("script-src configscripthost attributescripthost;"), path);
+            Assert.True(cspHeader.Contains("script-src configscripthost attributescripthost;"), path);
         }
 
-        [Test]
+        [Fact]
         public async Task CspConfig_SourcesInConfigAndInAttributeWithInheritSourcesDisabled_OverridesSources()
         {
             const string path = "/CspConfig/OverrideSource";
 
             var response = await _httpClient.GetAsync(path);
 
-            Assert.IsTrue(response.IsSuccessStatusCode, $"Request failed: {path}");
+            Assert.True(response.IsSuccessStatusCode, $"Request failed: {path}");
             var cspHeader = response.Headers.GetValues("Content-Security-Policy").Single();
-            Assert.IsTrue(cspHeader.Contains("script-src attributescripthost;"), path);
+            Assert.True(cspHeader.Contains("script-src attributescripthost;"), path);
         }
 
-        [Test]
+        [Fact]
         public async Task CspConfig_DisabledOnAction_NoHeader()
         {
             const string path = "/CspConfig/DisableCsp";
 
             var response = await _httpClient.GetAsync(path);
 
-            Assert.IsTrue(response.IsSuccessStatusCode, $"Request failed: {path}");
-            Assert.IsEmpty(response.Headers.Where(h => h.Key.Equals("Content-Security-Policy")));
+            Assert.True(response.IsSuccessStatusCode, $"Request failed: {path}");
+            Assert.Empty(response.Headers.Where(h => h.Key.Equals("Content-Security-Policy")));
         }
 
-        [Test]
+        [Fact]
         public async Task CspConfig_ScriptSrcAllowInlineUnsafeEval_OverridesAllowInlineUnsafeEval()
         {
             const string path = "/CspConfig/ScriptSrcAllowInlineUnsafeEval";
 
             var response = await _httpClient.GetAsync(path);
 
-            Assert.IsTrue(response.IsSuccessStatusCode, $"Request failed: {path}");
-            Assert.IsTrue(response.Headers.Contains("Content-Security-Policy"), path);
+            Assert.True(response.IsSuccessStatusCode, $"Request failed: {path}");
+            Assert.True(response.Headers.Contains("Content-Security-Policy"), path);
             var cspHeader = response.Headers.GetValues("Content-Security-Policy").Single();
-            Assert.IsTrue(cspHeader.Contains("script-src 'unsafe-inline' 'unsafe-eval' configscripthost;"), path);
+            Assert.True(cspHeader.Contains("script-src 'unsafe-inline' 'unsafe-eval' configscripthost;"), path);
         }
-
     }
 }
