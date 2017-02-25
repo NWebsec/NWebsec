@@ -1,6 +1,6 @@
 ﻿// Copyright (c) André N. Klingsheim. See License.txt in the project root for license information.
 
-using NUnit.Framework;
+using Xunit;
 using NWebsec.AspNetCore.Core.HttpHeaders;
 using NWebsec.AspNetCore.Core.HttpHeaders.Configuration;
 
@@ -8,43 +8,43 @@ namespace NWebsec.AspNetCore.Core.Tests.HttpHeaders
 {
     public partial class HeaderGeneratorTests
     {
-        [Test]
+        [Fact]
         public void CreateXfoResult_Disabled_ReturnsNull()
         {
             var xFrameConfig = new XFrameOptionsConfiguration { Policy = XfoPolicy.Disabled };
 
             var result = _generator.CreateXfoResult(xFrameConfig);
 
-            Assert.IsNull(result);
+            Assert.Null(result);
         }
 
-        [Test]
+        [Fact]
         public void CreateXfoResult_Deny_ReturnsSetXfoDenyResult()
         {
             var xFrameConfig = new XFrameOptionsConfiguration { Policy = XfoPolicy.Deny };
 
             var result = _generator.CreateXfoResult(xFrameConfig);
 
-            Assert.IsNotNull(result);
-            Assert.AreEqual(HeaderResult.ResponseAction.Set, result.Action);
-            Assert.AreEqual("X-Frame-Options", result.Name);
-            Assert.AreEqual("Deny", result.Value);
+            Assert.NotNull(result);
+            Assert.Equal(HeaderResult.ResponseAction.Set, result.Action);
+            Assert.Equal("X-Frame-Options", result.Name);
+            Assert.Equal("Deny", result.Value);
         }
 
-        [Test]
+        [Fact]
         public void CreateXfoResult_Sameorigin_ReturnsSetXfoSameOriginResult()
         {
             var xFrameConfig = new XFrameOptionsConfiguration { Policy = XfoPolicy.SameOrigin };
 
             var result = _generator.CreateXfoResult(xFrameConfig);
 
-            Assert.IsNotNull(result);
-            Assert.AreEqual(HeaderResult.ResponseAction.Set, result.Action);
-            Assert.AreEqual("X-Frame-Options", result.Name);
-            Assert.AreEqual("SameOrigin", result.Value);
+            Assert.NotNull(result);
+            Assert.Equal(HeaderResult.ResponseAction.Set, result.Action);
+            Assert.Equal("X-Frame-Options", result.Name);
+            Assert.Equal("SameOrigin", result.Value);
         }
 
-        [Test]
+        [Fact]
         public void CreateXfoResult_DisabledWithSameOriginInOldConfig_ReturnsRemoveXfoResult()
         {
             var xFrameConfig = new XFrameOptionsConfiguration { Policy = XfoPolicy.Disabled };
@@ -52,12 +52,12 @@ namespace NWebsec.AspNetCore.Core.Tests.HttpHeaders
 
             var result = _generator.CreateXfoResult(xFrameConfig,oldXFrameConfig);
 
-            Assert.IsNotNull(result);
-            Assert.AreEqual(HeaderResult.ResponseAction.Remove, result.Action);
-            Assert.AreEqual("X-Frame-Options", result.Name);
+            Assert.NotNull(result);
+            Assert.Equal(HeaderResult.ResponseAction.Remove, result.Action);
+            Assert.Equal("X-Frame-Options", result.Name);
         }
 
-        [Test]
+        [Fact]
         public void CreateXfoResult_SameoriginWithSameOriginInConfig_ReturnsSetXfoSameOriginResult()
         {
             var xFrameConfig = new XFrameOptionsConfiguration { Policy = XfoPolicy.SameOrigin };
@@ -65,13 +65,13 @@ namespace NWebsec.AspNetCore.Core.Tests.HttpHeaders
 
             var result = _generator.CreateXfoResult(xFrameConfig, oldXFrameConfig);
 
-            Assert.IsNotNull(result);
-            Assert.AreEqual(HeaderResult.ResponseAction.Set, result.Action);
-            Assert.AreEqual("X-Frame-Options", result.Name);
-            Assert.AreEqual("SameOrigin", result.Value);
+            Assert.NotNull(result);
+            Assert.Equal(HeaderResult.ResponseAction.Set, result.Action);
+            Assert.Equal("X-Frame-Options", result.Name);
+            Assert.Equal("SameOrigin", result.Value);
         }
 
-        [Test]
+        [Fact]
         public void CreateXfoResult_SameoriginWithDenyInConfig_ReturnsSetXfoSameOriginResult()
         {
             var xFrameConfig = new XFrameOptionsConfiguration { Policy = XfoPolicy.SameOrigin };
@@ -79,10 +79,10 @@ namespace NWebsec.AspNetCore.Core.Tests.HttpHeaders
 
             var result = _generator.CreateXfoResult(xFrameConfig, oldXFrameConfig);
 
-            Assert.IsNotNull(result);
-            Assert.AreEqual(HeaderResult.ResponseAction.Set, result.Action);
-            Assert.AreEqual("X-Frame-Options", result.Name);
-            Assert.AreEqual("SameOrigin", result.Value);
+            Assert.NotNull(result);
+            Assert.Equal(HeaderResult.ResponseAction.Set, result.Action);
+            Assert.Equal("X-Frame-Options", result.Name);
+            Assert.Equal("SameOrigin", result.Value);
         }
     }
 }

@@ -1,48 +1,46 @@
 ﻿// Copyright (c) André N. Klingsheim. See License.txt in the project root for license information.
 
 using System;
-using NUnit.Framework;
+using Xunit;
 using NWebsec.AspNetCore.Core.HttpHeaders.Configuration;
 using NWebsec.AspNetCore.Core.HttpHeaders.Configuration.Validation;
 
 namespace NWebsec.AspNetCore.Core.Tests.HttpHeaders.Configuration.Validation
 {
-    [TestFixture]
     public class HstsConfigurationValidatorTests
     {
-        private HstsConfigurationValidator _validator;
+        private readonly HstsConfigurationValidator _validator;
 
-        [SetUp]
-        public void Setup()
+        public HstsConfigurationValidatorTests()
         {
             _validator = new HstsConfigurationValidator();
         }
 
-        [Test]
+        [Fact]
         public void Validate_ValidMaxAge_NoException()
         {
             var config = new HstsConfiguration { MaxAge = new TimeSpan(1) };
 
-            Assert.DoesNotThrow(() => _validator.Validate(config));
+            _validator.Validate(config);
         }
 
-        [Test]
+        [Fact]
         public void Validate_ValidMaxAgeAndSubdomains_NoException()
         {
             var config = new HstsConfiguration { MaxAge = new TimeSpan(1), IncludeSubdomains = true };
 
-            Assert.DoesNotThrow(() => _validator.Validate(config));
+            _validator.Validate(config);
         }
 
-        [Test]
+        [Fact]
         public void Validate_ValidPreload_NoException()
         {
             var config = new HstsConfiguration { MaxAge = new TimeSpan(18 * 7, 0, 0, 0), IncludeSubdomains = true, Preload = true };
 
-            Assert.DoesNotThrow(() => _validator.Validate(config));
+            _validator.Validate(config);
         }
 
-        [Test]
+        [Fact]
         public void Validate_InvalidPreloadMaxAge_ThrowsException()
         {
             var config = new HstsConfiguration { MaxAge = new TimeSpan(18 * 7 - 1, 23, 59, 59), IncludeSubdomains = true, Preload = true };
@@ -50,7 +48,7 @@ namespace NWebsec.AspNetCore.Core.Tests.HttpHeaders.Configuration.Validation
             Assert.Throws<Exception>(() => _validator.Validate(config));
         }
 
-        [Test]
+        [Fact]
         public void Validate_InvalidPreloadSubdomains_ThrowsException()
         {
             var config = new HstsConfiguration { MaxAge = new TimeSpan(18 * 7, 0, 0, 0), IncludeSubdomains = false, Preload = true };
@@ -58,7 +56,7 @@ namespace NWebsec.AspNetCore.Core.Tests.HttpHeaders.Configuration.Validation
             Assert.Throws<Exception>(() => _validator.Validate(config));
         }
 
-        [Test]
+        [Fact]
         public void Validate_InvalidPreloadUpgradeInsecureRequests_ThrowsException()
         {
             var config = new HstsConfiguration { MaxAge = new TimeSpan(18 * 7, 0, 0, 0), IncludeSubdomains = true, Preload = true, UpgradeInsecureRequests = true };

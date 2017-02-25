@@ -1,23 +1,21 @@
 ﻿// Copyright (c) André N. Klingsheim. See License.txt in the project root for license information.
 
 using System;
-using NUnit.Framework;
+using Xunit;
 using NWebsec.AspNetCore.Core.HttpHeaders.Configuration.Validation;
 
 namespace NWebsec.AspNetCore.Core.Tests.HttpHeaders.Configuration.Validation
 {
-    [TestFixture]
     public class Rfc2045MediaTypeValidatorTests
     {
-        private Rfc2045MediaTypeValidator _validator;
+        private readonly Rfc2045MediaTypeValidator _validator;
 
-        [SetUp]
-        public void Setup()
+        public Rfc2045MediaTypeValidatorTests()
         {
             _validator = new Rfc2045MediaTypeValidator();
         }
 
-        [Test]
+        [Fact]
         public void Validate_CommonValidMediaTypes_NoException()
         {
             var mediaTypes = new[]
@@ -38,11 +36,11 @@ namespace NWebsec.AspNetCore.Core.Tests.HttpHeaders.Configuration.Validation
 
             foreach (var mediaType in mediaTypes)
             {
-                Assert.DoesNotThrow(() => _validator.Validate(mediaType));
+                _validator.Validate(mediaType);
             }
         }
 
-        [Test]
+        [Fact]
         public void Validate_InvalidType_ThrowsException()
         {
             var mediaType = "nwebsec/pdf";
@@ -50,7 +48,7 @@ namespace NWebsec.AspNetCore.Core.Tests.HttpHeaders.Configuration.Validation
             Assert.Throws<Exception>(() => _validator.Validate(mediaType));
         }
 
-        [Test]
+        [Fact]
         public void Validate_WhiteSpace_ThrowsException()
         {
             var mediaTypes = new[]
@@ -66,7 +64,8 @@ namespace NWebsec.AspNetCore.Core.Tests.HttpHeaders.Configuration.Validation
                 Assert.Throws<Exception>(() => _validator.Validate(mediaType));
             }
         }
-        [Test]
+
+        [Fact]
         public void Validate_TSpecials_ThrowsException()
         {
             var tspecials = "()<>@,;:\"\\/[]?=";
@@ -75,7 +74,7 @@ namespace NWebsec.AspNetCore.Core.Tests.HttpHeaders.Configuration.Validation
             foreach (var specialChar in tspecials)
             {
                 var invalidType = mediaType + specialChar;
-                Assert.Throws<Exception>(() => _validator.Validate(invalidType), "Expected exception for input: " + invalidType);
+                Assert.Throws<Exception>(() => _validator.Validate(invalidType));
             }
         }
     }

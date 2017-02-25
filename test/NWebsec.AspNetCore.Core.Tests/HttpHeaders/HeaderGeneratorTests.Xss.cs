@@ -1,6 +1,6 @@
 ﻿// Copyright (c) André N. Klingsheim. See License.txt in the project root for license information.
 
-using NUnit.Framework;
+using Xunit;
 using NWebsec.AspNetCore.Core.HttpHeaders;
 using NWebsec.AspNetCore.Core.HttpHeaders.Configuration;
 
@@ -8,56 +8,56 @@ namespace NWebsec.AspNetCore.Core.Tests.HttpHeaders
 {
     public partial class HeaderGeneratorTests
     {
-        [Test]
+        [Fact]
         public void CreateXXssProtectionResult_Disabled_ReturnsNull()
         {
             var xssProtection = new XXssProtectionConfiguration { Policy = XXssPolicy.Disabled };
 
             var result = _generator.CreateXXssProtectionResult(xssProtection);
 
-            Assert.IsNull(result);
+            Assert.Null(result);
         }
 
-        [Test]
+        [Fact]
         public void CreateXXssProtectionResult_FilterDisabledPolicy_ReturnsSetXXssProtectionDisabledResult()
         {
             var xssProtection = new XXssProtectionConfiguration { Policy = XXssPolicy.FilterDisabled };
 
             var result = _generator.CreateXXssProtectionResult(xssProtection);
 
-            Assert.IsNotNull(result);
-            Assert.AreEqual(HeaderResult.ResponseAction.Set, result.Action);
-            Assert.AreEqual("X-XSS-Protection", result.Name);
-            Assert.AreEqual("0", result.Value);
+            Assert.NotNull(result);
+            Assert.Equal(HeaderResult.ResponseAction.Set, result.Action);
+            Assert.Equal("X-XSS-Protection", result.Name);
+            Assert.Equal("0", result.Value);
         }
 
-        [Test]
+        [Fact]
         public void CreateXXssProtectionResult_FilterEnabledPolicy_ReturnsSetXssProtectionEnabledWithoutBlockmodeResult()
         {
             var xssProtection = new XXssProtectionConfiguration { Policy = XXssPolicy.FilterEnabled, BlockMode = false };
 
             var result = _generator.CreateXXssProtectionResult(xssProtection);
 
-            Assert.IsNotNull(result);
-            Assert.AreEqual(HeaderResult.ResponseAction.Set, result.Action);
-            Assert.AreEqual("X-XSS-Protection", result.Name);
-            Assert.AreEqual("1", result.Value);
+            Assert.NotNull(result);
+            Assert.Equal(HeaderResult.ResponseAction.Set, result.Action);
+            Assert.Equal("X-XSS-Protection", result.Name);
+            Assert.Equal("1", result.Value);
         }
 
-        [Test]
+        [Fact]
         public void CreateXXssProtectionResult_FilterEnabledPolicyWithBlockmode_ReturnsSetXssProtectionEnabledWithBlockModeResult()
         {
             var xssProtection = new XXssProtectionConfiguration { Policy = XXssPolicy.FilterEnabled, BlockMode = true };
 
             var result = _generator.CreateXXssProtectionResult(xssProtection);
 
-            Assert.IsNotNull(result);
-            Assert.AreEqual(HeaderResult.ResponseAction.Set, result.Action);
-            Assert.AreEqual("X-XSS-Protection", result.Name);
-            Assert.AreEqual("1; mode=block", result.Value);
+            Assert.NotNull(result);
+            Assert.Equal(HeaderResult.ResponseAction.Set, result.Action);
+            Assert.Equal("X-XSS-Protection", result.Name);
+            Assert.Equal("1; mode=block", result.Value);
         }
 
-        [Test]
+        [Fact]
         public void CreateXXssProtectionResult_DisabledPolicyWithFilterEnabledinOldconfig_ReturnsSetXXssProtectionDisabledResult()
         {
             var oldXssProtection = new XXssProtectionConfiguration { Policy = XXssPolicy.FilterEnabled };
@@ -65,13 +65,13 @@ namespace NWebsec.AspNetCore.Core.Tests.HttpHeaders
 
             var result = _generator.CreateXXssProtectionResult(xssProtection, oldXssProtection);
 
-            Assert.IsNotNull(result);
-            Assert.AreEqual(HeaderResult.ResponseAction.Set, result.Action);
-            Assert.AreEqual("X-XSS-Protection", result.Name);
-            Assert.AreEqual("0", result.Value);
+            Assert.NotNull(result);
+            Assert.Equal(HeaderResult.ResponseAction.Set, result.Action);
+            Assert.Equal("X-XSS-Protection", result.Name);
+            Assert.Equal("0", result.Value);
         }
 
-        [Test]
+        [Fact]
         public void CreateXXssProtectionResult_FilterEnabledPolicyWithFilterEnabledinOldconfig_ReturnsSetXXssProtectionEnabledResult()
         {
             var oldXssProtection = new XXssProtectionConfiguration { Policy = XXssPolicy.FilterEnabled };
@@ -79,13 +79,13 @@ namespace NWebsec.AspNetCore.Core.Tests.HttpHeaders
 
             var result = _generator.CreateXXssProtectionResult(xssProtection, oldXssProtection);
 
-            Assert.IsNotNull(result);
-            Assert.AreEqual(HeaderResult.ResponseAction.Set, result.Action);
-            Assert.AreEqual("X-XSS-Protection", result.Name);
-            Assert.AreEqual("1", result.Value);
+            Assert.NotNull(result);
+            Assert.Equal(HeaderResult.ResponseAction.Set, result.Action);
+            Assert.Equal("X-XSS-Protection", result.Name);
+            Assert.Equal("1", result.Value);
         }
 
-        [Test]
+        [Fact]
         public void CreateXXssProtectionResult_DisabledWithFilterEnabledinOldconfig_ReturnsRemoveXXssProtectionResult()
         {
             var oldXssProtection = new XXssProtectionConfiguration { Policy = XXssPolicy.FilterDisabled };
@@ -93,9 +93,9 @@ namespace NWebsec.AspNetCore.Core.Tests.HttpHeaders
 
             var result = _generator.CreateXXssProtectionResult(xssProtection, oldXssProtection);
 
-            Assert.IsNotNull(result);
-            Assert.AreEqual("X-XSS-Protection", result.Name);
-            Assert.AreEqual(HeaderResult.ResponseAction.Remove, result.Action);
+            Assert.NotNull(result);
+            Assert.Equal("X-XSS-Protection", result.Name);
+            Assert.Equal(HeaderResult.ResponseAction.Remove, result.Action);
         }
     }
 }
