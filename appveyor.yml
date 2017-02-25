@@ -11,13 +11,9 @@ build:
   verbosity: minimal
 test_script:
 - ps: >-
-    $wc = New-Object 'System.Net.WebClient'
-
     pushd .\test\NWebsec.AspNetCore.Core.Tests\
 
     dotnet test -c release
-
-    $wc.UploadFile("https://ci.appveyor.com/api/testresults/nunit3/$($env:APPVEYOR_JOB_ID)", (Resolve-Path .\TestResult.xml))
 
     popd
 
@@ -25,15 +21,11 @@ test_script:
 
     dotnet test -c release
 
-    $wc.UploadFile("https://ci.appveyor.com/api/testresults/nunit3/$($env:APPVEYOR_JOB_ID)", (Resolve-Path .\TestResult.xml))
-
     popd
 
     pushd .\test\NWebsec.AspNetCore.Mvc.Tests\
 
     dotnet test -c release
-
-    $wc.UploadFile("https://ci.appveyor.com/api/testresults/nunit3/$($env:APPVEYOR_JOB_ID)", (Resolve-Path .\TestResult.xml))
 
     popd
 
@@ -41,15 +33,11 @@ test_script:
 
     dotnet test -c release
 
-    $wc.UploadFile("https://ci.appveyor.com/api/testresults/nunit3/$($env:APPVEYOR_JOB_ID)", (Resolve-Path .\TestResult.xml))
-
     popd
     
     pushd .\test\NWebsec.AspNetCore.Mvc.FunctionalTests\
 
     dotnet test -c release
-
-    $wc.UploadFile("https://ci.appveyor.com/api/testresults/nunit3/$($env:APPVEYOR_JOB_ID)", (Resolve-Path .\TestResult.xml))
 
     popd
 after_test:
