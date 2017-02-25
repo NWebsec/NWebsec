@@ -5,15 +5,14 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.TestHost;
-using NUnit.Framework;
+using Xunit;
 
 namespace NWebsec.AspNetCore.Middleware.Tests.Middleware
 {
-    [TestFixture]
     public class HstsMiddlewareTests
     {
 
-        [Test]
+        [Fact]
         public async Task Hsts_HttpAndNoHttpsOnly_NoHeader()
         {
             using (var server = new TestServer(new WebHostBuilder().Configure(app =>
@@ -29,11 +28,11 @@ namespace NWebsec.AspNetCore.Middleware.Tests.Middleware
                 var httpClient = server.CreateClient();
                 var response = await httpClient.GetAsync("http://localhost/");
 
-                Assert.IsFalse(response.Headers.Contains("Strict-Transport-Security"));
+                Assert.False(response.Headers.Contains("Strict-Transport-Security"));
             }
         }
 
-        [Test]
+        [Fact]
         public async Task Hsts_HttpsAndNoHttpsOnly_AddsHeader()
         {
             using (var server = new TestServer(new WebHostBuilder().Configure(app =>
@@ -49,11 +48,11 @@ namespace NWebsec.AspNetCore.Middleware.Tests.Middleware
                 var httpClient = server.CreateClient();
                 var response = await httpClient.GetAsync("https://localhost/");
 
-                Assert.IsTrue(response.Headers.Contains("Strict-Transport-Security"));
+                Assert.True(response.Headers.Contains("Strict-Transport-Security"));
             }
         }
 
-        [Test]
+        [Fact]
         public async Task Hsts_HttpAndHttpsOnly_NoHeader()
         {
             using (var server = new TestServer(new WebHostBuilder().Configure(app =>
@@ -69,11 +68,11 @@ namespace NWebsec.AspNetCore.Middleware.Tests.Middleware
                 var httpClient = server.CreateClient();
                 var response = await httpClient.GetAsync("http://localhost/");
 
-                Assert.IsFalse(response.Headers.Contains("Strict-Transport-Security"));
+                Assert.False(response.Headers.Contains("Strict-Transport-Security"));
             }
         }
 
-        [Test]
+        [Fact]
         public async Task Hsts_HttpsAndHttpsOnly_AddsHeader()
         {
             using (var server = new TestServer(new WebHostBuilder().Configure(app =>
@@ -89,11 +88,11 @@ namespace NWebsec.AspNetCore.Middleware.Tests.Middleware
                 var httpClient = server.CreateClient();
                 var response = await httpClient.GetAsync("https://localhost/");
 
-                Assert.IsTrue(response.Headers.Contains("Strict-Transport-Security"));
+                Assert.True(response.Headers.Contains("Strict-Transport-Security"));
             }
         }
 
-        [Test]
+        [Fact]
         public async Task Hsts_HttpsAndUpgradeRequestWithUaSupport_AddsHeader()
         {
             using (var server = new TestServer(new WebHostBuilder().Configure(app =>
@@ -110,11 +109,11 @@ namespace NWebsec.AspNetCore.Middleware.Tests.Middleware
                 httpClient.DefaultRequestHeaders.Add("Upgrade-Insecure-Requests", "1");
                 var response = await httpClient.GetAsync("https://localhost/");
 
-                Assert.IsTrue(response.Headers.Contains("Strict-Transport-Security"));
+                Assert.True(response.Headers.Contains("Strict-Transport-Security"));
             }
         }
 
-        [Test]
+        [Fact]
         public async Task Hsts_HttpsAndUpgradeRequestWithoutUaSupport_NoHeader()
         {
            using (var server = new TestServer(new WebHostBuilder().Configure(app =>
@@ -130,7 +129,7 @@ namespace NWebsec.AspNetCore.Middleware.Tests.Middleware
                 var httpClient = server.CreateClient();
                 var response = await httpClient.GetAsync("https://localhost/");
 
-                Assert.IsFalse(response.Headers.Contains("Strict-Transport-Security"));
+                Assert.False(response.Headers.Contains("Strict-Transport-Security"));
             }
         }
     }

@@ -1,45 +1,43 @@
 ﻿// Copyright (c) André N. Klingsheim. See License.txt in the project root for license information.
 
 using System;
-using NUnit.Framework;
+using Xunit;
 using NWebsec.AspNetCore.Core.HttpHeaders.Configuration;
 
 namespace NWebsec.AspNetCore.Middleware.Tests
 {
-    [TestFixture]
     public class HstsOptionsTest
     {
-        private HstsOptions _options;
+        private readonly HstsOptions _options;
 
-        [SetUp]
-        public void Setup()
+        public HstsOptionsTest()
         {
             _options = new HstsOptions();
         }
 
-        [Test]
+        [Fact]
         public void Ctor_HttpsOnly_DefaultTrue()
         {
-            Assert.IsTrue(((IHstsConfiguration)_options).HttpsOnly);
+            Assert.True(((IHstsConfiguration)_options).HttpsOnly);
         }
 
-        [Test]
+        [Fact]
         public void MaxAge_ValidMaxage_SetsMaxage()
         {
             _options.MaxAge(minutes: 30);
             
-            Assert.IsTrue(new TimeSpan(0,30,0) == ((IHstsConfiguration)_options).MaxAge);
+            Assert.True(new TimeSpan(0,30,0) == ((IHstsConfiguration)_options).MaxAge);
         }
 
-        [Test]
+        [Fact]
         public void MaxAge_ZeroMaxage_SetsMaxage()
         {
             _options.MaxAge();
 
-            Assert.IsTrue(TimeSpan.Zero == ((IHstsConfiguration)_options).MaxAge);
+            Assert.True(TimeSpan.Zero == ((IHstsConfiguration)_options).MaxAge);
         }
 
-        [Test]
+        [Fact]
         public void MaxAge_NegativeValues_ThrowsException()
         {
             Assert.Throws<ArgumentOutOfRangeException>(() => _options.MaxAge(0, 0, 0, -1));
@@ -48,44 +46,44 @@ namespace NWebsec.AspNetCore.Middleware.Tests
             Assert.Throws<ArgumentOutOfRangeException>(() => _options.MaxAge(-1));
         }
 
-        [Test]
+        [Fact]
         public void IncludeSubdomains_SetsIncludeSubdomains()
         {
             _options.IncludeSubdomains();
 
-            Assert.IsTrue(((IHstsConfiguration)_options).IncludeSubdomains);
+            Assert.True(((IHstsConfiguration)_options).IncludeSubdomains);
         }
 
-        [Test]
+        [Fact]
         public void AllResponses_DisablesHttpsOnly()
         {
             _options.AllResponses();
 
-            Assert.IsFalse(((IHstsConfiguration)_options).HttpsOnly);
+            Assert.False(((IHstsConfiguration)_options).HttpsOnly);
         }
 
-        [Test]
+        [Fact]
         public void HttpsOnly_SetsHttpsOnly()
         {
             _options.HttpsOnly();
 
-            Assert.IsTrue(((IHstsConfiguration)_options).HttpsOnly);
+            Assert.True(((IHstsConfiguration)_options).HttpsOnly);
         }
 
-        [Test]
+        [Fact]
         public void Preload_SetsPreload()
         {
             _options.Preload();
 
-            Assert.IsTrue(((IHstsConfiguration)_options).Preload);
+            Assert.True(((IHstsConfiguration)_options).Preload);
         }
 
-        [Test]
+        [Fact]
         public void UpgradeInsecureRequests_SetsUpgradeInsecureRequests()
         {
             _options.UpgradeInsecureRequests();
 
-            Assert.IsTrue(((IHstsConfiguration)_options).UpgradeInsecureRequests);
+            Assert.True(((IHstsConfiguration)_options).UpgradeInsecureRequests);
         }
     }
 }

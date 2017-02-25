@@ -1,74 +1,72 @@
 ﻿// Copyright (c) André N. Klingsheim. See License.txt in the project root for license information.
 
-using NUnit.Framework;
+using Xunit;
 
 namespace NWebsec.AspNetCore.Middleware.Tests
 {
-    [TestFixture]
     public class XRobotsTagOptionsTests
     {
-        private XRobotsTagOptions _options;
+        private readonly XRobotsTagOptions _options;
 
-        [SetUp]
-        public void Setup()
+        public XRobotsTagOptionsTests()
         {
             _options = new XRobotsTagOptions();
         }
        
-        [Test]
+        [Fact]
         public void NoIndex_UpdatesConfig()
         {
             _options.NoIndex();
 
-            Assert.IsTrue(_options.Config.NoIndex);
+            Assert.True(_options.Config.NoIndex);
         }
 
-        [Test]
+        [Fact]
         public void NoFollow_UpdatesConfig()
         {
             _options.NoFollow();
 
-            Assert.IsTrue(_options.Config.NoFollow);
+            Assert.True(_options.Config.NoFollow);
         }
 
-        [Test]
+        [Fact]
         public void NoSnippet_UpdatesConfig()
         {
             _options.NoSnippet();
 
-            Assert.IsTrue(_options.Config.NoSnippet);
+            Assert.True(_options.Config.NoSnippet);
         }
 
-        [Test]
+        [Fact]
         public void NoArchive_UpdatesConfig()
         {
             _options.NoArchive();
 
-            Assert.IsTrue(_options.Config.NoArchive);
+            Assert.True(_options.Config.NoArchive);
         }
 
-        [Test]
+        [Fact]
         public void NoOdp_UpdatesConfig()
         {
             _options.NoOdp();
 
-            Assert.IsTrue(_options.Config.NoOdp);
+            Assert.True(_options.Config.NoOdp);
         }
 
-        [Test]
+        [Fact]
         public void NoTranslate_UpdatesConfig()
         {
             _options.NoTranslate();
 
-            Assert.IsTrue(_options.Config.NoTranslate);
+            Assert.True(_options.Config.NoTranslate);
         }
 
-        [Test]
+        [Fact]
         public void NoImageIndex_UpdatesConfig()
         {
             _options.NoImageIndex();
 
-            Assert.IsTrue(_options.Config.NoImageIndex);
+            Assert.True(_options.Config.NoImageIndex);
         }
     }
 }

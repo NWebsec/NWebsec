@@ -4,13 +4,24 @@
   },
 
   "dependencies": {
-    "Microsoft.AspNetCore.TestHost": "1.0.0",
-    "NUnit": "3.4.1",
-    "dotnet-test-nunit": "3.4.0-beta-2",
+    "Microsoft.AspNetCore.TestHost": "1.0.1",
+    "xunit": "2.2.0",
+    "dotnet-test-xunit": "2.2.0-*",
     "NWebsec.AspNetCore.Middleware": "1.0.0-*"
   },
-  "testRunner": "nunit",
+  "testRunner": "xunit",
   "frameworks": {
-    "net451": {}
+    "netcoreapp1.1": {
+      "imports": [
+        "portable-net451+win8"
+      ],
+      "dependencies": {
+        "Microsoft.NETCore.App": {
+          "version": "1.1.0",
+          "type": "platform"
+        }
+      }
+    },
+    "net452": {}
   }
 }

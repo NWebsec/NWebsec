@@ -1,37 +1,36 @@
 ﻿// Copyright (c) André N. Klingsheim. See License.txt in the project root for license information.
 
 using System;
-using NUnit.Framework;
+using System.Linq;
+using Xunit;
 
 namespace NWebsec.AspNetCore.Middleware.Tests
 {
-    [TestFixture]
     public class CspReportUriDirectiveTests
     {
-        private CspReportUriDirective _directive;
+        private readonly CspReportUriDirective _directive;
 
-        [SetUp]
-        public void Setup()
+        public CspReportUriDirectiveTests()
         {
             _directive = new CspReportUriDirective();
         }
 
-        [Test]
+        [Fact]
         public void Uris_ValidUris_AddsReportUris()
         {
             _directive.Uris("/report", "/otherReport");
 
             var expected = new[] { "/report", "/otherReport" };
-            CollectionAssert.AreEqual(expected, _directive.ReportUris);
+            Assert.True(expected.SequenceEqual(_directive.ReportUris));
         }
 
-        [Test]
+        [Fact]
         public void Uris_NoUris_ThrowsException()
         {
             Assert.Throws<ArgumentException>(() => _directive.Uris());
         }
 
-        [Test]
+        [Fact]
         public void Uris_InvalidUris_ThrowsException()
         {
             Assert.Throws<ArgumentException>(() => _directive.Uris("/report", "https://*.nwebsec.com/report"));
