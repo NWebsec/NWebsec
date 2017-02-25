@@ -1,24 +1,23 @@
 ﻿// Copyright (c) André N. Klingsheim. See License.txt in the project root for license information.
 
-using NUnit.Framework;
+using Xunit;
 using NWebsec.AspNetCore.Mvc.Html;
 
 namespace NWebsec.AspNetCore.Mvc.Tests.Html
 {
-    [TestFixture]
     public class ReferrerPolicyGeneratorTests
     {
 
-        [Test]
+        [Fact]
         public void Properties_ReturnsMetaTags()
         {
             var generator = new ReferrerPolicyGenerator();
 
-            Assert.AreEqual(@"<meta name=""referrer"" content=""none"" />", generator.None.Tag.ToString());
-            Assert.AreEqual(@"<meta name=""referrer"" content=""none-when-downgrade"" />", generator.NoneWhenDowngrade.Tag.ToString());
-            Assert.AreEqual(@"<meta name=""referrer"" content=""origin"" />", generator.Origin.Tag.ToString());
-            Assert.AreEqual(@"<meta name=""referrer"" content=""origin-when-crossorigin"" />", generator.OriginWhenCrossOrigin.Tag.ToString());
-            Assert.AreEqual(@"<meta name=""referrer"" content=""unsafe-url"" />", generator.UnsafeUrl.Tag.ToString());
+            Assert.Equal(@"<meta name=""referrer"" content=""none"" />", generator.None.Tag.ToString());
+            Assert.Equal(@"<meta name=""referrer"" content=""none-when-downgrade"" />", generator.NoneWhenDowngrade.Tag.ToString());
+            Assert.Equal(@"<meta name=""referrer"" content=""origin"" />", generator.Origin.Tag.ToString());
+            Assert.Equal(@"<meta name=""referrer"" content=""origin-when-crossorigin"" />", generator.OriginWhenCrossOrigin.Tag.ToString());
+            Assert.Equal(@"<meta name=""referrer"" content=""unsafe-url"" />", generator.UnsafeUrl.Tag.ToString());
         }
     }
 }

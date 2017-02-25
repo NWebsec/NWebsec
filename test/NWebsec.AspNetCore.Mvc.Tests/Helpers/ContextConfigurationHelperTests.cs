@@ -1,8 +1,9 @@
 ﻿// Copyright (c) André N. Klingsheim. See License.txt in the project root for license information.
 
+using System.Collections.Generic;
 using Microsoft.AspNetCore.Http;
 using Moq;
-using NUnit.Framework;
+using Xunit;
 using NWebsec.AspNetCore.Core;
 using NWebsec.AspNetCore.Core.HttpHeaders.Configuration;
 using NWebsec.AspNetCore.Mvc.Csp;
@@ -10,15 +11,15 @@ using NWebsec.AspNetCore.Mvc.Helpers;
 
 namespace NWebsec.AspNetCore.Mvc.Tests.Helpers
 {
-    [TestFixture]
     public class ContextConfigurationHelperTests
     {
-        private NWebsecContext _nwContext;
-        private HttpContext _mockContext;
-        private ContextConfigurationHelper _contextHelper;
+        public static readonly IEnumerable<object> ReportOnly = new TheoryData<bool> { false, true };
 
-        [SetUp]
-        public void Setup()
+        private readonly NWebsecContext _nwContext;
+        private readonly HttpContext _mockContext;
+        private readonly ContextConfigurationHelper _contextHelper;
+
+        public ContextConfigurationHelperTests()
         {
             _nwContext = new NWebsecContext();
 
@@ -29,7 +30,7 @@ namespace NWebsec.AspNetCore.Mvc.Tests.Helpers
             _contextHelper = new ContextConfigurationHelper();
         }
 
-        [Test]
+        [Fact]
         public void GetXRobotsTagConfiguration_ReturnsContextConfig()
         {
             var config = new XRobotsTagConfiguration();
@@ -37,10 +38,10 @@ namespace NWebsec.AspNetCore.Mvc.Tests.Helpers
 
             var result = _contextHelper.GetXRobotsTagConfiguration(_mockContext);
 
-            Assert.AreSame(config, result);
+            Assert.Same(config, result);
         }
 
-       [Test]
+        [Fact]
         public void GetXFrameOptionsConfiguration_ReturnsContextConfig()
         {
             var config = new XFrameOptionsConfiguration();
@@ -48,10 +49,10 @@ namespace NWebsec.AspNetCore.Mvc.Tests.Helpers
 
             var result = _contextHelper.GetXFrameOptionsConfiguration(_mockContext);
 
-            Assert.AreSame(config, result);
+            Assert.Same(config, result);
         }
 
-        [Test]
+        [Fact]
         public void GetXContentTypeOptionsConfiguration_ReturnsContextConfig()
         {
             var config = new SimpleBooleanConfiguration();
@@ -59,10 +60,10 @@ namespace NWebsec.AspNetCore.Mvc.Tests.Helpers
 
             var result = _contextHelper.GetXContentTypeOptionsConfiguration(_mockContext);
 
-            Assert.AreSame(config, result);
+            Assert.Same(config, result);
         }
 
-        [Test]
+        [Fact]
         public void GetXDownloadOptionsConfiguration_ReturnsContextConfig()
         {
             var config = new SimpleBooleanConfiguration();
@@ -70,10 +71,10 @@ namespace NWebsec.AspNetCore.Mvc.Tests.Helpers
 
             var result = _contextHelper.GetXDownloadOptionsConfiguration(_mockContext);
 
-            Assert.AreSame(config, result);
+            Assert.Same(config, result);
         }
 
-        [Test]
+        [Fact]
         public void GetXXssProtectionConfiguration_ReturnsContextConfig()
         {
             var config = new XXssProtectionConfiguration();
@@ -81,10 +82,10 @@ namespace NWebsec.AspNetCore.Mvc.Tests.Helpers
 
             var result = _contextHelper.GetXXssProtectionConfiguration(_mockContext);
 
-            Assert.AreSame(config, result);
+            Assert.Same(config, result);
         }
 
-        [Test]
+        [Fact]
         public void GetCspConfiguration_ReturnsContextConfig()
         {
             var config = new CspConfiguration();
@@ -92,10 +93,10 @@ namespace NWebsec.AspNetCore.Mvc.Tests.Helpers
 
             var result = _contextHelper.GetCspConfiguration(_mockContext, false);
 
-            Assert.AreSame(config, result);
+            Assert.Same(config, result);
         }
 
-        [Test]
+        [Fact]
         public void GetCspReportonlyConfiguration_ReturnsContextConfig()
         {
             var config = new CspConfiguration();
@@ -103,38 +104,40 @@ namespace NWebsec.AspNetCore.Mvc.Tests.Helpers
 
             var result = _contextHelper.GetCspConfiguration(_mockContext, true);
 
-            Assert.AreSame(config, result);
+            Assert.Same(config, result);
         }
 
-        [Test]
-        public void GetCspConfigurationOverride_AllowNull_ReturnsNull([Values(true, false)] bool reportOnly)
+        [Theory]
+        [MemberData(nameof(ReportOnly))]
+        public void GetCspConfigurationOverride_AllowNull_ReturnsNull(bool reportOnly)
         {
             var result = _contextHelper.GetCspConfigurationOverride(_mockContext, reportOnly, true);
 
-            Assert.IsNull(result);
+            Assert.Null(result);
         }
 
-        
-        [Test]
+
+        [Fact]
         public void GetCspConfigurationOverride_NotAllowNull_ReturnsOverrideConfig()
         {
             var result = _contextHelper.GetCspConfigurationOverride(_mockContext, false, false);
 
-            Assert.IsNotNull(result);
-            Assert.AreSame(_nwContext.ConfigOverrides.CspOverride, result);
+            Assert.NotNull(result);
+            Assert.Same(_nwContext.ConfigOverrides.CspOverride, result);
         }
 
-        [Test]
+        [Fact]
         public void GetCspReportOnlyConfigurationOverride_NotAllowNull_ReturnsOverrideConfig()
         {
             var result = _contextHelper.GetCspConfigurationOverride(_mockContext, true, false);
 
-            Assert.IsNotNull(result);
-            Assert.AreSame(_nwContext.ConfigOverrides.CspReportOnlyOverride, result);
+            Assert.NotNull(result);
+            Assert.Same(_nwContext.ConfigOverrides.CspReportOnlyOverride, result);
         }
 
-        [Test]
-        public void GetCspConfigurationOverride_HasOverrideConfig_ReturnsExistingConfig([Values(false, true)] bool allowNull)
+        [Theory]
+        [MemberData(nameof(ReportOnly))]
+        public void GetCspConfigurationOverride_HasOverrideConfig_ReturnsExistingConfig(bool allowNull)
         {
             var cspOverrideConfig = new CspOverrideConfiguration();
             var cspReportOnlyOverrideConfig = new CspOverrideConfiguration();
@@ -144,8 +147,8 @@ namespace NWebsec.AspNetCore.Mvc.Tests.Helpers
             var cspResult = _contextHelper.GetCspConfigurationOverride(_mockContext, false, allowNull);
             var cspReportOnlyResult = _contextHelper.GetCspConfigurationOverride(_mockContext, true, allowNull);
 
-            Assert.AreSame(cspOverrideConfig, cspResult);
-            Assert.AreSame(cspReportOnlyOverrideConfig, cspReportOnlyResult);
+            Assert.Same(cspOverrideConfig, cspResult);
+            Assert.Same(cspReportOnlyOverrideConfig, cspReportOnlyResult);
         }
     }
 }

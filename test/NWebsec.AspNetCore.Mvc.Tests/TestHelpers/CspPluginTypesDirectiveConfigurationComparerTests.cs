@@ -1,70 +1,70 @@
 // Copyright (c) André N. Klingsheim. See License.txt in the project root for license information.
 
-using NUnit.Framework;
+using Xunit;
 using NWebsec.AspNetCore.Core.HttpHeaders.Configuration;
 
 namespace NWebsec.AspNetCore.Mvc.Tests.TestHelpers
 {
-    [TestFixture]
+
     public class CspPluginTypesDirectiveConfigurationComparerTests
     {
 
-        private CspPluginTypesDirectiveConfigurationComparer _comparer;
+        private readonly CspPluginTypesDirectiveConfigurationEqualityComparer _equalityComparer;
 
-        [SetUp]
-        public void Setup()
+        public CspPluginTypesDirectiveConfigurationComparerTests()
         {
-            _comparer = new CspPluginTypesDirectiveConfigurationComparer();
-        }
-        [Test]
-        public void Compare_IdenticalDefaultConfigs_ReturnsZero()
-        {
-            var result = _comparer.Compare(new CspPluginTypesDirectiveConfiguration(), new CspPluginTypesDirectiveConfiguration());
-
-            Assert.AreEqual(0, result);
+            _equalityComparer = new CspPluginTypesDirectiveConfigurationEqualityComparer();
         }
 
-        [Test]
+        [Fact]
+        public void Equals_IdenticalDefaultConfigs_ReturnsTrue()
+        {
+            var result = _equalityComparer.Equals(new CspPluginTypesDirectiveConfiguration(), new CspPluginTypesDirectiveConfiguration());
 
-        public void Compare_EnabledDiffers_ReturnsNonzero()
+            Assert.True(result);
+        }
+
+        [Fact]
+
+        public void Equals_EnabledDiffers_ReturnsFalse()
         {
             var firstConfig = new CspPluginTypesDirectiveConfiguration { Enabled = false };
             var secondConfig = new CspPluginTypesDirectiveConfiguration { Enabled = true };
 
-            Assert.AreEqual(-1, _comparer.Compare(firstConfig, secondConfig));
-            Assert.AreEqual(1, _comparer.Compare(secondConfig, firstConfig));
+            Assert.False(_equalityComparer.Equals(firstConfig, secondConfig));
+            Assert.False(_equalityComparer.Equals(secondConfig, firstConfig));
         }
 
-        [Test]
+        [Fact]
 
-        public void Compare_CustomSourcesAreEqual_ReturnsZero()
+        public void Equals_CustomSourcesAreEqual_ReturnsTrue()
         {
             var firstConfig = new CspPluginTypesDirectiveConfiguration { MediaTypes = new[] { "application/pdf", "image/png" } };
             var secondConfig = new CspPluginTypesDirectiveConfiguration { MediaTypes = new[] { "application/pdf", "image/png" } };
 
-            Assert.AreEqual(0, _comparer.Compare(firstConfig, secondConfig));
+            Assert.True(_equalityComparer.Equals(firstConfig, secondConfig));
         }
 
-        [Test]
+        [Fact]
 
-        public void Compare_CustomSourcesDiffersInLength_ReturnsNonzero()
+        public void Equals_CustomSourcesDiffersInLength_ReturnsFalse()
         {
             var firstConfig = new CspPluginTypesDirectiveConfiguration { MediaTypes = new[] { "application/pdf" } };
             var secondConfig = new CspPluginTypesDirectiveConfiguration { MediaTypes = new[] { "application/pdf", "image/png" } };
 
-            Assert.Less(_comparer.Compare(firstConfig, secondConfig), 0);
-            Assert.Greater(_comparer.Compare(secondConfig, firstConfig), 0);
+            Assert.False(_equalityComparer.Equals(firstConfig, secondConfig));
+            Assert.False(_equalityComparer.Equals(secondConfig, firstConfig));
         }
 
-        [Test]
+        [Fact]
 
-        public void Compare_CustomSourcesDiffersInElements_ReturnsNonzero()
+        public void Equals_CustomSourcesDiffersInElements_ReturnsFalse()
         {
             var firstConfig = new CspPluginTypesDirectiveConfiguration { MediaTypes = new[] { "application/pdf", "image/png" } };
             var secondConfig = new CspPluginTypesDirectiveConfiguration { MediaTypes = new[] { "application/pdf", "video/mp4" } };
 
-            Assert.Less(_comparer.Compare(firstConfig, secondConfig), 0);
-            Assert.Greater(_comparer.Compare(secondConfig, firstConfig), 0);
+            Assert.False(_equalityComparer.Equals(firstConfig, secondConfig));
+            Assert.False(_equalityComparer.Equals(secondConfig, firstConfig));
         }
     }
 }

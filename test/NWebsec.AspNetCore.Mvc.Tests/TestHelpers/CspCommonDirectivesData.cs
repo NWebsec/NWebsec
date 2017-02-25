@@ -1,23 +1,21 @@
 ﻿// Copyright (c) André N. Klingsheim. See License.txt in the project root for license information.
 
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using NWebsec.AspNetCore.Mvc.Helpers;
 
 namespace NWebsec.AspNetCore.Mvc.Tests.TestHelpers
 {
-    public class CspCommonDirectives : IEnumerable<CspDirectives>
+    public class CspCommonDirectivesData : IEnumerable<object[]>
     {
         IEnumerator IEnumerable.GetEnumerator()
         {
             return GetEnumerator();
         }
 
-        public IEnumerator<CspDirectives> GetEnumerator()
+        public IEnumerator<object[]> GetEnumerator()
         {
-            return Enum.GetValues(typeof(CspDirectives)).Cast<CspDirectives>().Except(new[] {CspDirectives.ReportUri}).GetEnumerator();
+            return new CspCommonDirectives().Select(directive => new object[] {directive}).GetEnumerator();
         }
     }
 }
