@@ -5,31 +5,28 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 using Moq;
-using NUnit.Framework;
+using Xunit;
 using NWebsec.AspNetCore.Mvc.Helpers;
 
 namespace NWebsec.AspNetCore.Mvc.TagHelpers.Tests
 {
-    [TestFixture]
     public class CspNonceTagHelperTests
     {
-        private CspNonceTagHelper _tagHelper;
-        private Mock<ICspConfigurationOverrideHelper> _cspOverrideHelper;
-        private Mock<IHeaderOverrideHelper> _headerOverrideHelper;
+        private readonly CspNonceTagHelper _tagHelper;
+        private readonly Mock<ICspConfigurationOverrideHelper> _cspOverrideHelper;
 
-        [SetUp]
-        public void Setup()
+        public CspNonceTagHelperTests()
         {
             _cspOverrideHelper = new Mock<ICspConfigurationOverrideHelper>(MockBehavior.Strict);
-            _headerOverrideHelper = new Mock<IHeaderOverrideHelper>(MockBehavior.Strict);
-            _headerOverrideHelper.Setup(ho => ho.SetCspHeaders(It.IsAny<HttpContext>(), It.IsAny<bool>()));
+            var headerOverrideHelper = new Mock<IHeaderOverrideHelper>(MockBehavior.Strict);
+            headerOverrideHelper.Setup(ho => ho.SetCspHeaders(It.IsAny<HttpContext>(), It.IsAny<bool>()));
 
-            _tagHelper = new CspNonceTagHelper(_cspOverrideHelper.Object, _headerOverrideHelper.Object);
+            _tagHelper = new CspNonceTagHelper(_cspOverrideHelper.Object, headerOverrideHelper.Object);
             var httpContext = new DefaultHttpContext { Items = new Dictionary<object, object>() };
             _tagHelper.ViewContext = new Microsoft.AspNetCore.Mvc.Rendering.ViewContext() { HttpContext = httpContext };
         }
 
-        [Test]
+        [Fact]
         public void Process_ScriptTag_AddsNonce()
         {
             _cspOverrideHelper.Setup(co => co.GetCspScriptNonce(It.IsAny<HttpContext>())).Returns("scriptnonce");
@@ -50,22 +47,21 @@ namespace NWebsec.AspNetCore.Mvc.TagHelpers.Tests
 
             var tagHelperOutput = new TagHelperOutput("script", outputAttributes, (useCachedResult, encoder) =>
              {
-                 var tagHelperContent = new DefaultTagHelperContent();
-                 tagHelperContent.SetContent("Content");
-                 return Task.FromResult<TagHelperContent>(tagHelperContent);
+                 var tagHelperContent = new DefaultTagHelperContent().SetContent("Content");
+                 return Task.FromResult(tagHelperContent);
              });
 
             _tagHelper.Process(tagHelperContext, tagHelperOutput);
 
             //Assert gets script nonce, sets context, sets headers, switches attribute
 
-            Assert.AreEqual("scriptnonce", tagHelperOutput.Attributes["nonce"].Value);
+            Assert.Equal("scriptnonce", tagHelperOutput.Attributes["nonce"].Value);
             TagHelperAttribute attr;
-            Assert.IsFalse(tagHelperOutput.Attributes.TryGetAttribute("nws-csp-nonce", out attr));
+            Assert.False(tagHelperOutput.Attributes.TryGetAttribute("nws-csp-nonce", out attr));
             _cspOverrideHelper.Verify(co => co.GetCspScriptNonce(It.IsAny<HttpContext>()), Times.Once);
         }
 
-        [Test]
+        [Fact]
         public void Process_StyleTag_AddsNonce()
         {
             _cspOverrideHelper.Setup(co => co.GetCspStyleNonce(It.IsAny<HttpContext>())).Returns("stylenonce");
@@ -85,18 +81,17 @@ namespace NWebsec.AspNetCore.Mvc.TagHelpers.Tests
                 "test");
             var tagHelperOutput = new TagHelperOutput("style", outputAttributes, (useCachedResult, encoder) =>
             {
-                var tagHelperContent = new DefaultTagHelperContent();
-                tagHelperContent.SetContent("Content");
-                return Task.FromResult<TagHelperContent>(tagHelperContent);
+                var tagHelperContent = new DefaultTagHelperContent().SetContent("Content");
+                return Task.FromResult(tagHelperContent);
             });
 
             _tagHelper.Process(tagHelperContext, tagHelperOutput);
 
             //Assert gets script nonce, sets context, sets headers, switches attribute
 
-            Assert.AreEqual("stylenonce", tagHelperOutput.Attributes["nonce"].Value);
+            Assert.Equal("stylenonce", tagHelperOutput.Attributes["nonce"].Value);
             TagHelperAttribute attr;
-            Assert.IsFalse(tagHelperOutput.Attributes.TryGetAttribute("nws-csp-nonce", out attr));
+            Assert.False(tagHelperOutput.Attributes.TryGetAttribute("nws-csp-nonce", out attr));
             _cspOverrideHelper.Verify(co => co.GetCspStyleNonce(It.IsAny<HttpContext>()), Times.Once);
         }
     }
