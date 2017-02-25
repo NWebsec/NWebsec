@@ -10,7 +10,6 @@ using NWebsec.AspNetCore.Mvc.FunctionalTests.Plumbing;
 
 namespace NWebsec.AspNetCore.Mvc.FunctionalTests.Attributes
 {
-
     public class XRobotsTagTests : IDisposable
     {
         private readonly TestServer _server;

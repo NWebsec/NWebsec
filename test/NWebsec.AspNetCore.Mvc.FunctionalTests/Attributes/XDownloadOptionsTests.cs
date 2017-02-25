@@ -9,7 +9,6 @@ using NWebsec.AspNetCore.Mvc.FunctionalTests.Plumbing;
 
 namespace NWebsec.AspNetCore.Mvc.FunctionalTests.Attributes
 {
-
     public class XDownloadOptionsTests : IDisposable
     {
         private readonly TestServer _server;

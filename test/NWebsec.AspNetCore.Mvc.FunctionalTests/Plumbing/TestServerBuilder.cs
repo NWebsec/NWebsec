@@ -14,7 +14,6 @@ namespace NWebsec.AspNetCore.Mvc.FunctionalTests.Plumbing
             var appName = "MvcAttributeWebsite";
             var basePath = PlatformServices.Default.Application.ApplicationBasePath;
 
-
 #if NET452
   var applicationRoot = Path.GetFullPath(Path.Combine(
                             basePath,

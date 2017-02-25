@@ -10,7 +10,6 @@ using NWebsec.AspNetCore.Mvc.FunctionalTests.Plumbing;
 
 namespace NWebsec.AspNetCore.Mvc.FunctionalTests.Attributes
 {
-    
     public class CspTests : IDisposable
     {
         private readonly TestServer _server;
