@@ -48,7 +48,7 @@ namespace Mvc
             }
 
             app.UseStaticFiles();
-
+            app.UseNoCacheHttpHeaders();
             app.UseMvc(routes =>
             {
                 routes.MapRoute(

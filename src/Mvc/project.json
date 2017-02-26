@@ -1,4 +1,4 @@
-﻿{
+{
   "dependencies": {
     "Microsoft.NETCore.App": {
       "version": "1.0.1",
@@ -20,7 +20,8 @@
     "Microsoft.Extensions.Logging.Debug": "1.0.0",
     "Microsoft.Extensions.Options.ConfigurationExtensions": "1.0.0",
     "NWebsec.AspNetCore.Mvc": "1.0.0-gamma1",
-    "NWebsec.AspNetCore.Mvc.TagHelpers": "1.0.0-gamma1-*"
+    "NWebsec.AspNetCore.Mvc.TagHelpers": "1.0.0-gamma1-*",
+    "NWebsec.AspNetCore.Middleware": "1.0.0-gamma1-*"
   },
 
   "tools": {

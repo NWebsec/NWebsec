@@ -14,7 +14,6 @@ namespace NWebsec.AspNetCore.Mvc.Internals
 
         internal virtual string ContextKeyIdentifier => GetType().Name;
 
-
         public override void OnActionExecuted(ActionExecutedContext filterContext)
         {
             var context = filterContext.HttpContext;
@@ -39,7 +38,7 @@ namespace NWebsec.AspNetCore.Mvc.Internals
         /// <returns></returns>
         protected Exception CreateAttributeException(string message, Exception e = null)
         {
-            var errorMessage = string.Format("{0}: {1}", GetType().Name, message);
+            var errorMessage = $"{GetType().Name}: {message}";
             if (e != null)
             {
                 errorMessage += "\nDetails: " + e.Message;
