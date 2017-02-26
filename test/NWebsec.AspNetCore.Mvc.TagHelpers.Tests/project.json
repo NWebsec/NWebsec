@@ -4,7 +4,9 @@
   },
 
   "dependencies": {
-    "NWebsec.AspNetCore.Mvc.TagHelpers": "1.0.0-*",
+    "NWebsec.AspNetCore.Mvc.TagHelpers": {
+      "target": "project"
+    },
     "Microsoft.Extensions.WebEncoders": "1.0.0",
     "Moq": "4.7.0",
     "xunit": "2.2.0",

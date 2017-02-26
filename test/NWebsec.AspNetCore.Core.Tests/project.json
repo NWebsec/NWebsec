@@ -9,7 +9,9 @@
     "Moq": "4.7.0",
     "xunit": "2.2.0",
     "dotnet-test-xunit": "2.2.0-*",
-    "NWebsec.AspNetCore.Core": "1.0.0-gamma1-*"
+    "NWebsec.AspNetCore.Core": {
+      "target": "project"
+    }
   },
   "testRunner": "xunit",
   "frameworks": {

@@ -7,7 +7,9 @@
     "Microsoft.AspNetCore.TestHost": "1.0.1",
     "xunit": "2.2.0",
     "dotnet-test-xunit": "2.2.0-*",
-    "NWebsec.AspNetCore.Middleware": "1.0.0-*"
+    "NWebsec.AspNetCore.Middleware": {
+      "target": "project"
+    }
   },
   "testRunner": "xunit",
   "frameworks": {
