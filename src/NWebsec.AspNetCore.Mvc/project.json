@@ -3,7 +3,7 @@
   "title": "NWebsec.AspNetCore.Mvc",
   "description": "NWebsec attributes for ASP.NET Core MVC applications. NWebsec helps you set important security headers, detect potentially dangerous redirects, control cache headers, and remove version headers. See project website for documentation.",
   "authors": [ "André N. Klingsheim" ],
-  "copyright": "Copyright © 2016",
+  "copyright": "Copyright © 2016 - 2017",
   "packOptions": {
     "owners": [ "André N. Klingsheim" ],
     "releaseNotes": "This release includes support for ASP.NET Core MVC 1.0.",
