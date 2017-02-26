@@ -2,7 +2,7 @@
 
 using NWebsec.Annotations;
 using NWebsec.AspNetCore.Core.HttpHeaders.Configuration;
-using NWebsec.AspNetCore.Mvc.Csp;
+using NWebsec.AspNetCore.Mvc.Helpers.CspOverride;
 
 namespace NWebsec.AspNetCore.Mvc.Helpers
 {
