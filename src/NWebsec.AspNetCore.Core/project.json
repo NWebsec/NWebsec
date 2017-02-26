@@ -23,7 +23,7 @@
   },
 
   "dependencies": {
-    "Microsoft.AspNetCore.Http.Abstractions": "1.0.0",
+    "Microsoft.AspNetCore.Http.Abstractions": "1.0.1",
     "NWebsec.Annotations": {
       "version": "1.0.0-*",
       "type": "build"

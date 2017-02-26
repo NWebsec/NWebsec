@@ -4,8 +4,8 @@
   },
 
   "dependencies": {
-    "Microsoft.AspNetCore.Http": "1.0.0",
-    "Microsoft.AspNetCore.Http.Abstractions": "1.0.0",
+    "Microsoft.AspNetCore.Http": "1.0.1",
+    "Microsoft.AspNetCore.Http.Abstractions": "1.0.1",
     "Moq": "4.7.0",
     "xunit": "2.2.0",
     "dotnet-test-xunit": "2.2.0-*",

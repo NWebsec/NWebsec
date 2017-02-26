@@ -4,8 +4,8 @@
   },
 
   "dependencies": {
-    "Microsoft.AspNetCore.Hosting": "1.0.0",
-    "Microsoft.AspNetCore.TestHost": "1.0.0",
+    "Microsoft.AspNetCore.Hosting": "1.0.1",
+    "Microsoft.AspNetCore.TestHost": "1.0.1",
     "Microsoft.Extensions.PlatformAbstractions": "1.0.0",
     "MvcAttributeWebsite": {
       "target": "project"
