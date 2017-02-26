@@ -5,18 +5,18 @@ using NWebsec.AspNetCore.Mvc;
 
 namespace MvcAttributeWebsite.Controllers
 {
-    [SetNoCacheHttpHeaders]
-    public class NoCacheHeadersController : Controller
+    [NoCacheHttpHeaders]
+    public class NoCacheHttpHeadersController : Controller
     {
         //
-        // GET: /SetNoCacheHeaders/
+        // GET: /NoCacheHttpHeaders/
 
         public ActionResult Index()
         {
             return View("Index");
         }
 
-        [SetNoCacheHttpHeaders(Enabled = false)]
+        [NoCacheHttpHeaders(Enabled = false)]
         public ActionResult Disabled()
         {
             return View("Index");
