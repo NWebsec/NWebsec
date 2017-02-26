@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using NWebsec.AspNetCore.Mvc.HttpHeaders.Csp;
+﻿using Microsoft.AspNetCore.Mvc;
+using NWebsec.AspNetCore.Mvc.Csp;
 
 namespace Mvc.Controllers
 {
