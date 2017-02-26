@@ -6,7 +6,7 @@ using NWebsec.AspNetCore.Middleware;
 using NWebsec.AspNetCore.Middleware.Middleware;
 
 // ReSharper disable once CheckNamespace
-namespace Microsoft.AspNetCore.Builder //TODO check whether this namespace makes sense.
+namespace Microsoft.AspNetCore.Builder
 {
     public static class ApplicationBuilderExtensions
     {
@@ -37,6 +37,18 @@ namespace Microsoft.AspNetCore.Builder //TODO check whether this namespace makes
             var options = new RedirectValidationOptions();
             configurer(options);
             return app.UseMiddleware<RedirectValidationMiddleware>(options);
+        }
+
+        /// <summary>
+        ///     Adds a middleware to the ASP.NET pipeline that sets cache headers to prevent client caching.
+        /// </summary>
+        /// <param name="app">The <see cref="IApplicationBuilder" /> to which the middleware is added.</param>
+        /// <returns>The <see cref="IApplicationBuilder" /> supplied in the app parameter.</returns>
+        public static IApplicationBuilder UseNoCacheHttpHeaders(this IApplicationBuilder app)
+        {
+            if (app == null) throw new ArgumentNullException(nameof(app));
+
+            return app.UseMiddleware<NoCacheHttpHeadersMiddleware>();
         }
 
         /// <summary>
