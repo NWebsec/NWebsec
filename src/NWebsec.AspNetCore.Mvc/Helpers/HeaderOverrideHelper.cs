@@ -119,7 +119,6 @@ namespace NWebsec.AspNetCore.Mvc.Helpers
                 return;
             }
 
-            //TODO use typed headers
             var response = context.Response;
             response.Headers["Cache-Control"] = "no-cache, no-store, must-revalidate";
             response.Headers["Expires"] = "-1";

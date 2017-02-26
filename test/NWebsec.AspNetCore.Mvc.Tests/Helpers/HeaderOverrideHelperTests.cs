@@ -8,8 +8,6 @@ using Xunit;
 using NWebsec.AspNetCore.Core.Helpers;
 using NWebsec.AspNetCore.Core.HttpHeaders;
 using NWebsec.AspNetCore.Core.HttpHeaders.Configuration;
-//using NWebsec.Csp;
-//using NWebsec.Helpers;
 using NWebsec.AspNetCore.Mvc.Helpers;
 
 namespace NWebsec.AspNetCore.Mvc.Tests.Helpers
@@ -190,11 +188,8 @@ namespace NWebsec.AspNetCore.Mvc.Tests.Helpers
         [Fact]
         public void SetNoCacheHeaders_NoOverride_DoesNothing()
         {
-            //Get ASP.NET stuff in order
-            //var cachePolicy = new Mock<HttpCachePolicyBase>();
             var responseHeaders = new HeaderDictionary();
             var response = new Mock<HttpResponse>();
-            //response.Setup(r => r.Cache).Returns(cachePolicy.Object);
             response.Setup(r => r.Headers).Returns(responseHeaders);
             Mock.Get(_mockContext).Setup(c => c.Response).Returns(response.Object);
 
@@ -203,22 +198,13 @@ namespace NWebsec.AspNetCore.Mvc.Tests.Helpers
             _overrideHelper.SetNoCacheHeaders(_mockContext);
 
             Assert.Empty(responseHeaders);
-
-            //headers.CacheControl.
-            //cachePolicy.Verify(c => c.SetCacheability(It.IsAny<HttpCacheability>()), Times.Never());
-            //cachePolicy.Verify(c => c.SetNoStore(), Times.Never());
-            //cachePolicy.Verify(c => c.SetRevalidation(It.IsAny<HttpCacheRevalidation>()), Times.Never());
-            //Assert.Empty(responseHeaders);
         }
 
         [Fact]
         public void SetNoCacheHeaders_OverrideAndDisabled_DoesNothing()
         {
-            //Get ASP.NET stuff in order
-            //var cachePolicy = new Mock<HttpCachePolicyBase>();
             var responseHeaders = new HeaderDictionary();
             var response = new Mock<HttpResponse>();
-            //response.Setup(r => r.Cache).Returns(cachePolicy.Object);
             response.Setup(r => r.Headers).Returns(responseHeaders);
             Mock.Get(_mockContext).Setup(c => c.Response).Returns(response.Object);
 
@@ -226,22 +212,15 @@ namespace NWebsec.AspNetCore.Mvc.Tests.Helpers
             _configurationOverrideHelper.Setup(h => h.GetNoCacheHeadersWithOverride(It.IsAny<HttpContext>())).Returns(overrideConfig);
 
             _overrideHelper.SetNoCacheHeaders(_mockContext);
-
-            //TODO cleanup
-            //cachePolicy.Verify(c => c.SetCacheability(It.IsAny<HttpCacheability>()), Times.Never());
-            //cachePolicy.Verify(c => c.SetNoStore(), Times.Never());
-            //cachePolicy.Verify(c => c.SetRevalidation(It.IsAny<HttpCacheRevalidation>()), Times.Never());
+            
             Assert.Empty(responseHeaders);
         }
 
         [Fact]
         public void SetNoCacheHeaders_OverrideAndEnabled_SetsCacheHeaders()
         {
-            //Get ASP.NET stuff in order
-            //var cachePolicy = new Mock<HttpCachePolicyBase>();
             var responseHeaders = new HeaderDictionary();
             var response = new Mock<HttpResponse>();
-            //response.Setup(r => r.Cache).Returns(cachePolicy.Object);
             response.Setup(r => r.Headers).Returns(responseHeaders);
             Mock.Get(_mockContext).Setup(c => c.Response).Returns(response.Object);
 
@@ -260,9 +239,6 @@ namespace NWebsec.AspNetCore.Mvc.Tests.Helpers
             Assert.True(cachePolicy.MustRevalidate);
             Assert.Equal("-1", expiresHeader);
             Assert.Equal("no-cache", pragmaHeader);
-            //cachePolicy.Verify(c => c.SetCacheability(HttpCacheability.NoCache), Times.Once());
-            //cachePolicy.Verify(c => c.SetNoStore(), Times.Once());
-            //cachePolicy.Verify(c => c.SetRevalidation(HttpCacheRevalidation.AllCaches), Times.Once());
         }
 
         [Theory]
