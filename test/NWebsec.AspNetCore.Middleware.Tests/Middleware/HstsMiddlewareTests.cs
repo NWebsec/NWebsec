@@ -25,10 +25,12 @@ namespace NWebsec.AspNetCore.Middleware.Tests.Middleware
                });
            })))
             {
-                var httpClient = server.CreateClient();
-                var response = await httpClient.GetAsync("http://localhost/");
+                using (var httpClient = server.CreateClient())
+                {
+                    var response = await httpClient.GetAsync("http://localhost/");
 
-                Assert.False(response.Headers.Contains("Strict-Transport-Security"));
+                    Assert.False(response.Headers.Contains("Strict-Transport-Security"));
+                }
             }
         }
 
@@ -45,10 +47,12 @@ namespace NWebsec.AspNetCore.Middleware.Tests.Middleware
                 });
             })))
             {
-                var httpClient = server.CreateClient();
-                var response = await httpClient.GetAsync("https://localhost/");
+                using (var httpClient = server.CreateClient())
+                {
+                    var response = await httpClient.GetAsync("https://localhost/");
 
-                Assert.True(response.Headers.Contains("Strict-Transport-Security"));
+                    Assert.True(response.Headers.Contains("Strict-Transport-Security"));
+                }
             }
         }
 
@@ -65,10 +69,12 @@ namespace NWebsec.AspNetCore.Middleware.Tests.Middleware
                 });
             })))
             {
-                var httpClient = server.CreateClient();
-                var response = await httpClient.GetAsync("http://localhost/");
+                using (var httpClient = server.CreateClient())
+                {
+                    var response = await httpClient.GetAsync("http://localhost/");
 
-                Assert.False(response.Headers.Contains("Strict-Transport-Security"));
+                    Assert.False(response.Headers.Contains("Strict-Transport-Security"));
+                }
             }
         }
 
@@ -85,10 +91,12 @@ namespace NWebsec.AspNetCore.Middleware.Tests.Middleware
                 });
             })))
             {
-                var httpClient = server.CreateClient();
-                var response = await httpClient.GetAsync("https://localhost/");
+                using (var httpClient = server.CreateClient())
+                {
+                    var response = await httpClient.GetAsync("https://localhost/");
 
-                Assert.True(response.Headers.Contains("Strict-Transport-Security"));
+                    Assert.True(response.Headers.Contains("Strict-Transport-Security"));
+                }
             }
         }
 
@@ -105,31 +113,35 @@ namespace NWebsec.AspNetCore.Middleware.Tests.Middleware
                 });
             })))
             {
-                var httpClient = server.CreateClient();
-                httpClient.DefaultRequestHeaders.Add("Upgrade-Insecure-Requests", "1");
-                var response = await httpClient.GetAsync("https://localhost/");
+                using (var httpClient = server.CreateClient())
+                {
+                    httpClient.DefaultRequestHeaders.Add("Upgrade-Insecure-Requests", "1");
+                    var response = await httpClient.GetAsync("https://localhost/");
 
-                Assert.True(response.Headers.Contains("Strict-Transport-Security"));
+                    Assert.True(response.Headers.Contains("Strict-Transport-Security"));
+                }
             }
         }
 
         [Fact]
         public async Task Hsts_HttpsAndUpgradeRequestWithoutUaSupport_NoHeader()
         {
-           using (var server = new TestServer(new WebHostBuilder().Configure(app =>
+            using (var server = new TestServer(new WebHostBuilder().Configure(app =>
+             {
+                 app.UseHsts(config => config.MaxAge(1).UpgradeInsecureRequests());
+                 app.Run(async ctx =>
+                 {
+
+                     await ctx.Response.WriteAsync("Hello world using OWIN TestServer");
+                 });
+             })))
             {
-                app.UseHsts(config => config.MaxAge(1).UpgradeInsecureRequests());
-                app.Run(async ctx =>
+                using (var httpClient = server.CreateClient())
                 {
+                    var response = await httpClient.GetAsync("https://localhost/");
 
-                    await ctx.Response.WriteAsync("Hello world using OWIN TestServer");
-                });
-            })))
-            {
-                var httpClient = server.CreateClient();
-                var response = await httpClient.GetAsync("https://localhost/");
-
-                Assert.False(response.Headers.Contains("Strict-Transport-Security"));
+                    Assert.False(response.Headers.Contains("Strict-Transport-Security"));
+                }
             }
         }
     }

@@ -27,19 +27,21 @@ namespace NWebsec.AspNetCore.Middleware.Tests.Middleware
                });
            })))
             {
-                var httpClient = server.CreateClient();
-                var response = await httpClient.GetAsync("http://localhost/");
+                using (var httpClient = server.CreateClient())
+                {
+                    var response = await httpClient.GetAsync("http://localhost/");
 
-                Assert.True(response.Headers.CacheControl.NoCache);
-                Assert.True(response.Headers.CacheControl.NoStore);
-                Assert.True(response.Headers.CacheControl.MustRevalidate);
+                    Assert.True(response.Headers.CacheControl.NoCache);
+                    Assert.True(response.Headers.CacheControl.NoStore);
+                    Assert.True(response.Headers.CacheControl.MustRevalidate);
 
-                Assert.True(response.Content.Headers.Contains("Expires"));
-                Assert.Equal("-1", String.Join("", response.Content.Headers.GetValues("Expires")));
+                    Assert.True(response.Content.Headers.Contains("Expires"));
+                    Assert.Equal("-1", String.Join("", response.Content.Headers.GetValues("Expires")));
 
-                var pragma = response.Headers.Pragma.Single();
-                Assert.Equal("no-cache", pragma.Name);
-                Assert.Null(pragma.Value);
+                    var pragma = response.Headers.Pragma.Single();
+                    Assert.Equal("no-cache", pragma.Name);
+                    Assert.Null(pragma.Value);
+                }
             }
         }
     }

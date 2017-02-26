@@ -32,13 +32,15 @@ namespace NWebsec.AspNetCore.Middleware.Tests.Middleware
             {
                 server.BaseAddress = new Uri(basePath);
 
-                var httpClient = server.CreateClient();
-                httpClient.DefaultRequestHeaders.Add("Upgrade-Insecure-Requests", "1");
-                var response = await httpClient.GetAsync("http://localhost/BasePath/RequestPath/");
-                //TODO check path settings in OWIN
-                Assert.Equal(HttpStatusCode.RedirectKeepVerb, response.StatusCode);
-                Assert.Equal("Upgrade-Insecure-Requests", response.Headers.Vary.Single());
-                Assert.Equal("https://localhost/BasePath/RequestPath/", response.Headers.Location.AbsoluteUri);
+                using (var httpClient = server.CreateClient())
+                {
+                    httpClient.DefaultRequestHeaders.Add("Upgrade-Insecure-Requests", "1");
+                    var response = await httpClient.GetAsync("http://localhost/BasePath/RequestPath/");
+                    //TODO check path settings in OWIN
+                    Assert.Equal(HttpStatusCode.RedirectKeepVerb, response.StatusCode);
+                    Assert.Equal("Upgrade-Insecure-Requests", response.Headers.Vary.Single());
+                    Assert.Equal("https://localhost/BasePath/RequestPath/", response.Headers.Location.AbsoluteUri);
+                }
             }
         }
 
@@ -54,13 +56,15 @@ namespace NWebsec.AspNetCore.Middleware.Tests.Middleware
                 });
             })))
             {
-                var httpClient = server.CreateClient();
-                httpClient.DefaultRequestHeaders.Add("Upgrade-Insecure-Requests", "1");
-                var response = await httpClient.GetAsync("http://localhost/BasePath/RequestPath/");
+                using (var httpClient = server.CreateClient())
+                {
+                    httpClient.DefaultRequestHeaders.Add("Upgrade-Insecure-Requests", "1");
+                    var response = await httpClient.GetAsync("http://localhost/BasePath/RequestPath/");
 
-                Assert.Equal(HttpStatusCode.RedirectKeepVerb, response.StatusCode);
-                Assert.Equal("Upgrade-Insecure-Requests", response.Headers.Vary.Single());
-                Assert.Equal("https://localhost:4321/BasePath/RequestPath/", response.Headers.Location.AbsoluteUri);
+                    Assert.Equal(HttpStatusCode.RedirectKeepVerb, response.StatusCode);
+                    Assert.Equal("Upgrade-Insecure-Requests", response.Headers.Vary.Single());
+                    Assert.Equal("https://localhost:4321/BasePath/RequestPath/", response.Headers.Location.AbsoluteUri);
+                }
             }
         }
 
@@ -76,14 +80,16 @@ namespace NWebsec.AspNetCore.Middleware.Tests.Middleware
                 });
             })))
             {
-                var httpClient = server.CreateClient();
-                httpClient.DefaultRequestHeaders.Add("Upgrade-Insecure-Requests", "1");
-                var response = await httpClient.GetAsync("https://localhost/BasePath/RequestPath/");
+                using (var httpClient = server.CreateClient())
+                {
+                    httpClient.DefaultRequestHeaders.Add("Upgrade-Insecure-Requests", "1");
+                    var response = await httpClient.GetAsync("https://localhost/BasePath/RequestPath/");
 
-                Assert.Equal(HttpStatusCode.OK, response.StatusCode);
-                Assert.Empty(response.Headers.Vary);
-                Assert.Null(response.Headers.Location);
-                Assert.Equal("upgrade-insecure-requests", response.Headers.GetValues("Content-Security-Policy").Single());
+                    Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+                    Assert.Empty(response.Headers.Vary);
+                    Assert.Null(response.Headers.Location);
+                    Assert.Equal("upgrade-insecure-requests", response.Headers.GetValues("Content-Security-Policy").Single());
+                }
             }
         }
 
@@ -99,14 +105,16 @@ namespace NWebsec.AspNetCore.Middleware.Tests.Middleware
                 });
             })))
             {
-                var httpClient = server.CreateClient();
-                //No upgrade header from client
-                var response = await httpClient.GetAsync("http://localhost/BasePath/RequestPath/");
+                using (var httpClient = server.CreateClient())
+                {
+                    //No upgrade header from client
+                    var response = await httpClient.GetAsync("http://localhost/BasePath/RequestPath/");
 
-                Assert.Equal(HttpStatusCode.OK, response.StatusCode);
-                Assert.Empty(response.Headers.Vary);
-                Assert.Null(response.Headers.Location);
-                Assert.Equal("upgrade-insecure-requests", response.Headers.GetValues("Content-Security-Policy").Single());
+                    Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+                    Assert.Empty(response.Headers.Vary);
+                    Assert.Null(response.Headers.Location);
+                    Assert.Equal("upgrade-insecure-requests", response.Headers.GetValues("Content-Security-Policy").Single());
+                }
             }
         }
 
@@ -122,14 +130,16 @@ namespace NWebsec.AspNetCore.Middleware.Tests.Middleware
                 });
             })))
             {
-                var httpClient = server.CreateClient();
-                httpClient.DefaultRequestHeaders.Add("Upgrade-Insecure-Requests", "1");
-                var response = await httpClient.GetAsync("http://localhost/BasePath/RequestPath/");
+                using (var httpClient = server.CreateClient())
+                {
+                    httpClient.DefaultRequestHeaders.Add("Upgrade-Insecure-Requests", "1");
+                    var response = await httpClient.GetAsync("http://localhost/BasePath/RequestPath/");
 
-                Assert.Equal(HttpStatusCode.OK, response.StatusCode);
-                Assert.Empty(response.Headers.Vary);
-                Assert.Null(response.Headers.Location);
-                Assert.Equal("default-src 'self'", response.Headers.GetValues("Content-Security-Policy").Single());
+                    Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+                    Assert.Empty(response.Headers.Vary);
+                    Assert.Null(response.Headers.Location);
+                    Assert.Equal("default-src 'self'", response.Headers.GetValues("Content-Security-Policy").Single());
+                }
             }
         }
 
@@ -146,14 +156,17 @@ namespace NWebsec.AspNetCore.Middleware.Tests.Middleware
                 });
             })))
             {
-                var httpClient = server.CreateClient();
-                httpClient.DefaultRequestHeaders.Add("Upgrade-Insecure-Requests", "2");
-                var response = await httpClient.GetAsync("http://localhost/BasePath/RequestPath/");
+                using (var httpClient = server.CreateClient())
+                {
+                    httpClient.DefaultRequestHeaders.Add("Upgrade-Insecure-Requests", "2");
+                    var response = await httpClient.GetAsync("http://localhost/BasePath/RequestPath/");
 
-                Assert.Equal(HttpStatusCode.OK, response.StatusCode);
-                Assert.Empty(response.Headers.Vary);
-                Assert.Null(response.Headers.Location);
-                Assert.Equal("upgrade-insecure-requests", response.Headers.GetValues("Content-Security-Policy").Single());
+                    Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+                    Assert.Empty(response.Headers.Vary);
+                    Assert.Null(response.Headers.Location);
+                    Assert.Equal("upgrade-insecure-requests",
+                        response.Headers.GetValues("Content-Security-Policy").Single());
+                }
             }
         }
     }
