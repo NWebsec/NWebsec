@@ -82,7 +82,7 @@ namespace NWebsec.AspNetCore.Mvc.Helpers
             _configMapper.SetCspDirectiveConfig(overrides, directive, newConfig);
         }
 
-        internal void SetCspPluginTypesOverride(HttpContext context, CspPluginTypesOverride config, bool reportOnly)
+        public void SetCspPluginTypesOverride(HttpContext context, CspPluginTypesOverride config, bool reportOnly)
         {
             var overrides = _contextConfigurationHelper.GetCspConfigurationOverride(context, reportOnly, false);
 

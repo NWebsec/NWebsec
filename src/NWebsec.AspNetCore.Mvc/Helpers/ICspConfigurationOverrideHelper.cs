@@ -2,6 +2,7 @@
 
 using Microsoft.AspNetCore.Http;
 using NWebsec.AspNetCore.Core.HttpHeaders.Configuration;
+using NWebsec.AspNetCore.Mvc.Csp;
 
 namespace NWebsec.AspNetCore.Mvc.Helpers
 {
@@ -10,5 +11,6 @@ namespace NWebsec.AspNetCore.Mvc.Helpers
         ICspConfiguration GetCspConfigWithOverrides(HttpContext context, bool reportOnly);
         string GetCspScriptNonce(HttpContext context);
         string GetCspStyleNonce(HttpContext context);
+        void SetCspPluginTypesOverride(HttpContext context, CspPluginTypesOverride config, bool reportOnly);
     }
 }
