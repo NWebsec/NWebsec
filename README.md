@@ -7,6 +7,7 @@ ASP.NET Core:
 
 * <https://nuget.org/packages/NWebsec.AspNetCore.Middleware/>
 * <https://nuget.org/packages/NWebsec.AspNetCore.Mvc/>
+* <https://nuget.org/packages/NWebsec.AspNetCore.Mvc.TagHelpers/>
 
 ASP.NET 4:
 
