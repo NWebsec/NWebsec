@@ -3,9 +3,9 @@
 using System;
 using System.Collections.Generic;
 using Moq;
+using NWebsec.AspNetCore.Mvc.Csp;
+using NWebsec.AspNetCore.Mvc.Csp.Internals;
 using Xunit;
-using NWebsec.AspNetCore.Mvc.HttpHeaders.Csp;
-using NWebsec.AspNetCore.Mvc.HttpHeaders.Csp.Internals;
 
 namespace NWebsec.AspNetCore.Mvc.Tests.HttpHeaders.Csp.Internals
 {

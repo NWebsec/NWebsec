@@ -1,7 +1,7 @@
 ﻿// Copyright (c) André N. Klingsheim. See License.txt in the project root for license information.
 
 using Microsoft.AspNetCore.Mvc;
-using NWebsec.AspNetCore.Mvc.HttpHeaders.Csp;
+using NWebsec.AspNetCore.Mvc.Csp;
 
 namespace MvcAttributeWebsite.Controllers
 {

@@ -8,6 +8,7 @@ using Moq;
 using NWebsec.AspNetCore.Mvc.Csp;
 using Xunit;
 using NWebsec.AspNetCore.Mvc.Helpers;
+using NWebsec.AspNetCore.Mvc.Helpers.CspOverride;
 
 namespace NWebsec.AspNetCore.Mvc.TagHelpers.Tests
 {

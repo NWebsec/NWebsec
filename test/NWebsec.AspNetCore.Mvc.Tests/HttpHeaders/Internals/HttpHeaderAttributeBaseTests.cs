@@ -7,8 +7,8 @@ using Microsoft.AspNetCore.Mvc.Abstractions;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.AspNetCore.Routing;
 using Moq;
+using NWebsec.AspNetCore.Mvc.Internals;
 using Xunit;
-using NWebsec.AspNetCore.Mvc.HttpHeaders.Internals;
 
 namespace NWebsec.AspNetCore.Mvc.Tests.HttpHeaders.Internals
 {
