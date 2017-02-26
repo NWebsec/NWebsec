@@ -14,7 +14,7 @@ namespace NWebsec.AspNetCore.Mvc.TagHelpers
     {
         private const string ScriptTag = "script";
         private const string StyleTag = "style";
-        private const string CspNonceAttributeName = "nws-csp-nonce";
+        private const string CspNonceAttributeName = "nws-csp-add-nonce";
         private readonly ICspConfigurationOverrideHelper _cspConfigOverride;
         private readonly IHeaderOverrideHelper _headerOverride;
 
@@ -31,11 +31,19 @@ namespace NWebsec.AspNetCore.Mvc.TagHelpers
             _headerOverride = headerOverride;
         }
 
+        /// <summary>
+        /// Specifies a whether a nonce should be added to the tag and the CSP header.
+        /// </summary>
+        [HtmlAttributeName(CspNonceAttributeName)]
+        public bool UseCspNonce { get; set; }
+
         [HtmlAttributeNotBound, ViewContext]
         public ViewContext ViewContext { get; set; }
 
         public override void Process(TagHelperContext context, TagHelperOutput output)
         {
+            if (!UseCspNonce) return;
+
             var httpContext = ViewContext.HttpContext;
             string nonce;
             string contextMarkerKey;
@@ -64,8 +72,7 @@ namespace NWebsec.AspNetCore.Mvc.TagHelpers
                 _headerOverride.SetCspHeaders(httpContext, true);
             }
 
-            var i = output.Attributes.IndexOfName(CspNonceAttributeName);
-            output.Attributes[i] = new TagHelperAttribute("nonce", nonce);
+            output.Attributes.Add(new TagHelperAttribute("nonce", nonce));
         }
     }
 }

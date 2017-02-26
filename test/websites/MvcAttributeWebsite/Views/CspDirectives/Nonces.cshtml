@@ -13,14 +13,14 @@
     </head>
     <body>
     <div>
-        <script id="script1" nws-csp-nonce>document.write("Hello world")</script>
-        <script id="script2" nws-csp-nonce>document.write("Hello world")</script>
-        <style id="style1" nws-csp-nonce>
+        <script id="script1" nws-csp-add-nonce="true">document.write("Hello world")</script>
+        <script id="script2" nws-csp-add-nonce="true">document.write("Hello world")</script>
+        <style id="style1" nws-csp-add-nonce="true">
             h1 {
                 font-size: 10em;
             }
         </style>
-        <style id="style2" nws-csp-nonce>
+        <style id="style2" nws-csp-add-nonce="true">
             h2 {
                 font-size: 10em;
             }
