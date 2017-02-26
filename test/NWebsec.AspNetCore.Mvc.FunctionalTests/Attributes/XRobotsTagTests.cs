@@ -23,6 +23,7 @@ namespace NWebsec.AspNetCore.Mvc.FunctionalTests.Attributes
 
         public void Dispose()
         {
+            _httpClient.Dispose();
             _server.Dispose();
         }
 
