@@ -2,6 +2,7 @@
 
 using System;
 using System.Linq;
+using Microsoft.AspNetCore.Builder;
 using Xunit;
 
 namespace NWebsec.AspNetCore.Middleware.Tests
