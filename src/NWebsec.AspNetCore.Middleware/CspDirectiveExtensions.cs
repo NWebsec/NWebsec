@@ -5,7 +5,8 @@ using System.Linq;
 using NWebsec.AspNetCore.Core.HttpHeaders.Configuration;
 using NWebsec.AspNetCore.Core.HttpHeaders.Csp;
 
-namespace NWebsec.AspNetCore.Middleware
+// ReSharper disable once CheckNamespace
+namespace Microsoft.AspNetCore.Builder
 {
     public static class CspDirectiveExtensions
     {
