@@ -23,7 +23,7 @@
   },
 
   "dependencies": {
-    "Microsoft.AspNetCore.Mvc.ViewFeatures": "1.0.2",
+    "Microsoft.AspNetCore.Mvc.ViewFeatures": "1.0.3",
     "NWebsec.Annotations": {
       "version": "1.0.0-*",
       "type": "build"
