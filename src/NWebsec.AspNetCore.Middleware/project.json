@@ -1,5 +1,5 @@
 {
-  "version": "1.0.0-preview-*",
+  "version": "1.0.0",
   "title": "NWebsec.AspNetCore.Middleware",
   "description": "NWebsec middleware for ASP.NET Core applications. NWebsec helps you set important security headers and detect potentially dangerous redirects. See project website for documentation.",
   "authors": [ "André N. Klingsheim" ],
@@ -7,7 +7,7 @@
   "packOptions": {
     "owners": [ "André N. Klingsheim" ],
     "releaseNotes": "This release includes support for ASP.NET Core 1.0.",
-    "projectUrl": "https://docs.nwebsec.com/en/latest/",
+    "projectUrl": "https://docs.nwebsec.com/",
     "licenseUrl": "https://github.com/NWebsec/NWebsec/blob/master/LICENSE",
     "iconUrl": "https://klings.blob.core.windows.net/nwebsecicon/nwebsec_nuget.png",
     "tags": [ "nwebsec aspnetcore security" ],
@@ -28,7 +28,7 @@
       "version": "1.0.0-*",
       "type": "build"
     },
-    "NWebsec.AspNetCore.Core": "1.0.0-*"
+    "NWebsec.AspNetCore.Core": "1.0.0"
   },
 
   "frameworks": {

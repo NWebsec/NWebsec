@@ -1,5 +1,5 @@
 {
-  "version": "1.0.0-preview-*",
+  "version": "1.0.0",
   "title": "NWebsec.AspNetCore.Mvc.TagHelpers",
   "description": "NWebsec TagHelpers for ASP.NET Core MVC applications. NWebsec helps you set important security headers, detect potentially dangerous redirects, and control cache headers. See project website for documentation.",
   "authors": [ "André N. Klingsheim" ],
@@ -7,7 +7,7 @@
   "packOptions": {
     "owners": [ "André N. Klingsheim" ],
     "releaseNotes": "This release includes support for ASP.NET Core MVC 1.0.",
-    "projectUrl": "https://docs.nwebsec.com/en/latest/",
+    "projectUrl": "https://docs.nwebsec.com/",
     "licenseUrl": "https://github.com/NWebsec/NWebsec/blob/master/LICENSE",
     "iconUrl": "https://klings.blob.core.windows.net/nwebsecicon/nwebsec_nuget.png",
     "tags": [ "nwebsec aspnetcore security" ],
@@ -19,7 +19,7 @@
 
   "dependencies": {
     "Microsoft.AspNetCore.Razor.Runtime": "1.0.2",
-    "NWebsec.AspNetCore.Mvc": "1.0.0-*"
+    "NWebsec.AspNetCore.Mvc": "1.0.0"
   },
 
   "frameworks": {

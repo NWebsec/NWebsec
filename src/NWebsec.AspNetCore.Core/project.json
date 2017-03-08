@@ -1,5 +1,5 @@
 {
-  "version": "1.0.0-preview-*",
+  "version": "1.0.0",
   "title": "NWebsec.AspNetCore.Core",
   "description": "This library provides shared functionality for the NWebsec ASP.NET Core security libraries.",
   "authors": [ "André N. Klingsheim" ],
@@ -7,7 +7,7 @@
   "packOptions": {
     "owners": [ "André N. Klingsheim" ],
     "releaseNotes": "This release includes core functions for the NWebsec security libaries.",
-    "projectUrl": "https://docs.nwebsec.com/en/latest/",
+    "projectUrl": "https://docs.nwebsec.com/",
     "licenseUrl": "https://github.com/NWebsec/NWebsec/blob/master/LICENSE",
     "iconUrl": "https://klings.blob.core.windows.net/nwebsecicon/nwebsec_nuget.png",
     "tags": [ "nwebsec aspnetcore security" ],
