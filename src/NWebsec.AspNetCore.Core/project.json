@@ -1,5 +1,5 @@
 {
-  "version": "1.0.0",
+  "version": "1.1.0-dev-*",
   "title": "NWebsec.AspNetCore.Core",
   "description": "This library provides shared functionality for the NWebsec ASP.NET Core security libraries.",
   "authors": [ "André N. Klingsheim" ],

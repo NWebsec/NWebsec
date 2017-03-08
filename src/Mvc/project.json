@@ -19,9 +19,9 @@
     "Microsoft.Extensions.Logging.Console": "1.0.0",
     "Microsoft.Extensions.Logging.Debug": "1.0.0",
     "Microsoft.Extensions.Options.ConfigurationExtensions": "1.0.0",
-    "NWebsec.AspNetCore.Mvc": "1.0.0-gamma1",
-    "NWebsec.AspNetCore.Mvc.TagHelpers": "1.0.0-gamma1-*",
-    "NWebsec.AspNetCore.Middleware": "1.0.0-gamma1-*"
+    "NWebsec.AspNetCore.Mvc": "1.1.0-dev-*",
+    "NWebsec.AspNetCore.Mvc.TagHelpers": "1.1.0-dev-*",
+    "NWebsec.AspNetCore.Middleware": "1.1.0-dev-*"
   },
 
   "tools": {
