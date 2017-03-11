@@ -4,10 +4,34 @@
     <TargetFrameworks>netcoreapp1.1;net452</TargetFrameworks>
     <AssemblyName>NWebsec.AspNetCore.Mvc.FunctionalTests</AssemblyName>
     <PackageId>NWebsec.AspNetCore.Mvc.FunctionalTests</PackageId>
+    <GenerateRuntimeConfigurationFiles>true</GenerateRuntimeConfigurationFiles>
+    <PackageTargetFallback Condition=" '$(TargetFramework)' == 'netcoreapp1.1' ">$(PackageTargetFallback);portable-net451+win8</PackageTargetFallback>
+    <RuntimeFrameworkVersion Condition=" '$(TargetFramework)' == 'netcoreapp1.1' ">1.1.1</RuntimeFrameworkVersion>
+    <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
+    <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
+    <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
   </PropertyGroup>
+  
+  <PropertyGroup Condition=" '$(TargetFramework)' != 'netcoreapp1.1' ">
+    <!-- Work around https://github.com/dotnet/sdk/issues/926. Align with bitness of the web site projects. -->
+    <PlatformTarget>x86</PlatformTarget>
 
+    <!--
+      Work around https://github.com/Microsoft/vstest/issues/428 aka https://github.com/aspnet/Mvc/issues/5873.
+      Create the appropriate binding redirects.
+    -->
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <GenerateBindingRedirectsOutputType>true</GenerateBindingRedirectsOutputType>
+  </PropertyGroup>
+  
   <ItemGroup>
     <ProjectReference Include="..\websites\MvcAttributeWebsite\MvcAttributeWebsite.csproj" />
+    <EmbeddedResource Include="compiler\resources\**\*" />
+    <!--
+      Work around https://github.com/Microsoft/vstest/issues/196. Execute tests with assemblies in the bin folder, not
+      a temporary location. Unable to find the web site project folders otherwise.
+    -->
+    <None Include="xunit.runner.json" CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>
 
   <ItemGroup>
@@ -32,4 +56,12 @@
     <Folder Include="Properties\" />
   </ItemGroup>
 
+  <!-- Work around https://github.com/NuGet/Home/issues/4412. -->
+  <Target Name="CopyDepsFiles" AfterTargets="Build" Condition="'$(TargetFramework)'=='netcoreapp1.1'">
+    <ItemGroup>
+      <DepsFilePaths Include="$([System.IO.Path]::ChangeExtension('%(_ResolvedProjectReferencePaths.FullPath)', '.deps.json'))" />
+    </ItemGroup>
+
+    <Copy SourceFiles="%(DepsFilePaths.FullPath)" DestinationFolder="$(OutputPath)" Condition="Exists('%(DepsFilePaths.FullPath)')" />
+  </Target>
 </Project>

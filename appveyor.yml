@@ -1,44 +1,45 @@
 version: 1.0.{build}
-os: Visual Studio 2015
+image: Visual Studio 2017
 configuration: Release
 init: 
 - cmd: git config --global core.autocrlf true 
 - cmd: set DOTNET_BUILD_VERSION=%APPVEYOR_BUILD_NUMBER%
+install:
+- cmd: choco install dotnetcore
 before_build:
-- cmd: dotnet restore -v Warning
-build:
-  project: NWebsec-CI.sln
-  verbosity: minimal
+- cmd: dotnet restore NWebsec-CI.sln -v m
+build_script:
+- cmd: dotnet build NWebsec-CI.sln -c release
 test_script:
 - ps: >-
     pushd .\test\NWebsec.AspNetCore.Core.Tests\
 
-    dotnet test -c release
+    dotnet test -c release --no-build
 
     popd
 
     pushd .\test\NWebsec.AspNetCore.Middleware.Tests\
 
-    dotnet test -c release
+    dotnet test -c release --no-build
 
     popd
 
     pushd .\test\NWebsec.AspNetCore.Mvc.Tests\
 
-    dotnet test -c release
+    dotnet test -c release --no-build
 
     popd
 
     pushd .\test\NWebsec.AspNetCore.Mvc.TagHelpers.Tests\
 
-    dotnet test -c release
+    dotnet test -c release --no-build
 
     popd
     
     pushd .\test\NWebsec.AspNetCore.Mvc.FunctionalTests\
 
-    dotnet test -c release
-
+    dotnet test -c release --no-build -f netcoreapp1.1
+    
     popd
 after_test:
 - ps: >-

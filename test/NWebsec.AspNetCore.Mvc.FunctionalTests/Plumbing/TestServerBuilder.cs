@@ -9,21 +9,15 @@ namespace NWebsec.AspNetCore.Mvc.FunctionalTests.Plumbing
 {
     public static class TestServerBuilder<T> where T : class
     {
-        public static TestServer CreateTestServer() 
+        public static TestServer CreateTestServer()
         {
-            var appName = "MvcAttributeWebsite";
+            const string appName = "MvcAttributeWebsite";
             var basePath = PlatformServices.Default.Application.ApplicationBasePath;
 
-#if NET452
-  var applicationRoot = Path.GetFullPath(Path.Combine(
-                            basePath,
-                            "..", "..", "..", "..","..",  "websites", appName));
-#else
             var applicationRoot = Path.GetFullPath(Path.Combine(
-                            basePath,
-                            "..", "..", "..", "..", "websites", appName));
-#endif
-
+                                      basePath,
+                                      "..", "..", "..", "..", "websites", appName));
+            
             var builder = new WebHostBuilder()
                 .UseContentRoot(applicationRoot)
                 .UseStartup<T>();
