@@ -2,7 +2,6 @@
 
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
-using NWebsec.AspNetCore.Middleware;
 
 namespace MvcAttributeWebsite
 {

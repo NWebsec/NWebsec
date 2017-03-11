@@ -1,0 +1,44 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Description>This library provides shared functionality for the NWebsec ASP.NET Core security libraries.</Description>
+    <Copyright>Copyright © 2016 - 2017</Copyright>
+    <AssemblyTitle>NWebsec.AspNetCore.Core</AssemblyTitle>
+    <VersionPrefix>1.1.0-dev</VersionPrefix>
+    <Authors>André N. Klingsheim</Authors>
+    <TargetFrameworks>net451;netstandard1.3</TargetFrameworks>
+    <NoWarn>$(NoWarn);CS1591</NoWarn>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <AssemblyName>NWebsec.AspNetCore.Core</AssemblyName>
+    <PackageId>NWebsec.AspNetCore.Core</PackageId>
+    <PackageTags>nwebsec aspnetcore security</PackageTags>
+    <PackageReleaseNotes>This release includes core functions for the NWebsec security libaries.</PackageReleaseNotes>
+    <PackageIconUrl>https://klings.blob.core.windows.net/nwebsecicon/nwebsec_nuget.png</PackageIconUrl>
+    <PackageProjectUrl>https://docs.nwebsec.com/</PackageProjectUrl>
+    <PackageLicenseUrl>https://github.com/NWebsec/NWebsec/blob/master/LICENSE</PackageLicenseUrl>
+    <RepositoryType>git</RepositoryType>
+    <RepositoryUrl>git://github.com/NWebsec/NWebsec</RepositoryUrl>
+    <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
+    <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
+    <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
+    <GenerateAssemblyCopyrightAttribute>false</GenerateAssemblyCopyrightAttribute>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\NWebsec.Annotations\NWebsec.Annotations.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="1.0.2" />
+  </ItemGroup>
+
+  <ItemGroup Condition=" '$(TargetFramework)' == 'net451' ">
+    <Reference Include="System" />
+    <Reference Include="Microsoft.CSharp" />
+  </ItemGroup>
+
+  <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard1.3' ">
+    <PackageReference Include="System.Text.RegularExpressions" Version="4.3.0" />
+  </ItemGroup>
+
+</Project>

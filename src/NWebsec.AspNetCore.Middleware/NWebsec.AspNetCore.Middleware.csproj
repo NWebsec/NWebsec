@@ -1,0 +1,41 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Description>NWebsec middleware for ASP.NET Core applications. NWebsec helps you set important security headers and detect potentially dangerous redirects. See project website for documentation.</Description>
+    <Copyright>Copyright © 2016 - 2017</Copyright>
+    <AssemblyTitle>NWebsec.AspNetCore.Middleware</AssemblyTitle>
+    <VersionPrefix>1.1.0-dev</VersionPrefix>
+    <Authors>André N. Klingsheim</Authors>
+    <TargetFrameworks>net451;netstandard1.3</TargetFrameworks>
+    <NoWarn>$(NoWarn);CS1591</NoWarn>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <AssemblyName>NWebsec.AspNetCore.Middleware</AssemblyName>
+    <PackageId>NWebsec.AspNetCore.Middleware</PackageId>
+    <PackageTags>nwebsec aspnetcore security</PackageTags>
+    <PackageReleaseNotes>This release includes support for ASP.NET Core 1.0.</PackageReleaseNotes>
+    <PackageIconUrl>https://klings.blob.core.windows.net/nwebsecicon/nwebsec_nuget.png</PackageIconUrl>
+    <PackageProjectUrl>https://docs.nwebsec.com/</PackageProjectUrl>
+    <PackageLicenseUrl>https://github.com/NWebsec/NWebsec/blob/master/LICENSE</PackageLicenseUrl>
+    <RepositoryType>git</RepositoryType>
+    <RepositoryUrl>git://github.com/NWebsec/NWebsec</RepositoryUrl>
+    <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
+    <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
+    <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
+    <GenerateAssemblyCopyrightAttribute>false</GenerateAssemblyCopyrightAttribute>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\NWebsec.Annotations\NWebsec.Annotations.csproj" />
+    <ProjectReference Include="..\NWebsec.AspNetCore.Core\NWebsec.AspNetCore.Core.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="1.0.2" />
+  </ItemGroup>
+
+  <ItemGroup Condition=" '$(TargetFramework)' == 'net451' ">
+    <Reference Include="System" />
+    <Reference Include="Microsoft.CSharp" />
+  </ItemGroup>
+
+</Project>
