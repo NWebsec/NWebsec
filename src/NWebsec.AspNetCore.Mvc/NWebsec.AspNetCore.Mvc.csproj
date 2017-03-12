@@ -1,10 +1,12 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
+  
+  <Import Project="..\version.props" />
 
   <PropertyGroup>
     <Description>NWebsec attributes for ASP.NET Core MVC applications. NWebsec helps you set important security headers, detect potentially dangerous redirects, and control cache headers. See project website for documentation.</Description>
     <Copyright>Copyright © 2016 - 2017</Copyright>
     <AssemblyTitle>NWebsec.AspNetCore.Mvc</AssemblyTitle>
-    <VersionPrefix>1.1.0-dev</VersionPrefix>
+    <VersionPrefix>1.1.0</VersionPrefix>
     <Authors>André N. Klingsheim</Authors>
     <TargetFrameworks>net451;netstandard1.6</TargetFrameworks>
     <NoWarn>$(NoWarn);CS1591</NoWarn>
@@ -16,6 +18,7 @@
     <PackageIconUrl>https://klings.blob.core.windows.net/nwebsecicon/nwebsec_nuget.png</PackageIconUrl>
     <PackageProjectUrl>https://docs.nwebsec.com/</PackageProjectUrl>
     <PackageLicenseUrl>https://github.com/NWebsec/NWebsec/blob/master/LICENSE</PackageLicenseUrl>
+    <IncludeSymbols>true</IncludeSymbols>
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>git://github.com/NWebsec/NWebsec</RepositoryUrl>
     <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
@@ -25,7 +28,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\NWebsec.Annotations\NWebsec.Annotations.csproj" />
+    <ProjectReference Include="..\NWebsec.Annotations\NWebsec.Annotations.csproj" PrivateAssets="All" />
     <ProjectReference Include="..\NWebsec.AspNetCore.Core\NWebsec.AspNetCore.Core.csproj" />
   </ItemGroup>
 

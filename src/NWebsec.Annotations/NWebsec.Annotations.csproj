@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFrameworks>net451;netstandard1.3</TargetFrameworks>
     <AssemblyName>NWebsec.Annotations</AssemblyName>
-    <PackageId>NWebsec.Annotations</PackageId>
+    <IsPackable>false</IsPackable>
     <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
     <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
     <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>

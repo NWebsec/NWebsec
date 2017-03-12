@@ -3,7 +3,7 @@ image: Visual Studio 2017
 configuration: Release
 init: 
 - cmd: git config --global core.autocrlf true 
-- cmd: set DOTNET_BUILD_VERSION=%APPVEYOR_BUILD_NUMBER%
+- cmd: set DOTNET_VERSION_SUFFIX=%APPVEYOR_REPO_BRANCH%-%APPVEYOR_BUILD_NUMBER%
 install:
 - cmd: choco install dotnetcore
 before_build:

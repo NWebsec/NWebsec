@@ -1,0 +1,5 @@
+<Project>
+  <PropertyGroup>
+    <VersionSuffix Condition="'$(DOTNET_VERSION_SUFFIX)'!=''">$(DOTNET_VERSION_SUFFIX)</VersionSuffix>
+  </PropertyGroup>
+</Project>
