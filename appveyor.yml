@@ -43,31 +43,6 @@ test_script:
     popd
 after_test:
 - ps: >-
-    pushd .\src\NWebsec.AspNetCore.Core\
-
-    dotnet pack -c release --no-build -o nupkgs
-
-    popd
-
-    pushd .\src\NWebsec.AspNetCore.Middleware\
-
-    dotnet pack -c release --no-build -o nupkgs
-
-    popd
-
-    pushd .\src\NWebsec.AspNetCore.Mvc\
-
-    dotnet pack -c release --no-build -o nupkgs
-
-    popd
-
-    pushd .\src\NWebsec.AspNetCore.Mvc.TagHelpers\
-
-    dotnet pack -c release --no-build -o nupkgs
-
-    popd
+    dotnet pack -c release --no-build -o nupkgs NWebsec-CI.sln
 artifacts:
-- path: '**/NWebsec.AspNetCore.Core/nupkgs/*.nupkg'
-- path: '**/NWebsec.AspNetCore.Middleware/nupkgs/*.nupkg'
-- path: '**/NWebsec.AspNetCore.Mvc/nupkgs/*.nupkg'
-- path: '**/NWebsec.AspNetCore.Mvc.TagHelpers/nupkgs/*.nupkg'
+- path: '**/nupkgs/*.nupkg'
