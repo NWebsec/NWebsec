@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.23107.0
+# Visual Studio 15
+VisualStudioVersion = 15.0.26228.9
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{07D0ADD6-1502-453F-8F21-F69748F0D188}"
 	ProjectSection(SolutionItems) = preProject
@@ -32,6 +32,10 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NWebsec.Classic.Tests.Unit", "NWebsec.Tests.Unit\NWebsec.Classic.Tests.Unit.csproj", "{2E83CDC3-152A-4139-8B00-0CDECD3F5BDC}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NWebsec.Mvc.Tests.Unit", "NWebsec.Mvc.Tests.Unit\NWebsec.Mvc.Tests.Unit.csproj", "{BEB101EF-8EB2-4857-84CB-F44118D41ACA}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{55A9D75F-2336-490F-8D13-745A4912E9A9}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{C63200B5-9D4E-45F6-8172-19F01141DE52}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -74,6 +78,16 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{78FF86A6-C148-4D03-96CF-B429C1A36DA9} = {C63200B5-9D4E-45F6-8172-19F01141DE52}
+		{E2D23D75-19D4-41A6-A57E-4B6D4F94941F} = {C63200B5-9D4E-45F6-8172-19F01141DE52}
+		{6375C681-A781-4C36-BD06-4475F25534EE} = {55A9D75F-2336-490F-8D13-745A4912E9A9}
+		{625BA5EC-141E-4AA4-ABFA-B8B046215E1C} = {C63200B5-9D4E-45F6-8172-19F01141DE52}
+		{738F0620-1291-41BC-99F8-DAED551EDEE3} = {55A9D75F-2336-490F-8D13-745A4912E9A9}
+		{A011D84B-B731-4404-8BC1-FE94D2B37599} = {C63200B5-9D4E-45F6-8172-19F01141DE52}
+		{2E83CDC3-152A-4139-8B00-0CDECD3F5BDC} = {55A9D75F-2336-490F-8D13-745A4912E9A9}
+		{BEB101EF-8EB2-4857-84CB-F44118D41ACA} = {55A9D75F-2336-490F-8D13-745A4912E9A9}
 	EndGlobalSection
 	GlobalSection(TestCaseManagementSettings) = postSolution
 		CategoryFile = nwebsec.vsmdi
