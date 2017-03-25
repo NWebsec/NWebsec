@@ -312,6 +312,11 @@ namespace NWebsec.AspNetCore.Core.HttpHeaders
                 sources.Add("'unsafe-eval'");
             }
 
+            if (directive.StrictDynamicSrc)
+            {
+                sources.Add("'strict-dynamic'");
+            }
+
             if (directive.CustomSources != null)
             {
                 sources.AddRange(directive.CustomSources);

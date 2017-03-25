@@ -16,15 +16,19 @@ namespace NWebsec.AspNetCore.Middleware.Tests
             var directiveSources = new CspDirective();
             var directiveUnsafeInline = new CspDirective();
             var directiveUnsafeEval = new CspDirective();
+            var directiveStrictDynamic = new CspDirective();
+
             directiveSelf.Self();
             directiveSources.CustomSources("https:");
             directiveUnsafeInline.UnsafeInline();
             directiveUnsafeEval.UnsafeEval();
+            directiveStrictDynamic.StrictDynamic();
 
             Assert.Throws<InvalidOperationException>(() => directiveSelf.None());
             Assert.Throws<InvalidOperationException>(() => directiveSources.None());
             Assert.Throws<InvalidOperationException>(() => directiveUnsafeInline.None());
             Assert.Throws<InvalidOperationException>(() => directiveUnsafeEval.None());
+            Assert.Throws<InvalidOperationException>(() => directiveStrictDynamic.None());
         }
 
         [Fact]
@@ -92,6 +96,16 @@ namespace NWebsec.AspNetCore.Middleware.Tests
             directiveUnsafeEval.UnsafeEval();
 
             Assert.True(directiveUnsafeEval.UnsafeEvalSrc);
+        }
+
+        [Fact]
+        public void StrictDynamic_SetsStrictDynamic()
+        {
+            var directive = new CspDirective();
+
+            directive.StrictDynamic();
+
+            Assert.True(directive.StrictDynamicSrc);
         }
     }
 }

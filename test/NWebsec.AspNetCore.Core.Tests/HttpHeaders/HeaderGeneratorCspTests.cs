@@ -102,6 +102,24 @@ namespace NWebsec.AspNetCore.Core.Tests.HttpHeaders
 
         [Theory]
         [MemberData(nameof(ReportOnly))]
+        public void AddCspHeaders_CspEnabledWithScriptSrcStrictDynamic_ReturnsSetCspWithScriptSrcResult(bool reportOnly)
+        {
+            var cspConfig = new CspConfiguration
+            {
+                Enabled = true,
+                ScriptSrcDirective = { StrictDynamicSrc = true }
+            };
+
+            var result = _generator.CreateCspResult(cspConfig, reportOnly);
+
+            Assert.NotNull(result);
+            Assert.Equal(HeaderResult.ResponseAction.Set, result.Action);
+            Assert.Equal(CspHeaderName(reportOnly), result.Name);
+            Assert.Equal("script-src 'strict-dynamic'", result.Value);
+        }
+
+        [Theory]
+        [MemberData(nameof(ReportOnly))]
         public void AddCspHeaders_CspEnabledWithScriptSrcAndNonce_ReturnsSetCspWithScriptSrcAndNonceResult(bool reportOnly)
         {
             var cspConfig = new CspConfiguration

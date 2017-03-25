@@ -90,23 +90,33 @@ namespace Microsoft.AspNetCore.Builder
             return directive;
         }
 
-        private static void ValidateBeforeSettingNoneSource(ICspDirectiveBasicConfiguration directive)
+        /// <summary>
+        ///     Sets the "strict-dynamic" source for the CSP directive.
+        /// </summary>
+        /// <typeparam name="T">The type of the CSP directive configuration object.</typeparam>
+        /// <param name="directive">The CSP directive configuration object.</param>
+        /// <returns>The CSP directive configuration object.</returns>
+        public static T StrictDynamic<T>(this T directive) where T : class, ICspDirectiveConfiguration
         {
-            if (directive.SelfSrc || (directive.CustomSources != null && directive.CustomSources.Any()))
+            if (directive == null) throw new ArgumentNullException(nameof(directive));
+
+            directive.StrictDynamicSrc = true;
+            return directive;
+        }
+
+        private static void ValidateBeforeSettingNoneSource(ICspDirectiveBasicConfiguration basicDirective)
+        {
+            if (basicDirective.SelfSrc || (basicDirective.CustomSources != null && basicDirective.CustomSources.Any()))
             {
                 throw new InvalidOperationException("It is a logical error to combine the \"None\" source with other sources.");
             }
 
-            var unsafeInline = directive as ICspDirectiveUnsafeInlineConfiguration;
-
-            if (unsafeInline != null && unsafeInline.UnsafeInlineSrc)
+            if (basicDirective is ICspDirectiveUnsafeInlineConfiguration unsafeInline  && unsafeInline.UnsafeInlineSrc)
             {
                 throw new InvalidOperationException("It is a logical error to combine the \"None\" source with other sources.");
             }
 
-            var unsafeEval = directive as ICspDirectiveConfiguration;
-
-            if (unsafeEval != null && unsafeEval.UnsafeEvalSrc)
+            if (basicDirective is ICspDirectiveConfiguration directive && (directive.UnsafeEvalSrc || directive.StrictDynamicSrc))
             {
                 throw new InvalidOperationException("It is a logical error to combine the \"None\" source with other sources.");
             }

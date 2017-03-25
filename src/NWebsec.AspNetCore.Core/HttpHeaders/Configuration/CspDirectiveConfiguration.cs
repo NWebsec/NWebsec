@@ -19,8 +19,8 @@ namespace NWebsec.AspNetCore.Core.HttpHeaders.Configuration
         public bool SelfSrc { get; set; }
         public bool UnsafeInlineSrc { get; set; }
         public bool UnsafeEvalSrc { get; set; }
+        public bool StrictDynamicSrc { get; set; }
         public IEnumerable<string> CustomSources { get; set; }
         public string Nonce { get; set; }
-
     }
 }

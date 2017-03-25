@@ -29,6 +29,9 @@ namespace NWebsec.AspNetCore.Middleware
         public bool UnsafeEvalSrc { get; set; }
 
         [EditorBrowsable(EditorBrowsableState.Never)]
+        public bool StrictDynamicSrc { get; set; }
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public string Nonce { get; set; }
 
         [EditorBrowsable(EditorBrowsableState.Never)]
