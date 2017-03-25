@@ -56,11 +56,9 @@ namespace NWebsec.AspNetCore.Mvc.Tests.HttpHeaders.Csp.Internals
             attribute.Self = true;
             yield return attribute;
 
-            var styleattribute = new CspStyleSrcAttribute { UnsafeInline = true };
-            yield return styleattribute;
-
-            var scriptAttribute = new CspScriptSrcAttribute { UnsafeEval = true };
-            yield return scriptAttribute;
+            yield return new CspStyleSrcAttribute { UnsafeInline = true };
+            yield return new CspScriptSrcAttribute { UnsafeEval = true };
+            yield return new CspScriptSrcAttribute { StrictDynamic = true };
         }
 
         private IEnumerable<CspDirectiveAttributeBase> MalconfiguredAttributes()
@@ -75,11 +73,9 @@ namespace NWebsec.AspNetCore.Mvc.Tests.HttpHeaders.Csp.Internals
             attribute.CustomSources = "www.nwebsec.com";
             yield return attribute;
 
-            var styleattribute = new CspStyleSrcAttribute { None = true, UnsafeInline = true };
-            yield return styleattribute;
-
-            var scriptAttribute = new CspScriptSrcAttribute { None = true, UnsafeEval = true };
-            yield return scriptAttribute;
+            yield return new CspStyleSrcAttribute { None = true, UnsafeInline = true };
+            yield return new CspScriptSrcAttribute { None = true, UnsafeEval = true };
+            yield return new CspScriptSrcAttribute { None = true, StrictDynamic = true };
         }
     }
 }

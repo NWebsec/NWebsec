@@ -16,7 +16,8 @@ namespace NWebsec.AspNetCore.Mvc.Tests.TestHelpers
                          x.NoneSrc == y.NoneSrc &&
                          x.SelfSrc == y.SelfSrc &&
                          x.UnsafeInlineSrc == y.UnsafeInlineSrc &&
-                         x.UnsafeEvalSrc == y.UnsafeEvalSrc;
+                         x.UnsafeEvalSrc == y.UnsafeEvalSrc &&
+                         x.StrictDynamicSrc == y.StrictDynamicSrc;
 
             if (result == false) return false;
 

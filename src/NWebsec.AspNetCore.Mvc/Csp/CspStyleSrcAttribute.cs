@@ -14,7 +14,7 @@ namespace NWebsec.AspNetCore.Mvc.Csp
         /// <summary>
         /// Gets or sets whether the 'unsafe-inline' source is included in the directive. Not setting it will inherit existing configuration.
         /// </summary>
-        public bool UnsafeInline { get { throw new NotSupportedException(); } set { DirectiveConfig.UnsafeInline = value; } }
+        public bool UnsafeInline { get => throw new NotSupportedException(); set => DirectiveConfig.UnsafeInline = value; }
 
         protected override CspDirectives Directive => CspDirectives.StyleSrc;
 

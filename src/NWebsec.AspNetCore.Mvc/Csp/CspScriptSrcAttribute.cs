@@ -14,11 +14,23 @@ namespace NWebsec.AspNetCore.Mvc.Csp
         /// <summary>
         /// Gets or sets whether the 'unsafe-inline' source is included in the directive. Not setting it will inherit existing configuration.
         /// </summary>
-        public bool UnsafeInline { get { throw new NotSupportedException(); } set { DirectiveConfig.UnsafeInline = value; } }
+        public bool UnsafeInline { get => throw new NotSupportedException(); set => DirectiveConfig.UnsafeInline = value; }
+
         /// <summary>
         /// Gets or sets whether the 'unsafe-eval' source is included in the directive. Not setting it will inherit existing configuration.
         /// </summary>
-        public bool UnsafeEval { get { throw new NotSupportedException(); } set { DirectiveConfig.UnsafeEval = value; } }
+        public bool UnsafeEval
+        {
+            get => throw new NotSupportedException(); set => DirectiveConfig.UnsafeEval = value;
+        }
+
+        /// <summary>
+        /// Gets or sets whether the 'strict-dynamic' source is included in the directive. Not setting it will inherit existing configuration.
+        /// </summary>
+        public bool StrictDynamic
+        {
+            get => throw new NotSupportedException(); set => DirectiveConfig.StrictDynamic = value;
+        }
 
         protected override CspDirectives Directive => CspDirectives.ScriptSrc;
 

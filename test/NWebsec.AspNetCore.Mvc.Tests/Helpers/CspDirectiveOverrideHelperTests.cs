@@ -56,8 +56,9 @@ namespace NWebsec.AspNetCore.Mvc.Tests.Helpers
                 NoneSrc = false,
                 SelfSrc = true,
                 Nonce = "hei",
-                UnsafeEvalSrc = true,
                 UnsafeInlineSrc = true,
+                UnsafeEvalSrc = true,
+                StrictDynamicSrc = true,
                 CustomSources = new[] { "nwebsec.com" }
             };
             var directiveOverride = new CspDirectiveOverride { None = true };
@@ -76,12 +77,12 @@ namespace NWebsec.AspNetCore.Mvc.Tests.Helpers
                 NoneSrc = false,
                 SelfSrc = true,
                 Nonce = "hei",
-                UnsafeEvalSrc = true,
                 UnsafeInlineSrc = true,
+                UnsafeEvalSrc = true,
+                StrictDynamicSrc = true,
                 CustomSources = new[] { "nwebsec.com" }
             };
             var directiveOverride = new CspDirectiveOverride { None = false };
-
 
             var newConfig = _overrideHelper.GetOverridenCspDirectiveConfig(directiveOverride, directiveConfig);
 
@@ -95,8 +96,9 @@ namespace NWebsec.AspNetCore.Mvc.Tests.Helpers
             var overrides = new[]
             {
                 new CspDirectiveOverride {Self = true},
-                new CspDirectiveOverride {UnsafeEval = true},
                 new CspDirectiveOverride {UnsafeInline = true},
+                new CspDirectiveOverride {UnsafeEval = true},
+                new CspDirectiveOverride {StrictDynamic = true},
                 new CspDirectiveOverride {OtherSources = new []{"nwebsec.com"}},
 
             };
@@ -136,6 +138,30 @@ namespace NWebsec.AspNetCore.Mvc.Tests.Helpers
 
         [Theory]
         [MemberData(nameof(FalseThenTrue))]
+        public void GetOverridenCspDirectiveConfig_UnsafeInlineOverride_OverridesUnsafeInline(bool expectedResult)
+        {
+            var directiveConfig = new CspDirectiveConfiguration { UnsafeInlineSrc = !expectedResult };
+            var directiveOverride = new CspDirectiveOverride { UnsafeInline = expectedResult };
+
+            var newConfig = _overrideHelper.GetOverridenCspDirectiveConfig(directiveOverride, directiveConfig);
+
+            Assert.Equal(expectedResult, newConfig.UnsafeInlineSrc);
+        }
+
+        [Theory]
+        [MemberData(nameof(FalseThenTrue))]
+        public void GetOverridenCspDirectiveConfig_UnsafeInlineInherit_InheritsUnsafeInline(bool expectedResult)
+        {
+            var directiveConfig = new CspDirectiveConfiguration { UnsafeInlineSrc = expectedResult };
+            var directiveOverride = new CspDirectiveOverride();
+
+            var newConfig = _overrideHelper.GetOverridenCspDirectiveConfig(directiveOverride, directiveConfig);
+
+            Assert.Equal(expectedResult, newConfig.UnsafeInlineSrc);
+        }
+
+        [Theory]
+        [MemberData(nameof(FalseThenTrue))]
         public void GetOverridenCspDirectiveConfig_UnsafeEvalOverride_OverridesUnsafeEval(bool expectedResult)
         {
             var directiveConfig = new CspDirectiveConfiguration { UnsafeEvalSrc = !expectedResult };
@@ -160,26 +186,26 @@ namespace NWebsec.AspNetCore.Mvc.Tests.Helpers
 
         [Theory]
         [MemberData(nameof(FalseThenTrue))]
-        public void GetOverridenCspDirectiveConfig_UnsafeInlineOverride_OverridesUnsafeInline(bool expectedResult)
+        public void GetOverridenCspDirectiveConfig_StrictDynamicOverride_OverridesStrictDynamic(bool expectedResult)
         {
-            var directiveConfig = new CspDirectiveConfiguration { UnsafeInlineSrc = !expectedResult };
-            var directiveOverride = new CspDirectiveOverride { UnsafeInline = expectedResult };
+            var directiveConfig = new CspDirectiveConfiguration { StrictDynamicSrc = !expectedResult };
+            var directiveOverride = new CspDirectiveOverride { StrictDynamic = expectedResult };
 
             var newConfig = _overrideHelper.GetOverridenCspDirectiveConfig(directiveOverride, directiveConfig);
 
-            Assert.Equal(expectedResult, newConfig.UnsafeInlineSrc);
+            Assert.Equal(expectedResult, newConfig.StrictDynamicSrc);
         }
 
         [Theory]
         [MemberData(nameof(FalseThenTrue))]
-        public void GetOverridenCspDirectiveConfig_UnsafeInlineInherit_InheritsUnsafeInline(bool expectedResult)
+        public void GetOverridenCspDirectiveConfig_StrictDynamicInherit_InheritsStrictDynamic(bool expectedResult)
         {
-            var directiveConfig = new CspDirectiveConfiguration { UnsafeInlineSrc = expectedResult };
+            var directiveConfig = new CspDirectiveConfiguration { StrictDynamicSrc = expectedResult };
             var directiveOverride = new CspDirectiveOverride();
 
             var newConfig = _overrideHelper.GetOverridenCspDirectiveConfig(directiveOverride, directiveConfig);
 
-            Assert.Equal(expectedResult, newConfig.UnsafeInlineSrc);
+            Assert.Equal(expectedResult, newConfig.StrictDynamicSrc);
         }
 
         [Fact]

@@ -100,8 +100,9 @@ namespace NWebsec.AspNetCore.Mvc.Tests.Helpers
                 Enabled = false,
                 NoneSrc = true,
                 SelfSrc = true,
+                UnsafeInlineSrc = true,
                 UnsafeEvalSrc = true,
-                UnsafeInlineSrc = false,
+                StrictDynamicSrc = true,
                 CustomSources = new[] { "https://www.nwebsec.com", "www.klings.org" }
             };
 

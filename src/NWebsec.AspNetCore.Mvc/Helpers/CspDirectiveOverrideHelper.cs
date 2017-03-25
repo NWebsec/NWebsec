@@ -11,7 +11,6 @@ namespace NWebsec.AspNetCore.Mvc.Helpers
     {
         private static readonly string[] EmptySources = new string[0];
 
-
         public ICspDirectiveConfiguration GetOverridenCspDirectiveConfig(CspDirectiveOverride directiveOverride, ICspDirectiveConfiguration directiveConfig)
         {
             if (directiveOverride.None.HasValue && (bool)directiveOverride.None)
@@ -37,16 +36,22 @@ namespace NWebsec.AspNetCore.Mvc.Helpers
                 disableNone = result.SelfSrc;
             }
 
+            if (directiveOverride.UnsafeInline.HasValue)
+            {
+                result.UnsafeInlineSrc = (bool)directiveOverride.UnsafeInline;
+                disableNone = disableNone || result.UnsafeInlineSrc;
+            }
+
             if (directiveOverride.UnsafeEval.HasValue)
             {
                 result.UnsafeEvalSrc = (bool)directiveOverride.UnsafeEval;
                 disableNone = disableNone || result.UnsafeEvalSrc;
             }
 
-            if (directiveOverride.UnsafeInline.HasValue)
+            if (directiveOverride.StrictDynamic.HasValue)
             {
-                result.UnsafeInlineSrc = (bool)directiveOverride.UnsafeInline;
-                disableNone = disableNone || result.UnsafeInlineSrc;
+                result.StrictDynamicSrc = (bool)directiveOverride.StrictDynamic;
+                disableNone = disableNone || result.StrictDynamicSrc;
             }
 
             if (!directiveOverride.InheritOtherSources)

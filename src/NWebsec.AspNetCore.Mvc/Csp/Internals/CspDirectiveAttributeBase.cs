@@ -37,20 +37,24 @@ namespace NWebsec.AspNetCore.Mvc.Csp.Internals
         /// <summary>
         /// Gets or sets whether the CSP directive is enabled in the CSP header. The default is true.
         /// </summary>
-        public bool Enabled { get { return DirectiveConfig.Enabled; } set { DirectiveConfig.Enabled = value; } }
+        public bool Enabled { get => DirectiveConfig.Enabled; set => DirectiveConfig.Enabled = value;
+        }
 
         /// <summary>
         /// Sets whether the 'none' source is included in the directive. Not setting it will inherit existing configuration.
         /// </summary>
-        public bool None { get { throw new NotSupportedException(); } set { DirectiveConfig.None = value; } }
+        public bool None { get => throw new NotSupportedException();set => DirectiveConfig.None = value;
+        }
         /// <summary>
         /// Gets or sets whether the 'self' source is included in the directive. Not setting it will inherit existing configuration (default behaviour).
         /// </summary>
-        public bool Self { get { throw new NotSupportedException(); } set { DirectiveConfig.Self = value; } }
+        public bool Self { get => throw new NotSupportedException();set => DirectiveConfig.Self = value;
+        }
         /// <summary>
         /// Gets or sets whether CustomSources should be inherited from previous settings. The default is true.
         /// </summary>
-        public bool InheritCustomSources { get { return DirectiveConfig.InheritOtherSources; } set { DirectiveConfig.InheritOtherSources = value; } }
+        public bool InheritCustomSources { get => DirectiveConfig.InheritOtherSources;set => DirectiveConfig.InheritOtherSources = value;
+        }
         /// <summary>
         /// Gets or sets other sources for the directive. Sources are separated by exactly one whitespace. Source examples are scheme only ("https:"), any host ("*"),
         /// a host ("*.nwebsec.com", "www.nwebsec.com", "https://www.nwebsec.com", "www.nwebsec.com:443", "https://www.nwebsec.com:*").
@@ -58,10 +62,8 @@ namespace NWebsec.AspNetCore.Mvc.Csp.Internals
         /// </summary>
         public string CustomSources
         {
-            get
-            {
-                throw new NotSupportedException();
-            }
+            get => throw new NotSupportedException();
+
             set
             {
                 if (string.IsNullOrEmpty(value))
@@ -120,7 +122,8 @@ namespace NWebsec.AspNetCore.Mvc.Csp.Internals
             return (DirectiveConfig.None.HasValue ||
                     DirectiveConfig.Self.HasValue ||
                     DirectiveConfig.UnsafeInline.HasValue ||
-                    DirectiveConfig.UnsafeEval.HasValue) == false;
+                    DirectiveConfig.UnsafeEval.HasValue||
+                    DirectiveConfig.StrictDynamic.HasValue) == false;
         }
 
         private bool NoneCombinedWithOtherSources()
@@ -134,6 +137,7 @@ namespace NWebsec.AspNetCore.Mvc.Csp.Internals
             return ((DirectiveConfig.Self.HasValue && (bool)DirectiveConfig.Self) ||
                     (DirectiveConfig.UnsafeInline.HasValue && (bool)DirectiveConfig.UnsafeInline) ||
                     (DirectiveConfig.UnsafeEval.HasValue && (bool)DirectiveConfig.UnsafeEval) ||
+                    (DirectiveConfig.StrictDynamic.HasValue && (bool)DirectiveConfig.StrictDynamic) ||
                     DirectiveConfig.OtherSources != null);
         }
         

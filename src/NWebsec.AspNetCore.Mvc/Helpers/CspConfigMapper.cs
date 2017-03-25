@@ -84,10 +84,11 @@ namespace NWebsec.AspNetCore.Mvc.Helpers
                 Enabled = oldDirective.Enabled,
                 NoneSrc = oldDirective.NoneSrc,
                 SelfSrc = oldDirective.SelfSrc,
-                UnsafeEvalSrc = oldDirective.UnsafeEvalSrc,
                 UnsafeInlineSrc = oldDirective.UnsafeInlineSrc,
+                UnsafeEvalSrc = oldDirective.UnsafeEvalSrc,
+                StrictDynamicSrc = oldDirective.StrictDynamicSrc,
                 Nonce = oldDirective.Nonce,
-                CustomSources = oldDirective.CustomSources == null ? new List<string>(0) : oldDirective.CustomSources.ToList()
+                CustomSources = oldDirective.CustomSources?.ToList() ?? new List<string>(0)
             };
 
             return newConfig;
