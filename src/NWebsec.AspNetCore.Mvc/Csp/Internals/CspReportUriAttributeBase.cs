@@ -33,9 +33,9 @@ namespace NWebsec.AspNetCore.Mvc.Csp.Internals
         /// </summary>
         public bool Enabled { get { return _directive.Enabled; } set { _directive.Enabled = value; } }
         
-        /// <summary>
-        /// Gets or sets whether the URI for the built in CSP report handler should be included in the directive. The default is false.
-        /// </summary>
+        // <summary>
+        // Gets or sets whether the URI for the built in CSP report handler should be included in the directive. The default is false.
+        // </summary>
         // TODO clean up this
         //[Obsolete("This attribute is no longer supported. Csp report handling will be handled by middleware in a future release.", true)]
         //public bool EnableBuiltinHandler { get { return _directive.EnableBuiltinHandler; } set { _directive.EnableBuiltinHandler = value; } }
