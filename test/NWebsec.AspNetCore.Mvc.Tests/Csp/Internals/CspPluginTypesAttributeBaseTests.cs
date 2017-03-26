@@ -5,7 +5,7 @@ using Moq;
 using NWebsec.AspNetCore.Mvc.Csp.Internals;
 using Xunit;
 
-namespace NWebsec.AspNetCore.Mvc.Tests.HttpHeaders.Csp.Internals
+namespace NWebsec.AspNetCore.Mvc.Tests.Csp.Internals
 {
     public class CspPluginTypesAttributeBaseTests
     {

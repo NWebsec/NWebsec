@@ -10,7 +10,7 @@ using Moq;
 using NWebsec.AspNetCore.Mvc.Internals;
 using Xunit;
 
-namespace NWebsec.AspNetCore.Mvc.Tests.HttpHeaders.Internals
+namespace NWebsec.AspNetCore.Mvc.Tests.Internals
 {
     public class HttpHeaderAttributeBaseTests
     {
