@@ -11,6 +11,7 @@ namespace NWebsec.AspNetCore.Mvc.Helpers
         void SetXContentTypeOptionsHeader(HttpContext context);
         void SetXDownloadOptionsHeader(HttpContext context);
         void SetXXssProtectionHeader(HttpContext context);
+        void SetReferrerPolicyHeader(HttpContext context);
         void SetNoCacheHeaders(HttpContext context);
         void SetCspHeaders(HttpContext context, bool reportOnly);
     }

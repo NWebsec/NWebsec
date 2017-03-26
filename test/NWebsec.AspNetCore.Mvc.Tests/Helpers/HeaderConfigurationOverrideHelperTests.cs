@@ -119,5 +119,21 @@ namespace NWebsec.AspNetCore.Mvc.Tests.Helpers
 
             Assert.Same(configOverride, _headerConfigurationOverrideHelper.GetXRobotsTagWithOverride(_mockContext));
         }
+
+        [Fact]
+        public void GetReferrerPolicyWithOverride_NoOverride_ReturnsNull()
+        {
+            Assert.Null(_headerConfigurationOverrideHelper.GetReferrerPolicyWithOverride(_mockContext));
+        }
+
+        [Fact]
+        public void GetReferrerPolicyWithOverride_ConfigOverriden_ReturnsOverrideElement()
+        {
+            var configOverride = new ReferrerPolicyConfiguration { Policy = Core.HttpHeaders.ReferrerPolicy.NoReferrer };
+
+            _headerConfigurationOverrideHelper.SetReferrerPolicyOverride(_mockContext, configOverride);
+
+            Assert.Same(configOverride, _headerConfigurationOverrideHelper.GetReferrerPolicyWithOverride(_mockContext));
+        }
     }
 }

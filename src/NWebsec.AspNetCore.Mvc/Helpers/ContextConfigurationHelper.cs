@@ -35,6 +35,11 @@ namespace NWebsec.AspNetCore.Mvc.Helpers
             return context.GetNWebsecContext().XXssProtection;
         }
 
+        public IReferrerPolicyConfiguration GetReferrerPolicyConfiguration(HttpContext context)
+        {
+            return context.GetNWebsecContext().ReferrerPolicy;
+        }
+
         public ICspConfiguration GetCspConfiguration(HttpContext context, bool reportOnly)
         {
             return reportOnly ? context.GetNWebsecContext().CspReportOnly : context.GetNWebsecContext().Csp;

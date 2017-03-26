@@ -13,5 +13,6 @@ namespace NWebsec.AspNetCore.Mvc.Helpers
         ISimpleBooleanConfiguration GetXContentTypeOptionsWithOverride(HttpContext context);
         ISimpleBooleanConfiguration GetXDownloadOptionsWithOverride(HttpContext context);
         IXXssProtectionConfiguration GetXXssProtectionWithOverride(HttpContext context);
+        IReferrerPolicyConfiguration GetReferrerPolicyWithOverride(HttpContext context);
     }
 }

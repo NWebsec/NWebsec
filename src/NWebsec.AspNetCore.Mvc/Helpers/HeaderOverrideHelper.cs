@@ -110,6 +110,21 @@ namespace NWebsec.AspNetCore.Mvc.Helpers
             _headerResultHandler.HandleHeaderResult(context.Response, result);
         }
 
+        public void SetReferrerPolicyHeader(HttpContext context)
+        {
+            var config = _headerConfigurationOverrideHelper.GetReferrerPolicyWithOverride(context);
+
+            if (config == null)
+            {
+                return;
+            }
+
+            var oldConfig = _contextConfigurationHelper.GetReferrerPolicyConfiguration(context);
+
+            var result = _headerGenerator.CreateReferrerPolicyResult(config, oldConfig);
+            _headerResultHandler.HandleHeaderResult(context.Response, result);
+        }
+
         public void SetNoCacheHeaders(HttpContext context)
         {
             var config = _headerConfigurationOverrideHelper.GetNoCacheHeadersWithOverride(context);

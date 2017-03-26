@@ -186,6 +186,33 @@ namespace NWebsec.AspNetCore.Mvc.Tests.Helpers
         }
 
         [Fact]
+        public void SetReferrerPolicyHeader_NoOverride_DoesNothing()
+        {
+            var contextConfig = new ReferrerPolicyConfiguration();
+            _contextHelper.Setup(h => h.GetReferrerPolicyConfiguration(It.IsAny<HttpContext>())).Returns(contextConfig);
+            _configurationOverrideHelper.Setup(h => h.GetReferrerPolicyWithOverride(It.IsAny<HttpContext>())).Returns((ReferrerPolicyConfiguration)null);
+
+            _overrideHelper.SetReferrerPolicyHeader(_mockContext);
+
+            _headerGenerator.Verify(g => g.CreateReferrerPolicyResult(It.IsAny<ReferrerPolicyConfiguration>(), It.IsAny<ReferrerPolicyConfiguration>()), Times.Never);
+            _headerResultHandler.Verify(h => h.HandleHeaderResult(It.IsAny<HttpResponse>(), It.IsAny<HeaderResult>()), Times.Never);
+        }
+
+        [Fact]
+        public void SetReferrerPolicyHeader_Override_CreatesAndHandlesHeaderResult()
+        {
+            var contextConfig = new ReferrerPolicyConfiguration();
+            var overrideConfig = new ReferrerPolicyConfiguration();
+            _contextHelper.Setup(h => h.GetReferrerPolicyConfiguration(It.IsAny<HttpContext>())).Returns(contextConfig);
+            _configurationOverrideHelper.Setup(h => h.GetReferrerPolicyWithOverride(It.IsAny<HttpContext>())).Returns(overrideConfig);
+            _headerGenerator.Setup(g => g.CreateReferrerPolicyResult(overrideConfig, contextConfig)).Returns(_expectedHeaderResult);
+
+            _overrideHelper.SetReferrerPolicyHeader(_mockContext);
+
+            _headerResultHandler.Verify(h => h.HandleHeaderResult(It.IsAny<HttpResponse>(), _expectedHeaderResult), Times.Once);
+        }
+
+        [Fact]
         public void SetNoCacheHeaders_NoOverride_DoesNothing()
         {
             var responseHeaders = new HeaderDictionary();

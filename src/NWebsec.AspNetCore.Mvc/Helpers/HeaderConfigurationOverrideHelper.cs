@@ -136,7 +136,24 @@ namespace NWebsec.AspNetCore.Mvc.Helpers
                 : null;
         }
 
+        internal void SetReferrerPolicyOverride(HttpContext context, IReferrerPolicyConfiguration referrerConfig)
+        {
+            var headerList = GetHeaderListFromContext(context);
+            var headerKey = HeaderConstants.ReferrerPolicyHeader;
 
+            if (headerList.ContainsKey(headerKey))
+                headerList.Remove(headerKey);
+
+            headerList.Add(headerKey, referrerConfig);
+        }
+
+        public IReferrerPolicyConfiguration GetReferrerPolicyWithOverride(HttpContext context)
+        {
+            var headerList = GetHeaderListFromContext(context);
+            return headerList.ContainsKey(HeaderConstants.ReferrerPolicyHeader)
+                ? (IReferrerPolicyConfiguration)headerList[HeaderConstants.ReferrerPolicyHeader]
+                : null;
+        }
 
         private IDictionary<string, object> GetHeaderListFromContext(HttpContext context)
         {

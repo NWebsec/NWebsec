@@ -86,6 +86,17 @@ namespace NWebsec.AspNetCore.Mvc.Tests.Helpers
         }
 
         [Fact]
+        public void GetReferrerPolicyConfiguration_ReturnsContextConfig()
+        {
+            var config = new ReferrerPolicyConfiguration();
+            _nwContext.ReferrerPolicy = config;
+
+            var result = _contextHelper.GetReferrerPolicyConfiguration(_mockContext);
+
+            Assert.Same(config, result);
+        }
+
+        [Fact]
         public void GetCspConfiguration_ReturnsContextConfig()
         {
             var config = new CspConfiguration();
