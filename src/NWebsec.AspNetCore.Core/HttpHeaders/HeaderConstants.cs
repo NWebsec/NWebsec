@@ -14,6 +14,7 @@ namespace NWebsec.AspNetCore.Core.HttpHeaders
         public static readonly string ContentSecurityPolicyReportOnlyHeader = "Content-Security-Policy-Report-Only";
         public static readonly string HpkpHeader = "Public-Key-Pins";
         public static readonly string HpkpReportOnlyHeader = "Public-Key-Pins-Report-Only";
+        public static readonly string ReferrerPolicyHeader = "Referrer-Policy";
 
         public static readonly string[] CspSourceList =
         {

@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using NWebsec.Annotations;
+using NWebsec.AspNetCore.Core.Extensions;
 using NWebsec.AspNetCore.Core.HttpHeaders.Configuration;
 
 namespace NWebsec.AspNetCore.Core.HttpHeaders
@@ -147,6 +148,24 @@ namespace NWebsec.AspNetCore.Core.HttpHeaders
                     throw new NotImplementedException("Apparently someone forgot to implement support for: " +
                                                       xfoConfig.Policy);
             }
+        }
+
+        public HeaderResult CreateReferrerPolicyResult(IReferrerPolicyConfiguration rpConfig,
+            IReferrerPolicyConfiguration oldRpConfig = null)
+        {
+            if (oldRpConfig != null && oldRpConfig.Policy != ReferrerPolicy.Disabled && rpConfig.Policy == ReferrerPolicy.Disabled)
+            {
+                return new HeaderResult(HeaderResult.ResponseAction.Remove, HeaderConstants.ReferrerPolicyHeader);
+            }
+
+            if (rpConfig.Policy == ReferrerPolicy.Disabled)
+            {
+                return null;
+            }
+
+            var policyValue = rpConfig.Policy.GetPolicyString();
+
+            return new HeaderResult(HeaderResult.ResponseAction.Set, HeaderConstants.ReferrerPolicyHeader, policyValue);
         }
 
         [CanBeNull]

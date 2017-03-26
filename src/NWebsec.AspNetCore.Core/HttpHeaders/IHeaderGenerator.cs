@@ -23,6 +23,9 @@ namespace NWebsec.AspNetCore.Core.HttpHeaders
         HeaderResult CreateXfoResult(IXFrameOptionsConfiguration xfoConfig,
             IXFrameOptionsConfiguration oldXfoConfig = null);
 
+        HeaderResult CreateReferrerPolicyResult(IReferrerPolicyConfiguration xfoConfig,
+            IReferrerPolicyConfiguration oldXfoConfig = null);
+
         HeaderResult CreateCspResult(ICspConfiguration cspConfig, bool reportOnly,
             string builtinReportHandlerUri = null, ICspConfiguration oldCspConfig = null);
 
