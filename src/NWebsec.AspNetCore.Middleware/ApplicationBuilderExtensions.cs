@@ -11,7 +11,7 @@ namespace Microsoft.AspNetCore.Builder
     public static class ApplicationBuilderExtensions
     {
         /// <summary>
-        ///     Adds a middleware to the pipeline that validates redirects.
+        ///     Adds a middleware to the ASP.NET Core pipeline that validates redirects.
         /// </summary>
         /// <param name="app">The <see cref="IApplicationBuilder" /> to which the middleware is added.</param>
         /// <returns>The <see cref="IApplicationBuilder" /> supplied in the app parameter.</returns>
@@ -24,7 +24,7 @@ namespace Microsoft.AspNetCore.Builder
         }
 
         /// <summary>
-        ///     Adds a middleware to the ASP.NET pipeline that validates redirects.
+        ///     Adds a middleware to the ASP.NET Core pipeline that validates redirects.
         /// </summary>
         /// <param name="app">The <see cref="IApplicationBuilder" /> to which the middleware is added.</param>
         /// <param name="configurer">An <see cref="Action" /> that configures the options for the middleware.</param>
@@ -40,7 +40,7 @@ namespace Microsoft.AspNetCore.Builder
         }
 
         /// <summary>
-        ///     Adds a middleware to the ASP.NET pipeline that sets cache headers to prevent client caching.
+        ///     Adds a middleware to the ASP.NET Core pipeline that sets cache headers to prevent client caching.
         /// </summary>
         /// <param name="app">The <see cref="IApplicationBuilder" /> to which the middleware is added.</param>
         /// <returns>The <see cref="IApplicationBuilder" /> supplied in the app parameter.</returns>
@@ -52,7 +52,7 @@ namespace Microsoft.AspNetCore.Builder
         }
 
         /// <summary>
-        ///     Adds a middleware to the ASP.NET pipeline that sets the Strict-Transport-Security header.
+        ///     Adds a middleware to the ASP.NET Core pipeline that sets the Strict-Transport-Security header.
         /// </summary>
         /// <param name="app">The <see cref="IApplicationBuilder" /> to which the middleware is added.</param>
         /// <param name="configurer">An <see cref="Action" /> that configures the options for the middleware.</param>
@@ -69,7 +69,7 @@ namespace Microsoft.AspNetCore.Builder
         }
 
         /// <summary>
-        ///     Adds a middleware to the ASP.NET pipeline that sets the Public-Key-Pins header.
+        ///     Adds a middleware to the ASP.NET Core pipeline that sets the Public-Key-Pins header.
         /// </summary>
         /// <param name="app">The <see cref="IApplicationBuilder" /> to which the middleware is added.</param>
         /// <param name="configurer">An <see cref="Action" /> that configures the options for the middleware.</param>
@@ -86,7 +86,7 @@ namespace Microsoft.AspNetCore.Builder
         }
 
         /// <summary>
-        ///     Adds a middleware to the ASP.NET pipeline that sets the Public-Key-Pins-Report-Only header.
+        ///     Adds a middleware to the ASP.NET Core pipeline that sets the Public-Key-Pins-Report-Only header.
         /// </summary>
         /// <param name="app">The <see cref="IApplicationBuilder" /> to which the middleware is added.</param>
         /// <param name="configurer">An <see cref="Action" /> that configures the options for the middleware.</param>
@@ -103,7 +103,7 @@ namespace Microsoft.AspNetCore.Builder
         }
 
         /// <summary>
-        ///     Adds a middleware to the ASP.NET pipeline that sets the X-Content-Type-Options header.
+        ///     Adds a middleware to the ASP.NET Core pipeline that sets the X-Content-Type-Options header.
         /// </summary>
         /// <param name="app">The <see cref="IApplicationBuilder" /> to which the middleware is added.</param>
         /// <returns>The <see cref="IApplicationBuilder" /> supplied in the app parameter.</returns>
@@ -115,7 +115,7 @@ namespace Microsoft.AspNetCore.Builder
         }
 
         /// <summary>
-        ///     Adds a middleware to the ASP.NET pipeline that sets the X-Download-Options header.
+        ///     Adds a middleware to the ASP.NET Core pipeline that sets the X-Download-Options header.
         /// </summary>
         /// <param name="app">The <see cref="IApplicationBuilder" /> to which the middleware is added.</param>
         /// <returns>The <see cref="IApplicationBuilder" /> supplied in the app parameter.</returns>
@@ -127,7 +127,7 @@ namespace Microsoft.AspNetCore.Builder
         }
 
         /// <summary>
-        ///     Adds a middleware to the ASP.NET pipeline that sets the X-Frame-Options header.
+        ///     Adds a middleware to the ASP.NET Core pipeline that sets the X-Frame-Options header.
         /// </summary>
         /// <param name="app">The <see cref="IApplicationBuilder" /> to which the middleware is added.</param>
         /// <param name="configurer">An <see cref="Action" /> that configures the options for the middleware.</param>
@@ -143,7 +143,23 @@ namespace Microsoft.AspNetCore.Builder
         }
 
         /// <summary>
-        ///     Adds a middleware to the ASP.NET pipeline that sets the X-Robots-Tag header.
+        ///     Adds a middleware to the ASP.NET Core pipeline that sets the Referrer-Policy header.
+        /// </summary>
+        /// <param name="app">The <see cref="IApplicationBuilder" /> to which the middleware is added.</param>
+        /// <param name="configurer">An <see cref="Action" /> that configures the options for the middleware.</param>
+        /// <returns>The <see cref="IApplicationBuilder" /> supplied in the app parameter.</returns>
+        public static IApplicationBuilder UseReferrerPolicy(this IApplicationBuilder app, Action<IFluentReferrerPolicyOptions> configurer)
+        {
+            if (app == null) throw new ArgumentNullException(nameof(app));
+            if (configurer == null) throw new ArgumentNullException(nameof(configurer));
+
+            var options = new ReferrerPolicyOptions();
+            configurer(options);
+            return app.UseMiddleware<ReferrerPolicyMiddleware>(options);
+        }
+
+        /// <summary>
+        ///     Adds a middleware to the ASP.NET Core pipeline that sets the X-Robots-Tag header.
         /// </summary>
         /// <param name="app">The <see cref="IApplicationBuilder" /> to which the middleware is added.</param>
         /// <param name="configurer">An <see cref="Action" /> that configures the options for the middleware.</param>
@@ -159,7 +175,7 @@ namespace Microsoft.AspNetCore.Builder
         }
 
         /// <summary>
-        ///     Adds a middleware to the ASP.NET pipeline that sets the X-Xss-Protection header.
+        ///     Adds a middleware to the ASP.NET Core pipeline that sets the X-Xss-Protection header.
         /// </summary>
         /// <param name="app">The <see cref="IApplicationBuilder" /> to which the middleware is added.</param>
         /// <param name="configurer">An <see cref="Action" /> that configures the options for the middleware.</param>
@@ -175,7 +191,7 @@ namespace Microsoft.AspNetCore.Builder
         }
 
         /// <summary>
-        ///     Adds a middleware to the ASP.NET pipeline that sets the Content-Security-Policy header.
+        ///     Adds a middleware to the ASP.NET Core pipeline that sets the Content-Security-Policy header.
         /// </summary>
         /// <param name="app">The <see cref="IApplicationBuilder" /> to which the middleware is added.</param>
         /// <param name="configurer">An <see cref="Action" /> that configures the options for the middleware.</param>
@@ -191,7 +207,7 @@ namespace Microsoft.AspNetCore.Builder
         }
 
         /// <summary>
-        ///     Adds a middleware to the ASP.NET pipeline that sets the Content-Security-Policy-Report-Only header.
+        ///     Adds a middleware to the ASP.NET Core pipeline that sets the Content-Security-Policy-Report-Only header.
         /// </summary>
         /// <param name="app">The <see cref="IApplicationBuilder" /> to which the middleware is added.</param>
         /// <param name="configurer">An <see cref="Action" /> that configures the options for the middleware.</param>
