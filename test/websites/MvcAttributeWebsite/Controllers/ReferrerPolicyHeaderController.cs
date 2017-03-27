@@ -6,12 +6,18 @@ using NWebsec.AspNetCore.Mvc;
 namespace MvcAttributeWebsite.Controllers
 {
     [ReferrerPolicy(ReferrerPolicy.NoReferrer)]
-    public class ReferrerPolicyController : Controller
+    public class ReferrerPolicyHeaderController : Controller
     {
         //
-        // GET: /ReferrerPolicy/
+        // GET: /ReferrerPolicyHeader/
 
         public ActionResult Index()
+        {
+            return View("Index");
+        }
+
+        [ReferrerPolicy(ReferrerPolicy.NoReferrer)]
+        public ActionResult NoReferrer()
         {
             return View("Index");
         }

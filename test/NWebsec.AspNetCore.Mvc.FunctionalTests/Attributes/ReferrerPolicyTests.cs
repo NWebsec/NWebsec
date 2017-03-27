@@ -7,15 +7,29 @@ using Microsoft.AspNetCore.TestHost;
 using Xunit;
 using NWebsec.AspNetCore.Mvc.FunctionalTests.Plumbing;
 using System.Linq;
+using System.Collections.Generic;
 
 namespace NWebsec.AspNetCore.Mvc.FunctionalTests.Attributes
 {
-    public class ReferrerPolicyTests : IDisposable
+    public class ReferrerPolicyHeaderTests : IDisposable
     {
+        public static readonly IEnumerable<object> ReferrerActionsAndValues = new TheoryData<string, string>
+        {
+            { "NoReferrer", "no-referrer"},
+        {"NoReferrerWhenDowngrade", "no-referrer-when-downgrade"},
+        {"SameOrigin", "same-origin"},
+        {"Origin", "origin"},
+        {"StrictOrigin", "strict-origin"},
+        {"OriginWhenCrossOrigin", "origin-when-cross-origin"},
+        {"StrictOriginWhenCrossOrigin", "strict-origin-when-cross-origin"},
+        {"UnsafeUrl", "unsafe-url"}
+        };
+
+
         private readonly TestServer _server;
         private readonly HttpClient _httpClient;
 
-        public ReferrerPolicyTests()
+        public ReferrerPolicyHeaderTests()
         {
             _server = TestServerBuilder<MvcAttributeWebsite.Startup>.CreateTestServer();
             _httpClient = _server.CreateClient();
@@ -28,17 +42,11 @@ namespace NWebsec.AspNetCore.Mvc.FunctionalTests.Attributes
         }
 
         [Theory]
-        [InlineData("", "no-referrer")]
-        [InlineData("NoReferrerWhenDowngrade", "no-referrer-when-downgrade")]
-        [InlineData("SameOrigin", "same-origin")]
-        [InlineData("Origin", "origin")]
-        [InlineData("StrictOrigin", "strict-origin")]
-        [InlineData("OriginWhenCrossOrigin", "origin-when-cross-origin")]
-        [InlineData("StrictOriginWhenCrossOrigin", "strict-origin-when-cross-origin")]
-        [InlineData("UnsafeUrl", "unsafe-url")]
-        public async Task ReferrerPolicy_Enabled_SetsHeaders(string action, string expected)
+        //[InlineData("", "no-referrer")]
+        [MemberData(nameof(ReferrerActionsAndValues))]
+        public async Task ReferrerPolicyHeader_Enabled_SetsHeaders(string action, string expected)
         {
-            var path = "/ReferrerPolicy/" + action;
+            var path = "/ReferrerPolicyHeader/" + action;
 
             var response = await _httpClient.GetAsync(path);
 
@@ -50,14 +58,28 @@ namespace NWebsec.AspNetCore.Mvc.FunctionalTests.Attributes
         }
 
         [Fact]
-        public async Task ReferrerPolicy_Disabled_NoHeaders()
+        public async Task ReferrerPolicyHeader_Disabled_NoHeaders()
         {
-            const string path = "/ReferrerPolicy/Disabled";
+            const string path = "/ReferrerPolicyHeader/Disabled";
 
             var response = await _httpClient.GetAsync(path);
 
             Assert.True(response.IsSuccessStatusCode, $"Request failed: {path}");
             Assert.False(response.Headers.Contains("Referrer-Policy"), path);
+        }
+
+
+        [Theory]
+        [MemberData(nameof(ReferrerActionsAndValues))]
+        public async Task ReferrerPolicyMetaTag_Enabled_SetsMetaTag(string action, string expected)
+        {
+            var path = "/ReferrerPolicyMetaTag/" + action;
+
+            var response = await _httpClient.GetAsync(path);
+
+            Assert.True(response.IsSuccessStatusCode, $"Request failed: {path}");
+            var body = await response.Content.ReadAsStringAsync();
+            Assert.True(body.Contains($@"<meta name=""referrer"" content=""{expected}"" />"), expected);
         }
     }
 }
