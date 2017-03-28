@@ -12,7 +12,7 @@
     <AssemblyName>NWebsec.AspNetCore.Mvc.TagHelpers</AssemblyName>
     <PackageId>NWebsec.AspNetCore.Mvc.TagHelpers</PackageId>
     <PackageTags>nwebsec aspnetcore security</PackageTags>
-    <PackageReleaseNotes>This release includes support for ASP.NET Core MVC 1.0.</PackageReleaseNotes>
+    <PackageReleaseNotes>This release includes a Tag Helper that sets Referrer-Policy through the &lt;meta&gt; tag. See release notes on GitHub for details.</PackageReleaseNotes>
     <PackageIconUrl>https://klings.blob.core.windows.net/nwebsecicon/nwebsec_nuget.png</PackageIconUrl>
     <PackageProjectUrl>https://docs.nwebsec.com/</PackageProjectUrl>
     <PackageLicenseUrl>https://github.com/NWebsec/NWebsec/blob/master/LICENSE</PackageLicenseUrl>
