@@ -59,10 +59,11 @@ namespace NWebsec.AspNetCore.Core.Helpers.X509
                     {
                         CleanupCert(cert);
                     }
-#if NET451
-                    certStore.Close();
+#if NETSTANDARD1_3
+                    certStore.Dispose();
 #else
                     certStore.Dispose();
+                    certStore.Close();
 #endif
                 }
                 throw;
@@ -239,12 +240,10 @@ namespace NWebsec.AspNetCore.Core.Helpers.X509
         private void CleanupCert(X509Certificate2 cert)
         {
 
-#if NET451
-            cert.Reset();
-#elif DNX451
-            cert.Reset();
-#else
+#if NETSTANDARD1_3
             cert.Dispose();
+#else
+            cert.Reset();
 #endif
         }
     }

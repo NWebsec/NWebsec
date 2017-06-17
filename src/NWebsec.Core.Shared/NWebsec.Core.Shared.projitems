@@ -1,0 +1,70 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <SharedGUID>22c7c96d-f411-444a-a30e-64cfbda506f5</SharedGUID>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration">
+    <Import_RootNamespace>NWebsec.Core.Shared</Import_RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)Exceptions\RedirectValidationException.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Extensions\ReferrerPolicyExtensions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Fluent\IFluentInterface.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Helpers\X509\TlvTripletHeader.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Helpers\X509\X509Helper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)HttpHeaders\Configuration\CspConfiguration.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)HttpHeaders\Configuration\CspDirectiveConfiguration.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)HttpHeaders\Configuration\CspHeaderConfiguration.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)HttpHeaders\Configuration\CspMixedContentDirectiveConfiguration.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)HttpHeaders\Configuration\CspPluginTypesDirectiveConfiguration.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)HttpHeaders\Configuration\CspReportUriDirectiveConfiguration.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)HttpHeaders\Configuration\CspSandboxDirectiveConfiguration.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)HttpHeaders\Configuration\CspUpgradeDirectiveConfiguration.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)HttpHeaders\Configuration\HpkpConfiguration.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)HttpHeaders\Configuration\HstsConfiguration.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)HttpHeaders\Configuration\ICspConfiguration.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)HttpHeaders\Configuration\ICspDirectiveBasicConfiguration.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)HttpHeaders\Configuration\ICspDirectiveConfiguration.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)HttpHeaders\Configuration\ICspDirectiveUnsafeInlineConfiguration.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)HttpHeaders\Configuration\ICspHeaderConfiguration.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)HttpHeaders\Configuration\ICspMixedContentDirectiveConfiguration.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)HttpHeaders\Configuration\ICspPluginTypesDirectiveConfiguration.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)HttpHeaders\Configuration\ICspReportUriDirectiveConfiguration.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)HttpHeaders\Configuration\ICspSandboxDirectiveConfiguration.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)HttpHeaders\Configuration\ICspUpgradeDirectiveConfiguration.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)HttpHeaders\Configuration\IHpkpCertConfiguration.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)HttpHeaders\Configuration\IHpkpConfiguration.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)HttpHeaders\Configuration\IHpkpPinConfiguration.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)HttpHeaders\Configuration\IHstsConfiguration.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)HttpHeaders\Configuration\IRedirectValidationConfiguration.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)HttpHeaders\Configuration\IReferrerPolicyConfiguration.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)HttpHeaders\Configuration\ISameHostHttpsRedirectConfiguration.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)HttpHeaders\Configuration\ISimpleBooleanConfiguration.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)HttpHeaders\Configuration\IXFrameOptionsConfiguration.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)HttpHeaders\Configuration\IXRobotsTagConfiguration.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)HttpHeaders\Configuration\IXXssProtectionConfiguration.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)HttpHeaders\Configuration\RedirectValidationConfiguration.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)HttpHeaders\Configuration\ReferrerPolicyConfiguration.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)HttpHeaders\Configuration\SameHostHttpsRedirectConfiguration.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)HttpHeaders\Configuration\SimpleBooleanConfiguration.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)HttpHeaders\Configuration\Validation\HpkpConfigurationValidator.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)HttpHeaders\Configuration\Validation\HstsConfigurationValidator.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)HttpHeaders\Configuration\Validation\Rfc2045MediaTypeValidator.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)HttpHeaders\Configuration\Validation\XRobotsTagConfigurationValidator.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)HttpHeaders\Configuration\XFrameOptionsConfiguration.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)HttpHeaders\Configuration\XRobotsTagConfiguration.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)HttpHeaders\Configuration\XXssProtectionConfiguration.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)HttpHeaders\Csp\CspSourceParseResult.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)HttpHeaders\Csp\CspUriSource.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)HttpHeaders\Csp\InvalidCspSourceException.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)HttpHeaders\HeaderConstants.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)HttpHeaders\HeaderGenerator.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)HttpHeaders\HeaderResult.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)HttpHeaders\IHeaderGenerator.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)HttpHeaders\ReferrerPolicy.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)HttpHeaders\XfoPolicy.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)HttpHeaders\XXssPolicy.cs" />
+  </ItemGroup>
+</Project>

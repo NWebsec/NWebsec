@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26228.4
+VisualStudioVersion = 15.0.26430.12
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{1733BF96-BCF6-43DD-B145-EBCB11B57C55}"
 EndProject
@@ -35,7 +35,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NWebsec.AspNetCore.Mvc.Test
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mvc", "src\Mvc\Mvc.csproj", "{83A1170A-A739-4BEA-8897-1F19B8A0BE8E}"
 EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "NWebsec.Core.Shared", "src\NWebsec.Core.Shared\NWebsec.Core.Shared.shproj", "{22C7C96D-F411-444A-A30E-64CFBDA506F5}"
+EndProject
 Global
+	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		src\NWebsec.Core.Shared\NWebsec.Core.Shared.projitems*{22c7c96d-f411-444a-a30e-64cfbda506f5}*SharedItemsImports = 13
+	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
@@ -107,5 +112,6 @@ Global
 		{72158B5F-B415-4FD0-A17E-F4B0945EA948} = {1E120316-DAE8-4FF7-81C2-053A914C258D}
 		{9EF528EE-B28D-4278-82AC-59767E40E63B} = {1E120316-DAE8-4FF7-81C2-053A914C258D}
 		{83A1170A-A739-4BEA-8897-1F19B8A0BE8E} = {1733BF96-BCF6-43DD-B145-EBCB11B57C55}
+		{22C7C96D-F411-444A-A30E-64CFBDA506F5} = {1733BF96-BCF6-43DD-B145-EBCB11B57C55}
 	EndGlobalSection
 EndGlobal

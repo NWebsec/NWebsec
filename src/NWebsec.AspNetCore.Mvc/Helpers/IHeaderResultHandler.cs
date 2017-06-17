@@ -3,7 +3,7 @@
 using Microsoft.AspNetCore.Http;
 using NWebsec.AspNetCore.Core.HttpHeaders;
 
-namespace NWebsec.AspNetCore.Core.Helpers
+namespace NWebsec.AspNetCore.Mvc.Helpers
 {
     public interface IHeaderResultHandler
     {
