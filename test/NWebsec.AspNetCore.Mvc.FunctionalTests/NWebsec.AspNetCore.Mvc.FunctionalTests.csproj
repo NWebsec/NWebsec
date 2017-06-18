@@ -1,7 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>netcoreapp1.1;net452</TargetFrameworks>
+    <!--<TargetFrameworks>netcoreapp1.1;net452</TargetFrameworks>-->
+    <TargetFramework>netcoreapp1.1</TargetFramework>
     <AssemblyName>NWebsec.AspNetCore.Mvc.FunctionalTests</AssemblyName>
     <PackageId>NWebsec.AspNetCore.Mvc.FunctionalTests</PackageId>
     <GenerateRuntimeConfigurationFiles>true</GenerateRuntimeConfigurationFiles>
