@@ -13,3 +13,4 @@ using System.Runtime.InteropServices;
 [assembly: InternalsVisibleTo("NWebsec.AspNetCore.Core")]
 [assembly: InternalsVisibleTo("NWebsec.AspNetCore.Middleware")]
 [assembly: InternalsVisibleTo("NWebsec.AspNetCore.Mvc")]
+[assembly: InternalsVisibleTo("NWebsec.Core.SharedProject")]

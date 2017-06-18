@@ -1,14 +1,14 @@
 ﻿// Copyright (c) André N. Klingsheim. See License.txt in the project root for license information.
 
-using Xunit;
 using NWebsec.AspNetCore.Core.HttpHeaders;
 using NWebsec.AspNetCore.Core.HttpHeaders.Configuration;
+using Xunit;
 
-namespace NWebsec.AspNetCore.Core.Tests.HttpHeaders
+namespace NWebsec.Core.SharedProject.Tests.HttpHeaders
 {
     public partial class HeaderGeneratorTests
     {
-        
+
         [Fact]
         public void CreateXDownloadOptionsResult_Disabled_ReturnsNull()
         {

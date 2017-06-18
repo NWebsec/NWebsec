@@ -2,11 +2,11 @@
 
 using System;
 using System.Linq;
-using Xunit;
 using NWebsec.AspNetCore.Core.Exceptions;
 using NWebsec.AspNetCore.Core.HttpHeaders.Configuration;
+using Xunit;
 
-namespace NWebsec.AspNetCore.Core.Tests.HttpHeaders
+namespace NWebsec.AspNetCore.Core.Tests
 {
     public class RedirectValidatorTests
     {

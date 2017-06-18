@@ -4,7 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using NWebsec.AspNetCore.Core.HttpHeaders;
 
-namespace NWebsec.AspNetCore.Core.Tests.TestHelpers
+namespace NWebsec.Core.SharedProject.Tests.TestHelpers
 {
     public class ReferrerPolicyStringsData : IEnumerable<object[]>
     {

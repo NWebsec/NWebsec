@@ -2,7 +2,7 @@
 
 using NWebsec.AspNetCore.Core.HttpHeaders;
 
-namespace NWebsec.AspNetCore.Core.Tests.HttpHeaders
+namespace NWebsec.Core.SharedProject.Tests.HttpHeaders
 {
     public partial class HeaderGeneratorTests
     {

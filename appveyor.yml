@@ -13,35 +13,17 @@ build_script:
 - cmd: dotnet build NWebsec-CI.sln -c release
 test_script:
 - ps: >-
-    pushd .\test\NWebsec.AspNetCore.Core.Tests\
+    $testProjects = Get-ChildItem ".\test\" -Filter *Tests
 
-    dotnet test -c release --no-build
+    foreach ($project in $testProjects) {
 
-    popd
+      pushd ".\test\$project"
 
-    pushd .\test\NWebsec.AspNetCore.Middleware.Tests\
+      dotnet test -c release --no-build
 
-    dotnet test -c release --no-build
+      popd
 
-    popd
-
-    pushd .\test\NWebsec.AspNetCore.Mvc.Tests\
-
-    dotnet test -c release --no-build
-
-    popd
-
-    pushd .\test\NWebsec.AspNetCore.Mvc.TagHelpers.Tests\
-
-    dotnet test -c release --no-build
-
-    popd
-    
-    pushd .\test\NWebsec.AspNetCore.Mvc.FunctionalTests\
-
-    dotnet test -c release --no-build -f netcoreapp1.1
-    
-    popd
+    }
 after_test:
 - ps: >-
     dotnet pack -c release --no-build -o nupkgs NWebsec-CI.sln

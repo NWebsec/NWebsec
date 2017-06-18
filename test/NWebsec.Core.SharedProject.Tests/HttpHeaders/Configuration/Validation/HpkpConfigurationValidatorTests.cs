@@ -1,11 +1,11 @@
 ﻿// Copyright (c) André N. Klingsheim. See License.txt in the project root for license information.
 
 using System;
-using Xunit;
 using NWebsec.AspNetCore.Core.HttpHeaders.Configuration;
 using NWebsec.AspNetCore.Core.HttpHeaders.Configuration.Validation;
+using Xunit;
 
-namespace NWebsec.AspNetCore.Core.Tests.HttpHeaders.Configuration.Validation
+namespace NWebsec.Core.SharedProject.Tests.HttpHeaders.Configuration.Validation
 {
     public class HpkpConfigurationValidatorTests
     {

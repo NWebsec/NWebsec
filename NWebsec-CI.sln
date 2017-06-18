@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26228.4
+VisualStudioVersion = 15.0.26430.12
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{1733BF96-BCF6-43DD-B145-EBCB11B57C55}"
 EndProject
@@ -33,7 +33,16 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NWebsec.AspNetCore.Mvc.TagH
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NWebsec.AspNetCore.Mvc.Tests", "test\NWebsec.AspNetCore.Mvc.Tests\NWebsec.AspNetCore.Mvc.Tests.csproj", "{38B67127-27A1-48E4-B34E-587E0287FE1B}"
 EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "NWebsec.Core.Shared", "src\NWebsec.Core.Shared\NWebsec.Core.Shared.shproj", "{22C7C96D-F411-444A-A30E-64CFBDA506F5}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NWebsec.Core.SharedProject", "src\NWebsec.Core.SharedProject\NWebsec.Core.SharedProject.csproj", "{84FE99B5-DF2D-4F0C-82E7-6FC482A395D7}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NWebsec.Core.SharedProject.Tests", "test\NWebsec.Core.SharedProject.Tests\NWebsec.Core.SharedProject.Tests.csproj", "{A3F572DD-6730-43A6-865B-112B47ADA422}"
+EndProject
 Global
+	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		src\NWebsec.Core.Shared\NWebsec.Core.Shared.projitems*{22c7c96d-f411-444a-a30e-64cfbda506f5}*SharedItemsImports = 13
+	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
@@ -83,6 +92,14 @@ Global
 		{38B67127-27A1-48E4-B34E-587E0287FE1B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{38B67127-27A1-48E4-B34E-587E0287FE1B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{38B67127-27A1-48E4-B34E-587E0287FE1B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{84FE99B5-DF2D-4F0C-82E7-6FC482A395D7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{84FE99B5-DF2D-4F0C-82E7-6FC482A395D7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{84FE99B5-DF2D-4F0C-82E7-6FC482A395D7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{84FE99B5-DF2D-4F0C-82E7-6FC482A395D7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A3F572DD-6730-43A6-865B-112B47ADA422}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A3F572DD-6730-43A6-865B-112B47ADA422}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A3F572DD-6730-43A6-865B-112B47ADA422}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A3F572DD-6730-43A6-865B-112B47ADA422}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -100,5 +117,8 @@ Global
 		{73EDB2A7-4CDB-4544-886A-2B72E5EFD4B9} = {1E120316-DAE8-4FF7-81C2-053A914C258D}
 		{00300F10-A5EA-4EC1-869D-9F46C9F6957D} = {1E120316-DAE8-4FF7-81C2-053A914C258D}
 		{38B67127-27A1-48E4-B34E-587E0287FE1B} = {1E120316-DAE8-4FF7-81C2-053A914C258D}
+		{22C7C96D-F411-444A-A30E-64CFBDA506F5} = {1733BF96-BCF6-43DD-B145-EBCB11B57C55}
+		{84FE99B5-DF2D-4F0C-82E7-6FC482A395D7} = {1733BF96-BCF6-43DD-B145-EBCB11B57C55}
+		{A3F572DD-6730-43A6-865B-112B47ADA422} = {1E120316-DAE8-4FF7-81C2-053A914C258D}
 	EndGlobalSection
 EndGlobal

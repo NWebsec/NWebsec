@@ -1,10 +1,10 @@
 ﻿// Copyright (c) André N. Klingsheim. See License.txt in the project root for license information.
 
-using Xunit;
 using NWebsec.AspNetCore.Core.HttpHeaders;
 using NWebsec.AspNetCore.Core.HttpHeaders.Configuration;
+using Xunit;
 
-namespace NWebsec.AspNetCore.Core.Tests.HttpHeaders
+namespace NWebsec.Core.SharedProject.Tests.HttpHeaders
 {
     public partial class HeaderGeneratorTests
     {
@@ -50,7 +50,7 @@ namespace NWebsec.AspNetCore.Core.Tests.HttpHeaders
             var xFrameConfig = new XFrameOptionsConfiguration { Policy = XfoPolicy.Disabled };
             var oldXFrameConfig = new XFrameOptionsConfiguration { Policy = XfoPolicy.SameOrigin };
 
-            var result = _generator.CreateXfoResult(xFrameConfig,oldXFrameConfig);
+            var result = _generator.CreateXfoResult(xFrameConfig, oldXFrameConfig);
 
             Assert.NotNull(result);
             Assert.Equal(HeaderResult.ResponseAction.Remove, result.Action);

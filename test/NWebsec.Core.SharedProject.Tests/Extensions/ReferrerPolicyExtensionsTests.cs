@@ -3,10 +3,10 @@
 using System;
 using NWebsec.AspNetCore.Core.Extensions;
 using NWebsec.AspNetCore.Core.HttpHeaders;
-using NWebsec.AspNetCore.Core.Tests.TestHelpers;
+using NWebsec.Core.SharedProject.Tests.TestHelpers;
 using Xunit;
 
-namespace NWebsec.AspNetCore.Core.Tests.Extensions
+namespace NWebsec.Core.SharedProject.Tests.Extensions
 {
     public class ReferrerPolicyExtensionsTests
     {

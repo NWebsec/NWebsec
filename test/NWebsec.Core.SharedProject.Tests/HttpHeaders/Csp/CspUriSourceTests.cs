@@ -1,10 +1,10 @@
 ﻿// Copyright (c) André N. Klingsheim. See License.txt in the project root for license information.
 
 using System;
-using Xunit;
 using NWebsec.AspNetCore.Core.HttpHeaders.Csp;
+using Xunit;
 
-namespace NWebsec.AspNetCore.Core.Tests.HttpHeaders.Csp
+namespace NWebsec.Core.SharedProject.Tests.HttpHeaders.Csp
 {
     public class CspUriSourceTests
     {

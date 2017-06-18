@@ -1,11 +1,11 @@
 ﻿// Copyright (c) André N. Klingsheim. See License.txt in the project root for license information.
 
 using System.Collections.Generic;
-using Xunit;
 using NWebsec.AspNetCore.Core.HttpHeaders;
 using NWebsec.AspNetCore.Core.HttpHeaders.Configuration;
+using Xunit;
 
-namespace NWebsec.AspNetCore.Core.Tests.HttpHeaders
+namespace NWebsec.Core.SharedProject.Tests.HttpHeaders
 {
     public class HeaderGeneratorCspTests
     {

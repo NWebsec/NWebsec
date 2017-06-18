@@ -62,7 +62,6 @@ namespace NWebsec.AspNetCore.Core.Helpers.X509
 #if NETSTANDARD1_3
                     certStore.Dispose();
 #else
-                    certStore.Dispose();
                     certStore.Close();
 #endif
                 }
