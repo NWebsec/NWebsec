@@ -1,7 +1,7 @@
 ﻿// Copyright (c) André N. Klingsheim. See License.txt in the project root for license information.
 
 using Microsoft.AspNetCore.Razor.TagHelpers;
-using NWebsec.AspNetCore.Core.Extensions;
+using NWebsec.Core.Common.Extensions;
 using NWebsec.AspNetCore.Mvc.TagHelpers.Extensions;
 
 namespace NWebsec.AspNetCore.Mvc.TagHelpers

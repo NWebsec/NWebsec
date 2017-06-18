@@ -1,8 +1,8 @@
 // Copyright (c) André N. Klingsheim. See License.txt in the project root for license information.
 
 using System;
-using NWebsec.AspNetCore.Core.Fluent;
-using NWebsec.AspNetCore.Core.HttpHeaders.Configuration;
+using NWebsec.Core.Common.Fluent;
+using NWebsec.Core.Common.HttpHeaders.Configuration;
 
 namespace NWebsec.AspNetCore.Middleware
 {

@@ -6,7 +6,7 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
 
-namespace NWebsec.AspNetCore.Core.Helpers.X509
+namespace NWebsec.Core.Common.Helpers.X509
 {
     public class X509Helper
     {

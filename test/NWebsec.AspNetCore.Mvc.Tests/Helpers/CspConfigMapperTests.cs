@@ -2,7 +2,7 @@
 
 using System.Linq;
 using Xunit;
-using NWebsec.AspNetCore.Core.HttpHeaders.Configuration;
+using NWebsec.Core.Common.HttpHeaders.Configuration;
 using NWebsec.AspNetCore.Mvc.Helpers;
 using NWebsec.AspNetCore.Mvc.Helpers.CspOverride;
 using NWebsec.AspNetCore.Mvc.Tests.TestHelpers;

@@ -2,9 +2,9 @@
 
 using System;
 using Microsoft.AspNetCore.Mvc.Filters;
-using NWebsec.AspNetCore.Core.HttpHeaders.Configuration;
 using NWebsec.AspNetCore.Mvc.Helpers;
 using NWebsec.AspNetCore.Mvc.Internals;
+using NWebsec.Core.Common.HttpHeaders.Configuration;
 
 namespace NWebsec.AspNetCore.Mvc.Csp.Internals
 {

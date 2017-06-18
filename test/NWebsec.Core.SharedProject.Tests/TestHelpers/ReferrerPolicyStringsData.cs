@@ -2,7 +2,7 @@
 
 using System.Collections;
 using System.Collections.Generic;
-using NWebsec.AspNetCore.Core.HttpHeaders;
+using NWebsec.Core.Common.HttpHeaders;
 
 namespace NWebsec.Core.SharedProject.Tests.TestHelpers
 {

@@ -3,9 +3,9 @@
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Http;
 using Moq;
-using Xunit;
 using NWebsec.AspNetCore.Core;
-using NWebsec.AspNetCore.Core.HttpHeaders.Configuration;
+using Xunit;
+using NWebsec.Core.Common.HttpHeaders.Configuration;
 using NWebsec.AspNetCore.Mvc.Helpers;
 using NWebsec.AspNetCore.Mvc.Helpers.CspOverride;
 

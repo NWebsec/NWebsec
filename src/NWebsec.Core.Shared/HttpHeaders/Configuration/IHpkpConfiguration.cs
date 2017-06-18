@@ -3,7 +3,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace NWebsec.AspNetCore.Core.HttpHeaders.Configuration
+namespace NWebsec.Core.Common.HttpHeaders.Configuration
 {
     public interface IHpkpConfiguration
     {

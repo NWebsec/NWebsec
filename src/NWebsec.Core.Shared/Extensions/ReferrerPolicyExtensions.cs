@@ -2,9 +2,9 @@
 
 using System;
 using NWebsec.Annotations;
-using NWebsec.AspNetCore.Core.HttpHeaders;
+using NWebsec.Core.Common.HttpHeaders;
 
-namespace NWebsec.AspNetCore.Core.Extensions
+namespace NWebsec.Core.Common.Extensions
 {
     public static class ReferrerPolicyExtensions
     {

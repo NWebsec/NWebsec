@@ -3,7 +3,7 @@
 using System;
 using System.Linq;
 using NWebsec.AspNetCore.Core.Exceptions;
-using NWebsec.AspNetCore.Core.HttpHeaders.Configuration;
+using NWebsec.Core.Common.HttpHeaders.Configuration;
 using Xunit;
 
 namespace NWebsec.AspNetCore.Core.Tests

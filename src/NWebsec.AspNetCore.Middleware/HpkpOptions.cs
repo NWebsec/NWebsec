@@ -3,8 +3,8 @@
 using System;
 using System.Collections.Generic;
 using System.Security.Cryptography.X509Certificates;
-using NWebsec.AspNetCore.Core.Helpers.X509;
-using NWebsec.AspNetCore.Core.HttpHeaders.Configuration.Validation;
+using NWebsec.Core.Common.Helpers.X509;
+using NWebsec.Core.Common.HttpHeaders.Configuration.Validation;
 
 namespace NWebsec.AspNetCore.Middleware
 {

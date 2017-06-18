@@ -4,7 +4,7 @@ using System.Linq;
 using Microsoft.AspNetCore.Http;
 using Moq;
 using Xunit;
-using NWebsec.AspNetCore.Core.HttpHeaders;
+using NWebsec.Core.Common.HttpHeaders;
 using NWebsec.AspNetCore.Mvc.Helpers;
 
 namespace NWebsec.AspNetCore.Core.Tests.Helpers

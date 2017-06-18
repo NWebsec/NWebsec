@@ -2,9 +2,9 @@
 
 using System.Collections.Generic;
 using System.ComponentModel;
-using NWebsec.AspNetCore.Core.Fluent;
+using NWebsec.Core.Common.Fluent;
 
-namespace NWebsec.AspNetCore.Core.HttpHeaders.Configuration
+namespace NWebsec.Core.Common.HttpHeaders.Configuration
 {
     /// <summary>
     ///     Defines the properties required for CSP directive configuration.

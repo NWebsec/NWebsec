@@ -5,10 +5,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using NWebsec.Annotations;
-using NWebsec.AspNetCore.Core.Extensions;
-using NWebsec.AspNetCore.Core.HttpHeaders.Configuration;
+using NWebsec.Core.Common.Extensions;
+using NWebsec.Core.Common.HttpHeaders.Configuration;
 
-namespace NWebsec.AspNetCore.Core.HttpHeaders
+namespace NWebsec.Core.Common.HttpHeaders
 {
     public class HeaderGenerator : IHeaderGenerator
     {

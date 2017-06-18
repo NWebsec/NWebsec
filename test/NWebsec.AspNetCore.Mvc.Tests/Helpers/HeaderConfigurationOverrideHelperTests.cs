@@ -4,8 +4,8 @@ using System.Collections.Generic;
 using Microsoft.AspNetCore.Http;
 using Moq;
 using Xunit;
-using NWebsec.AspNetCore.Core.HttpHeaders;
-using NWebsec.AspNetCore.Core.HttpHeaders.Configuration;
+using NWebsec.Core.Common.HttpHeaders;
+using NWebsec.Core.Common.HttpHeaders.Configuration;
 using NWebsec.AspNetCore.Mvc.Helpers;
 
 namespace NWebsec.AspNetCore.Mvc.Tests.Helpers
@@ -129,7 +129,7 @@ namespace NWebsec.AspNetCore.Mvc.Tests.Helpers
         [Fact]
         public void GetReferrerPolicyWithOverride_ConfigOverriden_ReturnsOverrideElement()
         {
-            var configOverride = new ReferrerPolicyConfiguration { Policy = Core.HttpHeaders.ReferrerPolicy.NoReferrer };
+            var configOverride = new ReferrerPolicyConfiguration { Policy = NWebsec.Core.Common.HttpHeaders.ReferrerPolicy.NoReferrer };
 
             _headerConfigurationOverrideHelper.SetReferrerPolicyOverride(_mockContext, configOverride);
 

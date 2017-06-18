@@ -2,7 +2,7 @@
 
 using System;
 
-namespace NWebsec.AspNetCore.Core.HttpHeaders.Csp
+namespace NWebsec.Core.Common.HttpHeaders.Csp
 {
     //[Serializable]
     public class InvalidCspSourceException : Exception

@@ -3,7 +3,7 @@
 using System;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc.Filters;
-using NWebsec.AspNetCore.Core.HttpHeaders.Csp;
+using NWebsec.Core.Common.HttpHeaders.Csp;
 using NWebsec.AspNetCore.Mvc.Helpers;
 using NWebsec.AspNetCore.Mvc.Helpers.CspOverride;
 using NWebsec.AspNetCore.Mvc.Internals;

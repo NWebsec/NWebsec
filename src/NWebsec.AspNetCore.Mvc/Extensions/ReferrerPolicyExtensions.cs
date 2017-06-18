@@ -1,7 +1,7 @@
 ﻿// Copyright (c) André N. Klingsheim. See License.txt in the project root for license information.
 
 using System;
-using ReferrerPolicyCore = NWebsec.AspNetCore.Core.HttpHeaders.ReferrerPolicy;
+using ReferrerPolicyCore = NWebsec.Core.Common.HttpHeaders.ReferrerPolicy;
 
 namespace NWebsec.AspNetCore.Mvc.Extensions
 {

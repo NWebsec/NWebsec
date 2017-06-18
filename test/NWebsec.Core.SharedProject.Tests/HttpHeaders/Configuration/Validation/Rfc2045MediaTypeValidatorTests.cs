@@ -1,7 +1,7 @@
 ﻿// Copyright (c) André N. Klingsheim. See License.txt in the project root for license information.
 
 using System;
-using NWebsec.AspNetCore.Core.HttpHeaders.Configuration.Validation;
+using NWebsec.Core.Common.HttpHeaders.Configuration.Validation;
 using Xunit;
 
 namespace NWebsec.Core.SharedProject.Tests.HttpHeaders.Configuration.Validation

@@ -2,7 +2,7 @@
 
 using System;
 
-namespace NWebsec.AspNetCore.Core.HttpHeaders.Configuration.Validation
+namespace NWebsec.Core.Common.HttpHeaders.Configuration.Validation
 {
     public class HstsConfigurationValidator
     {

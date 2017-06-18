@@ -2,7 +2,7 @@
 
 using System.ComponentModel;
 
-namespace NWebsec.AspNetCore.Core.HttpHeaders.Configuration
+namespace NWebsec.Core.Common.HttpHeaders.Configuration
 {
     /// <summary>
     ///     Defines the properties required for CSP directive configuration.

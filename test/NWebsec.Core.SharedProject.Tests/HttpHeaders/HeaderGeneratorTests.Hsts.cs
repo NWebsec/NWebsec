@@ -1,8 +1,8 @@
 ﻿// Copyright (c) André N. Klingsheim. See License.txt in the project root for license information.
 
 using System;
-using NWebsec.AspNetCore.Core.HttpHeaders;
-using NWebsec.AspNetCore.Core.HttpHeaders.Configuration;
+using NWebsec.Core.Common.HttpHeaders;
+using NWebsec.Core.Common.HttpHeaders.Configuration;
 using Xunit;
 
 namespace NWebsec.Core.SharedProject.Tests.HttpHeaders

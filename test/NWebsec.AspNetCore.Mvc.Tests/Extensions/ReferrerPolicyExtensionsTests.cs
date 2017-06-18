@@ -4,7 +4,7 @@ using System;
 using System.Linq;
 using NWebsec.AspNetCore.Mvc.Extensions;
 using Xunit;
-using ReferrerPolicyCore = NWebsec.AspNetCore.Core.HttpHeaders.ReferrerPolicy;
+using ReferrerPolicyCore = NWebsec.Core.Common.HttpHeaders.ReferrerPolicy;
 
 namespace NWebsec.AspNetCore.Mvc.Tests.Extensions
 {

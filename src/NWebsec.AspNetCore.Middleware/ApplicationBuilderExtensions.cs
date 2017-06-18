@@ -1,9 +1,9 @@
 ﻿// Copyright (c) André N. Klingsheim. See License.txt in the project root for license information.
 
 using System;
-using NWebsec.AspNetCore.Core.HttpHeaders.Configuration.Validation;
 using NWebsec.AspNetCore.Middleware;
 using NWebsec.AspNetCore.Middleware.Middleware;
+using NWebsec.Core.Common.HttpHeaders.Configuration.Validation;
 
 // ReSharper disable once CheckNamespace
 namespace Microsoft.AspNetCore.Builder

@@ -2,7 +2,7 @@
 
 using System.Collections.Generic;
 using System.Linq;
-using NWebsec.AspNetCore.Core.HttpHeaders.Configuration;
+using NWebsec.Core.Common.HttpHeaders.Configuration;
 using NWebsec.AspNetCore.Mvc.Helpers.CspOverride;
 
 namespace NWebsec.AspNetCore.Mvc.Helpers

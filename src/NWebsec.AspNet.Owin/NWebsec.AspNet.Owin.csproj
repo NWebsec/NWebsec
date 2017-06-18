@@ -1,0 +1,24 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net45</TargetFramework>
+    <Description>NWebsec middleware for OWIN applications. NWebsec helps you set important security headers and detect potentially dangerous redirects. See project website for documentation.</Description>
+    <Copyright>Copyright © 2014 - 2017</Copyright>
+    <AssemblyTitle>NWebsec.Owin</AssemblyTitle>
+    <VersionPrefix>2.4.0</VersionPrefix>
+    <Authors>André N. Klingsheim</Authors>
+    <NoWarn>$(NoWarn);CS1591</NoWarn>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <AssemblyName>NWebsec.Owin</AssemblyName>
+    <PackageId>NWebsec.Owin</PackageId>
+    <PackageTags>nwebsec aspnetcore security</PackageTags>
+    <PackageReleaseNotes>This release adds support for the Referrer Policy header.</PackageReleaseNotes>
+    <PackageIconUrl>https://nwebseccdn.blob.core.windows.net/nugeticon/nwebsec_nuget.png</PackageIconUrl>
+    <PackageProjectUrl>https://docs.nwebsec.com/</PackageProjectUrl>
+    <PackageLicenseUrl>https://github.com/NWebsec/NWebsec/blob/master/LICENSE</PackageLicenseUrl>
+    <IncludeSymbols>true</IncludeSymbols>
+    <RepositoryType>git</RepositoryType>
+    <RepositoryUrl>git://github.com/NWebsec/NWebsec</RepositoryUrl>
+  </PropertyGroup>
+
+</Project>

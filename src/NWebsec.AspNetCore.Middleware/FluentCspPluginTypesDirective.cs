@@ -2,8 +2,8 @@
 
 using System;
 using System.Linq;
-using NWebsec.AspNetCore.Core.HttpHeaders.Configuration;
-using NWebsec.AspNetCore.Core.HttpHeaders.Configuration.Validation;
+using NWebsec.Core.Common.HttpHeaders.Configuration;
+using NWebsec.Core.Common.HttpHeaders.Configuration.Validation;
 
 namespace NWebsec.AspNetCore.Middleware
 {

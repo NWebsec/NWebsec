@@ -1,0 +1,24 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net45</TargetFramework>
+    <Description>NWebsec attributes for ASP.NET MVC 5 applications. NWebsec helps you set important security headers, detect potentially dangerous redirects, control cache headers, and remove version headers. See project website for documentation.</Description>
+    <Copyright>Copyright © 2012 - 2017</Copyright>
+    <AssemblyTitle>NWebsec.Mvc</AssemblyTitle>
+    <VersionPrefix>4.4.0</VersionPrefix>
+    <Authors>André N. Klingsheim</Authors>
+    <NoWarn>$(NoWarn);CS1591</NoWarn>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <AssemblyName>NWebsec.Mvc</AssemblyName>
+    <PackageId>NWebsec.Mvc</PackageId>
+    <PackageTags>nwebsec aspnetcore security</PackageTags>
+    <PackageReleaseNotes>This release adds support for the Referrer Policy header.</PackageReleaseNotes>
+    <PackageIconUrl>https://nwebseccdn.blob.core.windows.net/nugeticon/nwebsec_nuget.png</PackageIconUrl>
+    <PackageProjectUrl>https://docs.nwebsec.com/</PackageProjectUrl>
+    <PackageLicenseUrl>https://github.com/NWebsec/NWebsec/blob/master/LICENSE</PackageLicenseUrl>
+    <IncludeSymbols>true</IncludeSymbols>
+    <RepositoryType>git</RepositoryType>
+    <RepositoryUrl>git://github.com/NWebsec/NWebsec</RepositoryUrl>
+  </PropertyGroup>
+
+</Project>

@@ -6,10 +6,9 @@
     <SharedGUID>22c7c96d-f411-444a-a30e-64cfbda506f5</SharedGUID>
   </PropertyGroup>
   <PropertyGroup Label="Configuration">
-    <Import_RootNamespace>NWebsec.Core.Shared</Import_RootNamespace>
+    <Import_RootNamespace>NWebsec.Core.Common</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="$(MSBuildThisFileDirectory)Exceptions\RedirectValidationException.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Extensions\ReferrerPolicyExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Fluent\IFluentInterface.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\X509\TlvTripletHeader.cs" />

@@ -4,9 +4,9 @@ using System;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.AspNetCore.Razor.TagHelpers;
-using NWebsec.AspNetCore.Core.HttpHeaders.Configuration.Validation;
 using NWebsec.AspNetCore.Mvc.Helpers;
 using NWebsec.AspNetCore.Mvc.Helpers.CspOverride;
+using NWebsec.Core.Common.HttpHeaders.Configuration.Validation;
 
 namespace NWebsec.AspNetCore.Mvc.TagHelpers
 {

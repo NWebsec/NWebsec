@@ -2,7 +2,7 @@
 
 using System.Security.Cryptography.X509Certificates;
 
-namespace NWebsec.AspNetCore.Core.HttpHeaders.Configuration
+namespace NWebsec.Core.Common.HttpHeaders.Configuration
 {
     public interface IHpkpCertConfiguration
     {

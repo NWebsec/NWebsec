@@ -2,7 +2,7 @@
 
 using System;
 using System.Security.Cryptography.X509Certificates;
-using NWebsec.AspNetCore.Core.Fluent;
+using NWebsec.Core.Common.Fluent;
 
 namespace NWebsec.AspNetCore.Middleware
 {
