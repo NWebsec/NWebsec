@@ -4,48 +4,46 @@ using System;
 using System.Configuration;
 using System.Globalization;
 using System.Linq;
-using NUnit.Framework;
 using NWebsec.Modules.Configuration;
 using NWebsec.Modules.Configuration.Validation;
+using Xunit;
 
-namespace NWebsec.Tests.Unit.Modules.Configuration.Validation
+namespace NWebsec.AspNet.Classic.Tests.Modules.Configuration.Validation
 {
-    [TestFixture]
     public class RedirectSameHostConfigurationElementValidatorTests
     {
-        private RedirectSameHostConfigurationElementValidator _validator;
+        private readonly RedirectSameHostConfigurationElementValidator _validator;
 
-        [SetUp]
-        public void Setup()
+        public RedirectSameHostConfigurationElementValidatorTests()
         {
             _validator = new RedirectSameHostConfigurationElementValidator();
         }
 
-       [Test]
+        [Fact]
         public void Validate_DisabledAndNoPorts_NoException()
         {
             var config = new RedirectSameHostConfigurationElement { Enabled = false };
 
-            Assert.DoesNotThrow(() => _validator.Validate(config));
+            _validator.Validate(config);
         }
 
-        [Test]
+        [Fact]
         public void Validate_EnabledAndNoPorts_NoException()
         {
             var config = new RedirectSameHostConfigurationElement { Enabled = true };
-            
-            Assert.DoesNotThrow(() => _validator.Validate(config));
+
+            _validator.Validate(config);
         }
 
-        [Test]
+        [Fact]
         public void Validate_EnabledAndValidPort_NoException()
         {
-            var config = new RedirectSameHostConfigurationElement { Enabled = true, HttpsPorts = "8000"};
+            var config = new RedirectSameHostConfigurationElement { Enabled = true, HttpsPorts = "8000" };
 
-            Assert.DoesNotThrow(() => _validator.Validate(config));
+            _validator.Validate(config);
         }
 
-        [Test]
+        [Fact]
         public void Validate_EnabledAndMultipleValidPorts()
         {
             var allPorts = String.Join(",", Enumerable.Range(1, 65535).Select(i => i.ToString(CultureInfo.InvariantCulture)).ToArray());
@@ -54,21 +52,21 @@ namespace NWebsec.Tests.Unit.Modules.Configuration.Validation
             var condensedConfig = new RedirectSameHostConfigurationElement { Enabled = true, HttpsPorts = "8000,9000,10000" };
             var sloppyConfig = new RedirectSameHostConfigurationElement { Enabled = true, HttpsPorts = " 8000,   9000 , 10000 " };
 
-            Assert.DoesNotThrow(() => _validator.Validate(allValidPortsConfig));
-            Assert.DoesNotThrow(() => _validator.Validate(commaSeparatedConfig));
-            Assert.DoesNotThrow(() => _validator.Validate(condensedConfig));
-            Assert.DoesNotThrow(() => _validator.Validate(sloppyConfig));
+            _validator.Validate(allValidPortsConfig);
+            _validator.Validate(commaSeparatedConfig);
+            _validator.Validate(condensedConfig);
+            _validator.Validate(sloppyConfig);
         }
 
-        [Test]
+        [Fact]
         public void Validate_DisabledAndMalformedPorts_NoException()
         {
             var couldntEnterValidPortAndGaveUpConfig = new RedirectSameHostConfigurationElement { Enabled = false, HttpsPorts = "notaport" };
 
-            Assert.DoesNotThrow(() => _validator.Validate(couldntEnterValidPortAndGaveUpConfig));
+            _validator.Validate(couldntEnterValidPortAndGaveUpConfig);
         }
 
-        [Test]
+        [Fact]
         public void Validate_EnabledAndMalformedPorts()
         {
             var couldntEnterValidPortButStillTryingConfig = new RedirectSameHostConfigurationElement { Enabled = true, HttpsPorts = "notaport" };
@@ -82,7 +80,7 @@ namespace NWebsec.Tests.Unit.Modules.Configuration.Validation
             Assert.Throws<ConfigurationErrorsException>(() => _validator.Validate(invalidCommaSeparatedEndConfig));
         }
 
-        [Test]
+        [Fact]
         public void Validate_EnabledAndInvalidPorts()
         {
             var invalidLowPortConfig = new RedirectSameHostConfigurationElement { Enabled = true, HttpsPorts = "0,8000, 9000, 10000" };

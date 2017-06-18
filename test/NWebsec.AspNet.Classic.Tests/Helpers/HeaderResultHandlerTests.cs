@@ -3,21 +3,19 @@
 using System.Collections.Specialized;
 using System.Web;
 using Moq;
-using NUnit.Framework;
 using NWebsec.Core.Common.HttpHeaders;
 using NWebsec.Helpers;
+using Xunit;
 
-namespace NWebsec.Tests.Unit.Helpers
+namespace NWebsec.AspNet.Classic.Tests.Helpers
 {
-    [TestFixture]
     public class HeaderResultHandlerTests
     {
-        private HeaderResultHandler _resultHandler;
-        private NameValueCollection _responseHeaders;
-        private HttpResponseBase _httpResponse;
+        private readonly HeaderResultHandler _resultHandler;
+        private readonly NameValueCollection _responseHeaders;
+        private readonly HttpResponseBase _httpResponse;
 
-        [SetUp]
-        public void Setup()
+        public HeaderResultHandlerTests()
         {
             _resultHandler = new HeaderResultHandler();
             _responseHeaders = new NameValueCollection();
@@ -26,20 +24,20 @@ namespace NWebsec.Tests.Unit.Helpers
             _httpResponse = responseMock.Object;
         }
 
-        [Test]
+        [Fact]
         public void HandleHeaderResult_SetHeaderResult_SetsHeader()
         {
             var headerResult = new HeaderResult(HeaderResult.ResponseAction.Set, "NinjaHeader", "value");
 
             _resultHandler.HandleHeaderResult(_httpResponse, headerResult);
 
-            Assert.AreEqual(1, _responseHeaders.Count);
+            Assert.Equal(1, _responseHeaders.Count);
             var headerValue = _responseHeaders.Get("NinjaHeader");
-            Assert.IsNotNull(headerValue);
-            Assert.AreEqual("value", headerValue);
+            Assert.NotNull(headerValue);
+            Assert.Equal("value", headerValue);
         }
 
-        [Test]
+        [Fact]
         public void HandleHeaderResult_RemoveHeaderResult_RemovesHeader()
         {
             _responseHeaders.Set("NinjaHeader", "toberemoved");
@@ -47,7 +45,7 @@ namespace NWebsec.Tests.Unit.Helpers
 
             _resultHandler.HandleHeaderResult(_httpResponse, headerResult);
 
-            Assert.AreEqual(0, _responseHeaders.Count);
+            Assert.Equal(0, _responseHeaders.Count);
         }
     }
 }

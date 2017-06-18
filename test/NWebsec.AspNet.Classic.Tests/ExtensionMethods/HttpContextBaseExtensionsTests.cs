@@ -4,37 +4,35 @@ using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Web;
 using Moq;
-using NUnit.Framework;
 using NWebsec.Core;
 using NWebsec.ExtensionMethods;
+using Xunit;
 
-namespace NWebsec.Tests.Unit.ExtensionMethods
+namespace NWebsec.AspNet.Classic.Tests.ExtensionMethods
 {
-    [TestFixture]
-    public class HttpContextBaseExtensionsTests
+    public class HttpContextBaseExtensionsTests //TODO move to core lib?
     {
-        private HttpContextBase _mockContext;
+        private readonly HttpContextBase _mockContext;
 
-        [SetUp]
-        public void Setup()
+        public HttpContextBaseExtensionsTests()
         {
             var mockContext = new Mock<HttpContextBase>();
             mockContext.Setup(c => c.Items).Returns(new OrderedDictionary());
             _mockContext = mockContext.Object;
         }
 
-        [Test]
+        [Fact]
         public void GetNWebsecContext_NoContext_CreatesAndReturnsNewContext()
         {
             var firstContext = _mockContext.GetNWebsecContext();
             var secondContext = _mockContext.GetNWebsecContext();
 
-            Assert.IsNotNull(firstContext);
-            Assert.IsNotNull(secondContext);
-            Assert.AreSame(firstContext, secondContext);
+            Assert.NotNull(firstContext);
+            Assert.NotNull(secondContext);
+            Assert.Same(firstContext, secondContext);
         }
 
-        [Test]
+        [Fact]
         public void GetNWebsecOwinContext_NoContext_ReturnsNull()
         {
             var owinEnv = new Dictionary<string, object>();
@@ -42,10 +40,10 @@ namespace NWebsec.Tests.Unit.ExtensionMethods
 
             var result = _mockContext.GetNWebsecOwinContext();
             
-            Assert.IsNull(result);
+            Assert.Null(result);
         }
 
-        [Test]
+        [Fact]
         public void GetNWebsecOwinContext_HasContext_ReturnsContext()
         {
             var owinContext = new NWebsecContext();
@@ -55,7 +53,7 @@ namespace NWebsec.Tests.Unit.ExtensionMethods
 
             var result = _mockContext.GetNWebsecOwinContext();
 
-            Assert.AreSame(owinContext, result);
+            Assert.Same(owinContext, result);
         }
     }
 }

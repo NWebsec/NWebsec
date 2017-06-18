@@ -1,15 +1,14 @@
 ﻿// Copyright (c) André N. Klingsheim. See License.txt in the project root for license information.
 
-using NUnit.Framework;
 using NWebsec.Csp;
+using Xunit;
 
-namespace NWebsec.Tests.Unit.Csp
+namespace NWebsec.AspNet.Classic.Tests.Csp
 {
-    [TestFixture]
     public class CspViolationReportTests
     {
 
-        [Test]
+        [Fact]
         public void ToString_ReturnsFormattedString()
         {
             var reportDetails = new CspReportDetails
@@ -49,7 +48,7 @@ ScriptSample=""scriptsample""";
 
             var result = violationReport.ToString();
 
-            Assert.AreEqual(expectedResult, result);
+            Assert.Equal(expectedResult, result);
         }
     }
 }

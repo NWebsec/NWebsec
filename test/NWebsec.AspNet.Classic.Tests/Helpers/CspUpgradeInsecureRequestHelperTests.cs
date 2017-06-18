@@ -4,21 +4,19 @@ using System;
 using System.Collections.Specialized;
 using System.Web;
 using Moq;
-using NUnit.Framework;
 using NWebsec.Core.Common.HttpHeaders.Configuration;
 using NWebsec.Helpers;
+using Xunit;
 
-namespace NWebsec.Tests.Unit.Helpers
+namespace NWebsec.AspNet.Classic.Tests.Helpers
 {
-    [TestFixture]
     public class CspUpgradeInsecureRequestHelperTests
     {
-        private Mock<HttpContextBase> _context;
-        private Mock<HttpResponseBase> _response;
-        private Mock<HttpRequestBase> _request;
+        private readonly Mock<HttpContextBase> _context;
+        private readonly Mock<HttpResponseBase> _response;
+        private readonly Mock<HttpRequestBase> _request;
 
-        [SetUp]
-        public void Setup()
+        public CspUpgradeInsecureRequestHelperTests()
         {
             _request = new Mock<HttpRequestBase>();
             _request.Setup(r => r.Headers).Returns(new NameValueCollection());
@@ -31,35 +29,35 @@ namespace NWebsec.Tests.Unit.Helpers
             _context.Setup(m => m.Response).Returns(_response.Object);
         }
 
-        [Test]
+        [Fact]
         public void UaSupportsUpgradeInsecureRequests_UpgradeHeaderOk_ReturnsTrue()
         {
             SetRequestUpgradeHeader();
 
             var helper = new CspUpgradeInsecureRequestHelper();
 
-            Assert.IsTrue(helper.UaSupportsUpgradeInsecureRequests(_request.Object));
+            Assert.True(helper.UaSupportsUpgradeInsecureRequests(_request.Object));
         }
 
-        [Test]
+        [Fact]
         public void UaSupportsUpgradeInsecureRequests_UpgradeHeaderNotOk_ReturnsFalse()
         {
             SetRequestUpgradeHeader("yolo");
 
             var helper = new CspUpgradeInsecureRequestHelper();
 
-            Assert.IsFalse(helper.UaSupportsUpgradeInsecureRequests(_request.Object));
+            Assert.False(helper.UaSupportsUpgradeInsecureRequests(_request.Object));
         }
 
-        [Test]
+        [Fact]
         public void UaSupportsUpgradeInsecureRequests_NotSupported_ReturnsFalse()
         {
             var helper = new CspUpgradeInsecureRequestHelper();
 
-            Assert.IsFalse(helper.UaSupportsUpgradeInsecureRequests(_request.Object));
+            Assert.False(helper.UaSupportsUpgradeInsecureRequests(_request.Object));
         }
 
-        [Test]
+        [Fact]
         public void TryUpgradeInsecureRequest_UpgradeEnabledAndUpgradableRequest_RedirectsAndReturnsTrue()
         {
             _response.Setup(r => r.AppendHeader(It.IsAny<string>(), It.IsAny<string>()));
@@ -74,15 +72,15 @@ namespace NWebsec.Tests.Unit.Helpers
             };
             var helper = new CspUpgradeInsecureRequestHelper(cspConfig);
 
-            Assert.IsTrue(helper.TryUpgradeInsecureRequest(_context.Object));
+            Assert.True(helper.TryUpgradeInsecureRequest(_context.Object));
 
             _response.Verify(r => r.AppendHeader("Vary", "Upgrade-Insecure-Requests"), Times.Once);
             _response.Verify(r => r.Redirect("https://www.nwebsec.com/", false), Times.Once);
             _response.Verify(r => r.End(), Times.Once);
-            Assert.AreEqual(307, _response.Object.StatusCode);
+            Assert.Equal(307, _response.Object.StatusCode);
         }
 
-        [Test]
+        [Fact]
         public void TryUpgradeInsecureRequest_UpgradeEnabledWithPortAndUpgradableRequest_RedirectsAndReturnsTrue()
         {
             _response.Setup(r => r.AppendHeader(It.IsAny<string>(), It.IsAny<string>()));
@@ -97,15 +95,15 @@ namespace NWebsec.Tests.Unit.Helpers
             };
             var helper = new CspUpgradeInsecureRequestHelper(cspConfig);
 
-            Assert.IsTrue(helper.TryUpgradeInsecureRequest(_context.Object));
+            Assert.True(helper.TryUpgradeInsecureRequest(_context.Object));
 
             _response.Verify(r => r.AppendHeader("Vary", "Upgrade-Insecure-Requests"), Times.Once);
             _response.Verify(r => r.Redirect("https://www.nwebsec.com:4321/", false), Times.Once);
             _response.Verify(r => r.End(), Times.Once);
-            Assert.AreEqual(307, _response.Object.StatusCode);
+            Assert.Equal(307, _response.Object.StatusCode);
         }
 
-        [Test]
+        [Fact]
         public void TryUpgradeInsecureRequest_UpgradeEnabledAndHttpsRequest_ReturnsFalse()
         {
             SetSecureConnection();
@@ -116,11 +114,11 @@ namespace NWebsec.Tests.Unit.Helpers
             };
             var helper = new CspUpgradeInsecureRequestHelper(cspConfig);
 
-            Assert.IsFalse(helper.TryUpgradeInsecureRequest(_context.Object));
-            Assert.AreEqual(200, _response.Object.StatusCode);
+            Assert.False(helper.TryUpgradeInsecureRequest(_context.Object));
+            Assert.Equal(200, _response.Object.StatusCode);
         }
 
-        [Test]
+        [Fact]
         public void TryUpgradeInsecureRequest_UpgradeDisabledAndHttpRequest_ReturnsFalse()
         {
             SetSecureConnection(false);
@@ -131,11 +129,11 @@ namespace NWebsec.Tests.Unit.Helpers
             };
             var helper = new CspUpgradeInsecureRequestHelper(cspConfig);
 
-            Assert.IsFalse(helper.TryUpgradeInsecureRequest(_context.Object));
-            Assert.AreEqual(200, _response.Object.StatusCode);
+            Assert.False(helper.TryUpgradeInsecureRequest(_context.Object));
+            Assert.Equal(200, _response.Object.StatusCode);
         }
 
-        [Test]
+        [Fact]
         public void TryUpgradeInsecureRequest_CspDisabledAndHttpRequest_ReturnsFalse()
         {
             SetSecureConnection(false);
@@ -146,8 +144,8 @@ namespace NWebsec.Tests.Unit.Helpers
             };
             var helper = new CspUpgradeInsecureRequestHelper(cspConfig);
 
-            Assert.IsFalse(helper.TryUpgradeInsecureRequest(_context.Object));
-            Assert.AreEqual(200, _response.Object.StatusCode);
+            Assert.False(helper.TryUpgradeInsecureRequest(_context.Object));
+            Assert.Equal(200, _response.Object.StatusCode);
         }
 
         private void SetRequestUri(string uri)

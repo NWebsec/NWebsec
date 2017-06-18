@@ -1,39 +1,37 @@
 ﻿// Copyright (c) André N. Klingsheim. See License.txt in the project root for license information.
 
 using System;
-using NUnit.Framework;
 using NWebsec.Modules.Configuration.Validation;
+using Xunit;
 
-namespace NWebsec.Tests.Unit.Modules.Configuration.Validation
+namespace NWebsec.AspNet.Classic.Tests.Modules.Configuration.Validation
 {
-    [TestFixture]
     public class RedirectUriValidatorTests
     {
-        private RedirectUriValidator _validator;
+        private readonly RedirectUriValidator _validator;
 
-        [SetUp]
-        public void Setup()
+        public RedirectUriValidatorTests()
         {
             _validator = new RedirectUriValidator();
         }
 
-        [Test]
+        [Fact]
         public void Validate_AbsoluteUri_NoException()
         {
             var uri = new Uri("https://www.nwebsec.com");
-            
-            Assert.DoesNotThrow(() => _validator.Validate(uri));
+
+            _validator.Validate(uri);
         }
 
-        [Test]
+        [Fact]
         public void Validate_AbsoluteUriWithPath_NoException()
         {
             var uri = new Uri("https://www.nwebsec.com/path");
 
-            Assert.DoesNotThrow(() => _validator.Validate(uri));
+            _validator.Validate(uri);
         }
 
-        [Test]
+        [Fact]
         public void Validate_AbsoluteUriWithQuery_ThrowsException()
         {
             var uri = new Uri("https://www.nwebsec.com/path?foo=bar");
@@ -41,15 +39,15 @@ namespace NWebsec.Tests.Unit.Modules.Configuration.Validation
             Assert.Throws<RedirectValidationConfigurationException>(() => _validator.Validate(uri));
         }
 
-        [Test]
+        [Fact]
         public void Validate_RelativeUri_ThrowsException()
         {
-            var uri = new Uri("/testpath",UriKind.RelativeOrAbsolute);
+            var uri = new Uri("/testpath", UriKind.RelativeOrAbsolute);
 
             Assert.Throws<RedirectValidationConfigurationException>(() => _validator.Validate(uri));
         }
 
-        [Test]
+        [Fact]
         public void Validate_NoScheme_ThrowsException()
         {
             var uri = new Uri("www.nwebsec.com", UriKind.RelativeOrAbsolute);

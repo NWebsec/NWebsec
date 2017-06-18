@@ -4,86 +4,84 @@ using System.Collections.Specialized;
 using System.Web;
 using System.Web.Handlers;
 using Moq;
-using NUnit.Framework;
 using NWebsec.Helpers;
+using Xunit;
 
-namespace NWebsec.Tests.Unit.Helpers
+namespace NWebsec.AspNet.Classic.Tests.Helpers
 {
-    [TestFixture]
     public class HandlerTypeHelperTests
     {
-        private Mock<HttpContextBase> _context;
-        private HandlerTypeHelper _helper;
+        private readonly Mock<HttpContextBase> _context;
+        private readonly HandlerTypeHelper _helper;
 
-        [SetUp]
-        public void Setup()
+        public HandlerTypeHelperTests()
         {
             _context = new Mock<HttpContextBase>();
             _context.Setup(m => m.Items).Returns(new ListDictionary());
             _helper = new HandlerTypeHelper();
         }
 
-        [Test]
+        [Fact]
         public void IsUnmanagedHandler_NoRequestHandlerMapped_ReturnsFalse()
         {
             //Test what happens when pipeline is bypassed so RequestHandlerMapped is not called.
             _context.Setup(m => m.Handler).Returns((IHttpHandler)null);
 
-            Assert.IsFalse(_helper.IsUnmanagedHandler(_context.Object));
+            Assert.False(_helper.IsUnmanagedHandler(_context.Object));
         }
 
-        [Test]
+        [Fact]
         public void IsUnmanagedHandler_NoManagedHandlerMapped_ReturnsTrue()
         {
             _context.Setup(m => m.Handler).Returns((IHttpHandler)null);
             _helper.RequestHandlerMapped(_context.Object);
 
-            Assert.IsTrue(_helper.IsUnmanagedHandler(_context.Object));
+            Assert.True(_helper.IsUnmanagedHandler(_context.Object));
         }
 
-        [Test]
+        [Fact]
         public void IsUnmanagedHandler_ManagedHandlerMapped_ReturnsFalse()
         {
             _context.Setup(m => m.Handler).Returns(new Mock<IHttpHandler>().Object);
             _helper.RequestHandlerMapped(_context.Object);
 
-            Assert.IsFalse(_helper.IsUnmanagedHandler(_context.Object));
+            Assert.False(_helper.IsUnmanagedHandler(_context.Object));
         }
 
-        [Test]
+        [Fact]
         public void IsStaticContentHandler_NoManagedHandlerMapped_ReturnsFalse()
         {
             _context.Setup(m => m.Handler).Returns((IHttpHandler)null);
             _helper.RequestHandlerMapped(_context.Object);
 
-            Assert.IsFalse(_helper.IsStaticContentHandler(_context.Object));
+            Assert.False(_helper.IsStaticContentHandler(_context.Object));
         }
 
-        [Test]
+        [Fact]
         public void IsStaticContentHandler_SomeManagedHandlerMapped_ReturnsFalse()
         {
             _context.Setup(m => m.Handler).Returns(new Mock<IHttpHandler>().Object);
             _helper.RequestHandlerMapped(_context.Object);
 
-            Assert.IsFalse(_helper.IsStaticContentHandler(_context.Object));
+            Assert.False(_helper.IsStaticContentHandler(_context.Object));
         }
 
-        [Test]
+        [Fact]
         public void IsStaticContentHandler_WebResourceHandlerMapped_ReturnsTrue()
         {
             _context.Setup(m => m.Handler).Returns(new AssemblyResourceLoader());
             _helper.RequestHandlerMapped(_context.Object);
 
-            Assert.IsTrue(_helper.IsStaticContentHandler(_context.Object));
+            Assert.True(_helper.IsStaticContentHandler(_context.Object));
         }
 
-        [Test]
+        [Fact]
         public void IsStaticContentHandler_ScriptResourceHandlerMapped_ReturnsTrue()
         {
             _context.Setup(m => m.Handler).Returns(new ScriptResourceHandler());
             _helper.RequestHandlerMapped(_context.Object);
 
-            Assert.IsTrue(_helper.IsStaticContentHandler(_context.Object));
+            Assert.True(_helper.IsStaticContentHandler(_context.Object));
         }
     }
 }

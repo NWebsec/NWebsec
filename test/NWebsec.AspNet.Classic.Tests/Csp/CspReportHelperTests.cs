@@ -5,15 +5,14 @@ using System.IO;
 using System.Text;
 using System.Web;
 using Moq;
-using NUnit.Framework;
 using NWebsec.Csp;
+using Xunit;
 
-namespace NWebsec.Tests.Unit.Csp
+namespace NWebsec.AspNet.Classic.Tests.Csp
 {
-    [TestFixture]
     public class CspReportHelperTests
     {
-        [Test]
+        [Fact]
         public void IsRequestForBuiltInCspReportHandler_IsBuiltinReportHandler_ReturnsTrue()
         {
             var queryParams = new NameValueCollection {{"cspReport", "true"}};
@@ -25,10 +24,10 @@ namespace NWebsec.Tests.Unit.Csp
 
             var helper = new CspReportHelper(pathHelper.Object);
 
-            Assert.IsTrue(helper.IsRequestForBuiltInCspReportHandler(mockRequest.Object));
+            Assert.True(helper.IsRequestForBuiltInCspReportHandler(mockRequest.Object));
         }
 
-        [Test]
+        [Fact]
         public void IsRequestForBuiltInCspReportHandler_IsNotBuiltinReportHandler_ReturnsFalse()
         {
             var queryParams = new NameValueCollection {{"cspReport", "true"}};
@@ -40,10 +39,10 @@ namespace NWebsec.Tests.Unit.Csp
 
             var helper = new CspReportHelper(pathHelper.Object);
 
-            Assert.IsFalse(helper.IsRequestForBuiltInCspReportHandler(mockRequest.Object));
+            Assert.False(helper.IsRequestForBuiltInCspReportHandler(mockRequest.Object));
         }
 
-        [Test]
+        [Fact]
         public void GetCspReportFromRequest_FromChrome_ReadsCspReportFromRequest()
         {
             var helper = new CspReportHelper();
@@ -56,23 +55,23 @@ namespace NWebsec.Tests.Unit.Csp
                 mockRequest.Setup(r => r.InputStream).Returns(ms);
 
                 CspViolationReport violationReport;
-                Assert.IsTrue(helper.TryGetCspReportFromRequest(mockRequest.Object, out violationReport));
+                Assert.True(helper.TryGetCspReportFromRequest(mockRequest.Object, out violationReport));
                 var values = violationReport.Details;
 
-                Assert.IsNotNull(values);
-                Assert.AreEqual("http://localhost/NWebsecMvc3", values.DocumentUri);
-                Assert.AreEqual("script-src 'none'", values.ViolatedDirective);
-                Assert.AreEqual("script-src 'none'; report-uri /NWebsecMvc3/WebResource.axd?cspReport=true",
+                Assert.NotNull(values);
+                Assert.Equal("http://localhost/NWebsecMvc3", values.DocumentUri);
+                Assert.Equal("script-src 'none'", values.ViolatedDirective);
+                Assert.Equal("script-src 'none'; report-uri /NWebsecMvc3/WebResource.axd?cspReport=true",
                                 values.OriginalPolicy);
-                Assert.AreEqual("http://localhost/NWebsecMvc3/Scripts/jquery-1.7.1.min.js", values.BlockedUri);
-                Assert.AreEqual("", values.Referrer);
+                Assert.Equal("http://localhost/NWebsecMvc3/Scripts/jquery-1.7.1.min.js", values.BlockedUri);
+                Assert.Equal("", values.Referrer);
 
             }
         }
 
         //Firefox
 
-        [Test]
+        [Fact]
         public void GetCspReportFromRequest_FromFirefox_ReadsCspReportFromRequest()
         {
             var helper = new CspReportHelper();
@@ -85,19 +84,19 @@ namespace NWebsec.Tests.Unit.Csp
                 mockRequest.Setup(r => r.InputStream).Returns(ms);
 
                 CspViolationReport violationReport;
-                Assert.IsTrue(helper.TryGetCspReportFromRequest(mockRequest.Object, out violationReport));
+                Assert.True(helper.TryGetCspReportFromRequest(mockRequest.Object, out violationReport));
                 var values = violationReport.Details;
 
-                Assert.IsNotNull(values);
-                Assert.AreEqual("http://localhost/NWebsecMvc3", values.DocumentUri);
-                Assert.AreEqual("", values.Referrer);
-                Assert.AreEqual("script-src 'none'", values.ViolatedDirective);
-                Assert.AreEqual("", values.OriginalPolicy);
-                Assert.AreEqual("http://localhost/NWebsecMvc3/Scripts/jquery-1.7.1.min.js", values.BlockedUri);
+                Assert.NotNull(values);
+                Assert.Equal("http://localhost/NWebsecMvc3", values.DocumentUri);
+                Assert.Equal("", values.Referrer);
+                Assert.Equal("script-src 'none'", values.ViolatedDirective);
+                Assert.Equal("", values.OriginalPolicy);
+                Assert.Equal("http://localhost/NWebsecMvc3/Scripts/jquery-1.7.1.min.js", values.BlockedUri);
             }
         }
 
-        [Test]
+        [Fact]
         public void GetCspReportFromRequest_IncludesUserAgentInCspReport()
         {
             const string userAgent = "Opera, of course!";
@@ -112,9 +111,9 @@ namespace NWebsec.Tests.Unit.Csp
                 mockRequest.Setup(r => r.InputStream).Returns(ms);
 
                 CspViolationReport violationReport;
-                Assert.IsTrue(helper.TryGetCspReportFromRequest(mockRequest.Object, out violationReport));
+                Assert.True(helper.TryGetCspReportFromRequest(mockRequest.Object, out violationReport));
                 
-                Assert.AreEqual(userAgent, violationReport.UserAgent);
+                Assert.Equal(userAgent, violationReport.UserAgent);
             }
         }
     }
