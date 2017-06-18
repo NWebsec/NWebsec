@@ -1,5 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
+  <Import Project="..\version.props" />
+  
   <PropertyGroup>
     <TargetFramework>net45</TargetFramework>
     <Description>NWebsec middleware for OWIN applications. NWebsec helps you set important security headers and detect potentially dangerous redirects. See project website for documentation.</Description>
@@ -19,6 +21,20 @@
     <IncludeSymbols>true</IncludeSymbols>
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>git://github.com/NWebsec/NWebsec</RepositoryUrl>
+    <RootNamespace>NWebsec.Owin</RootNamespace>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Owin" Version="1.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\NWebsec.AspNet.Core\NWebsec.AspNet.Core.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="Microsoft.CSharp" />
+  </ItemGroup>
+  
 </Project>

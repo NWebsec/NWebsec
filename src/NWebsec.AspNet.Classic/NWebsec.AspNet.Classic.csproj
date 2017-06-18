@@ -1,5 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
+  <Import Project="..\version.props" />
+  
   <PropertyGroup>
     <TargetFramework>net45</TargetFramework>
     <Description>NWebsec is an easy to use security library for ASP.NET applications. With a few lines of config it lets you set important security headers, detect potentially dangerous redirects, control cache headers, and remove version headers. See project website for documentation.</Description>
@@ -19,10 +21,20 @@
     <IncludeSymbols>true</IncludeSymbols>
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>git://github.com/NWebsec/NWebsec</RepositoryUrl>
+    <RootNamespace>NWebsec</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\NWebsec.Annotations\NWebsec.Annotations.csproj" PrivateAssets="All" />
+    <ProjectReference Include="..\NWebsec.AspNet.Core\NWebsec.AspNet.Core.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Web" />
+    <Reference Include="Microsoft.CSharp" />
+  </ItemGroup>
+ 
 </Project>
