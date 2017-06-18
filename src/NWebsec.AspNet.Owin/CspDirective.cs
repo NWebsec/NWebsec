@@ -29,6 +29,9 @@ namespace NWebsec.Owin
         public bool UnsafeEvalSrc { get; set; }
 
         [EditorBrowsable(EditorBrowsableState.Never)]
+        public bool StrictDynamicSrc { get; set; } //TODO Handle strict-dynamic
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public string Nonce { get; set; }
 
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -3,8 +3,8 @@
 using System;
 using System.Collections.Generic;
 using System.Web.Mvc;
-using NWebsec.Core.HttpHeaders.Configuration;
-using NWebsec.Core.HttpHeaders.Csp;
+using NWebsec.Core.Common.HttpHeaders.Configuration;
+using NWebsec.Core.Common.HttpHeaders.Csp;
 using NWebsec.Mvc.Helpers;
 using NWebsec.Mvc.HttpHeaders.Internals;
 

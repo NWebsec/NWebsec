@@ -1,5 +1,6 @@
 ﻿// Copyright (c) André N. Klingsheim. See License.txt in the project root for license information.
 
+using System;
 using System.Web;
 using NWebsec.Core.Common.HttpHeaders.Configuration;
 

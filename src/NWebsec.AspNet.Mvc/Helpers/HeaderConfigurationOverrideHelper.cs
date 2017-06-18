@@ -2,9 +2,9 @@
 
 using System.Collections.Generic;
 using System.Web;
-using NWebsec.Core.HttpHeaders;
-using NWebsec.Core.HttpHeaders.Configuration;
-using NWebsec.Core.HttpHeaders.Configuration.Validation;
+using NWebsec.Core.Common.HttpHeaders;
+using NWebsec.Core.Common.HttpHeaders.Configuration;
+using NWebsec.Core.Common.HttpHeaders.Configuration.Validation;
 
 namespace NWebsec.Mvc.Helpers
 {

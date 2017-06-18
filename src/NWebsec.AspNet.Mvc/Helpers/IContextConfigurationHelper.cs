@@ -1,7 +1,7 @@
 ﻿// Copyright (c) André N. Klingsheim. See License.txt in the project root for license information.
 
 using System.Web;
-using NWebsec.Core.HttpHeaders.Configuration;
+using NWebsec.Core.Common.HttpHeaders.Configuration;
 using NWebsec.Mvc.Csp;
 
 namespace NWebsec.Mvc.Helpers

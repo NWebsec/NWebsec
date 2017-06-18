@@ -2,8 +2,8 @@
 
 using System;
 using System.Web.Mvc;
-using NWebsec.Core.HttpHeaders;
-using NWebsec.Core.HttpHeaders.Configuration;
+using NWebsec.Core.Common.HttpHeaders;
+using NWebsec.Core.Common.HttpHeaders.Configuration;
 using NWebsec.Mvc.Helpers;
 using NWebsec.Mvc.HttpHeaders.Internals;
 

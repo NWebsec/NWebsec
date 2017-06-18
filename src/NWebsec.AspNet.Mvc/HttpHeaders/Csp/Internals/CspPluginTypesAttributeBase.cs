@@ -2,7 +2,7 @@
 
 using System;
 using System.Web.Mvc;
-using NWebsec.Core.HttpHeaders.Configuration.Validation;
+using NWebsec.Core.Common.HttpHeaders.Configuration.Validation;
 using NWebsec.Mvc.Csp;
 using NWebsec.Mvc.Helpers;
 using NWebsec.Mvc.HttpHeaders.Internals;

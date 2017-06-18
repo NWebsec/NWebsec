@@ -3,7 +3,7 @@
 using System;
 using System.Linq;
 using System.Web.Mvc;
-using NWebsec.Core.HttpHeaders.Csp;
+using NWebsec.Core.Common.HttpHeaders.Csp;
 using NWebsec.Mvc.Csp;
 using NWebsec.Mvc.Helpers;
 using NWebsec.Mvc.HttpHeaders.Internals;

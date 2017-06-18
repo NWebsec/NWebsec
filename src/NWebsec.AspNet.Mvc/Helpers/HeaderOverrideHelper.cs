@@ -2,7 +2,7 @@
 
 using System;
 using System.Web;
-using NWebsec.Core.HttpHeaders;
+using NWebsec.Core.Common.HttpHeaders;
 using NWebsec.Csp;
 using NWebsec.Helpers;
 

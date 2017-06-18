@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using NWebsec.Annotations;
-using NWebsec.Core.HttpHeaders.Configuration;
+using NWebsec.Core.Common.HttpHeaders.Configuration;
 using NWebsec.Mvc.Csp;
 
 namespace NWebsec.Mvc.Helpers
