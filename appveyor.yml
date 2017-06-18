@@ -6,7 +6,7 @@ init:
 - cmd: git config --global core.autocrlf true 
 - cmd: set DOTNET_VERSION_SUFFIX=%APPVEYOR_REPO_BRANCH%-%APPVEYOR_BUILD_NUMBER%
 install:
-- cmd: choco install dotnetcore
+- cmd: choco install dotnetcore --version 1.1.1
 before_build:
 - cmd: dotnet restore NWebsec-CI.sln -v m
 build_script:
