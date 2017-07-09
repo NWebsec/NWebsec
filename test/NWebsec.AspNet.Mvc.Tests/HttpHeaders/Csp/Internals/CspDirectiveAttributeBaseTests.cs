@@ -3,42 +3,41 @@
 using System;
 using System.Collections.Generic;
 using Moq;
-using NUnit.Framework;
 using NWebsec.Mvc.HttpHeaders.Csp;
 using NWebsec.Mvc.HttpHeaders.Csp.Internals;
+using Xunit;
 
-namespace NWebsec.Mvc.Tests.Unit.HttpHeaders.Csp.Internals
+namespace NWebsec.AspNet.Mvc.Tests.HttpHeaders.Csp.Internals
 {
-    [TestFixture]
     public class CspDirectiveAttributeBaseTests
     {
 
-        [Test]
+        [Fact]
         public void ValidateParams_EnabledAndNoDirectives_ThrowsException()
         {
             var cspSandboxAttributeBaseMock = new Mock<CspDirectiveAttributeBase>(MockBehavior.Strict).Object;
             Assert.Throws<ApplicationException>(() => cspSandboxAttributeBaseMock.ValidateParams());
         }
 
-        [Test]
+        [Fact]
         public void ValidateParams_DisabledAndNoDirectives_NoException()
         {
             var cspSandboxAttributeBaseMock = new Mock<CspDirectiveAttributeBase>(MockBehavior.Strict).Object;
             cspSandboxAttributeBaseMock.Enabled = false;
 
-            Assert.DoesNotThrow(() => cspSandboxAttributeBaseMock.ValidateParams());
+            cspSandboxAttributeBaseMock.ValidateParams();
         }
 
-        [Test]
+        [Fact]
         public void ValidateParams_EnabledAndDirectives_NoException()
         {
             foreach (var cspSandboxAttributeBase in ConfiguredAttributes())
             {
-                Assert.DoesNotThrow(() => cspSandboxAttributeBase.ValidateParams());
+                cspSandboxAttributeBase.ValidateParams();
             }
         }
 
-        [Test]
+        [Fact]
         public void ValidateParams_EnabledAndMalconfiguredDirectives_NoException()
         {
             foreach (var cspSandboxAttributeBase in MalconfiguredAttributes())

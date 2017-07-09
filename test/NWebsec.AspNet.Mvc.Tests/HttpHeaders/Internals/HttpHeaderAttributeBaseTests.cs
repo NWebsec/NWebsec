@@ -4,19 +4,17 @@ using System.Collections;
 using System.Web;
 using System.Web.Mvc;
 using Moq;
-using NUnit.Framework;
 using NWebsec.Mvc.HttpHeaders.Internals;
+using Xunit;
 
-namespace NWebsec.Mvc.Tests.Unit.HttpHeaders.Internals
+namespace NWebsec.AspNet.Mvc.Tests.HttpHeaders.Internals
 {
-    [TestFixture]
     public class HttpHeaderAttributeBaseTests
     {
-        private Mock<HttpHeaderAttributeBase> _httpHeaderAttributeBaseMock;
-        private ActionExecutedContext _actionExecutedContext;
+        private readonly Mock<HttpHeaderAttributeBase> _httpHeaderAttributeBaseMock;
+        private readonly ActionExecutedContext _actionExecutedContext;
 
-        [SetUp]
-        public void Setup()
+        public HttpHeaderAttributeBaseTests()
         {
             _httpHeaderAttributeBaseMock = new Mock<HttpHeaderAttributeBase> { CallBase = true };
             var mockContext = new Mock<HttpContextBase>();
@@ -24,7 +22,7 @@ namespace NWebsec.Mvc.Tests.Unit.HttpHeaders.Internals
             _actionExecutedContext = new ActionExecutedContext { HttpContext = mockContext.Object };
         }
 
-        [Test]
+        [Fact]
         public void OnActionExecuted_CallsSetHttpHeadersOnActionExecuted()
         {
 
@@ -33,7 +31,7 @@ namespace NWebsec.Mvc.Tests.Unit.HttpHeaders.Internals
             _httpHeaderAttributeBaseMock.Verify(m => m.SetHttpHeadersOnActionExecuted(_actionExecutedContext), Times.Once);
         }
 
-        [Test]
+        [Fact]
         public void OnActionExecuted_CallsSetHttpHeadersOnceOnMultipleOnActionExecuted()
         {
 
@@ -43,12 +41,12 @@ namespace NWebsec.Mvc.Tests.Unit.HttpHeaders.Internals
             _httpHeaderAttributeBaseMock.Verify(m => m.SetHttpHeadersOnActionExecuted(_actionExecutedContext), Times.Once);
         }
 
-        [Test]
+        [Fact]
         public void ContextKeyIdentifier_ReturnsClassName()
         {
             var testAttribute = new TestHeaderAttribute();
 
-            Assert.AreEqual("TestHeaderAttribute", testAttribute.ContextKeyIdentifier);
+            Assert.Equal("TestHeaderAttribute", testAttribute.ContextKeyIdentifier);
         }
 
         protected class TestHeaderAttribute : HttpHeaderAttributeBase

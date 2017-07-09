@@ -1,32 +1,33 @@
 ﻿// Copyright (c) André N. Klingsheim. See License.txt in the project root for license information.
 
+using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Web;
 using Moq;
-using NUnit.Framework;
 using NWebsec.Core.Common.HttpHeaders;
 using NWebsec.Core.Common.HttpHeaders.Configuration;
 using NWebsec.Csp;
 using NWebsec.Helpers;
 using NWebsec.Mvc.Helpers;
+using Xunit;
 
-namespace NWebsec.Mvc.Tests.Unit.Helpers
+namespace NWebsec.AspNet.Mvc.Tests.Helpers
 {
-    [TestFixture]
     public class HeaderOverrideHelperTests
     {
-        private Mock<IContextConfigurationHelper> _contextHelper;
-        private Mock<IHeaderConfigurationOverrideHelper> _configurationOverrideHelper;
-        private Mock<IHeaderGenerator> _headerGenerator;
-        private Mock<IHeaderResultHandler> _headerResultHandler;
-        private Mock<ICspConfigurationOverrideHelper> _cspConfigurationOverrideHelper;
-        private Mock<ICspReportHelper> _reportHelper;
-        private HeaderOverrideHelper _overrideHelper;
-        private HttpContextBase _mockContext;
-        private HeaderResult _expectedHeaderResult;
+        public static readonly IEnumerable<object> ReportOnly = new TheoryData<bool> { false, true };
 
-        [SetUp]
-        public void Setup()
+        private readonly Mock<IContextConfigurationHelper> _contextHelper;
+        private readonly Mock<IHeaderConfigurationOverrideHelper> _configurationOverrideHelper;
+        private readonly Mock<IHeaderGenerator> _headerGenerator;
+        private readonly Mock<IHeaderResultHandler> _headerResultHandler;
+        private readonly Mock<ICspConfigurationOverrideHelper> _cspConfigurationOverrideHelper;
+        private readonly Mock<ICspReportHelper> _reportHelper;
+        private readonly HeaderOverrideHelper _overrideHelper;
+        private readonly HttpContextBase _mockContext;
+        private readonly HeaderResult _expectedHeaderResult;
+
+        public HeaderOverrideHelperTests()
         {
             _contextHelper = new Mock<IContextConfigurationHelper>(MockBehavior.Strict);
             _configurationOverrideHelper = new Mock<IHeaderConfigurationOverrideHelper>(MockBehavior.Strict);
@@ -49,7 +50,7 @@ namespace NWebsec.Mvc.Tests.Unit.Helpers
             _mockContext = new Mock<HttpContextBase>().Object;
         }
 
-        [Test]
+        [Fact]
         public void SetXRobotsTagHeader_NoOverride_DoesNothing()
         {
             var contextConfig = new XRobotsTagConfiguration();
@@ -62,7 +63,7 @@ namespace NWebsec.Mvc.Tests.Unit.Helpers
             _headerResultHandler.Verify(h => h.HandleHeaderResult(It.IsAny<HttpResponseBase>(), It.IsAny<HeaderResult>()), Times.Never);
         }
 
-        [Test]
+        [Fact]
         public void SetXRobotsTagHeader_Override_CreatesAndHandlesHeaderResult()
         {
             var contextConfig = new XRobotsTagConfiguration();
@@ -76,7 +77,7 @@ namespace NWebsec.Mvc.Tests.Unit.Helpers
             _headerResultHandler.Verify(h => h.HandleHeaderResult(It.IsAny<HttpResponseBase>(), _expectedHeaderResult), Times.Once);
         }
 
-        [Test]
+        [Fact]
         public void SetXFrameoptionsHeader_NoOverride_DoesNothing()
         {
             var contextConfig = new XFrameOptionsConfiguration();
@@ -89,7 +90,7 @@ namespace NWebsec.Mvc.Tests.Unit.Helpers
             _headerResultHandler.Verify(h => h.HandleHeaderResult(It.IsAny<HttpResponseBase>(), It.IsAny<HeaderResult>()), Times.Never);
         }
 
-        [Test]
+        [Fact]
         public void SetXFrameoptionsHeader_Override_CreatesAndHandlesHeaderResult()
         {
             var contextConfig = new XFrameOptionsConfiguration();
@@ -103,7 +104,7 @@ namespace NWebsec.Mvc.Tests.Unit.Helpers
             _headerResultHandler.Verify(h => h.HandleHeaderResult(It.IsAny<HttpResponseBase>(), _expectedHeaderResult), Times.Once);
         }
 
-        [Test]
+        [Fact]
         public void SetXContentTypeOptionsHeader_NoOverride_DoesNothing()
         {
             var contextConfig = new SimpleBooleanConfiguration();
@@ -116,7 +117,7 @@ namespace NWebsec.Mvc.Tests.Unit.Helpers
             _headerResultHandler.Verify(h => h.HandleHeaderResult(It.IsAny<HttpResponseBase>(), It.IsAny<HeaderResult>()), Times.Never);
         }
 
-        [Test]
+        [Fact]
         public void SetXContentTypeOptionsHeader_Override_CreatesAndHandlesHeaderResult()
         {
             var contextConfig = new SimpleBooleanConfiguration();
@@ -130,7 +131,7 @@ namespace NWebsec.Mvc.Tests.Unit.Helpers
             _headerResultHandler.Verify(h => h.HandleHeaderResult(It.IsAny<HttpResponseBase>(), _expectedHeaderResult), Times.Once);
         }
 
-        [Test]
+        [Fact]
         public void SetXDownloadOptionsHeader_NoOverride_DoesNothing()
         {
             var contextConfig = new SimpleBooleanConfiguration();
@@ -143,7 +144,7 @@ namespace NWebsec.Mvc.Tests.Unit.Helpers
             _headerResultHandler.Verify(h => h.HandleHeaderResult(It.IsAny<HttpResponseBase>(), It.IsAny<HeaderResult>()), Times.Never);
         }
 
-        [Test]
+        [Fact]
         public void SetXDownloadOptionsHeader_Override_CreatesAndHandlesHeaderResult()
         {
             var contextConfig = new SimpleBooleanConfiguration();
@@ -157,7 +158,7 @@ namespace NWebsec.Mvc.Tests.Unit.Helpers
             _headerResultHandler.Verify(h => h.HandleHeaderResult(It.IsAny<HttpResponseBase>(), _expectedHeaderResult), Times.Once);
         }
 
-        [Test]
+        [Fact]
         public void SetXXssProtectionHeader_NoOverride_DoesNothing()
         {
             var contextConfig = new XXssProtectionConfiguration();
@@ -170,7 +171,7 @@ namespace NWebsec.Mvc.Tests.Unit.Helpers
             _headerResultHandler.Verify(h => h.HandleHeaderResult(It.IsAny<HttpResponseBase>(), It.IsAny<HeaderResult>()), Times.Never);
         }
 
-        [Test]
+        [Fact]
         public void SetXXssProtectionHeader_Override_CreatesAndHandlesHeaderResult()
         {
             var contextConfig = new XXssProtectionConfiguration();
@@ -184,7 +185,7 @@ namespace NWebsec.Mvc.Tests.Unit.Helpers
             _headerResultHandler.Verify(h => h.HandleHeaderResult(It.IsAny<HttpResponseBase>(), _expectedHeaderResult), Times.Once);
         }
 
-        [Test]
+        [Fact]
         public void SetNoCacheHeaders_NoOverride_DoesNothing()
         {
             //Get ASP.NET stuff in order
@@ -202,10 +203,10 @@ namespace NWebsec.Mvc.Tests.Unit.Helpers
             cachePolicy.Verify(c => c.SetCacheability(It.IsAny<HttpCacheability>()), Times.Never());
             cachePolicy.Verify(c => c.SetNoStore(), Times.Never());
             cachePolicy.Verify(c => c.SetRevalidation(It.IsAny<HttpCacheRevalidation>()), Times.Never());
-            Assert.IsEmpty(responseHeaders);
+            Assert.Empty(responseHeaders);
         }
 
-        [Test]
+        [Fact]
         public void SetNoCacheHeaders_OverrideAndDisabled_DoesNothing()
         {
             //Get ASP.NET stuff in order
@@ -224,10 +225,10 @@ namespace NWebsec.Mvc.Tests.Unit.Helpers
             cachePolicy.Verify(c => c.SetCacheability(It.IsAny<HttpCacheability>()), Times.Never());
             cachePolicy.Verify(c => c.SetNoStore(), Times.Never());
             cachePolicy.Verify(c => c.SetRevalidation(It.IsAny<HttpCacheRevalidation>()), Times.Never());
-            Assert.IsEmpty(responseHeaders);
+            Assert.Empty(responseHeaders);
         }
 
-        [Test]
+        [Fact]
         public void SetNoCacheHeaders_OverrideAndEnabled_SetsCacheHeaders()
         {
             //Get ASP.NET stuff in order
@@ -248,8 +249,8 @@ namespace NWebsec.Mvc.Tests.Unit.Helpers
             cachePolicy.Verify(c => c.SetRevalidation(HttpCacheRevalidation.AllCaches), Times.Once());
         }
 
-        [Test]
-        public void SetCspHeaders_NoOverride_DoesNothing([Values(false, true)] bool reportOnly)
+        [Theory, MemberData(nameof(ReportOnly))]
+        public void SetCspHeaders_NoOverride_DoesNothing(bool reportOnly)
         {
             //Get ASP.NET stuff in order
             var request = new Mock<HttpRequestBase>();
@@ -262,18 +263,18 @@ namespace NWebsec.Mvc.Tests.Unit.Helpers
 
             _overrideHelper.SetCspHeaders(_mockContext, reportOnly);
 
-            _headerGenerator.Verify(g => g.CreateCspResult(It.IsAny<ICspConfiguration>(),reportOnly, It.IsAny<string>(), It.IsAny<ICspConfiguration>()), Times.Never);
+            _headerGenerator.Verify(g => g.CreateCspResult(It.IsAny<ICspConfiguration>(), reportOnly, It.IsAny<string>(), It.IsAny<ICspConfiguration>()), Times.Never);
             _headerResultHandler.Verify(h => h.HandleHeaderResult(It.IsAny<HttpResponseBase>(), It.IsAny<HeaderResult>()), Times.Never);
         }
 
-        [Test]
-        public void SetCspHeaders_Override_CreatesAndHandlesHeaderResult([Values(false, true)] bool reportOnly)
+        [Theory, MemberData(nameof(ReportOnly))]
+        public void SetCspHeaders_Override_CreatesAndHandlesHeaderResult(bool reportOnly)
         {
             //Get ASP.NET stuff in order
             var request = new Mock<HttpRequestBase>();
             request.SetupAllProperties();
             Mock.Get(_mockContext).Setup(c => c.Request).Returns(request.Object);
-            
+
             const string reportUri = "/cspreport";
 
             var contextConfig = new CspConfiguration();

@@ -3,24 +3,22 @@
 using System.Collections.Generic;
 using System.Web;
 using Moq;
-using NUnit.Framework;
 using NWebsec.Core;
 using NWebsec.Core.Common.HttpHeaders.Configuration;
 using NWebsec.Mvc.Csp;
 using NWebsec.Mvc.Helpers;
+using Xunit;
 
-namespace NWebsec.Mvc.Tests.Unit.Helpers
+namespace NWebsec.AspNet.Mvc.Tests.Helpers
 {
-    [TestFixture]
     public class ContextConfigurationHelperTests
     {
-        private NWebsecContext _systemWebContext;
-        private NWebsecContext _owinContext;
-        private HttpContextBase _mockContext;
-        private ContextConfigurationHelper _contextHelper;
+        private readonly NWebsecContext _systemWebContext;
+        private readonly NWebsecContext _owinContext;
+        private readonly HttpContextBase _mockContext;
+        private readonly ContextConfigurationHelper _contextHelper;
 
-        [SetUp]
-        public void Setup()
+        public ContextConfigurationHelperTests()
         {
             _systemWebContext = new NWebsecContext();
             _owinContext = new NWebsecContext();
@@ -41,7 +39,7 @@ namespace NWebsec.Mvc.Tests.Unit.Helpers
 
         }
 
-        [Test]
+        [Fact]
         public void GetXRobotsTagConfiguration_NoOwinContext_ReturnsSystemWebConfig()
         {
             var config = new XRobotsTagConfiguration();
@@ -49,10 +47,10 @@ namespace NWebsec.Mvc.Tests.Unit.Helpers
 
             var result = _contextHelper.GetXRobotsTagConfiguration(_mockContext);
 
-            Assert.AreSame(config, result);
+            Assert.Same(config, result);
         }
 
-        [Test]
+        [Fact]
         public void GetXRobotsTagConfiguration_OwinContextWithoutConfig_ReturnsSystemWebConfig()
         {
             SetupOwinContext();
@@ -61,10 +59,10 @@ namespace NWebsec.Mvc.Tests.Unit.Helpers
 
             var result = _contextHelper.GetXRobotsTagConfiguration(_mockContext);
 
-            Assert.AreSame(config, result);
+            Assert.Same(config, result);
         }
 
-        [Test]
+        [Fact]
         public void GetXRobotsTagConfiguration_HasOwinConfig_ReturnsOwinConfig()
         {
             SetupOwinContext();
@@ -73,10 +71,10 @@ namespace NWebsec.Mvc.Tests.Unit.Helpers
 
             var result = _contextHelper.GetXRobotsTagConfiguration(_mockContext);
 
-            Assert.AreSame(config, result);
+            Assert.Same(config, result);
         }
 
-        [Test]
+        [Fact]
         public void GetXFrameOptionsConfiguration_NoOwinContext_ReturnsSystemWebConfig()
         {
             var config = new XFrameOptionsConfiguration();
@@ -84,10 +82,10 @@ namespace NWebsec.Mvc.Tests.Unit.Helpers
 
             var result = _contextHelper.GetXFrameOptionsConfiguration(_mockContext);
 
-            Assert.AreSame(config, result);
+            Assert.Same(config, result);
         }
 
-        [Test]
+        [Fact]
         public void GetXFrameOptionsConfiguration_OwinContextWithoutConfig_ReturnsSystemWebConfig()
         {
             SetupOwinContext();
@@ -96,10 +94,10 @@ namespace NWebsec.Mvc.Tests.Unit.Helpers
 
             var result = _contextHelper.GetXFrameOptionsConfiguration(_mockContext);
 
-            Assert.AreSame(config, result);
+            Assert.Same(config, result);
         }
 
-        [Test]
+        [Fact]
         public void GetXFrameOptionsConfiguration_HasOwinConfig_ReturnsOwinConfig()
         {
             SetupOwinContext();
@@ -108,10 +106,10 @@ namespace NWebsec.Mvc.Tests.Unit.Helpers
 
             var result = _contextHelper.GetXFrameOptionsConfiguration(_mockContext);
 
-            Assert.AreSame(config, result);
+            Assert.Same(config, result);
         }
 
-        [Test]
+        [Fact]
         public void GetXContentTypeOptionsConfiguration_NoOwinContext_ReturnsSystemWebConfig()
         {
             var config = new SimpleBooleanConfiguration();
@@ -119,10 +117,10 @@ namespace NWebsec.Mvc.Tests.Unit.Helpers
 
             var result = _contextHelper.GetXContentTypeOptionsConfiguration(_mockContext);
 
-            Assert.AreSame(config, result);
+            Assert.Same(config, result);
         }
 
-        [Test]
+        [Fact]
         public void GetXContentTypeOptionsConfiguration_OwinContextWithoutConfig_ReturnsSystemWebConfig()
         {
             SetupOwinContext();
@@ -131,10 +129,10 @@ namespace NWebsec.Mvc.Tests.Unit.Helpers
 
             var result = _contextHelper.GetXContentTypeOptionsConfiguration(_mockContext);
 
-            Assert.AreSame(config, result);
+            Assert.Same(config, result);
         }
 
-        [Test]
+        [Fact]
         public void GetXContentTypeOptionsConfiguration_HasOwinConfig_ReturnsOwinConfig()
         {
             SetupOwinContext();
@@ -143,10 +141,10 @@ namespace NWebsec.Mvc.Tests.Unit.Helpers
 
             var result = _contextHelper.GetXContentTypeOptionsConfiguration(_mockContext);
 
-            Assert.AreSame(config, result);
+            Assert.Same(config, result);
         }
 
-        [Test]
+        [Fact]
         public void GetXDownloadOptionsConfiguration_NoOwinContext_ReturnsSystemWebConfig()
         {
             var config = new SimpleBooleanConfiguration();
@@ -154,10 +152,10 @@ namespace NWebsec.Mvc.Tests.Unit.Helpers
 
             var result = _contextHelper.GetXDownloadOptionsConfiguration(_mockContext);
 
-            Assert.AreSame(config, result);
+            Assert.Same(config, result);
         }
 
-        [Test]
+        [Fact]
         public void GetXDownloadOptionsConfiguration_OwinContextWithoutConfig_ReturnsSystemWebConfig()
         {
             SetupOwinContext();
@@ -166,10 +164,10 @@ namespace NWebsec.Mvc.Tests.Unit.Helpers
 
             var result = _contextHelper.GetXDownloadOptionsConfiguration(_mockContext);
 
-            Assert.AreSame(config, result);
+            Assert.Same(config, result);
         }
 
-        [Test]
+        [Fact]
         public void GetXDownloadOptionsConfiguration_HasOwinConfig_ReturnsOwinConfig()
         {
             SetupOwinContext();
@@ -178,10 +176,10 @@ namespace NWebsec.Mvc.Tests.Unit.Helpers
 
             var result = _contextHelper.GetXDownloadOptionsConfiguration(_mockContext);
 
-            Assert.AreSame(config, result);
+            Assert.Same(config, result);
         }
 
-        [Test]
+        [Fact]
         public void GetXXssProtectionConfiguration_NoOwinContext_ReturnsSystemWebConfig()
         {
             var config = new XXssProtectionConfiguration();
@@ -189,10 +187,10 @@ namespace NWebsec.Mvc.Tests.Unit.Helpers
 
             var result = _contextHelper.GetXXssProtectionConfiguration(_mockContext);
 
-            Assert.AreSame(config, result);
+            Assert.Same(config, result);
         }
 
-        [Test]
+        [Fact]
         public void GetXXssProtectionConfiguration_OwinContextWithoutConfig_ReturnsSystemWebConfig()
         {
             SetupOwinContext();
@@ -201,10 +199,10 @@ namespace NWebsec.Mvc.Tests.Unit.Helpers
 
             var result = _contextHelper.GetXXssProtectionConfiguration(_mockContext);
 
-            Assert.AreSame(config, result);
+            Assert.Same(config, result);
         }
 
-        [Test]
+        [Fact]
         public void GetXXssProtectionConfiguration_HasOwinConfig_ReturnsOwinConfig()
         {
             SetupOwinContext();
@@ -213,10 +211,10 @@ namespace NWebsec.Mvc.Tests.Unit.Helpers
 
             var result = _contextHelper.GetXXssProtectionConfiguration(_mockContext);
 
-            Assert.AreSame(config, result);
+            Assert.Same(config, result);
         }
 
-        [Test]
+        [Fact]
         public void GetCspConfiguration_NoOwinContext_ReturnsSystemWebConfig()
         {
             var config = new CspConfiguration();
@@ -224,10 +222,10 @@ namespace NWebsec.Mvc.Tests.Unit.Helpers
 
             var result = _contextHelper.GetCspConfiguration(_mockContext, false);
 
-            Assert.AreSame(config, result);
+            Assert.Same(config, result);
         }
 
-        [Test]
+        [Fact]
         public void GetCspConfiguration_OwinContextWithoutConfig_ReturnsSystemWebConfig()
         {
             SetupOwinContext();
@@ -236,10 +234,10 @@ namespace NWebsec.Mvc.Tests.Unit.Helpers
 
             var result = _contextHelper.GetCspConfiguration(_mockContext, false);
 
-            Assert.AreSame(config, result);
+            Assert.Same(config, result);
         }
 
-        [Test]
+        [Fact]
         public void GetCspConfiguration_HasOwinConfig_ReturnsOwinConfig()
         {
             SetupOwinContext();
@@ -248,10 +246,10 @@ namespace NWebsec.Mvc.Tests.Unit.Helpers
 
             var result = _contextHelper.GetCspConfiguration(_mockContext, false);
 
-            Assert.AreSame(config, result);
+            Assert.Same(config, result);
         }
 
-        [Test]
+        [Fact]
         public void GetCspReportonlyConfiguration_NoOwinContext_ReturnsSystemWebConfig()
         {
             var config = new CspConfiguration();
@@ -259,10 +257,10 @@ namespace NWebsec.Mvc.Tests.Unit.Helpers
 
             var result = _contextHelper.GetCspConfiguration(_mockContext, true);
 
-            Assert.AreSame(config, result);
+            Assert.Same(config, result);
         }
 
-        [Test]
+        [Fact]
         public void GetCspReportonlyConfiguration_OwinContextWithoutConfig_ReturnsSystemWebConfig()
         {
             SetupOwinContext();
@@ -271,10 +269,10 @@ namespace NWebsec.Mvc.Tests.Unit.Helpers
 
             var result = _contextHelper.GetCspConfiguration(_mockContext, true);
 
-            Assert.AreSame(config, result);
+            Assert.Same(config, result);
         }
 
-        [Test]
+        [Fact]
         public void GetCspReportonlyConfiguration_HasOwinConfig_ReturnsOwinConfig()
         {
             SetupOwinContext();
@@ -283,45 +281,45 @@ namespace NWebsec.Mvc.Tests.Unit.Helpers
 
             var result = _contextHelper.GetCspConfiguration(_mockContext, true);
 
-            Assert.AreSame(config, result);
+            Assert.Same(config, result);
         }
 
-        [Test]
+        [Fact]
         public void GetCspConfigurationOverride_AllowNull_ReturnsNull()
         {
             var result = _contextHelper.GetCspConfigurationOverride(_mockContext, false, true);
 
-            Assert.IsNull(result);
+            Assert.Null(result);
         }
 
-        [Test]
+        [Fact]
         public void GetCspReportOnlyConfigurationOverride_AllowNull_ReturnsNull()
         {
             var result = _contextHelper.GetCspConfigurationOverride(_mockContext, true, true);
 
-            Assert.IsNull(result);
+            Assert.Null(result);
         }
 
-        [Test]
+        [Fact]
         public void GetCspConfigurationOverride_NotAllowNull_ReturnsOverrideConfig()
         {
             var result = _contextHelper.GetCspConfigurationOverride(_mockContext, false, false);
 
-            Assert.IsNotNull(result);
-            Assert.AreSame(_systemWebContext.ConfigOverrides.CspOverride, result);
+            Assert.NotNull(result);
+            Assert.Same(_systemWebContext.ConfigOverrides.CspOverride, result);
         }
 
-        [Test]
+        [Fact]
         public void GetCspReportOnlyConfigurationOverride_NotAllowNull_ReturnsOverrideConfig()
         {
             var result = _contextHelper.GetCspConfigurationOverride(_mockContext, true, false);
 
-            Assert.IsNotNull(result);
-            Assert.AreSame(_systemWebContext.ConfigOverrides.CspReportOnlyOverride, result);
+            Assert.NotNull(result);
+            Assert.Same(_systemWebContext.ConfigOverrides.CspReportOnlyOverride, result);
         }
 
-        [Test]
-        public void GetCspConfigurationOverride_HasOverrideConfig_ReturnsExistingConfig([Values(false, true)] bool allowNull)
+        [Theory, InlineData(false), InlineData(true)]
+        public void GetCspConfigurationOverride_HasOverrideConfig_ReturnsExistingConfig(bool allowNull)
         {
             var cspOverrideConfig = new CspOverrideConfiguration();
             var cspReportOnlyOverrideConfig = new CspOverrideConfiguration();
@@ -331,8 +329,8 @@ namespace NWebsec.Mvc.Tests.Unit.Helpers
             var cspResult = _contextHelper.GetCspConfigurationOverride(_mockContext, false, allowNull);
             var cspReportOnlyResult = _contextHelper.GetCspConfigurationOverride(_mockContext, true, allowNull);
 
-            Assert.AreSame(cspOverrideConfig, cspResult);
-            Assert.AreSame(cspReportOnlyOverrideConfig, cspReportOnlyResult);
+            Assert.Same(cspOverrideConfig, cspResult);
+            Assert.Same(cspReportOnlyOverrideConfig, cspReportOnlyResult);
         }
     }
 }

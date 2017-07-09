@@ -1,46 +1,44 @@
 // Copyright (c) André N. Klingsheim. See License.txt in the project root for license information.
 
 using System.Linq;
-using NUnit.Framework;
+using NWebsec.AspNet.Mvc.Tests.TestHelpers;
 using NWebsec.Core.Common.HttpHeaders.Configuration;
 using NWebsec.Mvc.Csp;
 using NWebsec.Mvc.Helpers;
-using NWebsec.Mvc.Tests.Unit.TestHelpers;
+using Xunit;
 
-namespace NWebsec.Mvc.Tests.Unit.Helpers
+namespace NWebsec.AspNet.Mvc.Tests.Helpers
 {
-    [TestFixture]
     public class CspConfigMapperTests
     {
-        private CspConfigMapper _mapper;
+        private readonly CspConfigMapper _mapper;
 
-        [SetUp]
-        public void Setup()
+        public CspConfigMapperTests()
         {
             _mapper = new CspConfigMapper();
         }
 
-        [Test]
-        public void GetCspDirectiveConfig_CommonCspDirectives_NoException([ValueSource(typeof(CspCommonDirectives), nameof(CspCommonDirectives.Directives))] CspDirectives directive)
+        [Theory, ClassData(typeof(CspCommonDirectivesData))]
+        public void GetCspDirectiveConfig_CommonCspDirectives_NoException(CspDirectives directive)
         {
             var config = new CspConfiguration();
 
-            Assert.DoesNotThrow(() => _mapper.GetCspDirectiveConfig(config, directive));
+            _mapper.GetCspDirectiveConfig(config, directive);
         }
 
-        [Test]
-        public void SetCspDirectiveConfig_CommonCspDirectives_NoException([ValueSource(typeof(CspCommonDirectives), nameof(CspCommonDirectives.Directives))] CspDirectives directive)
+        [Theory, ClassData(typeof(CspCommonDirectivesData))]
+        public void SetCspDirectiveConfig_CommonCspDirectives_NoException(CspDirectives directive)
         {
             var config = new CspConfiguration();
             var directiveConfig = new CspDirectiveConfiguration();
 
-            Assert.DoesNotThrow(() => _mapper.SetCspDirectiveConfig(config, directive, directiveConfig));
+            _mapper.SetCspDirectiveConfig(config, directive, directiveConfig);
         }
 
-        [Test]
+        [Fact]
         public void GetCspDirectiveConfig_DirectiveSet_ReturnsDirective()
         {
-            var directives = CspCommonDirectives.Directives().ToArray();
+            var directives = new CspCommonDirectives().ToArray();
             var config = new CspConfiguration(false);
 
             foreach (var directive in directives)
@@ -51,12 +49,12 @@ namespace NWebsec.Mvc.Tests.Unit.Helpers
             foreach (var directive in directives)
             {
                 var directiveConfig = _mapper.GetCspDirectiveConfig(config, directive);
-                Assert.IsNotNull(directiveConfig);
-                Assert.AreEqual(directive.ToString(), directiveConfig.Nonce);
+                Assert.NotNull(directiveConfig);
+                Assert.Equal(directive.ToString(), directiveConfig.Nonce);
             }
         }
 
-        [Test]
+        [Fact]
         public void GetCspDirectiveConfigCloned_NoDirective_ReturnsNull()
         {
             var config = new CspConfiguration(false);
@@ -64,10 +62,10 @@ namespace NWebsec.Mvc.Tests.Unit.Helpers
 
             var clone = mapper.GetCspDirectiveConfigCloned(config, CspDirectives.ScriptSrc);
 
-            Assert.IsNull(clone);
+            Assert.Null(clone);
         }
 
-        [Test]
+        [Fact]
         public void GetCspDirectiveConfigCloned_DefaultDirective_ClonesDirective()
         {
             var directive = new CspDirectiveConfiguration();
@@ -78,11 +76,11 @@ namespace NWebsec.Mvc.Tests.Unit.Helpers
             var clone = mapper.GetCspDirectiveConfigCloned(config, CspDirectives.ScriptSrc);
 
 
-            Assert.AreNotSame(directive, clone);
-            Assert.That(clone, Is.EqualTo(directive).Using(new CspDirectiveConfigurationComparer()));
+            Assert.NotSame(directive, clone);
+            Assert.Equal(directive, clone, new CspDirectiveConfigurationEqualityComparer());
         }
 
-        [Test]
+        [Fact]
         public void GetCspDirectiveConfigCloned_Configured_ClonesDirective()
         {
             var directive = new CspDirectiveConfiguration
@@ -100,11 +98,11 @@ namespace NWebsec.Mvc.Tests.Unit.Helpers
 
             var clone = mapper.GetCspDirectiveConfigCloned(config, CspDirectives.ScriptSrc);
 
-            Assert.AreNotSame(directive, clone);
-            Assert.That(clone, Is.EqualTo(directive).Using(new CspDirectiveConfigurationComparer()));
+            Assert.NotSame(directive, clone);
+            Assert.Equal(directive, clone, new CspDirectiveConfigurationEqualityComparer());
         }
 
-        [Test]
+        [Fact]
         public void GetCspPluginTypesConfigCloned_NoDirective_ReturnsNull()
         {
             var config = new CspConfiguration(false);
@@ -112,10 +110,10 @@ namespace NWebsec.Mvc.Tests.Unit.Helpers
 
             var clone = mapper.GetCspPluginTypesConfigCloned(config);
 
-            Assert.IsNull(clone);
+            Assert.Null(clone);
         }
 
-        [Test]
+        [Fact]
         public void GetCspPluginTypesConfigCloned_Configured_ClonesDirective()
         {
             var firstDirective = new CspPluginTypesDirectiveConfiguration()
@@ -136,11 +134,11 @@ namespace NWebsec.Mvc.Tests.Unit.Helpers
             var firstResult = mapper.GetCspPluginTypesConfigCloned(firstConfig);
             var secondResult = mapper.GetCspPluginTypesConfigCloned(secondConfig);
 
-            Assert.That(firstResult, Is.EqualTo(firstDirective).Using(new CspPluginTypesDirectiveConfigurationComparer()));
-            Assert.That(secondResult, Is.EqualTo(secondDirective).Using(new CspPluginTypesDirectiveConfigurationComparer()));
+            Assert.Equal(firstDirective, firstResult, new CspPluginTypesDirectiveConfigurationEqualityComparer());
+            Assert.Equal(secondDirective, secondResult, new CspPluginTypesDirectiveConfigurationEqualityComparer());
         }
 
-        [Test]
+        [Fact]
         public void GetCspSandboxConfigCloned_NoDirective_ReturnsNull()
         {
             var config = new CspConfiguration(false);
@@ -148,10 +146,10 @@ namespace NWebsec.Mvc.Tests.Unit.Helpers
 
             var clone = mapper.GetCspSandboxConfigCloned(config);
 
-            Assert.IsNull(clone);
+            Assert.Null(clone);
         }
 
-        [Test]
+        [Fact]
         public void GetCspSandboxConfigCloned_Configured_ClonesDirective()
         {
             var firstDirective = new CspSandboxDirectiveConfiguration
@@ -178,11 +176,11 @@ namespace NWebsec.Mvc.Tests.Unit.Helpers
             var firstResult = mapper.GetCspSandboxConfigCloned(firstConfig);
             var secondResult = mapper.GetCspSandboxConfigCloned(secondConfig);
 
-            Assert.That(firstResult, Is.EqualTo(firstDirective).Using(new CspSandboxDirectiveConfigurationComparer()));
-            Assert.That(secondResult, Is.EqualTo(secondDirective).Using(new CspSandboxDirectiveConfigurationComparer()));
+            Assert.Equal(firstDirective, firstResult, new CspSandboxDirectiveConfigurationEqualityComparer());
+            Assert.Equal(secondDirective, secondResult, new CspSandboxDirectiveConfigurationEqualityComparer());
         }
 
-        [Test]
+        [Fact]
         public void GetCspMixedContentConfigCloned_NoDirective_ReturnsNull()
         {
             var config = new CspConfiguration(false);
@@ -190,11 +188,11 @@ namespace NWebsec.Mvc.Tests.Unit.Helpers
 
             var clone = mapper.GetCspMixedContentConfigCloned(config);
 
-            Assert.IsNull(clone);
+            Assert.Null(clone);
         }
 
-        [TestCase(true)]
-        [TestCase(false)]
+        [Theory]
+        [InlineData(true), InlineData(false)]
         public void GetCspMixedContentConfigCloned_Configured_ClonesDirective(bool enabled)
         {
             var directive = new CspMixedContentDirectiveConfiguration { Enabled = enabled };
@@ -204,12 +202,12 @@ namespace NWebsec.Mvc.Tests.Unit.Helpers
 
             var result = mapper.GetCspMixedContentConfigCloned(cspConfig);
 
-            Assert.IsNotNull(result);
-            Assert.AreNotSame(directive, result);
-            Assert.AreEqual(directive.Enabled, result.Enabled);
+            Assert.NotNull(result);
+            Assert.NotSame(directive, result);
+            Assert.Equal(directive.Enabled, result.Enabled);
         }
 
-        [Test]
+        [Fact]
         public void MergeConfiguration_SourceAndTargetDirectivesNotConfigured_MergesHeaderAttributesAndInitializesDirectives()
         {
             var sourceConfig = new CspConfiguration(false) { Enabled = false };
@@ -217,23 +215,23 @@ namespace NWebsec.Mvc.Tests.Unit.Helpers
 
             _mapper.MergeConfiguration(sourceConfig, destinationConfig);
 
-            var directives = CspCommonDirectives.Directives().ToArray();
+            var directives = new CspCommonDirectives().ToArray();
 
-            Assert.IsFalse(destinationConfig.Enabled);
+            Assert.False(destinationConfig.Enabled);
 
             foreach (var directive in directives)
             {
-                Assert.IsNotNull(_mapper.GetCspDirectiveConfig(destinationConfig, directive));
+                Assert.NotNull(_mapper.GetCspDirectiveConfig(destinationConfig, directive));
             }
 
-            Assert.IsNotNull(destinationConfig.PluginTypesDirective);
-            Assert.IsNotNull(destinationConfig.SandboxDirective);
-            Assert.IsNotNull(destinationConfig.UpgradeInsecureRequestsDirective);
-            Assert.IsNotNull(destinationConfig.MixedContentDirective);
-            Assert.IsNotNull(destinationConfig.ReportUriDirective);
+            Assert.NotNull(destinationConfig.PluginTypesDirective);
+            Assert.NotNull(destinationConfig.SandboxDirective);
+            Assert.NotNull(destinationConfig.UpgradeInsecureRequestsDirective);
+            Assert.NotNull(destinationConfig.MixedContentDirective);
+            Assert.NotNull(destinationConfig.ReportUriDirective);
         }
 
-        [Test]
+        [Fact]
         public void MergeConfiguration_SourceDirectivesConfiguredAndTargetUninitialized_MergesHeaderAttributesAndSourceDirectives()
         {
             var sourceConfig = new CspConfiguration { Enabled = false };
@@ -241,26 +239,26 @@ namespace NWebsec.Mvc.Tests.Unit.Helpers
 
             _mapper.MergeConfiguration(sourceConfig, destinationConfig);
 
-            var directives = CspCommonDirectives.Directives().ToArray();
+            var directives = new CspCommonDirectives().ToArray();
 
-            Assert.IsFalse(destinationConfig.Enabled);
+            Assert.False(destinationConfig.Enabled);
 
             foreach (var directive in directives)
             {
-                Assert.AreSame(_mapper.GetCspDirectiveConfig(sourceConfig, directive), _mapper.GetCspDirectiveConfig(destinationConfig, directive));
+                Assert.Same(_mapper.GetCspDirectiveConfig(sourceConfig, directive), _mapper.GetCspDirectiveConfig(destinationConfig, directive));
             }
 
-            Assert.AreSame(sourceConfig.PluginTypesDirective, destinationConfig.PluginTypesDirective);
-            Assert.AreSame(sourceConfig.SandboxDirective, destinationConfig.SandboxDirective);
-            Assert.AreSame(sourceConfig.UpgradeInsecureRequestsDirective, destinationConfig.UpgradeInsecureRequestsDirective);
-            Assert.AreSame(sourceConfig.MixedContentDirective, destinationConfig.MixedContentDirective);
-            Assert.AreSame(sourceConfig.ReportUriDirective, destinationConfig.ReportUriDirective);
+            Assert.Same(sourceConfig.PluginTypesDirective, destinationConfig.PluginTypesDirective);
+            Assert.Same(sourceConfig.SandboxDirective, destinationConfig.SandboxDirective);
+            Assert.Same(sourceConfig.UpgradeInsecureRequestsDirective, destinationConfig.UpgradeInsecureRequestsDirective);
+            Assert.Same(sourceConfig.MixedContentDirective, destinationConfig.MixedContentDirective);
+            Assert.Same(sourceConfig.ReportUriDirective, destinationConfig.ReportUriDirective);
         }
 
-        [Test]
+        [Fact]
         public void MergeConfiguration_SourceDirectivesMissingAndTargetDirectivesConfigured_MergesHeaderAttributesAndKeepsTargetDirectives()
         {
-            var directives = CspCommonDirectives.Directives().ToArray();
+            var directives = new CspCommonDirectives().ToArray();
 
             var sourceConfig = new CspConfiguration(false) { Enabled = false };
             var destinationConfig = new CspConfiguration { Enabled = true };
@@ -281,21 +279,21 @@ namespace NWebsec.Mvc.Tests.Unit.Helpers
 
             _mapper.MergeConfiguration(sourceConfig, destinationConfig);
 
-            Assert.IsFalse(destinationConfig.Enabled);
+            Assert.False(destinationConfig.Enabled);
 
             foreach (var directive in directives)
             {
-                Assert.AreSame(_mapper.GetCspDirectiveConfig(expectedConfig, directive), _mapper.GetCspDirectiveConfig(destinationConfig, directive));
+                Assert.Same(_mapper.GetCspDirectiveConfig(expectedConfig, directive), _mapper.GetCspDirectiveConfig(destinationConfig, directive));
             }
 
-            Assert.AreSame(expectedConfig.PluginTypesDirective, destinationConfig.PluginTypesDirective);
-            Assert.AreSame(expectedConfig.SandboxDirective, destinationConfig.SandboxDirective);
-            Assert.AreSame(expectedConfig.UpgradeInsecureRequestsDirective, destinationConfig.UpgradeInsecureRequestsDirective);
-            Assert.AreSame(expectedConfig.MixedContentDirective, destinationConfig.MixedContentDirective);
-            Assert.AreSame(expectedConfig.ReportUriDirective, destinationConfig.ReportUriDirective);
+            Assert.Same(expectedConfig.PluginTypesDirective, destinationConfig.PluginTypesDirective);
+            Assert.Same(expectedConfig.SandboxDirective, destinationConfig.SandboxDirective);
+            Assert.Same(expectedConfig.UpgradeInsecureRequestsDirective, destinationConfig.UpgradeInsecureRequestsDirective);
+            Assert.Same(expectedConfig.MixedContentDirective, destinationConfig.MixedContentDirective);
+            Assert.Same(expectedConfig.ReportUriDirective, destinationConfig.ReportUriDirective);
         }
 
-        [Test]
+        [Fact]
         public void MergeConfiguration_SourceAndTargetDirectivesConfigured_MergesHeaderAttributesAndSourceDirectives()
         {
             var sourceConfig = new CspConfiguration { Enabled = false };
@@ -303,23 +301,23 @@ namespace NWebsec.Mvc.Tests.Unit.Helpers
 
             _mapper.MergeConfiguration(sourceConfig, destinationConfig);
 
-            var directives = CspCommonDirectives.Directives().ToArray();
+            var directives = new CspCommonDirectives().ToArray();
 
-            Assert.IsFalse(destinationConfig.Enabled);
+            Assert.False(destinationConfig.Enabled);
 
             foreach (var directive in directives)
             {
-                Assert.AreSame(_mapper.GetCspDirectiveConfig(sourceConfig, directive), _mapper.GetCspDirectiveConfig(destinationConfig, directive));
+                Assert.Same(_mapper.GetCspDirectiveConfig(sourceConfig, directive), _mapper.GetCspDirectiveConfig(destinationConfig, directive));
             }
 
-            Assert.AreSame(sourceConfig.PluginTypesDirective, destinationConfig.PluginTypesDirective);
-            Assert.AreSame(sourceConfig.SandboxDirective, destinationConfig.SandboxDirective);
-            Assert.AreSame(sourceConfig.UpgradeInsecureRequestsDirective, destinationConfig.UpgradeInsecureRequestsDirective);
-            Assert.AreSame(sourceConfig.MixedContentDirective, destinationConfig.MixedContentDirective);
-            Assert.AreSame(sourceConfig.ReportUriDirective, destinationConfig.ReportUriDirective);
+            Assert.Same(sourceConfig.PluginTypesDirective, destinationConfig.PluginTypesDirective);
+            Assert.Same(sourceConfig.SandboxDirective, destinationConfig.SandboxDirective);
+            Assert.Same(sourceConfig.UpgradeInsecureRequestsDirective, destinationConfig.UpgradeInsecureRequestsDirective);
+            Assert.Same(sourceConfig.MixedContentDirective, destinationConfig.MixedContentDirective);
+            Assert.Same(sourceConfig.ReportUriDirective, destinationConfig.ReportUriDirective);
         }
 
-        [Test]
+        [Fact]
         public void MergeOverrides_HeaderAndDirectivesNotConfigured_InitializesDirectives()
         {
             var sourceConfig = new CspOverrideConfiguration { Enabled = false, EnabledOverride = false };
@@ -327,23 +325,23 @@ namespace NWebsec.Mvc.Tests.Unit.Helpers
 
             _mapper.MergeOverrides(sourceConfig, destinationConfig);
 
-            var directives = CspCommonDirectives.Directives().ToArray();
+            var directives = new CspCommonDirectives().ToArray();
 
-            Assert.IsTrue(destinationConfig.Enabled);
+            Assert.True(destinationConfig.Enabled);
 
             foreach (var directive in directives)
             {
-                Assert.IsNotNull(_mapper.GetCspDirectiveConfig(destinationConfig, directive));
+                Assert.NotNull(_mapper.GetCspDirectiveConfig(destinationConfig, directive));
             }
 
-            Assert.IsNotNull(destinationConfig.PluginTypesDirective);
-            Assert.IsNotNull(destinationConfig.SandboxDirective);
-            Assert.IsNotNull(destinationConfig.UpgradeInsecureRequestsDirective);
-            Assert.IsNotNull(destinationConfig.MixedContentDirective);
-            Assert.IsNotNull(destinationConfig.ReportUriDirective);
+            Assert.NotNull(destinationConfig.PluginTypesDirective);
+            Assert.NotNull(destinationConfig.SandboxDirective);
+            Assert.NotNull(destinationConfig.UpgradeInsecureRequestsDirective);
+            Assert.NotNull(destinationConfig.MixedContentDirective);
+            Assert.NotNull(destinationConfig.ReportUriDirective);
         }
 
-        [Test]
+        [Fact]
         public void MergeOverrides_HeaderConfiguredAndDirectivesNotConfigured_MergesHeaderConfigAndInitializesDirectives()
         {
             var sourceConfig = new CspOverrideConfiguration { Enabled = false, EnabledOverride = true };
@@ -351,26 +349,26 @@ namespace NWebsec.Mvc.Tests.Unit.Helpers
 
             _mapper.MergeOverrides(sourceConfig, destinationConfig);
 
-            var directives = CspCommonDirectives.Directives().ToArray();
+            var directives = new CspCommonDirectives().ToArray();
 
-            Assert.IsFalse(destinationConfig.Enabled);
+            Assert.False(destinationConfig.Enabled);
 
             foreach (var directive in directives)
             {
-                Assert.IsNotNull(_mapper.GetCspDirectiveConfig(destinationConfig, directive));
+                Assert.NotNull(_mapper.GetCspDirectiveConfig(destinationConfig, directive));
             }
 
-            Assert.IsNotNull(destinationConfig.PluginTypesDirective);
-            Assert.IsNotNull(destinationConfig.SandboxDirective);
-            Assert.IsNotNull(destinationConfig.UpgradeInsecureRequestsDirective);
-            Assert.IsNotNull(destinationConfig.MixedContentDirective);
-            Assert.IsNotNull(destinationConfig.ReportUriDirective);
+            Assert.NotNull(destinationConfig.PluginTypesDirective);
+            Assert.NotNull(destinationConfig.SandboxDirective);
+            Assert.NotNull(destinationConfig.UpgradeInsecureRequestsDirective);
+            Assert.NotNull(destinationConfig.MixedContentDirective);
+            Assert.NotNull(destinationConfig.ReportUriDirective);
         }
 
-        [Test]
+        [Fact]
         public void MergeOverrides_HeaderNotConfiguredAndDirectivesConfigured_MergesDirectives()
         {
-            var directives = CspCommonDirectives.Directives().ToArray();
+            var directives = new CspCommonDirectives().ToArray();
             var sourceConfig = new CspOverrideConfiguration { Enabled = false, EnabledOverride = false };
             foreach (var directive in directives)
             {
@@ -386,26 +384,26 @@ namespace NWebsec.Mvc.Tests.Unit.Helpers
 
             _mapper.MergeOverrides(sourceConfig, destinationConfig);
 
-            Assert.IsTrue(destinationConfig.Enabled);
+            Assert.True(destinationConfig.Enabled);
 
             foreach (var directive in directives)
             {
                 var directiveConfig = _mapper.GetCspDirectiveConfig(destinationConfig, directive);
-                Assert.IsNotNull(directiveConfig);
-                Assert.AreEqual(directive.ToString(), directiveConfig.Nonce);
+                Assert.NotNull(directiveConfig);
+                Assert.Equal(directive.ToString(), directiveConfig.Nonce);
             }
 
-            Assert.AreSame(sourceConfig.PluginTypesDirective, destinationConfig.PluginTypesDirective);
-            Assert.AreSame(sourceConfig.SandboxDirective, destinationConfig.SandboxDirective);
-            Assert.AreSame(sourceConfig.UpgradeInsecureRequestsDirective, destinationConfig.UpgradeInsecureRequestsDirective);
-            Assert.AreSame(sourceConfig.MixedContentDirective, destinationConfig.MixedContentDirective);
-            Assert.AreSame(sourceConfig.ReportUriDirective, destinationConfig.ReportUriDirective);
+            Assert.Same(sourceConfig.PluginTypesDirective, destinationConfig.PluginTypesDirective);
+            Assert.Same(sourceConfig.SandboxDirective, destinationConfig.SandboxDirective);
+            Assert.Same(sourceConfig.UpgradeInsecureRequestsDirective, destinationConfig.UpgradeInsecureRequestsDirective);
+            Assert.Same(sourceConfig.MixedContentDirective, destinationConfig.MixedContentDirective);
+            Assert.Same(sourceConfig.ReportUriDirective, destinationConfig.ReportUriDirective);
         }
 
-        [Test]
+        [Fact]
         public void MergeOverrides_HeaderConfiguredAndDirectivesConfigured_MergesHeaderAndDirectives()
         {
-            var directives = CspCommonDirectives.Directives().ToArray();
+            var directives = new CspCommonDirectives().ToArray();
             var sourceConfig = new CspOverrideConfiguration { Enabled = false, EnabledOverride = true };
             foreach (var directive in directives)
             {
@@ -421,20 +419,20 @@ namespace NWebsec.Mvc.Tests.Unit.Helpers
 
             _mapper.MergeOverrides(sourceConfig, destinationConfig);
 
-            Assert.IsFalse(destinationConfig.Enabled);
+            Assert.False(destinationConfig.Enabled);
 
             foreach (var directive in directives)
             {
                 var directiveConfig = _mapper.GetCspDirectiveConfig(destinationConfig, directive);
-                Assert.IsNotNull(directiveConfig);
-                Assert.AreEqual(directive.ToString(), directiveConfig.Nonce);
+                Assert.NotNull(directiveConfig);
+                Assert.Equal(directive.ToString(), directiveConfig.Nonce);
             }
 
-            Assert.AreSame(sourceConfig.PluginTypesDirective, destinationConfig.PluginTypesDirective);
-            Assert.AreSame(sourceConfig.SandboxDirective, destinationConfig.SandboxDirective);
-            Assert.AreSame(sourceConfig.UpgradeInsecureRequestsDirective, destinationConfig.UpgradeInsecureRequestsDirective);
-            Assert.AreSame(sourceConfig.MixedContentDirective, destinationConfig.MixedContentDirective);
-            Assert.AreSame(sourceConfig.ReportUriDirective, destinationConfig.ReportUriDirective);
+            Assert.Same(sourceConfig.PluginTypesDirective, destinationConfig.PluginTypesDirective);
+            Assert.Same(sourceConfig.SandboxDirective, destinationConfig.SandboxDirective);
+            Assert.Same(sourceConfig.UpgradeInsecureRequestsDirective, destinationConfig.UpgradeInsecureRequestsDirective);
+            Assert.Same(sourceConfig.MixedContentDirective, destinationConfig.MixedContentDirective);
+            Assert.Same(sourceConfig.ReportUriDirective, destinationConfig.ReportUriDirective);
         }
     }
 }
