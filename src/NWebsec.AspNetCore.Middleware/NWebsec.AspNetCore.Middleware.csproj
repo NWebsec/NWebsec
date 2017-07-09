@@ -15,7 +15,7 @@
     <PackageId>NWebsec.AspNetCore.Middleware</PackageId>
     <PackageTags>nwebsec aspnetcore security</PackageTags>
     <PackageReleaseNotes>This release adds support for the Referrer-Policy header and the CSP 'strict-dynamic' directive. See release notes on GitHub for details.</PackageReleaseNotes>
-    <PackageIconUrl>https://klings.blob.core.windows.net/nwebsecicon/nwebsec_nuget.png</PackageIconUrl>
+    <PackageIconUrl>https://nwebseccdn.blob.core.windows.net/nugeticon/nwebsec_nuget.png</PackageIconUrl>
     <PackageProjectUrl>https://docs.nwebsec.com/</PackageProjectUrl>
     <PackageLicenseUrl>https://github.com/NWebsec/NWebsec/blob/master/LICENSE</PackageLicenseUrl>
     <IncludeSymbols>true</IncludeSymbols>
