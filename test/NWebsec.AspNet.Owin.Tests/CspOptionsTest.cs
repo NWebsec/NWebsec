@@ -1,174 +1,175 @@
 ﻿// Copyright (c) André N. Klingsheim. See License.txt in the project root for license information.
 
 using System;
-using NUnit.Framework;
+using NWebsec.Owin;
+using Xunit;
 
-namespace NWebsec.Owin.Tests.Unit
+namespace NWebsec.AspNet.Owin.Tests
 {
-    [TestFixture]
     public class CspOptionsTest
     {
-        private CspOptions _options;
+        private readonly CspOptions _options;
 
-        [SetUp]
-        public void Setup()
+        public CspOptionsTest()
         {
             _options = new CspOptions();
         }
 
-        [Test]
+        [Fact]
         public void DefaultSources_ConfiguresDefaultSources()
         {
-            _options.DefaultSources(config => Assert.AreSame(_options.DefaultSrcDirective, config));
+            _options.DefaultSources(config => Assert.Same(_options.DefaultSrcDirective, config));
         }
 
-        [Test]
+        [Fact]
         public void ScriptSources_ConfiguresScriptSources()
         {
-            _options.ScriptSources(config => Assert.AreSame(_options.ScriptSrcDirective, config));
+            _options.ScriptSources(config => Assert.Same(_options.ScriptSrcDirective, config));
         }
 
-        [Test]
+        [Fact]
         public void ObjectSources_ConfiguresObjectSources()
         {
-            _options.ObjectSources(config => Assert.AreSame(_options.ObjectSrcDirective, config));
+            _options.ObjectSources(config => Assert.Same(_options.ObjectSrcDirective, config));
         }
 
-        [Test]
+        [Fact]
         public void StyleSources_ConfiguresStyleSources()
         {
-            _options.StyleSources(config => Assert.AreSame(_options.StyleSrcDirective, config));
+            _options.StyleSources(config => Assert.Same(_options.StyleSrcDirective, config));
         }
 
-        [Test]
+        [Fact]
         public void ImageSources_ConfiguresImageSources()
         {
-            _options.ImageSources(config => Assert.AreSame(_options.ImgSrcDirective, config));
+            _options.ImageSources(config => Assert.Same(_options.ImgSrcDirective, config));
         }
 
-        [Test]
+        [Fact]
         public void MediaSources_ConfiguresMediaSources()
         {
-            _options.MediaSources(config => Assert.AreSame(_options.MediaSrcDirective, config));
+            _options.MediaSources(config => Assert.Same(_options.MediaSrcDirective, config));
 
         }
 
-        [Test]
+        [Fact]
         public void FrameSources_ConfiguresFrameSources()
         {
-            _options.FrameSources(config => Assert.AreSame(_options.FrameSrcDirective, config));
+            _options.FrameSources(config => Assert.Same(_options.FrameSrcDirective, config));
         }
 
-        [Test]
+        [Fact]
         public void FontSources_ConfiguresFontSources()
         {
-            _options.FontSources(config => Assert.AreSame(_options.FontSrcDirective, config));
+            _options.FontSources(config => Assert.Same(_options.FontSrcDirective, config));
         }
 
-        [Test]
+        [Fact]
         public void ConnectSources_ConfiguresConnectSources()
         {
-            _options.ConnectSources(config => Assert.AreSame(_options.ConnectSrcDirective, config));
+            _options.ConnectSources(config => Assert.Same(_options.ConnectSrcDirective, config));
         }
 
-        [Test]
+        [Fact]
         public void BaseUris_ConfiguresBaseUris()
         {
-            _options.BaseUris(config => Assert.AreSame(_options.BaseUriDirective, config));
+            _options.BaseUris(config => Assert.Same(_options.BaseUriDirective, config));
         }
 
-        [Test]
+        [Fact]
         public void ChildSources_ConfiguresChildSources()
         {
-            _options.ChildSources(config => Assert.AreSame(_options.ChildSrcDirective, config));
+            _options.ChildSources(config => Assert.Same(_options.ChildSrcDirective, config));
         }
 
-        [Test]
+        [Fact]
         public void FormActions_ConfiguresFormActions()
         {
-            _options.FormActions(config => Assert.AreSame(_options.FormActionDirective, config));
+            _options.FormActions(config => Assert.Same(_options.FormActionDirective, config));
         }
 
-        [Test]
+        [Fact]
         public void FrameAncestors_ConfiguresFrameAncestors()
         {
-            _options.FrameAncestors(config => Assert.AreSame(_options.FrameAncestorsDirective, config));
+            _options.FrameAncestors(config => Assert.Same(_options.FrameAncestorsDirective, config));
         }
 
-        [Test]
+        [Fact]
         public void ManifestSources_ConfiguresManifestSources()
         {
-            _options.ManifestSources(config => Assert.AreSame(_options.ManifestSrcDirective, config));
+            _options.ManifestSources(config => Assert.Same(_options.ManifestSrcDirective, config));
         }
 
-        [Test]
+        [Fact]
         public void PluginTypes_ConfiguresPluginTypes()
         {
-            _options.PluginTypes(config => Assert.AreSame(_options.PluginTypesDirective, config));
+            _options.PluginTypes(config => Assert.Same(_options.PluginTypesDirective, config));
         }
 
-        [Test]
+        [Fact]
         public void Sandbox_EnablesSandbox()
         {
-            Assert.IsFalse(_options.SandboxDirective.Enabled);
+            Assert.False(_options.SandboxDirective.Enabled);
 
             _options.Sandbox();
 
-            Assert.IsTrue(_options.SandboxDirective.Enabled);
+            Assert.True(_options.SandboxDirective.Enabled);
         }
 
-        [Test]
+        [Fact]
         public void Sandbox_EnablesAndConfiguresSandbox()
         {
-            Assert.IsFalse(_options.SandboxDirective.Enabled);
+            Assert.False(_options.SandboxDirective.Enabled);
 
-            _options.Sandbox(config => Assert.AreSame(_options.SandboxDirective, config));
+            _options.Sandbox(config => Assert.Same(_options.SandboxDirective, config));
 
-            Assert.IsTrue(_options.SandboxDirective.Enabled);
+            Assert.True(_options.SandboxDirective.Enabled);
         }
 
-        [Test]
+        [Fact]
         public void UpgradeInsecureRequests_EnablesDirectiveWithPort443()
         {
-            Assert.IsFalse(_options.UpgradeInsecureRequestsDirective.Enabled);
+            Assert.False(_options.UpgradeInsecureRequestsDirective.Enabled);
 
             _options.UpgradeInsecureRequests();
 
-            Assert.IsTrue(_options.UpgradeInsecureRequestsDirective.Enabled);
-            Assert.AreEqual(443, _options.UpgradeInsecureRequestsDirective.HttpsPort);
+            Assert.True(_options.UpgradeInsecureRequestsDirective.Enabled);
+            Assert.Equal(443, _options.UpgradeInsecureRequestsDirective.HttpsPort);
         }
 
-        [Test]
+        [Fact]
         public void UpgradeInsecureRequestsWithCustomPort_EnablesDirectiveWithCustomPort()
         {
-            Assert.IsFalse(_options.UpgradeInsecureRequestsDirective.Enabled);
+            Assert.False(_options.UpgradeInsecureRequestsDirective.Enabled);
 
             _options.UpgradeInsecureRequests(8443);
 
-            Assert.IsTrue(_options.UpgradeInsecureRequestsDirective.Enabled);
-            Assert.AreEqual(8443, _options.UpgradeInsecureRequestsDirective.HttpsPort);
+            Assert.True(_options.UpgradeInsecureRequestsDirective.Enabled);
+            Assert.Equal(8443, _options.UpgradeInsecureRequestsDirective.HttpsPort);
         }
 
-        [Test]
-        public void UpgradeInsecureRequestsWithInvalidPort_Throws([Values(0, 65536)] int invalidPort)
+        [Theory]
+        [InlineData(0)]
+        [InlineData(65536)]
+        public void UpgradeInsecureRequestsWithInvalidPort_Throws(int invalidPort)
         {
             Assert.Throws<ArgumentOutOfRangeException>(() => _options.UpgradeInsecureRequests(invalidPort));
         }
 
-        [Test]
+        [Fact]
         public void BlockAllMixedContent_EnablesDirective()
         {
-            Assert.IsFalse(_options.MixedContentDirective.Enabled);
+            Assert.False(_options.MixedContentDirective.Enabled);
 
             _options.BlockAllMixedContent();
 
-            Assert.IsTrue(_options.MixedContentDirective.Enabled);
+            Assert.True(_options.MixedContentDirective.Enabled);
         }
 
-        [Test]
+        [Fact]
         public void ReportUris_ConfiguresReportUris()
         {
-            _options.ReportUris(config => Assert.AreSame(_options.ReportUriDirective, config));
+            _options.ReportUris(config => Assert.Same(_options.ReportUriDirective, config));
         }
     }
 }

@@ -1,46 +1,45 @@
 ﻿// Copyright (c) André N. Klingsheim. See License.txt in the project root for license information.
 
-using NUnit.Framework;
 using NWebsec.Core.Common.HttpHeaders;
+using NWebsec.Owin;
+using Xunit;
 
-namespace NWebsec.Owin.Tests.Unit
+namespace NWebsec.AspNet.Owin.Tests
 {
-    [TestFixture]
     public class XXssProtectionOptionsTests
     {
-        private XXssProtectionOptions _options;
+        private readonly XXssProtectionOptions _options;
 
-        [SetUp]
-        public void Setup()
+        public XXssProtectionOptionsTests()
         {
             _options = new XXssProtectionOptions();
         }
 
-        [Test]
+        [Fact]
         public void Disabled_SetsDisabled()
         {
             _options.Disabled();
 
-            Assert.AreEqual(XXssPolicy.FilterDisabled, _options.Policy);
-            Assert.IsFalse(_options.BlockMode);
+            Assert.Equal(XXssPolicy.FilterDisabled, _options.Policy);
+            Assert.False(_options.BlockMode);
         }
 
-        [Test]
+        [Fact]
         public void Enabled_SetsEnabled()
         {
             _options.Enabled();
 
-            Assert.AreEqual(XXssPolicy.FilterEnabled, _options.Policy);
-            Assert.IsFalse(_options.BlockMode);
+            Assert.Equal(XXssPolicy.FilterEnabled, _options.Policy);
+            Assert.False(_options.BlockMode);
         }
 
-        [Test]
+        [Fact]
         public void EnabledWithBlockMode_SetsEnabledWithBlockMode()
         {
             _options.EnabledWithBlockMode();
 
-            Assert.AreEqual(XXssPolicy.FilterEnabled, _options.Policy);
-            Assert.IsTrue(_options.BlockMode);
+            Assert.Equal(XXssPolicy.FilterEnabled, _options.Policy);
+            Assert.True(_options.BlockMode);
         }
     }
 }

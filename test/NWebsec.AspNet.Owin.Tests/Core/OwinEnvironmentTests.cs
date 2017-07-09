@@ -2,12 +2,11 @@
 
 using System;
 using System.Collections.Generic;
-using NUnit.Framework;
 using NWebsec.Owin.Core;
+using Xunit;
 
-namespace NWebsec.Owin.Tests.Unit.Core
+namespace NWebsec.AspNet.Owin.Tests.Core
 {
-    [TestFixture]
     public class OwinEnvironmentTests
     {
         //Comments from the OWIN 1.0 spec.
@@ -17,59 +16,62 @@ namespace NWebsec.Owin.Tests.Unit.Core
         private const string RequestHeaderKey = "owin.RequestHeaders";  //An IDictionary<string, string[]> of request headers.
         private const string ResponseHeaderKey = "owin.ResponseHeaders";//An IDictionary<string, string[]> of response headers.
         private const string ResponseStatusCodeKey = "owin.ResponseStatusCode"; //An optional int containing the HTTP response status code as defined in RFC 2616 section 6.1.1. The default is 200.
-        
-        private IDictionary<string, object> _env;
-        private OwinEnvironment _owinEnvironment;
 
-        [SetUp]
-        public void Setup()
+        private readonly IDictionary<string, object> _env;
+        private readonly OwinEnvironment _owinEnvironment;
+
+        public OwinEnvironmentTests()
         {
             _env = new Dictionary<string, object>
             {
                 [RequestHeaderKey] = new Dictionary<string, string[]>(StringComparer.OrdinalIgnoreCase), //Per OWIN 1.0 spec.
                 [ResponseHeaderKey] = new Dictionary<string, string[]>(StringComparer.OrdinalIgnoreCase) //Per OWIN 1.0 spec.
             };
-            
+
             _owinEnvironment = new OwinEnvironment(_env);
         }
 
-        [Test]
-        public void RequestScheme_ReturnsRequestScheme([Values("http","https")] string scheme)
+        [Theory]
+        [InlineData("http")]
+        [InlineData("https")]
+        public void RequestScheme_ReturnsRequestScheme(string scheme)
         {
             _env[RequestSchemeKey] = scheme;
-         
-            Assert.AreEqual(scheme, _owinEnvironment.RequestScheme);
+
+            Assert.Equal(scheme, _owinEnvironment.RequestScheme);
         }
 
-        [Test]
-        public void ResponseStatusCodeGet_ReturnsStatusCode([Values(200,302)] int statusCode)
+        [Theory]
+        [InlineData(200)]
+        [InlineData(302)]
+        public void ResponseStatusCodeGet_ReturnsStatusCode(int statusCode)
         {
             _env[ResponseStatusCodeKey] = statusCode;
-            Assert.AreEqual(statusCode, _owinEnvironment.ResponseStatusCode);
+            Assert.Equal(statusCode, _owinEnvironment.ResponseStatusCode);
         }
 
-        [Test]
+        [Fact]
         public void ResponseStatusCodeSet_SetsStatusCode()
         {
             _env[ResponseStatusCodeKey] = 200;
 
             _owinEnvironment.ResponseStatusCode = 302;
 
-            Assert.AreEqual(302, _env[ResponseStatusCodeKey]);
+            Assert.Equal(302, _env[ResponseStatusCodeKey]);
         }
 
-        [Test]
+        [Fact]
         public void RequestPathBase_ReturnsPathBase()
         {
             _env[RequestPathBaseKey] = "/reqPathBase";
-            Assert.AreEqual("/reqPathBase", _owinEnvironment.RequestPathBase);
+            Assert.Equal("/reqPathBase", _owinEnvironment.RequestPathBase);
         }
 
-        [Test]
+        [Fact]
         public void RequestPath_ReturnsPath()
         {
             _env[RequestPathKey] = "/reqPath/";
-            Assert.AreEqual("/reqPath/", _owinEnvironment.RequestPath);
+            Assert.Equal("/reqPath/", _owinEnvironment.RequestPath);
         }
     }
 }

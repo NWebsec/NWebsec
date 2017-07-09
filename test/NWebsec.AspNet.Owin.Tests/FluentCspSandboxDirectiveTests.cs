@@ -1,99 +1,98 @@
 ﻿// Copyright (c) André N. Klingsheim. See License.txt in the project root for license information.
 
-using NUnit.Framework;
 using NWebsec.Core.Common.HttpHeaders.Configuration;
+using NWebsec.Owin;
+using Xunit;
 
-namespace NWebsec.Owin.Tests.Unit
+namespace NWebsec.AspNet.Owin.Tests
 {
-    [TestFixture]
     public class FluentCspSandboxDirectiveTests
     {
-        private FluentCspSandboxDirective _options;
+        private readonly FluentCspSandboxDirective _options;
 
-        [SetUp]
-        public void Setup()
+        public FluentCspSandboxDirectiveTests()
         {
             _options = new FluentCspSandboxDirective();
         }
 
-        [Test]
+        [Fact]
         public void AllowForms_SetsAllowForms()
         {
             _options.AllowForms();
 
-            Assert.IsTrue(((CspSandboxDirectiveConfiguration)_options).AllowForms);
+            Assert.True(((CspSandboxDirectiveConfiguration)_options).AllowForms);
         }
 
-        [Test]
+        [Fact]
         public void AllowModals_SetsAllowModals()
         {
             _options.AllowModals();
 
-            Assert.IsTrue(((CspSandboxDirectiveConfiguration)_options).AllowModals);
+            Assert.True(((CspSandboxDirectiveConfiguration)_options).AllowModals);
         }
 
-        [Test]
+        [Fact]
         public void AllowOrientationLock_SetsAllowOrientationLock()
         {
             _options.AllowOrientationLock();
 
-            Assert.IsTrue(((CspSandboxDirectiveConfiguration)_options).AllowOrientationLock);
+            Assert.True(((CspSandboxDirectiveConfiguration)_options).AllowOrientationLock);
         }
 
-        [Test]
+        [Fact]
         public void AllowPointerLock_SetsAllowPointerLock()
         {
             _options.AllowPointerLock();
 
-            Assert.IsTrue(((CspSandboxDirectiveConfiguration)_options).AllowPointerLock);
+            Assert.True(((CspSandboxDirectiveConfiguration)_options).AllowPointerLock);
         }
 
-        [Test]
+        [Fact]
         public void AllowPopups_SetsAllowPopups()
         {
             _options.AllowPopups();
 
-            Assert.IsTrue(((CspSandboxDirectiveConfiguration)_options).AllowPopups);
+            Assert.True(((CspSandboxDirectiveConfiguration)_options).AllowPopups);
         }
 
-        [Test]
+        [Fact]
         public void AllowPopupsToEscapeSandbox_SetsAllowPopupsToEscapeSandbox()
         {
             _options.AllowPopupsToEscapeSandbox();
 
-            Assert.IsTrue(((CspSandboxDirectiveConfiguration)_options).AllowPopupsToEscapeSandbox);
+            Assert.True(((CspSandboxDirectiveConfiguration)_options).AllowPopupsToEscapeSandbox);
         }
 
-        [Test]
+        [Fact]
         public void AllowPresentation_SetsAllowPresentation()
         {
             _options.AllowPresentation();
 
-            Assert.IsTrue(((CspSandboxDirectiveConfiguration)_options).AllowPresentation);
+            Assert.True(((CspSandboxDirectiveConfiguration)_options).AllowPresentation);
         }
 
-        [Test]
+        [Fact]
         public void AllowSameOrigin_SetsAllowSameOrigin()
         {
             _options.AllowSameOrigin();
 
-            Assert.IsTrue(((CspSandboxDirectiveConfiguration)_options).AllowSameOrigin);
+            Assert.True(((CspSandboxDirectiveConfiguration)_options).AllowSameOrigin);
         }
 
-        [Test]
+        [Fact]
         public void AllowScripts_SetsAllowScripts()
         {
             _options.AllowScripts();
 
-            Assert.IsTrue(((CspSandboxDirectiveConfiguration)_options).AllowScripts);
+            Assert.True(((CspSandboxDirectiveConfiguration)_options).AllowScripts);
         }
 
-        [Test]
+        [Fact]
         public void AllowTopNavigation_SetsAllowTopNavigation()
         {
             _options.AllowTopNavigation();
 
-            Assert.IsTrue(((CspSandboxDirectiveConfiguration)_options).AllowTopNavigation);
+            Assert.True(((CspSandboxDirectiveConfiguration)_options).AllowTopNavigation);
         }
     }
 }

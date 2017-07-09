@@ -1,35 +1,34 @@
 ﻿// Copyright (c) André N. Klingsheim. See License.txt in the project root for license information.
 
-using NUnit.Framework;
 using NWebsec.Core.Common.HttpHeaders;
+using NWebsec.Owin;
+using Xunit;
 
-namespace NWebsec.Owin.Tests.Unit
+namespace NWebsec.AspNet.Owin.Tests
 {
-    [TestFixture]
     public class XFrameOptionsTests
     {
-        private XFrameOptions _options;
+        private readonly XFrameOptions _options;
 
-        [SetUp]
-        public void Setup()
+        public XFrameOptionsTests()
         {
             _options = new XFrameOptions();
         }
 
-        [Test]
+        [Fact]
         public void Deny_SetsDeny()
         {
             _options.Deny();
 
-            Assert.AreEqual(XfoPolicy.Deny, _options.Policy);
+            Assert.Equal(XfoPolicy.Deny, _options.Policy);
         }
 
-        [Test]
+        [Fact]
         public void SameOrigin_SetsSameOrigin()
         {
             _options.SameOrigin();
 
-            Assert.AreEqual(XfoPolicy.SameOrigin, _options.Policy);
+            Assert.Equal(XfoPolicy.SameOrigin, _options.Policy);
         }
     }
 }

@@ -3,60 +3,58 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using NUnit.Framework;
 using NWebsec.Owin.Core;
+using Xunit;
 
-namespace NWebsec.Owin.Tests.Unit.Core
+namespace NWebsec.AspNet.Owin.Tests.Core
 {
-    [TestFixture]
     public class ResponseHeadersTests
     {
-        private IDictionary<string, string[]> _headerDictionary;
-        private ResponseHeaders _responseHeaders;
+        private readonly IDictionary<string, string[]> _headerDictionary;
+        private readonly ResponseHeaders _responseHeaders;
 
-        [SetUp]
-        public void Setup()
+        public ResponseHeadersTests()
         {
             _headerDictionary = new Dictionary<string, string[]>(StringComparer.OrdinalIgnoreCase); //Per OWIN 1.0 spec.
             _responseHeaders = new ResponseHeaders(_headerDictionary);
         }
 
-        [Test]
+        [Fact]
         public void Location_HeaderExists_ReturnsValue()
         {
             _headerDictionary.Add("Location", new[] { "somelocation" });
 
             var location = _responseHeaders.Location;
 
-            Assert.AreEqual("somelocation", location);
+            Assert.Equal("somelocation", location);
         }
 
-        [Test]
+        [Fact]
         public void Location_HeaderMissing_ReturnsNull()
         {
-            Assert.IsNull(_responseHeaders.Location);
+            Assert.Null(_responseHeaders.Location);
         }
 
-        [Test]
+        [Fact]
         public void Location_SetHeader_SetsHeader()
         {
             _responseHeaders.Location = "somelocation";
 
-            Assert.AreEqual("somelocation", _headerDictionary["Location"].Single());
+            Assert.Equal("somelocation", _headerDictionary["Location"].Single());
 
         }
 
-        [Test]
+        [Fact]
         public void SetHeader_NoExistingHeader_SetsHeader()
         {
             _responseHeaders.SetHeader("X-test-header", "value");
 
-            Assert.IsTrue(_headerDictionary.ContainsKey("X-test-header"));
+            Assert.True(_headerDictionary.ContainsKey("X-test-header"));
             var headerValues = _headerDictionary["X-test-header"];
-            Assert.AreEqual("value", headerValues.Single());
+            Assert.Equal("value", headerValues.Single());
         }
 
-        [Test]
+        [Fact]
         public void SetHeader_ExistingHeader_SetsNewHeader()
         {
             var oldHeaderValues = new[] { "oldvalue" };
@@ -64,26 +62,26 @@ namespace NWebsec.Owin.Tests.Unit.Core
 
             _responseHeaders.SetHeader("X-test-header", "value");
 
-            Assert.IsTrue(_headerDictionary.ContainsKey("X-test-header"));
+            Assert.True(_headerDictionary.ContainsKey("X-test-header"));
             var newValues = _headerDictionary["X-test-header"];
-            Assert.AreNotSame(oldHeaderValues, newValues); //Assert value arrays are not same instance. Per OWIN 1.0 spec.
-            Assert.AreEqual("value", newValues.Single());
+            Assert.NotSame(oldHeaderValues, newValues); //Assert value arrays are not same instance. Per OWIN 1.0 spec.
+            Assert.Equal("value", newValues.Single());
         }
 
-        [Test]
+        [Fact]
         public void RemoveHeader_HeaderExists_RemovesHeader()
         {
             _headerDictionary["X-test-header"] = new[] { "somevalue" };
 
             _responseHeaders.RemoveHeader("X-test-header");
 
-            Assert.IsFalse(_headerDictionary.ContainsKey("X-test-header"));
+            Assert.False(_headerDictionary.ContainsKey("X-test-header"));
         }
 
-        [Test]
+        [Fact]
         public void RemoveHeader_NoHeader_NoException()
         {
-            Assert.DoesNotThrow(() => _responseHeaders.RemoveHeader("X-test-header"));
+            _responseHeaders.RemoveHeader("X-test-header");
         }
     }
 }

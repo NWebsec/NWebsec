@@ -2,72 +2,71 @@
 
 using System;
 using System.Linq;
-using NUnit.Framework;
+using NWebsec.Owin;
+using Xunit;
 
-namespace NWebsec.Owin.Tests.Unit
+namespace NWebsec.AspNet.Owin.Tests
 {
-    [TestFixture]
     public class RedirectValidationOptionsTests
     {
-        private RedirectValidationOptions _options;
+        private readonly RedirectValidationOptions _options;
 
-        [SetUp]
-        public void Setup()
+        public RedirectValidationOptionsTests()
         {
             _options = new RedirectValidationOptions();
         }
 
-        [Test]
+        [Fact]
         public void AllowedDestinations_ValidDestinations_SetsDestinations()
         {
-            var destinations = new[] {"https://www.nwebsec.com/", "http://klings.org:81/SomePath"};
+            var destinations = new[] { "https://www.nwebsec.com/", "http://klings.org:81/SomePath" };
             _options.AllowedDestinations(destinations);
 
-            Assert.IsTrue(destinations.SequenceEqual(_options.AllowedUris), String.Join(" ",destinations) + " / " + String.Join(" ", _options.AllowedUris));
+            Assert.True(destinations.SequenceEqual(_options.AllowedUris), String.Join(" ", destinations) + " / " + String.Join(" ", _options.AllowedUris));
         }
 
-        [Test]
+        [Fact]
         public void AllowedDestinations_NoDestinations_ThrowsException()
         {
             Assert.Throws<ArgumentException>(() => _options.AllowedDestinations());
         }
 
-        [Test]
+        [Fact]
         public void AllowedDestinations_RelativeUriDestinations_ThrowsException()
         {
             Assert.Throws<ArgumentException>(() => _options.AllowedDestinations("/relative/uri"));
         }
 
-        [Test]
+        [Fact]
         public void AllowedDestinations_MalformedUriDestinations_ThrowsException()
         {
             Assert.Throws<ArgumentException>(() => _options.AllowedDestinations("http:///example.com///hey"));
         }
 
-        [Test]
+        [Fact]
         public void AllowSameHostRedirectsToHttps_Validports_NoException()
         {
             var allValidPorts = Enumerable.Range(1, 65535).ToArray();
 
             _options.AllowSameHostRedirectsToHttps(allValidPorts);
 
-            Assert.IsTrue(_options.SameHostRedirectConfiguration.Enabled);
-            Assert.AreSame(allValidPorts, _options.SameHostRedirectConfiguration.Ports);
-            Assert.AreEqual(65535, allValidPorts.Last());
+            Assert.True(_options.SameHostRedirectConfiguration.Enabled);
+            Assert.Same(allValidPorts, _options.SameHostRedirectConfiguration.Ports);
+            Assert.Equal(65535, allValidPorts.Last());
         }
 
-        [Test]
+        [Fact]
         public void AllowSameHostRedirectsToHttps_LowerboundaryCheck_ThrowsException()
         {
             Assert.Throws<ArgumentOutOfRangeException>(() => _options.AllowSameHostRedirectsToHttps(0));
-            Assert.IsFalse(_options.SameHostRedirectConfiguration.Enabled);
+            Assert.False(_options.SameHostRedirectConfiguration.Enabled);
         }
 
-        [Test]
+        [Fact]
         public void AllowSameHostRedirectsToHttps_UpperboundaryCheck_ThrowsException()
         {
             Assert.Throws<ArgumentOutOfRangeException>(() => _options.AllowSameHostRedirectsToHttps(65536));
-            Assert.IsFalse(_options.SameHostRedirectConfiguration.Enabled);
+            Assert.False(_options.SameHostRedirectConfiguration.Enabled);
         }
     }
 }
