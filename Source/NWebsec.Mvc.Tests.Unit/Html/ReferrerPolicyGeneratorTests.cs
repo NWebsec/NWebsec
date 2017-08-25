@@ -14,10 +14,13 @@ namespace NWebsec.Mvc.Tests.Unit.Html
         {
             var generator = new ReferrerPolicyGenerator();
 
-            Assert.AreEqual(@"<meta name=""referrer"" content=""none"" />", generator.None.Tag.ToString());
-            Assert.AreEqual(@"<meta name=""referrer"" content=""none-when-downgrade"" />", generator.NoneWhenDowngrade.Tag.ToString());
+            Assert.AreEqual(@"<meta name=""referrer"" content="""" />", generator.Empty.Tag.ToString());
+            Assert.AreEqual(@"<meta name=""referrer"" content=""no-referrer"" />", generator.NoReferrer.Tag.ToString());
+            Assert.AreEqual(@"<meta name=""referrer"" content=""no-referrer-when-downgrade"" />", generator.NoReferrerWhenDowngrade.Tag.ToString());
+            Assert.AreEqual(@"<meta name=""referrer"" content=""same-origin"" />", generator.SameOrigin.Tag.ToString());
             Assert.AreEqual(@"<meta name=""referrer"" content=""origin"" />", generator.Origin.Tag.ToString());
-            Assert.AreEqual(@"<meta name=""referrer"" content=""origin-when-crossorigin"" />", generator.OriginWhenCrossOrigin.Tag.ToString());
+            Assert.AreEqual(@"<meta name=""referrer"" content=""strict-origin"" />", generator.StrictOrigin.Tag.ToString());
+            Assert.AreEqual(@"<meta name=""referrer"" content=""origin-when-cross-origin"" />", generator.OriginWhenCrossOrigin.Tag.ToString());
             Assert.AreEqual(@"<meta name=""referrer"" content=""unsafe-url"" />", generator.UnsafeUrl.Tag.ToString());
         }
     }
