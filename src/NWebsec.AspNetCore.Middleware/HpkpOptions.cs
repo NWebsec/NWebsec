@@ -12,6 +12,7 @@ namespace NWebsec.AspNetCore.Middleware
     {
         private readonly List<string> _pins;
         private readonly HpkpConfigurationValidator _validator;
+        private readonly ReportUriValidator _reportUriValidator;
 
         internal HpkpOptionsConfiguration Config { get; set; }
 
@@ -20,6 +21,7 @@ namespace NWebsec.AspNetCore.Middleware
             _pins = new List<string>();
             Config = new HpkpOptionsConfiguration { Pins = _pins };
             _validator = new HpkpConfigurationValidator();
+            _reportUriValidator = new ReportUriValidator();
         }
 
         // ReSharper disable once CSharpWarnings::CS0109
@@ -44,7 +46,7 @@ namespace NWebsec.AspNetCore.Middleware
         {
             try
             {
-                _validator.ValidateReportUri(reportUri);
+                _reportUriValidator.ValidateReportUri(reportUri);
             }
             catch (Exception e)
             {

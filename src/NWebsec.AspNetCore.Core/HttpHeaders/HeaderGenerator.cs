@@ -62,6 +62,32 @@ namespace NWebsec.AspNetCore.Core.HttpHeaders
         }
 
         [CanBeNull]
+        public HeaderResult CreateExpectCtResult(IExpectCtConfiguration expectCtConfig)
+        {
+            if (expectCtConfig.MaxAge < TimeSpan.Zero) return null;
+            
+            var seconds = (int)expectCtConfig.MaxAge.TotalSeconds;
+
+            var sb = new StringBuilder();
+            if(expectCtConfig.Enforce)
+            {
+                sb.Append("enforce; ");
+            }
+
+            sb.Append($"max-age={seconds}");
+
+            if(!string.IsNullOrWhiteSpace(expectCtConfig.ReportUri))
+            {
+                sb.Append($"; report-uri=\"{expectCtConfig.ReportUri}\"");
+            }
+
+            var value = sb.ToString();
+
+            return new HeaderResult(HeaderResult.ResponseAction.Set, HeaderConstants.ExpectCtHeader,
+                value);
+        }
+
+        [CanBeNull]
         public HeaderResult CreateXContentTypeOptionsResult(ISimpleBooleanConfiguration xContentTypeOptionsConfig,
             ISimpleBooleanConfiguration oldXContentTypeOptionsConfig = null)
         {

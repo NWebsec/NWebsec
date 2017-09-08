@@ -111,24 +111,5 @@ namespace NWebsec.AspNetCore.Core.Tests.HttpHeaders.Configuration.Validation
         {
             Assert.Throws<Exception>(() => _validator.ValidateThumbprint("a0 a1 ab 90 c9 fc 84 7b 3b 12 61 e8 97 7d 5f d3 22 61 d3  cc"));
         }
-
-        [Fact]
-        public void ValidateReportUri_AbsoluteUriWithValidScheme_NoException()
-        {
-            _validator.ValidateReportUri("http://nwebsec.com/report");
-            _validator.ValidateReportUri("https://nwebsec.com/report");
-        }
-
-        [Fact]
-        public void ValidateReportUri_RelativeUri_ThrowsException()
-        {
-            Assert.Throws<Exception>(() => _validator.ValidateReportUri("/report"));
-        }
-
-        [Fact]
-        public void ValidateReportUri_WrongScheme_ThrowsException()
-        {
-            Assert.Throws<Exception>(() => _validator.ValidateReportUri("ftp://nwebsec.com/report"));
-        }
     }
 }

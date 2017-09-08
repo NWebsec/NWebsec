@@ -37,19 +37,5 @@ namespace NWebsec.AspNetCore.Core.HttpHeaders.Configuration.Validation
 
             throw new Exception("Malformed thumbprint, expected 20 HEX octets without any leading or trailing whitespace, was: " + thumbPrint);
         }
-
-        public void ValidateReportUri(string reportUri)
-        {
-            Uri result;
-            if (!Uri.TryCreate(reportUri, UriKind.Absolute, out result))
-            {
-                throw new Exception("Report URIs must be absolute URIs. This is not: " + reportUri);
-            }
-            
-            if (!ValidSchemes.Any(s => s.Equals(result.Scheme)))
-            {
-                throw new Exception("Report URIs must have the http or https scheme. Got: " + reportUri);
-            }
-        }
     }
 }

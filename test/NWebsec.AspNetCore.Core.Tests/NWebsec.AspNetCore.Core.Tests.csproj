@@ -31,4 +31,8 @@
     <Folder Include="Properties\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Include="HttpHeaders\HeaderGeneratorTests.ExpectCt.cs" />
+  </ItemGroup>
+
 </Project>
