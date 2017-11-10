@@ -49,6 +49,12 @@ namespace NWebsec.Mvc.Helpers
                 disableNone = disableNone || result.UnsafeInlineSrc;
             }
 
+            if (directiveOverride.StrictDynamic.HasValue)
+            {
+                result.StrictDynamicSrc = (bool)directiveOverride.StrictDynamic;
+                disableNone = disableNone || result.StrictDynamicSrc;
+            }
+
             if (!directiveOverride.InheritOtherSources)
             {
                 result.CustomSources = EmptySources;

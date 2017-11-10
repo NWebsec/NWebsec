@@ -89,6 +89,20 @@ namespace NWebsec.Owin
             return directive;
         }
 
+        /// <summary>
+        ///     Sets the "strict-dynamic" source for the CSP directive.
+        /// </summary>
+        /// <typeparam name="T">The type of the CSP directive configuration object.</typeparam>
+        /// <param name="directive">The CSP directive configuration object.</param>
+        /// <returns>The CSP directive configuration object.</returns>
+        public static T StrictDynamic<T>(this T directive) where T : class, ICspDirectiveConfiguration
+        {
+            if (directive == null) throw new ArgumentNullException("directive");
+
+            directive.StrictDynamicSrc = true;
+            return directive;
+        }
+
         private static void ValidateBeforeSettingNoneSource(ICspDirectiveBasicConfiguration directive)
         {
             if (directive.SelfSrc || (directive.CustomSources != null && directive.CustomSources.Any()))
@@ -96,9 +110,12 @@ namespace NWebsec.Owin
                 throw new InvalidOperationException("It is a logical error to combine the \"None\" source with other sources.");
             }
 
-            var unsafeInline = directive as ICspDirectiveUnsafeInlineConfiguration;
+            if (directive is ICspDirectiveUnsafeInlineConfiguration unsafeInline && unsafeInline.UnsafeInlineSrc)
+            {
+                throw new InvalidOperationException("It is a logical error to combine the \"None\" source with other sources.");
+            }
 
-            if (unsafeInline != null && unsafeInline.UnsafeInlineSrc)
+            if (directive is ICspDirectiveConfiguration basicDirective && (basicDirective.UnsafeEvalSrc || basicDirective.StrictDynamicSrc))
             {
                 throw new InvalidOperationException("It is a logical error to combine the \"None\" source with other sources.");
             }

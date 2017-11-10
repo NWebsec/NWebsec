@@ -94,6 +94,23 @@ namespace NWebsec.Core.Tests.Unit.HttpHeaders
         }
 
         [Test]
+        public void AddCspHeaders_CspEnabledWithScriptSrcStrictDynamicAndNonce_ReturnsSetCspWithScriptSrcAndNonceResult([Values(false, true)]bool reportOnly)
+        {
+            var cspConfig = new CspConfiguration
+            {
+                Enabled = true,
+                ScriptSrcDirective = { StrictDynamicSrc = true, Nonce = "Nc3n83cnSAd3wc3Sasdfn939hc3" }
+            };
+
+            var result = _generator.CreateCspResult(cspConfig, reportOnly);
+
+            Assert.NotNull(result);
+            Assert.AreEqual(HeaderResult.ResponseAction.Set, result.Action);
+            Assert.AreEqual(CspHeaderName(reportOnly), result.Name);
+            Assert.AreEqual("script-src 'strict-dynamic' 'nonce-Nc3n83cnSAd3wc3Sasdfn939hc3'", result.Value);
+        }
+
+        [Test]
         public void AddCspHeaders_CspEnabledWithScriptSrcAndNonce_ReturnsSetCspWithScriptSrcAndNonceResult([Values(false, true)]bool reportOnly)
         {
             var cspConfig = new CspConfiguration

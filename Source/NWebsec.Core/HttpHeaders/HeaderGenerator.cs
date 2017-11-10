@@ -301,6 +301,11 @@ namespace NWebsec.Core.HttpHeaders
                 sources.Add("'unsafe-inline'");
             }
 
+            if (directive.StrictDynamicSrc)
+            {
+                sources.Add("'strict-dynamic'");
+            }
+
             if (!String.IsNullOrEmpty(directive.Nonce))
             {
                 var nonce = $"'nonce-{directive.Nonce}'";

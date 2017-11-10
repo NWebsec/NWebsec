@@ -122,6 +122,7 @@ namespace NWebsec.Mvc.HttpHeaders.Csp.Internals
         {
             return (DirectiveConfig.None.HasValue ||
                     DirectiveConfig.Self.HasValue ||
+                    DirectiveConfig.StrictDynamic.HasValue || 
                     DirectiveConfig.UnsafeInline.HasValue ||
                     DirectiveConfig.UnsafeEval.HasValue) == false;
         }
@@ -137,6 +138,7 @@ namespace NWebsec.Mvc.HttpHeaders.Csp.Internals
             return ((DirectiveConfig.Self.HasValue && (bool)DirectiveConfig.Self) ||
                     (DirectiveConfig.UnsafeInline.HasValue && (bool)DirectiveConfig.UnsafeInline) ||
                     (DirectiveConfig.UnsafeEval.HasValue && (bool)DirectiveConfig.UnsafeEval) ||
+                    (DirectiveConfig.StrictDynamic.HasValue && (bool)DirectiveConfig.StrictDynamic) ||
                     DirectiveConfig.OtherSources != null);
         }
         
