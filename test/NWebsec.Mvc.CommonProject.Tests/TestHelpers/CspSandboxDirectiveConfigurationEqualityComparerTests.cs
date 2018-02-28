@@ -3,7 +3,7 @@
 using NWebsec.Core.Common.HttpHeaders.Configuration;
 using Xunit;
 
-namespace NWebsec.AspNet.Mvc.Tests.TestHelpers
+namespace NWebsec.Mvc.CommonProject.Tests.TestHelpers
 {
     public class CspSandboxDirectiveConfigurationEqualityComparerTests
     {

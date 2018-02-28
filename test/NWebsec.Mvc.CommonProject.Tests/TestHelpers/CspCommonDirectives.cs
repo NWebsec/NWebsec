@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using NWebsec.Mvc.Common.Helpers;
 
-namespace NWebsec.AspNet.Mvc.Tests.TestHelpers
+namespace NWebsec.Mvc.CommonProject.Tests.TestHelpers
 {
     public class CspCommonDirectives : IEnumerable<CspDirectives>
     {

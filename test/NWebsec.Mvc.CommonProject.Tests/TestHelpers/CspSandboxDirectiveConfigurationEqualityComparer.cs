@@ -3,7 +3,7 @@
 using System.Collections.Generic;
 using NWebsec.Core.Common.HttpHeaders.Configuration;
 
-namespace NWebsec.AspNet.Mvc.Tests.TestHelpers
+namespace NWebsec.Mvc.CommonProject.Tests.TestHelpers
 {
     public class CspSandboxDirectiveConfigurationEqualityComparer : IEqualityComparer<ICspSandboxDirectiveConfiguration>
     {

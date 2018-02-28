@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <SharedGUID>4c0a345e-976a-4f84-a568-50501b1b2dbd</SharedGUID>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration">
+    <Import_RootNamespace>NWebsec.Mvc.Common</Import_RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)Csp\CspDirectiveOverride.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Csp\CspMixedContentOverride.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Csp\CspOverrideConfiguration.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Csp\CspPluginTypesOverride.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Csp\CspSandboxOverride.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Helpers\CspConfigMapper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Helpers\CspDirectiveOverrideHelper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Helpers\CspDirectives.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Helpers\ICspConfigMapper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Helpers\ICspDirectiveOverrideHelper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Web\IHttpContextWrapper.cs" />
+  </ItemGroup>
+</Project>

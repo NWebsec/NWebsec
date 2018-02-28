@@ -4,7 +4,7 @@ using System.Web;
 using NWebsec.Core;
 using NWebsec.Core.Common.HttpHeaders.Configuration;
 using NWebsec.ExtensionMethods;
-using NWebsec.Mvc.Csp;
+using NWebsec.Mvc.Common.Csp;
 
 namespace NWebsec.Mvc.Helpers
 {

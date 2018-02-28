@@ -5,7 +5,7 @@ using System.Web;
 using Moq;
 using NWebsec.Core;
 using NWebsec.Core.Common.HttpHeaders.Configuration;
-using NWebsec.Mvc.Csp;
+using NWebsec.Mvc.Common.Csp;
 using NWebsec.Mvc.Helpers;
 using Xunit;
 

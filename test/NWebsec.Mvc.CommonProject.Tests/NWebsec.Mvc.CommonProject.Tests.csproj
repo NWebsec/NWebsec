@@ -11,17 +11,18 @@
     <PackageReference Include="xunit.runner.visualstudio" Version="2.2.0" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\..\src\NWebsec.Core.SharedProject\NWebsec.Core.SharedProject.csproj" />
-  </ItemGroup>
-
   <ItemGroup Condition=" '$(TargetFramework)' == 'net452' ">
     <Reference Include="System" />
     <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
 
   <ItemGroup>
-    <Service Include="{82a7f48d-3b50-4b1e-b82e-3ada8210c358}" />
+    <ProjectReference Include="..\..\src\NWebsec.Core.SharedProject\NWebsec.Core.SharedProject.csproj" />
+    <ProjectReference Include="..\..\src\NWebsec.Mvc.CommonProject\NWebsec.Mvc.CommonProject.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Service Include="{82a7f48d-3b50-4b1e-b82e-3ada8210c358}" />
+  </ItemGroup>
+  
 </Project>

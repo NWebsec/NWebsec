@@ -5,7 +5,8 @@ using System.Security.Cryptography;
 using System.Web;
 using NWebsec.Annotations;
 using NWebsec.Core.Common.HttpHeaders.Configuration;
-using NWebsec.Mvc.Csp;
+using NWebsec.Mvc.Common.Csp;
+using NWebsec.Mvc.Common.Helpers;
 
 namespace NWebsec.Mvc.Helpers
 {

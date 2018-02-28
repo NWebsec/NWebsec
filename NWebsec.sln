@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26430.12
+VisualStudioVersion = 15.0.27130.2036
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{1733BF96-BCF6-43DD-B145-EBCB11B57C55}"
 EndProject
@@ -33,33 +33,40 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NWebsec.AspNetCore.Mvc.TagH
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NWebsec.AspNetCore.Mvc.Tests", "test\NWebsec.AspNetCore.Mvc.Tests\NWebsec.AspNetCore.Mvc.Tests.csproj", "{9EF528EE-B28D-4278-82AC-59767E40E63B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mvc", "src\Mvc\Mvc.csproj", "{83A1170A-A739-4BEA-8897-1F19B8A0BE8E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mvc", "src\Mvc\Mvc.csproj", "{83A1170A-A739-4BEA-8897-1F19B8A0BE8E}"
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "NWebsec.Core.Shared", "src\NWebsec.Core.Shared\NWebsec.Core.Shared.shproj", "{22C7C96D-F411-444A-A30E-64CFBDA506F5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NWebsec.Core.SharedProject", "src\NWebsec.Core.SharedProject\NWebsec.Core.SharedProject.csproj", "{7163B923-8A2E-47AB-A2EE-6ABCA91C42FA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NWebsec.Core.SharedProject", "src\NWebsec.Core.SharedProject\NWebsec.Core.SharedProject.csproj", "{7163B923-8A2E-47AB-A2EE-6ABCA91C42FA}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NWebsec.Core.SharedProject.Tests", "test\NWebsec.Core.SharedProject.Tests\NWebsec.Core.SharedProject.Tests.csproj", "{4B8079E5-3930-416C-A155-401912BA8B6A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NWebsec.AspNet.Core", "src\NWebsec.AspNet.Core\NWebsec.AspNet.Core.csproj", "{EB433B3F-3A17-4216-9032-60904A6F2F2A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NWebsec.AspNet.Core", "src\NWebsec.AspNet.Core\NWebsec.AspNet.Core.csproj", "{EB433B3F-3A17-4216-9032-60904A6F2F2A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NWebsec.AspNet.Classic", "src\NWebsec.AspNet.Classic\NWebsec.AspNet.Classic.csproj", "{33124350-2496-4EB4-860D-FC78465249EF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NWebsec.AspNet.Classic", "src\NWebsec.AspNet.Classic\NWebsec.AspNet.Classic.csproj", "{33124350-2496-4EB4-860D-FC78465249EF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NWebsec.AspNet.Mvc", "src\NWebsec.AspNet.Mvc\NWebsec.AspNet.Mvc.csproj", "{F9B06C0F-594A-47CD-AF83-8D47C5417569}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NWebsec.AspNet.Mvc", "src\NWebsec.AspNet.Mvc\NWebsec.AspNet.Mvc.csproj", "{F9B06C0F-594A-47CD-AF83-8D47C5417569}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NWebsec.AspNet.Owin", "src\NWebsec.AspNet.Owin\NWebsec.AspNet.Owin.csproj", "{5790FA7B-B08A-490F-B028-ED7809E31FAC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NWebsec.AspNet.Owin", "src\NWebsec.AspNet.Owin\NWebsec.AspNet.Owin.csproj", "{5790FA7B-B08A-490F-B028-ED7809E31FAC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NWebsec.AspNet.Classic.Tests", "test\NWebsec.AspNet.Classic.Tests\NWebsec.AspNet.Classic.Tests.csproj", "{4DEFC22F-17A6-4BBB-A9A8-5C5BE6A724DB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NWebsec.AspNet.Classic.Tests", "test\NWebsec.AspNet.Classic.Tests\NWebsec.AspNet.Classic.Tests.csproj", "{4DEFC22F-17A6-4BBB-A9A8-5C5BE6A724DB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NWebsec.AspNet.Core.Tests", "test\NWebsec.AspNet.Core.Tests\NWebsec.AspNet.Core.Tests.csproj", "{09963ED8-4888-4C23-A5C3-F38481454210}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NWebsec.AspNet.Core.Tests", "test\NWebsec.AspNet.Core.Tests\NWebsec.AspNet.Core.Tests.csproj", "{09963ED8-4888-4C23-A5C3-F38481454210}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NWebsec.AspNet.Mvc.Tests", "test\NWebsec.AspNet.Mvc.Tests\NWebsec.AspNet.Mvc.Tests.csproj", "{E227E512-8B78-4EF0-A8A1-806069C03EDC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NWebsec.AspNet.Mvc.Tests", "test\NWebsec.AspNet.Mvc.Tests\NWebsec.AspNet.Mvc.Tests.csproj", "{E227E512-8B78-4EF0-A8A1-806069C03EDC}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NWebsec.AspNet.Owin.Tests", "test\NWebsec.AspNet.Owin.Tests\NWebsec.AspNet.Owin.Tests.csproj", "{32604E97-6FA5-4A81-BE1E-E268D12565FF}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NWebsec.Mvc.CommonProject.Tests", "test\NWebsec.Mvc.CommonProject.Tests\NWebsec.Mvc.CommonProject.Tests.csproj", "{60420F4A-4F52-44DD-93F2-FCBA65E91E9F}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "NWebsec.Mvc.Common", "src\NWebsec.Mvc.Common\NWebsec.Mvc.Common.shproj", "{4C0A345E-976A-4F84-A568-50501B1B2DBD}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NWebsec.Mvc.CommonProject", "src\NWebsec.Mvc.CommonProject\NWebsec.Mvc.CommonProject.csproj", "{10521D31-E95A-447D-9E32-4A02C6689880}"
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		src\NWebsec.Core.Shared\NWebsec.Core.Shared.projitems*{22c7c96d-f411-444a-a30e-64cfbda506f5}*SharedItemsImports = 13
+		src\NWebsec.Mvc.Common\NWebsec.Mvc.Common.projitems*{4c0a345e-976a-4f84-a568-50501b1b2dbd}*SharedItemsImports = 13
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -154,6 +161,14 @@ Global
 		{32604E97-6FA5-4A81-BE1E-E268D12565FF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{32604E97-6FA5-4A81-BE1E-E268D12565FF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{32604E97-6FA5-4A81-BE1E-E268D12565FF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{60420F4A-4F52-44DD-93F2-FCBA65E91E9F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{60420F4A-4F52-44DD-93F2-FCBA65E91E9F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{60420F4A-4F52-44DD-93F2-FCBA65E91E9F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{60420F4A-4F52-44DD-93F2-FCBA65E91E9F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{10521D31-E95A-447D-9E32-4A02C6689880}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{10521D31-E95A-447D-9E32-4A02C6689880}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{10521D31-E95A-447D-9E32-4A02C6689880}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{10521D31-E95A-447D-9E32-4A02C6689880}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -183,5 +198,11 @@ Global
 		{09963ED8-4888-4C23-A5C3-F38481454210} = {1E120316-DAE8-4FF7-81C2-053A914C258D}
 		{E227E512-8B78-4EF0-A8A1-806069C03EDC} = {1E120316-DAE8-4FF7-81C2-053A914C258D}
 		{32604E97-6FA5-4A81-BE1E-E268D12565FF} = {1E120316-DAE8-4FF7-81C2-053A914C258D}
+		{60420F4A-4F52-44DD-93F2-FCBA65E91E9F} = {1E120316-DAE8-4FF7-81C2-053A914C258D}
+		{4C0A345E-976A-4F84-A568-50501B1B2DBD} = {1733BF96-BCF6-43DD-B145-EBCB11B57C55}
+		{10521D31-E95A-447D-9E32-4A02C6689880} = {1733BF96-BCF6-43DD-B145-EBCB11B57C55}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {291EB21D-431D-45CB-8052-282BC1170814}
 	EndGlobalSection
 EndGlobal

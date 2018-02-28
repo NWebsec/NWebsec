@@ -17,3 +17,4 @@ using System.Runtime.CompilerServices;
 [assembly: InternalsVisibleTo("NWebsec.AspNetCore.Middleware")]
 [assembly: InternalsVisibleTo("NWebsec.AspNetCore.Mvc")]
 [assembly: InternalsVisibleTo("NWebsec.Core.SharedProject")]
+[assembly: InternalsVisibleTo("NWebsec.Mvc.CommonProject")]

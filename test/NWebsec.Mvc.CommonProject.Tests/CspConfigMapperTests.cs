@@ -1,13 +1,13 @@
 // Copyright (c) André N. Klingsheim. See License.txt in the project root for license information.
 
 using System.Linq;
-using NWebsec.AspNet.Mvc.Tests.TestHelpers;
 using NWebsec.Core.Common.HttpHeaders.Configuration;
-using NWebsec.Mvc.Csp;
-using NWebsec.Mvc.Helpers;
+using NWebsec.Mvc.Common.Csp;
+using NWebsec.Mvc.Common.Helpers;
+using NWebsec.Mvc.CommonProject.Tests.TestHelpers;
 using Xunit;
 
-namespace NWebsec.AspNet.Mvc.Tests.Helpers
+namespace NWebsec.Mvc.CommonProject.Tests
 {
     public class CspConfigMapperTests
     {

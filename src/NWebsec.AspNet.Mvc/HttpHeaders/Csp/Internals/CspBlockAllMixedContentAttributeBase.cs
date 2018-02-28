@@ -2,7 +2,7 @@
 
 using System;
 using System.Web.Mvc;
-using NWebsec.Mvc.Csp;
+using NWebsec.Mvc.Common.Csp;
 using NWebsec.Mvc.Helpers;
 using NWebsec.Mvc.HttpHeaders.Internals;
 
