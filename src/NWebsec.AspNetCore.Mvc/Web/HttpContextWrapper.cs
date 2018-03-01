@@ -1,23 +1,23 @@
 // Copyright (c) André N. Klingsheim. See License.txt in the project root for license information.
 
-using NWebsec.Mvc.Common.Web;
-using System.Web;
+using Microsoft.AspNetCore.Http;
 using NWebsec.Core.Common;
+using NWebsec.Mvc.Common.Web;
 
-namespace NWebsec.Mvc.Web
+namespace NWebsec.AspNetCore.Mvc.Web
 {
     public class HttpContextWrapper : IHttpContextWrapper //TODO tests
     {
-        private readonly HttpContextBase _context;
+        private readonly HttpContext _context;
 
-        public HttpContextWrapper(HttpContextBase context)
+        public HttpContextWrapper(HttpContext context)
         {
             _context = context;
         }
 
         public NWebsecContext GetNWebsecContext()
         {
-            if (!_context.Items.Contains(NWebsecContext.ContextKey))
+            if (!_context.Items.ContainsKey(NWebsecContext.ContextKey))
             {
                 _context.Items[NWebsecContext.ContextKey] = new NWebsecContext();
             }
@@ -32,7 +32,7 @@ namespace NWebsec.Mvc.Web
 
         public string GetItem(string key)
         {
-            return _context.Items.Contains(key) ? (string)_context.Items[key] : null;
+            return _context.Items.ContainsKey(key) ? (string)_context.Items[key] : null;
         }
     }
 }
