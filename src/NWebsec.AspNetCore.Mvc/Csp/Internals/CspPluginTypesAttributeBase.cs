@@ -4,8 +4,8 @@ using System;
 using Microsoft.AspNetCore.Mvc.Filters;
 using NWebsec.Core.Common.HttpHeaders.Configuration.Validation;
 using NWebsec.AspNetCore.Mvc.Helpers;
-using NWebsec.AspNetCore.Mvc.Helpers.CspOverride;
 using NWebsec.AspNetCore.Mvc.Internals;
+using NWebsec.Mvc.Common.Csp;
 
 namespace NWebsec.AspNetCore.Mvc.Csp.Internals
 {

@@ -5,7 +5,8 @@ using System.Security.Cryptography;
 using Microsoft.AspNetCore.Http;
 using NWebsec.Annotations;
 using NWebsec.Core.Common.HttpHeaders.Configuration;
-using NWebsec.AspNetCore.Mvc.Helpers.CspOverride;
+using NWebsec.Mvc.Common.Csp;
+using NWebsec.Mvc.Common.Helpers;
 
 namespace NWebsec.AspNetCore.Mvc.Helpers
 {

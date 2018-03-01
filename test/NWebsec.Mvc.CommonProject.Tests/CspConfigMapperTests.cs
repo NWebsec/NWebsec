@@ -18,7 +18,8 @@ namespace NWebsec.Mvc.CommonProject.Tests
             _mapper = new CspConfigMapper();
         }
 
-        [Theory, ClassData(typeof(CspCommonDirectivesData))]
+        [Theory]
+        [ClassData(typeof(CspCommonDirectivesData))]
         public void GetCspDirectiveConfig_CommonCspDirectives_NoException(CspDirectives directive)
         {
             var config = new CspConfiguration();
@@ -26,7 +27,8 @@ namespace NWebsec.Mvc.CommonProject.Tests
             _mapper.GetCspDirectiveConfig(config, directive);
         }
 
-        [Theory, ClassData(typeof(CspCommonDirectivesData))]
+        [Theory]
+        [ClassData(typeof(CspCommonDirectivesData))]
         public void SetCspDirectiveConfig_CommonCspDirectives_NoException(CspDirectives directive)
         {
             var config = new CspConfiguration();
@@ -55,6 +57,16 @@ namespace NWebsec.Mvc.CommonProject.Tests
         }
 
         [Fact]
+        public void GetCspDirectiveConfigCloned_NoConfig_ReturnsNull()
+        {
+            var mapper = new CspConfigMapper();
+
+            var clone = mapper.GetCspDirectiveConfigCloned(null, CspDirectives.ScriptSrc);
+
+            Assert.Null(clone);
+        }
+
+        [Fact]
         public void GetCspDirectiveConfigCloned_NoDirective_ReturnsNull()
         {
             var config = new CspConfiguration(false);
@@ -77,7 +89,7 @@ namespace NWebsec.Mvc.CommonProject.Tests
 
 
             Assert.NotSame(directive, clone);
-            Assert.Equal(directive, clone, new CspDirectiveConfigurationEqualityComparer());
+            Assert.Equal(clone, directive, new CspDirectiveConfigurationEqualityComparer());
         }
 
         [Fact]
@@ -88,8 +100,9 @@ namespace NWebsec.Mvc.CommonProject.Tests
                 Enabled = false,
                 NoneSrc = true,
                 SelfSrc = true,
+                UnsafeInlineSrc = true,
                 UnsafeEvalSrc = true,
-                UnsafeInlineSrc = false,
+                StrictDynamicSrc = true,
                 CustomSources = new[] { "https://www.nwebsec.com", "www.klings.org" }
             };
 
@@ -99,7 +112,17 @@ namespace NWebsec.Mvc.CommonProject.Tests
             var clone = mapper.GetCspDirectiveConfigCloned(config, CspDirectives.ScriptSrc);
 
             Assert.NotSame(directive, clone);
-            Assert.Equal(directive, clone, new CspDirectiveConfigurationEqualityComparer());
+            Assert.Equal(clone, directive, new CspDirectiveConfigurationEqualityComparer());
+        }
+
+        [Fact]
+        public void GetCspPluginTypesConfigCloned_NoConfig_ReturnsNull()
+        {
+            var mapper = new CspConfigMapper();
+
+            var clone = mapper.GetCspPluginTypesConfigCloned(null);
+
+            Assert.Null(clone);
         }
 
         [Fact]
@@ -134,8 +157,18 @@ namespace NWebsec.Mvc.CommonProject.Tests
             var firstResult = mapper.GetCspPluginTypesConfigCloned(firstConfig);
             var secondResult = mapper.GetCspPluginTypesConfigCloned(secondConfig);
 
-            Assert.Equal(firstDirective, firstResult, new CspPluginTypesDirectiveConfigurationEqualityComparer());
-            Assert.Equal(secondDirective, secondResult, new CspPluginTypesDirectiveConfigurationEqualityComparer());
+            Assert.Equal(firstResult, firstDirective, new CspPluginTypesDirectiveConfigurationEqualityComparer());
+            Assert.Equal(secondResult, secondDirective, new CspPluginTypesDirectiveConfigurationEqualityComparer());
+        }
+
+        [Fact]
+        public void GetCspSandboxConfigCloned_NoConfig_ReturnsNull()
+        {
+            var mapper = new CspConfigMapper();
+
+            var clone = mapper.GetCspSandboxConfigCloned(null);
+
+            Assert.Null(clone);
         }
 
         [Fact]
@@ -176,8 +209,8 @@ namespace NWebsec.Mvc.CommonProject.Tests
             var firstResult = mapper.GetCspSandboxConfigCloned(firstConfig);
             var secondResult = mapper.GetCspSandboxConfigCloned(secondConfig);
 
-            Assert.Equal(firstDirective, firstResult, new CspSandboxDirectiveConfigurationEqualityComparer());
-            Assert.Equal(secondDirective, secondResult, new CspSandboxDirectiveConfigurationEqualityComparer());
+            Assert.Equal(firstResult, firstDirective, new CspSandboxDirectiveConfigurationEqualityComparer());
+            Assert.Equal(secondResult, secondDirective, new CspSandboxDirectiveConfigurationEqualityComparer());
         }
 
         [Fact]
@@ -192,7 +225,8 @@ namespace NWebsec.Mvc.CommonProject.Tests
         }
 
         [Theory]
-        [InlineData(true), InlineData(false)]
+        [InlineData(true)]
+        [InlineData(false)]
         public void GetCspMixedContentConfigCloned_Configured_ClonesDirective(bool enabled)
         {
             var directive = new CspMixedContentDirectiveConfiguration { Enabled = enabled };

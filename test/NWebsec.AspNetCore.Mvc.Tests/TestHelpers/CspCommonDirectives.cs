@@ -4,7 +4,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using NWebsec.AspNetCore.Mvc.Helpers;
+using NWebsec.Mvc.Common.Helpers;
 
 namespace NWebsec.AspNetCore.Mvc.Tests.TestHelpers
 {

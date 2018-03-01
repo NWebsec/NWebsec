@@ -31,10 +31,11 @@ namespace NWebsec.Mvc.CommonProject.Tests
             var newConfig = _overrideHelper.GetOverridenCspDirectiveConfig(directiveOverride, null);
 
             Assert.NotSame(directiveConfig, newConfig);
-            Assert.Equal(directiveConfig, newConfig, new CspDirectiveConfigurationEqualityComparer());
+            Assert.Equal(newConfig, directiveConfig, new CspDirectiveConfigurationEqualityComparer());
         }
 
-        [Theory, MemberData(nameof(FalseThenTrue))]
+        [Theory]
+        [MemberData(nameof(FalseThenTrue))]
         public void GetOverridenCspDirectiveConfig_EnabledOverride_EnabledOverriden(bool expectedResult)
         {
             var directiveConfig = new CspDirectiveConfiguration { Enabled = !expectedResult };
@@ -55,8 +56,9 @@ namespace NWebsec.Mvc.CommonProject.Tests
                 NoneSrc = false,
                 SelfSrc = true,
                 Nonce = "hei",
-                UnsafeEvalSrc = true,
                 UnsafeInlineSrc = true,
+                UnsafeEvalSrc = true,
+                StrictDynamicSrc = true,
                 CustomSources = new[] { "nwebsec.com" }
             };
             var directiveOverride = new CspDirectiveOverride { None = true };
@@ -64,7 +66,7 @@ namespace NWebsec.Mvc.CommonProject.Tests
 
             var newConfig = _overrideHelper.GetOverridenCspDirectiveConfig(directiveOverride, directiveConfig);
 
-            Assert.Equal(expectedConfig, newConfig, new CspDirectiveConfigurationEqualityComparer());
+            Assert.Equal(newConfig, expectedConfig, new CspDirectiveConfigurationEqualityComparer());
         }
 
         [Fact]
@@ -75,16 +77,16 @@ namespace NWebsec.Mvc.CommonProject.Tests
                 NoneSrc = false,
                 SelfSrc = true,
                 Nonce = "hei",
-                UnsafeEvalSrc = true,
                 UnsafeInlineSrc = true,
+                UnsafeEvalSrc = true,
+                StrictDynamicSrc = true,
                 CustomSources = new[] { "nwebsec.com" }
             };
             var directiveOverride = new CspDirectiveOverride { None = false };
 
-
             var newConfig = _overrideHelper.GetOverridenCspDirectiveConfig(directiveOverride, directiveConfig);
 
-            Assert.Equal(directiveConfig, newConfig, new CspDirectiveConfigurationEqualityComparer());
+            Assert.Equal(newConfig, directiveConfig, new CspDirectiveConfigurationEqualityComparer());
         }
 
         [Fact]
@@ -94,8 +96,9 @@ namespace NWebsec.Mvc.CommonProject.Tests
             var overrides = new[]
             {
                 new CspDirectiveOverride {Self = true},
-                new CspDirectiveOverride {UnsafeEval = true},
                 new CspDirectiveOverride {UnsafeInline = true},
+                new CspDirectiveOverride {UnsafeEval = true},
+                new CspDirectiveOverride {StrictDynamic = true},
                 new CspDirectiveOverride {OtherSources = new []{"nwebsec.com"}},
 
             };
@@ -109,7 +112,8 @@ namespace NWebsec.Mvc.CommonProject.Tests
             }
         }
 
-        [Theory, MemberData(nameof(FalseThenTrue))]
+        [Theory]
+        [MemberData(nameof(FalseThenTrue))]
         public void GetOverridenCspDirectiveConfig_SelfOverride_OverridesSelf(bool expectedResult)
         {
             var directiveConfig = new CspDirectiveConfiguration { SelfSrc = !expectedResult };
@@ -120,7 +124,8 @@ namespace NWebsec.Mvc.CommonProject.Tests
             Assert.Equal(expectedResult, newConfig.SelfSrc);
         }
 
-        [Theory, MemberData(nameof(FalseThenTrue))]
+        [Theory]
+        [MemberData(nameof(FalseThenTrue))]
         public void GetOverridenCspDirectiveConfig_SelfInherit_InheritsSelf(bool expectedResult)
         {
             var directiveConfig = new CspDirectiveConfiguration { SelfSrc = expectedResult };
@@ -131,29 +136,8 @@ namespace NWebsec.Mvc.CommonProject.Tests
             Assert.Equal(expectedResult, newConfig.SelfSrc);
         }
 
-        [Theory, MemberData(nameof(FalseThenTrue))]
-        public void GetOverridenCspDirectiveConfig_UnsafeEvalOverride_OverridesUnsafeEval(bool expectedResult)
-        {
-            var directiveConfig = new CspDirectiveConfiguration { UnsafeEvalSrc = !expectedResult };
-            var directiveOverride = new CspDirectiveOverride { UnsafeEval = expectedResult };
-
-            var newConfig = _overrideHelper.GetOverridenCspDirectiveConfig(directiveOverride, directiveConfig);
-
-            Assert.Equal(expectedResult, newConfig.UnsafeEvalSrc);
-        }
-
-        [Theory, MemberData(nameof(FalseThenTrue))]
-        public void GetOverridenCspDirectiveConfig_UnsafeEvalInherit_InheritsUnsafeEval(bool expectedResult)
-        {
-            var directiveConfig = new CspDirectiveConfiguration { UnsafeEvalSrc = expectedResult };
-            var directiveOverride = new CspDirectiveOverride();
-
-            var newConfig = _overrideHelper.GetOverridenCspDirectiveConfig(directiveOverride, directiveConfig);
-
-            Assert.Equal(expectedResult, newConfig.UnsafeEvalSrc);
-        }
-
-        [Theory, MemberData(nameof(FalseThenTrue))]
+        [Theory]
+        [MemberData(nameof(FalseThenTrue))]
         public void GetOverridenCspDirectiveConfig_UnsafeInlineOverride_OverridesUnsafeInline(bool expectedResult)
         {
             var directiveConfig = new CspDirectiveConfiguration { UnsafeInlineSrc = !expectedResult };
@@ -164,7 +148,8 @@ namespace NWebsec.Mvc.CommonProject.Tests
             Assert.Equal(expectedResult, newConfig.UnsafeInlineSrc);
         }
 
-        [Theory, MemberData(nameof(FalseThenTrue))]
+        [Theory]
+        [MemberData(nameof(FalseThenTrue))]
         public void GetOverridenCspDirectiveConfig_UnsafeInlineInherit_InheritsUnsafeInline(bool expectedResult)
         {
             var directiveConfig = new CspDirectiveConfiguration { UnsafeInlineSrc = expectedResult };
@@ -173,6 +158,54 @@ namespace NWebsec.Mvc.CommonProject.Tests
             var newConfig = _overrideHelper.GetOverridenCspDirectiveConfig(directiveOverride, directiveConfig);
 
             Assert.Equal(expectedResult, newConfig.UnsafeInlineSrc);
+        }
+
+        [Theory]
+        [MemberData(nameof(FalseThenTrue))]
+        public void GetOverridenCspDirectiveConfig_UnsafeEvalOverride_OverridesUnsafeEval(bool expectedResult)
+        {
+            var directiveConfig = new CspDirectiveConfiguration { UnsafeEvalSrc = !expectedResult };
+            var directiveOverride = new CspDirectiveOverride { UnsafeEval = expectedResult };
+
+            var newConfig = _overrideHelper.GetOverridenCspDirectiveConfig(directiveOverride, directiveConfig);
+
+            Assert.Equal(expectedResult, newConfig.UnsafeEvalSrc);
+        }
+
+        [Theory]
+        [MemberData(nameof(FalseThenTrue))]
+        public void GetOverridenCspDirectiveConfig_UnsafeEvalInherit_InheritsUnsafeEval(bool expectedResult)
+        {
+            var directiveConfig = new CspDirectiveConfiguration { UnsafeEvalSrc = expectedResult };
+            var directiveOverride = new CspDirectiveOverride();
+
+            var newConfig = _overrideHelper.GetOverridenCspDirectiveConfig(directiveOverride, directiveConfig);
+
+            Assert.Equal(expectedResult, newConfig.UnsafeEvalSrc);
+        }
+
+        [Theory]
+        [MemberData(nameof(FalseThenTrue))]
+        public void GetOverridenCspDirectiveConfig_StrictDynamicOverride_OverridesStrictDynamic(bool expectedResult)
+        {
+            var directiveConfig = new CspDirectiveConfiguration { StrictDynamicSrc = !expectedResult };
+            var directiveOverride = new CspDirectiveOverride { StrictDynamic = expectedResult };
+
+            var newConfig = _overrideHelper.GetOverridenCspDirectiveConfig(directiveOverride, directiveConfig);
+
+            Assert.Equal(expectedResult, newConfig.StrictDynamicSrc);
+        }
+
+        [Theory]
+        [MemberData(nameof(FalseThenTrue))]
+        public void GetOverridenCspDirectiveConfig_StrictDynamicInherit_InheritsStrictDynamic(bool expectedResult)
+        {
+            var directiveConfig = new CspDirectiveConfiguration { StrictDynamicSrc = expectedResult };
+            var directiveOverride = new CspDirectiveOverride();
+
+            var newConfig = _overrideHelper.GetOverridenCspDirectiveConfig(directiveOverride, directiveConfig);
+
+            Assert.Equal(expectedResult, newConfig.StrictDynamicSrc);
         }
 
         [Fact]
@@ -222,10 +255,11 @@ namespace NWebsec.Mvc.CommonProject.Tests
             var newConfig = _overrideHelper.GetOverridenCspPluginTypesConfig(directiveOverride, null);
 
             Assert.NotSame(directiveConfig, newConfig);
-            Assert.Equal(directiveConfig, newConfig, new CspPluginTypesDirectiveConfigurationEqualityComparer());
+            Assert.Equal(newConfig, directiveConfig, new CspPluginTypesDirectiveConfigurationEqualityComparer());
         }
 
-        [Theory, MemberData(nameof(FalseThenTrue))]
+        [Theory]
+        [MemberData(nameof(FalseThenTrue))]
         public void GetOverridenCspPluginTypesConfig_EnabledOverride_EnabledOverriden(bool expectedResult)
         {
             var directiveConfig = new CspPluginTypesDirectiveConfiguration { Enabled = !expectedResult };
@@ -273,7 +307,8 @@ namespace NWebsec.Mvc.CommonProject.Tests
             Assert.Contains("image/png", newConfig.MediaTypes.ToList());
         }
 
-        [Theory, MemberData(nameof(FalseThenTrue))]
+        [Theory]
+        [MemberData(nameof(FalseThenTrue))]
         public void GetOverridenCspSandboxConfig_EnableOverride_OverridesEnabled(bool expectedResult)
         {
             var directiveConfig = new CspSandboxDirectiveConfiguration { Enabled = !expectedResult };
@@ -284,7 +319,8 @@ namespace NWebsec.Mvc.CommonProject.Tests
             Assert.Equal(expectedResult, newConfig.Enabled);
         }
 
-        [Theory, MemberData(nameof(FalseThenTrue))]
+        [Theory]
+        [MemberData(nameof(FalseThenTrue))]
         public void GetOverridenCspSandboxConfig_AllowFormsOverride_OverridesAllowForms(bool expectedResult)
         {
             var directiveConfig = new CspSandboxDirectiveConfiguration { AllowForms = !expectedResult };
@@ -295,7 +331,8 @@ namespace NWebsec.Mvc.CommonProject.Tests
             Assert.Equal(expectedResult, newConfig.AllowForms);
         }
 
-        [Theory, MemberData(nameof(FalseThenTrue))]
+        [Theory]
+        [MemberData(nameof(FalseThenTrue))]
         public void GetOverridenCspSandboxConfig_AllowFormsNotSet_InheritsAllowForms(bool expectedResult)
         {
             var directiveConfig = new CspSandboxDirectiveConfiguration { AllowForms = expectedResult };
@@ -306,7 +343,8 @@ namespace NWebsec.Mvc.CommonProject.Tests
             Assert.Equal(expectedResult, newConfig.AllowForms);
         }
 
-        [Theory, MemberData(nameof(FalseThenTrue))]
+        [Theory]
+        [MemberData(nameof(FalseThenTrue))]
         public void GetOverridenCspSandboxConfig_AllowModalsOverride_OverridesAllowModals(bool expectedResult)
         {
             var directiveConfig = new CspSandboxDirectiveConfiguration { AllowModals = !expectedResult };
@@ -317,7 +355,8 @@ namespace NWebsec.Mvc.CommonProject.Tests
             Assert.Equal(expectedResult, newConfig.AllowModals);
         }
 
-        [Theory, MemberData(nameof(FalseThenTrue))]
+        [Theory]
+        [MemberData(nameof(FalseThenTrue))]
         public void GetOverridenCspSandboxConfig_AllowModalsNotSet_InheritsAllowModals(bool expectedResult)
         {
             var directiveConfig = new CspSandboxDirectiveConfiguration { AllowModals = expectedResult };
@@ -328,7 +367,8 @@ namespace NWebsec.Mvc.CommonProject.Tests
             Assert.Equal(expectedResult, newConfig.AllowModals);
         }
 
-        [Theory, MemberData(nameof(FalseThenTrue))]
+        [Theory]
+        [MemberData(nameof(FalseThenTrue))]
         public void GetOverridenCspSandboxConfig_AllowOrientationLockOverride_OverridesAllowOrientationLock(bool expectedResult)
         {
             var directiveConfig = new CspSandboxDirectiveConfiguration { AllowOrientationLock = !expectedResult };
@@ -339,7 +379,8 @@ namespace NWebsec.Mvc.CommonProject.Tests
             Assert.Equal(expectedResult, newConfig.AllowOrientationLock);
         }
 
-        [Theory, MemberData(nameof(FalseThenTrue))]
+        [Theory]
+        [MemberData(nameof(FalseThenTrue))]
         public void GetOverridenCspSandboxConfig_AllowOrientationLockNotSet_InheritsAllowOrientationLock(bool expectedResult)
         {
             var directiveConfig = new CspSandboxDirectiveConfiguration { AllowOrientationLock = expectedResult };
@@ -350,7 +391,8 @@ namespace NWebsec.Mvc.CommonProject.Tests
             Assert.Equal(expectedResult, newConfig.AllowOrientationLock);
         }
 
-        [Theory, MemberData(nameof(FalseThenTrue))]
+        [Theory]
+        [MemberData(nameof(FalseThenTrue))]
         public void GetOverridenCspSandboxConfig_AllowPointerLockOverride_OverridesAllowPointerLock(bool expectedResult)
         {
             var directiveConfig = new CspSandboxDirectiveConfiguration { AllowPointerLock = !expectedResult };
@@ -361,7 +403,8 @@ namespace NWebsec.Mvc.CommonProject.Tests
             Assert.Equal(expectedResult, newConfig.AllowPointerLock);
         }
 
-        [Theory, MemberData(nameof(FalseThenTrue))]
+        [Theory]
+        [MemberData(nameof(FalseThenTrue))]
         public void GetOverridenCspSandboxConfig_AllowPointerLockNotSet_InheritsAllowPointerLock(bool expectedResult)
         {
             var directiveConfig = new CspSandboxDirectiveConfiguration { AllowPointerLock = expectedResult };
@@ -372,7 +415,8 @@ namespace NWebsec.Mvc.CommonProject.Tests
             Assert.Equal(expectedResult, newConfig.AllowPointerLock);
         }
 
-        [Theory, MemberData(nameof(FalseThenTrue))]
+        [Theory]
+        [MemberData(nameof(FalseThenTrue))]
         public void GetOverridenCspSandboxConfig_AllowPopupsOverride_OverridesAllowPopups(bool expectedResult)
         {
             var directiveConfig = new CspSandboxDirectiveConfiguration { AllowPopups = !expectedResult };
@@ -383,7 +427,8 @@ namespace NWebsec.Mvc.CommonProject.Tests
             Assert.Equal(expectedResult, newConfig.AllowPopups);
         }
 
-        [Theory, MemberData(nameof(FalseThenTrue))]
+        [Theory]
+        [MemberData(nameof(FalseThenTrue))]
         public void GetOverridenCspSandboxConfig_AllowPopupsNotSet_InheritsAllowPopups(bool expectedResult)
         {
             var directiveConfig = new CspSandboxDirectiveConfiguration { AllowPopups = expectedResult };
@@ -394,7 +439,8 @@ namespace NWebsec.Mvc.CommonProject.Tests
             Assert.Equal(expectedResult, newConfig.AllowPopups);
         }
 
-        [Theory, MemberData(nameof(FalseThenTrue))]
+        [Theory]
+        [MemberData(nameof(FalseThenTrue))]
         public void GetOverridenCspSandboxConfig_AllowPopupsToEscapeSandboxOverride_OverridesAllowPopupsToEscapeSandbox(bool expectedResult)
         {
             var directiveConfig = new CspSandboxDirectiveConfiguration { AllowPopupsToEscapeSandbox = !expectedResult };
@@ -405,7 +451,8 @@ namespace NWebsec.Mvc.CommonProject.Tests
             Assert.Equal(expectedResult, newConfig.AllowPopupsToEscapeSandbox);
         }
 
-        [Theory, MemberData(nameof(FalseThenTrue))]
+        [Theory]
+        [MemberData(nameof(FalseThenTrue))]
         public void GetOverridenCspSandboxConfig_AllowPopupsToEscapeSandboxNotSet_InheritsAllowPopupsToEscapeSandbox(bool expectedResult)
         {
             var directiveConfig = new CspSandboxDirectiveConfiguration { AllowPopupsToEscapeSandbox = expectedResult };
@@ -416,7 +463,8 @@ namespace NWebsec.Mvc.CommonProject.Tests
             Assert.Equal(expectedResult, newConfig.AllowPopupsToEscapeSandbox);
         }
 
-        [Theory, MemberData(nameof(FalseThenTrue))]
+        [Theory]
+        [MemberData(nameof(FalseThenTrue))]
         public void GetOverridenCspSandboxConfig_AllowPresentationOverride_OverridesAllowPresentation(bool expectedResult)
         {
             var directiveConfig = new CspSandboxDirectiveConfiguration { AllowPresentation = !expectedResult };
@@ -427,7 +475,8 @@ namespace NWebsec.Mvc.CommonProject.Tests
             Assert.Equal(expectedResult, newConfig.AllowPresentation);
         }
 
-        [Theory, MemberData(nameof(FalseThenTrue))]
+        [Theory]
+        [MemberData(nameof(FalseThenTrue))]
         public void GetOverridenCspSandboxConfig_AllowPresentationNotSet_InheritsAllowPresentation(bool expectedResult)
         {
             var directiveConfig = new CspSandboxDirectiveConfiguration { AllowPresentation = expectedResult };
@@ -438,7 +487,8 @@ namespace NWebsec.Mvc.CommonProject.Tests
             Assert.Equal(expectedResult, newConfig.AllowPresentation);
         }
 
-        [Theory, MemberData(nameof(FalseThenTrue))]
+        [Theory]
+        [MemberData(nameof(FalseThenTrue))]
         public void GetOverridenCspSandboxConfig_AllowSameOriginOverride_OverridesAllowSameOrigin(bool expectedResult)
         {
             var directiveConfig = new CspSandboxDirectiveConfiguration { AllowSameOrigin = !expectedResult };
@@ -449,7 +499,8 @@ namespace NWebsec.Mvc.CommonProject.Tests
             Assert.Equal(expectedResult, newConfig.AllowSameOrigin);
         }
 
-        [Theory, MemberData(nameof(FalseThenTrue))]
+        [Theory]
+        [MemberData(nameof(FalseThenTrue))]
         public void GetOverridenCspSandboxConfig_AllowSameOriginNotSet_InheritsAllowSameOrigin(bool expectedResult)
         {
             var directiveConfig = new CspSandboxDirectiveConfiguration { AllowSameOrigin = expectedResult };
@@ -460,7 +511,8 @@ namespace NWebsec.Mvc.CommonProject.Tests
             Assert.Equal(expectedResult, newConfig.AllowSameOrigin);
         }
 
-        [Theory, MemberData(nameof(FalseThenTrue))]
+        [Theory]
+        [MemberData(nameof(FalseThenTrue))]
         public void GetOverridenCspSandboxConfig_AllowScriptsOverride_OverridesAllowScripts(bool expectedResult)
         {
             var directiveConfig = new CspSandboxDirectiveConfiguration { AllowScripts = !expectedResult };
@@ -471,7 +523,8 @@ namespace NWebsec.Mvc.CommonProject.Tests
             Assert.Equal(expectedResult, newConfig.AllowScripts);
         }
 
-        [Theory, MemberData(nameof(FalseThenTrue))]
+        [Theory]
+        [MemberData(nameof(FalseThenTrue))]
         public void GetOverridenCspSandboxConfig_AllowScriptsNotSet_InheritsAllowScripts(bool expectedResult)
         {
             var directiveConfig = new CspSandboxDirectiveConfiguration { AllowScripts = expectedResult };
@@ -482,7 +535,8 @@ namespace NWebsec.Mvc.CommonProject.Tests
             Assert.Equal(expectedResult, newConfig.AllowScripts);
         }
 
-        [Theory, MemberData(nameof(FalseThenTrue))]
+        [Theory]
+        [MemberData(nameof(FalseThenTrue))]
         public void GetOverridenCspSandboxConfig_AllowTopNavigationOverride_OverridesAllowTopNavigation(bool expectedResult)
         {
             var directiveConfig = new CspSandboxDirectiveConfiguration { AllowTopNavigation = !expectedResult };
@@ -493,7 +547,8 @@ namespace NWebsec.Mvc.CommonProject.Tests
             Assert.Equal(expectedResult, newConfig.AllowTopNavigation);
         }
 
-        [Theory, MemberData(nameof(FalseThenTrue))]
+        [Theory]
+        [MemberData(nameof(FalseThenTrue))]
         public void GetOverridenCspSandboxConfig_AllowTopNavigationNotSet_InheritsAllowTopNavigation(bool expectedResult)
         {
             var directiveConfig = new CspSandboxDirectiveConfiguration { AllowTopNavigation = expectedResult };
@@ -504,7 +559,8 @@ namespace NWebsec.Mvc.CommonProject.Tests
             Assert.Equal(expectedResult, newConfig.AllowTopNavigation);
         }
 
-        [Theory, MemberData(nameof(FalseThenTrue))]
+        [Theory]
+        [MemberData(nameof(FalseThenTrue))]
         public void GetOverridenCspMixedContentConfig_EnableOverride_OverridesEnabled(bool expectedResult)
         {
             var directiveConfig = new CspMixedContentDirectiveConfiguration { Enabled = !expectedResult };

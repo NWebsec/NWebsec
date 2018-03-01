@@ -1,7 +1,8 @@
 // Copyright (c) André N. Klingsheim. See License.txt in the project root for license information.
 
 using NWebsec.AspNetCore.Mvc.Csp.Internals;
-using NWebsec.AspNetCore.Mvc.Helpers;
+using NWebsec.Mvc.Common.Helpers;
+
 
 namespace NWebsec.AspNetCore.Mvc.Csp
 {

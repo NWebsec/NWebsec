@@ -84,10 +84,11 @@ namespace NWebsec.Mvc.Common.Helpers
                 Enabled = oldDirective.Enabled,
                 NoneSrc = oldDirective.NoneSrc,
                 SelfSrc = oldDirective.SelfSrc,
-                UnsafeEvalSrc = oldDirective.UnsafeEvalSrc,
                 UnsafeInlineSrc = oldDirective.UnsafeInlineSrc,
+                UnsafeEvalSrc = oldDirective.UnsafeEvalSrc,
+                StrictDynamicSrc = oldDirective.StrictDynamicSrc,
                 Nonce = oldDirective.Nonce,
-                CustomSources = oldDirective.CustomSources == null ? new List<string>(0) : oldDirective.CustomSources.ToList()
+                CustomSources = oldDirective.CustomSources?.ToList() ?? new List<string>(0)
             };
 
             return newConfig;
@@ -95,7 +96,7 @@ namespace NWebsec.Mvc.Common.Helpers
 
         public ICspPluginTypesDirectiveConfiguration GetCspPluginTypesConfigCloned(ICspConfiguration cspConfig)
         {
-            var oldDirective = cspConfig.PluginTypesDirective;
+            var oldDirective = cspConfig?.PluginTypesDirective;
 
             if (oldDirective == null)
             {
@@ -111,7 +112,7 @@ namespace NWebsec.Mvc.Common.Helpers
 
         public ICspSandboxDirectiveConfiguration GetCspSandboxConfigCloned(ICspConfiguration cspConfig)
         {
-            var oldDirective = cspConfig.SandboxDirective;
+            var oldDirective = cspConfig?.SandboxDirective;
 
             if (oldDirective == null)
             {
@@ -136,7 +137,7 @@ namespace NWebsec.Mvc.Common.Helpers
 
         public ICspMixedContentDirectiveConfiguration GetCspMixedContentConfigCloned(ICspConfiguration cspConfig)
         {
-            var oldDirective = cspConfig.MixedContentDirective;
+            var oldDirective = cspConfig?.MixedContentDirective;
 
             if (oldDirective == null)
             {

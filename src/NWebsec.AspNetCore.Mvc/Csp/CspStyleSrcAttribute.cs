@@ -2,7 +2,7 @@
 
 using System;
 using NWebsec.AspNetCore.Mvc.Csp.Internals;
-using NWebsec.AspNetCore.Mvc.Helpers;
+using NWebsec.Mvc.Common.Helpers;
 
 namespace NWebsec.AspNetCore.Mvc.Csp
 {

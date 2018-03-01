@@ -6,12 +6,12 @@ using Xunit;
 namespace NWebsec.Mvc.CommonProject.Tests.TestHelpers
 {
 
-    public class CspPluginTypesDirectiveConfigurationEqualityComparerTests
+    public class CspPluginTypesDirectiveConfigurationComparerTests
     {
 
         private readonly CspPluginTypesDirectiveConfigurationEqualityComparer _equalityComparer;
 
-        public CspPluginTypesDirectiveConfigurationEqualityComparerTests()
+        public CspPluginTypesDirectiveConfigurationComparerTests()
         {
             _equalityComparer = new CspPluginTypesDirectiveConfigurationEqualityComparer();
         }

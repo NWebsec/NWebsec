@@ -6,8 +6,9 @@ using Moq;
 using Xunit;
 using NWebsec.Core.Common.HttpHeaders.Configuration;
 using NWebsec.AspNetCore.Mvc.Helpers;
-using NWebsec.AspNetCore.Mvc.Helpers.CspOverride;
 using NWebsec.AspNetCore.Mvc.Tests.TestHelpers;
+using NWebsec.Mvc.Common.Csp;
+using NWebsec.Mvc.Common.Helpers;
 
 namespace NWebsec.AspNetCore.Mvc.Tests.Helpers
 {

@@ -5,8 +5,9 @@ using System.Linq;
 using Microsoft.AspNetCore.Mvc.Filters;
 using NWebsec.Core.Common.HttpHeaders.Csp;
 using NWebsec.AspNetCore.Mvc.Helpers;
-using NWebsec.AspNetCore.Mvc.Helpers.CspOverride;
 using NWebsec.AspNetCore.Mvc.Internals;
+using NWebsec.Mvc.Common.Csp;
+using NWebsec.Mvc.Common.Helpers;
 
 namespace NWebsec.AspNetCore.Mvc.Csp.Internals
 {
