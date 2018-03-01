@@ -2,7 +2,7 @@
 
 using System.Collections.Generic;
 using System.Web;
-using NWebsec.Core;
+using NWebsec.Core.Common;
 
 namespace NWebsec.ExtensionMethods
 {

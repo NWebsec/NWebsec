@@ -14,6 +14,7 @@ namespace NWebsec.Core.Common
         public IXFrameOptionsConfiguration XFrameOptions { get; set; }
         public IXRobotsTagConfiguration XRobotsTag { get; set; }
         public IXXssProtectionConfiguration XXssProtection { get; set; }
+        public IReferrerPolicyConfiguration ReferrerPolicy { get; set; } //TODO tests??
         public ICspConfiguration Csp { get; set; }
         public ICspConfiguration CspReportOnly { get; set; }
 

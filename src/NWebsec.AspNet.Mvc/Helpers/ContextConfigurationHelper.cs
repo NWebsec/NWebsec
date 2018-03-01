@@ -1,7 +1,7 @@
 ﻿// Copyright (c) André N. Klingsheim. See License.txt in the project root for license information.
 
 using System.Web;
-using NWebsec.Core;
+using NWebsec.Core.Common;
 using NWebsec.Core.Common.HttpHeaders.Configuration;
 using NWebsec.ExtensionMethods;
 using NWebsec.Mvc.Common.Csp;

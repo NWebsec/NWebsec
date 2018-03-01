@@ -3,10 +3,10 @@
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Http;
 using Moq;
-using NWebsec.AspNetCore.Core;
 using Xunit;
 using NWebsec.Core.Common.HttpHeaders.Configuration;
 using NWebsec.AspNetCore.Mvc.Helpers;
+using NWebsec.Core.Common;
 using NWebsec.Mvc.Common.Csp;
 
 namespace NWebsec.AspNetCore.Mvc.Tests.Helpers

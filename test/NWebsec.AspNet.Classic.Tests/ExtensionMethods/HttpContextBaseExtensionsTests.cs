@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Web;
 using Moq;
-using NWebsec.Core;
+using NWebsec.Core.Common;
 using NWebsec.ExtensionMethods;
 using Xunit;
 

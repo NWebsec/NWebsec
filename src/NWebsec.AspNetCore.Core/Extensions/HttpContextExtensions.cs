@@ -2,6 +2,7 @@
 
 using Microsoft.AspNetCore.Http;
 using NWebsec.Annotations;
+using NWebsec.Core.Common;
 
 namespace NWebsec.AspNetCore.Core.Extensions
 {

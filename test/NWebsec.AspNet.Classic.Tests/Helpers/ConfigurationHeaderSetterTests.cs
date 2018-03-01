@@ -4,7 +4,7 @@ using System;
 using System.Collections.Specialized;
 using System.Web;
 using Moq;
-using NWebsec.Core;
+using NWebsec.Core.Common;
 using NWebsec.Core.Common.HttpHeaders;
 using NWebsec.Core.Common.HttpHeaders.Configuration;
 using NWebsec.Csp;
