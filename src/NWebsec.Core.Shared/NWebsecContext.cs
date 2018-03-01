@@ -2,7 +2,7 @@
 
 using NWebsec.Core.Common.HttpHeaders.Configuration;
 
-namespace NWebsec.Core
+namespace NWebsec.Core.Common
 {
     public class NWebsecContext
     {
