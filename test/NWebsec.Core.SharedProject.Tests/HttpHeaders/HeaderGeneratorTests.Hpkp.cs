@@ -10,7 +10,7 @@ namespace NWebsec.Core.SharedProject.Tests.HttpHeaders
 {
     public partial class HeaderGeneratorTests
     {
-        public static readonly IEnumerable<object> ReportOnly = new TheoryData<bool> { false, true };
+        public static readonly IEnumerable<object[]> ReportOnly = new TheoryData<bool> { false, true };
 
         private readonly string[] _dummyPins = { "sha256=\"firstpin\"", "sha256=\"secondpin\"" };
 

@@ -12,7 +12,7 @@ namespace NWebsec.AspNetCore.Mvc.Tests.Helpers
 {
     public class CspDirectiveOverrideHelperTests
     {
-        public static readonly IEnumerable<object> FalseThenTrue = new TheoryData<bool> { false, true };
+        public static readonly IEnumerable<object[]> FalseThenTrue = new TheoryData<bool> { false, true };
 
         private readonly CspDirectiveOverrideHelper _overrideHelper;
 

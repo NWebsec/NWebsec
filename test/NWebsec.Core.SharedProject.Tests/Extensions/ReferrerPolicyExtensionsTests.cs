@@ -12,7 +12,7 @@ namespace NWebsec.Core.SharedProject.Tests.Extensions
     {
         [Theory]
         [InlineData(ReferrerPolicy.Disabled)]
-        [InlineData(Int32.MaxValue)]
+        [InlineData((ReferrerPolicy)Int32.MaxValue)]
         public void GetPolicyString_InvalidPolicy_Throws(ReferrerPolicy policy)
         {
             Assert.Throws<ArgumentOutOfRangeException>(() => policy.GetPolicyString());

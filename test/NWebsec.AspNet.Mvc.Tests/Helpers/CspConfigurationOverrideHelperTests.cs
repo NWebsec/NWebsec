@@ -14,7 +14,7 @@ namespace NWebsec.AspNet.Mvc.Tests.Helpers
 {
     public class CspConfigurationOverrideHelperTests
     {
-        public static readonly IEnumerable<object> ReportOnly = new TheoryData<bool> { false, true };
+        public static readonly IEnumerable<object[]> ReportOnly = new TheoryData<bool> { false, true };
 
         protected HttpContextBase MockContext;
         protected CspConfigurationOverrideHelper CspConfigurationOverrideHelper;

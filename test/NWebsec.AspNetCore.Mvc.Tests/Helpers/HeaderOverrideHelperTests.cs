@@ -14,7 +14,7 @@ namespace NWebsec.AspNetCore.Mvc.Tests.Helpers
 {
     public class HeaderOverrideHelperTests
     {
-        public static readonly IEnumerable<object> ReportOnly = new TheoryData<bool> { false, true };
+        public static readonly IEnumerable<object[]> ReportOnly = new TheoryData<bool> { false, true };
 
         private readonly Mock<IContextConfigurationHelper> _contextHelper;
         private readonly Mock<IHeaderConfigurationOverrideHelper> _configurationOverrideHelper;

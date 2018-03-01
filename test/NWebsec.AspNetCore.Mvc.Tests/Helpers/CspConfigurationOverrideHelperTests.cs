@@ -13,7 +13,7 @@ namespace NWebsec.AspNetCore.Mvc.Tests.Helpers
 {
     public class CspConfigurationOverrideHelperTests
     {
-        public static readonly IEnumerable<object> ReportOnly = new TheoryData<bool> { false, true };
+        public static readonly IEnumerable<object[]> ReportOnly = new TheoryData<bool> { false, true };
 
         protected HttpContext MockContext;
         private readonly CspConfigurationOverrideHelper _cspConfigurationOverrideHelper;

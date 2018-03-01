@@ -9,7 +9,7 @@ namespace NWebsec.Core.SharedProject.Tests.HttpHeaders
 {
     public class HeaderGeneratorCspTests
     {
-        public static readonly IEnumerable<object> ReportOnly = new TheoryData<bool> { false, true };
+        public static readonly IEnumerable<object[]> ReportOnly = new TheoryData<bool> { false, true };
 
         private readonly HeaderGenerator _generator;
 

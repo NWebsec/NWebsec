@@ -11,7 +11,7 @@ namespace NWebsec.AspNetCore.Mvc.TagHelpers.Tests
     {
         private const string ContentAttribute = "referrerpolicy";
 
-        public static readonly IEnumerable<object> ReferrerActionsAndValues = new TheoryData<string, string>
+        public static readonly IEnumerable<object[]> ReferrerActionsAndValues = new TheoryData<string, string>
         {
             { "meta", "content"},
             {"a", ContentAttribute},

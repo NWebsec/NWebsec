@@ -13,7 +13,7 @@ namespace NWebsec.AspNetCore.Mvc.Tests.Helpers
 {
     public class ContextConfigurationHelperTests
     {
-        public static readonly IEnumerable<object> ReportOnly = new TheoryData<bool> { false, true };
+        public static readonly IEnumerable<object[]> ReportOnly = new TheoryData<bool> { false, true };
 
         private readonly NWebsecContext _nwContext;
         private readonly HttpContext _mockContext;
