@@ -2,13 +2,14 @@
 
 using System;
 using System.Web;
+using NWebsec.Core.Common.Web;
 
 namespace NWebsec.Helpers
 {
     public interface IHandlerTypeHelper
     {
-        bool IsUnmanagedHandler(HttpContextBase context);
-        bool IsStaticContentHandler(HttpContextBase context);
+        bool IsUnmanagedHandler(IHttpContextWrapper context);
+        bool IsStaticContentHandler(IHttpContextWrapper context);
     }
 
     public class HandlerTypeHelper : IHandlerTypeHelper
@@ -24,23 +25,24 @@ namespace NWebsec.Helpers
                 return;
             }
 
-            var handlerName = context.Handler.GetType().FullName;
-            if (handlerName.Equals("System.Web.Handlers.AssemblyResourceLoader") ||
-                handlerName.Equals("System.Web.Handlers.ScriptResourceHandler") ||
-                handlerName.Equals("System.Web.Optimization.BundleHandler"))
+            switch (context.Handler.GetType().FullName)
             {
-                context.Items.Add(StaticContentHandlerKey, String.Empty);
+                case "System.Web.Handlers.AssemblyResourceLoader":
+                case "System.Web.Handlers.ScriptResourceHandler":
+                case "System.Web.Optimization.BundleHandler":
+                    context.Items.Add(StaticContentHandlerKey, String.Empty);
+                    return;
             }
         }
 
-        public bool IsUnmanagedHandler(HttpContextBase context)
+        public bool IsUnmanagedHandler(IHttpContextWrapper context)
         {
-            return context.Items[UnManagedHandlerKey] != null;
+            return context.GetItem<string>(UnManagedHandlerKey) != null;
         }
 
-        public bool IsStaticContentHandler(HttpContextBase context)
+        public bool IsStaticContentHandler(IHttpContextWrapper context)
         {
-            return context.Items[StaticContentHandlerKey] != null;
+            return context.GetItem<string>(StaticContentHandlerKey) != null;
         }
     }
 }

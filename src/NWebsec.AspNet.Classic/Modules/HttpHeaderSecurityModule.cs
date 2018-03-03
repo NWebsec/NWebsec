@@ -67,7 +67,7 @@ namespace NWebsec.Modules
             var context = new HttpContextWrapper(app.Context);
 
             _handlerTypeHelper.RequestHandlerMapped(context);
-            _configHeaderSetter.SetContentRelatedHeadersFromConfig(context);
+            _configHeaderSetter.SetContentRelatedHeadersFromConfig(new Core.Web.HttpContextWrapper(context));
         }
 
         void app_EndRequest(object sender, EventArgs e)
@@ -76,7 +76,7 @@ namespace NWebsec.Modules
             var context = new HttpContextWrapper(app.Context);
 
             _redirectValidationHelper.ValidateIfRedirect(context);
-            _configHeaderSetter.SetNoCacheHeadersForSignoutCleanup(context);
+            _configHeaderSetter.SetNoCacheHeadersForSignoutCleanup(new Core.Web.HttpContextWrapper(context));
         }
 
         public delegate void CspViolationReportEventHandler(object sender, CspViolationReportEventArgs e);

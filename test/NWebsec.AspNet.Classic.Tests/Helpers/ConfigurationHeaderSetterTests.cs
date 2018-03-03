@@ -8,6 +8,7 @@ using NWebsec.Core.Common;
 using NWebsec.Core.Common.HttpHeaders;
 using NWebsec.Core.Common.HttpHeaders.Configuration;
 using NWebsec.Csp;
+using NWebsec.Core.Common.Web;
 using NWebsec.Helpers;
 using NWebsec.Modules.Configuration;
 using Xunit;
@@ -16,11 +17,8 @@ namespace NWebsec.AspNet.Classic.Tests.Helpers
 {
     public class ConfigurationHeaderSetterTests
     {
-        readonly Mock<IHandlerTypeHelper> _mockHandlerHelper;
-        readonly Mock<HttpRequestBase> _mockRequest;
-        readonly Mock<HttpResponseBase> _mockResponse;
-        readonly HttpContextBase _mockContext;
-        private readonly NameValueCollection _responseHeaders;
+        private readonly Mock<IHandlerTypeHelper> _mockHandlerHelper;
+        private readonly Mock<HttpRequestBase> _mockRequest;
         private readonly HttpHeaderSecurityConfigurationSection _config;
         private readonly Mock<IHeaderGenerator> _mockHeaderGenerator;
         private Mock<IHeaderResultHandler> _mockHeaderResultHandler;
@@ -28,30 +26,33 @@ namespace NWebsec.AspNet.Classic.Tests.Helpers
         private readonly ConfigurationHeaderSetter _configHeaderSetter;
         private readonly NWebsecContext _nwebsecContext;
         private readonly HeaderResult _expectedHeaderResult;
+        private readonly IHttpContextWrapper _httpContext;
 
         public ConfigurationHeaderSetterTests()
         {
             _mockRequest = new Mock<HttpRequestBase>();
             _mockRequest.Setup(r => r.UserAgent).Returns("Ninja CSP browser");
 
-            _responseHeaders = new NameValueCollection();
-            _mockResponse = new Mock<HttpResponseBase>();
-            _mockResponse.Setup(r => r.Headers).Returns(_responseHeaders);
+            var mockResponse = new Mock<HttpResponseBase>();
+            mockResponse.Setup(r => r.Headers).Returns(new NameValueCollection());
 
             var mockedContext = new Mock<HttpContextBase>();
             mockedContext.SetupAllProperties();
             mockedContext.Setup(c => c.Request).Returns(_mockRequest.Object);
-            mockedContext.Setup(c => c.Response).Returns(_mockResponse.Object);
+            mockedContext.Setup(c => c.Response).Returns(mockResponse.Object);
 
             _expectedHeaderResult = new HeaderResult(HeaderResult.ResponseAction.Set, "SomeHeader", "SomeValue");
             _mockHeaderGenerator = new Mock<IHeaderGenerator>(MockBehavior.Strict);
             _mockHeaderResultHandler = new Mock<IHeaderResultHandler>(MockBehavior.Strict);
-            _mockHeaderResultHandler.Setup(h => h.HandleHeaderResult(It.IsAny<HttpResponseBase>(), _expectedHeaderResult));
+            _mockHeaderResultHandler.Setup(h => h.HandleHeaderResult(It.IsAny<IHttpContextWrapper>(), _expectedHeaderResult));
 
             _mockHandlerHelper = new Mock<IHandlerTypeHelper>();
             _mockCspReportHelper = new Mock<ICspReportHelper>(MockBehavior.Strict);
 
-            _mockContext = mockedContext.Object;
+            var mockContextBase = mockedContext.Object;
+
+            _httpContext = new Mock<IHttpContextWrapper>().Object;
+            Mock.Get(_httpContext).Setup(ctx => ctx.GetOriginalHttpContext<HttpContextBase>()).Returns(mockContextBase);
 
             _config = new HttpHeaderSecurityConfigurationSection();
             _configHeaderSetter = new ConfigurationHeaderSetter(_config, _mockHeaderGenerator.Object, _mockHeaderResultHandler.Object, _mockHandlerHelper.Object, _mockCspReportHelper.Object);
@@ -64,9 +65,9 @@ namespace NWebsec.AspNet.Classic.Tests.Helpers
             _config.SecurityHttpHeaders.Hsts.HttpsOnly = false;
             _mockHeaderGenerator.Setup(g => g.CreateHstsResult(_config.SecurityHttpHeaders.Hsts)).Returns(_expectedHeaderResult);
 
-            _configHeaderSetter.SetHstsHeader(_mockResponse.Object, false, uaSupportsUpgrade);
+            _configHeaderSetter.SetHstsHeader(_httpContext, false, uaSupportsUpgrade);
 
-            _mockHeaderResultHandler.Verify(h => h.HandleHeaderResult(It.IsAny<HttpResponseBase>(), _expectedHeaderResult), Times.Once);
+            _mockHeaderResultHandler.Verify(h => h.HandleHeaderResult(_httpContext, _expectedHeaderResult), Times.Once);
         }
 
         [Theory, InlineData(true), InlineData(false)]
@@ -75,10 +76,10 @@ namespace NWebsec.AspNet.Classic.Tests.Helpers
             _config.SecurityHttpHeaders.Hsts.HttpsOnly = true;
             _mockHeaderGenerator.Setup(g => g.CreateHstsResult(_config.SecurityHttpHeaders.Hsts)).Returns(_expectedHeaderResult);
 
-            _configHeaderSetter.SetHstsHeader(_mockResponse.Object, false, uaSupportsUpgrade);
+            _configHeaderSetter.SetHstsHeader(_httpContext, false, uaSupportsUpgrade);
 
             _mockHeaderGenerator.Verify(g => g.CreateHstsResult(It.IsAny<IHstsConfiguration>()), Times.Never);
-            _mockHeaderResultHandler.Verify(h => h.HandleHeaderResult(It.IsAny<HttpResponseBase>(), _expectedHeaderResult), Times.Never);
+            _mockHeaderResultHandler.Verify(h => h.HandleHeaderResult(_httpContext, _expectedHeaderResult), Times.Never);
         }
 
         [Theory]
@@ -91,9 +92,9 @@ namespace NWebsec.AspNet.Classic.Tests.Helpers
             _config.SecurityHttpHeaders.Hsts.HttpsOnly = httpsOnly;
             _mockHeaderGenerator.Setup(g => g.CreateHstsResult(_config.SecurityHttpHeaders.Hsts)).Returns(_expectedHeaderResult);
 
-            _configHeaderSetter.SetHstsHeader(_mockResponse.Object, true, uaSupportsUpgrade);
+            _configHeaderSetter.SetHstsHeader(_httpContext, true, uaSupportsUpgrade);
 
-            _mockHeaderResultHandler.Verify(h => h.HandleHeaderResult(It.IsAny<HttpResponseBase>(), _expectedHeaderResult), Times.Once);
+            _mockHeaderResultHandler.Verify(h => h.HandleHeaderResult(_httpContext, _expectedHeaderResult), Times.Once);
         }
 
         [Fact]
@@ -102,9 +103,9 @@ namespace NWebsec.AspNet.Classic.Tests.Helpers
             _config.SecurityHttpHeaders.Hsts.UpgradeInsecureRequests = true;
             _mockHeaderGenerator.Setup(g => g.CreateHstsResult(_config.SecurityHttpHeaders.Hsts)).Returns(_expectedHeaderResult);
 
-            _configHeaderSetter.SetHstsHeader(_mockResponse.Object, true, true);
+            _configHeaderSetter.SetHstsHeader(_httpContext, true, true);
 
-            _mockHeaderResultHandler.Verify(h => h.HandleHeaderResult(It.IsAny<HttpResponseBase>(), _expectedHeaderResult), Times.Once);
+            _mockHeaderResultHandler.Verify(h => h.HandleHeaderResult(_httpContext, _expectedHeaderResult), Times.Once);
         }
 
         [Fact]
@@ -113,9 +114,9 @@ namespace NWebsec.AspNet.Classic.Tests.Helpers
             _config.SecurityHttpHeaders.Hsts.UpgradeInsecureRequests = true;
             _mockHeaderGenerator.Setup(g => g.CreateHstsResult(_config.SecurityHttpHeaders.Hsts)).Returns(_expectedHeaderResult);
 
-            _configHeaderSetter.SetHstsHeader(_mockResponse.Object, true, false);
+            _configHeaderSetter.SetHstsHeader(_httpContext, true, false);
 
-            _mockHeaderResultHandler.Verify(h => h.HandleHeaderResult(It.IsAny<HttpResponseBase>(), _expectedHeaderResult), Times.Never);
+            _mockHeaderResultHandler.Verify(h => h.HandleHeaderResult(_httpContext, _expectedHeaderResult), Times.Never);
         }
 
         [Theory, InlineData(true), InlineData(false)]
@@ -126,9 +127,9 @@ namespace NWebsec.AspNet.Classic.Tests.Helpers
             hpkpConfig.HttpsOnly = false;
             _mockHeaderGenerator.Setup(g => g.CreateHpkpResult(hpkpConfig, reportOnly)).Returns(_expectedHeaderResult);
 
-            _configHeaderSetter.SetHpkpHeader(_mockResponse.Object, false, reportOnly);
+            _configHeaderSetter.SetHpkpHeader(_httpContext, false, reportOnly);
 
-            _mockHeaderResultHandler.Verify(h => h.HandleHeaderResult(It.IsAny<HttpResponseBase>(), _expectedHeaderResult), Times.Once);
+            _mockHeaderResultHandler.Verify(h => h.HandleHeaderResult(_httpContext, _expectedHeaderResult), Times.Once);
         }
 
         [Theory, InlineData(true), InlineData(false)]
@@ -139,10 +140,10 @@ namespace NWebsec.AspNet.Classic.Tests.Helpers
             hpkpConfig.HttpsOnly = true;
             _mockHeaderGenerator.Setup(g => g.CreateHpkpResult(hpkpConfig, reportOnly)).Returns(_expectedHeaderResult);
 
-            _configHeaderSetter.SetHpkpHeader(_mockResponse.Object, false, reportOnly);
+            _configHeaderSetter.SetHpkpHeader(_httpContext, false, reportOnly);
 
             _mockHeaderGenerator.Verify(g => g.CreateHstsResult(It.IsAny<IHstsConfiguration>()), Times.Never);
-            _mockHeaderResultHandler.Verify(h => h.HandleHeaderResult(It.IsAny<HttpResponseBase>(), _expectedHeaderResult), Times.Never);
+            _mockHeaderResultHandler.Verify(h => h.HandleHeaderResult(_httpContext, _expectedHeaderResult), Times.Never);
         }
 
         [Theory]
@@ -157,9 +158,9 @@ namespace NWebsec.AspNet.Classic.Tests.Helpers
             hpkpConfig.HttpsOnly = httpsOnly;
             _mockHeaderGenerator.Setup(g => g.CreateHpkpResult(hpkpConfig, reportOnly)).Returns(_expectedHeaderResult);
 
-            _configHeaderSetter.SetHpkpHeader(_mockResponse.Object, true, reportOnly);
+            _configHeaderSetter.SetHpkpHeader(_httpContext, true, reportOnly);
 
-            _mockHeaderResultHandler.Verify(h => h.HandleHeaderResult(It.IsAny<HttpResponseBase>(), _expectedHeaderResult), Times.Once);
+            _mockHeaderResultHandler.Verify(h => h.HandleHeaderResult(_httpContext, _expectedHeaderResult), Times.Once);
         }
 
         [Fact]
@@ -167,10 +168,10 @@ namespace NWebsec.AspNet.Classic.Tests.Helpers
         {
             _mockHeaderGenerator.Setup(g => g.CreateXRobotsTagResult(_config.XRobotsTag, null)).Returns(_expectedHeaderResult);
 
-            _configHeaderSetter.SetXRobotsTagHeader(_mockResponse.Object, _nwebsecContext);
+            _configHeaderSetter.SetXRobotsTagHeader(_httpContext, _nwebsecContext);
 
             Assert.Same(_config.XRobotsTag, _nwebsecContext.XRobotsTag);
-            _mockHeaderResultHandler.Verify(h => h.HandleHeaderResult(It.IsAny<HttpResponseBase>(), _expectedHeaderResult), Times.Once);
+            _mockHeaderResultHandler.Verify(h => h.HandleHeaderResult(_httpContext, _expectedHeaderResult), Times.Once);
         }
 
         [Fact]
@@ -178,10 +179,10 @@ namespace NWebsec.AspNet.Classic.Tests.Helpers
         {
             _mockHeaderGenerator.Setup(g => g.CreateXfoResult(_config.SecurityHttpHeaders.XFrameOptions, null)).Returns(_expectedHeaderResult);
 
-            _configHeaderSetter.SetXFrameoptionsHeader(_mockResponse.Object, _nwebsecContext);
+            _configHeaderSetter.SetXFrameoptionsHeader(_httpContext, _nwebsecContext);
 
             Assert.Same(_config.SecurityHttpHeaders.XFrameOptions, _nwebsecContext.XFrameOptions);
-            _mockHeaderResultHandler.Verify(h => h.HandleHeaderResult(It.IsAny<HttpResponseBase>(), _expectedHeaderResult), Times.Once);
+            _mockHeaderResultHandler.Verify(h => h.HandleHeaderResult(_httpContext, _expectedHeaderResult), Times.Once);
         }
 
         [Fact]
@@ -189,10 +190,10 @@ namespace NWebsec.AspNet.Classic.Tests.Helpers
         {
             _mockHeaderGenerator.Setup(g => g.CreateXContentTypeOptionsResult(_config.SecurityHttpHeaders.XContentTypeOptions, null)).Returns(_expectedHeaderResult);
 
-            _configHeaderSetter.SetXContentTypeOptionsHeader(_mockResponse.Object, _nwebsecContext);
+            _configHeaderSetter.SetXContentTypeOptionsHeader(_httpContext, _nwebsecContext);
 
             Assert.Same(_config.SecurityHttpHeaders.XContentTypeOptions, _nwebsecContext.XContentTypeOptions);
-            _mockHeaderResultHandler.Verify(h => h.HandleHeaderResult(It.IsAny<HttpResponseBase>(), _expectedHeaderResult), Times.Once);
+            _mockHeaderResultHandler.Verify(h => h.HandleHeaderResult(_httpContext, _expectedHeaderResult), Times.Once);
         }
 
         [Fact]
@@ -200,10 +201,10 @@ namespace NWebsec.AspNet.Classic.Tests.Helpers
         {
             _mockHeaderGenerator.Setup(g => g.CreateXDownloadOptionsResult(_config.SecurityHttpHeaders.XDownloadOptions, null)).Returns(_expectedHeaderResult);
 
-            _configHeaderSetter.SetXDownloadOptionsHeader(_mockResponse.Object, _nwebsecContext);
+            _configHeaderSetter.SetXDownloadOptionsHeader(_httpContext, _nwebsecContext);
 
             Assert.Same(_config.SecurityHttpHeaders.XDownloadOptions, _nwebsecContext.XDownloadOptions);
-            _mockHeaderResultHandler.Verify(h => h.HandleHeaderResult(It.IsAny<HttpResponseBase>(), _expectedHeaderResult), Times.Once);
+            _mockHeaderResultHandler.Verify(h => h.HandleHeaderResult(_httpContext, _expectedHeaderResult), Times.Once);
         }
 
         [Fact]
@@ -211,10 +212,10 @@ namespace NWebsec.AspNet.Classic.Tests.Helpers
         {
             _mockHeaderGenerator.Setup(g => g.CreateXXssProtectionResult(_config.SecurityHttpHeaders.XXssProtection, null)).Returns(_expectedHeaderResult);
 
-            _configHeaderSetter.SetXXssProtectionHeader(_mockContext, _nwebsecContext);
+            _configHeaderSetter.SetXXssProtectionHeader(_httpContext, _nwebsecContext);
 
             Assert.Same(_config.SecurityHttpHeaders.XXssProtection, _nwebsecContext.XXssProtection);
-            _mockHeaderResultHandler.Verify(h => h.HandleHeaderResult(It.IsAny<HttpResponseBase>(), _expectedHeaderResult), Times.Once);
+            _mockHeaderResultHandler.Verify(h => h.HandleHeaderResult(_httpContext, _expectedHeaderResult), Times.Once);
         }
 
         [Fact]
@@ -222,138 +223,108 @@ namespace NWebsec.AspNet.Classic.Tests.Helpers
         {
             _mockHeaderGenerator.Setup(g => g.CreateXXssProtectionResult(_config.SecurityHttpHeaders.XXssProtection, null)).Throws(new Exception("This method should not be called"));
 
-            _mockHandlerHelper.Setup(h => h.IsUnmanagedHandler(It.IsAny<HttpContextBase>())).Returns(true);
+            _mockHandlerHelper.Setup(h => h.IsUnmanagedHandler(_httpContext)).Returns(true);
             _mockHeaderResultHandler = new Mock<IHeaderResultHandler>(MockBehavior.Strict);
 
-            _configHeaderSetter.SetXXssProtectionHeader(_mockContext, _nwebsecContext);
+            _configHeaderSetter.SetXXssProtectionHeader(_httpContext, _nwebsecContext);
 
             Assert.Null(_nwebsecContext.XXssProtection);
-            _mockHeaderResultHandler.Verify(h => h.HandleHeaderResult(It.IsAny<HttpResponseBase>(), _expectedHeaderResult), Times.Never);
+            _mockHeaderResultHandler.Verify(h => h.HandleHeaderResult(_httpContext, _expectedHeaderResult), Times.Never);
         }
 
         [Fact]
         public void SetXXssProtectionHeader_StaticContentHandler_DoesNothing()
         {
             _mockHeaderGenerator.Setup(g => g.CreateXXssProtectionResult(_config.SecurityHttpHeaders.XXssProtection, null)).Throws(new Exception("This method should not be called"));
-            _mockHandlerHelper.Setup(h => h.IsStaticContentHandler(It.IsAny<HttpContextBase>())).Returns(true);
+            _mockHandlerHelper.Setup(h => h.IsStaticContentHandler(_httpContext)).Returns(true);
             _mockHeaderResultHandler = new Mock<IHeaderResultHandler>(MockBehavior.Strict);
 
-            _configHeaderSetter.SetXXssProtectionHeader(_mockContext, _nwebsecContext);
+            _configHeaderSetter.SetXXssProtectionHeader(_httpContext, _nwebsecContext);
 
             Assert.Null(_nwebsecContext.XXssProtection);
-            _mockHeaderResultHandler.Verify(h => h.HandleHeaderResult(It.IsAny<HttpResponseBase>(), _expectedHeaderResult), Times.Never);
+            _mockHeaderResultHandler.Verify(h => h.HandleHeaderResult(_httpContext, _expectedHeaderResult), Times.Never);
         }
 
         [Fact]
         public void SetNoCacheHeaders_DisabledInConfig_DoesNothing()
         {
-            var cachePolicy = new Mock<HttpCachePolicyBase>();
-            _mockResponse.Setup(x => x.Cache).Returns(cachePolicy.Object);
+            _config.NoCacheHttpHeaders.Enabled = false;
 
-            _configHeaderSetter.SetNoCacheHeadersFromConfig(_mockContext, _nwebsecContext);
+            _configHeaderSetter.SetNoCacheHeadersFromConfig(_httpContext, _nwebsecContext);
 
             Assert.Null(_nwebsecContext.NoCacheHeaders);
-            cachePolicy.Verify(c => c.SetCacheability(It.IsAny<HttpCacheability>()), Times.Never());
-            cachePolicy.Verify(c => c.SetNoStore(), Times.Never());
-            cachePolicy.Verify(c => c.SetRevalidation(It.IsAny<HttpCacheRevalidation>()), Times.Never());
-            Assert.Empty(_responseHeaders);
+            Mock.Get(_httpContext).Verify(ctx => ctx.SetNoCacheHeaders(), Times.Never);
         }
 
         [Fact]
         public void SetNoCacheHeaders_EnabledInConfig_UpdatesContextSetsNoCacheHeaders()
         {
             _config.NoCacheHttpHeaders.Enabled = true;
-            var cachePolicy = new Mock<HttpCachePolicyBase>();
-            _mockResponse.Setup(x => x.Cache).Returns(cachePolicy.Object);
 
-            _configHeaderSetter.SetNoCacheHeadersFromConfig(_mockContext, _nwebsecContext);
+            _configHeaderSetter.SetNoCacheHeadersFromConfig(_httpContext, _nwebsecContext);
 
             Assert.Same(_config.NoCacheHttpHeaders, _nwebsecContext.NoCacheHeaders);
-            cachePolicy.Verify(c => c.SetCacheability(HttpCacheability.NoCache), Times.Once());
-            cachePolicy.Verify(c => c.SetNoStore(), Times.Once());
-            cachePolicy.Verify(c => c.SetRevalidation(HttpCacheRevalidation.AllCaches), Times.Once());
+            Mock.Get(_httpContext).Verify(ctx => ctx.SetNoCacheHeaders(), Times.Once);
         }
 
         [Fact]
-        public void SetNoCacheHeaders_EnabledInConfigAndStaticContentHandler_DoesNotNothing()
+        public void SetNoCacheHeaders_EnabledInConfigAndStaticContentHandler_DoesNothing()
         {
             _config.NoCacheHttpHeaders.Enabled = true;
-            var cachePolicy = new Mock<HttpCachePolicyBase>();
-            _mockResponse.Setup(x => x.Cache).Returns(cachePolicy.Object);
-            _mockHandlerHelper.Setup(h => h.IsStaticContentHandler(It.IsAny<HttpContextBase>())).Returns(true);
+            _mockHandlerHelper.Setup(h => h.IsStaticContentHandler(_httpContext)).Returns(true);
 
-            _configHeaderSetter.SetNoCacheHeadersFromConfig(_mockContext, _nwebsecContext);
+            _configHeaderSetter.SetNoCacheHeadersFromConfig(_httpContext, _nwebsecContext);
 
             Assert.Null(_nwebsecContext.NoCacheHeaders);
-            cachePolicy.Verify(c => c.SetCacheability(It.IsAny<HttpCacheability>()), Times.Never());
-            cachePolicy.Verify(c => c.SetNoStore(), Times.Never());
-            cachePolicy.Verify(c => c.SetRevalidation(It.IsAny<HttpCacheRevalidation>()), Times.Never());
-            Assert.Empty(_responseHeaders);
+            Mock.Get(_httpContext).Verify(ctx => ctx.SetNoCacheHeaders(), Times.Never);
         }
 
         [Fact]
-        public void SetNoCacheHeaders_EnabledInConfigAndStaticContent_DoesNotChangeCachePolicy()
+        public void SetNoCacheHeaders_EnabledInConfigAndStaticContent_DoesNothing()
         {
             _config.NoCacheHttpHeaders.Enabled = true;
-            var cachePolicy = new Mock<HttpCachePolicyBase>();
-            _mockResponse.Setup(x => x.Cache).Returns(cachePolicy.Object);
-            _mockHandlerHelper.Setup(h => h.IsUnmanagedHandler(It.IsAny<HttpContextBase>())).Returns(true);
+            _mockHandlerHelper.Setup(h => h.IsUnmanagedHandler(_httpContext)).Returns(true);
 
-            _configHeaderSetter.SetNoCacheHeadersFromConfig(_mockContext, _nwebsecContext);
+            _configHeaderSetter.SetNoCacheHeadersFromConfig(_httpContext, _nwebsecContext);
 
             Assert.Null(_nwebsecContext.NoCacheHeaders);
-            cachePolicy.Verify(c => c.SetCacheability(It.IsAny<HttpCacheability>()), Times.Never());
-            cachePolicy.Verify(c => c.SetNoStore(), Times.Never());
-            cachePolicy.Verify(c => c.SetRevalidation(It.IsAny<HttpCacheRevalidation>()), Times.Never());
-            Assert.Empty(_responseHeaders);
+            Mock.Get(_httpContext).Verify(ctx => ctx.SetNoCacheHeaders(), Times.Never);
         }
 
         [Fact]
         public void SetNoCacheHeadersForSignoutCleanup_DisabledInConfig_DoesNothing()
         {
-            var cachePolicy = new Mock<HttpCachePolicyBase>();
-            _mockResponse.Setup(x => x.Cache).Returns(cachePolicy.Object);
+            _config.NoCacheHttpHeaders.Enabled = false;
+            _mockRequest.Setup(x => x.QueryString).Returns(new NameValueCollection { { "wa", "wsignoutcleanup1.0" } });
 
-            _configHeaderSetter.SetNoCacheHeadersForSignoutCleanup(_mockContext);
+            _configHeaderSetter.SetNoCacheHeadersForSignoutCleanup(_httpContext);
 
             Assert.Null(_nwebsecContext.NoCacheHeaders);
-            cachePolicy.Verify(c => c.SetCacheability(It.IsAny<HttpCacheability>()), Times.Never());
-            cachePolicy.Verify(c => c.SetNoStore(), Times.Never());
-            cachePolicy.Verify(c => c.SetRevalidation(It.IsAny<HttpCacheRevalidation>()), Times.Never());
-            Assert.Empty(_responseHeaders);
+            Mock.Get(_httpContext).Verify(ctx => ctx.SetNoCacheHeaders(), Times.Never);
         }
 
         [Fact]
         public void SetNoCacheHeadersForSignoutCleanup_EnabledInConfigAndNotSignoutRequest_DoesNotNothing()
         {
             _config.NoCacheHttpHeaders.Enabled = true;
-            var cachePolicy = new Mock<HttpCachePolicyBase>();
             _mockRequest.Setup(x => x.QueryString).Returns(new NameValueCollection());
-            _mockResponse.Setup(x => x.Cache).Returns(cachePolicy.Object);
 
-            _configHeaderSetter.SetNoCacheHeadersForSignoutCleanup(_mockContext);
+            _configHeaderSetter.SetNoCacheHeadersForSignoutCleanup(_httpContext);
 
             Assert.Null(_nwebsecContext.NoCacheHeaders);
-            cachePolicy.Verify(c => c.SetCacheability(It.IsAny<HttpCacheability>()), Times.Never());
-            cachePolicy.Verify(c => c.SetNoStore(), Times.Never());
-            cachePolicy.Verify(c => c.SetRevalidation(It.IsAny<HttpCacheRevalidation>()), Times.Never());
-            Assert.Empty(_responseHeaders);
+            Mock.Get(_httpContext).Verify(ctx => ctx.SetNoCacheHeaders(), Times.Never);
         }
 
         [Fact]
-        public void SetNoCacheHeadersForSignoutCleanup_EnabledInConfigAndSignoutRequest_UpdatesContextSetsNoCacheHeaders()
+        public void SetNoCacheHeadersForSignoutCleanup_EnabledInConfigAndSignoutRequest_DoesNotUpdateContextSetsNoCacheHeaders()
         {
             _config.NoCacheHttpHeaders.Enabled = true;
-            var cachePolicy = new Mock<HttpCachePolicyBase>();
             _mockRequest.Setup(x => x.QueryString).Returns(new NameValueCollection { { "wa", "wsignoutcleanup1.0" } });
-            _mockResponse.Setup(x => x.Cache).Returns(cachePolicy.Object);
 
-            _configHeaderSetter.SetNoCacheHeadersForSignoutCleanup(_mockContext);
+            _configHeaderSetter.SetNoCacheHeadersForSignoutCleanup(_httpContext);
 
             Assert.Null(_nwebsecContext.NoCacheHeaders);
-            cachePolicy.Verify(c => c.SetCacheability(HttpCacheability.NoCache), Times.Once());
-            cachePolicy.Verify(c => c.SetNoStore(), Times.Once());
-            cachePolicy.Verify(c => c.SetRevalidation(HttpCacheRevalidation.AllCaches), Times.Once());
+            Mock.Get(_httpContext).Verify(ctx => ctx.SetNoCacheHeaders(), Times.Once);
         }
 
         [Fact]
@@ -362,10 +333,10 @@ namespace NWebsec.AspNet.Classic.Tests.Helpers
             _mockCspReportHelper.Setup(h => h.GetBuiltInCspReportHandlerRelativeUri()).Returns("/cspreport");
             _mockHeaderGenerator.Setup(g => g.CreateCspResult(_config.SecurityHttpHeaders.Csp, false, "/cspreport", null)).Returns(_expectedHeaderResult);
 
-            _configHeaderSetter.SetCspHeaders(_mockContext, _nwebsecContext, false);
+            _configHeaderSetter.SetCspHeaders(_httpContext, _nwebsecContext, false);
 
             Assert.Same(_config.SecurityHttpHeaders.Csp, _nwebsecContext.Csp);
-            _mockHeaderResultHandler.Verify(h => h.HandleHeaderResult(It.IsAny<HttpResponseBase>(), _expectedHeaderResult), Times.Once);
+            _mockHeaderResultHandler.Verify(h => h.HandleHeaderResult(_httpContext, _expectedHeaderResult), Times.Once);
         }
 
         [Fact]
@@ -374,10 +345,10 @@ namespace NWebsec.AspNet.Classic.Tests.Helpers
             _mockCspReportHelper.Setup(h => h.GetBuiltInCspReportHandlerRelativeUri()).Returns("/cspreport");
             _mockHeaderGenerator.Setup(g => g.CreateCspResult(_config.SecurityHttpHeaders.CspReportOnly, true, "/cspreport", null)).Returns(_expectedHeaderResult);
 
-            _configHeaderSetter.SetCspHeaders(_mockContext, _nwebsecContext, true);
+            _configHeaderSetter.SetCspHeaders(_httpContext, _nwebsecContext, true);
 
             Assert.Same(_config.SecurityHttpHeaders.CspReportOnly, _nwebsecContext.CspReportOnly);
-            _mockHeaderResultHandler.Verify(h => h.HandleHeaderResult(It.IsAny<HttpResponseBase>(), _expectedHeaderResult), Times.Once);
+            _mockHeaderResultHandler.Verify(h => h.HandleHeaderResult(_httpContext, _expectedHeaderResult), Times.Once);
         }
 
         [Fact]
@@ -387,12 +358,12 @@ namespace NWebsec.AspNet.Classic.Tests.Helpers
 
             _config.SecurityHttpHeaders.Csp.Enabled = true;
             _config.SecurityHttpHeaders.Csp.DefaultSrc.SelfSrc = true;
-            _mockHandlerHelper.Setup(h => h.IsStaticContentHandler(It.IsAny<HttpContextBase>())).Returns(true);
+            _mockHandlerHelper.Setup(h => h.IsStaticContentHandler(_httpContext)).Returns(true);
 
-            _configHeaderSetter.SetCspHeaders(_mockContext, _nwebsecContext, false);
+            _configHeaderSetter.SetCspHeaders(_httpContext, _nwebsecContext, false);
 
             Assert.Null(_nwebsecContext.Csp);
-            _mockHeaderResultHandler.Verify(h => h.HandleHeaderResult(It.IsAny<HttpResponseBase>(), _expectedHeaderResult), Times.Never);
+            _mockHeaderResultHandler.Verify(h => h.HandleHeaderResult(_httpContext, _expectedHeaderResult), Times.Never);
         }
 
         [Fact]
@@ -402,12 +373,12 @@ namespace NWebsec.AspNet.Classic.Tests.Helpers
 
             _config.SecurityHttpHeaders.CspReportOnly.Enabled = true;
             _config.SecurityHttpHeaders.CspReportOnly.DefaultSrc.SelfSrc = true;
-            _mockHandlerHelper.Setup(h => h.IsStaticContentHandler(It.IsAny<HttpContextBase>())).Returns(true);
+            _mockHandlerHelper.Setup(h => h.IsStaticContentHandler(_httpContext)).Returns(true);
 
-            _configHeaderSetter.SetCspHeaders(_mockContext, _nwebsecContext, true);
+            _configHeaderSetter.SetCspHeaders(_httpContext, _nwebsecContext, true);
 
             Assert.Null(_nwebsecContext.CspReportOnly);
-            _mockHeaderResultHandler.Verify(h => h.HandleHeaderResult(It.IsAny<HttpResponseBase>(), _expectedHeaderResult), Times.Never);
+            _mockHeaderResultHandler.Verify(h => h.HandleHeaderResult(_httpContext, _expectedHeaderResult), Times.Never);
         }
 
         [Fact]
@@ -417,12 +388,12 @@ namespace NWebsec.AspNet.Classic.Tests.Helpers
 
             _config.SecurityHttpHeaders.Csp.Enabled = true;
             _config.SecurityHttpHeaders.Csp.DefaultSrc.SelfSrc = true;
-            _mockHandlerHelper.Setup(h => h.IsUnmanagedHandler(It.IsAny<HttpContextBase>())).Returns(true);
+            _mockHandlerHelper.Setup(h => h.IsUnmanagedHandler(_httpContext)).Returns(true);
 
-            _configHeaderSetter.SetCspHeaders(_mockContext, _nwebsecContext, false);
+            _configHeaderSetter.SetCspHeaders(_httpContext, _nwebsecContext, false);
 
             Assert.Null(_nwebsecContext.Csp);
-            _mockHeaderResultHandler.Verify(h => h.HandleHeaderResult(It.IsAny<HttpResponseBase>(), _expectedHeaderResult), Times.Never);
+            _mockHeaderResultHandler.Verify(h => h.HandleHeaderResult(_httpContext, _expectedHeaderResult), Times.Never);
         }
 
         [Fact]
@@ -432,12 +403,12 @@ namespace NWebsec.AspNet.Classic.Tests.Helpers
 
             _config.SecurityHttpHeaders.CspReportOnly.Enabled = true;
             _config.SecurityHttpHeaders.CspReportOnly.DefaultSrc.SelfSrc = true;
-            _mockHandlerHelper.Setup(h => h.IsUnmanagedHandler(It.IsAny<HttpContextBase>())).Returns(true);
+            _mockHandlerHelper.Setup(h => h.IsUnmanagedHandler(_httpContext)).Returns(true);
 
-            _configHeaderSetter.SetCspHeaders(_mockContext, _nwebsecContext, true);
+            _configHeaderSetter.SetCspHeaders(_httpContext, _nwebsecContext, true);
 
             Assert.Null(_nwebsecContext.CspReportOnly);
-            _mockHeaderResultHandler.Verify(h => h.HandleHeaderResult(It.IsAny<HttpResponseBase>(), _expectedHeaderResult), Times.Never);
+            _mockHeaderResultHandler.Verify(h => h.HandleHeaderResult(_httpContext, _expectedHeaderResult), Times.Never);
         }
     }
 }
