@@ -4,7 +4,7 @@ using NWebsec.Core.Common.HttpHeaders.Configuration;
 using NWebsec.Core.Common.Web;
 using NWebsec.Mvc.Common.Csp;
 
-namespace NWebsec.Mvc.Helpers
+namespace NWebsec.Mvc.Common.Helpers
 {
     public interface IContextConfigurationHelper
     {

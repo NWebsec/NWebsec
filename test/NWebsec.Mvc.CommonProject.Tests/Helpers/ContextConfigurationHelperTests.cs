@@ -3,12 +3,12 @@
 using Moq;
 using NWebsec.Core.Common;
 using NWebsec.Core.Common.HttpHeaders.Configuration;
-using NWebsec.Mvc.Common.Csp;
 using NWebsec.Core.Common.Web;
-using NWebsec.Mvc.Helpers;
+using NWebsec.Mvc.Common.Csp;
+using NWebsec.Mvc.Common.Helpers;
 using Xunit;
 
-namespace NWebsec.AspNet.Mvc.Tests.Helpers
+namespace NWebsec.Mvc.CommonProject.Tests.Helpers
 {
     public class ContextConfigurationHelperTests
     {

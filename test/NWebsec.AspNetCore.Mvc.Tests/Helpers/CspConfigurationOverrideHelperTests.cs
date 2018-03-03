@@ -18,7 +18,7 @@ namespace NWebsec.AspNetCore.Mvc.Tests.Helpers
 
         protected HttpContext MockContext;
         private readonly CspConfigurationOverrideHelper _cspConfigurationOverrideHelper;
-        private readonly Mock<IContextConfigurationHelper> _contextHelper;
+        private readonly Mock<Mvc.Helpers.IContextConfigurationHelper> _contextHelper;
         private readonly Mock<ICspConfigMapper> _directiveConfigMapper;
         private readonly Mock<ICspDirectiveOverrideHelper> _directiveOverrideHelper;
 
@@ -26,7 +26,7 @@ namespace NWebsec.AspNetCore.Mvc.Tests.Helpers
         {
             MockContext = new Mock<HttpContext>().Object;
 
-            _contextHelper = new Mock<IContextConfigurationHelper>(MockBehavior.Strict);
+            _contextHelper = new Mock<Mvc.Helpers.IContextConfigurationHelper>(MockBehavior.Strict);
             _directiveConfigMapper = new Mock<ICspConfigMapper>(MockBehavior.Strict);
             _directiveOverrideHelper = new Mock<ICspDirectiveOverrideHelper>(MockBehavior.Strict);
 
