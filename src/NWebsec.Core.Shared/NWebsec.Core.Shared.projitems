@@ -65,6 +65,9 @@
     <Compile Include="$(MSBuildThisFileDirectory)HttpHeaders\ReferrerPolicy.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)HttpHeaders\XfoPolicy.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)HttpHeaders\XXssPolicy.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)HeaderOverrides.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)NWebsecContext.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Web\IHeaderResultHandler.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Web\IHttpContextWrapper.cs" />
   </ItemGroup>
 </Project>

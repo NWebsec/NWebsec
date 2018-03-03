@@ -7,6 +7,7 @@ namespace NWebsec.Core.Common
     public class NWebsecContext
     {
         public static readonly string ContextKey = "nwebsec.Context";
+        public static readonly string ContextKeyOverrides = "nwebsec.Context.Overrides";
 
         public ISimpleBooleanConfiguration NoCacheHeaders { get; set; }
         public ISimpleBooleanConfiguration XContentTypeOptions { get; set; }
