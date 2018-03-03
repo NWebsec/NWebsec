@@ -1,27 +1,22 @@
 ﻿// Copyright (c) André N. Klingsheim. See License.txt in the project root for license information.
 
-using System.Collections.Specialized;
-using System.Web;
 using Moq;
 using NWebsec.Core.Common.HttpHeaders;
-using NWebsec.Helpers;
+using NWebsec.Core.Common.Web;
+using NWebsec.Core.Web;
 using Xunit;
 
-namespace NWebsec.AspNet.Classic.Tests.Helpers
+namespace NWebsec.AspNet.Core.Tests.Web
 {
     public class HeaderResultHandlerTests
     {
         private readonly HeaderResultHandler _resultHandler;
-        private readonly NameValueCollection _responseHeaders;
-        private readonly HttpResponseBase _httpResponse;
+        private readonly IHttpContextWrapper _httpResponse;
 
         public HeaderResultHandlerTests()
         {
             _resultHandler = new HeaderResultHandler();
-            _responseHeaders = new NameValueCollection();
-            var responseMock = new Mock<HttpResponseBase>(MockBehavior.Strict);
-            responseMock.Setup(r => r.Headers).Returns(_responseHeaders);
-            _httpResponse = responseMock.Object;
+            _httpResponse = new Mock<IHttpContextWrapper>().Object;
         }
 
         [Fact]
@@ -31,21 +26,19 @@ namespace NWebsec.AspNet.Classic.Tests.Helpers
 
             _resultHandler.HandleHeaderResult(_httpResponse, headerResult);
 
-            Assert.Equal(1, _responseHeaders.Count);
-            var headerValue = _responseHeaders.Get("NinjaHeader");
-            Assert.NotNull(headerValue);
-            Assert.Equal("value", headerValue);
+            Mock.Get(_httpResponse).Verify(ctx => ctx.SetHttpHeader("NinjaHeader","value"));
+            Mock.Get(_httpResponse).VerifyNoOtherCalls();
         }
 
         [Fact]
         public void HandleHeaderResult_RemoveHeaderResult_RemovesHeader()
         {
-            _responseHeaders.Set("NinjaHeader", "toberemoved");
             var headerResult = new HeaderResult(HeaderResult.ResponseAction.Remove, "NinjaHeader");
 
             _resultHandler.HandleHeaderResult(_httpResponse, headerResult);
 
-            Assert.Equal(0, _responseHeaders.Count);
+            Mock.Get(_httpResponse).Verify(ctx => ctx.RemoveHttpHeader("NinjaHeader"));
+            Mock.Get(_httpResponse).VerifyNoOtherCalls();
         }
     }
 }

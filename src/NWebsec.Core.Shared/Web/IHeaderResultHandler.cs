@@ -1,12 +1,11 @@
 // Copyright (c) André N. Klingsheim. See License.txt in the project root for license information.
 
-using System.Web;
 using NWebsec.Core.Common.HttpHeaders;
 
-namespace NWebsec.Helpers
+namespace NWebsec.Core.Common.Web
 {
     public interface IHeaderResultHandler
     {
-        void HandleHeaderResult(HttpResponseBase response, HeaderResult result);
+        void HandleHeaderResult(IHttpContextWrapper httpContext, HeaderResult result);
     }
 }

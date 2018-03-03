@@ -1,13 +1,14 @@
 ﻿// Copyright (c) André N. Klingsheim. See License.txt in the project root for license information.
 
-using System.Web;
+using System;
 using NWebsec.Core.Common.HttpHeaders;
+using NWebsec.Core.Common.Web;
 
-namespace NWebsec.Helpers
+namespace NWebsec.Core.Web
 {
     public class HeaderResultHandler : IHeaderResultHandler
     {
-        public void HandleHeaderResult(HttpResponseBase response, HeaderResult result)
+        public void HandleHeaderResult(IHttpContextWrapper httpContext, HeaderResult result)
         {
             if (result == null)
             {
@@ -17,13 +18,15 @@ namespace NWebsec.Helpers
             switch (result.Action)
             {
                 case HeaderResult.ResponseAction.Set:
-                    response.Headers.Set(result.Name, result.Value);
+                    httpContext.SetHttpHeader(result.Name, result.Value);
                     return;
                 case HeaderResult.ResponseAction.Remove:
-                    response.Headers.Remove(result.Name);
+                    httpContext.RemoveHttpHeader(result.Name);
                     return;
 
+                default:
+                    throw new ArgumentOutOfRangeException();
             }
-        }  
+        }
     }
 }
