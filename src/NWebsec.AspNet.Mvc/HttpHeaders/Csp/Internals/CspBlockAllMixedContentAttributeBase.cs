@@ -30,7 +30,7 @@ namespace NWebsec.Mvc.HttpHeaders.Csp.Internals
         /// <summary>
         /// Sets whether the block-all-mixed-content directive is enabled in the CSP header. The default is true.
         /// </summary>
-        public bool Enabled { get { return _directive.Enabled; } set { _directive.Enabled = value; } }
+        public bool Enabled { get => _directive.Enabled; set => _directive.Enabled = value; }
 
         protected abstract bool ReportOnly { get; }
 

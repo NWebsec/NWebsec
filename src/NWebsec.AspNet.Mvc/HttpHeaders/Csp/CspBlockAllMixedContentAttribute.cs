@@ -9,9 +9,6 @@ namespace NWebsec.Mvc.HttpHeaders.Csp
     /// </summary>
     public class CspBlockAllMixedContentAttribute : CspBlockAllMixedContentAttributeBase
     {
-        protected override bool ReportOnly
-        {
-            get { return false; }
-        }
+        protected override bool ReportOnly => false;
     }
 }

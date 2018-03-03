@@ -8,9 +8,6 @@ namespace NWebsec.Mvc.HttpHeaders.Csp
     /// </summary>
     public class CspFrameSrcReportOnlyAttribute : CspFrameSrcAttribute
     {
-        protected override bool ReportOnly
-        {
-            get { return true; }
-        }
+        protected override bool ReportOnly => true;
     }
 }

@@ -14,20 +14,15 @@ namespace NWebsec.Mvc.HttpHeaders.Csp
         /// <summary>
         /// Gets or sets whether the 'unsafe-inline' source is included in the directive. Not setting it will inherit existing configuration.
         /// </summary>
-        public bool UnsafeInline { get { throw new NotSupportedException(); } set { DirectiveConfig.UnsafeInline = value; } }
+        public bool UnsafeInline { get => throw new NotSupportedException(); set => DirectiveConfig.UnsafeInline = value; }
+
         /// <summary>
         /// Gets or sets whether the 'unsafe-eval' source is included in the directive. Not setting it will inherit existing configuration.
         /// </summary>
-        public bool UnsafeEval { get { throw new NotSupportedException(); } set { DirectiveConfig.UnsafeEval = value; } }
+        public bool UnsafeEval { get => throw new NotSupportedException(); set => DirectiveConfig.UnsafeEval = value; }
 
-        protected override CspDirectives Directive
-        {
-            get { return CspDirectives.ScriptSrc; }
-        }
+        protected override CspDirectives Directive => CspDirectives.ScriptSrc;
 
-        protected override bool ReportOnly
-        {
-            get { return false; }
-        }
+        protected override bool ReportOnly => false;
     }
 }

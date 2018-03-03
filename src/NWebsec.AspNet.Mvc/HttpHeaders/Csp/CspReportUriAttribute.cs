@@ -9,13 +9,10 @@ namespace NWebsec.Mvc.HttpHeaders.Csp
     /// When applied to a controller or action method, enables the report-uri directive for the CSP header (CSP 1.0).
     /// Support for absolute URIs was added in CSP 2. 
     /// </summary>
-    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, Inherited = false, AllowMultiple = false)]
+    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, Inherited = false)]
     public class CspReportUriAttribute : CspReportUriAttributeBase
     {
 #pragma warning disable 1591
-        protected override bool ReportOnly
-        {
-            get { return false; }
-        }
+        protected override bool ReportOnly => false;
     }
 }

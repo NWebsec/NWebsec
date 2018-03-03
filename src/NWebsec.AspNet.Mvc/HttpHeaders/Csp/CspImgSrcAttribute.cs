@@ -10,14 +10,8 @@ namespace NWebsec.Mvc.HttpHeaders.Csp
     /// </summary>
     public class CspImgSrcAttribute : CspDirectiveAttributeBase
     {
-        protected override CspDirectives Directive
-        {
-            get { return CspDirectives.ImgSrc; }
-        }
+        protected override CspDirectives Directive => CspDirectives.ImgSrc;
 
-        protected override bool ReportOnly
-        {
-            get { return false; }
-        }
+        protected override bool ReportOnly => false;
     }
 }

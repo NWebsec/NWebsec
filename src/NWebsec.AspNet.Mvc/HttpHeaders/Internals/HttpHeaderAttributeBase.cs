@@ -10,19 +10,9 @@ namespace NWebsec.Mvc.HttpHeaders.Internals
         private static readonly Object MarkerObject = new Object();
         private string _contextKey;
 
-        private string ContextKey
-        {
-            get
-            {
-                if (_contextKey == null)
-                {
-                    _contextKey = "NWebsecHeaderSet" + ContextKeyIdentifier;
-                }
-                return _contextKey;
-            }
-        }
-        internal virtual string ContextKeyIdentifier { get { return GetType().Name; } }
+        private string ContextKey => _contextKey ?? (_contextKey = "NWebsecHeaderSet" + ContextKeyIdentifier);
 
+        internal virtual string ContextKeyIdentifier => GetType().Name;
 
         public override void OnActionExecuted(ActionExecutedContext filterContext)
         {
@@ -48,7 +38,7 @@ namespace NWebsec.Mvc.HttpHeaders.Internals
         /// <returns></returns>
         protected Exception CreateAttributeException(string message, Exception e = null)
         {
-            var errorMessage = string.Format("{0}: {1}", GetType().Name, message);
+            var errorMessage = $"{GetType().Name}: {message}";
             if (e != null)
             {
                 errorMessage += "\nDetails: " + e.Message;

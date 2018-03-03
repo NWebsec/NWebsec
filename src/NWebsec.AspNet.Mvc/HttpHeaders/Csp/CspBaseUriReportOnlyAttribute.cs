@@ -7,9 +7,6 @@ namespace NWebsec.Mvc.HttpHeaders.Csp
     /// </summary>
     public class CspBaseUriReportOnlyAttribute : CspBaseUriAttribute
     {
-        protected override bool ReportOnly
-        {
-            get { return true; }
-        }
+        protected override bool ReportOnly => true;
     }
 }

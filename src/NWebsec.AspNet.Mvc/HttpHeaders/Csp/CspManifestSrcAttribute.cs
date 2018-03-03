@@ -10,14 +10,8 @@ namespace NWebsec.Mvc.HttpHeaders.Csp
     /// </summary>
     public class CspManifestSrcAttribute : CspDirectiveAttributeBase
     {
-        protected override CspDirectives Directive
-        {
-            get { return CspDirectives.ManifestSrc; }
-        }
+        protected override CspDirectives Directive => CspDirectives.ManifestSrc;
 
-        protected override bool ReportOnly
-        {
-            get { return false; }
-        }
+        protected override bool ReportOnly => false;
     }
 }

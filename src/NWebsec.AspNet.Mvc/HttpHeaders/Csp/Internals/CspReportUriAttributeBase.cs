@@ -26,25 +26,23 @@ namespace NWebsec.Mvc.HttpHeaders.Csp.Internals
             _headerOverrideHelper = new HeaderOverrideHelper();
         }
 
-        internal sealed override string ContextKeyIdentifier
-        {
-            get { return ReportOnly ? "CspReportOnly" : "Csp"; }
-        }
+        internal sealed override string ContextKeyIdentifier => ReportOnly ? "CspReportOnly" : "Csp";
 
         /// <summary>
         /// Gets or sets whether the report-uri directive is enabled in the CSP header. The default is true.
         /// </summary>
-        public bool Enabled { get { return _directive.Enabled; } set { _directive.Enabled = value; } }
+        public bool Enabled { get => _directive.Enabled; set => _directive.Enabled = value; }
         /// <summary>
         /// Gets or sets whether the URI for the built in CSP report handler should be included in the directive. The default is false.
         /// </summary>
-        public bool EnableBuiltinHandler { get { return _directive.EnableBuiltinHandler; } set { _directive.EnableBuiltinHandler = value; } }
+        public bool EnableBuiltinHandler { get => _directive.EnableBuiltinHandler; set => _directive.EnableBuiltinHandler = value; }
+
         /// <summary>
         /// Gets or sets custom report URIs for the directive. Report URIs are separated by exactly one whitespace.
         /// </summary>
         public string ReportUris
         {
-            get { return String.Join(" ", _directive.ReportUris); }
+            get => String.Join(" ", _directive.ReportUris);
             set
             {
                 if (String.IsNullOrEmpty(value))
@@ -59,15 +57,14 @@ namespace NWebsec.Mvc.HttpHeaders.Csp.Internals
                 var reportUriList = new List<string>();
                 foreach (var reportUri in uris)
                 {
-                    Uri uri;
-                    if (!Uri.TryCreate(reportUri, UriKind.RelativeOrAbsolute, out uri))
+                    if (!Uri.TryCreate(reportUri, UriKind.RelativeOrAbsolute, out var uri))
                     {
                         throw CreateAttributeException("Could not parse reportUri: " + reportUri);
                     }
 
                     reportUriList.Add(CspUriSource.EncodeUri(uri));
                 }
-                
+
                 _directive.ReportUris = reportUriList.ToArray();
             }
         }

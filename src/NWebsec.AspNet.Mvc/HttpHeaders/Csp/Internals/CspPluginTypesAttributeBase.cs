@@ -32,30 +32,24 @@ namespace NWebsec.Mvc.HttpHeaders.Csp.Internals
             }
         }
 
-        internal sealed override string ContextKeyIdentifier
-        {
-            get { return ReportOnly ? "CspReportOnly" : "Csp"; }
-        }
+        internal sealed override string ContextKeyIdentifier => ReportOnly ? "CspReportOnly" : "Csp";
 
         /// <summary>
         /// Sets whether the plugin-types directive is enabled in the CSP header. The default is true.
         /// </summary>
-        public bool Enabled { get { return _directive.Enabled; } set { _directive.Enabled = value; } }
+        public bool Enabled { get => _directive.Enabled; set => _directive.Enabled = value; }
 
         /// <summary>
         /// Gets or sets whether Media Types should be inherited from previous settings. The default is true.
         /// </summary>
-        public bool InheritMediaSources { get { return _directive.InheritMediaTypes; } set { _directive.InheritMediaTypes = value; } }
+        public bool InheritMediaSources { get => _directive.InheritMediaTypes; set => _directive.InheritMediaTypes = value; }
 
         /// <summary>
         /// Sets the media types for the directive. Media types are separated by exactly one whitespace.
         /// </summary>
         public string MediaTypes
         {
-            get
-            {
-                throw new NotSupportedException();
-            }
+            get => throw new NotSupportedException();
             set
             {
                 if (string.IsNullOrEmpty(value))
