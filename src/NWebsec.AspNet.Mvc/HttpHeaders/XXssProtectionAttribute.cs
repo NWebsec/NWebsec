@@ -4,6 +4,8 @@ using System;
 using System.Web.Mvc;
 using NWebsec.Core.Common.HttpHeaders;
 using NWebsec.Core.Common.HttpHeaders.Configuration;
+using NWebsec.Core.Web;
+using NWebsec.Mvc.Common.Helpers;
 using NWebsec.Mvc.Helpers;
 using NWebsec.Mvc.HttpHeaders.Internals;
 
@@ -35,7 +37,7 @@ namespace NWebsec.Mvc.HttpHeaders
         /// </summary>
         public XXssProtectionPolicy Policy
         {
-            get { throw new NotSupportedException(); }
+            get => throw new NotSupportedException();
             set
             {
                 switch (value)
@@ -63,19 +65,19 @@ namespace NWebsec.Mvc.HttpHeaders
         /// </summary>
         public bool BlockMode
         {
-            get { return _config.BlockMode; }
-            set { _config.BlockMode = value; }
+            get => _config.BlockMode;
+            set => _config.BlockMode = value;
         }
 
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
-            _headerConfigurationOverrideHelper.SetXXssProtectionOverride(filterContext.HttpContext, _config);
+            _headerConfigurationOverrideHelper.SetXXssProtectionOverride(new HttpContextWrapper(filterContext.HttpContext), _config);
             base.OnActionExecuting(filterContext);
         }
 
         public override void SetHttpHeadersOnActionExecuted(ActionExecutedContext filterContext)
         {
-            _headerOverrideHelper.SetXXssProtectionHeader(filterContext.HttpContext);
+            _headerOverrideHelper.SetXXssProtectionHeader(new HttpContextWrapper(filterContext.HttpContext));
         }
     }
 }

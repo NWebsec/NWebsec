@@ -23,7 +23,6 @@ namespace NWebsec.Mvc.CommonProject.Tests.Helpers
             _headerConfigurationOverrideHelper = new HeaderConfigurationOverrideHelper();
         }
      
-
         [Fact]
         public void GetNoCacheHeadersWithOverride_NoOverride_ReturnsNull()
         {

@@ -4,6 +4,8 @@ using System;
 using System.Web.Mvc;
 using NWebsec.Core.Common.HttpHeaders;
 using NWebsec.Core.Common.HttpHeaders.Configuration;
+using NWebsec.Core.Web;
+using NWebsec.Mvc.Common.Helpers;
 using NWebsec.Mvc.Helpers;
 using NWebsec.Mvc.HttpHeaders.Internals;
 
@@ -35,7 +37,7 @@ namespace NWebsec.Mvc.HttpHeaders
         /// </summary>
         public XFrameOptionsPolicy Policy
         {
-            get { throw new NotSupportedException(); }
+            get => throw new NotSupportedException();
             set
             {
                 switch (value)
@@ -59,13 +61,13 @@ namespace NWebsec.Mvc.HttpHeaders
 
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
-            _configurationOverrideHelper.SetXFrameoptionsOverride(filterContext.HttpContext, _config);
+            _configurationOverrideHelper.SetXFrameoptionsOverride(new HttpContextWrapper(filterContext.HttpContext), _config);
             base.OnActionExecuting(filterContext);
         }
 
         public override void SetHttpHeadersOnActionExecuted(ActionExecutedContext filterContext)
         {
-            _headerOverrideHelper.SetXFrameoptionsHeader(filterContext.HttpContext);
+            _headerOverrideHelper.SetXFrameoptionsHeader(new HttpContextWrapper(filterContext.HttpContext));
         }
     }
 }

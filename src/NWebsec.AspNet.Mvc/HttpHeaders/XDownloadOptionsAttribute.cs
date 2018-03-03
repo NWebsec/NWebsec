@@ -3,6 +3,8 @@
 using System;
 using System.Web.Mvc;
 using NWebsec.Core.Common.HttpHeaders.Configuration;
+using NWebsec.Core.Web;
+using NWebsec.Mvc.Common.Helpers;
 using NWebsec.Mvc.Helpers;
 using NWebsec.Mvc.HttpHeaders.Internals;
 
@@ -11,7 +13,7 @@ namespace NWebsec.Mvc.HttpHeaders
     /// <summary>
     /// Specifies whether the X-Download-Options security header should be set in the HTTP response.
     /// </summary>
-    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, Inherited = true, AllowMultiple = false)]
+    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]
     public class XDownloadOptionsAttribute : HttpHeaderAttributeBase
     {
         private readonly HeaderConfigurationOverrideHelper _headerConfigurationOverrideHelper;
@@ -31,17 +33,17 @@ namespace NWebsec.Mvc.HttpHeaders
         /// <summary>
         /// Gets or sets whether the X-Download-Options security header should be set in the HTTP response. The default is true.
         /// </summary>
-        public bool Enabled { get { return _config.Enabled; } set { _config.Enabled = value; } }
+        public bool Enabled { get => _config.Enabled; set => _config.Enabled = value; }
 
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
-            _headerConfigurationOverrideHelper.SetXDownloadOptionsOverride(filterContext.HttpContext, _config);
+            _headerConfigurationOverrideHelper.SetXDownloadOptionsOverride(new HttpContextWrapper(filterContext.HttpContext), _config);
             base.OnActionExecuting(filterContext);
         }
 
         public override void SetHttpHeadersOnActionExecuted(ActionExecutedContext filterContext)
         {
-            _headerOverrideHelper.SetXDownloadOptionsHeader(filterContext.HttpContext);
+            _headerOverrideHelper.SetXDownloadOptionsHeader(new HttpContextWrapper(filterContext.HttpContext));
         }
     }
 }
