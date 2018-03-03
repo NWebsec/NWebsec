@@ -16,11 +16,13 @@
     <Compile Include="$(MSBuildThisFileDirectory)Csp\CspSandboxOverride.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\ContextConfigurationHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\CspConfigMapper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Helpers\CspConfigurationOverrideHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\CspDirectiveOverrideHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\CspDirectives.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\HeaderConfigurationOverrideHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\IContextConfigurationHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\ICspConfigMapper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Helpers\ICspConfigurationOverrideHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\ICspDirectiveOverrideHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\IHeaderConfigurationOverrideHelper.cs" />
   </ItemGroup>

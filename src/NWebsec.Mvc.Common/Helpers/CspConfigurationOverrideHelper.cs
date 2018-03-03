@@ -8,7 +8,7 @@ using NWebsec.Core.Common.Web;
 using NWebsec.Mvc.Common.Csp;
 using NWebsec.Mvc.Common.Helpers;
 
-namespace NWebsec.Mvc.Helpers
+namespace NWebsec.Mvc.Common.Helpers
 {
     public class CspConfigurationOverrideHelper : ICspConfigurationOverrideHelper
     {

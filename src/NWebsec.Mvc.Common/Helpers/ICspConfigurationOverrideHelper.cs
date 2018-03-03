@@ -3,7 +3,7 @@
 using NWebsec.Core.Common.HttpHeaders.Configuration;
 using NWebsec.Core.Common.Web;
 
-namespace NWebsec.Mvc.Helpers
+namespace NWebsec.Mvc.Common.Helpers
 {
     public interface ICspConfigurationOverrideHelper
     {
