@@ -2,9 +2,9 @@
 
 using System;
 using System.Security.Cryptography;
-using System.Web;
 using NWebsec.Annotations;
 using NWebsec.Core.Common.HttpHeaders.Configuration;
+using NWebsec.Core.Common.Web;
 using NWebsec.Mvc.Common.Csp;
 using NWebsec.Mvc.Common.Helpers;
 
@@ -31,7 +31,7 @@ namespace NWebsec.Mvc.Helpers
         }
 
         [CanBeNull]
-        public ICspConfiguration GetCspConfigWithOverrides([NotNull]HttpContextBase context, bool reportOnly)
+        public ICspConfiguration GetCspConfigWithOverrides([NotNull]IHttpContextWrapper context, bool reportOnly)
         {
 
             var overrides = _contextConfigurationHelper.GetCspConfigurationOverride(context, reportOnly, true);
@@ -58,7 +58,7 @@ namespace NWebsec.Mvc.Helpers
 
         }
 
-        internal void SetCspHeaderOverride(HttpContextBase context, ICspHeaderConfiguration cspConfig, bool reportOnly)
+        internal void SetCspHeaderOverride(IHttpContextWrapper context, ICspHeaderConfiguration cspConfig, bool reportOnly)
         {
             var overrides = _contextConfigurationHelper.GetCspConfigurationOverride(context, reportOnly, false);
 
@@ -66,7 +66,7 @@ namespace NWebsec.Mvc.Helpers
             overrides.Enabled = cspConfig.Enabled;
         }
         
-        internal void SetCspDirectiveOverride(HttpContextBase context, CspDirectives directive, CspDirectiveOverride config, bool reportOnly)
+        internal void SetCspDirectiveOverride(IHttpContextWrapper context, CspDirectives directive, CspDirectiveOverride config, bool reportOnly)
         {
             var overrides = _contextConfigurationHelper.GetCspConfigurationOverride(context, reportOnly, false);
 
@@ -83,7 +83,7 @@ namespace NWebsec.Mvc.Helpers
             _configMapper.SetCspDirectiveConfig(overrides, directive, newConfig);
         }
 
-        internal void SetCspPluginTypesOverride(HttpContextBase context, CspPluginTypesOverride config, bool reportOnly)
+        internal void SetCspPluginTypesOverride(IHttpContextWrapper context, CspPluginTypesOverride config, bool reportOnly)
         {
             var overrides = _contextConfigurationHelper.GetCspConfigurationOverride(context, reportOnly, false);
 
@@ -100,7 +100,7 @@ namespace NWebsec.Mvc.Helpers
             overrides.PluginTypesDirective = newConfig;
         }
 
-        internal void SetCspSandboxOverride(HttpContextBase context, CspSandboxOverride config, bool reportOnly)
+        internal void SetCspSandboxOverride(IHttpContextWrapper context, CspSandboxOverride config, bool reportOnly)
         {
             var overrides = _contextConfigurationHelper.GetCspConfigurationOverride(context, reportOnly, false);
 
@@ -117,7 +117,7 @@ namespace NWebsec.Mvc.Helpers
             overrides.SandboxDirective = newConfig;
         }
 
-        public void SetCspMixedContentOverride(HttpContextBase context, CspMixedContentOverride config, Boolean reportOnly)
+        public void SetCspMixedContentOverride(IHttpContextWrapper context, CspMixedContentOverride config, Boolean reportOnly)
         {
             var overrides = _contextConfigurationHelper.GetCspConfigurationOverride(context, reportOnly, false);
 
@@ -134,14 +134,14 @@ namespace NWebsec.Mvc.Helpers
             overrides.MixedContentDirective = newConfig;
         }
 
-        internal void SetCspReportUriOverride(HttpContextBase context, ICspReportUriDirectiveConfiguration reportUriConfig, bool reportOnly)
+        internal void SetCspReportUriOverride(IHttpContextWrapper context, ICspReportUriDirectiveConfiguration reportUriConfig, bool reportOnly)
         {
             var overrides = _contextConfigurationHelper.GetCspConfigurationOverride(context, reportOnly, false);
 
             overrides.ReportUriDirective = reportUriConfig;
         }
 
-        internal string GetCspScriptNonce(HttpContextBase context)
+        internal string GetCspScriptNonce(IHttpContextWrapper context)
         {
             var overrides = _contextConfigurationHelper.GetCspConfigurationOverride(context, false, false);
 
@@ -158,7 +158,7 @@ namespace NWebsec.Mvc.Helpers
             return nonce;
         }
 
-        internal string GetCspStyleNonce(HttpContextBase context)
+        internal string GetCspStyleNonce(IHttpContextWrapper context)
         {
             var overrides = _contextConfigurationHelper.GetCspConfigurationOverride(context, false, false);
 
@@ -175,7 +175,7 @@ namespace NWebsec.Mvc.Helpers
             return nonce;
         }
 
-        private void SetCspDirectiveNonce(HttpContextBase context, string nonce, CspDirectives directive, bool reportOnly)
+        private void SetCspDirectiveNonce(IHttpContextWrapper context, string nonce, CspDirectives directive, bool reportOnly)
         {
             var overrides = _contextConfigurationHelper.GetCspConfigurationOverride(context, reportOnly, false);
 

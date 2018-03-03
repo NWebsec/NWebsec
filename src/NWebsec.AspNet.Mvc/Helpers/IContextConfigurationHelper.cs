@@ -1,19 +1,19 @@
 ﻿// Copyright (c) André N. Klingsheim. See License.txt in the project root for license information.
 
-using System.Web;
 using NWebsec.Core.Common.HttpHeaders.Configuration;
+using NWebsec.Core.Common.Web;
 using NWebsec.Mvc.Common.Csp;
 
 namespace NWebsec.Mvc.Helpers
 {
     public interface IContextConfigurationHelper
     {
-        IXRobotsTagConfiguration GetXRobotsTagConfiguration(HttpContextBase context);
-        IXFrameOptionsConfiguration GetXFrameOptionsConfiguration(HttpContextBase context);
-        ISimpleBooleanConfiguration GetXContentTypeOptionsConfiguration(HttpContextBase context);
-        ISimpleBooleanConfiguration GetXDownloadOptionsConfiguration(HttpContextBase context);
-        IXXssProtectionConfiguration GetXXssProtectionConfiguration(HttpContextBase context);
-        ICspConfiguration GetCspConfiguration(HttpContextBase context, bool reportOnly);
-        CspOverrideConfiguration GetCspConfigurationOverride(HttpContextBase httpContext, bool reportOnly, bool allowNull);
+        IXRobotsTagConfiguration GetXRobotsTagConfiguration(IHttpContextWrapper context);
+        IXFrameOptionsConfiguration GetXFrameOptionsConfiguration(IHttpContextWrapper context);
+        ISimpleBooleanConfiguration GetXContentTypeOptionsConfiguration(IHttpContextWrapper context);
+        ISimpleBooleanConfiguration GetXDownloadOptionsConfiguration(IHttpContextWrapper context);
+        IXXssProtectionConfiguration GetXXssProtectionConfiguration(IHttpContextWrapper context);
+        ICspConfiguration GetCspConfiguration(IHttpContextWrapper context, bool reportOnly);
+        CspOverrideConfiguration GetCspConfigurationOverride(IHttpContextWrapper httpContext, bool reportOnly, bool allowNull);
     }
 }

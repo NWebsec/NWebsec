@@ -1,13 +1,13 @@
 ﻿// Copyright (c) André N. Klingsheim. See License.txt in the project root for license information.
 
 using System.Collections.Generic;
-using System.Collections.Specialized;
 using System.Web;
 using Moq;
 using NWebsec.Core.Common.HttpHeaders;
 using NWebsec.Core.Common.HttpHeaders.Configuration;
 using NWebsec.Csp;
-using NWebsec.Helpers;
+using NWebsec.Core.Common.Web;
+using NWebsec.Mvc.Common.Helpers;
 using NWebsec.Mvc.Helpers;
 using Xunit;
 
@@ -24,8 +24,9 @@ namespace NWebsec.AspNet.Mvc.Tests.Helpers
         private readonly Mock<ICspConfigurationOverrideHelper> _cspConfigurationOverrideHelper;
         private readonly Mock<ICspReportHelper> _reportHelper;
         private readonly HeaderOverrideHelper _overrideHelper;
-        private readonly HttpContextBase _mockContext;
+        //private readonly HttpContextBase _mockContext;
         private readonly HeaderResult _expectedHeaderResult;
+        private readonly IHttpContextWrapper _httpContext;
 
         public HeaderOverrideHelperTests()
         {
@@ -35,7 +36,7 @@ namespace NWebsec.AspNet.Mvc.Tests.Helpers
 
             _expectedHeaderResult = new HeaderResult(HeaderResult.ResponseAction.Set, "ExpectedHeader", "ninjavalue");
             _headerResultHandler = new Mock<IHeaderResultHandler>(MockBehavior.Strict);
-            _headerResultHandler.Setup(h => h.HandleHeaderResult(It.IsAny<HttpResponseBase>(), _expectedHeaderResult));
+            _headerResultHandler.Setup(h => h.HandleHeaderResult(It.IsAny<IHttpContextWrapper>(), _expectedHeaderResult));
 
             _cspConfigurationOverrideHelper = new Mock<ICspConfigurationOverrideHelper>(MockBehavior.Strict);
             _reportHelper = new Mock<ICspReportHelper>(MockBehavior.Strict);
@@ -47,20 +48,21 @@ namespace NWebsec.AspNet.Mvc.Tests.Helpers
                 _cspConfigurationOverrideHelper.Object,
                 _reportHelper.Object);
 
-            _mockContext = new Mock<HttpContextBase>().Object;
+            _httpContext = new Mock<IHttpContextWrapper>().Object;
+            //_mockContext = new Mock<HttpContextBase>().Object;
         }
 
         [Fact]
         public void SetXRobotsTagHeader_NoOverride_DoesNothing()
         {
             var contextConfig = new XRobotsTagConfiguration();
-            _contextHelper.Setup(h => h.GetXRobotsTagConfiguration(It.IsAny<HttpContextBase>())).Returns(contextConfig);
-            _configurationOverrideHelper.Setup(h => h.GetXRobotsTagWithOverride(It.IsAny<HttpContextBase>())).Returns((XRobotsTagConfiguration)null);
+            _contextHelper.Setup(h => h.GetXRobotsTagConfiguration(_httpContext)).Returns(contextConfig);
+            _configurationOverrideHelper.Setup(h => h.GetXRobotsTagWithOverride(_httpContext)).Returns((XRobotsTagConfiguration)null);
 
-            _overrideHelper.SetXRobotsTagHeader(_mockContext);
+            _overrideHelper.SetXRobotsTagHeader(_httpContext);
 
             _headerGenerator.Verify(g => g.CreateXRobotsTagResult(It.IsAny<XRobotsTagConfiguration>(), It.IsAny<XRobotsTagConfiguration>()), Times.Never);
-            _headerResultHandler.Verify(h => h.HandleHeaderResult(It.IsAny<HttpResponseBase>(), It.IsAny<HeaderResult>()), Times.Never);
+            _headerResultHandler.Verify(h => h.HandleHeaderResult(_httpContext, It.IsAny<HeaderResult>()), Times.Never);
         }
 
         [Fact]
@@ -68,26 +70,26 @@ namespace NWebsec.AspNet.Mvc.Tests.Helpers
         {
             var contextConfig = new XRobotsTagConfiguration();
             var overrideConfig = new XRobotsTagConfiguration();
-            _contextHelper.Setup(h => h.GetXRobotsTagConfiguration(It.IsAny<HttpContextBase>())).Returns(contextConfig);
-            _configurationOverrideHelper.Setup(h => h.GetXRobotsTagWithOverride(It.IsAny<HttpContextBase>())).Returns(overrideConfig);
+            _contextHelper.Setup(h => h.GetXRobotsTagConfiguration(_httpContext)).Returns(contextConfig);
+            _configurationOverrideHelper.Setup(h => h.GetXRobotsTagWithOverride(_httpContext)).Returns(overrideConfig);
             _headerGenerator.Setup(g => g.CreateXRobotsTagResult(overrideConfig, contextConfig)).Returns(_expectedHeaderResult);
 
-            _overrideHelper.SetXRobotsTagHeader(_mockContext);
+            _overrideHelper.SetXRobotsTagHeader(_httpContext);
 
-            _headerResultHandler.Verify(h => h.HandleHeaderResult(It.IsAny<HttpResponseBase>(), _expectedHeaderResult), Times.Once);
+            _headerResultHandler.Verify(h => h.HandleHeaderResult(_httpContext, _expectedHeaderResult), Times.Once);
         }
 
         [Fact]
         public void SetXFrameoptionsHeader_NoOverride_DoesNothing()
         {
             var contextConfig = new XFrameOptionsConfiguration();
-            _contextHelper.Setup(h => h.GetXFrameOptionsConfiguration(It.IsAny<HttpContextBase>())).Returns(contextConfig);
-            _configurationOverrideHelper.Setup(h => h.GetXFrameoptionsWithOverride(It.IsAny<HttpContextBase>())).Returns((XFrameOptionsConfiguration)null);
+            _contextHelper.Setup(h => h.GetXFrameOptionsConfiguration(_httpContext)).Returns(contextConfig);
+            _configurationOverrideHelper.Setup(h => h.GetXFrameoptionsWithOverride(_httpContext)).Returns((XFrameOptionsConfiguration)null);
 
-            _overrideHelper.SetXFrameoptionsHeader(_mockContext);
+            _overrideHelper.SetXFrameoptionsHeader(_httpContext);
 
             _headerGenerator.Verify(g => g.CreateXfoResult(It.IsAny<XFrameOptionsConfiguration>(), It.IsAny<XFrameOptionsConfiguration>()), Times.Never);
-            _headerResultHandler.Verify(h => h.HandleHeaderResult(It.IsAny<HttpResponseBase>(), It.IsAny<HeaderResult>()), Times.Never);
+            _headerResultHandler.Verify(h => h.HandleHeaderResult(_httpContext, It.IsAny<HeaderResult>()), Times.Never);
         }
 
         [Fact]
@@ -95,26 +97,26 @@ namespace NWebsec.AspNet.Mvc.Tests.Helpers
         {
             var contextConfig = new XFrameOptionsConfiguration();
             var overrideConfig = new XFrameOptionsConfiguration();
-            _contextHelper.Setup(h => h.GetXFrameOptionsConfiguration(It.IsAny<HttpContextBase>())).Returns(contextConfig);
-            _configurationOverrideHelper.Setup(h => h.GetXFrameoptionsWithOverride(It.IsAny<HttpContextBase>())).Returns(overrideConfig);
+            _contextHelper.Setup(h => h.GetXFrameOptionsConfiguration(_httpContext)).Returns(contextConfig);
+            _configurationOverrideHelper.Setup(h => h.GetXFrameoptionsWithOverride(_httpContext)).Returns(overrideConfig);
             _headerGenerator.Setup(g => g.CreateXfoResult(overrideConfig, contextConfig)).Returns(_expectedHeaderResult);
 
-            _overrideHelper.SetXFrameoptionsHeader(_mockContext);
+            _overrideHelper.SetXFrameoptionsHeader(_httpContext);
 
-            _headerResultHandler.Verify(h => h.HandleHeaderResult(It.IsAny<HttpResponseBase>(), _expectedHeaderResult), Times.Once);
+            _headerResultHandler.Verify(h => h.HandleHeaderResult(_httpContext, _expectedHeaderResult), Times.Once);
         }
 
         [Fact]
         public void SetXContentTypeOptionsHeader_NoOverride_DoesNothing()
         {
             var contextConfig = new SimpleBooleanConfiguration();
-            _contextHelper.Setup(h => h.GetXContentTypeOptionsConfiguration(It.IsAny<HttpContextBase>())).Returns(contextConfig);
-            _configurationOverrideHelper.Setup(h => h.GetXContentTypeOptionsWithOverride(It.IsAny<HttpContextBase>())).Returns((SimpleBooleanConfiguration)null);
+            _contextHelper.Setup(h => h.GetXContentTypeOptionsConfiguration(_httpContext)).Returns(contextConfig);
+            _configurationOverrideHelper.Setup(h => h.GetXContentTypeOptionsWithOverride(_httpContext)).Returns((SimpleBooleanConfiguration)null);
 
-            _overrideHelper.SetXContentTypeOptionsHeader(_mockContext);
+            _overrideHelper.SetXContentTypeOptionsHeader(_httpContext);
 
             _headerGenerator.Verify(g => g.CreateXContentTypeOptionsResult(It.IsAny<SimpleBooleanConfiguration>(), It.IsAny<SimpleBooleanConfiguration>()), Times.Never);
-            _headerResultHandler.Verify(h => h.HandleHeaderResult(It.IsAny<HttpResponseBase>(), It.IsAny<HeaderResult>()), Times.Never);
+            _headerResultHandler.Verify(h => h.HandleHeaderResult(_httpContext, It.IsAny<HeaderResult>()), Times.Never);
         }
 
         [Fact]
@@ -122,26 +124,26 @@ namespace NWebsec.AspNet.Mvc.Tests.Helpers
         {
             var contextConfig = new SimpleBooleanConfiguration();
             var overrideConfig = new SimpleBooleanConfiguration();
-            _contextHelper.Setup(h => h.GetXContentTypeOptionsConfiguration(It.IsAny<HttpContextBase>())).Returns(contextConfig);
-            _configurationOverrideHelper.Setup(h => h.GetXContentTypeOptionsWithOverride(It.IsAny<HttpContextBase>())).Returns(overrideConfig);
+            _contextHelper.Setup(h => h.GetXContentTypeOptionsConfiguration(_httpContext)).Returns(contextConfig);
+            _configurationOverrideHelper.Setup(h => h.GetXContentTypeOptionsWithOverride(_httpContext)).Returns(overrideConfig);
             _headerGenerator.Setup(g => g.CreateXContentTypeOptionsResult(overrideConfig, contextConfig)).Returns(_expectedHeaderResult);
 
-            _overrideHelper.SetXContentTypeOptionsHeader(_mockContext);
+            _overrideHelper.SetXContentTypeOptionsHeader(_httpContext);
 
-            _headerResultHandler.Verify(h => h.HandleHeaderResult(It.IsAny<HttpResponseBase>(), _expectedHeaderResult), Times.Once);
+            _headerResultHandler.Verify(h => h.HandleHeaderResult(_httpContext, _expectedHeaderResult), Times.Once);
         }
 
         [Fact]
         public void SetXDownloadOptionsHeader_NoOverride_DoesNothing()
         {
             var contextConfig = new SimpleBooleanConfiguration();
-            _contextHelper.Setup(h => h.GetXDownloadOptionsConfiguration(It.IsAny<HttpContextBase>())).Returns(contextConfig);
-            _configurationOverrideHelper.Setup(h => h.GetXDownloadOptionsWithOverride(It.IsAny<HttpContextBase>())).Returns((SimpleBooleanConfiguration)null);
+            _contextHelper.Setup(h => h.GetXDownloadOptionsConfiguration(_httpContext)).Returns(contextConfig);
+            _configurationOverrideHelper.Setup(h => h.GetXDownloadOptionsWithOverride(_httpContext)).Returns((SimpleBooleanConfiguration)null);
 
-            _overrideHelper.SetXDownloadOptionsHeader(_mockContext);
+            _overrideHelper.SetXDownloadOptionsHeader(_httpContext);
 
             _headerGenerator.Verify(g => g.CreateXDownloadOptionsResult(It.IsAny<SimpleBooleanConfiguration>(), It.IsAny<SimpleBooleanConfiguration>()), Times.Never);
-            _headerResultHandler.Verify(h => h.HandleHeaderResult(It.IsAny<HttpResponseBase>(), It.IsAny<HeaderResult>()), Times.Never);
+            _headerResultHandler.Verify(h => h.HandleHeaderResult(_httpContext, It.IsAny<HeaderResult>()), Times.Never);
         }
 
         [Fact]
@@ -149,26 +151,26 @@ namespace NWebsec.AspNet.Mvc.Tests.Helpers
         {
             var contextConfig = new SimpleBooleanConfiguration();
             var overrideConfig = new SimpleBooleanConfiguration();
-            _contextHelper.Setup(h => h.GetXDownloadOptionsConfiguration(It.IsAny<HttpContextBase>())).Returns(contextConfig);
-            _configurationOverrideHelper.Setup(h => h.GetXDownloadOptionsWithOverride(It.IsAny<HttpContextBase>())).Returns(overrideConfig);
+            _contextHelper.Setup(h => h.GetXDownloadOptionsConfiguration(_httpContext)).Returns(contextConfig);
+            _configurationOverrideHelper.Setup(h => h.GetXDownloadOptionsWithOverride(_httpContext)).Returns(overrideConfig);
             _headerGenerator.Setup(g => g.CreateXDownloadOptionsResult(overrideConfig, contextConfig)).Returns(_expectedHeaderResult);
 
-            _overrideHelper.SetXDownloadOptionsHeader(_mockContext);
+            _overrideHelper.SetXDownloadOptionsHeader(_httpContext);
 
-            _headerResultHandler.Verify(h => h.HandleHeaderResult(It.IsAny<HttpResponseBase>(), _expectedHeaderResult), Times.Once);
+            _headerResultHandler.Verify(h => h.HandleHeaderResult(_httpContext, _expectedHeaderResult), Times.Once);
         }
 
         [Fact]
         public void SetXXssProtectionHeader_NoOverride_DoesNothing()
         {
             var contextConfig = new XXssProtectionConfiguration();
-            _contextHelper.Setup(h => h.GetXXssProtectionConfiguration(It.IsAny<HttpContextBase>())).Returns(contextConfig);
-            _configurationOverrideHelper.Setup(h => h.GetXXssProtectionWithOverride(It.IsAny<HttpContextBase>())).Returns((XXssProtectionConfiguration)null);
+            _contextHelper.Setup(h => h.GetXXssProtectionConfiguration(_httpContext)).Returns(contextConfig);
+            _configurationOverrideHelper.Setup(h => h.GetXXssProtectionWithOverride(_httpContext)).Returns((XXssProtectionConfiguration)null);
 
-            _overrideHelper.SetXXssProtectionHeader(_mockContext);
+            _overrideHelper.SetXXssProtectionHeader(_httpContext);
 
             _headerGenerator.Verify(g => g.CreateXXssProtectionResult(It.IsAny<XXssProtectionConfiguration>(), It.IsAny<XXssProtectionConfiguration>()), Times.Never);
-            _headerResultHandler.Verify(h => h.HandleHeaderResult(It.IsAny<HttpResponseBase>(), It.IsAny<HeaderResult>()), Times.Never);
+            _headerResultHandler.Verify(h => h.HandleHeaderResult(_httpContext, It.IsAny<HeaderResult>()), Times.Never);
         }
 
         [Fact]
@@ -176,117 +178,77 @@ namespace NWebsec.AspNet.Mvc.Tests.Helpers
         {
             var contextConfig = new XXssProtectionConfiguration();
             var overrideConfig = new XXssProtectionConfiguration();
-            _contextHelper.Setup(h => h.GetXXssProtectionConfiguration(It.IsAny<HttpContextBase>())).Returns(contextConfig);
-            _configurationOverrideHelper.Setup(h => h.GetXXssProtectionWithOverride(It.IsAny<HttpContextBase>())).Returns(overrideConfig);
+            _contextHelper.Setup(h => h.GetXXssProtectionConfiguration(_httpContext)).Returns(contextConfig);
+            _configurationOverrideHelper.Setup(h => h.GetXXssProtectionWithOverride(_httpContext)).Returns(overrideConfig);
             _headerGenerator.Setup(g => g.CreateXXssProtectionResult(overrideConfig, contextConfig)).Returns(_expectedHeaderResult);
 
-            _overrideHelper.SetXXssProtectionHeader(_mockContext);
+            _overrideHelper.SetXXssProtectionHeader(_httpContext);
 
-            _headerResultHandler.Verify(h => h.HandleHeaderResult(It.IsAny<HttpResponseBase>(), _expectedHeaderResult), Times.Once);
+            _headerResultHandler.Verify(h => h.HandleHeaderResult(_httpContext, _expectedHeaderResult), Times.Once);
         }
 
         [Fact]
         public void SetNoCacheHeaders_NoOverride_DoesNothing()
         {
-            //Get ASP.NET stuff in order
-            var cachePolicy = new Mock<HttpCachePolicyBase>();
-            var responseHeaders = new NameValueCollection();
-            var response = new Mock<HttpResponseBase>();
-            response.Setup(r => r.Cache).Returns(cachePolicy.Object);
-            response.Setup(r => r.Headers).Returns(responseHeaders);
-            Mock.Get(_mockContext).Setup(c => c.Response).Returns(response.Object);
+            _configurationOverrideHelper.Setup(h => h.GetNoCacheHeadersWithOverride(_httpContext)).Returns((SimpleBooleanConfiguration)null);
 
-            _configurationOverrideHelper.Setup(h => h.GetNoCacheHeadersWithOverride(It.IsAny<HttpContextBase>())).Returns((SimpleBooleanConfiguration)null);
+            _overrideHelper.SetNoCacheHeaders(_httpContext);
 
-            _overrideHelper.SetNoCacheHeaders(_mockContext);
-
-            cachePolicy.Verify(c => c.SetCacheability(It.IsAny<HttpCacheability>()), Times.Never());
-            cachePolicy.Verify(c => c.SetNoStore(), Times.Never());
-            cachePolicy.Verify(c => c.SetRevalidation(It.IsAny<HttpCacheRevalidation>()), Times.Never());
-            Assert.Empty(responseHeaders);
+            Mock.Get(_httpContext).Verify(ctx => ctx.SetNoCacheHeaders(), Times.Never);
         }
 
         [Fact]
         public void SetNoCacheHeaders_OverrideAndDisabled_DoesNothing()
         {
-            //Get ASP.NET stuff in order
-            var cachePolicy = new Mock<HttpCachePolicyBase>();
-            var responseHeaders = new NameValueCollection();
-            var response = new Mock<HttpResponseBase>();
-            response.Setup(r => r.Cache).Returns(cachePolicy.Object);
-            response.Setup(r => r.Headers).Returns(responseHeaders);
-            Mock.Get(_mockContext).Setup(c => c.Response).Returns(response.Object);
-
             var overrideConfig = new SimpleBooleanConfiguration { Enabled = false };
-            _configurationOverrideHelper.Setup(h => h.GetNoCacheHeadersWithOverride(It.IsAny<HttpContextBase>())).Returns(overrideConfig);
+            _configurationOverrideHelper.Setup(h => h.GetNoCacheHeadersWithOverride(_httpContext)).Returns(overrideConfig);
 
-            _overrideHelper.SetNoCacheHeaders(_mockContext);
+            _overrideHelper.SetNoCacheHeaders(_httpContext);
 
-            cachePolicy.Verify(c => c.SetCacheability(It.IsAny<HttpCacheability>()), Times.Never());
-            cachePolicy.Verify(c => c.SetNoStore(), Times.Never());
-            cachePolicy.Verify(c => c.SetRevalidation(It.IsAny<HttpCacheRevalidation>()), Times.Never());
-            Assert.Empty(responseHeaders);
+            Mock.Get(_httpContext).Verify(ctx => ctx.SetNoCacheHeaders(), Times.Never);
         }
 
         [Fact]
         public void SetNoCacheHeaders_OverrideAndEnabled_SetsCacheHeaders()
         {
-            //Get ASP.NET stuff in order
-            var cachePolicy = new Mock<HttpCachePolicyBase>();
-            var responseHeaders = new NameValueCollection();
-            var response = new Mock<HttpResponseBase>();
-            response.Setup(r => r.Cache).Returns(cachePolicy.Object);
-            response.Setup(r => r.Headers).Returns(responseHeaders);
-            Mock.Get(_mockContext).Setup(c => c.Response).Returns(response.Object);
-
             var overrideConfig = new SimpleBooleanConfiguration { Enabled = true };
-            _configurationOverrideHelper.Setup(h => h.GetNoCacheHeadersWithOverride(It.IsAny<HttpContextBase>())).Returns(overrideConfig);
+            _configurationOverrideHelper.Setup(h => h.GetNoCacheHeadersWithOverride(_httpContext)).Returns(overrideConfig);
 
-            _overrideHelper.SetNoCacheHeaders(_mockContext);
+            _overrideHelper.SetNoCacheHeaders(_httpContext);
 
-            cachePolicy.Verify(c => c.SetCacheability(HttpCacheability.NoCache), Times.Once());
-            cachePolicy.Verify(c => c.SetNoStore(), Times.Once());
-            cachePolicy.Verify(c => c.SetRevalidation(HttpCacheRevalidation.AllCaches), Times.Once());
+            Mock.Get(_httpContext).Verify(ctx => ctx.SetNoCacheHeaders(), Times.Once);
         }
 
         [Theory, MemberData(nameof(ReportOnly))]
         public void SetCspHeaders_NoOverride_DoesNothing(bool reportOnly)
         {
-            //Get ASP.NET stuff in order
-            var request = new Mock<HttpRequestBase>();
-            request.SetupAllProperties();
-            Mock.Get(_mockContext).Setup(c => c.Request).Returns(request.Object);
 
             var contextConfig = new CspConfiguration();
-            _contextHelper.Setup(h => h.GetCspConfiguration(It.IsAny<HttpContextBase>(), reportOnly)).Returns(contextConfig);
-            _cspConfigurationOverrideHelper.Setup(h => h.GetCspConfigWithOverrides(It.IsAny<HttpContextBase>(), reportOnly)).Returns((CspConfiguration)null);
+            _contextHelper.Setup(h => h.GetCspConfiguration(It.IsAny<IHttpContextWrapper>(), reportOnly)).Returns(contextConfig);
+            _cspConfigurationOverrideHelper.Setup(h => h.GetCspConfigWithOverrides(It.IsAny<IHttpContextWrapper>(), reportOnly)).Returns((CspConfiguration)null);
 
-            _overrideHelper.SetCspHeaders(_mockContext, reportOnly);
+            _overrideHelper.SetCspHeaders(_httpContext, reportOnly);
 
             _headerGenerator.Verify(g => g.CreateCspResult(It.IsAny<ICspConfiguration>(), reportOnly, It.IsAny<string>(), It.IsAny<ICspConfiguration>()), Times.Never);
-            _headerResultHandler.Verify(h => h.HandleHeaderResult(It.IsAny<HttpResponseBase>(), It.IsAny<HeaderResult>()), Times.Never);
+            _headerResultHandler.Verify(h => h.HandleHeaderResult(_httpContext, It.IsAny<HeaderResult>()), Times.Never);
         }
 
         [Theory, MemberData(nameof(ReportOnly))]
         public void SetCspHeaders_Override_CreatesAndHandlesHeaderResult(bool reportOnly)
         {
-            //Get ASP.NET stuff in order
-            var request = new Mock<HttpRequestBase>();
-            request.SetupAllProperties();
-            Mock.Get(_mockContext).Setup(c => c.Request).Returns(request.Object);
 
             const string reportUri = "/cspreport";
 
             var contextConfig = new CspConfiguration();
             var overrideConfig = new CspConfiguration();
-            _contextHelper.Setup(h => h.GetCspConfiguration(It.IsAny<HttpContextBase>(), reportOnly)).Returns(contextConfig);
-            _cspConfigurationOverrideHelper.Setup(h => h.GetCspConfigWithOverrides(It.IsAny<HttpContextBase>(), reportOnly)).Returns(overrideConfig);
+            _contextHelper.Setup(h => h.GetCspConfiguration(It.IsAny<IHttpContextWrapper>(), reportOnly)).Returns(contextConfig);
+            _cspConfigurationOverrideHelper.Setup(h => h.GetCspConfigWithOverrides(It.IsAny<IHttpContextWrapper>(), reportOnly)).Returns(overrideConfig);
             _reportHelper.Setup(h => h.GetBuiltInCspReportHandlerRelativeUri()).Returns(reportUri);
             _headerGenerator.Setup(g => g.CreateCspResult(overrideConfig, reportOnly, reportUri, contextConfig)).Returns(_expectedHeaderResult);
 
-            _overrideHelper.SetCspHeaders(_mockContext, reportOnly);
+            _overrideHelper.SetCspHeaders(_httpContext, reportOnly);
 
-            _headerResultHandler.Verify(h => h.HandleHeaderResult(It.IsAny<HttpResponseBase>(), _expectedHeaderResult), Times.Once);
+            _headerResultHandler.Verify(h => h.HandleHeaderResult(_httpContext, _expectedHeaderResult), Times.Once);
         }
     }
 }

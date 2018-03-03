@@ -3,6 +3,7 @@
 using System;
 using System.Web.Mvc;
 using NWebsec.Core.Common.HttpHeaders.Configuration;
+using NWebsec.Core.Web;
 using NWebsec.Mvc.Helpers;
 using NWebsec.Mvc.HttpHeaders.Internals;
 
@@ -48,13 +49,13 @@ namespace NWebsec.Mvc.HttpHeaders.Csp.Internals
 
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
-            _headerConfigurationOverrideHelper.SetCspHeaderOverride(filterContext.HttpContext, _config, ReportOnly);
+            _headerConfigurationOverrideHelper.SetCspHeaderOverride(new HttpContextWrapper(filterContext.HttpContext), _config, ReportOnly);
             base.OnActionExecuting(filterContext);
         }
 
         public sealed override void SetHttpHeadersOnActionExecuted(ActionExecutedContext filterContext)
         {
-            _headerOverrideHelper.SetCspHeaders(filterContext.HttpContext, ReportOnly);
+            _headerOverrideHelper.SetCspHeaders(new HttpContextWrapper(filterContext.HttpContext), ReportOnly);
         }
     }
 }

@@ -3,6 +3,7 @@
 using System;
 using System.Web.Mvc;
 using NWebsec.Core.Common.HttpHeaders.Configuration.Validation;
+using NWebsec.Core.Web;
 using NWebsec.Mvc.Common.Csp;
 using NWebsec.Mvc.Helpers;
 using NWebsec.Mvc.HttpHeaders.Internals;
@@ -74,13 +75,13 @@ namespace NWebsec.Mvc.HttpHeaders.Csp.Internals
         {
             ValidateParams();
 
-            _configurationOverrideHelper.SetCspPluginTypesOverride(filterContext.HttpContext, _directive, ReportOnly);
+            _configurationOverrideHelper.SetCspPluginTypesOverride(new HttpContextWrapper(filterContext.HttpContext), _directive, ReportOnly);
             base.OnActionExecuting(filterContext);
         }
 
         public sealed override void SetHttpHeadersOnActionExecuted(ActionExecutedContext filterContext)
         {
-            _headerOverrideHelper.SetCspHeaders(filterContext.HttpContext, ReportOnly);
+            _headerOverrideHelper.SetCspHeaders(new HttpContextWrapper(filterContext.HttpContext), ReportOnly);
         }
 
         internal void ValidateParams()

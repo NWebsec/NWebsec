@@ -1,11 +1,10 @@
 ﻿// Copyright (c) André N. Klingsheim. See License.txt in the project root for license information.
 
-using System.Collections.Generic;
-using System.Web;
 using Moq;
 using NWebsec.Core.Common;
 using NWebsec.Core.Common.HttpHeaders.Configuration;
 using NWebsec.Mvc.Common.Csp;
+using NWebsec.Core.Common.Web;
 using NWebsec.Mvc.Helpers;
 using Xunit;
 
@@ -15,7 +14,7 @@ namespace NWebsec.AspNet.Mvc.Tests.Helpers
     {
         private readonly NWebsecContext _systemWebContext;
         private readonly NWebsecContext _owinContext;
-        private readonly HttpContextBase _mockContext;
+        private readonly IHttpContextWrapper _mockContext;
         private readonly ContextConfigurationHelper _contextHelper;
 
         public ContextConfigurationHelperTests()
@@ -23,20 +22,15 @@ namespace NWebsec.AspNet.Mvc.Tests.Helpers
             _systemWebContext = new NWebsecContext();
             _owinContext = new NWebsecContext();
 
-            var mockContext = new Mock<HttpContextBase>();
-            mockContext.Setup(c => c.Items["nwebsec.Context"]).Returns(_systemWebContext);
-
-            _mockContext = mockContext.Object;
+            _mockContext = new Mock<IHttpContextWrapper>().Object;
+            Mock.Get(_mockContext).Setup(c => c.GetNWebsecContext()).Returns(_systemWebContext);
 
             _contextHelper = new ContextConfigurationHelper();
         }
 
         private void SetupOwinContext()
         {
-            var owinEnv = new Dictionary<string, object>();
-            owinEnv["nwebsec.Context"] = _owinContext;
-            Mock.Get(_mockContext).Setup(c => c.Items["owin.Environment"]).Returns(owinEnv);
-
+            Mock.Get(_mockContext).Setup(c => c.GetNWebsecOwinContext()).Returns(_owinContext);
         }
 
         [Fact]

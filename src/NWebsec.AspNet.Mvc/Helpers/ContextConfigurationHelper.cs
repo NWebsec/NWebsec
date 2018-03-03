@@ -1,16 +1,16 @@
 ﻿// Copyright (c) André N. Klingsheim. See License.txt in the project root for license information.
 
-using System.Web;
 using NWebsec.Core.Common;
 using NWebsec.Core.Common.HttpHeaders.Configuration;
-using NWebsec.ExtensionMethods;
+using NWebsec.Core.Common.Web;
 using NWebsec.Mvc.Common.Csp;
 
 namespace NWebsec.Mvc.Helpers
 {
     internal class ContextConfigurationHelper : IContextConfigurationHelper
     {
-        public IXRobotsTagConfiguration GetXRobotsTagConfiguration(HttpContextBase context)
+        //TODO simplify code
+        public IXRobotsTagConfiguration GetXRobotsTagConfiguration(IHttpContextWrapper context)
         {
             var owinContext = context.GetNWebsecOwinContext();
             if (owinContext != null && owinContext.XRobotsTag != null)
@@ -20,7 +20,7 @@ namespace NWebsec.Mvc.Helpers
             return context.GetNWebsecContext().XRobotsTag;
         }
 
-        public IXFrameOptionsConfiguration GetXFrameOptionsConfiguration(HttpContextBase context)
+        public IXFrameOptionsConfiguration GetXFrameOptionsConfiguration(IHttpContextWrapper context)
         {
             var owinContext = context.GetNWebsecOwinContext();
             if (owinContext != null && owinContext.XFrameOptions != null)
@@ -30,7 +30,7 @@ namespace NWebsec.Mvc.Helpers
             return context.GetNWebsecContext().XFrameOptions;
         }
 
-        public ISimpleBooleanConfiguration GetXContentTypeOptionsConfiguration(HttpContextBase context)
+        public ISimpleBooleanConfiguration GetXContentTypeOptionsConfiguration(IHttpContextWrapper context)
         {
             var owinContext = context.GetNWebsecOwinContext();
             if (owinContext != null && owinContext.XContentTypeOptions != null)
@@ -40,7 +40,7 @@ namespace NWebsec.Mvc.Helpers
             return context.GetNWebsecContext().XContentTypeOptions;
         }
 
-        public ISimpleBooleanConfiguration GetXDownloadOptionsConfiguration(HttpContextBase context)
+        public ISimpleBooleanConfiguration GetXDownloadOptionsConfiguration(IHttpContextWrapper context)
         {
             var owinContext = context.GetNWebsecOwinContext();
             if (owinContext != null && owinContext.XDownloadOptions != null)
@@ -50,7 +50,7 @@ namespace NWebsec.Mvc.Helpers
             return context.GetNWebsecContext().XDownloadOptions;
         }
 
-        public IXXssProtectionConfiguration GetXXssProtectionConfiguration(HttpContextBase context)
+        public IXXssProtectionConfiguration GetXXssProtectionConfiguration(IHttpContextWrapper context)
         {
             var owinContext = context.GetNWebsecOwinContext();
             if (owinContext != null && owinContext.XXssProtection != null)
@@ -60,7 +60,7 @@ namespace NWebsec.Mvc.Helpers
             return context.GetNWebsecContext().XXssProtection;
         }
 
-        public ICspConfiguration GetCspConfiguration(HttpContextBase context, bool reportOnly)
+        public ICspConfiguration GetCspConfiguration(IHttpContextWrapper context, bool reportOnly)
         {
             if (reportOnly)
             {
@@ -75,7 +75,7 @@ namespace NWebsec.Mvc.Helpers
             return context.GetNWebsecContext().Csp;
         }
 
-        private ICspConfiguration GetCspReportonlyConfiguration(HttpContextBase context)
+        private ICspConfiguration GetCspReportonlyConfiguration(IHttpContextWrapper context)
         {
             var owinContext = context.GetNWebsecOwinContext();
             if (owinContext != null && owinContext.CspReportOnly != null)
@@ -85,7 +85,7 @@ namespace NWebsec.Mvc.Helpers
             return context.GetNWebsecContext().CspReportOnly;
         }
 
-        public CspOverrideConfiguration GetCspConfigurationOverride(HttpContextBase httpContext, bool reportOnly, bool allowNull)
+        public CspOverrideConfiguration GetCspConfigurationOverride(IHttpContextWrapper httpContext, bool reportOnly, bool allowNull)
         {
             var context = httpContext.GetNWebsecOwinContext() ?? httpContext.GetNWebsecContext();
             var configOverride = GetConfigOverrides(context);

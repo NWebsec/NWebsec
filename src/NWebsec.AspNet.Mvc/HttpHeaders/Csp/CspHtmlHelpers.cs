@@ -5,6 +5,7 @@ using System.Web.Mvc;
 using NWebsec.Core.Common.HttpHeaders.Configuration.Validation;
 using NWebsec.Mvc.Common.Csp;
 using NWebsec.Mvc.Helpers;
+using HttpContextWrapper = NWebsec.Core.Web.HttpContextWrapper;
 
 namespace NWebsec.Mvc.HttpHeaders.Csp
 {
@@ -16,15 +17,15 @@ namespace NWebsec.Mvc.HttpHeaders.Csp
         /// <param name="helper"></param>
         public static IHtmlString CspScriptNonce(this HtmlHelper helper)
         {
-            var context = helper.ViewContext.HttpContext;
+            var context = new HttpContextWrapper(helper.ViewContext.HttpContext);
             var cspConfigurationOverrideHelper = new CspConfigurationOverrideHelper();
             var headerOverrideHelper = new HeaderOverrideHelper();
 
             var nonce = cspConfigurationOverrideHelper.GetCspScriptNonce(context);
 
-            if (context.Items["NWebsecScriptNonceSet"] == null)
+            if (context.GetItem<string>("NWebsecScriptNonceSet") == null)
             {
-                context.Items["NWebsecScriptNonceSet"] = "set";
+                context.SetItem("NWebsecScriptNonceSet", "set");
                 headerOverrideHelper.SetCspHeaders(context, false);
                 headerOverrideHelper.SetCspHeaders(context, true);
             }
@@ -38,15 +39,15 @@ namespace NWebsec.Mvc.HttpHeaders.Csp
         /// <param name="helper"></param>
         public static IHtmlString CspStyleNonce(this HtmlHelper helper)
         {
-            var context = helper.ViewContext.HttpContext;
+            var context = new HttpContextWrapper(helper.ViewContext.HttpContext);
             var cspConfigurationOverrideHelper = new CspConfigurationOverrideHelper();
             var headerOverrideHelper = new HeaderOverrideHelper();
 
             var nonce = cspConfigurationOverrideHelper.GetCspStyleNonce(context);
 
-            if (context.Items["NWebsecStyleNonceSet"] == null)
+            if (context.GetItem<string>("NWebsecStyleNonceSet") == null)
             {
-                context.Items["NWebsecStyleNonceSet"] = "set";
+                context.SetItem("NWebsecStyleNonceSet", "set");
                 headerOverrideHelper.SetCspHeaders(context, false);
                 headerOverrideHelper.SetCspHeaders(context, true);
             }
@@ -63,7 +64,7 @@ namespace NWebsec.Mvc.HttpHeaders.Csp
         {
             new Rfc2045MediaTypeValidator().Validate(mediaType);
 
-            var context = helper.ViewContext.HttpContext;
+            var context = new HttpContextWrapper(helper.ViewContext.HttpContext);
             var cspConfigurationOverrideHelper = new CspConfigurationOverrideHelper();
             var headerOverrideHelper = new HeaderOverrideHelper();
 
@@ -73,7 +74,7 @@ namespace NWebsec.Mvc.HttpHeaders.Csp
 
             headerOverrideHelper.SetCspHeaders(context, false);
             headerOverrideHelper.SetCspHeaders(context, true);
-            var attribute = string.Format("type=\"{0}\"", helper.AttributeEncode(mediaType));
+            var attribute = $"type=\"{helper.AttributeEncode(mediaType)}\"";
             return new HtmlString(attribute);
         }
 

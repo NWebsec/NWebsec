@@ -4,6 +4,7 @@ using System;
 using System.Linq;
 using System.Web.Mvc;
 using NWebsec.Core.Common.HttpHeaders.Csp;
+using NWebsec.Core.Web;
 using NWebsec.Mvc.Common.Csp;
 using NWebsec.Mvc.Common.Helpers;
 using NWebsec.Mvc.Helpers;
@@ -97,7 +98,7 @@ namespace NWebsec.Mvc.HttpHeaders.Csp.Internals
         {
             ValidateParams();
 
-            _headerConfigurationOverrideHelper.SetCspDirectiveOverride(filterContext.HttpContext, Directive, DirectiveConfig, ReportOnly);
+            _headerConfigurationOverrideHelper.SetCspDirectiveOverride(new HttpContextWrapper(filterContext.HttpContext), Directive, DirectiveConfig, ReportOnly);
 
             base.OnActionExecuting(filterContext);
         }
@@ -143,7 +144,7 @@ namespace NWebsec.Mvc.HttpHeaders.Csp.Internals
 
         public sealed override void SetHttpHeadersOnActionExecuted(ActionExecutedContext filterContext)
         {
-            _headerOverrideHelper.SetCspHeaders(filterContext.HttpContext, ReportOnly);
+            _headerOverrideHelper.SetCspHeaders(new HttpContextWrapper(filterContext.HttpContext), ReportOnly);
         }
     }
 }
