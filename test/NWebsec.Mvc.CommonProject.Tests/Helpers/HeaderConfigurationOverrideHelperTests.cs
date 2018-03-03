@@ -1,29 +1,28 @@
 ﻿// Copyright (c) André N. Klingsheim. See License.txt in the project root for license information.
 
-using System;
-using System.Collections.Generic;
-using System.Web;
 using Moq;
+using NWebsec.Core.Common;
 using NWebsec.Core.Common.HttpHeaders;
 using NWebsec.Core.Common.HttpHeaders.Configuration;
-using NWebsec.Mvc.Helpers;
+using NWebsec.Core.Common.Web;
+using NWebsec.Mvc.Common.Helpers;
 using Xunit;
 
-namespace NWebsec.AspNet.Mvc.Tests.Helpers
+namespace NWebsec.Mvc.CommonProject.Tests.Helpers
 {
     public class HeaderConfigurationOverrideHelperTests
     {
-        private readonly HttpContextBase _mockContext;
+        private readonly IHttpContextWrapper _mockContext;
         private readonly HeaderConfigurationOverrideHelper _headerConfigurationOverrideHelper;
 
         public HeaderConfigurationOverrideHelperTests()
         {
-            var mockedContext = new Mock<HttpContextBase>();
-            IDictionary<String, Object> nwebsecContentItems = new Dictionary<string, object>();
-            mockedContext.Setup(x => x.Items["nwebsecheaderoverride"]).Returns(nwebsecContentItems);
-            _mockContext = mockedContext.Object;
+            _mockContext = new Mock<IHttpContextWrapper>(MockBehavior.Strict).Object;
+            Mock.Get(_mockContext).Setup(ctx => ctx.GetNWebsecOverrideContext()).Returns(new NWebsecContext());
+
             _headerConfigurationOverrideHelper = new HeaderConfigurationOverrideHelper();
         }
+     
 
         [Fact]
         public void GetNoCacheHeadersWithOverride_NoOverride_ReturnsNull()

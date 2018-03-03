@@ -7,7 +7,7 @@ using NWebsec.Mvc.Common.Helpers;
 using NWebsec.Mvc.CommonProject.Tests.TestHelpers;
 using Xunit;
 
-namespace NWebsec.Mvc.CommonProject.Tests
+namespace NWebsec.Mvc.CommonProject.Tests.Helpers
 {
     public class CspConfigMapperTests
     {
