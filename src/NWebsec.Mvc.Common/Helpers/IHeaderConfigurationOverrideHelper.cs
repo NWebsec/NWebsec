@@ -13,5 +13,6 @@ namespace NWebsec.Mvc.Common.Helpers
         ISimpleBooleanConfiguration GetXContentTypeOptionsWithOverride(IHttpContextWrapper context);
         ISimpleBooleanConfiguration GetXDownloadOptionsWithOverride(IHttpContextWrapper context);
         IXXssProtectionConfiguration GetXXssProtectionWithOverride(IHttpContextWrapper context);
+        IReferrerPolicyConfiguration GetReferrerPolicyWithOverride(IHttpContextWrapper context);
     }
 }

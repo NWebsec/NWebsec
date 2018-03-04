@@ -13,6 +13,7 @@ namespace NWebsec.Mvc.Common.Helpers
         ISimpleBooleanConfiguration GetXContentTypeOptionsConfiguration(IHttpContextWrapper context);
         ISimpleBooleanConfiguration GetXDownloadOptionsConfiguration(IHttpContextWrapper context);
         IXXssProtectionConfiguration GetXXssProtectionConfiguration(IHttpContextWrapper context);
+        IReferrerPolicyConfiguration GetReferrerPolicyConfiguration(IHttpContextWrapper context);
         ICspConfiguration GetCspConfiguration(IHttpContextWrapper context, bool reportOnly);
         CspOverrideConfiguration GetCspConfigurationOverride(IHttpContextWrapper httpContext, bool reportOnly, bool allowNull);
     }

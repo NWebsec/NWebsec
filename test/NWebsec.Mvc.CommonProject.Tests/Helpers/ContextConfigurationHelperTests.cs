@@ -209,6 +209,41 @@ namespace NWebsec.Mvc.CommonProject.Tests.Helpers
         }
 
         [Fact]
+        public void GetReferrerPolicyConfiguration_NoOwinContext_ReturnsSystemWebConfig()
+        {
+            var config = new ReferrerPolicyConfiguration();
+            _systemWebContext.ReferrerPolicy = config;
+
+            var result = _contextHelper.GetReferrerPolicyConfiguration(_mockContext);
+
+            Assert.Same(config, result);
+        }
+
+        [Fact]
+        public void GetReferrerPolicyConfiguration_OwinContextWithoutConfig_ReturnsSystemWebConfig()
+        {
+            SetupOwinContext();
+            var config = new ReferrerPolicyConfiguration();
+            _systemWebContext.ReferrerPolicy = config;
+
+            var result = _contextHelper.GetReferrerPolicyConfiguration(_mockContext);
+
+            Assert.Same(config, result);
+        }
+
+        [Fact]
+        public void GetReferrerPolicyConfiguration_HasOwinConfig_ReturnsOwinConfig()
+        {
+            SetupOwinContext();
+            var config = new ReferrerPolicyConfiguration();
+            _owinContext.ReferrerPolicy = config;
+
+            var result = _contextHelper.GetReferrerPolicyConfiguration(_mockContext);
+
+            Assert.Same(config, result);
+        }
+
+        [Fact]
         public void GetCspConfiguration_NoOwinContext_ReturnsSystemWebConfig()
         {
             var config = new CspConfiguration();

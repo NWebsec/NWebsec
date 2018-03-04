@@ -76,5 +76,15 @@ namespace NWebsec.Mvc.Common.Helpers
         {
             return context.GetNWebsecOverrideContext().XXssProtection;
         }
+
+        internal void SetReferrerPolicyOverride(IHttpContextWrapper context, IReferrerPolicyConfiguration referrerConfig)
+        {
+            context.GetNWebsecOverrideContext().ReferrerPolicy = referrerConfig;
+        }
+
+        public IReferrerPolicyConfiguration GetReferrerPolicyWithOverride(IHttpContextWrapper context)
+        {
+            return context.GetNWebsecOverrideContext().ReferrerPolicy;
+        }
     }
 }

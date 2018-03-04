@@ -12,52 +12,32 @@ namespace NWebsec.Mvc.Common.Helpers
         //TODO simplify code
         public IXRobotsTagConfiguration GetXRobotsTagConfiguration(IHttpContextWrapper context)
         {
-            var owinContext = context.GetNWebsecOwinContext();
-            if (owinContext != null && owinContext.XRobotsTag != null)
-            {
-                return owinContext.XRobotsTag;
-            }
-            return context.GetNWebsecContext().XRobotsTag;
+            return context.GetNWebsecOwinContext()?.XRobotsTag ?? context.GetNWebsecContext().XRobotsTag;
         }
 
         public IXFrameOptionsConfiguration GetXFrameOptionsConfiguration(IHttpContextWrapper context)
         {
-            var owinContext = context.GetNWebsecOwinContext();
-            if (owinContext != null && owinContext.XFrameOptions != null)
-            {
-                return owinContext.XFrameOptions;
-            }
-            return context.GetNWebsecContext().XFrameOptions;
+            return context.GetNWebsecOwinContext()?.XFrameOptions ?? context.GetNWebsecContext().XFrameOptions;
         }
 
         public ISimpleBooleanConfiguration GetXContentTypeOptionsConfiguration(IHttpContextWrapper context)
         {
-            var owinContext = context.GetNWebsecOwinContext();
-            if (owinContext != null && owinContext.XContentTypeOptions != null)
-            {
-                return owinContext.XContentTypeOptions;
-            }
-            return context.GetNWebsecContext().XContentTypeOptions;
+            return context.GetNWebsecOwinContext()?.XContentTypeOptions ?? context.GetNWebsecContext().XContentTypeOptions;
         }
 
         public ISimpleBooleanConfiguration GetXDownloadOptionsConfiguration(IHttpContextWrapper context)
         {
-            var owinContext = context.GetNWebsecOwinContext();
-            if (owinContext != null && owinContext.XDownloadOptions != null)
-            {
-                return owinContext.XDownloadOptions;
-            }
-            return context.GetNWebsecContext().XDownloadOptions;
+            return context.GetNWebsecOwinContext()?.XDownloadOptions ?? context.GetNWebsecContext().XDownloadOptions;
         }
 
         public IXXssProtectionConfiguration GetXXssProtectionConfiguration(IHttpContextWrapper context)
         {
-            var owinContext = context.GetNWebsecOwinContext();
-            if (owinContext != null && owinContext.XXssProtection != null)
-            {
-                return owinContext.XXssProtection;
-            }
-            return context.GetNWebsecContext().XXssProtection;
+            return context.GetNWebsecOwinContext()?.XXssProtection ?? context.GetNWebsecContext().XXssProtection;
+        }
+
+        public IReferrerPolicyConfiguration GetReferrerPolicyConfiguration(IHttpContextWrapper context)
+        {
+            return context.GetNWebsecOwinContext()?.ReferrerPolicy ?? context.GetNWebsecContext().ReferrerPolicy;
         }
 
         public ICspConfiguration GetCspConfiguration(IHttpContextWrapper context, bool reportOnly)
@@ -66,23 +46,12 @@ namespace NWebsec.Mvc.Common.Helpers
             {
                 return GetCspReportonlyConfiguration(context);
             }
-
-            var owinContext = context.GetNWebsecOwinContext();
-            if (owinContext != null && owinContext.Csp != null)
-            {
-                return owinContext.Csp;
-            }
-            return context.GetNWebsecContext().Csp;
+            return context.GetNWebsecOwinContext()?.Csp ?? context.GetNWebsecContext().Csp;
         }
 
         private ICspConfiguration GetCspReportonlyConfiguration(IHttpContextWrapper context)
         {
-            var owinContext = context.GetNWebsecOwinContext();
-            if (owinContext != null && owinContext.CspReportOnly != null)
-            {
-                return owinContext.CspReportOnly;
-            }
-            return context.GetNWebsecContext().CspReportOnly;
+            return context.GetNWebsecOwinContext()?.CspReportOnly ?? context.GetNWebsecContext().CspReportOnly;
         }
 
         public CspOverrideConfiguration GetCspConfigurationOverride(IHttpContextWrapper httpContext, bool reportOnly, bool allowNull)

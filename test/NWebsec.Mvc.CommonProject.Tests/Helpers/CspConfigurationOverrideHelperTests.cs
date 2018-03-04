@@ -2,15 +2,14 @@
 
 using System.Collections.Generic;
 using Moq;
-using NWebsec.AspNet.Mvc.Tests.TestHelpers;
 using NWebsec.Core.Common.HttpHeaders.Configuration;
 using NWebsec.Core.Common.Web;
 using NWebsec.Mvc.Common.Csp;
 using NWebsec.Mvc.Common.Helpers;
-using NWebsec.Mvc.Helpers;
+using NWebsec.Mvc.CommonProject.Tests.TestHelpers;
 using Xunit;
 
-namespace NWebsec.AspNet.Mvc.Tests.Helpers
+namespace NWebsec.Mvc.CommonProject.Tests.Helpers
 {
     public class CspConfigurationOverrideHelperTests
     {

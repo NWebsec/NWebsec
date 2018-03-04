@@ -25,5 +25,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\ICspConfigurationOverrideHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\ICspDirectiveOverrideHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\IHeaderConfigurationOverrideHelper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Helpers\IHeaderOverrideHelper.cs" />
   </ItemGroup>
 </Project>

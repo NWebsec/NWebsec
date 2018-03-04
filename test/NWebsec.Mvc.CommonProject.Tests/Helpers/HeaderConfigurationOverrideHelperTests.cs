@@ -22,7 +22,7 @@ namespace NWebsec.Mvc.CommonProject.Tests.Helpers
 
             _headerConfigurationOverrideHelper = new HeaderConfigurationOverrideHelper();
         }
-     
+
         [Fact]
         public void GetNoCacheHeadersWithOverride_NoOverride_ReturnsNull()
         {
@@ -117,6 +117,22 @@ namespace NWebsec.Mvc.CommonProject.Tests.Helpers
             _headerConfigurationOverrideHelper.SetXRobotsTagHeaderOverride(_mockContext, configOverride);
 
             Assert.Same(configOverride, _headerConfigurationOverrideHelper.GetXRobotsTagWithOverride(_mockContext));
+        }
+
+        [Fact]
+        public void GetReferrerPolicyWithOverride_NoOverride_ReturnsNull()
+        {
+            Assert.Null(_headerConfigurationOverrideHelper.GetReferrerPolicyWithOverride(_mockContext));
+        }
+
+        [Fact]
+        public void GetReferrerPolicyWithOverride_ConfigOverriden_ReturnsOverrideElement()
+        {
+            var configOverride = new ReferrerPolicyConfiguration { Policy = ReferrerPolicy.NoReferrer };
+
+            _headerConfigurationOverrideHelper.SetReferrerPolicyOverride(_mockContext, configOverride);
+
+            Assert.Same(configOverride, _headerConfigurationOverrideHelper.GetReferrerPolicyWithOverride(_mockContext));
         }
     }
 }

@@ -6,7 +6,6 @@ using NWebsec.Annotations;
 using NWebsec.Core.Common.HttpHeaders.Configuration;
 using NWebsec.Core.Common.Web;
 using NWebsec.Mvc.Common.Csp;
-using NWebsec.Mvc.Common.Helpers;
 
 namespace NWebsec.Mvc.Common.Helpers
 {
@@ -65,7 +64,7 @@ namespace NWebsec.Mvc.Common.Helpers
             overrides.EnabledOverride = true;
             overrides.Enabled = cspConfig.Enabled;
         }
-        
+
         internal void SetCspDirectiveOverride(IHttpContextWrapper context, CspDirectives directive, CspDirectiveOverride config, bool reportOnly)
         {
             var overrides = _contextConfigurationHelper.GetCspConfigurationOverride(context, reportOnly, false);
@@ -83,7 +82,7 @@ namespace NWebsec.Mvc.Common.Helpers
             _configMapper.SetCspDirectiveConfig(overrides, directive, newConfig);
         }
 
-        internal void SetCspPluginTypesOverride(IHttpContextWrapper context, CspPluginTypesOverride config, bool reportOnly)
+        public void SetCspPluginTypesOverride(IHttpContextWrapper context, CspPluginTypesOverride config, bool reportOnly)
         {
             var overrides = _contextConfigurationHelper.GetCspConfigurationOverride(context, reportOnly, false);
 
@@ -141,7 +140,7 @@ namespace NWebsec.Mvc.Common.Helpers
             overrides.ReportUriDirective = reportUriConfig;
         }
 
-        internal string GetCspScriptNonce(IHttpContextWrapper context)
+        public string GetCspScriptNonce(IHttpContextWrapper context)
         {
             var overrides = _contextConfigurationHelper.GetCspConfigurationOverride(context, false, false);
 
@@ -158,7 +157,7 @@ namespace NWebsec.Mvc.Common.Helpers
             return nonce;
         }
 
-        internal string GetCspStyleNonce(IHttpContextWrapper context)
+        public string GetCspStyleNonce(IHttpContextWrapper context)
         {
             var overrides = _contextConfigurationHelper.GetCspConfigurationOverride(context, false, false);
 
@@ -193,7 +192,7 @@ namespace NWebsec.Mvc.Common.Helpers
 
         private string GenerateCspNonceValue()
         {
-            using (var rng = new RNGCryptoServiceProvider())
+            using (var rng = RandomNumberGenerator.Create())
             {
                 var nonceBytes = new byte[15];
                 rng.GetBytes(nonceBytes);
