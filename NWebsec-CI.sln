@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26430.12
+VisualStudioVersion = 15.0.27130.2036
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{1733BF96-BCF6-43DD-B145-EBCB11B57C55}"
 EndProject
@@ -55,9 +55,16 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NWebsec.AspNet.Mvc.Tests", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NWebsec.AspNet.Owin.Tests", "test\NWebsec.AspNet.Owin.Tests\NWebsec.AspNet.Owin.Tests.csproj", "{C9FA54A3-53DC-4EAF-802F-C9AECC43215D}"
 EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "NWebsec.Mvc.Common", "src\NWebsec.Mvc.Common\NWebsec.Mvc.Common.shproj", "{4C0A345E-976A-4F84-A568-50501B1B2DBD}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NWebsec.Mvc.CommonProject", "src\NWebsec.Mvc.CommonProject\NWebsec.Mvc.CommonProject.csproj", "{943A7CC6-608A-4A08-B5C3-ABC15A999772}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NWebsec.Mvc.CommonProject.Tests", "test\NWebsec.Mvc.CommonProject.Tests\NWebsec.Mvc.CommonProject.Tests.csproj", "{19D727E1-5998-45B3-8A72-FCB788743CE6}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		src\NWebsec.Core.Shared\NWebsec.Core.Shared.projitems*{22c7c96d-f411-444a-a30e-64cfbda506f5}*SharedItemsImports = 13
+		src\NWebsec.Mvc.Common\NWebsec.Mvc.Common.projitems*{4c0a345e-976a-4f84-a568-50501b1b2dbd}*SharedItemsImports = 13
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -148,6 +155,14 @@ Global
 		{C9FA54A3-53DC-4EAF-802F-C9AECC43215D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C9FA54A3-53DC-4EAF-802F-C9AECC43215D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C9FA54A3-53DC-4EAF-802F-C9AECC43215D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{943A7CC6-608A-4A08-B5C3-ABC15A999772}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{943A7CC6-608A-4A08-B5C3-ABC15A999772}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{943A7CC6-608A-4A08-B5C3-ABC15A999772}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{943A7CC6-608A-4A08-B5C3-ABC15A999772}.Release|Any CPU.Build.0 = Release|Any CPU
+		{19D727E1-5998-45B3-8A72-FCB788743CE6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{19D727E1-5998-45B3-8A72-FCB788743CE6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{19D727E1-5998-45B3-8A72-FCB788743CE6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{19D727E1-5998-45B3-8A72-FCB788743CE6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -176,5 +191,11 @@ Global
 		{EB32DD78-FF7D-409D-8686-40FC1B5F75F7} = {1E120316-DAE8-4FF7-81C2-053A914C258D}
 		{8BEEB345-0AEB-48DD-AF55-B569E9027ACD} = {1E120316-DAE8-4FF7-81C2-053A914C258D}
 		{C9FA54A3-53DC-4EAF-802F-C9AECC43215D} = {1E120316-DAE8-4FF7-81C2-053A914C258D}
+		{4C0A345E-976A-4F84-A568-50501B1B2DBD} = {1733BF96-BCF6-43DD-B145-EBCB11B57C55}
+		{943A7CC6-608A-4A08-B5C3-ABC15A999772} = {1733BF96-BCF6-43DD-B145-EBCB11B57C55}
+		{19D727E1-5998-45B3-8A72-FCB788743CE6} = {1E120316-DAE8-4FF7-81C2-053A914C258D}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {2F3AD821-BA41-4A34-BF8F-553F9E64E7B9}
 	EndGlobalSection
 EndGlobal
