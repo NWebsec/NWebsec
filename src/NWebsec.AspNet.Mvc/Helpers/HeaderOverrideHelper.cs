@@ -3,7 +3,7 @@
 using NWebsec.Core.Common.HttpHeaders;
 using NWebsec.Core.Common.Web;
 using NWebsec.Core.Web;
-using NWebsec.Csp;
+using NWebsec.Core.Common.Csp;
 using NWebsec.Mvc.Common.Helpers;
 
 namespace NWebsec.Mvc.Helpers
@@ -17,14 +17,14 @@ namespace NWebsec.Mvc.Helpers
         private readonly ICspConfigurationOverrideHelper _cspConfigurationOverrideHelper;
         private readonly ICspReportHelper _reportHelper;
 
-        public HeaderOverrideHelper()
+        public HeaderOverrideHelper(ICspReportHelper reportHelper)
         {
             _contextConfigurationHelper = new ContextConfigurationHelper();
             _headerConfigurationOverrideHelper = new HeaderConfigurationOverrideHelper();
             _headerGenerator = new HeaderGenerator();
             _headerResultHandler = new HeaderResultHandler();
             _cspConfigurationOverrideHelper = new CspConfigurationOverrideHelper();
-            _reportHelper = new CspReportHelper();
+            _reportHelper = reportHelper;
         }
 
         internal HeaderOverrideHelper(IContextConfigurationHelper contextConfigurationHelper, IHeaderConfigurationOverrideHelper headerConfigurationOverrideHelper, IHeaderGenerator headerGenerator, IHeaderResultHandler headerResultHandler, ICspConfigurationOverrideHelper cspConfigurationOverrideHelper, ICspReportHelper reportHelper)

@@ -11,6 +11,7 @@
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)Extensions\ReferrerPolicyExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Fluent\IFluentInterface.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Helpers\ICspReportHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\X509\TlvTripletHeader.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\X509\X509Helper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)HttpHeaders\Configuration\CspConfiguration.cs" />

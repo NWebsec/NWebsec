@@ -3,6 +3,7 @@
 using System;
 using System.Web.Mvc;
 using NWebsec.Core.Web;
+using NWebsec.Csp;
 using NWebsec.Mvc.Common.Csp;
 using NWebsec.Mvc.Common.Helpers;
 using NWebsec.Mvc.Helpers;
@@ -24,7 +25,7 @@ namespace NWebsec.Mvc.HttpHeaders.Csp.Internals
         {
             _directive = new CspMixedContentOverride { Enabled = true };
             _configurationOverrideHelper = new CspConfigurationOverrideHelper();
-            _headerOverrideHelper = new HeaderOverrideHelper();
+            _headerOverrideHelper = new HeaderOverrideHelper(new CspReportHelper());
         }
 
         internal sealed override string ContextKeyIdentifier => ReportOnly ? "CspReportOnly" : "Csp";

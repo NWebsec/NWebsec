@@ -3,6 +3,7 @@
 using System.Web;
 using System.Web.Mvc;
 using NWebsec.Core.Common.HttpHeaders.Configuration.Validation;
+using NWebsec.Csp;
 using NWebsec.Mvc.Common.Csp;
 using NWebsec.Mvc.Common.Helpers;
 using NWebsec.Mvc.Helpers;
@@ -20,7 +21,7 @@ namespace NWebsec.Mvc.HttpHeaders.Csp
         {
             var context = new HttpContextWrapper(helper.ViewContext.HttpContext);
             var cspConfigurationOverrideHelper = new CspConfigurationOverrideHelper();
-            var headerOverrideHelper = new HeaderOverrideHelper();
+            var headerOverrideHelper = new HeaderOverrideHelper(new CspReportHelper());
 
             var nonce = cspConfigurationOverrideHelper.GetCspScriptNonce(context);
 
@@ -42,7 +43,7 @@ namespace NWebsec.Mvc.HttpHeaders.Csp
         {
             var context = new HttpContextWrapper(helper.ViewContext.HttpContext);
             var cspConfigurationOverrideHelper = new CspConfigurationOverrideHelper();
-            var headerOverrideHelper = new HeaderOverrideHelper();
+            var headerOverrideHelper = new HeaderOverrideHelper(new CspReportHelper());
 
             var nonce = cspConfigurationOverrideHelper.GetCspStyleNonce(context);
 
@@ -67,7 +68,7 @@ namespace NWebsec.Mvc.HttpHeaders.Csp
 
             var context = new HttpContextWrapper(helper.ViewContext.HttpContext);
             var cspConfigurationOverrideHelper = new CspConfigurationOverrideHelper();
-            var headerOverrideHelper = new HeaderOverrideHelper();
+            var headerOverrideHelper = new HeaderOverrideHelper(new CspReportHelper());
 
             var configOverride = new CspPluginTypesOverride() { Enabled = true, InheritMediaTypes = true, MediaTypes = new[] { mediaType } };
             cspConfigurationOverrideHelper.SetCspPluginTypesOverride(context, configOverride, false);

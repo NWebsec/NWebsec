@@ -5,6 +5,7 @@ using System.Web.Mvc;
 using NWebsec.Core.Common.HttpHeaders;
 using NWebsec.Core.Common.HttpHeaders.Configuration;
 using NWebsec.Core.Web;
+using NWebsec.Csp;
 using NWebsec.Mvc.Common.Helpers;
 using NWebsec.Mvc.Helpers;
 using NWebsec.Mvc.HttpHeaders.Internals;
@@ -28,7 +29,7 @@ namespace NWebsec.Mvc.HttpHeaders
         {
             _config = new XXssProtectionConfiguration { Policy = XXssPolicy.FilterEnabled, BlockMode = true };
             _headerConfigurationOverrideHelper = new HeaderConfigurationOverrideHelper();
-            _headerOverrideHelper = new HeaderOverrideHelper();
+            _headerOverrideHelper = new HeaderOverrideHelper(new CspReportHelper());
         }
 
         /// <summary>

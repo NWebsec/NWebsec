@@ -6,6 +6,7 @@ using NWebsec.Core.Common.HttpHeaders;
 using NWebsec.Core.Common.HttpHeaders.Configuration;
 using NWebsec.Core.Common.Web;
 using NWebsec.Core.Web;
+using NWebsec.Core.Common.Csp;
 using NWebsec.Csp;
 using NWebsec.ExtensionMethods;
 using NWebsec.Modules.Configuration;

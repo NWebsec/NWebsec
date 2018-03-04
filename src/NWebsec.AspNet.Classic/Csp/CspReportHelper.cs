@@ -3,6 +3,7 @@
 using System;
 using System.Runtime.Serialization.Json;
 using System.Web;
+using NWebsec.Core.Common.Csp;
 
 namespace NWebsec.Csp
 {

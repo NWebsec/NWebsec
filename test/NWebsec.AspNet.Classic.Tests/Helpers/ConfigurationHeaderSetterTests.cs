@@ -7,7 +7,7 @@ using Moq;
 using NWebsec.Core.Common;
 using NWebsec.Core.Common.HttpHeaders;
 using NWebsec.Core.Common.HttpHeaders.Configuration;
-using NWebsec.Csp;
+using NWebsec.Core.Common.Csp;
 using NWebsec.Core.Common.Web;
 using NWebsec.Helpers;
 using NWebsec.Modules.Configuration;
