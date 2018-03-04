@@ -6,7 +6,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 using Moq;
 using Xunit;
-using NWebsec.AspNetCore.Mvc.Helpers;
+using NWebsec.Core.Common.Web;
+using NWebsec.Mvc.Common.Helpers;
 
 namespace NWebsec.AspNetCore.Mvc.TagHelpers.Tests
 {
@@ -30,8 +31,8 @@ namespace NWebsec.AspNetCore.Mvc.TagHelpers.Tests
         [Fact]
         public void Process_EnabledOnScriptTag_AddsNonce()
         {
-            _cspOverrideHelper.Setup(co => co.GetCspScriptNonce(It.IsAny<HttpContext>())).Returns("scriptnonce");
-            _headerOverrideHelper.Setup(ho => ho.SetCspHeaders(It.IsAny<HttpContext>(), It.IsAny<bool>()));
+            _cspOverrideHelper.Setup(co => co.GetCspScriptNonce(It.IsAny<IHttpContextWrapper>())).Returns("scriptnonce");
+            _headerOverrideHelper.Setup(ho => ho.SetCspHeaders(It.IsAny<IHttpContextWrapper>(), It.IsAny<bool>()));
 
             var contextAttributes = new TagHelperAttributeList
                 {
@@ -58,10 +59,10 @@ namespace NWebsec.AspNetCore.Mvc.TagHelpers.Tests
 
             //Assert gets script nonce, sets context, sets headers, sets attribute
 
-            _cspOverrideHelper.Verify(co => co.GetCspScriptNonce(It.IsAny<HttpContext>()), Times.Once);
+            _cspOverrideHelper.Verify(co => co.GetCspScriptNonce(It.IsAny<IHttpContextWrapper>()), Times.Once);
 
-            _headerOverrideHelper.Verify(ho => ho.SetCspHeaders(It.IsAny<HttpContext>(), false), Times.Once);
-            _headerOverrideHelper.Verify(ho => ho.SetCspHeaders(It.IsAny<HttpContext>(), true), Times.Once);
+            _headerOverrideHelper.Verify(ho => ho.SetCspHeaders(It.IsAny<IHttpContextWrapper>(), false), Times.Once);
+            _headerOverrideHelper.Verify(ho => ho.SetCspHeaders(It.IsAny<IHttpContextWrapper>(), true), Times.Once);
 
             Assert.True(tagHelperOutput.Attributes.ContainsName("nonce"));
             Assert.Equal("scriptnonce", tagHelperOutput.Attributes["nonce"].Value);
@@ -103,8 +104,8 @@ namespace NWebsec.AspNetCore.Mvc.TagHelpers.Tests
         [Fact]
         public void Process_EnabledOnStyleTag_AddsNonce()
         {
-            _cspOverrideHelper.Setup(co => co.GetCspStyleNonce(It.IsAny<HttpContext>())).Returns("stylenonce");
-            _headerOverrideHelper.Setup(ho => ho.SetCspHeaders(It.IsAny<HttpContext>(), It.IsAny<bool>()));
+            _cspOverrideHelper.Setup(co => co.GetCspStyleNonce(It.IsAny<IHttpContextWrapper>())).Returns("stylenonce");
+            _headerOverrideHelper.Setup(ho => ho.SetCspHeaders(It.IsAny<IHttpContextWrapper>(), It.IsAny<bool>()));
 
             var contextAttributes = new TagHelperAttributeList
                 {
@@ -131,17 +132,17 @@ namespace NWebsec.AspNetCore.Mvc.TagHelpers.Tests
 
             //Assert gets style nonce, sets context, sets headers, sets attribute
 
-            _cspOverrideHelper.Verify(co => co.GetCspStyleNonce(It.IsAny<HttpContext>()), Times.Once);
+            _cspOverrideHelper.Verify(co => co.GetCspStyleNonce(It.IsAny<IHttpContextWrapper>()), Times.Once);
 
-            _headerOverrideHelper.Verify(ho => ho.SetCspHeaders(It.IsAny<HttpContext>(), false), Times.Once);
-            _headerOverrideHelper.Verify(ho => ho.SetCspHeaders(It.IsAny<HttpContext>(), true), Times.Once);
+            _headerOverrideHelper.Verify(ho => ho.SetCspHeaders(It.IsAny<IHttpContextWrapper>(), false), Times.Once);
+            _headerOverrideHelper.Verify(ho => ho.SetCspHeaders(It.IsAny<IHttpContextWrapper>(), true), Times.Once);
 
             Assert.True(tagHelperOutput.Attributes.ContainsName("nonce"));
             Assert.Equal("stylenonce", tagHelperOutput.Attributes["nonce"].Value);
         }
 
         [Fact]
-        public void Process_DisabledOnStyleTag_AddsNonce()
+        public void Process_DisabledOnStyleTag_DoesNothing()
         {
             //Don't setup mocks.
 

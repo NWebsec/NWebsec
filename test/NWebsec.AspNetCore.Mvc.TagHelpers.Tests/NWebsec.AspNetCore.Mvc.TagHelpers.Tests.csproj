@@ -7,6 +7,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\NWebsec.AspNetCore.Mvc.TagHelpers\NWebsec.AspNetCore.Mvc.TagHelpers.csproj" />
+    <ProjectReference Include="..\..\src\NWebsec.AspNetCore.Mvc\NWebsec.AspNetCore.Mvc.csproj" />
   </ItemGroup>
 
   <ItemGroup>

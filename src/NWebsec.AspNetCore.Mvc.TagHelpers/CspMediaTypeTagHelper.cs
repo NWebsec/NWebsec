@@ -4,9 +4,11 @@ using System;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.AspNetCore.Razor.TagHelpers;
+using NWebsec.AspNetCore.Core.Web;
 using NWebsec.AspNetCore.Mvc.Helpers;
 using NWebsec.Core.Common.HttpHeaders.Configuration.Validation;
 using NWebsec.Mvc.Common.Csp;
+using NWebsec.Mvc.Common.Helpers;
 
 namespace NWebsec.AspNetCore.Mvc.TagHelpers
 {
@@ -47,11 +49,12 @@ namespace NWebsec.AspNetCore.Mvc.TagHelpers
             new Rfc2045MediaTypeValidator().Validate(NwsCspPluginType);
 
             var configOverride = new CspPluginTypesOverride { Enabled = true, InheritMediaTypes = true, MediaTypes = new[] { NwsCspPluginType } };
-            _cspConfigOverride.SetCspPluginTypesOverride(ViewContext.HttpContext, configOverride, false);
-            _cspConfigOverride.SetCspPluginTypesOverride(ViewContext.HttpContext, configOverride, true);
+            var httpContext = new HttpContextWrapper(ViewContext.HttpContext);
+            _cspConfigOverride.SetCspPluginTypesOverride(httpContext, configOverride, false);
+            _cspConfigOverride.SetCspPluginTypesOverride(httpContext, configOverride, true);
 
-            _headerOverride.SetCspHeaders(ViewContext.HttpContext, false);
-            _headerOverride.SetCspHeaders(ViewContext.HttpContext, true);
+            _headerOverride.SetCspHeaders(httpContext, false);
+            _headerOverride.SetCspHeaders(httpContext, true);
 
             output.Attributes.Add(new TagHelperAttribute("type", NwsCspPluginType));
         }

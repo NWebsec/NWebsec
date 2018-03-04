@@ -5,10 +5,10 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 using Moq;
-using NWebsec.AspNetCore.Mvc.Csp;
 using Xunit;
-using NWebsec.AspNetCore.Mvc.Helpers;
+using NWebsec.Core.Common.Web;
 using NWebsec.Mvc.Common.Csp;
+using NWebsec.Mvc.Common.Helpers;
 
 namespace NWebsec.AspNetCore.Mvc.TagHelpers.Tests
 {
@@ -22,7 +22,7 @@ namespace NWebsec.AspNetCore.Mvc.TagHelpers.Tests
         {
             _cspOverrideHelper = new Mock<ICspConfigurationOverrideHelper>(MockBehavior.Strict);
             _headerOverrideHelper = new Mock<IHeaderOverrideHelper>(MockBehavior.Strict);
-            _headerOverrideHelper.Setup(ho => ho.SetCspHeaders(It.IsAny<HttpContext>(), It.IsAny<bool>()));
+            _headerOverrideHelper.Setup(ho => ho.SetCspHeaders(It.IsAny<IHttpContextWrapper>(), It.IsAny<bool>()));
 
             _tagHelper = new CspMediaTypeTagHelper(_cspOverrideHelper.Object, _headerOverrideHelper.Object);
             var httpContext = new DefaultHttpContext { Items = new Dictionary<object, object>() };
@@ -32,7 +32,7 @@ namespace NWebsec.AspNetCore.Mvc.TagHelpers.Tests
         [Fact]
         public void Process_ScriptTag_AddsHeaderAndTypeAttribute()
         {
-            _cspOverrideHelper.Setup(co => co.SetCspPluginTypesOverride(It.IsAny<HttpContext>(), It.IsAny<CspPluginTypesOverride>(), It.IsAny<bool>()));
+            _cspOverrideHelper.Setup(co => co.SetCspPluginTypesOverride(It.IsAny<IHttpContextWrapper>(), It.IsAny<CspPluginTypesOverride>(), It.IsAny<bool>()));
 
             var contextAttributes = new TagHelperAttributeList
                 {
@@ -59,11 +59,11 @@ namespace NWebsec.AspNetCore.Mvc.TagHelpers.Tests
 
             //Assert gets script nonce, sets context, sets headers, switches attribute
 
-            _cspOverrideHelper.Verify(co => co.SetCspPluginTypesOverride(It.IsAny<HttpContext>(), It.IsAny<CspPluginTypesOverride>(), false), Times.Once);
-            _cspOverrideHelper.Verify(co => co.SetCspPluginTypesOverride(It.IsAny<HttpContext>(), It.IsAny<CspPluginTypesOverride>(), true), Times.Once);
+            _cspOverrideHelper.Verify(co => co.SetCspPluginTypesOverride(It.IsAny<IHttpContextWrapper>(), It.IsAny<CspPluginTypesOverride>(), false), Times.Once);
+            _cspOverrideHelper.Verify(co => co.SetCspPluginTypesOverride(It.IsAny<IHttpContextWrapper>(), It.IsAny<CspPluginTypesOverride>(), true), Times.Once);
 
-            _headerOverrideHelper.Verify(ho => ho.SetCspHeaders(It.IsAny<HttpContext>(), false), Times.Once);
-            _headerOverrideHelper.Verify(ho => ho.SetCspHeaders(It.IsAny<HttpContext>(), true), Times.Once);
+            _headerOverrideHelper.Verify(ho => ho.SetCspHeaders(It.IsAny<IHttpContextWrapper>(), false), Times.Once);
+            _headerOverrideHelper.Verify(ho => ho.SetCspHeaders(It.IsAny<IHttpContextWrapper>(), true), Times.Once);
 
             Assert.True(tagHelperOutput.Attributes.ContainsName("type"));
             Assert.Equal("application/pdf", tagHelperOutput.Attributes["type"].Value);

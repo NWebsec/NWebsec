@@ -4,7 +4,9 @@ using System;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.AspNetCore.Razor.TagHelpers;
+using NWebsec.AspNetCore.Core.Web;
 using NWebsec.AspNetCore.Mvc.Helpers;
+using NWebsec.Mvc.Common.Helpers;
 
 namespace NWebsec.AspNetCore.Mvc.TagHelpers
 {
@@ -44,7 +46,7 @@ namespace NWebsec.AspNetCore.Mvc.TagHelpers
         {
             if (!UseCspNonce) return;
 
-            var httpContext = ViewContext.HttpContext;
+            var httpContext = new HttpContextWrapper(ViewContext.HttpContext);
             string nonce;
             string contextMarkerKey;
             var tag = output.TagName;
@@ -65,9 +67,9 @@ namespace NWebsec.AspNetCore.Mvc.TagHelpers
             }
 
             // First reference to a nonce, set header and mark that header has been set. We only need to set it once.
-            if (!httpContext.Items.ContainsKey(contextMarkerKey))
+            if (httpContext.GetItem<string>(contextMarkerKey) == null)
             {
-                httpContext.Items[contextMarkerKey] = "set";
+                httpContext.SetItem(contextMarkerKey, "set");
                 _headerOverride.SetCspHeaders(httpContext, false);
                 _headerOverride.SetCspHeaders(httpContext, true);
             }
