@@ -4,7 +4,7 @@ using NWebsec.Core.Common.Web;
 
 namespace NWebsec.Mvc.Common.Helpers
 {
-    internal interface IHeaderOverrideHelper
+    public interface IHeaderOverrideHelper
     {
         void SetXRobotsTagHeader(IHttpContextWrapper context);
         void SetXFrameoptionsHeader(IHttpContextWrapper context);

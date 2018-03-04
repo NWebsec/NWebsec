@@ -2,9 +2,9 @@
 
 using System;
 using Microsoft.AspNetCore.Mvc.Filters;
+using NWebsec.AspNetCore.Core.Helpers;
 using NWebsec.AspNetCore.Core.Web;
 using NWebsec.Core.Common.HttpHeaders.Configuration;
-using NWebsec.AspNetCore.Mvc.Helpers;
 using NWebsec.AspNetCore.Mvc.Internals;
 using NWebsec.Mvc.Common.Helpers;
 
@@ -27,7 +27,7 @@ namespace NWebsec.AspNetCore.Mvc
         {
             _config = new SimpleBooleanConfiguration { Enabled = true };
             _headerConfigurationOverrideHelper = new HeaderConfigurationOverrideHelper();
-            _headerOverrideHelper = new HeaderOverrideHelper();
+            _headerOverrideHelper = new HeaderOverrideHelper(new CspReportHelper());
         }
         /// <summary>
         /// Gets or sets whether the X-Content-Type-Options security header should be set in the HTTP response. The default is true.

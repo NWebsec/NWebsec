@@ -4,11 +4,10 @@ using NWebsec.Core.Common.HttpHeaders;
 using NWebsec.Core.Common.Web;
 using NWebsec.Core.Web;
 using NWebsec.Core.Common.Csp;
-using NWebsec.Mvc.Common.Helpers;
 
-namespace NWebsec.Mvc.Helpers
+namespace NWebsec.Mvc.Common.Helpers
 {
-    public class HeaderOverrideHelper
+    public class HeaderOverrideHelper : IHeaderOverrideHelper
     {
         private readonly IContextConfigurationHelper _contextConfigurationHelper;
         private readonly IHeaderConfigurationOverrideHelper _headerConfigurationOverrideHelper;
@@ -37,7 +36,7 @@ namespace NWebsec.Mvc.Helpers
             _reportHelper = reportHelper;
         }
 
-        internal void SetXRobotsTagHeader(IHttpContextWrapper context)
+        public void SetXRobotsTagHeader(IHttpContextWrapper context)
         {
             var config = _headerConfigurationOverrideHelper.GetXRobotsTagWithOverride(context);
 
@@ -52,7 +51,7 @@ namespace NWebsec.Mvc.Helpers
             _headerResultHandler.HandleHeaderResult(context, result);
         }
 
-        internal void SetXFrameoptionsHeader(IHttpContextWrapper context)
+        public void SetXFrameoptionsHeader(IHttpContextWrapper context)
         {
             var config = _headerConfigurationOverrideHelper.GetXFrameoptionsWithOverride(context);
 
@@ -67,7 +66,7 @@ namespace NWebsec.Mvc.Helpers
             _headerResultHandler.HandleHeaderResult(context, result);
         }
 
-        internal void SetXContentTypeOptionsHeader(IHttpContextWrapper context)
+        public void SetXContentTypeOptionsHeader(IHttpContextWrapper context)
         {
             var config = _headerConfigurationOverrideHelper.GetXContentTypeOptionsWithOverride(context);
 
@@ -82,7 +81,7 @@ namespace NWebsec.Mvc.Helpers
             _headerResultHandler.HandleHeaderResult(context, result);
         }
 
-        internal void SetXDownloadOptionsHeader(IHttpContextWrapper context)
+        public void SetXDownloadOptionsHeader(IHttpContextWrapper context)
         {
             var config = _headerConfigurationOverrideHelper.GetXDownloadOptionsWithOverride(context);
 
@@ -97,7 +96,7 @@ namespace NWebsec.Mvc.Helpers
             _headerResultHandler.HandleHeaderResult(context, result);
         }
 
-        internal void SetXXssProtectionHeader(IHttpContextWrapper context)
+        public void SetXXssProtectionHeader(IHttpContextWrapper context)
         {
             var config = _headerConfigurationOverrideHelper.GetXXssProtectionWithOverride(context);
 
@@ -112,6 +111,21 @@ namespace NWebsec.Mvc.Helpers
             _headerResultHandler.HandleHeaderResult(context, result);
         }
 
+        public void SetReferrerPolicyHeader(IHttpContextWrapper context)
+        {
+            var config = _headerConfigurationOverrideHelper.GetReferrerPolicyWithOverride(context);
+
+            if (config == null)
+            {
+                return;
+            }
+
+            var oldConfig = _contextConfigurationHelper.GetReferrerPolicyConfiguration(context);
+
+            var result = _headerGenerator.CreateReferrerPolicyResult(config, oldConfig);
+            _headerResultHandler.HandleHeaderResult(context, result);
+        }
+
         public void SetNoCacheHeaders(IHttpContextWrapper context)
         {
             var config = _headerConfigurationOverrideHelper.GetNoCacheHeadersWithOverride(context);
@@ -120,10 +134,11 @@ namespace NWebsec.Mvc.Helpers
             {
                 return;
             }
+
             context.SetNoCacheHeaders();
         }
 
-        internal void SetCspHeaders(IHttpContextWrapper context, bool reportOnly)
+        public void SetCspHeaders(IHttpContextWrapper context, bool reportOnly)
         {
             var cspConfig = _cspConfigurationOverrideHelper.GetCspConfigWithOverrides(context, reportOnly);
 

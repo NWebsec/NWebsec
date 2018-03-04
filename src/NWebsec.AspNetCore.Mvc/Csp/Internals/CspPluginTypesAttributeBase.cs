@@ -2,9 +2,9 @@
 
 using System;
 using Microsoft.AspNetCore.Mvc.Filters;
+using NWebsec.AspNetCore.Core.Helpers;
 using NWebsec.AspNetCore.Core.Web;
 using NWebsec.Core.Common.HttpHeaders.Configuration.Validation;
-using NWebsec.AspNetCore.Mvc.Helpers;
 using NWebsec.AspNetCore.Mvc.Internals;
 using NWebsec.Mvc.Common.Csp;
 using NWebsec.Mvc.Common.Helpers;
@@ -26,7 +26,7 @@ namespace NWebsec.AspNetCore.Mvc.Csp.Internals
         {
             _directive = new CspPluginTypesOverride { Enabled = true, InheritMediaTypes = true };
             _configurationOverrideHelper = new CspConfigurationOverrideHelper();
-            _headerOverrideHelper = new HeaderOverrideHelper();
+            _headerOverrideHelper = new HeaderOverrideHelper(new CspReportHelper());
 
             if (mediaTypes.Length > 0)
             {

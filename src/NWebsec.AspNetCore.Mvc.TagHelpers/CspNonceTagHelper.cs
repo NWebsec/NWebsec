@@ -4,8 +4,8 @@ using System;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.AspNetCore.Razor.TagHelpers;
+using NWebsec.AspNetCore.Core.Helpers;
 using NWebsec.AspNetCore.Core.Web;
-using NWebsec.AspNetCore.Mvc.Helpers;
 using NWebsec.Mvc.Common.Helpers;
 
 namespace NWebsec.AspNetCore.Mvc.TagHelpers
@@ -23,7 +23,7 @@ namespace NWebsec.AspNetCore.Mvc.TagHelpers
         public CspNonceTagHelper()
         {
             _cspConfigOverride = new CspConfigurationOverrideHelper();
-            _headerOverride = new HeaderOverrideHelper();
+            _headerOverride = new HeaderOverrideHelper(new CspReportHelper());
         }
 
         internal CspNonceTagHelper(ICspConfigurationOverrideHelper overrideHelper,

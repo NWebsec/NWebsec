@@ -3,9 +3,9 @@
 using System;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc.Filters;
+using NWebsec.AspNetCore.Core.Helpers;
 using NWebsec.AspNetCore.Core.Web;
 using NWebsec.Core.Common.HttpHeaders.Csp;
-using NWebsec.AspNetCore.Mvc.Helpers;
 using NWebsec.AspNetCore.Mvc.Internals;
 using NWebsec.Mvc.Common.Csp;
 using NWebsec.Mvc.Common.Helpers;
@@ -31,7 +31,7 @@ namespace NWebsec.AspNetCore.Mvc.Csp.Internals
                 InheritOtherSources = true
             };
             _headerConfigurationOverrideHelper = new CspConfigurationOverrideHelper();
-            _headerOverrideHelper = new HeaderOverrideHelper();
+            _headerOverrideHelper = new HeaderOverrideHelper(new CspReportHelper());
         }
 
         internal sealed override string ContextKeyIdentifier => ReportOnly ? "CspReportOnly" : "Csp";

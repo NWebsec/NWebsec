@@ -20,6 +20,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\CspDirectiveOverrideHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\CspDirectives.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\HeaderConfigurationOverrideHelper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Helpers\HeaderOverrideHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\IContextConfigurationHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\ICspConfigMapper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\ICspConfigurationOverrideHelper.cs" />
