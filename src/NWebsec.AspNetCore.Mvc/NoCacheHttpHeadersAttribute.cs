@@ -2,9 +2,11 @@
 
 using System;
 using Microsoft.AspNetCore.Mvc.Filters;
+using NWebsec.AspNetCore.Core.Web;
 using NWebsec.Core.Common.HttpHeaders.Configuration;
 using NWebsec.AspNetCore.Mvc.Helpers;
 using NWebsec.AspNetCore.Mvc.Internals;
+using NWebsec.Mvc.Common.Helpers;
 
 namespace NWebsec.AspNetCore.Mvc
 {
@@ -27,21 +29,21 @@ namespace NWebsec.AspNetCore.Mvc
             _configurationOverrideHelper = new HeaderConfigurationOverrideHelper();
             _headerOverrideHelper = new HeaderOverrideHelper();
         }
-        
+
         /// <summary>
         /// Gets of sets whether cache headers should be included in the response to prevent browser caching. The default is true.
         /// </summary>
-        public bool Enabled { get { return _config.Enabled; } set { _config.Enabled = value; } }
+        public bool Enabled { get => _config.Enabled; set => _config.Enabled = value; }
 
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
-            _configurationOverrideHelper.SetNoCacheHeadersOverride(filterContext.HttpContext, _config);
+            _configurationOverrideHelper.SetNoCacheHeadersOverride(new HttpContextWrapper(filterContext.HttpContext), _config);
             base.OnActionExecuting(filterContext);
         }
 
         public override void SetHttpHeadersOnActionExecuted(ActionExecutedContext filterContext)
         {
-            _headerOverrideHelper.SetNoCacheHeaders(filterContext.HttpContext);
+            _headerOverrideHelper.SetNoCacheHeaders(new HttpContextWrapper(filterContext.HttpContext));
         }
     }
 }

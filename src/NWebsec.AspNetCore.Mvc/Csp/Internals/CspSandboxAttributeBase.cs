@@ -2,9 +2,11 @@
 
 using System;
 using Microsoft.AspNetCore.Mvc.Filters;
+using NWebsec.AspNetCore.Core.Web;
 using NWebsec.AspNetCore.Mvc.Helpers;
 using NWebsec.AspNetCore.Mvc.Internals;
 using NWebsec.Mvc.Common.Csp;
+using NWebsec.Mvc.Common.Helpers;
 
 namespace NWebsec.AspNetCore.Mvc.Csp.Internals
 {
@@ -30,69 +32,69 @@ namespace NWebsec.AspNetCore.Mvc.Csp.Internals
         /// <summary>
         /// Sets whether the sandbox directive is enabled in the CSP header. The default is true.
         /// </summary>
-        public bool Enabled { get { return _directive.Enabled; } set { _directive.Enabled = value; } }
+        public bool Enabled { get => _directive.Enabled;set => _directive.Enabled = value;}
 
         /// <summary>
         /// Sets whether the allow-forms flag is included in the sandbox directive. The default is false.
         /// </summary>
-        public bool AllowForms { get { throw new NotSupportedException(); } set { _directive.AllowForms = value; } }
+        public bool AllowForms { get => throw new NotSupportedException();set => _directive.AllowForms = value;}
 
         /// <summary>
         /// Sets whether the allow-modals flag is included in the sandbox directive. The default is false.
         /// </summary>
-        public bool AllowModals { get { throw new NotSupportedException(); } set { _directive.AllowModals = value; } }
+        public bool AllowModals { get => throw new NotSupportedException();set => _directive.AllowModals = value;}
 
         /// <summary>
         /// Sets whether the allow-orientation-lock flag is included in the sandbox directive. The default is false.
         /// </summary>
-        public bool AllowOrientationLock { get { throw new NotSupportedException(); } set { _directive.AllowOrientationLock = value; } }
+        public bool AllowOrientationLock { get => throw new NotSupportedException();set => _directive.AllowOrientationLock = value;}
 
         /// <summary>
         /// Sets whether the allow-pointer-lock flag is included in the sandbox directive. The default is false.
         /// </summary>
-        public bool AllowPointerLock { get { throw new NotSupportedException(); } set { _directive.AllowPointerLock = value; } }
+        public bool AllowPointerLock { get => throw new NotSupportedException();set => _directive.AllowPointerLock = value;}
 
         /// <summary>
         /// Sets whether the allow-popups flag is included in the sandbox directive. The default is false.
         /// </summary>
-        public bool AllowPopups { get { throw new NotSupportedException(); } set { _directive.AllowPopups = value; } }
+        public bool AllowPopups { get => throw new NotSupportedException();set => _directive.AllowPopups = value;}
 
         /// <summary>
         /// Sets whether the allow-popups-to-escape-sandbox flag is included in the sandbox directive. The default is false.
         /// </summary>
-        public bool AllowPopupsToEscapeSandbox { get { throw new NotSupportedException(); } set { _directive.AllowPopupsToEscapeSandbox = value; } }
+        public bool AllowPopupsToEscapeSandbox { get => throw new NotSupportedException();set => _directive.AllowPopupsToEscapeSandbox = value;}
 
         /// <summary>
         /// Sets whether the allow-presentation flag is included in the sandbox directive. The default is false.
         /// </summary>
-        public bool AllowPresentation { get { throw new NotSupportedException(); } set { _directive.AllowPresentation = value; } }
+        public bool AllowPresentation { get => throw new NotSupportedException();set => _directive.AllowPresentation = value;}
 
         /// <summary>
         /// Sets whether the allow-same-origin flag is included in the sandbox directive. The default is false.
         /// </summary>
-        public bool AllowSameOrigin { get { throw new NotSupportedException(); } set { _directive.AllowSameOrigin = value; } }
+        public bool AllowSameOrigin { get => throw new NotSupportedException();set => _directive.AllowSameOrigin = value;}
 
         /// <summary>
         /// Sets whether the allow-scripts flag is included in the sandbox directive. The default is false.
         /// </summary>
-        public bool AllowScripts { get { throw new NotSupportedException(); } set { _directive.AllowScripts = value; } }
+        public bool AllowScripts { get => throw new NotSupportedException();set => _directive.AllowScripts = value;}
 
         /// <summary>
         /// Sets whether the allow-top-navigation flag is included in the sandbox directive. The default is false.
         /// </summary>
-        public bool AllowTopNavigation { get { throw new NotSupportedException(); } set { _directive.AllowTopNavigation = value; } }
+        public bool AllowTopNavigation { get => throw new NotSupportedException();set => _directive.AllowTopNavigation = value;}
 
         protected abstract bool ReportOnly { get; }
 
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
-            _configurationOverrideHelper.SetCspSandboxOverride(filterContext.HttpContext, _directive, ReportOnly);
+            _configurationOverrideHelper.SetCspSandboxOverride(new HttpContextWrapper(filterContext.HttpContext), _directive, ReportOnly);
             base.OnActionExecuting(filterContext);
         }
 
         public sealed override void SetHttpHeadersOnActionExecuted(ActionExecutedContext filterContext)
         {
-            _headerOverrideHelper.SetCspHeaders(filterContext.HttpContext, ReportOnly);
+            _headerOverrideHelper.SetCspHeaders(new HttpContextWrapper(filterContext.HttpContext), ReportOnly);
         }
     }
 }

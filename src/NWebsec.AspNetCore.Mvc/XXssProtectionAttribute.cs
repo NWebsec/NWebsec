@@ -2,10 +2,12 @@
 
 using System;
 using Microsoft.AspNetCore.Mvc.Filters;
+using NWebsec.AspNetCore.Core.Web;
 using NWebsec.Core.Common.HttpHeaders;
 using NWebsec.Core.Common.HttpHeaders.Configuration;
 using NWebsec.AspNetCore.Mvc.Helpers;
 using NWebsec.AspNetCore.Mvc.Internals;
+using NWebsec.Mvc.Common.Helpers;
 
 namespace NWebsec.AspNetCore.Mvc
 {
@@ -35,7 +37,7 @@ namespace NWebsec.AspNetCore.Mvc
         /// </summary>
         public XXssProtectionPolicy Policy
         {
-            get { throw new NotSupportedException(); }
+            get => throw new NotSupportedException();
             set
             {
                 switch (value)
@@ -52,7 +54,7 @@ namespace NWebsec.AspNetCore.Mvc
                         _config.Policy = XXssPolicy.FilterEnabled;
                         break;
                     default:
-                        throw  new ArgumentException("Unknown value: " + value);
+                        throw new ArgumentException("Unknown value: " + value);
                 }
             }
         }
@@ -61,21 +63,17 @@ namespace NWebsec.AspNetCore.Mvc
         /// Gets or sets whether to enable the IE XSS filter block mode. This setting only takes effect when the Policy is set to FilterEnabled.
         /// The default is true.
         /// </summary>
-        public bool BlockMode
-        {
-            get { return _config.BlockMode; }
-            set { _config.BlockMode = value; }
-        }
+        public bool BlockMode { get => _config.BlockMode; set => _config.BlockMode = value; }
 
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
-            _headerConfigurationOverrideHelper.SetXXssProtectionOverride(filterContext.HttpContext, _config);
+            _headerConfigurationOverrideHelper.SetXXssProtectionOverride(new HttpContextWrapper(filterContext.HttpContext), _config);
             base.OnActionExecuting(filterContext);
         }
 
         public override void SetHttpHeadersOnActionExecuted(ActionExecutedContext filterContext)
         {
-            _headerOverrideHelper.SetXXssProtectionHeader(filterContext.HttpContext);
+            _headerOverrideHelper.SetXXssProtectionHeader(new HttpContextWrapper(filterContext.HttpContext));
         }
     }
 }

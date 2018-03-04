@@ -3,10 +3,12 @@
 using System;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc.Filters;
+using NWebsec.AspNetCore.Core.Web;
 using NWebsec.Core.Common.HttpHeaders.Configuration;
 using NWebsec.Core.Common.HttpHeaders.Csp;
 using NWebsec.AspNetCore.Mvc.Helpers;
 using NWebsec.AspNetCore.Mvc.Internals;
+using NWebsec.Mvc.Common.Helpers;
 
 namespace NWebsec.AspNetCore.Mvc.Csp.Internals
 {
@@ -31,8 +33,8 @@ namespace NWebsec.AspNetCore.Mvc.Csp.Internals
         /// <summary>
         /// Gets or sets whether the report-uri directive is enabled in the CSP header. The default is true.
         /// </summary>
-        public bool Enabled { get { return _directive.Enabled; } set { _directive.Enabled = value; } }
-        
+        public bool Enabled { get => _directive.Enabled; set => _directive.Enabled = value; }
+
         // <summary>
         // Gets or sets whether the URI for the built in CSP report handler should be included in the directive. The default is false.
         // </summary>
@@ -45,7 +47,7 @@ namespace NWebsec.AspNetCore.Mvc.Csp.Internals
         /// </summary>
         public string ReportUris
         {
-            get { return String.Join(" ", _directive.ReportUris); }
+            get => String.Join(" ", _directive.ReportUris);
             set
             {
                 if (String.IsNullOrEmpty(value))
@@ -60,15 +62,14 @@ namespace NWebsec.AspNetCore.Mvc.Csp.Internals
                 var reportUriList = new List<string>();
                 foreach (var reportUri in uris)
                 {
-                    Uri uri;
-                    if (!Uri.TryCreate(reportUri, UriKind.RelativeOrAbsolute, out uri))
+                    if (!Uri.TryCreate(reportUri, UriKind.RelativeOrAbsolute, out var uri))
                     {
                         throw CreateAttributeException("Could not parse reportUri: " + reportUri);
                     }
 
                     reportUriList.Add(CspUriSource.EncodeUri(uri));
                 }
-                
+
                 _directive.ReportUris = reportUriList.ToArray();
             }
         }
@@ -84,13 +85,13 @@ namespace NWebsec.AspNetCore.Mvc.Csp.Internals
                 throw CreateAttributeException("You need to supply at least one Reporturi to enable the reporturi directive.");
             }
 
-            _configurationOverrideHelper.SetCspReportUriOverride(filterContext.HttpContext, _directive, ReportOnly);
+            _configurationOverrideHelper.SetCspReportUriOverride(new HttpContextWrapper(filterContext.HttpContext), _directive, ReportOnly);
             base.OnActionExecuting(filterContext);
         }
 
         public sealed override void SetHttpHeadersOnActionExecuted(ActionExecutedContext filterContext)
         {
-            _headerOverrideHelper.SetCspHeaders(filterContext.HttpContext, ReportOnly);
+            _headerOverrideHelper.SetCspHeaders(new HttpContextWrapper(filterContext.HttpContext), ReportOnly);
         }
     }
 }

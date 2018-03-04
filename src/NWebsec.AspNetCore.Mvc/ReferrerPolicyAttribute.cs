@@ -2,10 +2,12 @@
 
 using System;
 using Microsoft.AspNetCore.Mvc.Filters;
+using NWebsec.AspNetCore.Core.Web;
 using NWebsec.Core.Common.HttpHeaders.Configuration;
 using NWebsec.AspNetCore.Mvc.Extensions;
 using NWebsec.AspNetCore.Mvc.Helpers;
 using NWebsec.AspNetCore.Mvc.Internals;
+using NWebsec.Mvc.Common.Helpers;
 
 namespace NWebsec.AspNetCore.Mvc
 {
@@ -31,13 +33,13 @@ namespace NWebsec.AspNetCore.Mvc
 
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
-            _configurationOverrideHelper.SetReferrerPolicyOverride(filterContext.HttpContext, _config);
+            _configurationOverrideHelper.SetReferrerPolicyOverride(new HttpContextWrapper(filterContext.HttpContext), _config);
             base.OnActionExecuting(filterContext);
         }
 
         public override void SetHttpHeadersOnActionExecuted(ActionExecutedContext filterContext)
         {
-            _headerOverrideHelper.SetReferrerPolicyHeader(filterContext.HttpContext);
+            _headerOverrideHelper.SetReferrerPolicyHeader(new HttpContextWrapper(filterContext.HttpContext));
         }
     }
 }

@@ -2,9 +2,11 @@
 
 using System;
 using Microsoft.AspNetCore.Mvc.Filters;
+using NWebsec.AspNetCore.Core.Web;
 using NWebsec.AspNetCore.Mvc.Helpers;
 using NWebsec.AspNetCore.Mvc.Internals;
 using NWebsec.Core.Common.HttpHeaders.Configuration;
+using NWebsec.Mvc.Common.Helpers;
 
 namespace NWebsec.AspNetCore.Mvc.Csp.Internals
 {
@@ -30,7 +32,7 @@ namespace NWebsec.AspNetCore.Mvc.Csp.Internals
         /// <summary>
         /// Gets or sets whether the header is set in the HTTP response. The default is true.
         /// </summary>
-        public bool Enabled { get { return _config.Enabled; } set { _config.Enabled = value; } }
+        public bool Enabled { get => _config.Enabled; set => _config.Enabled = value; }
 
         /// <summary>
         /// The X-Content-Security-Policy header is no longer supported as modern browsers now support the standardized CSP header.
@@ -48,13 +50,13 @@ namespace NWebsec.AspNetCore.Mvc.Csp.Internals
 
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
-            _headerConfigurationOverrideHelper.SetCspHeaderOverride(filterContext.HttpContext, _config, ReportOnly);
+            _headerConfigurationOverrideHelper.SetCspHeaderOverride(new HttpContextWrapper(filterContext.HttpContext), _config, ReportOnly);
             base.OnActionExecuting(filterContext);
         }
 
         public sealed override void SetHttpHeadersOnActionExecuted(ActionExecutedContext filterContext)
         {
-            _headerOverrideHelper.SetCspHeaders(filterContext.HttpContext, ReportOnly);
+            _headerOverrideHelper.SetCspHeaders(new HttpContextWrapper(filterContext.HttpContext), ReportOnly);
         }
     }
 }

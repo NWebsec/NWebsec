@@ -2,9 +2,11 @@
 
 using System;
 using Microsoft.AspNetCore.Mvc.Filters;
+using NWebsec.AspNetCore.Core.Web;
 using NWebsec.Core.Common.HttpHeaders.Configuration;
 using NWebsec.AspNetCore.Mvc.Helpers;
 using NWebsec.AspNetCore.Mvc.Internals;
+using NWebsec.Mvc.Common.Helpers;
 
 namespace NWebsec.AspNetCore.Mvc
 {
@@ -30,17 +32,17 @@ namespace NWebsec.AspNetCore.Mvc
         /// <summary>
         /// Gets or sets whether the X-Content-Type-Options security header should be set in the HTTP response. The default is true.
         /// </summary>
-        public bool Enabled { get { return _config.Enabled; } set { _config.Enabled = value; } }
+        public bool Enabled { get => _config.Enabled; set => _config.Enabled = value; }
 
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
-            _headerConfigurationOverrideHelper.SetXContentTypeOptionsOverride(filterContext.HttpContext, _config);
+            _headerConfigurationOverrideHelper.SetXContentTypeOptionsOverride(new HttpContextWrapper(filterContext.HttpContext), _config);
             base.OnActionExecuting(filterContext);
         }
 
         public override void SetHttpHeadersOnActionExecuted(ActionExecutedContext filterContext)
         {
-            _headerOverrideHelper.SetXContentTypeOptionsHeader(filterContext.HttpContext);
+            _headerOverrideHelper.SetXContentTypeOptionsHeader(new HttpContextWrapper(filterContext.HttpContext));
         }
     }
 }

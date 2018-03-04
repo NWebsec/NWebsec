@@ -2,9 +2,11 @@
 
 using System;
 using Microsoft.AspNetCore.Mvc.Filters;
+using NWebsec.AspNetCore.Core.Web;
 using NWebsec.AspNetCore.Mvc.Helpers;
 using NWebsec.AspNetCore.Mvc.Internals;
 using NWebsec.Mvc.Common.Csp;
+using NWebsec.Mvc.Common.Helpers;
 
 namespace NWebsec.AspNetCore.Mvc.Csp.Internals
 {
@@ -30,19 +32,19 @@ namespace NWebsec.AspNetCore.Mvc.Csp.Internals
         /// <summary>
         /// Sets whether the block-all-mixed-content directive is enabled in the CSP header. The default is true.
         /// </summary>
-        public bool Enabled { get { return _directive.Enabled; } set { _directive.Enabled = value; } }
+        public bool Enabled { get => _directive.Enabled; set => _directive.Enabled = value; }
 
         protected abstract bool ReportOnly { get; }
 
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
-            _configurationOverrideHelper.SetCspMixedContentOverride(filterContext.HttpContext, _directive, ReportOnly);
+            _configurationOverrideHelper.SetCspMixedContentOverride(new HttpContextWrapper(filterContext.HttpContext), _directive, ReportOnly);
             base.OnActionExecuting(filterContext);
         }
 
         public sealed override void SetHttpHeadersOnActionExecuted(ActionExecutedContext filterContext)
         {
-            _headerOverrideHelper.SetCspHeaders(filterContext.HttpContext, ReportOnly);
+            _headerOverrideHelper.SetCspHeaders(new HttpContextWrapper(filterContext.HttpContext), ReportOnly);
         }
     }
 }

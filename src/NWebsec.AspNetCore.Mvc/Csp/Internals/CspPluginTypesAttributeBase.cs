@@ -2,10 +2,12 @@
 
 using System;
 using Microsoft.AspNetCore.Mvc.Filters;
+using NWebsec.AspNetCore.Core.Web;
 using NWebsec.Core.Common.HttpHeaders.Configuration.Validation;
 using NWebsec.AspNetCore.Mvc.Helpers;
 using NWebsec.AspNetCore.Mvc.Internals;
 using NWebsec.Mvc.Common.Csp;
+using NWebsec.Mvc.Common.Helpers;
 
 namespace NWebsec.AspNetCore.Mvc.Csp.Internals
 {
@@ -37,22 +39,19 @@ namespace NWebsec.AspNetCore.Mvc.Csp.Internals
         /// <summary>
         /// Sets whether the plugin-types directive is enabled in the CSP header. The default is true.
         /// </summary>
-        public bool Enabled { get { return _directive.Enabled; } set { _directive.Enabled = value; } }
+        public bool Enabled { get => _directive.Enabled; set => _directive.Enabled = value; }
 
         /// <summary>
         /// Gets or sets whether Media Types should be inherited from previous settings. The default is true.
         /// </summary>
-        public bool InheritMediaSources { get { return _directive.InheritMediaTypes; } set { _directive.InheritMediaTypes = value; } }
+        public bool InheritMediaSources { get => _directive.InheritMediaTypes; set => _directive.InheritMediaTypes = value; }
 
         /// <summary>
         /// Sets the media types for the directive. Media types are separated by exactly one whitespace.
         /// </summary>
         public string MediaTypes
         {
-            get
-            {
-                throw new NotSupportedException();
-            }
+            get => throw new NotSupportedException();
             set
             {
                 if (string.IsNullOrEmpty(value))
@@ -77,13 +76,13 @@ namespace NWebsec.AspNetCore.Mvc.Csp.Internals
         {
             ValidateParams();
 
-            _configurationOverrideHelper.SetCspPluginTypesOverride(filterContext.HttpContext, _directive, ReportOnly);
+            _configurationOverrideHelper.SetCspPluginTypesOverride(new HttpContextWrapper(filterContext.HttpContext), _directive, ReportOnly);
             base.OnActionExecuting(filterContext);
         }
 
         public sealed override void SetHttpHeadersOnActionExecuted(ActionExecutedContext filterContext)
         {
-            _headerOverrideHelper.SetCspHeaders(filterContext.HttpContext, ReportOnly);
+            _headerOverrideHelper.SetCspHeaders(new HttpContextWrapper(filterContext.HttpContext), ReportOnly);
         }
 
         internal void ValidateParams()

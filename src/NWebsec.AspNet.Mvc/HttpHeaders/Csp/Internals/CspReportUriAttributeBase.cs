@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using NWebsec.Core.Common.HttpHeaders.Configuration;
 using NWebsec.Core.Common.HttpHeaders.Csp;
 using NWebsec.Core.Web;
+using NWebsec.Mvc.Common.Helpers;
 using NWebsec.Mvc.Helpers;
 using NWebsec.Mvc.HttpHeaders.Internals;
 

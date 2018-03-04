@@ -2,10 +2,12 @@
 
 using System;
 using Microsoft.AspNetCore.Mvc.Filters;
+using NWebsec.AspNetCore.Core.Web;
 using NWebsec.Core.Common.HttpHeaders;
 using NWebsec.Core.Common.HttpHeaders.Configuration;
 using NWebsec.AspNetCore.Mvc.Helpers;
 using NWebsec.AspNetCore.Mvc.Internals;
+using NWebsec.Mvc.Common.Helpers;
 
 namespace NWebsec.AspNetCore.Mvc
 {
@@ -35,7 +37,7 @@ namespace NWebsec.AspNetCore.Mvc
         /// </summary>
         public XFrameOptionsPolicy Policy
         {
-            get { throw new NotSupportedException(); }
+            get => throw new NotSupportedException();
             set
             {
                 switch (value)
@@ -59,13 +61,13 @@ namespace NWebsec.AspNetCore.Mvc
 
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
-            _configurationOverrideHelper.SetXFrameoptionsOverride(filterContext.HttpContext, _config);
+            _configurationOverrideHelper.SetXFrameoptionsOverride(new HttpContextWrapper(filterContext.HttpContext), _config);
             base.OnActionExecuting(filterContext);
         }
 
         public override void SetHttpHeadersOnActionExecuted(ActionExecutedContext filterContext)
         {
-            _headerOverrideHelper.SetXFrameoptionsHeader(filterContext.HttpContext);
+            _headerOverrideHelper.SetXFrameoptionsHeader(new HttpContextWrapper(filterContext.HttpContext));
         }
     }
 }
