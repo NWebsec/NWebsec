@@ -57,9 +57,9 @@ Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "NWebsec.Mvc.Common", "src\N
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NWebsec.Mvc.CommonProject", "src\NWebsec.Mvc.CommonProject\NWebsec.Mvc.CommonProject.csproj", "{10521D31-E95A-447D-9E32-4A02C6689880}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mvc", "src\Mvc\Mvc.csproj", "{8F857CB0-E352-4A88-B5D5-352381D8F9C8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mvc", "src\Mvc\Mvc.csproj", "{8F857CB0-E352-4A88-B5D5-352381D8F9C8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MvcAttributeWebsite", "test\websites\MvcAttributeWebsite\MvcAttributeWebsite.csproj", "{4DBD49E0-02C0-4952-8E61-3D842B888846}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MvcAttributeWebsite", "test\websites\MvcAttributeWebsite\MvcAttributeWebsite.csproj", "{4DBD49E0-02C0-4952-8E61-3D842B888846}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NWebsec.AspNetCore.Mvc.FunctionalTests", "test\NWebsec.AspNetCore.Mvc.FunctionalTests\NWebsec.AspNetCore.Mvc.FunctionalTests.csproj", "{99636447-A4E6-478D-8795-11556FA9A11A}"
 EndProject

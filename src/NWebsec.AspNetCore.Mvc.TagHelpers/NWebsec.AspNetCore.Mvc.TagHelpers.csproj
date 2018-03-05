@@ -3,12 +3,12 @@
   <Import Project="..\version.props" />
 
   <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
     <Description>NWebsec TagHelpers for ASP.NET Core MVC applications. NWebsec helps you set important security headers, detect potentially dangerous redirects, and control cache headers. See project website for documentation.</Description>
     <Copyright>Copyright © 2016 - 2017</Copyright>
     <AssemblyTitle>NWebsec.AspNetCore.Mvc.TagHelpers</AssemblyTitle>
     <VersionPrefix>1.1.0</VersionPrefix>
     <Authors>André N. Klingsheim</Authors>
-    <TargetFrameworks>net451;netstandard1.6</TargetFrameworks>
     <AssemblyName>NWebsec.AspNetCore.Mvc.TagHelpers</AssemblyName>
     <PackageId>NWebsec.AspNetCore.Mvc.TagHelpers</PackageId>
     <PackageTags>nwebsec aspnetcore security</PackageTags>
@@ -29,12 +29,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Razor.Runtime" Version="1.0.2" />
-  </ItemGroup>
-
-  <ItemGroup Condition=" '$(TargetFramework)' == 'net451' ">
-    <Reference Include="System" />
-    <Reference Include="Microsoft.CSharp" />
+    <PackageReference Include="Microsoft.AspNetCore.Razor.Runtime" Version="2.0.1" />
   </ItemGroup>
 
 </Project>
