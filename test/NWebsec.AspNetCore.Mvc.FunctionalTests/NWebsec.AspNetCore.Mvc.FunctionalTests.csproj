@@ -1,21 +1,21 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <!--<TargetFrameworks>netcoreapp1.1;net452</TargetFrameworks>-->
-    <TargetFramework>netcoreapp1.1</TargetFramework>
+    <!--<TargetFrameworks>netcoreapp2.0;net452</TargetFrameworks>-->
+    <TargetFramework>netcoreapp2.0</TargetFramework>
     <AssemblyName>NWebsec.AspNetCore.Mvc.FunctionalTests</AssemblyName>
     <PackageId>NWebsec.AspNetCore.Mvc.FunctionalTests</PackageId>
     <GenerateRuntimeConfigurationFiles>true</GenerateRuntimeConfigurationFiles>
-    <PackageTargetFallback Condition=" '$(TargetFramework)' == 'netcoreapp1.1' ">$(PackageTargetFallback);portable-net451+win8</PackageTargetFallback>
-    <RuntimeFrameworkVersion Condition=" '$(TargetFramework)' == 'netcoreapp1.1' ">1.1.1</RuntimeFrameworkVersion>
+    <PackageTargetFallback Condition=" '$(TargetFramework)' == 'netcoreapp2.0' ">$(PackageTargetFallback);portable-net451+win8</PackageTargetFallback>
+    <RuntimeFrameworkVersion Condition=" '$(TargetFramework)' == 'netcoreapp2.0' ">2.0.0</RuntimeFrameworkVersion>
     <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
     <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
     <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
     <IsPackable>false</IsPackable>
   </PropertyGroup>
   
-  <PropertyGroup Condition=" '$(TargetFramework)' != 'netcoreapp1.1' ">
-    <!-- Work around https://github.com/dotnet/sdk/issues/926. Align with bitness of the web site projects. -->
+  <PropertyGroup Condition=" '$(TargetFramework)' != 'netcoreapp2.0' ">
+       <!-- Work around https://github.com/dotnet/sdk/issues/926. Align with bitness of the web site projects. -->
     <PlatformTarget>x86</PlatformTarget>
 
     <!--
@@ -38,11 +38,12 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.6.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Hosting" Version="1.0.2" />
-    <PackageReference Include="Microsoft.AspNetCore.TestHost" Version="1.0.2" />
-    <PackageReference Include="Microsoft.Extensions.PlatformAbstractions" Version="1.0.0" />
-    <PackageReference Include="xunit" Version="2.2.0" />
-    <PackageReference Include="xunit.runner.visualstudio" Version="2.2.0" />
+    <!--<PackageReference Include="Microsoft.AspNetCore.Hosting" Version="1.0.2" />-->
+    <PackageReference Include="Microsoft.AspNetCore.TestHost" Version="2.0.1" />
+    <PackageReference Include="Microsoft.Extensions.PlatformAbstractions" Version="1.1.0" />
+    <PackageReference Include="xunit" Version="2.3.1" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.3.1" />
+    <DotNetCliToolReference Include="dotnet-xunit" Version="2.3.1" />
   </ItemGroup>
 
   <ItemGroup Condition=" '$(TargetFramework)' == 'net452' ">
@@ -59,7 +60,7 @@
   </ItemGroup>
 
   <!-- Work around https://github.com/NuGet/Home/issues/4412. -->
-  <Target Name="CopyDepsFiles" AfterTargets="Build" Condition="'$(TargetFramework)'=='netcoreapp1.1'">
+  <Target Name="CopyDepsFiles" AfterTargets="Build" Condition="'$(TargetFramework)'=='netcoreapp2.0'">
     <ItemGroup>
       <DepsFilePaths Include="$([System.IO.Path]::ChangeExtension('%(_ResolvedProjectReferencePaths.FullPath)', '.deps.json'))" />
     </ItemGroup>

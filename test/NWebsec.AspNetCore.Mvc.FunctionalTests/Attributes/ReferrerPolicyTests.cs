@@ -13,7 +13,7 @@ namespace NWebsec.AspNetCore.Mvc.FunctionalTests.Attributes
 {
     public class ReferrerPolicyHeaderTests : IDisposable
     {
-        public static readonly IEnumerable<object> ReferrerActionsAndValues = new TheoryData<string, string>
+        public static readonly IEnumerable<object[]> ReferrerActionsAndValues = new TheoryData<string, string>
         {
             { "NoReferrer", "no-referrer"},
         {"NoReferrerWhenDowngrade", "no-referrer-when-downgrade"},

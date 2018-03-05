@@ -1,31 +1,23 @@
-﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
-    <TargetFrameworks>net452;netcoreapp1.1</TargetFrameworks>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
     <PreserveCompilationContext>true</PreserveCompilationContext>
-    <AssemblyName>MvcAttributeWebsite</AssemblyName>
-    <OutputType>Exe</OutputType>
-    <PackageId>MvcAttributeWebsite</PackageId>
-    <PackageTargetFallback Condition=" '$(TargetFramework)' == 'netcoreapp1.1' ">$(PackageTargetFallback);portable-net451+win8</PackageTargetFallback>
-    <RuntimeFrameworkVersion Condition=" '$(TargetFramework)' == 'netcoreapp1.1' ">1.1.1</RuntimeFrameworkVersion>
     <IsPackable>false</IsPackable>
   </PropertyGroup>
 
- <ItemGroup>
-    <ProjectReference Include="..\..\..\src\NWebsec.AspNetCore.Mvc\NWebsec.AspNetCore.Mvc.csproj" />
-    <ProjectReference Include="..\..\..\src\NWebsec.AspNetCore.Middleware\NWebsec.AspNetCore.Middleware.csproj" />
-    <ProjectReference Include="..\..\..\src\NWebsec.AspNetCore.Mvc.TagHelpers\NWebsec.AspNetCore.Mvc.TagHelpers.csproj" />
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.5" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="1.0.3" />
-    <PackageReference Include="Microsoft.AspNetCore.Server.IISIntegration" Version="1.0.2" />
-    <PackageReference Include="Microsoft.AspNetCore.Server.Kestrel" Version="1.0.3" />
+    <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="2.0.2" />
   </ItemGroup>
-  
-  <ItemGroup Condition=" '$(TargetFramework)' == 'net452' ">
-    <Reference Include="System" />
-    <Reference Include="Microsoft.CSharp" />
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\src\NWebsec.AspNetCore.Middleware\NWebsec.AspNetCore.Middleware.csproj" />
+    <ProjectReference Include="..\..\..\src\NWebsec.AspNetCore.Mvc.TagHelpers\NWebsec.AspNetCore.Mvc.TagHelpers.csproj" />
+    <ProjectReference Include="..\..\..\src\NWebsec.AspNetCore.Mvc\NWebsec.AspNetCore.Mvc.csproj" />
   </ItemGroup>
 
 </Project>
