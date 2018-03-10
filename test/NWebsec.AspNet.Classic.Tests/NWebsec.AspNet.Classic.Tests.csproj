@@ -3,6 +3,9 @@
   <PropertyGroup>
     <TargetFramework>net452</TargetFramework>
     <IsPackable>false</IsPackable>
+    <SignAssembly>true</SignAssembly>
+    <DelaySign>false</DelaySign>
+    <AssemblyOriginatorKeyFile>..\nwebsectst.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
 
   <ItemGroup>

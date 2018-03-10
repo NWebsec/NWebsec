@@ -22,6 +22,9 @@
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>git://github.com/NWebsec/NWebsec</RepositoryUrl>
     <RootNamespace>NWebsec</RootNamespace>
+    <SignAssembly>true</SignAssembly>
+    <DelaySign>false</DelaySign>
+    <AssemblyOriginatorKeyFile>..\nwebsec.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
 
   <ItemGroup>
