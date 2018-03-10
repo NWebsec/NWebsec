@@ -26,7 +26,14 @@
     <DelaySign>false</DelaySign>
     <AssemblyOriginatorKeyFile>..\nwebsec.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
-
+  
+  <ItemGroup>
+    <Content Include="nupkgcontent\**\*">
+      <Pack>true</Pack>
+      <PackagePath>content</PackagePath>
+    </Content>
+  </ItemGroup>
+  
   <ItemGroup>
     <ProjectReference Include="..\NWebsec.Annotations\NWebsec.Annotations.csproj" PrivateAssets="All" />
     <ProjectReference Include="..\NWebsec.AspNet.Core\NWebsec.AspNet.Core.csproj" />
