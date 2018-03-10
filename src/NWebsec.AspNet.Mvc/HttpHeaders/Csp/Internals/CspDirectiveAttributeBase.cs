@@ -54,11 +54,7 @@ namespace NWebsec.Mvc.HttpHeaders.Csp.Internals
         /// <summary>
         /// Gets or sets whether CustomSources should be inherited from previous settings. The default is true.
         /// </summary>
-        public bool InheritCustomSources
-        {
-            get => DirectiveConfig.InheritOtherSources; set => DirectiveConfig.InheritOtherSources = value;
-
-        }
+        public bool InheritCustomSources { get => DirectiveConfig.InheritOtherSources; set => DirectiveConfig.InheritOtherSources = value; }
         /// <summary>
         /// Gets or sets other sources for the directive. Sources are separated by exactly one whitespace. Source examples are scheme only ("https:"), any host ("*"),
         /// a host ("*.nwebsec.com", "www.nwebsec.com", "https://www.nwebsec.com", "www.nwebsec.com:443", "https://www.nwebsec.com:*").
@@ -67,6 +63,7 @@ namespace NWebsec.Mvc.HttpHeaders.Csp.Internals
         public string CustomSources
         {
             get => throw new NotSupportedException();
+
             set
             {
                 if (string.IsNullOrEmpty(value))
@@ -125,7 +122,8 @@ namespace NWebsec.Mvc.HttpHeaders.Csp.Internals
             return (DirectiveConfig.None.HasValue ||
                     DirectiveConfig.Self.HasValue ||
                     DirectiveConfig.UnsafeInline.HasValue ||
-                    DirectiveConfig.UnsafeEval.HasValue) == false;
+                    DirectiveConfig.UnsafeEval.HasValue ||
+                    DirectiveConfig.StrictDynamic.HasValue) == false;
         }
 
         private bool NoneCombinedWithOtherSources()
@@ -139,6 +137,7 @@ namespace NWebsec.Mvc.HttpHeaders.Csp.Internals
             return ((DirectiveConfig.Self.HasValue && (bool)DirectiveConfig.Self) ||
                     (DirectiveConfig.UnsafeInline.HasValue && (bool)DirectiveConfig.UnsafeInline) ||
                     (DirectiveConfig.UnsafeEval.HasValue && (bool)DirectiveConfig.UnsafeEval) ||
+                    (DirectiveConfig.StrictDynamic.HasValue && (bool)DirectiveConfig.StrictDynamic) ||
                     DirectiveConfig.OtherSources != null);
         }
 
