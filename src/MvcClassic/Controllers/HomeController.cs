@@ -7,7 +7,7 @@ using NWebsec.Mvc.HttpHeaders.Csp;
 
 namespace MvcClassic.Controllers
 {
-    [Csp, CspScriptSrc(Self = true, StrictDynamic = true)]
+    //[Csp, CspScriptSrc(Self = true, StrictDynamic = true)]
     public class HomeController : Controller
     {
         public ActionResult Index()

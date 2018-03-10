@@ -473,6 +473,17 @@
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
+  <xs:complexType name="UnsafeInlineUnsafeEvalStrictDynamicCspElement">
+    <xs:complexContent>
+      <xs:extension base="UnsafeInlineUnsafeEvalCspElement">
+        <xs:attribute name="strictDynamic" type="simple_boolean" use="optional">
+          <xs:annotation>
+            <xs:documentation>Optional. Specifies whether to include the 'strict-dynamic' source. The default is false.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
   <xs:group name="cspElements">
     <xs:all>
       <xs:element name="default-src" minOccurs="0" maxOccurs="1" type="BaseCspElement">
@@ -480,7 +491,7 @@
           <xs:documentation>Configures the default-src CSP directive (CSP 1.0).</xs:documentation>
         </xs:annotation>
       </xs:element>
-      <xs:element name="script-src" minOccurs="0" maxOccurs="1" type="UnsafeInlineUnsafeEvalCspElement">
+      <xs:element name="script-src" minOccurs="0" maxOccurs="1" type="UnsafeInlineUnsafeEvalStrictDynamicCspElement">
         <xs:annotation>
           <xs:documentation>Configures the script-src CSP directive (CSP 1.0).</xs:documentation>
         </xs:annotation>

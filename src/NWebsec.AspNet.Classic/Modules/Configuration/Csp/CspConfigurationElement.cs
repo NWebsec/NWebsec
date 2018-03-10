@@ -25,12 +25,12 @@ namespace NWebsec.Modules.Configuration.Csp
         }
 
         [ConfigurationProperty("script-src", IsRequired = false)]
-        [CspDirectiveUnsafeInlineUnsafeEvalConfigurationElementValidator]
-        public CspDirectiveUnsafeInlineUnsafeEvalConfigurationElement ScriptSrc
+        [CspDirectiveUnsafeInlineUnsafeEvalStrictDynamicConfigurationElementValidator]
+        public CspDirectiveUnsafeInlineUnsafeEvalStrictDynamicConfigurationElement ScriptSrc
         {
             get
             {
-                return (CspDirectiveUnsafeInlineUnsafeEvalConfigurationElement)this["script-src"];
+                return (CspDirectiveUnsafeInlineUnsafeEvalStrictDynamicConfigurationElement)this["script-src"];
             }
             set
             {

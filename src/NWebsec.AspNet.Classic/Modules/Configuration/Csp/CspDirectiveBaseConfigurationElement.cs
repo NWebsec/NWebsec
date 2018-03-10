@@ -54,7 +54,7 @@ namespace NWebsec.Modules.Configuration.Csp
 
         public virtual bool UnsafeInlineSrc { get; set; }
         public virtual bool UnsafeEvalSrc { get; set; }
-        public bool StrictDynamicSrc { get; set; } //TODO handle strict-dynamic
+        public virtual bool StrictDynamicSrc { get; set; }
 
         public IEnumerable<string> CustomSources
         {
