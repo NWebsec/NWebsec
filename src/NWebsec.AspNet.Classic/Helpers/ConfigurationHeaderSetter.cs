@@ -54,9 +54,10 @@ namespace NWebsec.Helpers
             SetXFrameoptionsHeader(httpContext, nwebsecContext);
             SetXContentTypeOptionsHeader(httpContext, nwebsecContext);
             SetXDownloadOptionsHeader(httpContext, nwebsecContext);
+            SetReferrerPolicyHeader(httpContext, nwebsecContext);
         }
 
-        internal void SetContentRelatedHeadersFromConfig(IHttpContextWrapper context)
+       internal void SetContentRelatedHeadersFromConfig(IHttpContextWrapper context)
         {
             var nwebsecContext = context.GetNWebsecContext();
             SetXXssProtectionHeader(context, nwebsecContext);
@@ -118,6 +119,13 @@ namespace NWebsec.Helpers
         {
             nwebsecContext.XDownloadOptions = WebConfig.SecurityHttpHeaders.XDownloadOptions;
             var result = _headerGenerator.CreateXDownloadOptionsResult(WebConfig.SecurityHttpHeaders.XDownloadOptions);
+            _headerResultHandler.HandleHeaderResult(httpContext, result);
+        }
+
+        internal void SetReferrerPolicyHeader(IHttpContextWrapper httpContext, NWebsecContext nwebsecContext)
+        {
+            nwebsecContext.ReferrerPolicy = WebConfig.SecurityHttpHeaders.ReferrerPolicy;
+            var result = _headerGenerator.CreateReferrerPolicyResult(WebConfig.SecurityHttpHeaders.ReferrerPolicy);
             _headerResultHandler.HandleHeaderResult(httpContext, result);
         }
 

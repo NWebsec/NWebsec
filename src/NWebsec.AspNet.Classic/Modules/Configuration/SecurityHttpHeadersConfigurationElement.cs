@@ -14,7 +14,15 @@ namespace NWebsec.Modules.Configuration
             get => (XFrameOptionsConfigurationElement)this["x-Frame-Options"];
             set => this["x-Frame-Options"] = value;
         }
-        
+
+        [ConfigurationProperty("referrer-Policy", IsRequired = false)]
+        [ReferrerPolicyValidator]
+        public ReferrerPolicyConfigurationElement ReferrerPolicy
+        {
+            get => (ReferrerPolicyConfigurationElement)this["referrer-Policy"];
+            set => this["referrer-Policy"] = value;
+        }
+
         [ConfigurationProperty("strict-Transport-Security", IsRequired = false)]
         [HstsValidator]
         public HstsConfigurationElement Hsts

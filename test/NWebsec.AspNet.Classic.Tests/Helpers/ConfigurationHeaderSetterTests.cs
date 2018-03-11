@@ -208,6 +208,17 @@ namespace NWebsec.AspNet.Classic.Tests.Helpers
         }
 
         [Fact]
+        public void SetReferrerPolicyHeader_UpdatesContextAndHandlesResult()
+        {
+            _mockHeaderGenerator.Setup(g => g.CreateReferrerPolicyResult(_config.SecurityHttpHeaders.ReferrerPolicy, null)).Returns(_expectedHeaderResult);
+
+            _configHeaderSetter.SetReferrerPolicyHeader(_httpContext, _nwebsecContext);
+
+            Assert.Same(_config.SecurityHttpHeaders.ReferrerPolicy, _nwebsecContext.ReferrerPolicy);
+            _mockHeaderResultHandler.Verify(h => h.HandleHeaderResult(_httpContext, _expectedHeaderResult), Times.Once);
+        }
+
+        [Fact]
         public void SetXXssProtectionHeader_UpdatesContextAndHandlesResult()
         {
             _mockHeaderGenerator.Setup(g => g.CreateXXssProtectionResult(_config.SecurityHttpHeaders.XXssProtection, null)).Returns(_expectedHeaderResult);
