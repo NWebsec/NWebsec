@@ -18,10 +18,7 @@ namespace NWebsec.Modules.Configuration
 
         public HpkpCertConfigurationElement this[int index]
         {
-            get
-            {
-                return (HpkpCertConfigurationElement)BaseGet(index);
-            }
+            get => (HpkpCertConfigurationElement)BaseGet(index);
             set
             {
                 if (BaseGet(index) != null)

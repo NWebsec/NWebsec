@@ -12,9 +12,8 @@ namespace NWebsec.Modules.Configuration.Csp
         public string Source
         {
 
-            get { return (string) this["source"]; }
-            set { this["source"] = value; }
-
+            get => (string) this["source"];
+            set => this["source"] = value;
         }
     }
 }

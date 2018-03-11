@@ -6,12 +6,6 @@ namespace NWebsec.Modules.Configuration.Validation
 {
     class HpkpPinValidatorAttribute : ConfigurationValidatorAttribute
     {
-        public override ConfigurationValidatorBase ValidatorInstance
-        {
-            get
-            {
-                return new HpkpPinValidator();
-            }
-        }
+        public override ConfigurationValidatorBase ValidatorInstance => new HpkpPinValidator();
     }
 }

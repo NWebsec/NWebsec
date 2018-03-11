@@ -15,14 +15,8 @@ namespace NWebsec.Modules.Configuration.Csp
         [ConfigurationProperty("enabled", IsRequired = false, DefaultValue = true)]
         public bool Enabled
         {
-            get
-            {
-                return (bool)this["enabled"];
-            }
-            set
-            {
-                this["enabled"] = value;
-            }
+            get => (bool)this["enabled"];
+            set => this["enabled"] = value;
         }
 
         public IEnumerable<string> MediaTypes
@@ -37,21 +31,15 @@ namespace NWebsec.Modules.Configuration.Csp
                 }
                 return _mediaTypes;
             }
-            set { throw new NotImplementedException(); }
+            set => throw new NotImplementedException();
         }
 
         [ConfigurationProperty("", IsRequired = false, IsDefaultCollection = true)]
         [ConfigurationCollection(typeof(CspMediaTypeElementCollection), CollectionType = ConfigurationElementCollectionType.AddRemoveClearMap)]
         public CspMediaTypeElementCollection Sources
         {
-            get
-            {
-                return (CspMediaTypeElementCollection)base[""];
-            }
-            set
-            {
-                base[""] = value;
-            }
+            get => (CspMediaTypeElementCollection)base[""];
+            set => base[""] = value;
         }
 
     }

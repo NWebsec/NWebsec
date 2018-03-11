@@ -6,12 +6,6 @@ namespace NWebsec.Modules.Configuration.Csp.Validation
 {
     class CspPluginTypesMediaTypeValidatorAttribute : ConfigurationValidatorAttribute
     {
-        public override ConfigurationValidatorBase ValidatorInstance
-        {
-            get
-            {
-                return new CspPluginTypesMediaTypeValidator();
-            }
-        }
+        public override ConfigurationValidatorBase ValidatorInstance => new CspPluginTypesMediaTypeValidator();
     }
 }

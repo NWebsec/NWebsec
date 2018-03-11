@@ -6,12 +6,6 @@ namespace NWebsec.Modules.Configuration.Validation
 {
     class HpkpCertThumbprintValidatorAttribute : ConfigurationValidatorAttribute
     {
-        public override ConfigurationValidatorBase ValidatorInstance
-        {
-            get
-            {
-                return new HpkpCertThumbprintValidator();
-            }
-        }
+        public override ConfigurationValidatorBase ValidatorInstance => new HpkpCertThumbprintValidator();
     }
 }

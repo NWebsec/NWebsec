@@ -6,12 +6,6 @@ namespace NWebsec.Modules.Configuration.Validation
 {
     class HstsValidatorAttribute : ConfigurationValidatorAttribute
     {
-        public override ConfigurationValidatorBase ValidatorInstance
-        {
-            get
-            {
-                return new HstsValidator();
-            }
-        }
+        public override ConfigurationValidatorBase ValidatorInstance => new HstsValidator();
     }
 }

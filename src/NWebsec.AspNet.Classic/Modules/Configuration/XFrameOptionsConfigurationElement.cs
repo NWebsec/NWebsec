@@ -12,16 +12,8 @@ namespace NWebsec.Modules.Configuration
         public XfoPolicy Policy
         {
 
-            get
-            {
-                return (XfoPolicy)this["policy"];
-            }
-            set
-            {
-                this["policy"] = value;
-            }
-
+            get => (XfoPolicy)this["policy"];
+            set => this["policy"] = value;
         }
-
     }
 }

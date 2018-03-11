@@ -6,12 +6,6 @@ namespace NWebsec.Modules.Configuration.Validation
 {
     class HpkpReportUriValidatorAttribute : ConfigurationValidatorAttribute
     {
-        public override ConfigurationValidatorBase ValidatorInstance
-        {
-            get
-            {
-                return new HpkpReportUriValidator();
-            }
-        }
+        public override ConfigurationValidatorBase ValidatorInstance => new HpkpReportUriValidator();
     }
 }

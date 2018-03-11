@@ -7,12 +7,6 @@ namespace NWebsec.Modules.Configuration.Csp.Validation
     public class CspDirectiveBaseConfigurationElementValidatorAttribute :
         ConfigurationValidatorAttribute
     {
-        public override ConfigurationValidatorBase ValidatorInstance
-        {
-            get
-            {
-                return new CspDirectiveBaseConfigurationElementValidator();
-            }
-        }
+        public override ConfigurationValidatorBase ValidatorInstance => new CspDirectiveBaseConfigurationElementValidator();
     }
 }

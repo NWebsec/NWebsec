@@ -13,30 +13,16 @@ namespace NWebsec.Modules.Configuration
         public XXssPolicy Policy
         {
 
-            get
-            {
-                return (XXssPolicy)this["policy"];
-            }
-            set
-            {
-                this["policy"] = value;
-            }
-
+            get => (XXssPolicy)this["policy"];
+            set => this["policy"] = value;
         }
 
         [ConfigurationProperty("blockMode", IsRequired = false, DefaultValue = true)]
         public bool BlockMode
         {
 
-            get
-            {
-                return (bool)this["blockMode"];
-            }
-            set
-            {
-                this["blockMode"] = value;
-            }
-
+            get => (bool)this["blockMode"];
+            set => this["blockMode"] = value;
         }
 
     }

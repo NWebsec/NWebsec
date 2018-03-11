@@ -10,8 +10,8 @@ namespace NWebsec.Modules.Configuration.Csp
         [ConfigurationProperty("report-uri", IsKey = true, IsRequired = true)]
         public Uri ReportUri
         {
-            get { return (Uri)this["report-uri"]; }
-            set { this["report-uri"] = value; }
+            get => (Uri)this["report-uri"];
+            set => this["report-uri"] = value;
         }
     }
 }

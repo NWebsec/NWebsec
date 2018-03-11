@@ -9,14 +9,8 @@ namespace NWebsec.Modules.Configuration.Csp
         [ConfigurationProperty("unsafeEval", IsRequired = false, DefaultValue = false)]
         public override bool UnsafeEvalSrc
         {
-            get
-            {
-                return (bool)this["unsafeEval"];
-            }
-            set
-            {
-                this["unsafeEval"] = value;
-            }
+            get => (bool)this["unsafeEval"];
+            set => this["unsafeEval"] = value;
         }
     }
 }

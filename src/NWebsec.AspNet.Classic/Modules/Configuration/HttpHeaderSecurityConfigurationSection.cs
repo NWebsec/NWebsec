@@ -10,54 +10,30 @@ namespace NWebsec.Modules.Configuration
         [ConfigurationProperty("setNoCacheHttpHeaders")]
         public SimpleBooleanConfigurationElement NoCacheHttpHeaders
         {
-            get
-            {
-                return (SimpleBooleanConfigurationElement)this["setNoCacheHttpHeaders"];
-            }
-            set
-            {
-                this["setNoCacheHttpHeaders"] = value;
-            }
+            get => (SimpleBooleanConfigurationElement)this["setNoCacheHttpHeaders"];
+            set => this["setNoCacheHttpHeaders"] = value;
         }
 
         [ConfigurationProperty("x-Robots-Tag")]
         [XRobotsTagValidator]
         public XRobotsTagConfigurationElement XRobotsTag
         {
-            get
-            {
-                return (XRobotsTagConfigurationElement)this["x-Robots-Tag"];
-            }
-            set
-            {
-                this["x-Robots-Tag"] = value;
-            }
+            get => (XRobotsTagConfigurationElement)this["x-Robots-Tag"];
+            set => this["x-Robots-Tag"] = value;
         }
 
         [ConfigurationProperty("redirectValidation")]
         public RedirectValidationConfigurationElement RedirectValidation
         {
-            get
-            {
-                return (RedirectValidationConfigurationElement)this["redirectValidation"];
-            }
-            set
-            {
-                this["redirectValidation"] = value;
-            }
+            get => (RedirectValidationConfigurationElement)this["redirectValidation"];
+            set => this["redirectValidation"] = value;
         }
 
         [ConfigurationProperty("securityHttpHeaders")]
         public SecurityHttpHeadersConfigurationElement SecurityHttpHeaders
         {
-            get
-            {
-                return (SecurityHttpHeadersConfigurationElement)this["securityHttpHeaders"];
-            }
-            set
-            {
-                this["securityHttpHeaders"] = value;
-            }
+            get => (SecurityHttpHeadersConfigurationElement)this["securityHttpHeaders"];
+            set => this["securityHttpHeaders"] = value;
         }
 
         protected override bool OnDeserializeUnrecognizedAttribute(string name, string value)

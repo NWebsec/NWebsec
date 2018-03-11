@@ -18,40 +18,22 @@ namespace NWebsec.Modules.Configuration
         [HpkpCertThumbprintValidator]
         public string ThumbPrint
         {
-            get
-            {
-                return (string)this["thumbprint"];
-            }
-            set
-            {
-                this["thumbprint"] = value;
-            }
+            get => (string)this["thumbprint"];
+            set => this["thumbprint"] = value;
         }
 
         [ConfigurationProperty("storeLocation", IsRequired = false, DefaultValue = StoreLocation.LocalMachine)]
         public StoreLocation StoreLocation
         {
-            get
-            {
-                return (StoreLocation)this["storeLocation"];
-            }
-            set
-            {
-                this["storeLocation"] = value;
-            }
+            get => (StoreLocation)this["storeLocation"];
+            set => this["storeLocation"] = value;
         }
 
         [ConfigurationProperty("storeName", IsRequired = false, DefaultValue = StoreName.My)]
         public StoreName Storename
         {
-            get
-            {
-                return (StoreName)this["storeName"];
-            }
-            set
-            {
-                this["storeName"] = value;
-            }
+            get => (StoreName)this["storeName"];
+            set => this["storeName"] = value;
         }
 
         public string SpkiPinValue

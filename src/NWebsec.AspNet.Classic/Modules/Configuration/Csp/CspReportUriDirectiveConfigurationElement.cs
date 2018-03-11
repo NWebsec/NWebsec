@@ -16,27 +16,15 @@ namespace NWebsec.Modules.Configuration.Csp
         [ConfigurationProperty("enabled", IsRequired = false, DefaultValue = true)]
         public bool Enabled
         {
-            get
-            {
-                return (bool)this["enabled"];
-            }
-            set
-            {
-                this["enabled"] = value;
-            }
+            get => (bool)this["enabled"];
+            set => this["enabled"] = value;
         }
 
         [ConfigurationProperty("enableBuiltinHandler", IsRequired = false, DefaultValue = false)]
         public bool EnableBuiltinHandler
         {
-            get
-            {
-                return (bool)this["enableBuiltinHandler"];
-            }
-            set
-            {
-                this["enableBuiltinHandler"] = value;
-            }
+            get => (bool)this["enableBuiltinHandler"];
+            set => this["enableBuiltinHandler"] = value;
         }
 
         public IEnumerable<string> ReportUris
@@ -49,21 +37,15 @@ namespace NWebsec.Modules.Configuration.Csp
                 }
                 return _reportUris;
             }
-            set { throw new NotImplementedException(); }
+            set => throw new NotImplementedException();
         }
 
         [ConfigurationProperty("", IsRequired = false, IsDefaultCollection = true)]
         [ConfigurationCollection(typeof(CspReportUriConfigurationElementCollection), CollectionType = ConfigurationElementCollectionType.AddRemoveClearMap)]
         public CspReportUriConfigurationElementCollection ReportUriCollection
         {
-            get
-            {
-                return (CspReportUriConfigurationElementCollection)base[""];
-            }
-            set
-            {
-                base[""] = value;
-            }
+            get => (CspReportUriConfigurationElementCollection)base[""];
+            set => base[""] = value;
         }
     }
 }

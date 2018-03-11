@@ -19,10 +19,7 @@ namespace NWebsec.Modules.Configuration.Csp
 
         public CspReportUriConfigurationElement this[int index]
         {
-            get
-            {
-                return (CspReportUriConfigurationElement)BaseGet(index);
-            }
+            get => (CspReportUriConfigurationElement)BaseGet(index);
             set
             {
                 if (BaseGet(index) != null)

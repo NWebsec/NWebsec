@@ -6,12 +6,6 @@ namespace NWebsec.Modules.Configuration.Validation
 {
     public class RedirectSameHostConfigurationElementValidatorAttribute : ConfigurationValidatorAttribute
     {
-        public override ConfigurationValidatorBase ValidatorInstance
-        {
-            get
-            {
-                return new RedirectSameHostConfigurationElementValidator();
-            }
-        }
+        public override ConfigurationValidatorBase ValidatorInstance => new RedirectSameHostConfigurationElementValidator();
     }
 }

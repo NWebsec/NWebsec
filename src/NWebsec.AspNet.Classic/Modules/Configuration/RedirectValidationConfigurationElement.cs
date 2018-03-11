@@ -16,42 +16,24 @@ namespace NWebsec.Modules.Configuration
         [ConfigurationProperty("enabled", IsRequired = true, DefaultValue = false)]
         public bool Enabled
         {
-            get
-            {
-                return (bool)this["enabled"];
-            }
-            set
-            {
-                this["enabled"] = value;
-            }
+            get => (bool)this["enabled"];
+            set => this["enabled"] = value;
         }
 
         [ConfigurationProperty("allowSameHostRedirectsToHttps", IsRequired = false)]
         [RedirectSameHostConfigurationElementValidator]
         public RedirectSameHostConfigurationElement SameHostRedirectConfig
         {
-            get
-            {
-                return (RedirectSameHostConfigurationElement)this["allowSameHostRedirectsToHttps"];
-            }
-            set
-            {
-                this["allowSameHostRedirectsToHttps"] = value;
-            }
+            get => (RedirectSameHostConfigurationElement)this["allowSameHostRedirectsToHttps"];
+            set => this["allowSameHostRedirectsToHttps"] = value;
         }
 
         [ConfigurationProperty("", IsRequired = false, IsDefaultCollection = true)]
         [ConfigurationCollection(typeof(RedirectUriElementCollection), CollectionType = ConfigurationElementCollectionType.AddRemoveClearMap)]
         public RedirectUriElementCollection RedirectUris
         {
-            get
-            {
-                return (RedirectUriElementCollection)base[""];
-            }
-            set
-            {
-                base[""] = value;
-            }
+            get => (RedirectUriElementCollection)base[""];
+            set => base[""] = value;
         }
 
         public IEnumerable<string> AllowedUris
@@ -64,16 +46,13 @@ namespace NWebsec.Modules.Configuration
                 }
                 return _redirectUris;
             }
-            set { throw new NotImplementedException(); }
+            set => throw new NotImplementedException();
         }
 
         public ISameHostHttpsRedirectConfiguration SameHostRedirectConfiguration
         {
-            get
-            {
-                return SameHostRedirectConfig;
-            }
-            set { throw new NotImplementedException(); }
+            get => SameHostRedirectConfig;
+            set => throw new NotImplementedException();
         }
     }
 }

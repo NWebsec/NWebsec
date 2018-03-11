@@ -18,10 +18,7 @@ namespace NWebsec.Modules.Configuration
 
         public HpkpPinConfigurationElement this[int index]
         {
-            get
-            {
-                return (HpkpPinConfigurationElement)BaseGet(index);
-            }
+            get => (HpkpPinConfigurationElement)BaseGet(index);
             set
             {
                 if (BaseGet(index) != null)

@@ -9,14 +9,8 @@ namespace NWebsec.Modules.Configuration.Csp
         [ConfigurationProperty("unsafeInline", IsRequired = false, DefaultValue = false)]
         public override bool UnsafeInlineSrc
         {
-            get
-            {
-                return (bool)this["unsafeInline"];
-            }
-            set
-            {
-                this["unsafeInline"] = value;
-            }
+            get => (bool)this["unsafeInline"];
+            set => this["unsafeInline"] = value;
         }
     }
 }

@@ -18,76 +18,46 @@ namespace NWebsec.Modules.Configuration
         [TimeSpanValidator(MinValueString = "-0:0:1")]
         public TimeSpan MaxAge
         {
-            get
-            {
-                return (TimeSpan)this["max-age"];
-            }
-            set
-            {
-                this["max-age"] = value;
-            }
+            get => (TimeSpan)this["max-age"];
+            set => this["max-age"] = value;
         }
 
         [ConfigurationProperty("includeSubdomains", IsRequired = false, DefaultValue = false)]
         public bool IncludeSubdomains
         {
-            get
-            {
-                return (bool)this["includeSubdomains"];
-            }
-            set
-            {
-                this["includeSubdomains"] = value;
-            }
+            get => (bool)this["includeSubdomains"];
+            set => this["includeSubdomains"] = value;
         }
 
         [ConfigurationProperty("report-uri", IsKey = true, IsRequired = false)]
         [HpkpReportUriValidator]
         public virtual string ReportUriValue
         {
-            get { return (string)this["report-uri"]; }
-            set { this["report-uri"] = value; }
+            get => (string)this["report-uri"];
+            set => this["report-uri"] = value;
         }
 
         [ConfigurationProperty("httpsOnly", IsRequired = false, DefaultValue = true)]
         public bool HttpsOnly
         {
-            get
-            {
-                return (bool)this["httpsOnly"];
-            }
-            set
-            {
-                this["httpsOnly"] = value;
-            }
+            get => (bool)this["httpsOnly"];
+            set => this["httpsOnly"] = value;
         }
 
         [ConfigurationProperty("certificates", IsRequired = false, IsDefaultCollection = true)]
         [ConfigurationCollection(typeof(HpkpCertConfigurationElementCollection), CollectionType = ConfigurationElementCollectionType.AddRemoveClearMap)]
         public HpkpCertConfigurationElementCollection Certificates
         {
-            get
-            {
-                return (HpkpCertConfigurationElementCollection)base["certificates"];
-            }
-            set
-            {
-                base[""] = value;
-            }
+            get => (HpkpCertConfigurationElementCollection)base["certificates"];
+            set => base[""] = value;
         }
 
         [ConfigurationProperty("pins", IsRequired = false, IsDefaultCollection = true)]
         [ConfigurationCollection(typeof(HpkpPinConfigurationElementCollection), CollectionType = ConfigurationElementCollectionType.AddRemoveClearMap)]
         public HpkpPinConfigurationElementCollection ManualPins
         {
-            get
-            {
-                return (HpkpPinConfigurationElementCollection)base["pins"];
-            }
-            set
-            {
-                base[""] = value;
-            }
+            get => (HpkpPinConfigurationElementCollection)base["pins"];
+            set => base[""] = value;
         }
 
         public IEnumerable<string> Pins
@@ -102,7 +72,7 @@ namespace NWebsec.Modules.Configuration
                 }
                 return _pins;
             }
-            set { throw new NotImplementedException(); }
+            set => throw new NotImplementedException();
         }
 
         public string ReportUri
@@ -115,10 +85,7 @@ namespace NWebsec.Modules.Configuration
                 }
                 return _parsedReportUri;
             }
-            set
-            {
-                throw new NotImplementedException();
-            }
+            set => throw new NotImplementedException();
         }
     }
 }

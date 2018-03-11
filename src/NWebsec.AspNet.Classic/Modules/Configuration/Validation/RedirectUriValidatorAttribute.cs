@@ -6,12 +6,6 @@ namespace NWebsec.Modules.Configuration.Validation
 {
     public class RedirectUriValidatorAttribute : ConfigurationValidatorAttribute
     {
-        public override ConfigurationValidatorBase ValidatorInstance
-        {
-            get
-            {
-                return new RedirectUriValidator();
-            }
-        }
+        public override ConfigurationValidatorBase ValidatorInstance => new RedirectUriValidator();
     }
 }

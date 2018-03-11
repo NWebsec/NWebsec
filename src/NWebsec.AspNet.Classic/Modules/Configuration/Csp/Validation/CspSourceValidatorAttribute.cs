@@ -6,12 +6,6 @@ namespace NWebsec.Modules.Configuration.Csp.Validation
 {
     class CspSourceValidatorAttribute : ConfigurationValidatorAttribute
     {
-        public override ConfigurationValidatorBase ValidatorInstance
-        {
-            get
-            {
-                return new CspSourceConfigurationValidator();
-            }
-        }
+        public override ConfigurationValidatorBase ValidatorInstance => new CspSourceConfigurationValidator();
     }
 }

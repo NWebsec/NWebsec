@@ -19,10 +19,7 @@ namespace NWebsec.Modules.Configuration.Csp
 
         public CspMediaTypeConfigurationElement this[int index]
         {
-            get
-            {
-                return (CspMediaTypeConfigurationElement)BaseGet(index);
-            }
+            get => (CspMediaTypeConfigurationElement)BaseGet(index);
             set
             {
                 if (BaseGet(index) != null)

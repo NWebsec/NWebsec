@@ -11,16 +11,16 @@ namespace NWebsec.Modules.Configuration.Csp
         [ConfigurationProperty("enabled", IsRequired = true, DefaultValue = false)]
         public bool Enabled
         {
-            get { return (bool)this["enabled"]; }
-            set { this["enabled"] = value; }
+            get => (bool)this["enabled"];
+            set => this["enabled"] = value;
         }
 
         [ConfigurationProperty("httpsPort", IsRequired = false, DefaultValue = 443)]
         [IntegerValidator(MinValue = 1, MaxValue = 65535)]
         public int HttpsPort
         {
-            get { return (int)this["httpsPort"]; }
-            set { this["httpsPort"] = value; }
+            get => (int)this["httpsPort"];
+            set => this["httpsPort"] = value;
         }
     }
 }

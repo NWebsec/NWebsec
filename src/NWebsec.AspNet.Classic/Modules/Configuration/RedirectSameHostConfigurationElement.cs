@@ -14,27 +14,15 @@ namespace NWebsec.Modules.Configuration
         [ConfigurationProperty("enabled", IsRequired = true, DefaultValue = false)]
         public bool Enabled
         {
-            get
-            {
-                return (bool)this["enabled"];
-            }
-            set
-            {
-                this["enabled"] = value;
-            }
+            get => (bool)this["enabled"];
+            set => this["enabled"] = value;
         }
 
         [ConfigurationProperty("httpsPorts", IsRequired = false, DefaultValue = "")]
         public string HttpsPorts
         {
-            get
-            {
-                return (string)this["httpsPorts"];
-            }
-            set
-            {
-                this["httpsPorts"] = value;
-            }
+            get => (string)this["httpsPorts"];
+            set => this["httpsPorts"] = value;
         }
 
         public int[] Ports
@@ -47,7 +35,7 @@ namespace NWebsec.Modules.Configuration
                 }
                 return _httpsPorts ?? (_httpsPorts = HttpsPorts.Split(new[] { ',' }).Select(c => Int32.Parse(c.Trim())).ToArray());
             }
-            set { throw new NotImplementedException(); }
+            set => throw new NotImplementedException();
         }
     }
 }

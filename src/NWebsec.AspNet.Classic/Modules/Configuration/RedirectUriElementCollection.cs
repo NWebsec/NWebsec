@@ -19,10 +19,7 @@ namespace NWebsec.Modules.Configuration
 
         public RedirectUriConfigurationElement this[int index]
         {
-            get
-            {
-                return (RedirectUriConfigurationElement)BaseGet(index);
-            }
+            get => (RedirectUriConfigurationElement)BaseGet(index);
             set
             {
                 if (BaseGet(index) != null)

@@ -13,9 +13,8 @@ namespace NWebsec.Modules.Configuration
         public Uri RedirectUri
         {
 
-            get { return (Uri)this["allowedDestination"]; }
-            set { this["allowedDestination"] = value; }
-
+            get => (Uri)this["allowedDestination"];
+            set => this["allowedDestination"] = value;
         }
     }
 }

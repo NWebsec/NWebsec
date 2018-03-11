@@ -13,19 +13,10 @@ namespace NWebsec.Modules.Configuration
         [HpkpPinValidator]
         public string Pin
         {
-            get
-            {
-                return (string)this["pin"];
-            }
-            set
-            {
-                this["pin"] = value;
-            }
+            get => (string)this["pin"];
+            set => this["pin"] = value;
         }
 
-        public string PinValue
-        {
-            get { return string.Format("sha256=\"{0}\"", Pin); }
-        }
+        public string PinValue => $"sha256=\"{Pin}\"";
     }
 }

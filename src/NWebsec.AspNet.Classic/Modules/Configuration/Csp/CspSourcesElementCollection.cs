@@ -19,10 +19,7 @@ namespace NWebsec.Modules.Configuration.Csp
 
         public CspSourceConfigurationElement this[int index]
         {
-            get
-            {
-                return (CspSourceConfigurationElement)BaseGet(index);
-            }
+            get => (CspSourceConfigurationElement)BaseGet(index);
             set
             {
                 if (BaseGet(index) != null)

@@ -7,12 +7,6 @@ namespace NWebsec.Modules.Configuration.Csp.Validation
     class CspDirectiveUnsafeInlineConfigurationElementValidatorAttribute :
         ConfigurationValidatorAttribute
     {
-        public override ConfigurationValidatorBase ValidatorInstance
-        {
-            get
-            {
-                return new CspDirectiveUnsafeInlineConfigurationElementValidator();
-            }
-        }
+        public override ConfigurationValidatorBase ValidatorInstance => new CspDirectiveUnsafeInlineConfigurationElementValidator();
     }
 }

@@ -31,8 +31,8 @@ namespace NWebsec.Csp
         [DataMember(Name = "blocked-uri")]
         public string BlockedUri
         {
-            get { return _blockedUri ?? String.Empty; }
-            set { _blockedUri = value; }
+            get => _blockedUri ?? String.Empty;
+            set => _blockedUri = value;
         }
 
         /// <summary>
@@ -41,8 +41,8 @@ namespace NWebsec.Csp
         [DataMember(Name = "document-uri")]
         public string DocumentUri
         {
-            get { return _documentUri ?? String.Empty; }
-            set { _documentUri = value; }
+            get => _documentUri ?? String.Empty;
+            set => _documentUri = value;
         }
 
         /// <summary>
@@ -51,8 +51,8 @@ namespace NWebsec.Csp
         [DataMember(Name = "effective-directive")]
         public string EffectiveDirective
         {
-            get { return _effectiveDirective ?? String.Empty; }
-            set { _effectiveDirective = value; }
+            get => _effectiveDirective ?? String.Empty;
+            set => _effectiveDirective = value;
         }
 
         /// <summary>
@@ -61,8 +61,8 @@ namespace NWebsec.Csp
         [DataMember(Name = "original-policy")]
         public string OriginalPolicy
         {
-            get { return _originalPolicy ?? String.Empty; }
-            set { _originalPolicy = value; }
+            get => _originalPolicy ?? String.Empty;
+            set => _originalPolicy = value;
         }
 
         /// <summary>
@@ -71,8 +71,8 @@ namespace NWebsec.Csp
         [DataMember(Name = "referrer")]
         public string Referrer
         {
-            get { return _referrer ?? String.Empty; }
-            set { _referrer = value; }
+            get => _referrer ?? String.Empty;
+            set => _referrer = value;
         }
 
         /// <summary>
@@ -81,8 +81,8 @@ namespace NWebsec.Csp
         [DataMember(Name = "status-code")]
         public string StatusCode
         {
-            get { return _statusCode ?? String.Empty; }
-            set { _statusCode = value; }
+            get => _statusCode ?? String.Empty;
+            set => _statusCode = value;
         }
 
         /// <summary>
@@ -91,8 +91,8 @@ namespace NWebsec.Csp
         [DataMember(Name = "violated-directive")]
         public string ViolatedDirective
         {
-            get { return _violatedDirective ?? String.Empty; }
-            set { _violatedDirective = value; }
+            get => _violatedDirective ?? String.Empty;
+            set => _violatedDirective = value;
         }
 
         /// <summary>
@@ -101,8 +101,8 @@ namespace NWebsec.Csp
         [DataMember(Name = "source-file")]
         public string SourceFile
         {
-            get { return _sourceFile ?? String.Empty; }
-            set { _sourceFile = value; }
+            get => _sourceFile ?? String.Empty;
+            set => _sourceFile = value;
         }
 
         /// <summary>
@@ -111,8 +111,8 @@ namespace NWebsec.Csp
         [DataMember(Name = "line-number")]
         public string LineNumber
         {
-            get { return _lineNumber ?? String.Empty; }
-            set { _lineNumber = value; }
+            get => _lineNumber ?? String.Empty;
+            set => _lineNumber = value;
         }
 
         /// <summary>
@@ -121,8 +121,8 @@ namespace NWebsec.Csp
         [DataMember(Name = "column-number")]
         public string ColumnNumber
         {
-            get { return _columnNumber ?? String.Empty; }
-            set { _columnNumber = value; }
+            get => _columnNumber ?? String.Empty;
+            set => _columnNumber = value;
         }
 
         /// <summary>
@@ -131,8 +131,8 @@ namespace NWebsec.Csp
         [DataMember(Name = "script-sample")]
         public string ScriptSample
         {
-            get { return _scriptSample ?? String.Empty; }
-            set { _scriptSample = value; }
+            get => _scriptSample ?? String.Empty;
+            set => _scriptSample = value;
         }
     }
 }

@@ -6,12 +6,6 @@ namespace NWebsec.Modules.Configuration.Validation
 {
     class XRobotsTagValidatorAttribute : ConfigurationValidatorAttribute
     {
-        public override ConfigurationValidatorBase ValidatorInstance
-        {
-            get
-            {
-                return new XRobotsTagValidator();
-            }
-        }
+        public override ConfigurationValidatorBase ValidatorInstance => new XRobotsTagValidator();
     }
 }

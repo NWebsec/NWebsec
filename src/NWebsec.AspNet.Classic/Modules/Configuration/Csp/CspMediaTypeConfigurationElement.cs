@@ -8,13 +8,12 @@ namespace NWebsec.Modules.Configuration.Csp
     public class CspMediaTypeConfigurationElement : ConfigurationElement
     {
         [ConfigurationProperty("media-type", IsKey = true, IsRequired = true, DefaultValue = "ConfigDefault")]
-        [CspPluginTypesMediaTypeValidatorAttribute]
+        [CspPluginTypesMediaTypeValidator]
         public string MediaType
         {
 
-            get { return (string)this["media-type"]; }
-            set { this["media-type"] = value; }
-
+            get => (string)this["media-type"];
+            set => this["media-type"] = value;
         }
     }
 }

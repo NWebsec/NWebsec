@@ -10,7 +10,7 @@ namespace NWebsec.Helpers
     internal class RedirectValidationHelper
     {
         private readonly RedirectValidator _redirectValidator;
-        private IRedirectValidationConfiguration Config { get { return ConfigHelper.GetConfig().RedirectValidation; } }
+        private IRedirectValidationConfiguration Config => ConfigHelper.GetConfig().RedirectValidation;
 
         internal RedirectValidationHelper()
         {

@@ -16,40 +16,22 @@ namespace NWebsec.Modules.Configuration.Csp
         [ConfigurationProperty("enabled", IsRequired = false, DefaultValue = true)]
         public bool Enabled
         {
-            get
-            {
-                return (bool)this["enabled"];
-            }
-            set
-            {
-                this["enabled"] = value;
-            }
+            get => (bool)this["enabled"];
+            set => this["enabled"] = value;
         }
 
         [ConfigurationProperty("none", IsRequired = false, DefaultValue = false)]
         public bool NoneSrc
         {
-            get
-            {
-                return (bool)this["none"];
-            }
-            set
-            {
-                this["none"] = value;
-            }
+            get => (bool)this["none"];
+            set => this["none"] = value;
         }
 
         [ConfigurationProperty("self", IsRequired = false, DefaultValue = false)]
         public bool SelfSrc
         {
-            get
-            {
-                return (bool)this["self"];
-            }
-            set
-            {
-                this["self"] = value;
-            }
+            get => (bool)this["self"];
+            set => this["self"] = value;
         }
 
         public virtual bool UnsafeInlineSrc { get; set; }
@@ -68,7 +50,7 @@ namespace NWebsec.Modules.Configuration.Csp
                 }
                 return _customSources;
             }
-            set { throw new NotImplementedException(); }
+            set => throw new NotImplementedException();
         }
 
         public string Nonce { get; set; }
@@ -77,14 +59,8 @@ namespace NWebsec.Modules.Configuration.Csp
         [ConfigurationCollection(typeof(CspSourcesElementCollection), CollectionType = ConfigurationElementCollectionType.AddRemoveClearMap)]
         public CspSourcesElementCollection Sources
         {
-            get
-            {
-                return (CspSourcesElementCollection)base[""];
-            }
-            set
-            {
-                base[""] = value;
-            }
+            get => (CspSourcesElementCollection)base[""];
+            set => base[""] = value;
         }
 
     }

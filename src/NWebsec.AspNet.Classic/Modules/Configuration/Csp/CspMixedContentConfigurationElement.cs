@@ -11,8 +11,8 @@ namespace NWebsec.Modules.Configuration.Csp
         [ConfigurationProperty("enabled", IsRequired = true, DefaultValue = false)]
         public bool Enabled
         {
-            get { return (bool)this["enabled"]; }
-            set { this["enabled"] = value; }
+            get => (bool)this["enabled"];
+            set => this["enabled"] = value;
         }
     }
 }
