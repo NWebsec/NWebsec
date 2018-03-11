@@ -9,7 +9,7 @@ namespace NWebsec.Mvc.Extensions
 {
     public static class HtmlHelperExtensions
     {
-        private static readonly IReferrerPolicy RefPolicy = new ReferrerPolicyGenerator();
+        private static readonly IReferrerPolicyClassic RefPolicyMeta = new ReferrerPolicyMetaTagGenerator();
 
         /// <summary>
         /// Returns a Referrer policy meta tag.
@@ -17,13 +17,13 @@ namespace NWebsec.Mvc.Extensions
         /// <param name="helper"></param>
         /// <param name="configurer">A configurer that selects a policy from the <see cref="IReferrerPolicy"/>.</param>
         /// <returns></returns>
-        public static HtmlString ReferrerPolicyMetaTag(this HtmlHelper helper, Func<IReferrerPolicy, ReferrerPolicyTag> configurer )
+        public static HtmlString ReferrerPolicyMetaTag(this HtmlHelper helper, Func<IReferrerPolicyClassic, ReferrerPolicyTag> configurer )
         {
             if (configurer == null)
             {
                 throw new ArgumentNullException(nameof(configurer),"You must supply a configurer.");
             }
-            return configurer(RefPolicy)?.Tag;
+            return configurer(RefPolicyMeta)?.Tag;
         }
     }
 }

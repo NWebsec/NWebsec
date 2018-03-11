@@ -11,31 +11,49 @@ namespace NWebsec.Mvc.Html
 
     {
         /// <summary>
-        /// Specifies the <c>none</c> policy, instructing the browser to not send referrer information.
+        /// Specifies the 'no-referrer' policy. The Referer header will be omitted entirely. No referrer information is sent along with requests.
         /// </summary>
         /// <returns>A <see cref="ReferrerPolicyTag"/>.</returns>
-        ReferrerPolicyTag None { get; }
+        ReferrerPolicyTag NoReferrer { get; }
 
         /// <summary>
-        /// Specifies the 'none-when-downgrade' policy, instructing the browser to send full referrer information unless navigation is from HTTPS->HTTP.
+        /// Specifies the 'no-referrer-when-downgrade' policy. This is the user agent's default behavior if no policy is specified. The origin is sent as a referrer when the protocol security level stays the same (HTTPS-&gt;HTTPS), but isn't sent to a less secure destination (HTTPS-&gt;HTTP).
         /// </summary>
         /// <returns>A <see cref="ReferrerPolicyTag"/>.</returns>
-        ReferrerPolicyTag NoneWhenDowngrade { get; }
+        ReferrerPolicyTag NoReferrerWhenDowngrade { get; }
 
         /// <summary>
-        /// Specifies the 'origin' policy, instructing the browser to send referrer information about the origin only, without path and query. 
+        /// Specifies the 'origin' policy. Only send the origin of the document as the referrer in all cases. The document https://example.com/page.html will send the referrer https://example.com/.
         /// </summary>
         /// <returns>A <see cref="ReferrerPolicyTag"/>.</returns>
         ReferrerPolicyTag Origin { get; }
 
         /// <summary>
-        /// Specifies the 'origin-when-crossorigin' policy, instructing the browser to send full referrer information for same origin but origin only when cross origin. 
+        /// Specifies the 'origin-when-crossorigin' policy. Send a full URL when performing a same-origin request, but only send the origin of the document for other cases.
         /// </summary>
         /// <returns>A <see cref="ReferrerPolicyTag"/>.</returns>
         ReferrerPolicyTag OriginWhenCrossOrigin { get; }
 
         /// <summary>
-        /// Specifies the 'unsafe-url' policy, instructing the browser to always send full referrer information, even when requests are from HTTPS->HTTP. 
+        /// Specifies the 'same-origin' policy. A referrer will be sent for same-site origins, but cross-origin requests will contain no referrer information.
+        /// </summary>
+        /// <returns>A <see cref="ReferrerPolicyTag"/>.</returns>
+        ReferrerPolicyTag SameOrigin { get; }
+
+        /// <summary>
+        /// Specifies the 'strict-origin' policy. Only send the origin of the document as the referrer to a-priori as-much-secure destination (HTTPS-&gt;HTTPS), but don't send it to a less secure destination (HTTPS-&gt;HTTP).
+        /// </summary>
+        /// <returns>A <see cref="ReferrerPolicyTag"/>.</returns>
+        ReferrerPolicyTag StrictOrigin { get; }
+
+        /// <summary>
+        /// Specifies the 'strict-origin-when-cross-origin' policy. Send a full URL when performing a same-origin request, only send the origin of the document to a-priori as-much-secure destination (HTTPS-&gt;HTTPS), and send no header to a less secure destination (HTTPS-&gt;HTTP).
+        /// </summary>
+        /// <returns>A <see cref="ReferrerPolicyTag"/>.</returns>
+        ReferrerPolicyTag StrictOriginWhenCrossOrigin { get; }
+
+        /// <summary>
+        /// Specifies the 'unsafe-url' policy. Send a full URL when performing a same-origin or cross-origin request. This policy is best avoided since it will leak origins and paths from TLS-protected resources to insecure origins.
         /// </summary>
         /// <returns>A <see cref="ReferrerPolicyTag"/>.</returns>
         ReferrerPolicyTag UnsafeUrl { get; }
