@@ -98,6 +98,50 @@
       </xs:enumeration>
     </xs:restriction>
   </xs:simpleType>
+  <xs:simpleType name="ReferrerPolicyDirectives">
+    <xs:restriction base="xs:normalizedString">
+      <xs:enumeration value="no-referrer">
+        <xs:annotation>
+          <xs:documentation>The Referer header will be omitted entirely. No referrer information is sent along with requests.</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="no-referrer-when-downgrade">
+        <xs:annotation>
+          <xs:documentation>This is the user agent's default behavior if no policy is specified. The origin is sent as a referrer when the protocol security level stays the same (HTTPS->HTTPS), but isn't sent to a less secure destination (HTTPS->HTTP).</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="origin">
+        <xs:annotation>
+          <xs:documentation>Only send the origin of the document as the referrer in all cases. The document https://example.com/page.html will send the referrer https://example.com/. </xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="origin-when-cross-origin">
+        <xs:annotation>
+          <xs:documentation>Send a full URL when performing a same-origin request, but only send the origin of the document for other cases.</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="same-origin">
+        <xs:annotation>
+          <xs:documentation>A referrer will be sent for same-site origins, but cross-origin requests will contain no referrer information.</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="strict-origin">
+        <xs:annotation>
+          <xs:documentation>Only send the origin of the document as the referrer to a-priori as-much-secure destination (HTTPS-&gt;HTTPS), but don't send it to a less secure destination (HTTPS-&gt;HTTP).</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="strict-origin-when-cross-origin">
+        <xs:annotation>
+          <xs:documentation>Send a full URL when performing a same-origin request, only send the origin of the document to a-priori as-much-secure destination (HTTPS-&gt;HTTPS), and send no header to a less secure destination (HTTPS-&gt;HTTP).</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="unsafe-url">
+        <xs:annotation>
+          <xs:documentation>Send a full URL when performing a same-origin or cross-origin request. This policy is best avoided since it will leak origins and paths from TLS-protected resources to insecure origins.</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
   <xs:element name="httpHeaderSecurityModule" >
     <xs:annotation>
       <xs:documentation>Configuration section for the NWebsec HttpHeaderSecurityModule</xs:documentation>
@@ -216,6 +260,23 @@
                   <xs:attribute name="policy" type="XFrameOptionsEnumType" use="required">
                     <xs:annotation>
                       <xs:documentation>This attribute is required.</xs:documentation>
+                    </xs:annotation>
+                  </xs:attribute>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="referrer-Policy" minOccurs="0" maxOccurs="1">
+                <xs:annotation>
+                  <xs:documentation>Specifies whether the Referrer-Policy security header should be set in the HTTP responses.</xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                  <xs:attribute name="enabled" type="simple_boolean" use="required">
+                    <xs:annotation>
+                      <xs:documentation>This attribute is required.</xs:documentation>
+                    </xs:annotation>
+                  </xs:attribute>
+                  <xs:attribute name="policy" type="ReferrerPolicyDirectives" use="required">
+                    <xs:annotation>
+                      <xs:documentation>Specifies the referrer policy. This attribute is required.</xs:documentation>
                     </xs:annotation>
                   </xs:attribute>
                 </xs:complexType>
