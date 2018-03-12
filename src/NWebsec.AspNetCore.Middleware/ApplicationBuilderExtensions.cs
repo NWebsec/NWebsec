@@ -4,6 +4,7 @@ using System;
 using NWebsec.AspNetCore.Middleware;
 using NWebsec.AspNetCore.Middleware.Middleware;
 using NWebsec.Core.Common.HttpHeaders.Configuration.Validation;
+using NWebsec.Core.Common.Middleware.Options;
 
 // ReSharper disable once CheckNamespace
 namespace Microsoft.AspNetCore.Builder

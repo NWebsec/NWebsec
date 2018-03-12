@@ -1,19 +1,23 @@
 ﻿// Copyright (c) André N. Klingsheim. See License.txt in the project root for license information.
 
-using Microsoft.AspNetCore.Http;
-using NWebsec.AspNetCore.Core.Extensions;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using NWebsec.Core.Common.HttpHeaders;
 using NWebsec.Core.Common.HttpHeaders.Configuration;
 using NWebsec.Core.Common.Middleware.Options;
+using NWebsec.Owin.Core;
 
-namespace NWebsec.AspNetCore.Middleware.Middleware
+namespace NWebsec.Owin.Middleware
 {
+    using AppFunc = Func<IDictionary<string, object>, Task>;
+
     public class ReferrerPolicyMiddleware : MiddlewareBase
     {
         private readonly IReferrerPolicyConfiguration _config;
         private readonly HeaderResult _headerResult;
 
-        public ReferrerPolicyMiddleware(RequestDelegate next, ReferrerPolicyOptions options)
+        public ReferrerPolicyMiddleware(AppFunc next, ReferrerPolicyOptions options)
             : base(next)
         {
             _config = options;
@@ -21,12 +25,12 @@ namespace NWebsec.AspNetCore.Middleware.Middleware
             _headerResult = headerGenerator.CreateReferrerPolicyResult(_config);
         }
 
-        internal override void PreInvokeNext(HttpContext owinEnvironment)
+        internal override void PreInvokeNext(OwinEnvironment owinEnvironment)
         {
-            owinEnvironment.GetNWebsecContext().ReferrerPolicy = _config;
+            owinEnvironment.NWebsecContext.ReferrerPolicy = _config;
             if (_headerResult.Action == HeaderResult.ResponseAction.Set)
             {
-                owinEnvironment.Response.Headers[_headerResult.Name] = _headerResult.Value;
+                owinEnvironment.ResponseHeaders.SetHeader(_headerResult.Name, _headerResult.Value);
             }
         }
     }

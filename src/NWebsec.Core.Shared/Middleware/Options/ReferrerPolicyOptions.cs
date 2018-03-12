@@ -3,11 +3,11 @@
 using NWebsec.Core.Common.HttpHeaders;
 using NWebsec.Core.Common.HttpHeaders.Configuration;
 
-namespace NWebsec.AspNetCore.Middleware
+namespace NWebsec.Core.Common.Middleware.Options
 {
     public class ReferrerPolicyOptions : IReferrerPolicyConfiguration, IFluentReferrerPolicyOptions
     {
-        internal ReferrerPolicyOptions()
+        public ReferrerPolicyOptions()
         {
             Policy = ReferrerPolicy.Disabled;
         }

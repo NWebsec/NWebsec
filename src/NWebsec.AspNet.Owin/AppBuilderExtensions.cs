@@ -2,10 +2,13 @@
 
 using System;
 using NWebsec.Core.Common.HttpHeaders.Configuration.Validation;
+using NWebsec.Core.Common.Middleware.Options;
+using NWebsec.Owin;
 using NWebsec.Owin.Middleware;
 using Owin;
 
-namespace NWebsec.Owin
+// ReSharper disable once CheckNamespace
+namespace Owin
 {
     public static class AppBuilderExtensions
     {
@@ -127,6 +130,22 @@ namespace NWebsec.Owin
             var options = new XFrameOptions();
             configurer(options);
             return app.Use(typeof(XfoMiddleware), options);
+        }
+
+        /// <summary>
+        ///     Adds a middleware to the OWIN pipeline that sets the Referrer-Policy header.
+        /// </summary>
+        /// <param name="app">The <see cref="IAppBuilder" /> to which the middleware is added.</param>
+        /// <param name="configurer">An <see cref="Action" /> that configures the options for the middleware.</param>
+        /// <returns>The <see cref="IAppBuilder" /> supplied in the app parameter.</returns>
+        public static IAppBuilder UseReferrerPolicy(this IAppBuilder app, Action<IFluentReferrerPolicyOptions> configurer)
+        {
+            if (app == null) throw new ArgumentNullException(nameof(app));
+            if (configurer == null) throw new ArgumentNullException(nameof(configurer));
+
+            var options = new ReferrerPolicyOptions();
+            configurer(options);
+            return app.Use(typeof(ReferrerPolicyMiddleware), options);
         }
 
         /// <summary>
