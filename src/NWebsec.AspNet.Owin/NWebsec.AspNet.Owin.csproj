@@ -5,9 +5,9 @@
   <PropertyGroup>
     <TargetFramework>net45</TargetFramework>
     <Description>NWebsec middleware for OWIN applications. NWebsec helps you set important security headers and detect potentially dangerous redirects. See project website for documentation.</Description>
-    <Copyright>Copyright © 2014 - 2017</Copyright>
+    <Copyright>Copyright © 2014 - 2018</Copyright>
     <AssemblyTitle>NWebsec.Owin</AssemblyTitle>
-    <VersionPrefix>2.4.0</VersionPrefix>
+    <VersionPrefix>3.0.0-rc1</VersionPrefix>
     <Authors>André N. Klingsheim</Authors>
     <NoWarn>$(NoWarn);CS1591</NoWarn>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>

@@ -5,9 +5,9 @@
   <PropertyGroup>
     <TargetFramework>net45</TargetFramework>
     <Description>This library provides shared functionality for the NWebsec ASP.NET security libraries.</Description>
-    <Copyright>Copyright © 2014 - 2017</Copyright>
+    <Copyright>Copyright © 2014 - 2018</Copyright>
     <AssemblyTitle>NWebsec.Core</AssemblyTitle>
-    <VersionPrefix>1.8.0</VersionPrefix>
+    <VersionPrefix>2.0.0-rc1</VersionPrefix>
     <Authors>André N. Klingsheim</Authors>
     <NoWarn>$(NoWarn);CS1591</NoWarn>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
