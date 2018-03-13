@@ -7,13 +7,13 @@
     <Description>This library provides shared functionality for the NWebsec ASP.NET security libraries.</Description>
     <Copyright>Copyright © 2014 - 2018</Copyright>
     <AssemblyTitle>NWebsec.Core</AssemblyTitle>
-    <VersionPrefix>2.0.0-rc1</VersionPrefix>
+    <VersionPrefix>2.0.0</VersionPrefix>
     <Authors>André N. Klingsheim</Authors>
     <NoWarn>$(NoWarn);CS1591</NoWarn>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <AssemblyName>NWebsec.Core</AssemblyName>
     <PackageId>NWebsec.Core</PackageId>
-    <PackageTags>nwebsec aspnetcore security</PackageTags>
+    <PackageTags>nwebsec aspnet security appsec</PackageTags>
     <PackageReleaseNotes>This release includes core functions for the NWebsec security libaries.</PackageReleaseNotes>
     <PackageIconUrl>https://nwebseccdn.blob.core.windows.net/nugeticon/nwebsec_nuget.png</PackageIconUrl>
     <PackageProjectUrl>https://docs.nwebsec.com/</PackageProjectUrl>
