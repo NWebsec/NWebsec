@@ -91,7 +91,6 @@ namespace NWebsec.Core.Common.HttpHeaders.Csp
             if (!Regex.IsMatch(parseResult.Host, HostRegex))
             {
                 throw new InvalidCspSourceException("Invalid host in CSP source: " + source);
-
             }
 
             sb.Append(EncodeHostname(parseResult.Host.ToLower()));
@@ -164,8 +163,7 @@ namespace NWebsec.Core.Common.HttpHeaders.Csp
         {
             if (port.Equals("*")) return true;
 
-            int portNumber;
-            var isInt = Int32.TryParse(port, out portNumber);
+            var isInt = Int32.TryParse(port, out var portNumber);
             return isInt && portNumber > 0 && portNumber <= 65535;
         }
     }

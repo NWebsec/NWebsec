@@ -57,6 +57,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)HttpHeaders\Configuration\XRobotsTagConfiguration.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)HttpHeaders\Configuration\XXssProtectionConfiguration.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)HttpHeaders\Csp\CspSourceParseResult.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)HttpHeaders\Csp\CspHashSource.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)HttpHeaders\Csp\CspUriSource.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)HttpHeaders\Csp\InvalidCspSourceException.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)HttpHeaders\HeaderConstants.cs" />
