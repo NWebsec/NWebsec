@@ -9,7 +9,7 @@ namespace NWebsec.Helpers
     {
         public static HttpHeaderSecurityConfigurationSection GetConfig()
         {
-            return (HttpHeaderSecurityConfigurationSection)(WebConfigurationManager.GetSection("nwebsec/httpHeaderSecurityModule")) ??
+            return (HttpHeaderSecurityConfigurationSection)WebConfigurationManager.GetSection("nwebsec/httpHeaderSecurityModule") ??
                    new HttpHeaderSecurityConfigurationSection();
         }
     }

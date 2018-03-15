@@ -4,8 +4,7 @@ using System.Configuration;
 
 namespace NWebsec.Modules.Configuration.Csp.Validation
 {
-    class CspDirectiveUnsafeInlineConfigurationElementValidatorAttribute :
-        ConfigurationValidatorAttribute
+    class CspDirectiveUnsafeInlineConfigurationElementValidatorAttribute : ConfigurationValidatorAttribute
     {
         public override ConfigurationValidatorBase ValidatorInstance => new CspDirectiveUnsafeInlineConfigurationElementValidator();
     }
