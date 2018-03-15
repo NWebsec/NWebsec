@@ -23,7 +23,7 @@ namespace NWebsec.AspNet.Mvc.Tests.HttpHeaders.Csp.Internals
         public void ValidateParams_EnabledAndNoDirectives_ThrowsException()
         {
             var cspPluginTypesAttributeBaseMock = new Mock<CspPluginTypesAttributeBase>(MockBehavior.Strict).Object;
-            Assert.Throws<ApplicationException>(() => cspPluginTypesAttributeBaseMock.ValidateParams());
+            Assert.Throws<ArgumentException>(() => cspPluginTypesAttributeBaseMock.ValidateParams());
         }
 
         [Fact]

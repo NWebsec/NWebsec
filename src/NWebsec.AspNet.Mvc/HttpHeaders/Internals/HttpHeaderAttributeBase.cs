@@ -43,7 +43,7 @@ namespace NWebsec.Mvc.HttpHeaders.Internals
             {
                 errorMessage += "\nDetails: " + e.Message;
             }
-            return new ApplicationException(errorMessage);
+            return new ArgumentException(errorMessage);
         }
     }
 }

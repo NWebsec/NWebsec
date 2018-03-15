@@ -15,17 +15,43 @@ namespace NWebsec.AspNet.Mvc.Tests.HttpHeaders.Csp.Internals
         [Fact]
         public void ValidateParams_EnabledAndNoDirectives_ThrowsException()
         {
-            var cspSandboxAttributeBaseMock = new Mock<CspDirectiveAttributeBase>(MockBehavior.Strict).Object;
-            Assert.Throws<ApplicationException>(() => cspSandboxAttributeBaseMock.ValidateParams());
+            var cspDirectiveAttribute = new Mock<CspDirectiveAttributeBase>(MockBehavior.Strict).Object;
+            Assert.Throws<ArgumentException>(() => cspDirectiveAttribute.ValidateParams());
         }
 
         [Fact]
         public void ValidateParams_DisabledAndNoDirectives_NoException()
         {
-            var cspSandboxAttributeBaseMock = new Mock<CspDirectiveAttributeBase>(MockBehavior.Strict).Object;
-            cspSandboxAttributeBaseMock.Enabled = false;
+            var cspDirectiveAttribute = new Mock<CspDirectiveAttributeBase>(MockBehavior.Strict).Object;
+            cspDirectiveAttribute.Enabled = false;
 
-            cspSandboxAttributeBaseMock.ValidateParams();
+            cspDirectiveAttribute.ValidateParams();
+        }
+
+        [Theory]
+        [InlineData(true)]
+        [InlineData(false)]
+        public void ValidateParams_HashSourcesEnabled_NoException(bool enabled)
+        {
+            var cspDirectiveAttribute = new Mock<CspDirectiveAttributeBase>(MockBehavior.Strict).Object;
+            Mock.Get(cspDirectiveAttribute).Setup(d => d.EnableHashSources).Returns(true);
+            cspDirectiveAttribute.Enabled = enabled;
+
+            cspDirectiveAttribute.CustomSources = "sha256-Kgv+CLuzs+N/onD9CCIVKvqXrFhN+F5GOItmgi/EYd0=";
+
+            cspDirectiveAttribute.ValidateParams();
+        }
+
+        [Theory]
+        [InlineData(true)]
+        [InlineData(false)]
+        public void ValidateParams_HashSourcesDisabled_Throws(bool enabled)
+        {
+            var cspDirectiveAttribute = new Mock<CspDirectiveAttributeBase>(MockBehavior.Strict).Object;
+            Mock.Get(cspDirectiveAttribute).Setup(d => d.EnableHashSources).Returns(false);
+            cspDirectiveAttribute.Enabled = enabled;
+
+            Assert.Throws<ArgumentException>(() => cspDirectiveAttribute.CustomSources = "sha256-Kgv+CLuzs+N/onD9CCIVKvqXrFhN+F5GOItmgi/EYd0=");
         }
 
         [Fact]
@@ -38,48 +64,49 @@ namespace NWebsec.AspNet.Mvc.Tests.HttpHeaders.Csp.Internals
         }
 
         [Fact]
-        public void ValidateParams_EnabledAndMalconfiguredDirectives_NoException()
+        public void ValidateParams_EnabledAndMalconfiguredDirectives_Throws()
         {
             foreach (var cspSandboxAttributeBase in MalconfiguredAttributes())
             {
-                Assert.Throws<ApplicationException>(() => cspSandboxAttributeBase.ValidateParams());
+                Assert.Throws<ArgumentException>(() => cspSandboxAttributeBase.ValidateParams());
             }
         }
 
         private IEnumerable<CspDirectiveAttributeBase> ConfiguredAttributes()
         {
             var attribute = new Mock<CspDirectiveAttributeBase>(MockBehavior.Strict).Object;
+            Mock.Get(attribute).Setup(d => d.EnableHashSources).Returns(false);
+
             attribute.None = true;
             yield return attribute;
 
             attribute = new Mock<CspDirectiveAttributeBase>(MockBehavior.Strict).Object;
+            Mock.Get(attribute).Setup(d => d.EnableHashSources).Returns(false);
             attribute.Self = true;
             yield return attribute;
 
-            var styleattribute = new CspStyleSrcAttribute { UnsafeInline = true };
-            yield return styleattribute;
-
-            var scriptAttribute = new CspScriptSrcAttribute { UnsafeEval = true };
-            yield return scriptAttribute;
+            yield return new CspStyleSrcAttribute { UnsafeInline = true };
+            yield return new CspScriptSrcAttribute { UnsafeEval = true };
+            yield return new CspScriptSrcAttribute { StrictDynamic = true };
         }
 
         private IEnumerable<CspDirectiveAttributeBase> MalconfiguredAttributes()
         {
             var attribute = new Mock<CspDirectiveAttributeBase>(MockBehavior.Strict).Object;
+            Mock.Get(attribute).Setup(d => d.EnableHashSources).Returns(false);
             attribute.Self = true;
             attribute.None = true;
             yield return attribute;
 
             attribute = new Mock<CspDirectiveAttributeBase>(MockBehavior.Strict).Object;
+            Mock.Get(attribute).Setup(d => d.EnableHashSources).Returns(false);
             attribute.None = true;
             attribute.CustomSources = "www.nwebsec.com";
             yield return attribute;
 
-            var styleattribute = new CspStyleSrcAttribute { None = true, UnsafeInline = true };
-            yield return styleattribute;
-
-            var scriptAttribute = new CspScriptSrcAttribute { None = true, UnsafeEval = true };
-            yield return scriptAttribute;
+            yield return new CspStyleSrcAttribute { None = true, UnsafeInline = true };
+            yield return new CspScriptSrcAttribute { None = true, UnsafeEval = true };
+            yield return new CspScriptSrcAttribute { None = true, StrictDynamic = true };
         }
     }
 }
