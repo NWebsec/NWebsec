@@ -34,18 +34,6 @@ namespace NWebsec.Mvc.HttpHeaders.Csp.Internals
         /// </summary>
         public bool Enabled { get => _config.Enabled; set => _config.Enabled = value; }
 
-        /// <summary>
-        /// The X-Content-Security-Policy header is no longer supported as modern browsers now support the standardized CSP header.
-        /// </summary>
-        [Obsolete("The X-Content-Security-Policy header is no longer supported as modern browsers now support the standardized CSP header. This property will be removed entirely in a future version.", true)]
-        public bool XContentSecurityPolicyHeader { get; set; }
-
-        /// <summary>
-        /// The X-WebKit-Csp header is no longer supported as modern browsers now support the standardized CSP header.
-        /// </summary>
-        [Obsolete("The X-WebKitCsp header is no longer supported as modern browsers now support the standardized CSP header. This property will be removed entirely in a future version. ", true)]
-        public bool XWebKitCspHeader { get; set; }
-
         protected abstract bool ReportOnly { get; }
 
         public override void OnActionExecuting(ActionExecutingContext filterContext)

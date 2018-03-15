@@ -53,7 +53,7 @@ namespace NWebsec.Owin
         /// Specifies that the HSTS header should be set for HTTPS responses only.
         /// </summary>
         /// <returns>The current instance.</returns>
-        [Obsolete("This method is deprecated as the default has been changed to HTTPS only.", false)]
+        [Obsolete("This method is deprecated as the default has been changed to HTTPS only.", true)]
         IFluentHstsOptions HttpsOnly();
     }
 }
