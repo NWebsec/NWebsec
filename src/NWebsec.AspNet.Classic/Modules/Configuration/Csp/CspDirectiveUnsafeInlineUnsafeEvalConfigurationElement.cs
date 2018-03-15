@@ -12,5 +12,12 @@ namespace NWebsec.Modules.Configuration.Csp
             get => (bool)this["unsafeEval"];
             set => this["unsafeEval"] = value;
         }
+
+        [ConfigurationProperty("strictDynamic", IsRequired = false, DefaultValue = false)]
+        public override bool StrictDynamicSrc
+        {
+            get => (bool)this["strictDynamic"];
+            set => this["strictDynamic"] = value;
+        }
     }
 }

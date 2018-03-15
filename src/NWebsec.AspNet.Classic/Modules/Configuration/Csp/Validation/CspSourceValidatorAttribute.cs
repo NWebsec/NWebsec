@@ -4,8 +4,9 @@ using System.Configuration;
 
 namespace NWebsec.Modules.Configuration.Csp.Validation
 {
-    class CspSourceValidatorAttribute : ConfigurationValidatorAttribute
+    internal class CspSourceValidatorAttribute : ConfigurationValidatorAttribute
     {
-        public override ConfigurationValidatorBase ValidatorInstance => new CspSourceConfigurationValidator();
+        public bool ExpectHashSources { get; set; }
+        public override ConfigurationValidatorBase ValidatorInstance => new CspSourceConfigurationValidator(ExpectHashSources);
     }
 }

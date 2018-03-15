@@ -5,18 +5,18 @@ using NWebsec.Modules.Configuration.Csp;
 using NWebsec.Modules.Configuration.Csp.Validation;
 using Xunit;
 
-namespace NWebsec.AspNet.Classic.Tests.Modules.Configuration.Csp
+namespace NWebsec.AspNet.Classic.Tests.Modules.Configuration.Csp.Validation
 {
     public class CspDirectiveBaseConfigurationElementValidatorTests
     {
         private readonly CspDirectiveBaseConfigurationElementValidator _validator;
-        private readonly CspDirectiveBaseConfigurationElement _configElement;
+        private readonly CspDirectiveBaseConfigurationElement<CspSourceConfigurationElement> _configElement;
         private const string ValidSource = "nwebsec.codeplex.com";
 
         public CspDirectiveBaseConfigurationElementValidatorTests()
         {
             _validator = new CspDirectiveBaseConfigurationElementValidator();
-            _configElement = new CspDirectiveBaseConfigurationElement();
+            _configElement = new CspDirectiveBaseConfigurationElement<CspSourceConfigurationElement>();
         }
 
         [Fact]

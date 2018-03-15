@@ -9,12 +9,12 @@ namespace NWebsec.Modules.Configuration.Csp.Validation
     {
         public override bool CanValidate(Type type)
         {
-            return type == typeof(CspDirectiveBaseConfigurationElement);
+            return type == typeof(CspDirectiveBaseConfigurationElement<CspSourceConfigurationElement>);
         }
 
         public override void Validate(object value)
         {
-            var directive = (CspDirectiveBaseConfigurationElement)value;
+            var directive = (CspDirectiveBaseConfigurationElement<CspSourceConfigurationElement>)value;
 
             if (!(directive.NoneSrc || directive.SelfSrc || directive.Sources.Count > 0))
                 return;

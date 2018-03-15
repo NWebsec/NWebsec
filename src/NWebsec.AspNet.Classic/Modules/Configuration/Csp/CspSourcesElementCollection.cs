@@ -5,11 +5,11 @@ using System.Configuration;
 
 namespace NWebsec.Modules.Configuration.Csp
 {
-    public class CspSourcesElementCollection : ConfigurationElementCollection
+    public class CspSourcesElementCollection<T> : ConfigurationElementCollection where T : CspSourceConfigurationElement, new()
     {
         protected override ConfigurationElement CreateNewElement()
         {
-            return new CspSourceConfigurationElement();
+            return new T();
         }
 
         protected override object GetElementKey(ConfigurationElement element)

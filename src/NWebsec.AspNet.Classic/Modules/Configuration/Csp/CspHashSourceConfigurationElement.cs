@@ -5,14 +5,13 @@ using NWebsec.Modules.Configuration.Csp.Validation;
 
 namespace NWebsec.Modules.Configuration.Csp
 {
-    public class CspSourceConfigurationElement : ConfigurationElement
+    public class CspHashSourceConfigurationElement : CspSourceConfigurationElement
     {
         [ConfigurationProperty("source", IsKey = true, IsRequired = true)]
-        [CspSourceValidator]
-        public virtual string Source
+        [CspSourceValidator(ExpectHashSources = true)]
+        public override string Source
         {
-
-            get => (string) this["source"];
+            get => (string)this["source"];
             set => this["source"] = value;
         }
     }

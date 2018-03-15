@@ -6,8 +6,14 @@ using NWebsec.Core.Common.HttpHeaders.Csp;
 
 namespace NWebsec.Modules.Configuration.Csp.Validation
 {
-    class CspSourceConfigurationValidator : ConfigurationValidatorBase
+    internal class CspSourceConfigurationValidator : ConfigurationValidatorBase
     {
+        private readonly bool _expectHashSources;
+
+        public CspSourceConfigurationValidator(bool expectHashSources)
+        {
+            _expectHashSources = expectHashSources;
+        }
 
         public override bool CanValidate(Type type)
         {
@@ -21,6 +27,10 @@ namespace NWebsec.Modules.Configuration.Csp.Validation
 
             try
             {
+                if (_expectHashSources && CspHashSource.Parse(source) != null)
+                {
+                    return;
+                }
                 CspUriSource.Parse(source);
             }
             catch (Exception e)

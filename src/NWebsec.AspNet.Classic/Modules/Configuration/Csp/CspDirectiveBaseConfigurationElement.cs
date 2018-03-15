@@ -9,7 +9,7 @@ using NWebsec.Core.Common.HttpHeaders.Csp;
 
 namespace NWebsec.Modules.Configuration.Csp
 {
-    public class CspDirectiveBaseConfigurationElement : ConfigurationElement, ICspDirectiveConfiguration
+    public class CspDirectiveBaseConfigurationElement<T> : ConfigurationElement, ICspDirectiveConfiguration where T : CspSourceConfigurationElement, new()
     {
         private string[] _customSources;
 
@@ -44,9 +44,10 @@ namespace NWebsec.Modules.Configuration.Csp
             {
                 if (_customSources == null)
                 {
-                    //Sources are already validated by configuration validation magic.
-                    _customSources = Sources.Cast<CspSourceConfigurationElement>().Select(s => CspUriSource.Parse(s.Source).ToString()).ToArray();
-
+                    _customSources = Sources
+                        .Cast<T>()
+                        .Select(s => (s is CspHashSourceConfigurationElement ? CspHashSource.Parse(s.Source) : null) ?? CspUriSource.Parse(s.Source).ToString())
+                        .ToArray();
                 }
                 return _customSources;
             }
@@ -56,10 +57,10 @@ namespace NWebsec.Modules.Configuration.Csp
         public string Nonce { get; set; }
 
         [ConfigurationProperty("", IsRequired = false, IsDefaultCollection = true)]
-        [ConfigurationCollection(typeof(CspSourcesElementCollection), CollectionType = ConfigurationElementCollectionType.AddRemoveClearMap)]
-        public CspSourcesElementCollection Sources
+        [ConfigurationCollection(typeof(CspSourcesElementCollection<>), CollectionType = ConfigurationElementCollectionType.AddRemoveClearMap)]
+        public CspSourcesElementCollection<T> Sources
         {
-            get => (CspSourcesElementCollection)base[""];
+            get => (CspSourcesElementCollection<T>)base[""];
             set => base[""] = value;
         }
 

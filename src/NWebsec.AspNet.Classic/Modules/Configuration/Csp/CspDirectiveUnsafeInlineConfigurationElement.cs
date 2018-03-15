@@ -4,7 +4,7 @@ using System.Configuration;
 
 namespace NWebsec.Modules.Configuration.Csp
 {
-    public class CspDirectiveUnsafeInlineConfigurationElement : CspDirectiveBaseConfigurationElement
+    public class CspDirectiveUnsafeInlineConfigurationElement : CspDirectiveBaseConfigurationElement<CspHashSourceConfigurationElement>
     {
         [ConfigurationProperty("unsafeInline", IsRequired = false, DefaultValue = false)]
         public override bool UnsafeInlineSrc

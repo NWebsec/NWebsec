@@ -12,25 +12,25 @@ namespace NWebsec.Modules.Configuration.Csp
 
         [ConfigurationProperty("default-src", IsRequired = false)]
         [CspDirectiveBaseConfigurationElementValidator]
-        public CspDirectiveBaseConfigurationElement DefaultSrc
+        public CspDirectiveBaseConfigurationElement<CspSourceConfigurationElement> DefaultSrc
         {
-            get => (CspDirectiveBaseConfigurationElement)this["default-src"];
+            get => (CspDirectiveBaseConfigurationElement<CspSourceConfigurationElement>)this["default-src"];
             set => this["default-src"] = value;
         }
 
         [ConfigurationProperty("script-src", IsRequired = false)]
-        [CspDirectiveUnsafeInlineUnsafeEvalStrictDynamicConfigurationElementValidator]
-        public CspDirectiveUnsafeInlineUnsafeEvalStrictDynamicConfigurationElement ScriptSrc
+        [CspDirectiveUnsafeInlineUnsafeEvalConfigurationElementValidator]
+        public CspDirectiveUnsafeInlineUnsafeEvalConfigurationElement ScriptSrc
         {
-            get => (CspDirectiveUnsafeInlineUnsafeEvalStrictDynamicConfigurationElement)this["script-src"];
+            get => (CspDirectiveUnsafeInlineUnsafeEvalConfigurationElement)this["script-src"];
             set => this["script-src"] = value;
         }
 
         [ConfigurationProperty("object-src", IsRequired = false)]
         [CspDirectiveBaseConfigurationElementValidator]
-        public CspDirectiveBaseConfigurationElement ObjectSrc
+        public CspDirectiveBaseConfigurationElement<CspSourceConfigurationElement> ObjectSrc
         {
-            get => (CspDirectiveBaseConfigurationElement)this["object-src"];
+            get => (CspDirectiveBaseConfigurationElement<CspSourceConfigurationElement>)this["object-src"];
             set => this["object-src"] = value;
         }
 
@@ -44,81 +44,81 @@ namespace NWebsec.Modules.Configuration.Csp
 
         [ConfigurationProperty("img-src", IsRequired = false)]
         [CspDirectiveBaseConfigurationElementValidator]
-        public CspDirectiveBaseConfigurationElement ImgSrc
+        public CspDirectiveBaseConfigurationElement<CspSourceConfigurationElement> ImgSrc
         {
-            get => (CspDirectiveBaseConfigurationElement)this["img-src"];
+            get => (CspDirectiveBaseConfigurationElement<CspSourceConfigurationElement>)this["img-src"];
             set => this["img-src"] = value;
         }
 
         [ConfigurationProperty("media-src", IsRequired = false)]
         [CspDirectiveBaseConfigurationElementValidator]
-        public CspDirectiveBaseConfigurationElement MediaSrc
+        public CspDirectiveBaseConfigurationElement<CspSourceConfigurationElement> MediaSrc
         {
-            get => (CspDirectiveBaseConfigurationElement)this["media-src"];
+            get => (CspDirectiveBaseConfigurationElement<CspSourceConfigurationElement>)this["media-src"];
             set => this["media-src"] = value;
         }
 
         [ConfigurationProperty("frame-src", IsRequired = false)]
         [CspDirectiveBaseConfigurationElementValidator]
-        public CspDirectiveBaseConfigurationElement FrameSrc
+        public CspDirectiveBaseConfigurationElement<CspSourceConfigurationElement> FrameSrc
         {
-            get => (CspDirectiveBaseConfigurationElement)this["frame-src"];
+            get => (CspDirectiveBaseConfigurationElement<CspSourceConfigurationElement>)this["frame-src"];
             set => this["frame-src"] = value;
         }
 
         [ConfigurationProperty("font-src", IsRequired = false)]
         [CspDirectiveBaseConfigurationElementValidator]
-        public CspDirectiveBaseConfigurationElement FontSrc
+        public CspDirectiveBaseConfigurationElement<CspSourceConfigurationElement> FontSrc
         {
-            get => (CspDirectiveBaseConfigurationElement)this["font-src"];
+            get => (CspDirectiveBaseConfigurationElement<CspSourceConfigurationElement>)this["font-src"];
             set => this["font-src"] = value;
         }
 
         [ConfigurationProperty("connect-src", IsRequired = false)]
         [CspDirectiveBaseConfigurationElementValidator]
-        public CspDirectiveBaseConfigurationElement ConnectSrc
+        public CspDirectiveBaseConfigurationElement<CspSourceConfigurationElement> ConnectSrc
         {
-            get => (CspDirectiveBaseConfigurationElement)this["connect-src"];
+            get => (CspDirectiveBaseConfigurationElement<CspSourceConfigurationElement>)this["connect-src"];
             set => this["connect-src"] = value;
         }
 
         [ConfigurationProperty("base-uri", IsRequired = false)]
         [CspDirectiveBaseConfigurationElementValidator]
-        public CspDirectiveBaseConfigurationElement BaseUri
+        public CspDirectiveBaseConfigurationElement<CspSourceConfigurationElement> BaseUri
         {
-            get => (CspDirectiveBaseConfigurationElement)this["base-uri"];
+            get => (CspDirectiveBaseConfigurationElement<CspSourceConfigurationElement>)this["base-uri"];
             set => this["base-uri"] = value;
         }
 
         [ConfigurationProperty("child-src", IsRequired = false)]
         [CspDirectiveBaseConfigurationElementValidator]
-        public CspDirectiveBaseConfigurationElement ChildSrc
+        public CspDirectiveBaseConfigurationElement<CspSourceConfigurationElement> ChildSrc
         {
-            get => (CspDirectiveBaseConfigurationElement)this["child-src"];
+            get => (CspDirectiveBaseConfigurationElement<CspSourceConfigurationElement>)this["child-src"];
             set => this["child-src"] = value;
         }
 
         [ConfigurationProperty("form-action", IsRequired = false)]
         [CspDirectiveBaseConfigurationElementValidator]
-        public CspDirectiveBaseConfigurationElement FormAction
+        public CspDirectiveBaseConfigurationElement<CspSourceConfigurationElement> FormAction
         {
-            get => (CspDirectiveBaseConfigurationElement)this["form-action"];
+            get => (CspDirectiveBaseConfigurationElement<CspSourceConfigurationElement>)this["form-action"];
             set => this["form-action"] = value;
         }
 
         [ConfigurationProperty("frame-ancestors", IsRequired = false)]
         [CspDirectiveBaseConfigurationElementValidator]
-        public CspDirectiveBaseConfigurationElement FrameAncestors
+        public CspDirectiveBaseConfigurationElement<CspSourceConfigurationElement> FrameAncestors
         {
-            get => (CspDirectiveBaseConfigurationElement)this["frame-ancestors"];
+            get => (CspDirectiveBaseConfigurationElement<CspSourceConfigurationElement>)this["frame-ancestors"];
             set => this["frame-ancestors"] = value;
         }
 
         [ConfigurationProperty("manifest-src", IsRequired = false)]
         [CspDirectiveBaseConfigurationElementValidator]
-        public CspDirectiveBaseConfigurationElement ManifestSrc
+        public CspDirectiveBaseConfigurationElement<CspSourceConfigurationElement> ManifestSrc
         {
-            get => (CspDirectiveBaseConfigurationElement)this["manifest-src"];
+            get => (CspDirectiveBaseConfigurationElement<CspSourceConfigurationElement>)this["manifest-src"];
             set => this["manifest-src"] = value;
         }
 
