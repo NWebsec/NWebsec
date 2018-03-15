@@ -5,7 +5,6 @@ using NWebsec.Core.Common.HttpHeaders.Configuration.Validation;
 using NWebsec.Core.Common.Middleware.Options;
 using NWebsec.Owin;
 using NWebsec.Owin.Middleware;
-using Owin;
 
 // ReSharper disable once CheckNamespace
 namespace Owin

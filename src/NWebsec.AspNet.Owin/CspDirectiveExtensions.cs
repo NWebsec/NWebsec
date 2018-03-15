@@ -51,7 +51,11 @@ namespace NWebsec.Owin
 
             try
             {
-                directive.CustomSources = sources.Select(s => CspUriSource.Parse(s).ToString()).ToArray();
+                var type = typeof(T);
+                var enableHashes = type == typeof(ICspDirectiveConfiguration) || type == typeof(ICspDirectiveUnsafeInlineConfiguration);
+                directive.CustomSources = sources
+                    .Select(s => (enableHashes ? CspHashSource.Parse(s) : null) ?? CspUriSource.Parse(s).ToString())
+                    .ToArray();
             }
             catch (InvalidCspSourceException e)
             {

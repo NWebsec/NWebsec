@@ -3,6 +3,7 @@
 using System;
 using System.Linq;
 using Microsoft.AspNetCore.Builder;
+using NWebsec.Core.Common.HttpHeaders.Configuration;
 using Xunit;
 
 namespace NWebsec.AspNetCore.Middleware.Tests
@@ -63,6 +64,30 @@ namespace NWebsec.AspNetCore.Middleware.Tests
         }
 
         [Fact]
+        public void CustomSources_StyleAndHashSource_SetCustomSources()
+        {
+            const string hashSource = "sha256-jzgBGA4UWFFmpOBq0JpdsySukE1FrEN5bUpoK8Z29fY=";
+            var directive = new CspDirective() as ICspDirectiveUnsafeInlineConfiguration;
+
+            directive.CustomSources("source1", hashSource);
+
+            var expectedResult = new[] { "source1", $"'{hashSource}'" };
+            Assert.True(expectedResult.SequenceEqual(directive.CustomSources));
+        }
+
+        [Fact]
+        public void CustomSources_ScriptAndHashSource_SetCustomSources()
+        {
+            const string hashSource = "sha256-jzgBGA4UWFFmpOBq0JpdsySukE1FrEN5bUpoK8Z29fY=";
+            var directive = new CspDirective() as ICspDirectiveConfiguration;
+
+            directive.CustomSources("source1", hashSource);
+
+            var expectedResult = new[] { "source1", $"'{hashSource}'" };
+            Assert.Equal(expectedResult, directive.CustomSources);
+        }
+
+        [Fact]
         public void CustomSources_NoParams_ThrowException()
         {
             var directive = new CspDirective();
@@ -71,11 +96,21 @@ namespace NWebsec.AspNetCore.Middleware.Tests
         }
 
         [Fact]
-        public void CustomSources_InValidSource_ThrowsException()
+        public void CustomSources_InvalidSource_ThrowsException()
         {
             var directive = new CspDirective();
 
             Assert.Throws<ArgumentException>(() => directive.CustomSources("https:", "nwebsec.*.com"));
+        }
+
+        [Fact]
+        public void CustomSources_PlainDirectiveAndHashSource_ThrowsException()
+        {
+            const string hashSource = "sha256-jzgBGA4UWFFmpOBq0JpdsySukE1FrEN5bUpoK8Z29fY=";
+            var directive = new CspDirective() as ICspDirectiveBasicConfiguration;
+
+            var e = Assert.Throws<ArgumentException>(() => directive.CustomSources(hashSource));
+            Assert.Contains(hashSource, e.Message);
         }
 
         [Fact]
