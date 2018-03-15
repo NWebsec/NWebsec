@@ -39,23 +39,31 @@ namespace NWebsec.AspNetCore.Mvc.Csp.Internals
         /// <summary>
         /// Gets or sets whether the CSP directive is enabled in the CSP header. The default is true.
         /// </summary>
-        public bool Enabled { get => DirectiveConfig.Enabled; set => DirectiveConfig.Enabled = value;
+        public bool Enabled
+        {
+            get => DirectiveConfig.Enabled; set => DirectiveConfig.Enabled = value;
         }
 
         /// <summary>
         /// Sets whether the 'none' source is included in the directive. Not setting it will inherit existing configuration.
         /// </summary>
-        public bool None { get => throw new NotSupportedException();set => DirectiveConfig.None = value;
+        public bool None
+        {
+            get => throw new NotSupportedException(); set => DirectiveConfig.None = value;
         }
         /// <summary>
         /// Gets or sets whether the 'self' source is included in the directive. Not setting it will inherit existing configuration (default behaviour).
         /// </summary>
-        public bool Self { get => throw new NotSupportedException();set => DirectiveConfig.Self = value;
+        public bool Self
+        {
+            get => throw new NotSupportedException(); set => DirectiveConfig.Self = value;
         }
         /// <summary>
         /// Gets or sets whether CustomSources should be inherited from previous settings. The default is true.
         /// </summary>
-        public bool InheritCustomSources { get => DirectiveConfig.InheritOtherSources;set => DirectiveConfig.InheritOtherSources = value;
+        public bool InheritCustomSources
+        {
+            get => DirectiveConfig.InheritOtherSources; set => DirectiveConfig.InheritOtherSources = value;
         }
         /// <summary>
         /// Gets or sets other sources for the directive. Sources are separated by exactly one whitespace. Source examples are scheme only ("https:"), any host ("*"),
@@ -81,7 +89,7 @@ namespace NWebsec.AspNetCore.Mvc.Csp.Internals
 
                 try
                 {
-                    DirectiveConfig.OtherSources = sources.Select(s => CspUriSource.Parse(s).ToString()).ToArray();
+                    DirectiveConfig.OtherSources = sources.Select(s => (EnableHashSources ? CspHashSource.Parse(s) : null) ?? CspUriSource.Parse(s).ToString()).ToArray();
                 }
                 catch (Exception e)
                 {
@@ -92,6 +100,7 @@ namespace NWebsec.AspNetCore.Mvc.Csp.Internals
 
         protected abstract CspDirectives Directive { get; }
         protected abstract bool ReportOnly { get; }
+        protected internal virtual bool EnableHashSources { get; } = false;
 
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
@@ -114,7 +123,7 @@ namespace NWebsec.AspNetCore.Mvc.Csp.Internals
             if (NoneCombinedWithOtherSources())
             {
                 throw CreateAttributeException("The 'none' source cannot be combined with other sources.");
-                
+
             }
             _paramsValidated = true;
         }
@@ -124,13 +133,13 @@ namespace NWebsec.AspNetCore.Mvc.Csp.Internals
             return (DirectiveConfig.None.HasValue ||
                     DirectiveConfig.Self.HasValue ||
                     DirectiveConfig.UnsafeInline.HasValue ||
-                    DirectiveConfig.UnsafeEval.HasValue||
+                    DirectiveConfig.UnsafeEval.HasValue ||
                     DirectiveConfig.StrictDynamic.HasValue) == false;
         }
 
         private bool NoneCombinedWithOtherSources()
         {
-            if (!DirectiveConfig.None.HasValue || !(bool) DirectiveConfig.None)
+            if (!DirectiveConfig.None.HasValue || !(bool)DirectiveConfig.None)
             {
                 //None not configured, or set to false
                 return false;
@@ -142,7 +151,7 @@ namespace NWebsec.AspNetCore.Mvc.Csp.Internals
                     (DirectiveConfig.StrictDynamic.HasValue && (bool)DirectiveConfig.StrictDynamic) ||
                     DirectiveConfig.OtherSources != null);
         }
-        
+
         public sealed override void SetHttpHeadersOnActionExecuted(ActionExecutedContext filterContext)
         {
             _headerOverrideHelper.SetCspHeaders(new HttpContextWrapper(filterContext.HttpContext), ReportOnly);

@@ -79,7 +79,7 @@ namespace NWebsec.Mvc.HttpHeaders.Csp.Internals
 
                 try
                 {
-                    DirectiveConfig.OtherSources = sources.Select(s => CspUriSource.Parse(s).ToString()).ToArray();
+                    DirectiveConfig.OtherSources = sources.Select(s => (EnableHashSources ? CspHashSource.Parse(s) : null) ?? CspUriSource.Parse(s).ToString()).ToArray();
                 }
                 catch (Exception e)
                 {
@@ -90,6 +90,7 @@ namespace NWebsec.Mvc.HttpHeaders.Csp.Internals
 
         protected abstract CspDirectives Directive { get; }
         protected abstract bool ReportOnly { get; }
+        protected internal virtual bool EnableHashSources { get; } = false;
 
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {

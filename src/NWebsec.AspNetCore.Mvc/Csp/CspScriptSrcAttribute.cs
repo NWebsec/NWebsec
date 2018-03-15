@@ -35,5 +35,7 @@ namespace NWebsec.AspNetCore.Mvc.Csp
         protected override CspDirectives Directive => CspDirectives.ScriptSrc;
 
         protected override bool ReportOnly => false;
+
+        protected internal override bool EnableHashSources => true;
     }
 }
