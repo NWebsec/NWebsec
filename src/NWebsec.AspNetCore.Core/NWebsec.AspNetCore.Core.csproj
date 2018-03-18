@@ -11,7 +11,7 @@
     <Description>This library provides shared functionality for the NWebsec ASP.NET Core security libraries.</Description>
     <Copyright>Copyright © 2016 - 2017</Copyright>
     <AssemblyTitle>NWebsec.AspNetCore.Core</AssemblyTitle>
-    <VersionPrefix>1.1.0</VersionPrefix>
+    <VersionPrefix>2.0.0</VersionPrefix>
     <Authors>André N. Klingsheim</Authors>
     <NoWarn>$(NoWarn);CS1591</NoWarn>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
