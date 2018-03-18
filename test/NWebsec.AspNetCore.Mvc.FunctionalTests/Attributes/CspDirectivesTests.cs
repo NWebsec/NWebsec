@@ -74,7 +74,7 @@ namespace NWebsec.AspNetCore.Mvc.FunctionalTests.Attributes
 
             Assert.True(response.IsSuccessStatusCode, $"Request failed: {path}");
             var cspHeader = response.Headers.GetValues("Content-Security-Policy").Single();
-            Assert.Equal("script-src 'self'", cspHeader);
+            Assert.Equal("script-src 'self' 'sha256-Kgv+CLuzs+N/onD9CCIVKvqXrFhN+F5GOItmgi/EYd0='", cspHeader);
         }
 
         [Fact]
@@ -86,7 +86,7 @@ namespace NWebsec.AspNetCore.Mvc.FunctionalTests.Attributes
 
             Assert.True(response.IsSuccessStatusCode, $"Request failed: {path}");
             var cspHeader = response.Headers.GetValues("Content-Security-Policy").Single();
-            Assert.Equal("style-src 'self'", cspHeader);
+            Assert.Equal("style-src 'self' 'sha256-CwE3Bg0VYQOIdNAkbB/Btdkhul49qZuwgNCMPgNY5zw='", cspHeader);
         }
 
         [Fact]

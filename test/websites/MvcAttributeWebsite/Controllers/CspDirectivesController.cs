@@ -22,13 +22,13 @@ namespace MvcAttributeWebsite.Controllers
             return View("Index");
         }
 
-        [CspScriptSrc(Self = true)]
+        [CspScriptSrc(Self = true, CustomSources = "sha256-Kgv+CLuzs+N/onD9CCIVKvqXrFhN+F5GOItmgi/EYd0=")]
         public ActionResult ScriptSrc()
         {
             return View("Index");
         }
 
-        [CspStyleSrc(Self = true)]
+        [CspStyleSrc(Self = true, CustomSources = "sha256-CwE3Bg0VYQOIdNAkbB/Btdkhul49qZuwgNCMPgNY5zw=")]
         public ActionResult StyleSrc()
         {
             return View("Index");
