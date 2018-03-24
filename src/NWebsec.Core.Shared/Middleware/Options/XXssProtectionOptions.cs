@@ -4,11 +4,11 @@ using System.ComponentModel;
 using NWebsec.Core.Common.HttpHeaders;
 using NWebsec.Core.Common.HttpHeaders.Configuration;
 
-namespace NWebsec.AspNetCore.Middleware
+namespace NWebsec.Core.Common.Middleware.Options
 {
     public class XXssProtectionOptions : IXXssProtectionConfiguration, IFluentXXssProtectionOptions
     {
-        internal XXssProtectionOptions()
+        public XXssProtectionOptions()
         {
             Policy = XXssPolicy.Disabled;
         }

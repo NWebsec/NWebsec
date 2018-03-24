@@ -68,13 +68,12 @@
     <Compile Include="$(MSBuildThisFileDirectory)HttpHeaders\XfoPolicy.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)HttpHeaders\XXssPolicy.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Middleware\Options\IFluentReferrerPolicyOptions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Middleware\Options\IFluentXXssProtectionOptions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Middleware\Options\ReferrerPolicyOptions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Middleware\Options\XXssProtectionOptions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)NWebsecContext.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Web\HeaderResultHandler.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Web\IHeaderResultHandler.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Web\IHttpContextWrapper.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="$(MSBuildThisFileDirectory)Middleware\Options\" />
   </ItemGroup>
 </Project>

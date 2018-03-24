@@ -2,7 +2,7 @@
 
 using NWebsec.Core.Common.Fluent;
 
-namespace NWebsec.Owin
+namespace NWebsec.Core.Common.Middleware.Options
 {
     /// <summary>
     /// Fluent interface to configure options for X-Xss-Protection.
