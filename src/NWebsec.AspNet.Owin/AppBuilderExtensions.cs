@@ -18,7 +18,7 @@ namespace Owin
         /// <returns>The <see cref="IAppBuilder" /> supplied in the app parameter.</returns>
         public static IAppBuilder UseRedirectValidation(this IAppBuilder app)
         {
-            if (app == null) throw new ArgumentNullException("app");
+            if (app == null) throw new ArgumentNullException(nameof(app));
 
             var options = new RedirectValidationOptions();
             return app.Use(typeof(RedirectValidationMiddleware), options);
@@ -32,8 +32,8 @@ namespace Owin
         /// <returns>The <see cref="IAppBuilder" /> supplied in the app parameter.</returns>
         public static IAppBuilder UseRedirectValidation(this IAppBuilder app, Action<IFluentRedirectValidationOptions> configurer)
         {
-            if (app == null) throw new ArgumentNullException("app");
-            if (configurer == null) throw new ArgumentNullException("configurer");
+            if (app == null) throw new ArgumentNullException(nameof(app));
+            if (configurer == null) throw new ArgumentNullException(nameof(configurer));
 
             var options = new RedirectValidationOptions();
             configurer(options);
@@ -48,8 +48,8 @@ namespace Owin
         /// <returns>The <see cref="IAppBuilder" /> supplied in the app parameter.</returns>
         public static IAppBuilder UseHsts(this IAppBuilder app, Action<IFluentHstsOptions> configurer)
         {
-            if (app == null) throw new ArgumentNullException("app");
-            if (configurer == null) throw new ArgumentNullException("configurer");
+            if (app == null) throw new ArgumentNullException(nameof(app));
+            if (configurer == null) throw new ArgumentNullException(nameof(configurer));
 
             var options = new HstsOptions();
             configurer(options);
@@ -65,8 +65,8 @@ namespace Owin
         /// <returns>The <see cref="IAppBuilder" /> supplied in the app parameter.</returns>
         public static IAppBuilder UseHpkp(this IAppBuilder app, Action<IFluentHpkpOptions> configurer)
         {
-            if (app == null) throw new ArgumentNullException("app");
-            if (configurer == null) throw new ArgumentNullException("configurer");
+            if (app == null) throw new ArgumentNullException(nameof(app));
+            if (configurer == null) throw new ArgumentNullException(nameof(configurer));
 
             var options = new HpkpOptions();
             configurer(options);
@@ -82,8 +82,8 @@ namespace Owin
         /// <returns>The <see cref="IAppBuilder" /> supplied in the app parameter.</returns>
         public static IAppBuilder UseHpkpReportOnly(this IAppBuilder app, Action<IFluentHpkpOptions> configurer)
         {
-            if (app == null) throw new ArgumentNullException("app");
-            if (configurer == null) throw new ArgumentNullException("configurer");
+            if (app == null) throw new ArgumentNullException(nameof(app));
+            if (configurer == null) throw new ArgumentNullException(nameof(configurer));
 
             var options = new HpkpOptions();
             configurer(options);
@@ -98,7 +98,7 @@ namespace Owin
         /// <returns>The <see cref="IAppBuilder" /> supplied in the app parameter.</returns>
         public static IAppBuilder UseXContentTypeOptions(this IAppBuilder app)
         {
-            if (app == null) throw new ArgumentNullException("app");
+            if (app == null) throw new ArgumentNullException(nameof(app));
 
             return app.Use(typeof(XContentTypeOptionsMiddleware));
         }
@@ -110,7 +110,7 @@ namespace Owin
         /// <returns>The <see cref="IAppBuilder" /> supplied in the app parameter.</returns>
         public static IAppBuilder UseXDownloadOptions(this IAppBuilder app)
         {
-            if (app == null) throw new ArgumentNullException("app");
+            if (app == null) throw new ArgumentNullException(nameof(app));
 
             return app.Use(typeof(XDownloadOptionsMiddleware));
         }
@@ -123,8 +123,8 @@ namespace Owin
         /// <returns>The <see cref="IAppBuilder" /> supplied in the app parameter.</returns>
         public static IAppBuilder UseXfo(this IAppBuilder app, Action<IFluentXFrameOptions> configurer)
         {
-            if (app == null) throw new ArgumentNullException("app");
-            if (configurer == null) throw new ArgumentNullException("configurer");
+            if (app == null) throw new ArgumentNullException(nameof(app));
+            if (configurer == null) throw new ArgumentNullException(nameof(configurer));
 
             var options = new XFrameOptions();
             configurer(options);
@@ -155,8 +155,8 @@ namespace Owin
         /// <returns>The <see cref="IAppBuilder" /> supplied in the app parameter.</returns>
         public static IAppBuilder UseXRobotsTag(this IAppBuilder app, Action<IFluentXRobotsTagOptions> configurer)
         {
-            if (app == null) throw new ArgumentNullException("app");
-            if (configurer == null) throw new ArgumentNullException("configurer");
+            if (app == null) throw new ArgumentNullException(nameof(app));
+            if (configurer == null) throw new ArgumentNullException(nameof(configurer));
 
             var options = new XRobotsTagOptions();
             configurer(options);
@@ -171,8 +171,8 @@ namespace Owin
         /// <returns>The <see cref="IAppBuilder" /> supplied in the app parameter.</returns>
         public static IAppBuilder UseXXssProtection(this IAppBuilder app, Action<IFluentXXssProtectionOptions> configurer)
         {
-            if (app == null) throw new ArgumentNullException("app");
-            if (configurer == null) throw new ArgumentNullException("configurer");
+            if (app == null) throw new ArgumentNullException(nameof(app));
+            if (configurer == null) throw new ArgumentNullException(nameof(configurer));
 
             var options = new XXssProtectionOptions();
             configurer(options);
@@ -187,8 +187,8 @@ namespace Owin
         /// <returns>The <see cref="IAppBuilder" /> supplied in the app parameter.</returns>
         public static IAppBuilder UseCsp(this IAppBuilder app, Action<IFluentCspOptions> configurer)
         {
-            if (app == null) throw new ArgumentNullException("app");
-            if (configurer == null) throw new ArgumentNullException("configurer");
+            if (app == null) throw new ArgumentNullException(nameof(app));
+            if (configurer == null) throw new ArgumentNullException(nameof(configurer));
 
             var options = new CspOptions();
             configurer(options);
@@ -203,8 +203,8 @@ namespace Owin
         /// <returns>The <see cref="IAppBuilder" /> supplied in the app parameter.</returns>
         public static IAppBuilder UseCspReportOnly(this IAppBuilder app, Action<IFluentCspOptions> configurer)
         {
-            if (app == null) throw new ArgumentNullException("app");
-            if (configurer == null) throw new ArgumentNullException("configurer");
+            if (app == null) throw new ArgumentNullException(nameof(app));
+            if (configurer == null) throw new ArgumentNullException(nameof(configurer));
 
             var options = new CspOptions();
             configurer(options);
