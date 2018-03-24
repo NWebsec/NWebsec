@@ -355,7 +355,7 @@ namespace NWebsec.Core.SharedProject.Tests.HttpHeaders
 
         [Theory]
         [MemberData(nameof(ReportOnly))]
-        public void AddCspHeaders_CspEnabledWithManifestSrc_ReturnsSetCspWithhManifestSrcResult(bool reportOnly)
+        public void AddCspHeaders_CspEnabledWithManifestSrc_ReturnsSetCspWithManifestSrcResult(bool reportOnly)
         {
             var cspConfig = new CspConfiguration
             {
@@ -369,6 +369,24 @@ namespace NWebsec.Core.SharedProject.Tests.HttpHeaders
             Assert.Equal(HeaderResult.ResponseAction.Set, result.Action);
             Assert.Equal(CspHeaderName(reportOnly), result.Name);
             Assert.Equal("manifest-src 'self'", result.Value);
+        }
+
+        [Theory]
+        [MemberData(nameof(ReportOnly))]
+        public void AddCspHeaders_CspEnabledWithWorkerSrc_ReturnsSetCspWithWorkerSrcResult(bool reportOnly)
+        {
+            var cspConfig = new CspConfiguration
+            {
+                Enabled = true,
+                WorkerSrcDirective = { SelfSrc = true }
+            };
+
+            var result = _generator.CreateCspResult(cspConfig, reportOnly);
+
+            Assert.NotNull(result);
+            Assert.Equal(HeaderResult.ResponseAction.Set, result.Action);
+            Assert.Equal(CspHeaderName(reportOnly), result.Name);
+            Assert.Equal("worker-src 'self'", result.Value);
         }
 
         [Theory]
