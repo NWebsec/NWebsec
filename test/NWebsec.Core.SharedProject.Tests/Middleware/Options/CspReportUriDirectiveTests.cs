@@ -1,10 +1,10 @@
 ﻿// Copyright (c) André N. Klingsheim. See License.txt in the project root for license information.
 
 using System;
-using System.Linq;
+using NWebsec.Core.Common.Middleware.Options;
 using Xunit;
 
-namespace NWebsec.AspNetCore.Middleware.Tests
+namespace NWebsec.Core.SharedProject.Tests.Middleware.Options
 {
     public class CspReportUriDirectiveTests
     {
@@ -21,7 +21,7 @@ namespace NWebsec.AspNetCore.Middleware.Tests
             _directive.Uris("/report", "/otherReport");
 
             var expected = new[] { "/report", "/otherReport" };
-            Assert.True(expected.SequenceEqual(_directive.ReportUris));
+            Assert.Equal(expected, _directive.ReportUris);
         }
 
         [Fact]

@@ -2,10 +2,11 @@
 
 using System;
 using System.Linq;
-using Xunit;
 using NWebsec.Core.Common.HttpHeaders.Configuration;
+using NWebsec.Core.Common.Middleware.Options;
+using Xunit;
 
-namespace NWebsec.AspNetCore.Middleware.Tests
+namespace NWebsec.Core.SharedProject.Tests.Middleware.Options
 {
     public class FluentCspPluginTypesDirectiveTests
     {
@@ -35,7 +36,7 @@ namespace NWebsec.AspNetCore.Middleware.Tests
         [Fact]
         public void MediaTypes_InvalidMediaTypes_ThrowsException()
         {
-            Assert.Throws<ArgumentException>(()=> _options.MediaTypes("application /pdf", "applicazion/vnd.ms-excel"));
+            Assert.Throws<ArgumentException>(() => _options.MediaTypes("application /pdf", "applicazion/vnd.ms-excel"));
 
         }
     }

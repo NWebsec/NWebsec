@@ -4,7 +4,7 @@ using System;
 using NWebsec.Core.Common.Fluent;
 using NWebsec.Core.Common.HttpHeaders.Configuration;
 
-namespace NWebsec.AspNetCore.Middleware
+namespace NWebsec.Core.Common.Middleware.Options
 {
     /// <summary>
     /// Fluent interface to configure options for Content-Security-Options.

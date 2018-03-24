@@ -2,7 +2,7 @@
 
 using NWebsec.Core.Common.Fluent;
 
-namespace NWebsec.AspNetCore.Middleware
+namespace NWebsec.Core.Common.Middleware.Options
 {
     public interface IFluentCspPluginTypesDirective : IFluentInterface
     {

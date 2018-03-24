@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using NWebsec.Core.Common.HttpHeaders.Configuration;
 
-namespace NWebsec.AspNetCore.Middleware
+namespace NWebsec.Core.Common.Middleware.Options
 {
     public class CspDirective : ICspDirectiveConfiguration
     {

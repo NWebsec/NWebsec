@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using NWebsec.Core.Common.HttpHeaders.Configuration;
 using NWebsec.Core.Common.HttpHeaders.Csp;
 
-namespace NWebsec.AspNetCore.Middleware
+namespace NWebsec.Core.Common.Middleware.Options
 {
     public class CspReportUriDirective : ICspReportUriDirectiveConfiguration, IFluentCspReportUriDirective
     {
@@ -20,7 +20,7 @@ namespace NWebsec.AspNetCore.Middleware
 
         public void Uris(params string[] reportUris)
         {
-            if (reportUris.Length == 0) throw new ArgumentException("You must supply at least one report URI.", nameof(reportUris));
+            if (reportUris.Length == 0) throw new ArgumentException("You must supply at least one report URI.", "reportUris");
 
             var reportUriList = new List<string>();
 

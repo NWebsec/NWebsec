@@ -1,9 +1,10 @@
 ﻿// Copyright (c) André N. Klingsheim. See License.txt in the project root for license information.
 
 using System;
+using NWebsec.Core.Common.Middleware.Options;
 using Xunit;
 
-namespace NWebsec.AspNetCore.Middleware.Tests
+namespace NWebsec.Core.SharedProject.Tests.Middleware.Options
 {
     public class CspOptionsTest
     {

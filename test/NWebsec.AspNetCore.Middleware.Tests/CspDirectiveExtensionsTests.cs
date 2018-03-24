@@ -4,6 +4,7 @@ using System;
 using System.Linq;
 using Microsoft.AspNetCore.Builder;
 using NWebsec.Core.Common.HttpHeaders.Configuration;
+using NWebsec.Core.Common.Middleware.Options;
 using Xunit;
 
 namespace NWebsec.AspNetCore.Middleware.Tests
