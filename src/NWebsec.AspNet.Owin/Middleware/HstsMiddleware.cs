@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using NWebsec.Core.Common.HttpHeaders;
 using NWebsec.Core.Common.HttpHeaders.Configuration;
+using NWebsec.Core.Common.Middleware.Options;
 using NWebsec.Owin.Core;
 using NWebsec.Owin.Helpers;
 

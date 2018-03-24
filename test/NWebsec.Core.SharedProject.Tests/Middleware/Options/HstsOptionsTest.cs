@@ -2,10 +2,10 @@
 
 using System;
 using NWebsec.Core.Common.HttpHeaders.Configuration;
-using NWebsec.Owin;
+using NWebsec.Core.Common.Middleware.Options;
 using Xunit;
 
-namespace NWebsec.AspNet.Owin.Tests
+namespace NWebsec.Core.SharedProject.Tests.Middleware.Options
 {
     public class HstsOptionsTest
     {

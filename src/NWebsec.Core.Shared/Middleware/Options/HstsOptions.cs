@@ -2,7 +2,7 @@
 
 using System;
 
-namespace NWebsec.AspNetCore.Middleware
+namespace NWebsec.Core.Common.Middleware.Options
 {
     public class HstsOptions : HstsOptionsConfiguration, IFluentHstsOptions
     {

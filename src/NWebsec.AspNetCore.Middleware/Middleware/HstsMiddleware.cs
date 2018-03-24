@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Http;
 using NWebsec.Core.Common.HttpHeaders;
 using NWebsec.Core.Common.HttpHeaders.Configuration;
 using NWebsec.AspNetCore.Middleware.Helpers;
+using NWebsec.Core.Common.Middleware.Options;
 
 namespace NWebsec.AspNetCore.Middleware.Middleware
 {
