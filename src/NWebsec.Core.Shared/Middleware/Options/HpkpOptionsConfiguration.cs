@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using NWebsec.Core.Common.HttpHeaders.Configuration;
 
-namespace NWebsec.Owin
+namespace NWebsec.Core.Common.Middleware.Options
 {
     public class HpkpOptionsConfiguration : IHpkpConfiguration
     {
