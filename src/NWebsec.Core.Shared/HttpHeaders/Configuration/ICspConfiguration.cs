@@ -26,6 +26,7 @@ namespace NWebsec.Core.Common.HttpHeaders.Configuration
 
         //CSP 3
         ICspDirectiveConfiguration ManifestSrcDirective { get; set; }
+        ICspDirectiveConfiguration WorkerSrcDirective { get; set; }
 
         //Upgrade insecure requests
         ICspUpgradeDirectiveConfiguration UpgradeInsecureRequestsDirective { get; set; }

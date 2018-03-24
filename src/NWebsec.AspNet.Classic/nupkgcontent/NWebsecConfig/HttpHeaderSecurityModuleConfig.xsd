@@ -617,6 +617,11 @@
           <xs:documentation>Configures the manifest-src CSP directive (CSP 3).</xs:documentation>
         </xs:annotation>
       </xs:element>
+      <xs:element name="worker-src" minOccurs="0" maxOccurs="1" type="BaseCspElement">
+        <xs:annotation>
+          <xs:documentation>Configures the worker-src CSP directive (CSP 3).</xs:documentation>
+        </xs:annotation>
+      </xs:element>
       <xs:element name="plugin-types" minOccurs="0" maxOccurs="1">
         <xs:annotation>
           <xs:documentation>Configures the plugin-types CSP directive (CSP 2).</xs:documentation>

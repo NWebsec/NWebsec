@@ -23,6 +23,7 @@ namespace NWebsec.Core.Common.Middleware.Options
         public ICspDirectiveConfiguration FormActionDirective { get; set; } = new CspDirective();
         public ICspDirectiveConfiguration FrameAncestorsDirective { get; set; } = new CspDirective();
         public ICspDirectiveConfiguration ManifestSrcDirective { get; set; } = new CspDirective();
+        public ICspDirectiveConfiguration WorkerSrcDirective { get; set; } = new CspDirective();
         public ICspPluginTypesDirectiveConfiguration PluginTypesDirective { get; set; } = new FluentCspPluginTypesDirective();
         public ICspSandboxDirectiveConfiguration SandboxDirective { get; set; } = new FluentCspSandboxDirective();
         public ICspUpgradeDirectiveConfiguration UpgradeInsecureRequestsDirective { get; set; } = new CspUpgradeDirectiveConfiguration();
@@ -110,6 +111,12 @@ namespace NWebsec.Core.Common.Middleware.Options
         public IFluentCspOptions ManifestSources(Action<ICspDirectiveBasicConfiguration> configurer)
         {
             configurer(ManifestSrcDirective);
+            return this;
+        }
+
+        public IFluentCspOptions WorkerSources(Action<ICspDirectiveBasicConfiguration> configurer)
+        {
+            configurer(WorkerSrcDirective);
             return this;
         }
 

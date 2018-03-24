@@ -101,6 +101,12 @@ namespace NWebsec.Core.SharedProject.Tests.Middleware.Options
         }
 
         [Fact]
+        public void WorkerSources_ConfiguresWorkerSources()
+        {
+            _options.WorkerSources(config => Assert.Same(_options.WorkerSrcDirective, config));
+        }
+
+        [Fact]
         public void PluginTypes_ConfiguresPluginTypes()
         {
             _options.PluginTypes(config => Assert.Same(_options.PluginTypesDirective, config));

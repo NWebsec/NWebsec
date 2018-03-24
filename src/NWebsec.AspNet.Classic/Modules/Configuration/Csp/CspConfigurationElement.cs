@@ -122,6 +122,14 @@ namespace NWebsec.Modules.Configuration.Csp
             set => this["manifest-src"] = value;
         }
 
+        [ConfigurationProperty("worker-src", IsRequired = false)]
+        [CspDirectiveBaseConfigurationElementValidator]
+        public CspDirectiveBaseConfigurationElement<CspSourceConfigurationElement> WorkerSrc
+        {
+            get => (CspDirectiveBaseConfigurationElement<CspSourceConfigurationElement>)this["worker-src"];
+            set => this["worker-src"] = value;
+        }
+
         [ConfigurationProperty("sandbox", IsRequired = false)]
         public CspSandboxDirectiveConfigurationElement Sandbox
         {
@@ -228,6 +236,12 @@ namespace NWebsec.Modules.Configuration.Csp
         public ICspDirectiveConfiguration ManifestSrcDirective
         {
             get => ManifestSrc;
+            set => throw new NotImplementedException();
+        }
+
+        public ICspDirectiveConfiguration WorkerSrcDirective
+        {
+            get => WorkerSrc;
             set => throw new NotImplementedException();
         }
 

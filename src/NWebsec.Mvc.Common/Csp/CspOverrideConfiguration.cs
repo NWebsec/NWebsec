@@ -24,6 +24,7 @@ namespace NWebsec.Mvc.Common.Csp
         public ICspDirectiveConfiguration FormActionDirective { get; set; }
         public ICspDirectiveConfiguration FrameAncestorsDirective { get; set; }
         public ICspDirectiveConfiguration ManifestSrcDirective { get; set; }
+        public ICspDirectiveConfiguration WorkerSrcDirective { get; set; }
         public ICspPluginTypesDirectiveConfiguration PluginTypesDirective { get; set; }
         public ICspSandboxDirectiveConfiguration SandboxDirective { get; set; }
         public ICspUpgradeDirectiveConfiguration UpgradeInsecureRequestsDirective { get; set; }
