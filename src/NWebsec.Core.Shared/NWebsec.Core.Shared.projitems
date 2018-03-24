@@ -67,10 +67,12 @@
     <Compile Include="$(MSBuildThisFileDirectory)HttpHeaders\ReferrerPolicy.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)HttpHeaders\XfoPolicy.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)HttpHeaders\XXssPolicy.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Middleware\Options\IFluentRedirectValidationOptions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Middleware\Options\IFluentReferrerPolicyOptions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Middleware\Options\IFluentXFrameOptions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Middleware\Options\IFluentXRobotsTagOptions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Middleware\Options\IFluentXXssProtectionOptions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Middleware\Options\RedirectValidationOptions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Middleware\Options\ReferrerPolicyOptions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Middleware\Options\XFrameOptions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Middleware\Options\XRobotsTagOptions.cs" />

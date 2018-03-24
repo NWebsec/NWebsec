@@ -1,11 +1,11 @@
 ﻿// Copyright (c) André N. Klingsheim. See License.txt in the project root for license information.
 
+using NWebsec.Core.Common.Middleware.Options;
 using System;
 using System.Linq;
-using NWebsec.Owin;
 using Xunit;
 
-namespace NWebsec.AspNet.Owin.Tests
+namespace NWebsec.Core.SharedProject.Tests.Middleware.Options
 {
     public class RedirectValidationOptionsTests
     {

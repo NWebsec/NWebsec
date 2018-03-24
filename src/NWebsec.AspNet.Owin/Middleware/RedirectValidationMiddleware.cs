@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using NWebsec.Core;
+using NWebsec.Core.Common.Middleware.Options;
 using NWebsec.Owin.Core;
 
 namespace NWebsec.Owin.Middleware

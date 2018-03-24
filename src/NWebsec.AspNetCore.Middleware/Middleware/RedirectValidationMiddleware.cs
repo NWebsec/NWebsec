@@ -3,6 +3,7 @@
 using System;
 using Microsoft.AspNetCore.Http;
 using NWebsec.AspNetCore.Core;
+using NWebsec.Core.Common.Middleware.Options;
 
 namespace NWebsec.AspNetCore.Middleware.Middleware
 {
