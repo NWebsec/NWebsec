@@ -4,7 +4,7 @@ using System;
 using System.Linq;
 using NWebsec.Core.Common.HttpHeaders.Configuration;
 using NWebsec.Core.Common.Middleware.Options;
-using NWebsec.Owin;
+using Owin;
 using Xunit;
 
 namespace NWebsec.AspNet.Owin.Tests

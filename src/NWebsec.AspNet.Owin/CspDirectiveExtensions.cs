@@ -5,7 +5,8 @@ using System.Linq;
 using NWebsec.Core.Common.HttpHeaders.Configuration;
 using NWebsec.Core.Common.HttpHeaders.Csp;
 
-namespace NWebsec.Owin
+// ReSharper disable once CheckNamespace
+namespace Owin
 {
     public static class CspDirectiveExtensions
     {
