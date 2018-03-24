@@ -1,5 +1,4 @@
 ﻿using Microsoft.Owin;
-using NWebsec.Owin;
 using Owin;
 
 [assembly: OwinStartup(typeof(MvcClassic.Startup))]
@@ -12,7 +11,9 @@ namespace MvcClassic
         {
             //app.UseCsp(opts => opts
             //    .DefaultSources(s => s.Self())
-            //.ScriptSources(s => s.Self().StrictDynamic()));
+            //    .ScriptSources(s => s.Self().StrictDynamic())
+            //    .WorkerSources(s => s.Self())
+            //);
         }
     }
 }

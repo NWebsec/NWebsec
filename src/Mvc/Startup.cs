@@ -35,9 +35,11 @@ namespace Mvc
 
             app.UseStaticFiles();
 
-            //app.UseCsp(opts => opts
-            //    .DefaultSources(s => s.Self())
-            //    .ScriptSources(s => s.Self().StrictDynamic()));
+            app.UseCsp(opts => opts
+                .DefaultSources(s => s.Self())
+                .ScriptSources(s => s.Self().StrictDynamic())
+                .WorkerSources(s => s.Self())
+            );
 
             app.UseMvc(routes =>
                 {
