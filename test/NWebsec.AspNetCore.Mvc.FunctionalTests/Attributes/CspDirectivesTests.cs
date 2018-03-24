@@ -222,6 +222,18 @@ namespace NWebsec.AspNetCore.Mvc.FunctionalTests.Attributes
         }
 
         [Fact]
+        public async Task CspDirectives_WorkerSrcEnabled_SetsHeader()
+        {
+            const string path = "/CspDirectives/WorkerSrc";
+
+            var response = await _httpClient.GetAsync(path);
+
+            Assert.True(response.IsSuccessStatusCode, $"Request failed: {path}");
+            var cspHeader = response.Headers.GetValues("Content-Security-Policy").Single();
+            Assert.Equal("worker-src 'self'", cspHeader);
+        }
+
+        [Fact]
         public async Task CspDirectives_PluginTypes_SetsHeader()
         {
             const string path = "/CspDirectives/PluginTypes";

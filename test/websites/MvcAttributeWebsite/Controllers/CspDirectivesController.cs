@@ -100,6 +100,12 @@ namespace MvcAttributeWebsite.Controllers
             return View("Index");
         }
 
+        [CspWorkerSrc(Self = true)]
+        public ActionResult WorkerSrc()
+        {
+            return View("Index");
+        }
+
         [CspPluginTypes(MediaTypes = "application/cspattribute")]
         public ActionResult PluginTypes()
         {
