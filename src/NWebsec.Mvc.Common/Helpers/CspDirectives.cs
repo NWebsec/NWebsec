@@ -18,6 +18,7 @@ namespace NWebsec.Mvc.Common.Helpers
         BaseUri = 11,
         ChildSrc = 12,
         FormAction = 13,
-        ManifestSrc = 14
+        ManifestSrc = 14,
+        WorkerSrc = 15
     }
 }

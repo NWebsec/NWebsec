@@ -65,6 +65,9 @@ namespace NWebsec.Mvc.Common.Helpers
                 case CspDirectives.ManifestSrc:
                     return cspConfig.ManifestSrcDirective;
 
+                case CspDirectives.WorkerSrc:
+                    return cspConfig.WorkerSrcDirective;
+
                 default:
                     throw new NotImplementedException("The mapping for " + directive + " was not implemented.");
             }
@@ -203,6 +206,9 @@ namespace NWebsec.Mvc.Common.Helpers
                 case CspDirectives.ManifestSrc:
                     cspConfig.ManifestSrcDirective = directiveConfig;
                     return;
+                case CspDirectives.WorkerSrc:
+                    cspConfig.WorkerSrcDirective = directiveConfig;
+                    return;
 
                 default:
                     throw new NotImplementedException("The mapping for " + directive + " was not implemented.");
@@ -245,6 +251,7 @@ namespace NWebsec.Mvc.Common.Helpers
             destination.FormActionDirective = source.FormActionDirective ?? destination.FormActionDirective ?? new CspDirectiveConfiguration();
             destination.FrameAncestorsDirective = source.FrameAncestorsDirective ?? destination.FrameAncestorsDirective ?? new CspDirectiveConfiguration();
             destination.ManifestSrcDirective = source.ManifestSrcDirective ?? destination.ManifestSrcDirective ?? new CspDirectiveConfiguration();
+            destination.WorkerSrcDirective = source.WorkerSrcDirective ?? destination.WorkerSrcDirective ?? new CspDirectiveConfiguration();
             destination.PluginTypesDirective = source.PluginTypesDirective ?? destination.PluginTypesDirective ?? new CspPluginTypesDirectiveConfiguration();
             destination.SandboxDirective = source.SandboxDirective ?? destination.SandboxDirective ?? new CspSandboxDirectiveConfiguration();
             destination.UpgradeInsecureRequestsDirective = source.UpgradeInsecureRequestsDirective ?? destination.UpgradeInsecureRequestsDirective ?? new CspUpgradeDirectiveConfiguration();
