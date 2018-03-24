@@ -230,7 +230,7 @@ namespace NWebsec.Mvc.CommonProject.Tests.Helpers
 
             Assert.False(newConfig.SelfSrc);
             Assert.True(newConfig.CustomSources.Count() == 1);
-            Assert.True(newConfig.CustomSources.First().Equals("*.nwebsec.com"));
+            Assert.Equal("*.nwebsec.com", newConfig.CustomSources.First());
         }
 
         [Fact]
@@ -291,7 +291,7 @@ namespace NWebsec.Mvc.CommonProject.Tests.Helpers
             var newConfig = _overrideHelper.GetOverridenCspPluginTypesConfig(directiveOverride, directiveConfig);
 
             Assert.True(newConfig.MediaTypes.Count() == 1);
-            Assert.True(newConfig.MediaTypes.First().Equals("image/png"));
+            Assert.Equal("image/png", newConfig.MediaTypes.First());
         }
 
         [Fact]

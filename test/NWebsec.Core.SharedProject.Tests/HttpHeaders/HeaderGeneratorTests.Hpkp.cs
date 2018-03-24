@@ -20,8 +20,7 @@ namespace NWebsec.Core.SharedProject.Tests.HttpHeaders
         {
             var hpkpConfig = new HpkpConfiguration { MaxAge = new TimeSpan(-1), Pins = _dummyPins };
 
-            Assert.Null(_generator.CreateHpkpResult(hpkpConfig, false));
-            Assert.Null(_generator.CreateHpkpResult(hpkpConfig, true));
+            Assert.Null(_generator.CreateHpkpResult(hpkpConfig, reportOnly));
         }
 
         [Theory]

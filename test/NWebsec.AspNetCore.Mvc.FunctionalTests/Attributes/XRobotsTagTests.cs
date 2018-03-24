@@ -47,7 +47,6 @@ namespace NWebsec.AspNetCore.Mvc.FunctionalTests.Attributes
 
             Assert.True(response.IsSuccessStatusCode, $"Request failed: {path}");
             var header = response.Headers.SingleOrDefault(h => h.Key.Equals("X-Robots-Tag"));
-            Assert.NotNull(header);
             Assert.Equal("noindex", header.Value.Single());
         }
 
@@ -60,7 +59,6 @@ namespace NWebsec.AspNetCore.Mvc.FunctionalTests.Attributes
 
             Assert.True(response.IsSuccessStatusCode, $"Request failed: {path}");
             var header = response.Headers.SingleOrDefault(h => h.Key.Equals("X-Robots-Tag"));
-            Assert.NotNull(header);
             Assert.Equal("nofollow", header.Value.Single());
         }
 
@@ -73,7 +71,6 @@ namespace NWebsec.AspNetCore.Mvc.FunctionalTests.Attributes
 
             Assert.True(response.IsSuccessStatusCode, $"Request failed: {path}");
             var header = response.Headers.SingleOrDefault(h => h.Key.Equals("X-Robots-Tag"));
-            Assert.NotNull(header);
             Assert.Equal("nosnippet", header.Value.Single());
         }
 
@@ -86,7 +83,6 @@ namespace NWebsec.AspNetCore.Mvc.FunctionalTests.Attributes
 
             Assert.True(response.IsSuccessStatusCode, $"Request failed: {path}");
             var header = response.Headers.SingleOrDefault(h => h.Key.Equals("X-Robots-Tag"));
-            Assert.NotNull(header);
             Assert.Equal("noarchive", header.Value.Single());
         }
 
@@ -99,7 +95,6 @@ namespace NWebsec.AspNetCore.Mvc.FunctionalTests.Attributes
 
             Assert.True(response.IsSuccessStatusCode, $"Request failed: {path}");
             var header = response.Headers.SingleOrDefault(h => h.Key.Equals("X-Robots-Tag"));
-            Assert.NotNull(header);
             Assert.Equal("noodp", header.Value.Single());
         }
 
@@ -112,7 +107,6 @@ namespace NWebsec.AspNetCore.Mvc.FunctionalTests.Attributes
 
             Assert.True(response.IsSuccessStatusCode, $"Request failed: {path}");
             var header = response.Headers.SingleOrDefault(h => h.Key.Equals("X-Robots-Tag"));
-            Assert.NotNull(header);
             Assert.Equal("notranslate", header.Value.Single());
         }
 
@@ -125,7 +119,6 @@ namespace NWebsec.AspNetCore.Mvc.FunctionalTests.Attributes
 
             Assert.True(response.IsSuccessStatusCode, $"Request failed: {path}");
             var header = response.Headers.SingleOrDefault(h => h.Key.Equals("X-Robots-Tag"));
-            Assert.NotNull(header);
             Assert.Equal("noimageindex", header.Value.Single());
         }
 
@@ -138,7 +131,6 @@ namespace NWebsec.AspNetCore.Mvc.FunctionalTests.Attributes
 
             Assert.True(response.IsSuccessStatusCode, $"Request failed: {path}");
             var header = response.Headers.SingleOrDefault(h => h.Key.Equals("X-Robots-Tag"));
-            Assert.NotNull(header);
             Assert.Equal("noindex, nofollow", header.Value.Single());
         }
     }
