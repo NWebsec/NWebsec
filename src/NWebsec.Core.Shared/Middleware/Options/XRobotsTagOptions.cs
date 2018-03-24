@@ -2,16 +2,16 @@
 
 using NWebsec.Core.Common.HttpHeaders.Configuration;
 
-namespace NWebsec.AspNetCore.Middleware
+namespace NWebsec.Core.Common.Middleware.Options
 {
     public class XRobotsTagOptions : IFluentXRobotsTagOptions
     {
-        internal XRobotsTagOptions()
+        public XRobotsTagOptions()
         {
             Config = new XRobotsTagConfiguration();
         }
 
-        internal XRobotsTagConfiguration Config { get; }
+        public XRobotsTagConfiguration Config { get; }
 
         public IFluentXRobotsTagOptions NoIndex()
         {

@@ -1,9 +1,9 @@
 ﻿// Copyright (c) André N. Klingsheim. See License.txt in the project root for license information.
 
-using NWebsec.Owin;
+using NWebsec.Core.Common.Middleware.Options;
 using Xunit;
 
-namespace NWebsec.AspNet.Owin.Tests
+namespace NWebsec.Core.SharedProject.Tests.Middleware.Options
 {
     public class XRobotsTagOptionsTests
     {
