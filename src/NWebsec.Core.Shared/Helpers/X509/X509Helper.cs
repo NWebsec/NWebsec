@@ -59,11 +59,7 @@ namespace NWebsec.Core.Common.Helpers.X509
                     {
                         CleanupCert(cert);
                     }
-#if NETSTANDARD1_3
-                    certStore.Dispose();
-#else
                     certStore.Close();
-#endif
                 }
                 throw;
             }
@@ -238,12 +234,7 @@ namespace NWebsec.Core.Common.Helpers.X509
 
         private void CleanupCert(X509Certificate2 cert)
         {
-
-#if NETSTANDARD1_3
-            cert.Dispose();
-#else
             cert.Reset();
-#endif
         }
     }
 }
