@@ -9,7 +9,7 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <Description>This library provides shared functionality for the NWebsec ASP.NET Core security libraries.</Description>
-    <Copyright>Copyright © 2016 - 2017</Copyright>
+    <Copyright>Copyright © 2016 - 2018</Copyright>
     <AssemblyTitle>NWebsec.AspNetCore.Core</AssemblyTitle>
     <VersionPrefix>2.0.0</VersionPrefix>
     <Authors>André N. Klingsheim</Authors>

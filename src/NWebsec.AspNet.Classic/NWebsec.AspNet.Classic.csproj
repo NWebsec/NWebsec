@@ -14,7 +14,7 @@
     <AssemblyName>NWebsec</AssemblyName>
     <PackageId>NWebsec</PackageId>
     <PackageTags>nwebsec aspnet security appsec</PackageTags>
-    <PackageReleaseNotes>This release adds support for the Referrer-Policy header and the CSP 'strict-dynamic' directive. Drops support for .NET &lt; 4.5. See release notes on GitHub for details.</PackageReleaseNotes>
+    <PackageReleaseNotes>This release adds support for CSP hash sources and the CSP 'worker-src' directive. See release notes on GitHub for details.</PackageReleaseNotes>
     <PackageIconUrl>https://nwebseccdn.blob.core.windows.net/nugeticon/nwebsec_nuget.png</PackageIconUrl>
     <PackageProjectUrl>https://docs.nwebsec.com/</PackageProjectUrl>
     <PackageLicenseUrl>https://github.com/NWebsec/NWebsec/blob/master/LICENSE</PackageLicenseUrl>

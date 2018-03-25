@@ -5,14 +5,14 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <Description>NWebsec TagHelpers for ASP.NET Core MVC applications. NWebsec helps you set important security headers, detect potentially dangerous redirects, and control cache headers. See project website for documentation.</Description>
-    <Copyright>Copyright © 2016 - 2017</Copyright>
+    <Copyright>Copyright © 2016 - 2018</Copyright>
     <AssemblyTitle>NWebsec.AspNetCore.Mvc.TagHelpers</AssemblyTitle>
     <VersionPrefix>2.0.0</VersionPrefix>
     <Authors>André N. Klingsheim</Authors>
     <AssemblyName>NWebsec.AspNetCore.Mvc.TagHelpers</AssemblyName>
     <PackageId>NWebsec.AspNetCore.Mvc.TagHelpers</PackageId>
     <PackageTags>nwebsec aspnetcore security</PackageTags>
-    <PackageReleaseNotes>This release includes a Tag Helper that sets Referrer-Policy through the &lt;meta&gt; tag. See release notes on GitHub for details.</PackageReleaseNotes>
+    <PackageReleaseNotes>This release bumps dependencies to ASP.NET Core 2.0. See release notes on GitHub for details.</PackageReleaseNotes>
     <PackageIconUrl>https://nwebseccdn.blob.core.windows.net/nugeticon/nwebsec_nuget.png</PackageIconUrl>
     <PackageProjectUrl>https://docs.nwebsec.com/</PackageProjectUrl>
     <PackageLicenseUrl>https://github.com/NWebsec/NWebsec/blob/master/LICENSE</PackageLicenseUrl>
