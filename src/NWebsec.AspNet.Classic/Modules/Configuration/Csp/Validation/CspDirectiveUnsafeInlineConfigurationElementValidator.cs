@@ -15,15 +15,18 @@ namespace NWebsec.Modules.Configuration.Csp.Validation
         public override void Validate(object value)
         {
             var element = (CspDirectiveUnsafeInlineConfigurationElement)value;
+            ValidateElement(element);
+        }
 
-            if (!element.UnsafeInlineSrc) return;
+        internal override void ValidateElement<T>(CspDirectiveBaseConfigurationElement<T> element)
+        {
 
             if (element.NoneSrc && element.UnsafeInlineSrc)
             {
                 throw new ConfigurationErrorsException("Both \"None\" and \"UnsafeInline\" are enabled. \"None\" cannot be combined with other sources");
             }
 
-            base.Validate(value);
+            base.ValidateElement(element);
         }
     }
 }

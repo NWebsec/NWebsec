@@ -14,17 +14,19 @@ namespace NWebsec.Modules.Configuration.Csp.Validation
 
         public override void Validate(object value)
         {
-            var directive = (CspDirectiveBaseConfigurationElement<CspSourceConfigurationElement>)value;
+            var element = (CspDirectiveBaseConfigurationElement<CspSourceConfigurationElement>)value;
+            ValidateElement(element);
+        }
 
-            if (!(directive.NoneSrc || directive.SelfSrc || directive.Sources.Count > 0))
-                return;
+        internal virtual void ValidateElement<T>(CspDirectiveBaseConfigurationElement<T> element) where T : CspSourceConfigurationElement, new()
+        {
 
-            if (directive.NoneSrc && directive.Sources.Count > 0)
+            if (element.NoneSrc && element.Sources.Count > 0)
             {
                 throw new ConfigurationErrorsException("Other sources are not allowed when \"None\" is enabled. Disable \"None\" or remove other sources.");
             }
 
-            if (directive.NoneSrc && directive.SelfSrc)
+            if (element.NoneSrc && element.SelfSrc)
             {
                 throw new ConfigurationErrorsException("Both \"None\" and \"Self\" are enabled. \"None\" cannot be combined with other sources");
             }

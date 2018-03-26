@@ -15,9 +15,11 @@ namespace NWebsec.Modules.Configuration.Csp.Validation
         public override void Validate(object value)
         {
             var element = (CspDirectiveUnsafeInlineUnsafeEvalConfigurationElement)value;
+            ValidateElement(element);
+        }
 
-            if (!element.UnsafeEvalSrc && !element.StrictDynamicSrc) return;
-
+        internal override void ValidateElement<T>(CspDirectiveBaseConfigurationElement<T> element)
+        {
             if (element.NoneSrc && element.UnsafeEvalSrc)
             {
                 throw new ConfigurationErrorsException("Both \"None\" and \"UnsafeEval\" are enabled. \"NoneSrc\" cannot be combined with other sources");
@@ -28,7 +30,7 @@ namespace NWebsec.Modules.Configuration.Csp.Validation
                 throw new ConfigurationErrorsException("Both \"None\" and \"StrictDynamic\" are enabled. \"NoneSrc\" cannot be combined with other sources");
             }
 
-            base.Validate(value);
+            base.ValidateElement(element);
         }
     }
 }
