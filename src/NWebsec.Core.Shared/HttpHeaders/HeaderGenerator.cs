@@ -111,7 +111,12 @@ namespace NWebsec.Core.Common.HttpHeaders
                     break;
 
                 case XXssPolicy.FilterEnabled:
-                    value = (xXssProtectionConfig.BlockMode ? "1; mode=block" : "1");
+                    var hasReportUri = !string.IsNullOrWhiteSpace(xXssProtectionConfig.ReportUri);
+                    value = xXssProtectionConfig.BlockMode
+                        ? "1; mode=block"
+                        : hasReportUri
+                            ? $"1; report={xXssProtectionConfig.ReportUri}"
+                            : "1";
                     break;
 
                 default:

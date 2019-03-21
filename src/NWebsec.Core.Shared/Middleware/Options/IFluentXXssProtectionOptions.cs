@@ -20,6 +20,11 @@ namespace NWebsec.Core.Common.Middleware.Options
         void Enabled();
 
         /// <summary>
+        /// Configures the header to explicitly enable protection with XSS violation report callback.
+        /// </summary>
+        void EnabledWithReport(string reportUri);
+
+        /// <summary>
         /// Configures the header to explicitly enable protection with block mode.
         /// </summary>
         void EnabledWithBlockMode();

@@ -25,5 +25,12 @@ namespace NWebsec.Modules.Configuration
             set => this["blockMode"] = value;
         }
 
+        [ConfigurationProperty("reportUri", IsRequired = false)]
+        public string ReportUri
+        {
+
+            get => (string)this["reportUri"];
+            set => this["reportUri"] = value;
+        }
     }
 }

@@ -7,5 +7,7 @@ namespace NWebsec.Core.Common.HttpHeaders.Configuration
         XXssPolicy Policy { get; set; }
 
         bool BlockMode { get; set; }
+        
+        string ReportUri { get; set; }
     }
 }

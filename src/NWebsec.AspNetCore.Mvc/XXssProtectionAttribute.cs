@@ -65,6 +65,11 @@ namespace NWebsec.AspNetCore.Mvc
         /// </summary>
         public bool BlockMode { get => _config.BlockMode; set => _config.BlockMode = value; }
 
+        /// <summary>
+        /// Gets or sets report uri for XSS violation report.
+        /// </summary>
+        public string ReportUri { get => _config.ReportUri; set => _config.ReportUri = value; }
+
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
             _headerConfigurationOverrideHelper.SetXXssProtectionOverride(new HttpContextWrapper(filterContext.HttpContext), _config);
