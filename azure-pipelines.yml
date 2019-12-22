@@ -1,0 +1,53 @@
+#trigger:
+#- master
+
+pool:
+  vmImage: 'windows-latest'
+
+variables:
+  buildConfiguration: 'Release'
+  sln: 'NWebsec-CI.sln'
+  versionSuffix: '' #overridden for branches before pack.
+  nugetConnection: 'NWebsec Nuget'
+
+steps:
+- task: DotNetCoreCLI@2
+  displayName: 'Build'
+  inputs:
+    command: build
+    projects: '$(sln)'
+    arguments: '--configuration $(buildConfiguration)'
+
+- task: DotNetCoreCLI@2
+  displayName: 'Test'
+  inputs:
+    command: test
+    projects: $(sln)
+    nobuild: true
+    arguments: '--configuration $(buildConfiguration)'
+
+- script: echo "##vso[task.setvariable variable=versionSuffix]--version-suffix $(Build.BuildID).$(Build.SourceBranchName)"
+  condition: and(succeeded(), ne(variables['Build.SourceBranchName'], 'master'))
+  displayName: 'Version suffix'
+
+- script: dotnet pack $(sln) --configuration $(buildConfiguration) --no-build -o $(Build.ArtifactStagingDirectory)\nupkgs $(versionSuffix)
+  displayName: 'Pack'
+
+- task: PublishBuildArtifacts@1
+  inputs:
+    pathtoPublish: '$(Build.ArtifactStagingDirectory)\nupkgs'
+    artifactName: 'nwebsec-$(Build.BuildID)'
+
+- task: UseDotNet@2 
+  displayName: ".NET Core 3.1.x"
+  inputs:
+    version: '3.1.x'
+    packageType: sdk
+
+- task: DotNetCoreCLI@2
+  condition: and(succeeded(), in(variables['Build.SourceBranchName'], 'master', 'dev'))
+  displayName: 'dotnet nuget push'
+  inputs:
+    command: custom 
+    custom: nuget
+    arguments: 'push $(Build.ArtifactStagingDirectory)\nupkgs\ -k $(nugetApiKey) -s https://api.nuget.org/v3/index.json --skip-duplicate'
