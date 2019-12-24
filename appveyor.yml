@@ -1,29 +1,20 @@
 version: 1.0.{build}
 skip_tags: true
-image: Visual Studio 2017
+pull_requests:
+  do_not_increment_build_number: true
+image: Visual Studio 2019
 configuration: Release
 init: 
 - cmd: git config --global core.autocrlf true 
-- cmd: set DOTNET_VERSION_SUFFIX=%APPVEYOR_REPO_BRANCH%-%APPVEYOR_BUILD_NUMBER%
-before_build:
-- cmd: dotnet restore NWebsec-CI.sln -v m
+- cmd: set DOTNET_VERSION_SUFFIX=%APPVEYOR_BUILD_NUMBER%.%APPVEYOR_REPO_BRANCH%
+nuget:
+  disable_publish_on_pr: true
 build_script:
 - cmd: dotnet build NWebsec-CI.sln -c release
 test_script:
-- ps: >-
-    $testProjects = Get-ChildItem ".\test\" -Filter *Tests
-
-    foreach ($project in $testProjects) {
-
-      pushd ".\test\$project"
-
-      dotnet test -c release --no-build
-
-      popd
-
-    }
+- cmd: dotnet test NWebsec-CI.sln -c release --no-build
 after_test:
-- ps: >-
-    dotnet pack -c release --no-build -o nupkgs NWebsec-CI.sln
+- cmd: dotnet pack NWebsec-CI.sln -c release --no-build -o nupkgs
 artifacts:
-- path: '**/nupkgs/*.nupkg'
+- path: '**/*.nupkg'
+- path: '**/*.snupkg'
