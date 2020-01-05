@@ -1,44 +1,42 @@
 // Copyright (c) André N. Klingsheim. See License.txt in the project root for license information.
 
+using Microsoft.AspNetCore.Mvc.Testing;
 using System;
 using System.Net.Http;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.TestHost;
 using Xunit;
-using NWebsec.AspNetCore.Mvc.FunctionalTests.Plumbing;
 using System.Linq;
 using System.Collections.Generic;
+using WebAppFactoryType = NWebsec.AspNetCore.Mvc.FunctionalTests.WebApplicationFactoryStartup<MvcAttributeWebsite.Startup>;
 
 namespace NWebsec.AspNetCore.Mvc.FunctionalTests.Attributes
 {
-    public class ReferrerPolicyHeaderTests : IDisposable
+    public class ReferrerPolicyHeaderTests : IDisposable, IClassFixture<WebAppFactoryType>
     {
         public static readonly IEnumerable<object[]> ReferrerActionsAndValues = new TheoryData<string, string>
         {
             { "NoReferrer", "no-referrer"},
-        {"NoReferrerWhenDowngrade", "no-referrer-when-downgrade"},
-        {"SameOrigin", "same-origin"},
-        {"Origin", "origin"},
-        {"StrictOrigin", "strict-origin"},
-        {"OriginWhenCrossOrigin", "origin-when-cross-origin"},
-        {"StrictOriginWhenCrossOrigin", "strict-origin-when-cross-origin"},
-        {"UnsafeUrl", "unsafe-url"}
+            {"NoReferrerWhenDowngrade", "no-referrer-when-downgrade"},
+            {"SameOrigin", "same-origin"},
+            {"Origin", "origin"},
+            {"StrictOrigin", "strict-origin"},
+            {"OriginWhenCrossOrigin", "origin-when-cross-origin"},
+            {"StrictOriginWhenCrossOrigin", "strict-origin-when-cross-origin"},
+            {"UnsafeUrl", "unsafe-url"}
         };
 
-
-        private readonly TestServer _server;
+        private readonly WebAppFactoryType _factory;
         private readonly HttpClient _httpClient;
 
-        public ReferrerPolicyHeaderTests()
+        public ReferrerPolicyHeaderTests(WebAppFactoryType factory)
         {
-            _server = TestServerBuilder<MvcAttributeWebsite.Startup>.CreateTestServer();
-            _httpClient = _server.CreateClient();
+            _factory = factory;
+            _httpClient = _factory.CreateClient(new WebApplicationFactoryClientOptions { AllowAutoRedirect = false, HandleCookies = false });
         }
 
         public void Dispose()
         {
             _httpClient.Dispose();
-            _server.Dispose();
         }
 
         [Theory]

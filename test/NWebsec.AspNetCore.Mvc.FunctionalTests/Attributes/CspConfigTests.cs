@@ -1,30 +1,29 @@
 // Copyright (c) André N. Klingsheim. See License.txt in the project root for license information.
 
+using Microsoft.AspNetCore.Mvc.Testing;
 using System;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.TestHost;
 using Xunit;
-using NWebsec.AspNetCore.Mvc.FunctionalTests.Plumbing;
+using WebAppFactoryType = NWebsec.AspNetCore.Mvc.FunctionalTests.WebApplicationFactoryStartup<MvcAttributeWebsite.StartupCspConfig>;
 
 namespace NWebsec.AspNetCore.Mvc.FunctionalTests.Attributes
 {
-    public class CspConfigTests : IDisposable
+    public class CspConfigTests : IDisposable, IClassFixture<WebAppFactoryType>
     {
-        private readonly TestServer _server;
+        private readonly WebAppFactoryType _factory;
         private readonly HttpClient _httpClient;
 
-        public CspConfigTests()
+        public CspConfigTests(WebAppFactoryType factory)
         {
-            _server = TestServerBuilder<MvcAttributeWebsite.StartupCspConfig>.CreateTestServer();
-            _httpClient = _server.CreateClient();
+            _factory = factory;
+            _httpClient = _factory.CreateClient(new WebApplicationFactoryClientOptions { AllowAutoRedirect = false, HandleCookies = false });
         }
 
         public void Dispose()
         {
             _httpClient.Dispose();
-            _server.Dispose();
         }
 
         [Fact]
@@ -33,7 +32,7 @@ namespace NWebsec.AspNetCore.Mvc.FunctionalTests.Attributes
             const string path = "/CspConfig";
 
             var response = await _httpClient.GetAsync(path);
-
+            //_output.WriteLine(response);
             Assert.True(response.IsSuccessStatusCode, $"Request failed: {path}");
             var cspHeader = response.Headers.GetValues("Content-Security-Policy").Single();
             Assert.True(cspHeader.Contains("media-src fromconfig"), path);

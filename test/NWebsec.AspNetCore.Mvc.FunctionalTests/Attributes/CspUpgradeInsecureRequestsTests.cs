@@ -1,5 +1,6 @@
 // Copyright (c) André N. Klingsheim. See License.txt in the project root for license information.
 
+using Microsoft.AspNetCore.Mvc.Testing;
 using System;
 using System.Linq;
 using System.Net;
@@ -7,27 +8,25 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Extensions;
-using Microsoft.AspNetCore.TestHost;
 using Xunit;
-using NWebsec.AspNetCore.Mvc.FunctionalTests.Plumbing;
+using WebAppFactoryType = NWebsec.AspNetCore.Mvc.FunctionalTests.WebApplicationFactoryStartup<MvcAttributeWebsite.StartupCspConfigUpgradeInsecureRequests>;
 
 namespace NWebsec.AspNetCore.Mvc.FunctionalTests.Attributes
 {
-    public class CspUpgradeInsecureRequestsTests : IDisposable
+    public class CspUpgradeInsecureRequestsTests : IDisposable, IClassFixture<WebAppFactoryType>
     {
-        private readonly TestServer _server;
+        private readonly WebAppFactoryType _factory;
         private readonly HttpClient _httpClient;
 
-        public CspUpgradeInsecureRequestsTests()
+        public CspUpgradeInsecureRequestsTests(WebAppFactoryType factory)
         {
-            _server = TestServerBuilder<MvcAttributeWebsite.StartupCspConfigUpgradeInsecureRequests>.CreateTestServer();
-            _httpClient = _server.CreateClient();
+            _factory = factory;
+            _httpClient = _factory.CreateClient(new WebApplicationFactoryClientOptions { AllowAutoRedirect = false, HandleCookies = false });
         }
 
         public void Dispose()
         {
             _httpClient.Dispose();
-            _server.Dispose();
         }
 
         [Fact]
