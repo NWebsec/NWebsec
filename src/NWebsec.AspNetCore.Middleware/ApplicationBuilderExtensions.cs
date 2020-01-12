@@ -68,38 +68,16 @@ namespace Microsoft.AspNetCore.Builder
             return app.UseMiddleware<HstsMiddleware>(options);
         }
 
-        /// <summary>
-        ///     Adds a middleware to the ASP.NET Core pipeline that sets the Public-Key-Pins header.
-        /// </summary>
-        /// <param name="app">The <see cref="IApplicationBuilder" /> to which the middleware is added.</param>
-        /// <param name="configurer">An <see cref="Action" /> that configures the options for the middleware.</param>
-        /// <returns>The <see cref="IApplicationBuilder" /> supplied in the app parameter.</returns>
+        [Obsolete("The Public-Key-Pins header has been deprecated since recent browser versions have removed support for it.", true)]
         public static IApplicationBuilder UseHpkp(this IApplicationBuilder app, Action<IFluentHpkpOptions> configurer)
         {
-            if (app == null) throw new ArgumentNullException(nameof(app));
-            if (configurer == null) throw new ArgumentNullException(nameof(configurer));
-
-            var options = new HpkpOptions();
-            configurer(options);
-            new HpkpConfigurationValidator().ValidateNumberOfPins(options.Config);
-            return app.UseMiddleware<HpkpMiddleware>(options, false);
+            return null;
         }
 
-        /// <summary>
-        ///     Adds a middleware to the ASP.NET Core pipeline that sets the Public-Key-Pins-Report-Only header.
-        /// </summary>
-        /// <param name="app">The <see cref="IApplicationBuilder" /> to which the middleware is added.</param>
-        /// <param name="configurer">An <see cref="Action" /> that configures the options for the middleware.</param>
-        /// <returns>The <see cref="IApplicationBuilder" /> supplied in the app parameter.</returns>
+        [Obsolete("The Public-Key-Pins-Report-Only header has been deprecated since recent browser versions have removed support for it.", true)]
         public static IApplicationBuilder UseHpkpReportOnly(this IApplicationBuilder app, Action<IFluentHpkpOptions> configurer)
         {
-            if (app == null) throw new ArgumentNullException(nameof(app));
-            if (configurer == null) throw new ArgumentNullException(nameof(configurer));
-
-            var options = new HpkpOptions();
-            configurer(options);
-            new HpkpConfigurationValidator().ValidateNumberOfPins(options.Config);
-            return app.UseMiddleware<HpkpMiddleware>(options, true);
+            return null;
         }
 
         /// <summary>

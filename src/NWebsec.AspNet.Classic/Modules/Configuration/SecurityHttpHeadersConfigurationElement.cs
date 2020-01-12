@@ -31,22 +31,6 @@ namespace NWebsec.Modules.Configuration
             set => this["strict-Transport-Security"] = value;
         }
 
-        [ConfigurationProperty("public-Key-Pins", IsRequired = false)]
-        [HpkpValidator]
-        public HpkpConfigurationElement Hpkp
-        {
-            get => (HpkpConfigurationElement)this["public-Key-Pins"];
-            set => this["public-Key-Pins"] = value;
-        }
-
-        [ConfigurationProperty("public-Key-Pins-Report-Only", IsRequired = false)]
-        [HpkpValidator]
-        public HpkpConfigurationElement HpkpReportOnly
-        {
-            get => (HpkpConfigurationElement)this["public-Key-Pins-Report-Only"];
-            set => this["public-Key-Pins-Report-Only"] = value;
-        }
-
         [ConfigurationProperty("x-Content-Type-Options", IsRequired = false)]
         public SimpleBooleanConfigurationElement XContentTypeOptions
         {

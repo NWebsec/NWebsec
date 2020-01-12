@@ -168,47 +168,6 @@ namespace NWebsec.Core.Common.HttpHeaders
         }
 
        /*[CanBeNull]*/
-        public HeaderResult CreateHpkpResult(IHpkpConfiguration hpkpConfig, bool reportOnly)
-        {
-            if (hpkpConfig.MaxAge < TimeSpan.Zero || hpkpConfig.Pins == null || !hpkpConfig.Pins.Any()) return null;
-
-            var headerName = reportOnly ? HeaderConstants.HpkpReportOnlyHeader : HeaderConstants.HpkpHeader;
-
-            var seconds = (int)hpkpConfig.MaxAge.TotalSeconds;
-            //Unpinning. Save a few bytes by ignoring other directives.
-            if (seconds == 0)
-            {
-                return new HeaderResult(HeaderResult.ResponseAction.Set, headerName, "max-age=" + seconds);
-            }
-
-            var sb = new StringBuilder();
-            sb.Append("max-age=").Append(seconds).Append(";");
-
-            if (hpkpConfig.IncludeSubdomains)
-            {
-                sb.Append("includeSubDomains;");
-            }
-
-            foreach (var pin in hpkpConfig.Pins)
-            {
-                sb.Append("pin-").Append(pin).Append(";");
-            }
-
-            if (string.IsNullOrEmpty(hpkpConfig.ReportUri))
-            {
-                sb.Remove(sb.Length - 1, 1);
-            }
-            else
-            {
-                sb.Append("report-uri=\"").Append(hpkpConfig.ReportUri).Append("\"");
-            }
-
-            var value = sb.ToString();
-
-            return new HeaderResult(HeaderResult.ResponseAction.Set, headerName, value);
-        }
-
-       /*[CanBeNull]*/
         public HeaderResult CreateCspResult(ICspConfiguration cspConfig, bool reportOnly,
             string builtinReportHandlerUri = null, ICspConfiguration oldCspConfig = null)
         {

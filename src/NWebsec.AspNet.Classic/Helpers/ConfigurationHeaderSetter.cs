@@ -48,8 +48,6 @@ namespace NWebsec.Helpers
             var nwebsecContext = context.GetNWebsecContext();
             var httpContext = new HttpContextWrapper(context);
             SetHstsHeader(httpContext, context.Request.IsSecureConnection, _cspUpgradeRequestHelper.UaSupportsUpgradeInsecureRequests(context.Request));
-            SetHpkpHeader(httpContext, context.Request.IsSecureConnection, false);
-            SetHpkpHeader(httpContext, context.Request.IsSecureConnection, true);
             SetXRobotsTagHeader(httpContext, nwebsecContext);
             SetXFrameoptionsHeader(httpContext, nwebsecContext);
             SetXContentTypeOptionsHeader(httpContext, nwebsecContext);
@@ -79,18 +77,6 @@ namespace NWebsec.Helpers
             }
 
             var result = _headerGenerator.CreateHstsResult(WebConfig.SecurityHttpHeaders.Hsts);
-            _headerResultHandler.HandleHeaderResult(httpContext, result);
-        }
-
-        internal void SetHpkpHeader(IHttpContextWrapper httpContext, bool isHttps, bool reportOnly)
-        {
-            var hpkpConfig = reportOnly ? WebConfig.SecurityHttpHeaders.HpkpReportOnly : WebConfig.SecurityHttpHeaders.Hpkp;
-            if (!isHttps && hpkpConfig.HttpsOnly)
-            {
-                return;
-            }
-
-            var result = _headerGenerator.CreateHpkpResult(hpkpConfig, reportOnly);
             _headerResultHandler.HandleHeaderResult(httpContext, result);
         }
 

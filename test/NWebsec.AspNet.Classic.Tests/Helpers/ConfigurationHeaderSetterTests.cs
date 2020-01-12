@@ -119,50 +119,6 @@ namespace NWebsec.AspNet.Classic.Tests.Helpers
             _mockHeaderResultHandler.Verify(h => h.HandleHeaderResult(_httpContext, _expectedHeaderResult), Times.Never);
         }
 
-        [Theory, InlineData(true), InlineData(false)]
-        public void SetHpkpHeader_HttpAndNoHttpsOnly_HandlesResult(bool reportOnly)
-        {
-            var hpkpConfig = reportOnly ? _config.SecurityHttpHeaders.HpkpReportOnly : _config.SecurityHttpHeaders.Hpkp;
-
-            hpkpConfig.HttpsOnly = false;
-            _mockHeaderGenerator.Setup(g => g.CreateHpkpResult(hpkpConfig, reportOnly)).Returns(_expectedHeaderResult);
-
-            _configHeaderSetter.SetHpkpHeader(_httpContext, false, reportOnly);
-
-            _mockHeaderResultHandler.Verify(h => h.HandleHeaderResult(_httpContext, _expectedHeaderResult), Times.Once);
-        }
-
-        [Theory, InlineData(true), InlineData(false)]
-        public void SetHpkpHeader_HttpAndHttpsOnly_DoesNotHandleResult(bool reportOnly)
-        {
-            var hpkpConfig = reportOnly ? _config.SecurityHttpHeaders.HpkpReportOnly : _config.SecurityHttpHeaders.Hpkp;
-
-            hpkpConfig.HttpsOnly = true;
-            _mockHeaderGenerator.Setup(g => g.CreateHpkpResult(hpkpConfig, reportOnly)).Returns(_expectedHeaderResult);
-
-            _configHeaderSetter.SetHpkpHeader(_httpContext, false, reportOnly);
-
-            _mockHeaderGenerator.Verify(g => g.CreateHstsResult(It.IsAny<IHstsConfiguration>()), Times.Never);
-            _mockHeaderResultHandler.Verify(h => h.HandleHeaderResult(_httpContext, _expectedHeaderResult), Times.Never);
-        }
-
-        [Theory]
-        [InlineData(false, false)]
-        [InlineData(false, true)]
-        [InlineData(true, false)]
-        [InlineData(true, true)]
-        public void SetHpkpHeader_HttpsAndAnyHttpsOnly_HandlesResult(bool reportOnly, bool httpsOnly)
-        {
-            var hpkpConfig = reportOnly ? _config.SecurityHttpHeaders.HpkpReportOnly : _config.SecurityHttpHeaders.Hpkp;
-
-            hpkpConfig.HttpsOnly = httpsOnly;
-            _mockHeaderGenerator.Setup(g => g.CreateHpkpResult(hpkpConfig, reportOnly)).Returns(_expectedHeaderResult);
-
-            _configHeaderSetter.SetHpkpHeader(_httpContext, true, reportOnly);
-
-            _mockHeaderResultHandler.Verify(h => h.HandleHeaderResult(_httpContext, _expectedHeaderResult), Times.Once);
-        }
-
         [Fact]
         public void SetXRobotsTagHeader_UpdatesContextAndHandlesResult()
         {

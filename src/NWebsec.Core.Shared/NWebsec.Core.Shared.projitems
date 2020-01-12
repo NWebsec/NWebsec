@@ -12,8 +12,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)Extensions\ReferrerPolicyExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Fluent\IFluentInterface.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\ICspReportHelper.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Helpers\X509\TlvTripletHeader.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Helpers\X509\X509Helper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)HttpHeaders\Configuration\CspConfiguration.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)HttpHeaders\Configuration\CspDirectiveConfiguration.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)HttpHeaders\Configuration\CspHeaderConfiguration.cs" />
@@ -22,7 +20,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)HttpHeaders\Configuration\CspReportUriDirectiveConfiguration.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)HttpHeaders\Configuration\CspSandboxDirectiveConfiguration.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)HttpHeaders\Configuration\CspUpgradeDirectiveConfiguration.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)HttpHeaders\Configuration\HpkpConfiguration.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)HttpHeaders\Configuration\HstsConfiguration.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)HttpHeaders\Configuration\ICspConfiguration.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)HttpHeaders\Configuration\ICspDirectiveBasicConfiguration.cs" />
@@ -34,9 +31,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)HttpHeaders\Configuration\ICspReportUriDirectiveConfiguration.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)HttpHeaders\Configuration\ICspSandboxDirectiveConfiguration.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)HttpHeaders\Configuration\ICspUpgradeDirectiveConfiguration.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)HttpHeaders\Configuration\IHpkpCertConfiguration.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)HttpHeaders\Configuration\IHpkpConfiguration.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)HttpHeaders\Configuration\IHpkpPinConfiguration.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)HttpHeaders\Configuration\IHstsConfiguration.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)HttpHeaders\Configuration\IRedirectValidationConfiguration.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)HttpHeaders\Configuration\IReferrerPolicyConfiguration.cs" />
@@ -49,7 +43,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)HttpHeaders\Configuration\ReferrerPolicyConfiguration.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)HttpHeaders\Configuration\SameHostHttpsRedirectConfiguration.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)HttpHeaders\Configuration\SimpleBooleanConfiguration.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)HttpHeaders\Configuration\Validation\HpkpConfigurationValidator.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)HttpHeaders\Configuration\Validation\HstsConfigurationValidator.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)HttpHeaders\Configuration\Validation\Rfc2045MediaTypeValidator.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)HttpHeaders\Configuration\Validation\XRobotsTagConfigurationValidator.cs" />
@@ -67,20 +60,18 @@
     <Compile Include="$(MSBuildThisFileDirectory)HttpHeaders\ReferrerPolicy.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)HttpHeaders\XfoPolicy.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)HttpHeaders\XXssPolicy.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Middleware\Options\IFluentHpkpOptions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Middleware\Options\CspDirective.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Middleware\Options\CspOptions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Middleware\Options\CspReportUriDirective.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Middleware\Options\FluentCspPluginTypesDirective.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Middleware\Options\FluentCspSandboxDirective.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Middleware\Options\HpkpOptions.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Middleware\Options\HpkpOptionsConfiguration.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Middleware\Options\HstsOptions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Middleware\Options\HstsOptionsConfiguration.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Middleware\Options\IFluentCspOptions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Middleware\Options\IFluentCspPluginTypesDirective.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Middleware\Options\IFluentCspReportUriDirective.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Middleware\Options\IFluentCspSandboxDirective.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Middleware\Options\IFluentHpkpOptions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Middleware\Options\IFluentHstsOptions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Middleware\Options\IFluentRedirectValidationOptions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Middleware\Options\IFluentReferrerPolicyOptions.cs" />

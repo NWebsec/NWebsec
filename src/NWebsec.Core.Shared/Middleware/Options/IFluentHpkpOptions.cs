@@ -6,9 +6,7 @@ using NWebsec.Core.Common.Fluent;
 
 namespace NWebsec.Core.Common.Middleware.Options
 {
-    /// <summary>
-    /// Fluent interface to configure options for Http Strict Transport Security.
-    /// </summary>
+    [Obsolete("The Public-Key-Pins header has been deprecated and recent browser versions have removed support for it.", true)]
     public interface IFluentHpkpOptions : IFluentInterface
     {
         /// <summary>
