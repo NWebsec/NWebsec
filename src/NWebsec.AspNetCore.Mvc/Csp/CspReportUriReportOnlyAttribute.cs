@@ -9,7 +9,7 @@ namespace NWebsec.AspNetCore.Mvc.Csp
     /// When applied to a controller or action method, enables the report-uri directive for the CSP Report Only header (CSP 1.0).
     /// Support for absolute URIs was added in CSP 2.
     /// </summary>
-    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, Inherited = false)]
+    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, Inherited = true)]
     public class CspReportUriReportOnlyAttribute: CspReportUriAttributeBase
     {
         protected override bool ReportOnly => true;

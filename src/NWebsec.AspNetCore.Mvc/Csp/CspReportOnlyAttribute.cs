@@ -8,7 +8,7 @@ namespace NWebsec.AspNetCore.Mvc.Csp
     /// <summary>
     /// When applied to a controller or action method, enables the Content-Security-Policy-Report-Only header (assuming there are directives enabled). 
     /// </summary>
-    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, Inherited = false)]
+    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, Inherited = true)]
     public class CspReportOnlyAttribute : CspAttributeBase
     {
         protected override bool ReportOnly => true;

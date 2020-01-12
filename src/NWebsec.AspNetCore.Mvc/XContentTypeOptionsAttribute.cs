@@ -13,7 +13,7 @@ namespace NWebsec.AspNetCore.Mvc
     /// <summary>
     /// Specifies whether the X-Content-Type-Options security header should be set in the HTTP response.
     /// </summary>
-    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]
+    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, Inherited = true)]
     public class XContentTypeOptionsAttribute : HttpHeaderAttributeBase
     {
         private readonly SimpleBooleanConfiguration _config;

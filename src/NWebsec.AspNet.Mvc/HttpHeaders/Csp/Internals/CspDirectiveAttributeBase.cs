@@ -15,7 +15,7 @@ namespace NWebsec.Mvc.HttpHeaders.Csp.Internals
     /// <summary>
     /// This is a base class which should not be used directly.
     /// </summary>
-    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, AllowMultiple = true)]
+    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, AllowMultiple = true, Inherited = true)]
     public abstract class CspDirectiveAttributeBase : HttpHeaderAttributeBase
     {
         private readonly CspConfigurationOverrideHelper _headerConfigurationOverrideHelper;

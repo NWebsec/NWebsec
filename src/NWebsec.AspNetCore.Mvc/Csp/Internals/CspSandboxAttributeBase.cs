@@ -13,7 +13,7 @@ namespace NWebsec.AspNetCore.Mvc.Csp.Internals
     /// <summary>
     /// This class is abstract and cannot be used directly.
     /// </summary>
-    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, AllowMultiple = true)]
+    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, AllowMultiple = true, Inherited = true)]
     public abstract class CspSandboxAttributeBase : HttpHeaderAttributeBase
     {
         private readonly CspSandboxOverride _directive;

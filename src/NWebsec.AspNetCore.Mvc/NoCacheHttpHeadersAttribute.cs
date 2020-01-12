@@ -13,7 +13,7 @@ namespace NWebsec.AspNetCore.Mvc
     /// <summary>
     /// Specifies whether appropriate headers to prevent browser caching should be set in the HTTP response.
     /// </summary>
-    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]
+    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, Inherited = true)]
     public class NoCacheHttpHeadersAttribute : HttpHeaderAttributeBase
     {
         private readonly SimpleBooleanConfiguration _config;

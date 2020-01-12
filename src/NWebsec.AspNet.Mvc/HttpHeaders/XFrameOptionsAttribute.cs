@@ -14,7 +14,7 @@ namespace NWebsec.Mvc.HttpHeaders
     /// <summary>
     /// Specifies whether the X-Frame-Options security header should be set in the HTTP response.
     /// </summary>
-    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]
+    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, Inherited = true)]
     public class XFrameOptionsAttribute : HttpHeaderAttributeBase
     {
         private readonly IXFrameOptionsConfiguration _config;
