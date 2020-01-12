@@ -3,9 +3,6 @@
   <PropertyGroup>    
     <TargetFramework>net452</TargetFramework>
     <IsPackable>false</IsPackable>
-    <SignAssembly>true</SignAssembly>
-    <DelaySign>false</DelaySign>
-    <AssemblyOriginatorKeyFile>..\nwebsectst.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
 
   <ItemGroup>
@@ -27,4 +24,10 @@
     <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
 
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+    <DelaySign>false</DelaySign>
+    <AssemblyOriginatorKeyFile>..\nwebsectst.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  
 </Project>

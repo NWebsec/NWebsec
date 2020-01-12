@@ -2,7 +2,13 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
   </PropertyGroup>
-  
+
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+    <DelaySign>false</DelaySign>
+    <AssemblyOriginatorKeyFile>..\nwebsec.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+
   <!-- NuGet stuff-->
   <PropertyGroup>
     <Authors>André N. Klingsheim</Authors>
@@ -14,4 +20,5 @@
     <IncludeSymbols>true</IncludeSymbols>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
   </PropertyGroup>
+
 </Project>

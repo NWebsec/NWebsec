@@ -1,12 +1,13 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   
   <Import Project="..\NWebsec.Mvc.Common\NWebsec.Mvc.Common.projitems" Label="Shared" />
-  
   <Import Project="..\common.props" />
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <VersionPrefix>3.0.0</VersionPrefix>
+    <FileVersion>3.0.0.0</FileVersion>
+    <AssemblyVersion>3.0.0.0</AssemblyVersion>
     <NoWarn>CS1591</NoWarn>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <WarningsAsErrors />

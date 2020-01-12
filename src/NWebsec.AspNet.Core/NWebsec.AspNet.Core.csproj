@@ -5,16 +5,14 @@
   <PropertyGroup>
     <TargetFramework>net45</TargetFramework>
     <VersionPrefix>3.0.0</VersionPrefix>
-    <NoWarn>$(NoWarn);CS1591</NoWarn>
+    <FileVersion>3.0.0.0</FileVersion>
+    <AssemblyVersion>3.0.0.0</AssemblyVersion>
+    <NoWarn>CS1591</NoWarn>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <WarningsAsErrors />
     <AssemblyName>NWebsec.Core</AssemblyName>
     <AssemblyTitle>NWebsec.Core</AssemblyTitle>
     <RootNamespace>NWebsec.Core</RootNamespace>
-   
-    <SignAssembly>true</SignAssembly>
-    <DelaySign>false</DelaySign>
-    <AssemblyOriginatorKeyFile>..\nwebsec.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
 
   <Import Project="..\NWebsec.Core.Shared\NWebsec.Core.Shared.projitems" Label="Shared" />

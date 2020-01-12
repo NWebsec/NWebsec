@@ -20,4 +20,10 @@
     </PackageReference>
   </ItemGroup>
 
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+    <DelaySign>false</DelaySign>
+    <AssemblyOriginatorKeyFile>..\nwebsectst.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  
 </Project>

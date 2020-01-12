@@ -7,14 +7,13 @@
 
     <AssemblyTitle>NWebsec.Owin</AssemblyTitle>
     <VersionPrefix>4.0.0</VersionPrefix>
+    <FileVersion>4.0.0.0</FileVersion>
+    <AssemblyVersion>4.0.0.0</AssemblyVersion>
     <NoWarn>CS1591</NoWarn>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <WarningsAsErrors />
     <AssemblyName>NWebsec.Owin</AssemblyName>
-    <RootNamespace>NWebsec.Owin</RootNamespace>
-    <SignAssembly>true</SignAssembly>
-    <DelaySign>false</DelaySign>
-    <AssemblyOriginatorKeyFile>..\nwebsec.snk</AssemblyOriginatorKeyFile>
+    <RootNamespace>NWebsec.Owin</RootNamespace>    
   </PropertyGroup>
 
   <ItemGroup>
