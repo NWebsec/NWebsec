@@ -1,17 +1,14 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-
   <Import Project="..\NWebsec.Core.Shared\NWebsec.Core.Shared.projitems" Label="Shared" />
-
-
   <Import Project="..\version.props" />
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
     <Description>This library provides shared functionality for the NWebsec ASP.NET Core security libraries.</Description>
-    <Copyright>Copyright © 2016 - 2018</Copyright>
+    <Copyright>Copyright © 2016 - 2020</Copyright>
     <AssemblyTitle>NWebsec.AspNetCore.Core</AssemblyTitle>
-    <VersionPrefix>2.0.0</VersionPrefix>
+    <VersionPrefix>3.0.0</VersionPrefix>
     <Authors>André N. Klingsheim</Authors>
     <NoWarn>$(NoWarn);CS1591</NoWarn>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
@@ -34,9 +31,9 @@
   <ItemGroup>
     <ProjectReference Include="..\NWebsec.Annotations\NWebsec.Annotations.csproj" PrivateAssets="All" />
   </ItemGroup>
-
+  
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.0.2" />
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
   </ItemGroup>
-
+  
 </Project>

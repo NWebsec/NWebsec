@@ -1,32 +1,32 @@
 // Copyright (c) André N. Klingsheim. See License.txt in the project root for license information.
 
+using Microsoft.AspNetCore.Mvc.Testing;
 using System;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.TestHost;
 using Xunit;
-using NWebsec.AspNetCore.Mvc.FunctionalTests.Plumbing;
+using WebAppFactoryType = NWebsec.AspNetCore.Mvc.FunctionalTests.WebApplicationFactoryStartup<MvcAttributeWebsite.Startup>;
+
 
 namespace NWebsec.AspNetCore.Mvc.FunctionalTests.Attributes
 {
-    public class CspDirectivesTests : IDisposable
+    public class CspDirectivesTests : IDisposable, IClassFixture<WebAppFactoryType>
     {
-        private readonly TestServer _server;
+        private readonly WebAppFactoryType _factory;
         private readonly HttpClient _httpClient;
 
-        public CspDirectivesTests()
+        public CspDirectivesTests(WebAppFactoryType factory)
         {
-            _server = TestServerBuilder<MvcAttributeWebsite.Startup>.CreateTestServer();
-            _httpClient = _server.CreateClient();
+            _factory = factory;
+            _httpClient = _factory.CreateClient(new WebApplicationFactoryClientOptions { AllowAutoRedirect = false, HandleCookies = false });
         }
 
         public void Dispose()
         {
             _httpClient.Dispose();
-            _server.Dispose();
         }
 
         [Fact]
