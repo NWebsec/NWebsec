@@ -1,27 +1,17 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <Import Project="..\version.props" />
+  <Import Project="..\common.props" />
   
   <PropertyGroup>
     <TargetFramework>net45</TargetFramework>
-    <Description>This library provides shared functionality for the NWebsec ASP.NET security libraries.</Description>
-    <Copyright>Copyright © 2014 - 2020</Copyright>
-    <AssemblyTitle>NWebsec.Core</AssemblyTitle>
     <VersionPrefix>3.0.0</VersionPrefix>
-    <Authors>André N. Klingsheim</Authors>
     <NoWarn>$(NoWarn);CS1591</NoWarn>
-    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <WarningsAsErrors />
     <AssemblyName>NWebsec.Core</AssemblyName>
-    <PackageId>NWebsec.Core</PackageId>
-    <PackageTags>nwebsec aspnet security appsec</PackageTags>
-    <PackageReleaseNotes>This release includes core functions for the NWebsec security libaries.</PackageReleaseNotes>
-    <PackageIconUrl>https://nwebseccdn.blob.core.windows.net/nugeticon/nwebsec_nuget.png</PackageIconUrl>
-    <PackageProjectUrl>https://docs.nwebsec.com/</PackageProjectUrl>
-    <PackageLicenseUrl>https://github.com/NWebsec/NWebsec/blob/master/LICENSE</PackageLicenseUrl>
-    <IncludeSymbols>true</IncludeSymbols>
-    <RepositoryType>git</RepositoryType>
-    <RepositoryUrl>git://github.com/NWebsec/NWebsec</RepositoryUrl>
+    <AssemblyTitle>NWebsec.Core</AssemblyTitle>
     <RootNamespace>NWebsec.Core</RootNamespace>
+   
     <SignAssembly>true</SignAssembly>
     <DelaySign>false</DelaySign>
     <AssemblyOriginatorKeyFile>..\nwebsec.snk</AssemblyOriginatorKeyFile>
@@ -30,12 +20,16 @@
   <Import Project="..\NWebsec.Core.Shared\NWebsec.Core.Shared.projitems" Label="Shared" />
 
   <ItemGroup>
-    <ProjectReference Include="..\NWebsec.Annotations\NWebsec.Annotations.csproj" PrivateAssets="All" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Reference Include="System" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Web" />
   </ItemGroup>
+
+  <PropertyGroup>
+    <PackageReleaseNotes>This release includes core functions for the NWebsec security libaries.</PackageReleaseNotes>
+    <Description>This library provides shared functionality for the NWebsec ASP.NET security libraries.</Description>
+    <PackageId>NWebsec.Core</PackageId>
+    <PackageTags>nwebsec aspnet security appsec</PackageTags>
+    <Copyright>Copyright © 2014 - 2020</Copyright>
+  </PropertyGroup>
 </Project>

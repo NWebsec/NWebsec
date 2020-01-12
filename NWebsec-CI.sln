@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27130.2036
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29613.14
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{1733BF96-BCF6-43DD-B145-EBCB11B57C55}"
 EndProject
@@ -10,8 +10,6 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{1E120316-DAE8-4FF7-81C2-053A914C258D}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "websites", "websites", "{BBDF5974-4937-4E1E-A596-22F1EF79B05A}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NWebsec.Annotations", "src\NWebsec.Annotations\NWebsec.Annotations.csproj", "{2254E2E0-8390-48A4-820D-86F6EBAA7F2A}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NWebsec.AspNetCore.Core", "src\NWebsec.AspNetCore.Core\NWebsec.AspNetCore.Core.csproj", "{952CAE2C-D3A3-4B16-B864-0108741A4510}"
 EndProject
@@ -71,10 +69,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{2254E2E0-8390-48A4-820D-86F6EBAA7F2A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2254E2E0-8390-48A4-820D-86F6EBAA7F2A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2254E2E0-8390-48A4-820D-86F6EBAA7F2A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2254E2E0-8390-48A4-820D-86F6EBAA7F2A}.Release|Any CPU.Build.0 = Release|Any CPU
 		{952CAE2C-D3A3-4B16-B864-0108741A4510}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{952CAE2C-D3A3-4B16-B864-0108741A4510}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{952CAE2C-D3A3-4B16-B864-0108741A4510}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -169,7 +163,6 @@ Global
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{BBDF5974-4937-4E1E-A596-22F1EF79B05A} = {1E120316-DAE8-4FF7-81C2-053A914C258D}
-		{2254E2E0-8390-48A4-820D-86F6EBAA7F2A} = {1733BF96-BCF6-43DD-B145-EBCB11B57C55}
 		{952CAE2C-D3A3-4B16-B864-0108741A4510} = {1733BF96-BCF6-43DD-B145-EBCB11B57C55}
 		{03763277-72E4-4246-B86E-56D9A1C90AA2} = {1733BF96-BCF6-43DD-B145-EBCB11B57C55}
 		{F8500AAD-270F-4F77-B8C9-FA16A69CF868} = {1733BF96-BCF6-43DD-B145-EBCB11B57C55}

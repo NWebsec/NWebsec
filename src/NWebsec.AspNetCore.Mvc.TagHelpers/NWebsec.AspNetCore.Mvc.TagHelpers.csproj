@@ -1,27 +1,16 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <Import Project="..\version.props" />
+  <Import Project="..\common.props" />
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
-    <Description>NWebsec TagHelpers for ASP.NET Core MVC applications. NWebsec helps you set important security headers, detect potentially dangerous redirects, and control cache headers. See project website for documentation.</Description>
-    <Copyright>Copyright © 2016 - 2020</Copyright>
-    <AssemblyTitle>NWebsec.AspNetCore.Mvc.TagHelpers</AssemblyTitle>
     <VersionPrefix>3.0.0</VersionPrefix>
     <Authors>André N. Klingsheim</Authors>
+    <NoWarn>CS1591</NoWarn>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <WarningsAsErrors />
     <AssemblyName>NWebsec.AspNetCore.Mvc.TagHelpers</AssemblyName>
-    <PackageId>NWebsec.AspNetCore.Mvc.TagHelpers</PackageId>
-    <PackageTags>nwebsec aspnetcore security</PackageTags>
-    <PackageReleaseNotes>This release adds support for ASP.NET Core 3.1. See release notes on GitHub for details.</PackageReleaseNotes>
-    <PackageIconUrl>https://nwebseccdn.blob.core.windows.net/nugeticon/nwebsec_nuget.png</PackageIconUrl>
-    <PackageProjectUrl>https://docs.nwebsec.com/</PackageProjectUrl>
-    <PackageLicenseUrl>https://github.com/NWebsec/NWebsec/blob/master/LICENSE</PackageLicenseUrl>
-    <IncludeSymbols>true</IncludeSymbols>
-    <RepositoryType>git</RepositoryType>
-    <RepositoryUrl>git://github.com/NWebsec/NWebsec</RepositoryUrl>
-    <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
-    <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
-    <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
+    <AssemblyTitle>NWebsec.AspNetCore.Mvc.TagHelpers</AssemblyTitle>
   </PropertyGroup>
 
   <ItemGroup>
@@ -31,5 +20,14 @@
   <ItemGroup>
     <FrameworkReference Include="Microsoft.AspNetCore.App" />
   </ItemGroup>
-  
+
+
+  <PropertyGroup>
+    <PackageReleaseNotes>This release adds support for ASP.NET Core 3.1. See release notes on GitHub for details.</PackageReleaseNotes>
+    <Description>NWebsec TagHelpers for ASP.NET Core MVC applications. NWebsec helps you set important security headers, detect potentially dangerous redirects, and control cache headers. See project website for documentation.</Description>
+    <PackageId>NWebsec.AspNetCore.Mvc.TagHelpers</PackageId>
+    <PackageTags>nwebsec aspnetcore security</PackageTags>
+    <Copyright>Copyright © 2016 - 2020</Copyright>
+  </PropertyGroup>
+
 </Project>

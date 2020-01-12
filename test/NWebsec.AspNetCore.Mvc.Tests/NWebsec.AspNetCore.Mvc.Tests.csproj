@@ -7,7 +7,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\NWebsec.AspNetCore.Mvc\NWebsec.AspNetCore.Mvc.csproj" />
-    <ProjectReference Include="..\..\src\NWebsec.Annotations\NWebsec.Annotations.csproj" />
   </ItemGroup>
 
   <ItemGroup>
