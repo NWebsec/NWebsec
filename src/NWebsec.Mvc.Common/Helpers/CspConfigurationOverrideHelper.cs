@@ -193,7 +193,7 @@ namespace NWebsec.Mvc.Common.Helpers
         {
             using (var rng = RandomNumberGenerator.Create())
             {
-                var nonceBytes = new byte[15];
+                var nonceBytes = new byte[18];
                 rng.GetBytes(nonceBytes);
                 return Convert.ToBase64String(nonceBytes);
             }
