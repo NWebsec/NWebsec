@@ -2,7 +2,6 @@
 
 using System;
 using System.Security.Cryptography;
-using NWebsec.Annotations;
 using NWebsec.Core.Common.HttpHeaders.Configuration;
 using NWebsec.Core.Common.Web;
 using NWebsec.Mvc.Common.Csp;
@@ -29,8 +28,8 @@ namespace NWebsec.Mvc.Common.Helpers
             _configMapper = mapper;
         }
 
-        [CanBeNull]
-        public ICspConfiguration GetCspConfigWithOverrides([NotNull]IHttpContextWrapper context, bool reportOnly)
+       /*[CanBeNull]*/
+        public ICspConfiguration GetCspConfigWithOverrides(/*[NotNull]*/IHttpContextWrapper context, bool reportOnly)
         {
 
             var overrides = _contextConfigurationHelper.GetCspConfigurationOverride(context, reportOnly, true);

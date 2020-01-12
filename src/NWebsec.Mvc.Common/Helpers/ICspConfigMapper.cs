@@ -1,6 +1,5 @@
 ﻿// Copyright (c) André N. Klingsheim. See License.txt in the project root for license information.
 
-using NWebsec.Annotations;
 using NWebsec.Core.Common.HttpHeaders.Configuration;
 using NWebsec.Mvc.Common.Csp;
 
@@ -11,25 +10,25 @@ namespace NWebsec.Mvc.Common.Helpers
     /// </summary>
     public interface ICspConfigMapper
     {
-        [CanBeNull]
+       /*[CanBeNull]*/
         ICspDirectiveConfiguration GetCspDirectiveConfig(ICspConfiguration cspConfig, CspDirectives directive);
 
-        [CanBeNull]
+       /*[CanBeNull]*/
         ICspDirectiveConfiguration GetCspDirectiveConfigCloned(ICspConfiguration cspConfig, CspDirectives directive);
 
-        [CanBeNull]
+       /*[CanBeNull]*/
         ICspPluginTypesDirectiveConfiguration GetCspPluginTypesConfigCloned(ICspConfiguration cspConfig);
 
-        [CanBeNull]
+       /*[CanBeNull]*/
         ICspSandboxDirectiveConfiguration GetCspSandboxConfigCloned(ICspConfiguration cspConfig);
 
-        [CanBeNull]
+       /*[CanBeNull]*/
         ICspMixedContentDirectiveConfiguration GetCspMixedContentConfigCloned(ICspConfiguration baseConfig);
 
         void SetCspDirectiveConfig(ICspConfiguration cspConfig, CspDirectives directive, ICspDirectiveConfiguration directiveConfig);
 
-        void MergeConfiguration([NotNull]ICspConfiguration source, [NotNull]ICspConfiguration destination);
+        void MergeConfiguration(/*[NotNull]*/ICspConfiguration source, /*[NotNull]*/ICspConfiguration destination);
 
-        void MergeOverrides([NotNull]CspOverrideConfiguration source, [NotNull]ICspConfiguration destination);
+        void MergeOverrides(/*[NotNull]*/CspOverrideConfiguration source, /*[NotNull]*/ICspConfiguration destination);
     }
 }

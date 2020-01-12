@@ -1,14 +1,13 @@
 ﻿// Copyright (c) André N. Klingsheim. See License.txt in the project root for license information.
 
 using System;
-using NWebsec.Annotations;
 using NWebsec.Core.Common.HttpHeaders;
 
 namespace NWebsec.Core.Common.Extensions
 {
     public static class ReferrerPolicyExtensions
     {
-        [NotNull]
+        /*[NotNull]*/
         public static string GetPolicyString(this ReferrerPolicy policy)
         {
             switch (policy)

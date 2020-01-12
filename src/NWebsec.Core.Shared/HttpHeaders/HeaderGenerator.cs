@@ -4,7 +4,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using NWebsec.Annotations;
 using NWebsec.Core.Common.Extensions;
 using NWebsec.Core.Common.HttpHeaders.Configuration;
 
@@ -12,7 +11,7 @@ namespace NWebsec.Core.Common.HttpHeaders
 {
     public class HeaderGenerator : IHeaderGenerator
     {
-        [CanBeNull]
+       /*[CanBeNull]*/
         public HeaderResult CreateXRobotsTagResult(IXRobotsTagConfiguration xRobotsTagConfig,
             IXRobotsTagConfiguration oldXRobotsTagConfig = null)
         {
@@ -41,7 +40,7 @@ namespace NWebsec.Core.Common.HttpHeaders
             return new HeaderResult(HeaderResult.ResponseAction.Set, HeaderConstants.XRobotsTagHeader, value);
         }
 
-        [CanBeNull]
+       /*[CanBeNull]*/
         public HeaderResult CreateHstsResult(IHstsConfiguration hstsConfig)
         {
             if (hstsConfig.MaxAge < TimeSpan.Zero) return null;
@@ -61,7 +60,7 @@ namespace NWebsec.Core.Common.HttpHeaders
                 value);
         }
 
-        [CanBeNull]
+       /*[CanBeNull]*/
         public HeaderResult CreateXContentTypeOptionsResult(ISimpleBooleanConfiguration xContentTypeOptionsConfig,
             ISimpleBooleanConfiguration oldXContentTypeOptionsConfig = null)
         {
@@ -76,7 +75,7 @@ namespace NWebsec.Core.Common.HttpHeaders
                 : null;
         }
 
-        [CanBeNull]
+       /*[CanBeNull]*/
         public HeaderResult CreateXDownloadOptionsResult(ISimpleBooleanConfiguration xDownloadOptionsConfig,
             ISimpleBooleanConfiguration oldXDownloadOptionsConfig = null)
         {
@@ -90,7 +89,7 @@ namespace NWebsec.Core.Common.HttpHeaders
                 : null;
         }
 
-        [CanBeNull]
+       /*[CanBeNull]*/
         public HeaderResult CreateXXssProtectionResult(IXXssProtectionConfiguration xXssProtectionConfig,
             IXXssProtectionConfiguration oldXXssProtectionConfig = null)
         {
@@ -122,7 +121,7 @@ namespace NWebsec.Core.Common.HttpHeaders
             return new HeaderResult(HeaderResult.ResponseAction.Set, HeaderConstants.XXssProtectionHeader, value);
         }
 
-        [CanBeNull]
+       /*[CanBeNull]*/
         public HeaderResult CreateXfoResult(IXFrameOptionsConfiguration xfoConfig,
             IXFrameOptionsConfiguration oldXfoConfig = null)
         {
@@ -168,7 +167,7 @@ namespace NWebsec.Core.Common.HttpHeaders
             return new HeaderResult(HeaderResult.ResponseAction.Set, HeaderConstants.ReferrerPolicyHeader, policyValue);
         }
 
-        [CanBeNull]
+       /*[CanBeNull]*/
         public HeaderResult CreateHpkpResult(IHpkpConfiguration hpkpConfig, bool reportOnly)
         {
             if (hpkpConfig.MaxAge < TimeSpan.Zero || hpkpConfig.Pins == null || !hpkpConfig.Pins.Any()) return null;
@@ -209,7 +208,7 @@ namespace NWebsec.Core.Common.HttpHeaders
             return new HeaderResult(HeaderResult.ResponseAction.Set, headerName, value);
         }
 
-        [CanBeNull]
+       /*[CanBeNull]*/
         public HeaderResult CreateCspResult(ICspConfiguration cspConfig, bool reportOnly,
             string builtinReportHandlerUri = null, ICspConfiguration oldCspConfig = null)
         {
@@ -234,7 +233,7 @@ namespace NWebsec.Core.Common.HttpHeaders
                 (reportOnly ? HeaderConstants.ContentSecurityPolicyReportOnlyHeader : HeaderConstants.ContentSecurityPolicyHeader), headerValue);
         }
 
-        [CanBeNull]
+       /*[CanBeNull]*/
         private string CreateCspHeaderValue(ICspConfiguration config, string builtinReportHandlerUri = null)
         {
             var sb = new StringBuilder();

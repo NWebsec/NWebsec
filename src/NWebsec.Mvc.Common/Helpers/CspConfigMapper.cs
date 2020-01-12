@@ -3,7 +3,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using NWebsec.Annotations;
 using NWebsec.Core.Common.HttpHeaders.Configuration;
 using NWebsec.Mvc.Common.Csp;
 
@@ -234,7 +233,7 @@ namespace NWebsec.Mvc.Common.Helpers
             MergeDirectives(source, destination);
         }
 
-        private void MergeDirectives([NotNull] ICspConfiguration source, [NotNull] ICspConfiguration destination)
+        private void MergeDirectives(/*[NotNull]*/ ICspConfiguration source, /*[NotNull]*/ ICspConfiguration destination)
         {
             //Use source directive if set, else keep existing if not null, initalize directive if both are null.
             destination.DefaultSrcDirective = source.DefaultSrcDirective ?? destination.DefaultSrcDirective ?? new CspDirectiveConfiguration();
