@@ -7,16 +7,16 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <Description>NWebsec attributes for ASP.NET Core MVC applications. NWebsec helps you set important security headers, detect potentially dangerous redirects, and control cache headers. See project website for documentation.</Description>
-    <Copyright>Copyright © 2016 - 2018</Copyright>
+    <Copyright>Copyright © 2016 - 2020</Copyright>
     <AssemblyTitle>NWebsec.AspNetCore.Mvc</AssemblyTitle>
-    <VersionPrefix>2.0.0</VersionPrefix>
+    <VersionPrefix>3.0.0</VersionPrefix>
     <Authors>André N. Klingsheim</Authors>
     <NoWarn>$(NoWarn);CS1591</NoWarn>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <AssemblyName>NWebsec.AspNetCore.Mvc</AssemblyName>
     <PackageId>NWebsec.AspNetCore.Mvc</PackageId>
     <PackageTags>nwebsec aspnetcore security</PackageTags>
-    <PackageReleaseNotes>This release adds support for CSP hash sources and the CSP 'worker-src' directive. Dependencies are bumped to ASP.NET Core 2.0. See release notes on GitHub for details.</PackageReleaseNotes>
+    <PackageReleaseNotes>This release adds support for ASP.NET Core 3.1. See release notes on GitHub for details.</PackageReleaseNotes>
     <PackageIconUrl>https://nwebseccdn.blob.core.windows.net/nugeticon/nwebsec_nuget.png</PackageIconUrl>
     <PackageProjectUrl>https://docs.nwebsec.com/</PackageProjectUrl>
     <PackageLicenseUrl>https://github.com/NWebsec/NWebsec/blob/master/LICENSE</PackageLicenseUrl>

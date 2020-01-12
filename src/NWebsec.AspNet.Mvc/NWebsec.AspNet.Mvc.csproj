@@ -7,16 +7,16 @@
   <PropertyGroup>
     <TargetFramework>net45</TargetFramework>
     <Description>NWebsec attributes for ASP.NET MVC 5 applications. NWebsec helps you set important security headers, detect potentially dangerous redirects, control cache headers, and remove version headers. See project website for documentation.</Description>
-    <Copyright>Copyright © 2012 - 2018</Copyright>
+    <Copyright>Copyright © 2012 - 2020</Copyright>
     <AssemblyTitle>NWebsec.Mvc</AssemblyTitle>
-    <VersionPrefix>5.1.1</VersionPrefix>
+    <VersionPrefix>6.0.0</VersionPrefix>
     <Authors>André N. Klingsheim</Authors>
     <NoWarn>$(NoWarn);CS1591</NoWarn>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <AssemblyName>NWebsec.Mvc</AssemblyName>
     <PackageId>NWebsec.Mvc</PackageId>
     <PackageTags>nwebsec aspnet mvc aspnetmvc security appsec</PackageTags>
-    <PackageReleaseNotes>This release adds support for CSP hash sources and the CSP 'worker-src' directive. See release notes on GitHub for details.</PackageReleaseNotes>
+    <PackageReleaseNotes>This release fixes a minor issue related to attribute inheritance. See release notes on GitHub for details.</PackageReleaseNotes>
     <PackageIconUrl>https://nwebseccdn.blob.core.windows.net/nugeticon/nwebsec_nuget.png</PackageIconUrl>
     <PackageProjectUrl>https://docs.nwebsec.com/</PackageProjectUrl>
     <PackageLicenseUrl>https://github.com/NWebsec/NWebsec/blob/master/LICENSE</PackageLicenseUrl>
