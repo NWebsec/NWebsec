@@ -5,8 +5,8 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
-    <VersionPrefix>3.0.0</VersionPrefix>
-    <FileVersion>3.0.0.0</FileVersion>
+    <VersionPrefix>3.0.1</VersionPrefix>
+    <FileVersion>3.0.1.0</FileVersion>
     <AssemblyVersion>3.0.0.0</AssemblyVersion>
     <NoWarn>CS1591</NoWarn>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
@@ -20,7 +20,7 @@
   </ItemGroup>
 
   <PropertyGroup>
-    <PackageReleaseNotes>This release includes core functions for the NWebsec security libaries.</PackageReleaseNotes>
+    <PackageReleaseNotes>This release fixes a bug that caused a validation exception on some valid CSP scheme sources containing the characters '+.-'.</PackageReleaseNotes>
     <Description>This library provides shared functionality for the NWebsec ASP.NET Core security libraries.</Description>
     <PackageId>NWebsec.AspNetCore.Core</PackageId>
     <PackageTags>nwebsec aspnetcore security</PackageTags>
