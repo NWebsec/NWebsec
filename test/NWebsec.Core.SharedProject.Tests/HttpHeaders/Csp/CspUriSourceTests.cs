@@ -73,6 +73,9 @@ namespace NWebsec.Core.SharedProject.Tests.HttpHeaders.Csp
         [Theory]
         [InlineData("https:")]
         [InlineData("data:")]
+        [InlineData("custom-scheme:")]
+        [InlineData("another.custom-scheme:")]
+        [InlineData("a:")]
         public void Parse_SchemeOnly_ReturnsResult(string scheme)
         {
             var result = CspUriSource.Parse(scheme);
@@ -528,11 +531,14 @@ namespace NWebsec.Core.SharedProject.Tests.HttpHeaders.Csp
             Assert.Equal("*.xn--tdaaaaaa.com:*/some/path", result.ToString());
         }
 
-        [Fact]
-        public void Parse_InvalidScheme_ThrowsException()
+        [Theory]
+        [InlineData("0https:")]
+        [InlineData("+:")]
+        [InlineData("-:")]
+        [InlineData(".:")]
+        public void Parse_InvalidScheme_ThrowsException(string invalidScheme)
         {
-
-            Assert.Throws<InvalidCspSourceException>(() => CspUriSource.Parse("0https:"));
+            Assert.Throws<InvalidCspSourceException>(() => CspUriSource.Parse(invalidScheme));
         }
 
         [Fact]
