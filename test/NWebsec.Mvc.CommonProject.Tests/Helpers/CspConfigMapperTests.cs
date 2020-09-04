@@ -187,6 +187,7 @@ namespace NWebsec.Mvc.CommonProject.Tests.Helpers
         {
             var firstDirective = new CspSandboxDirectiveConfiguration
             {
+                AllowDownloads = true,
                 AllowForms = true,
                 AllowModals = true,
                 AllowOrientationLock = true,

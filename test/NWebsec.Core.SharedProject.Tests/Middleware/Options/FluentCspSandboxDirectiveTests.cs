@@ -16,6 +16,14 @@ namespace NWebsec.Core.SharedProject.Tests.Middleware.Options
         }
 
         [Fact]
+        public void AllowDownloads_SetsAllowDownloads()
+        {
+            _options.AllowDownloads();
+
+            Assert.True(((CspSandboxDirectiveConfiguration)_options).AllowDownloads);
+        }
+
+        [Fact]
         public void AllowForms_SetsAllowForms()
         {
             _options.AllowForms();

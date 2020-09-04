@@ -514,6 +514,11 @@
               <xs:documentation>This attribute is required. Specifies whether to include the sandbox CSP directive (CSP 1.0).</xs:documentation>
             </xs:annotation>
           </xs:attribute>
+          <xs:attribute name="allow-downloads" type="simple_boolean" use="optional">
+            <xs:annotation>
+              <xs:documentation>Optional. Specifies whether to include the allow-downloads source. The default is false.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
           <xs:attribute name="allow-forms" type="simple_boolean" use="optional">
             <xs:annotation>
               <xs:documentation>Optional. Specifies whether to include the allow-forms source. The default is false.</xs:documentation>

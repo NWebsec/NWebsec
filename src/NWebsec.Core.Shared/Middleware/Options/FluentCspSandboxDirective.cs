@@ -6,6 +6,12 @@ namespace NWebsec.Core.Common.Middleware.Options
 {
     class FluentCspSandboxDirective : CspSandboxDirectiveConfiguration, IFluentCspSandboxDirective
     {
+        public new IFluentCspSandboxDirective AllowDownloads()
+        {
+            base.AllowDownloads = true;
+            return this;
+        }
+
         public new IFluentCspSandboxDirective AllowForms()
         {
             base.AllowForms = true;

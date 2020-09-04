@@ -33,6 +33,16 @@ namespace NWebsec.Mvc.CommonProject.Tests.TestHelpers
         }
 
         [Fact]
+        public void Equals_AllowDownloadsDiffers_ReturnsFalse()
+        {
+            var firstConfig = new CspSandboxDirectiveConfiguration { AllowDownloads = false };
+            var secondConfig = new CspSandboxDirectiveConfiguration { AllowDownloads = true };
+
+            Assert.False(_equalityComparer.Equals(firstConfig, secondConfig));
+            Assert.False(_equalityComparer.Equals(secondConfig, firstConfig));
+        }
+
+        [Fact]
         public void Equals_AllowFormsDiffers_ReturnsFalse()
         {
             var firstConfig = new CspSandboxDirectiveConfiguration { AllowForms = false };

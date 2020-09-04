@@ -7,6 +7,11 @@ namespace NWebsec.Core.Common.Middleware.Options
     public interface IFluentCspSandboxDirective : IFluentInterface
     {
         /// <summary>
+        ///     Sets the 'allow-downloads' source for the CSP sandbox directive.
+        /// </summary>
+        IFluentCspSandboxDirective AllowDownloads();
+
+        /// <summary>
         ///     Sets the 'allow-forms' source for the CSP sandbox directive.
         /// </summary>
         IFluentCspSandboxDirective AllowForms();

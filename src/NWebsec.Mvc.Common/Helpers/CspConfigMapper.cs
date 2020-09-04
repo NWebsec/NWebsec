@@ -124,6 +124,7 @@ namespace NWebsec.Mvc.Common.Helpers
             return new CspSandboxDirectiveConfiguration
             {
                 Enabled = oldDirective.Enabled,
+                AllowDownloads = oldDirective.AllowDownloads,
                 AllowForms = oldDirective.AllowForms,
                 AllowModals = oldDirective.AllowModals,
                 AllowOrientationLock = oldDirective.AllowOrientationLock,
