@@ -81,6 +81,11 @@ namespace NWebsec.Mvc.Common.Helpers
 
             result.Enabled = directiveOverride.Enabled;
 
+            if (directiveOverride.AllowDownloads.HasValue)
+            {
+                result.AllowDownloads = (bool)directiveOverride.AllowDownloads;
+            }
+
             if (directiveOverride.AllowForms.HasValue)
             {
                 result.AllowForms = (bool)directiveOverride.AllowForms;

@@ -10,6 +10,7 @@ namespace NWebsec.Mvc.CommonProject.Tests.TestHelpers
         public bool Equals(ICspSandboxDirectiveConfiguration x, ICspSandboxDirectiveConfiguration y)
         {
             return x.Enabled.Equals(y.Enabled) &&
+                x.AllowDownloads.Equals(y.AllowDownloads) &&
                 x.AllowForms.Equals(y.AllowForms) &&
                 x.AllowModals.Equals(y.AllowModals) &&
                 x.AllowOrientationLock.Equals(y.AllowOrientationLock) &&

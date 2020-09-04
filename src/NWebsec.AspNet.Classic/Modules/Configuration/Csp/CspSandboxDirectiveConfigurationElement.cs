@@ -15,6 +15,13 @@ namespace NWebsec.Modules.Configuration.Csp
             set => this["enabled"] = value;
         }
 
+        [ConfigurationProperty("allow-downloads", IsRequired = false, DefaultValue = false)]
+        public bool AllowDownloads
+        {
+            get => (bool)this["allow-downloads"];
+            set => this["allow-downloads"] = value;
+        }
+
         [ConfigurationProperty("allow-forms", IsRequired = false, DefaultValue = false)]
         public bool AllowForms
         {

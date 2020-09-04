@@ -416,6 +416,7 @@ namespace NWebsec.Core.SharedProject.Tests.HttpHeaders
                 Enabled = true,
                 SandboxDirective = {
                     Enabled = true,
+                    AllowDownloads = true,
                     AllowForms = true,
                     AllowModals = true,
                     AllowOrientationLock = true,
@@ -434,7 +435,7 @@ namespace NWebsec.Core.SharedProject.Tests.HttpHeaders
             Assert.NotNull(result);
             Assert.Equal(HeaderResult.ResponseAction.Set, result.Action);
             Assert.Equal(CspHeaderName(reportOnly), result.Name);
-            Assert.Equal("sandbox allow-forms allow-modals allow-orientation-lock allow-pointer-lock allow-popups allow-popups-to-escape-sandbox allow-presentation allow-same-origin allow-scripts allow-top-navigation", result.Value);
+            Assert.Equal("sandbox allow-downloads allow-forms allow-modals allow-orientation-lock allow-pointer-lock allow-popups allow-popups-to-escape-sandbox allow-presentation allow-same-origin allow-scripts allow-top-navigation", result.Value);
         }
 
         [Theory]

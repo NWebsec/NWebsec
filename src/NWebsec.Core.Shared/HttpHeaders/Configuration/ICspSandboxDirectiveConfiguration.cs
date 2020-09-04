@@ -16,6 +16,11 @@ namespace NWebsec.Core.Common.HttpHeaders.Configuration
         ///     Infrastructure. Not intended to be used by your code directly. An attempt to hide this from Intellisense has been
         ///     made.
         /// </summary>
+        bool AllowDownloads { get; set; }
+        /// <summary>
+        ///     Infrastructure. Not intended to be used by your code directly. An attempt to hide this from Intellisense has been
+        ///     made.
+        /// </summary>
         bool AllowForms { get; set; }
         /// <summary>
         ///     Infrastructure. Not intended to be used by your code directly. An attempt to hide this from Intellisense has been

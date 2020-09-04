@@ -5,6 +5,7 @@ namespace NWebsec.Core.Common.HttpHeaders.Configuration
     public class CspSandboxDirectiveConfiguration : ICspSandboxDirectiveConfiguration
     {
         public bool Enabled { get; set; }
+        public bool AllowDownloads { get; set; }
         public bool AllowForms { get; set; }
         public bool AllowModals { get; set; }
         public bool AllowOrientationLock { get; set; }

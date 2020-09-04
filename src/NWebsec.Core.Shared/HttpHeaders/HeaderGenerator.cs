@@ -319,6 +319,11 @@ namespace NWebsec.Core.Common.HttpHeaders
 
             var sources = new List<string>();
 
+            if (directive.AllowDownloads)
+            {
+                sources.Add("allow-downloads");
+            }
+
             if (directive.AllowForms)
             {
                 sources.Add("allow-forms");

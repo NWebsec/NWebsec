@@ -35,6 +35,11 @@ namespace NWebsec.AspNetCore.Mvc.Csp.Internals
         public bool Enabled { get => _directive.Enabled;set => _directive.Enabled = value;}
 
         /// <summary>
+        /// Sets whether the allow-downloads flag is included in the sandbox directive. The default is false.
+        /// </summary>
+        public bool AllowDownloads { get => throw new NotSupportedException(); set => _directive.AllowDownloads = value; }
+
+        /// <summary>
         /// Sets whether the allow-forms flag is included in the sandbox directive. The default is false.
         /// </summary>
         public bool AllowForms { get => throw new NotSupportedException();set => _directive.AllowForms = value;}
