@@ -29,6 +29,12 @@ namespace NWebsec.AspNetCore.Core
                 return;
             }
 
+            // If URL starts with two slashes than add request autority scheme
+            if (locationHeader.StartsWith("//"))
+            {
+                locationHeader = requestAuthority.Scheme + ":" + locationHeader;
+            }
+
             Uri locationUri;
             if (!Uri.TryCreate(locationHeader, UriKind.RelativeOrAbsolute, out locationUri))
             {

@@ -40,6 +40,16 @@ namespace NWebsec.AspNetCore.Core.Tests
         }
 
         [Fact]
+        public void ValidateRedirect_EnabledAndRedirectNoScheme_ThrowsException()
+        {
+            const int statusCode = 302;
+            const string location = "//evilsite.com";
+            var config = new RedirectValidationConfiguration { Enabled = true };
+
+            Assert.Throws<RedirectValidationException>(() => _redirectValidator.ValidateRedirect(statusCode, location, RequestUriHttps, config));
+        }
+
+        [Fact]
         public void ValidateRedirect_EnabledAndNoRedirect_NoException()
         {
             var config = new RedirectValidationConfiguration { Enabled = true };
@@ -244,7 +254,7 @@ namespace NWebsec.AspNetCore.Core.Tests
 
             Assert.Throws<RedirectValidationException>(() => _redirectValidator.ValidateRedirect(statusCode, "https://www.nwebsec.com/", RequestUriHttp, config));
             Assert.Throws<RedirectValidationException>(() => _redirectValidator.ValidateRedirect(statusCode, "https://www.nwebsec.com:443/", RequestUriHttp, config));
-            
+
         }
 
         [Fact]
