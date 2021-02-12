@@ -50,6 +50,16 @@ namespace NWebsec.AspNetCore.Core.Tests
         }
 
         [Fact]
+        public void ValidateRedirect_EnabledAndRedirectNoSchemeWithSpace_ThrowsException()
+        {
+            const int statusCode = 302;
+            const string location = " //evilsite.com";
+            var config = new RedirectValidationConfiguration { Enabled = true };
+
+            Assert.Throws<RedirectValidationException>(() => _redirectValidator.ValidateRedirect(statusCode, location, RequestUriHttps, config));
+        }
+
+        [Fact]
         public void ValidateRedirect_EnabledAndNoRedirect_NoException()
         {
             var config = new RedirectValidationConfiguration { Enabled = true };
