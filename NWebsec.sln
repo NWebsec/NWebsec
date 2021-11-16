@@ -65,7 +65,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NWebSecSampleProjects", "NW
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NWebsec.AspNetCore.Middleware.SampleProject", "NWebsec.AspNetCore.Middleware.SampleProject", "{8254C52F-071E-4AA4-A909-B7393D8800AF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NWebSec.AspNetCore.Middleware.SampleProject", "WebApplication1\NWebSec.AspNetCore.Middleware.SampleProject.csproj", "{E6E1589D-6913-4413-89BC-A06D4B74FE47}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NWebSec.AspNetCore.Middleware.SampleProject", "NWebSec.AspNetCore.Middleware.SampleProject\NWebSec.AspNetCore.Middleware.SampleProject.csproj", "{E7A34955-1778-4E40-A2C2-15CD0A5E7515}"
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
@@ -179,10 +179,10 @@ Global
 		{DE57AD6B-EA22-4F7A-9504-67B5FA538C7B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DE57AD6B-EA22-4F7A-9504-67B5FA538C7B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DE57AD6B-EA22-4F7A-9504-67B5FA538C7B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{E6E1589D-6913-4413-89BC-A06D4B74FE47}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E6E1589D-6913-4413-89BC-A06D4B74FE47}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E6E1589D-6913-4413-89BC-A06D4B74FE47}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E6E1589D-6913-4413-89BC-A06D4B74FE47}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E7A34955-1778-4E40-A2C2-15CD0A5E7515}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E7A34955-1778-4E40-A2C2-15CD0A5E7515}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E7A34955-1778-4E40-A2C2-15CD0A5E7515}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E7A34955-1778-4E40-A2C2-15CD0A5E7515}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -216,7 +216,7 @@ Global
 		{99636447-A4E6-478D-8795-11556FA9A11A} = {1E120316-DAE8-4FF7-81C2-053A914C258D}
 		{DE57AD6B-EA22-4F7A-9504-67B5FA538C7B} = {1733BF96-BCF6-43DD-B145-EBCB11B57C55}
 		{8254C52F-071E-4AA4-A909-B7393D8800AF} = {BD535F82-AB45-4148-9FEC-29DF28596E71}
-		{E6E1589D-6913-4413-89BC-A06D4B74FE47} = {8254C52F-071E-4AA4-A909-B7393D8800AF}
+		{E7A34955-1778-4E40-A2C2-15CD0A5E7515} = {8254C52F-071E-4AA4-A909-B7393D8800AF}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {291EB21D-431D-45CB-8052-282BC1170814}
