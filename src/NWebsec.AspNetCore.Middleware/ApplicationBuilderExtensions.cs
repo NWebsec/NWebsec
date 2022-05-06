@@ -199,5 +199,15 @@ namespace Microsoft.AspNetCore.Builder
             configurer(options);
             return app.UseMiddleware<CspMiddleware>(options, true); //Last param indicates it's reportOnly.
         }
+
+        public static IApplicationBuilder UsePermissionsPolicy(this IApplicationBuilder app, Action<IFluentPermissionsPolicyOptions> configurer)
+        {
+            if(app == null) throw new ArgumentNullException(nameof(app));
+            if (configurer == null) throw new ArgumentNullException(nameof(configurer));
+
+            var options = new PermissionsPolicyOptions();
+            configurer(options);
+            return app.UseMiddleware<PermissionsPolicyMiddleware>(options);
+        }
     }
 }

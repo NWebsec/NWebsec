@@ -32,6 +32,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)HttpHeaders\Configuration\ICspSandboxDirectiveConfiguration.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)HttpHeaders\Configuration\ICspUpgradeDirectiveConfiguration.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)HttpHeaders\Configuration\IHstsConfiguration.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)HttpHeaders\Configuration\IPermissionsPolicyPermissionConfiguration.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)HttpHeaders\Configuration\IRedirectValidationConfiguration.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)HttpHeaders\Configuration\IReferrerPolicyConfiguration.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)HttpHeaders\Configuration\ISameHostHttpsRedirectConfiguration.cs" />
@@ -39,6 +40,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)HttpHeaders\Configuration\IXFrameOptionsConfiguration.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)HttpHeaders\Configuration\IXRobotsTagConfiguration.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)HttpHeaders\Configuration\IXXssProtectionConfiguration.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)HttpHeaders\Configuration\PermissionsPolicyPermissionPermissionConfiguration.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)HttpHeaders\Configuration\RedirectValidationConfiguration.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)HttpHeaders\Configuration\ReferrerPolicyConfiguration.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)HttpHeaders\Configuration\SameHostHttpsRedirectConfiguration.cs" />
@@ -57,6 +59,11 @@
     <Compile Include="$(MSBuildThisFileDirectory)HttpHeaders\HeaderGenerator.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)HttpHeaders\HeaderResult.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)HttpHeaders\IHeaderGenerator.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)HttpHeaders\IPermissionsPolicyConfiguration.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)HttpHeaders\PermissionsPolicyConfiguration.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)HttpHeaders\PermissionsPolicy\InvalidPermissionsPolicySourceException.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)HttpHeaders\PermissionsPolicy\PermissionsPolicySourceParseResult.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)HttpHeaders\PermissionsPolicy\PermissionsPolicyUriSource.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)HttpHeaders\ReferrerPolicy.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)HttpHeaders\XfoPolicy.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)HttpHeaders\XXssPolicy.cs" />
@@ -73,11 +80,14 @@
     <Compile Include="$(MSBuildThisFileDirectory)Middleware\Options\IFluentCspReportUriDirective.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Middleware\Options\IFluentCspSandboxDirective.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Middleware\Options\IFluentHstsOptions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Middleware\Options\IFluentPermissionsPolicyOptions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Middleware\Options\IFluentRedirectValidationOptions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Middleware\Options\IFluentReferrerPolicyOptions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Middleware\Options\IFluentXFrameOptions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Middleware\Options\IFluentXRobotsTagOptions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Middleware\Options\IFluentXXssProtectionOptions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Middleware\Options\PermissionsPolicyOptions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Middleware\Options\PermissionsPolicyPermission.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Middleware\Options\RedirectValidationOptions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Middleware\Options\ReferrerPolicyOptions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Middleware\Options\XFrameOptions.cs" />
