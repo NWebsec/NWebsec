@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.29613.14
+# Visual Studio Version 17
+VisualStudioVersion = 17.1.32319.34
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{1733BF96-BCF6-43DD-B145-EBCB11B57C55}"
 EndProject
@@ -63,8 +63,14 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MvcClassic", "src\MvcClassi
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		src\NWebsec.Mvc.Common\NWebsec.Mvc.Common.projitems*{10521d31-e95a-447d-9e32-4a02c6689880}*SharedItemsImports = 5
 		src\NWebsec.Core.Shared\NWebsec.Core.Shared.projitems*{22c7c96d-f411-444a-a30e-64cfbda506f5}*SharedItemsImports = 13
 		src\NWebsec.Mvc.Common\NWebsec.Mvc.Common.projitems*{4c0a345e-976a-4f84-a568-50501b1b2dbd}*SharedItemsImports = 13
+		src\NWebsec.Core.Shared\NWebsec.Core.Shared.projitems*{7163b923-8a2e-47ab-a2ee-6abca91c42fa}*SharedItemsImports = 5
+		src\NWebsec.Mvc.Common\NWebsec.Mvc.Common.projitems*{abb44397-b534-4ae4-98e4-4032c05e85c2}*SharedItemsImports = 5
+		src\NWebsec.Core.Shared\NWebsec.Core.Shared.projitems*{ace9f21a-3ff6-4cb0-b264-d2b44bc581fa}*SharedItemsImports = 5
+		src\NWebsec.Core.Shared\NWebsec.Core.Shared.projitems*{eb433b3f-3a17-4216-9032-60904a6f2f2a}*SharedItemsImports = 5
+		src\NWebsec.Mvc.Common\NWebsec.Mvc.Common.projitems*{f9b06c0f-594a-47cd-af83-8d47c5417569}*SharedItemsImports = 5
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

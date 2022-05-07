@@ -28,5 +28,8 @@ namespace NWebsec.Core.Common.HttpHeaders
 
         HeaderResult CreateCspResult(ICspConfiguration cspConfig, bool reportOnly,
             string builtinReportHandlerUri = null, ICspConfiguration oldCspConfig = null);
+
+        HeaderResult CreatePermissionsPolicyResult(
+            IPermissionsPolicyConfiguration permissionsPolicyPermissionConfiguration);
     }
 }

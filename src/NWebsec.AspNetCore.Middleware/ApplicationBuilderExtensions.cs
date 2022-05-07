@@ -199,5 +199,21 @@ namespace Microsoft.AspNetCore.Builder
             configurer(options);
             return app.UseMiddleware<CspMiddleware>(options, true); //Last param indicates it's reportOnly.
         }
+
+        /// <summary>
+        ///     Adds a middleware to the ASP.NET Core pipeline that sets the Permissions-Policy header.
+        /// </summary>
+        /// <param name="app">The <see cref="IApplicationBuilder" /> to which the middleware is added.</param>
+        /// <param name="configurer">An <see cref="Action" /> that configures the options for the middleware.</param>
+        /// <returns>The <see cref="IApplicationBuilder" /> supplied in the app parameter.</returns>
+        public static IApplicationBuilder UsePermissionsPolicy(this IApplicationBuilder app, Action<IFluentPermissionsPolicyOptions> configurer)
+        {
+            if(app == null) throw new ArgumentNullException(nameof(app));
+            if (configurer == null) throw new ArgumentNullException(nameof(configurer));
+
+            var options = new PermissionsPolicyOptions();
+            configurer(options);
+            return app.UseMiddleware<PermissionsPolicyMiddleware>(options);
+        }
     }
 }

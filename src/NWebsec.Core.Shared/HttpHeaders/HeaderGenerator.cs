@@ -167,7 +167,23 @@ namespace NWebsec.Core.Common.HttpHeaders
             return new HeaderResult(HeaderResult.ResponseAction.Set, HeaderConstants.ReferrerPolicyHeader, policyValue);
         }
 
-       /*[CanBeNull]*/
+        public HeaderResult CreatePermissionsPolicyResult(
+            IPermissionsPolicyConfiguration config)
+        {
+            var headerValue = config.Enabled
+                ? CreatePermissionsPolicyHeaderValue(config)
+                : null;
+
+            if (!config.Enabled || headerValue == null)
+            {
+                return null;
+            }
+
+            return new HeaderResult(HeaderResult.ResponseAction.Set,
+                HeaderConstants.PermissionsPolicyHeader, headerValue);
+        }
+
+        /*[CanBeNull]*/
         public HeaderResult CreateCspResult(ICspConfiguration cspConfig, bool reportOnly,
             string builtinReportHandlerUri = null, ICspConfiguration oldCspConfig = null)
         {
@@ -192,7 +208,100 @@ namespace NWebsec.Core.Common.HttpHeaders
                 (reportOnly ? HeaderConstants.ContentSecurityPolicyReportOnlyHeader : HeaderConstants.ContentSecurityPolicyHeader), headerValue);
         }
 
-       /*[CanBeNull]*/
+        private string CreatePermissionsPolicyHeaderValue(IPermissionsPolicyConfiguration config)
+        {
+            var sb = new StringBuilder();
+
+            AppendPermission(sb, "accelerometer", GetPermissionList(config.AccelerometerPermission));
+            AppendPermission(sb, "ambient-light-sensor", GetPermissionList(config.AmbientLightSensorPermission));
+            AppendPermission(sb, "autoplay", GetPermissionList(config.AutoplayPermission));
+            AppendPermission(sb, "battery", GetPermissionList(config.BatteryPermission));
+            AppendPermission(sb, "camera", GetPermissionList(config.CameraPermission));
+            AppendPermission(sb, "cross-origin-isolated", GetPermissionList(config.CrossOriginIsolatedPermission));
+            AppendPermission(sb, "display-capture", GetPermissionList(config.DisplayCapturePermission));
+            AppendPermission(sb, "document-domain", GetPermissionList(config.DocumentDomainPermission));
+            AppendPermission(sb, "encrypted-media", GetPermissionList(config.EncryptedMediaPermission));
+            AppendPermission(sb, "execution-while-not-rendered", GetPermissionList(config.ExecutionWhileNotRenderedPermission));
+            AppendPermission(sb, "execution-while-out-of-viewport", GetPermissionList(config.ExecutionWhileOutOfViewportPermission));
+            AppendPermission(sb, "fullscreen", GetPermissionList(config.FullscreenPermission));
+            AppendPermission(sb, "geolocation", GetPermissionList(config.GeolocationPermission));
+            AppendPermission(sb, "gyroscope", GetPermissionList(config.GyroscopePermission));
+            AppendPermission(sb, "hid", GetPermissionList(config.HidPermission));
+            AppendPermission(sb, "idle-detection", GetPermissionList(config.IdleDetectionPermission));
+            AppendPermission(sb, "magnetometer", GetPermissionList(config.MagnetometerPermission));
+            AppendPermission(sb, "microphone", GetPermissionList(config.MicrophonePermission));
+            AppendPermission(sb, "midi", GetPermissionList(config.MidiPermission));
+            AppendPermission(sb, "navigation-override", GetPermissionList(config.NavigationOverridePermission));
+            AppendPermission(sb, "payment", GetPermissionList(config.PaymentPermission));
+            AppendPermission(sb, "picture-in-picture", GetPermissionList(config.PictureInPicturePermission));
+            AppendPermission(sb, "publickey-credentials-get", GetPermissionList(config.PublickeyCredentialsGetPermission));
+            AppendPermission(sb, "screen-wake-lock", GetPermissionList(config.ScreenWakeLockPermission));
+            AppendPermission(sb, "serial", GetPermissionList(config.SerialPermission));
+            AppendPermission(sb, "sync-xhr", GetPermissionList(config.SyncXhrPermission));
+            AppendPermission(sb, "usb", GetPermissionList(config.UsbPermission));
+            AppendPermission(sb, "web-share", GetPermissionList(config.WebSharePermission));
+            AppendPermission(sb, "xr-spatial-tracking", GetPermissionList(config.XrSpatialTrackingPermission));
+
+            if (sb.Length == 0) return null;
+            
+            sb.Length-= 2; //Get rid of trailing comma and space
+            return sb.ToString();
+        }
+
+        private void AppendPermission(StringBuilder sb, string permissionName, List<string> sources)
+        {
+            if (sources == null) return;
+
+            sb.Append(permissionName);
+            sb.Append('=');
+            sb.Append('(');
+            // sources here
+            foreach (var source in sources)
+            {
+                sb.Append(source).Append(' ');
+            }
+
+            sb.Length--; // remove trailing space after last source
+
+            sb.Append(')');
+            sb.Append(',');
+            sb.Append(' ');
+        }
+
+        private List<string> GetPermissionList(IPermissionsPolicyPermissionConfiguration permission)
+        {
+            if (!permission.Enabled)
+            {
+                return null;
+            }
+
+            var sources = new List<string>();
+
+            if (permission.NoneSrc)
+            {
+                sources.Add(string.Empty);
+                return sources;
+            }
+
+            if (permission.AllSrc)
+            {
+                sources.Add("*");
+            }
+
+            if (permission.SelfSrc)
+            {
+                sources.Add("self");
+            }
+
+            if (permission.CustomSources != null)
+            {
+                sources.AddRange(permission.CustomSources.Select(s => $"\"{s}\"").ToList());
+            }
+
+            return sources.Count > 0 ? sources : null;
+        }
+
+        /*[CanBeNull]*/
         private string CreateCspHeaderValue(ICspConfiguration config, string builtinReportHandlerUri = null)
         {
             var sb = new StringBuilder();

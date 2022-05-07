@@ -13,6 +13,7 @@ namespace NWebsec.Core.Common.HttpHeaders
         public static readonly string ContentSecurityPolicyHeader = "Content-Security-Policy";
         public static readonly string ContentSecurityPolicyReportOnlyHeader = "Content-Security-Policy-Report-Only";
         public static readonly string ReferrerPolicyHeader = "Referrer-Policy";
+        public static readonly string PermissionsPolicyHeader = "Permissions-Policy";
 
         public static readonly string[] CspSourceList =
         {
